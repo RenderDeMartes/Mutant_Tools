@@ -1,0 +1,49 @@
+{
+   "main_grp" : "Asset Name",
+
+   "base_groups": {
+               "geometry" : "Geo",
+               "control" : "Ctrl",
+               "rig" : "Rig"  
+                },
+
+   "geo_groups": {
+               "render_geo" : "Render_Geo"
+               },
+
+   "rig_groups": {
+                "bind_joints" : "Bind_Joints",
+                "bind_geo" : "Bind_Geo",
+                "misc" : "Miscellaneous",
+                "template" : "Template"
+               },
+
+   "main_ctrl_grp":"Rig_Ctrl",
+
+   "right_color" : "red",
+   "left_color" : "relightd",
+   "center_color" : "yellow",
+   "main_color" : "lightBlue",
+   "gimbal_color" : "grey",
+
+   "ik_ctrl" : "cube",
+   "pv_ctrl" : "sphere",
+   "top_ik_ctrl" : "circleX",
+
+   "fk_ctrl" : "bounding_cube",
+   "spine_fk_ctrl" : "circleY",
+
+   "ik_fk_method" : "blend",
+
+   "line_width" : "2",
+   
+   "twist_axis" : "X",
+   "twist_axis_head" : "X",
+   "twist_axis_spine" : "X",
+   "twist_axis_arms" : "X",
+   "twist_axis_legs" : "X",
+
+   "stretch_default":"1",
+   "volume_preservation":"0.5"
+
+}

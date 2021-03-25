@@ -1,0 +1,43 @@
+{
+
+   "left":		"L_",
+   "right":		"R_",
+
+   "offset":  "_Offset",
+   "root":    "_Root",
+   "auto":    "_Auto",
+
+   "joint":		"_Jnt",
+   "joint_end":	"_JntEnd",
+   "joint_bind": "_Bnd",
+   "joint_ctrl": "_JntCtrl",
+   "ik": "_Ik_Jnt",
+   "fk": "_Fk_Jnt",
+
+   "geo":		"_Geo",
+   "group":		"_Grp",
+   "locator":  "_Loc",
+   "cluster":  "_Cls",
+
+   "ctrl":		"_Ctrl",
+   "gimbal_ctrl":  "_Gimbal_Ctrl",
+   "curve":		"_Crv",   
+
+   "follicle":	"_Fol",
+   "nurb":		"_Nurb",
+
+   "ik_rp" : "_IKrp",
+   "ik_sc" : "_IKsc",
+   "ik_spline" : "_IKspl",
+   "pole_vector" : "_PoleVector",
+   "effector" :   "_Effector",
+
+   "multiplyDivide":"_MD",
+   "distance":"_Distance",
+   "condition":"_Condition",
+   "blend":"_Blend",
+
+   "connected":"_Connected",
+
+   "module":"_Blocks"
+}
