@@ -6,17 +6,17 @@ date: 21/04/2020
 #----------------
 how to: 
 	
-import RdM_ScriptTools
-from RdM_ScriptTools import main_rdm
-reload(RdM_ScriptTools.main_rdm)
+import Mosaic_Tools
+import Mosaic_Tools.Utils
+from Mosaic_Tools.Utils import modules
+reload(Mosaic_Tools.Utils.modules)
 
-rdm = main_rdm.RdM()
-rdm.FUNC(ARGUMENTS)
+modules = modules.RdM()
+modules.FUNC(ARGUMENTS)
 
 #----------------
 dependencies:   
 	
-math
 json
 pymel
 maya mel
@@ -32,9 +32,6 @@ licence: https://www.eulatemplate.com/live.php?token=ySe25XC0bKARQymXaGQGR8i4gvX
 author:  Esteban Rodriguez <info@renderdemartes.com>
 
 '''
-version = '3.0.1'
-
-import math
 
 import maya.mel
 from maya import cmds
@@ -50,23 +47,25 @@ try:
 	import kinematics
 	reload(kinematics)
 except:
-	import RdM_ScriptTools
-	from RdM_ScriptTools import tools
-	reload(RdM_ScriptTools.tools)
-	from RdM_ScriptTools import kinematics
-	reload(RdM_ScriptTools.kinematics)
+	import Mosaic_Tools
+	import Mosaic_Tools.Utils
+	from Mosaic_Tools.Utils import tools
+	reload(Mosaic_Tools.Utils.tools)
+	from Mosaic_Tools.Utils import kinematics
+	reload(Mosaic_Tools.Utils.kinematics)
+
 
 #----------------
 
 
-#Read name conventions as nc['']
-#PATH = cmds.internalVar(usd = True) + 'RdM_ScriptTools'
+#Read name conventions as nc[''] and setup as seup['']
 PATH = os.path.dirname(__file__)
+PATH = PATH.replace('\Utils', '//Config')
 
-JSON_FILE = (PATH+'/name_conventions.json')
+JSON_FILE = (PATH +'/name_conventions.json')
 with open(JSON_FILE) as json_file:
 	nc = json.load(json_file)
-SETUP_FILE = (PATH+'/rig_setup.json')
+SETUP_FILE = (PATH +'/rig_setup.json')
 with open(SETUP_FILE) as setup_file:
 	setup = json.load(setup_file)
 
@@ -82,9 +81,7 @@ class Modules_class(kinematics.Kinematics_class):
 	def create_block(self, name = '', icon = ''):
 
 		cmds.select(cl=True)
-		container = cmds.container(name =name + nc['module']
-		cmds.setAttr(type =  "string",  '{}.iconName'.format(container), icon)
-
+		container = cmds.container(name = name + nc['module'])
 
 #----------------------------------------------------------------------------------------------------------------
 

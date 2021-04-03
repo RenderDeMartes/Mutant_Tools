@@ -1,0 +1,9 @@
+{
+    "Name" :  "Limb",
+    "Description":"This will create a basic Limb System",
+
+    "python_file" : "Exec_Limb.py",
+    "import":"from Exec_Limb import * ",
+    "exec_command" : "create_limb_base()",    
+    "build_command":"nothing yet"
+ }

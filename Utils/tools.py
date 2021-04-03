@@ -21,9 +21,10 @@ NEEDS A UPDATE :)
 #----------------
 how to: 
 	
-import RdM_ScriptTools
-from RdM_ScriptTools import tools
-reload(RdM_ScriptTools.tools)
+import Mosaic_Tools
+import Mosaic_Tools.Utils
+from Mosaic_Tools.Utils import tools
+reload(Mosaic_Tools.Utils.tools)
 
 tool = tools.Tools_class()
 tool.FUNC_NAME(argument = '')
@@ -51,9 +52,10 @@ import pymel.core as pm
 
 #----------------------------------------------------------------------------------------------------------------
 
-#Read name conventions as nc['']
-#PATH = cmds.internalVar(usd = True) + 'RdM_ScriptTools'
+#Read name conventions as nc[''] and setup as seup['']
 PATH = os.path.dirname(__file__)
+PATH = PATH.replace('\Utils', '//Config')
+
 JSON_FILE = (PATH + '/name_conventions.json')
 with open(JSON_FILE) as json_file:
 	nc = json.load(json_file)

@@ -1,8 +1,9 @@
-import RdM_ScriptTools
-from RdM_ScriptTools import main_rdm
-reload(RdM_ScriptTools.main_rdm)
+import Mosaic_Tools
+import Mosaic_Tools.Utils
+from Mosaic_Tools.Utils import main_mosaic
+reload(Mosaic_Tools.Utils.main_mosaic)
 
-rdm = main_rdm.RdM()
+#mosaic = main_mosaic.Mosaic()
 #rdm.rig_base_module()
 #rdm.bounding_cube(axis = 'Z')
 #help(rdm)
@@ -18,6 +19,15 @@ rdm = main_rdm.RdM()
 #rdm.joints_middle_no_chain()
 #rdm.invert_fk_chain()
 #rdm.connect_with_line()
-rdm.create_joint_guide()
+#rdm.create_joint_guide()
 #rdm.build_base(size = 3, name = 'lol')
 #rdm.curve(type = 'root')
+
+import Mosaic_Tools
+from Mosaic_Tools.UI import load_autoRigger
+reload(load_autoRigger)
+
+try:AutoRigger.close()
+except:pass
+AutoRigger = load_autoRigger.AutoRigger()
+AutoRigger.show()

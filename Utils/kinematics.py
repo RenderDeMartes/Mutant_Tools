@@ -16,9 +16,10 @@ NEEDS A UPDATE :)
 #----------------
 how to: 
 	
-import RdM_ScriptTools
-from RdM_ScriptTools import kinematics
-reload(RdM_ScriptTools.kinematics)
+import Mosaic_Tools
+import Mosaic_Tools.Utils
+from Mosaic_Tools.Utils import kinematics
+reload(Mosaic_Tools.Utils.kinematics)
 
 kin = kinematics.Kinematics_class()
 kin.FUNC_NAME(argument = '')
@@ -55,15 +56,16 @@ try:
 	reload(tools)
 
 except:
-	import RdM_ScriptTools
-	from RdM_ScriptTools import tools
-	reload(RdM_ScriptTools.tools)
+	import Mosaic_Tools
+	import Mosaic_Tools.Utils
+	from Mosaic_Tools.Utils import tools
+	reload(Mosaic_Tools.Utils.tools)
 
 #----------------------------------------------------------------------------------------------------------------
 
-#Read name conventions as nc['']
-#PATH = cmds.internalVar(usd = True) + 'RdM_ScriptTools'
+#Read name conventions as nc[''] and setup as seup['']
 PATH = os.path.dirname(__file__)
+PATH = PATH.replace('\Utils', '//Config')
 
 JSON_FILE = (PATH+'/name_conventions.json')
 with open(JSON_FILE) as json_file:
@@ -924,7 +926,7 @@ class Kinematics_class(tools.Tools_class):
 		temp_fk_joints = self.joints_middle_no_chain(start = start, end=end, axis = twist_axis, amount = amount, name = 'Fk_Temp')
 		fk_controllers = []
 		for num, joint in enumerate(temp_fk_joints):
-			print num, joint
+			print (num, joint)
 			cmds.select(cl=True)
 			fk_controller = self.curve(type = setup['spine_fk_ctrl'], size = size, custom_name = True, name = '{}_{}_FK{}'.format(name, num,nc['ctrl']))
 			fk_grp = self.root_grp(fk_controller)
