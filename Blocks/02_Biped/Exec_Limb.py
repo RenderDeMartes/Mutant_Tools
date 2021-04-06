@@ -1,19 +1,48 @@
 from maya import cmds
+import json
+import os
 
 import Mosaic_Tools
 import Mosaic_Tools.Utils
 from Mosaic_Tools.Utils import main_mosaic
 reload(Mosaic_Tools.Utils.main_mosaic)
 
-mosaic = main_mosaic.Mosaic()
+mt = main_mosaic.Mosaic()
 
-def create_limb_base():
+#---------------------------------------------
+
+#Read name conventions as nc[''] and setup as seup['']
+PATH = os.path.dirname(__file__)
+PATH = PATH.replace('\Blocks//02_Biped', '//Config') #change this path depending of the folder
+
+JSON_FILE = (PATH + '/name_conventions.json')
+with open(JSON_FILE) as json_file:
+	nc = json.load(json_file)
+#Read curve shapes info
+CURVE_FILE = (PATH + '/curves.json')
+with open(CURVE_FILE) as curve_file:
+	curve_data = json.load(curve_file)
+#setup File
+SETUP_FILE = (PATH+'/rig_setup.json')
+with open(SETUP_FILE) as setup_file:
+	setup = json.load(setup_file)	
+
+#---------------------------------------------
+
+def create_limb_base(name = 'limb'):
 
     cmds.select(cl=True)
-    cmds.joint(p = (0,0,0))
-    cmds.joint(p = (0,10,0))
-    cmds.joint(p = (0,20,0))
+    joint_one = mt.create_joint_guide()
+    cmds.move(0,0,0)
+    joint_two = mt.create_joint_guide()
+    cmds.move(10,0,0)    
+    joint_three = mt.create_joint_guide()
+    cmds.move(20,0,0)
     
+    cmds.parent(joint_three, joint_two)
+    cmds.parent(joint_two, joint_one)
+
+    cmds.select(cl=True)
     print('Limb Base Created Successfully'),
 
 #create_limb_base()

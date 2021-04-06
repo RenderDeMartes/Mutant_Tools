@@ -1,4 +1,11 @@
 {
     "Name" :  "Quadruped Preset",
-    "Description":"This will create a Quadruped Block System Ready to use"
+    "Description":"This will create a Quadruped Block System Ready to use",
+    
+    "Enable" :  "False",
+
+    "python_file" : "None.py",
+    "import":"from None import * ",
+    "exec_command" : "None()",    
+    "build_command":"nothing yet"
  }

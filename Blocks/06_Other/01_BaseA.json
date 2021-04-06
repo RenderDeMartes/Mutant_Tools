@@ -1,6 +1,6 @@
 {
-    "Name" :  "Biped_Preset",
-    "Description":"This will create a Biped Block System Ready to use",
+    "Name" :  "BaseA",
+    "Description":"This will create a Base to hold the rig (type A)",
     
     "Enable" :  "False",
 

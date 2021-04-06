@@ -517,7 +517,7 @@ class Tools_class:
 		if name == '':
 			cube = self.curve(type = 'cube',  size = size, gimbal = False)
 		else:
-			cube = self.curve(type = 'cube', custom_name = True, name = name, size = size, gimbal = False)
+			cube = self.curve(type = 'cube', custom_name = True, name = name, size = size)
 
 		#move vertex to start and move vertex to finish
 		#input_position = cmds.xform(original, q = True, m= True, ws = True)
@@ -616,7 +616,7 @@ class Tools_class:
 
 
 	#----------------------------------------------------------------------------------------------------------------				
-	def text_curves(self, name_text = 'Name', font = 'Arial', color = 16):   
+	def text_curves(self, name_text = 'Name', font = 'Arial', color = setup['main_color']):   
 
 		#BASED ON OLD ONE in RDM Tools V1 (Sorry for the spanish i just copy paste it)
 
@@ -662,7 +662,9 @@ class Tools_class:
 	                                                        
 	                #Colores
 	                cmds.setAttr (Curva+'.overrideEnabled', 1)
-	                cmds.setAttr (Curva+'.overrideColor', Color)
+	                self.asign_color(Curva, color = color)
+	                cmds.setAttr('{}.lineWidth'.format(Curva), int(setup['line_width']))
+
 	                      
 	    #Do stuff for the Double Letters
 	        #print LetrasDobles

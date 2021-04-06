@@ -2,8 +2,11 @@
     "Name" :  "Limb",
     "Description":"This will create a basic Limb System",
 
+    "Enable" :  "True",
+
     "python_file" : "Exec_Limb.py",
-    "import":"from Exec_Limb import * ",
-    "exec_command" : "create_limb_base()",    
+    "import":"import Exec_Limb ",
+    "reload":"reload(Exec_Limb)",
+    "exec_command" : "Exec_Limb.create_limb_base()",    
     "build_command":"nothing yet"
  }

@@ -1,4 +1,11 @@
 {
     "Name" :  "Tail",
-    "Description":"This will create a basic Tail System"
+    "Description":"This will create a basic Tail System",
+    
+    "Enable" :  "False",
+
+    "python_file" : "None.py",
+    "import":"from None import * ",
+    "exec_command" : "None()",    
+    "build_command":"nothing yet"
  }

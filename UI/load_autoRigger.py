@@ -5,9 +5,8 @@ date: 21/04/2020
 #----------------
 content: 
 
-This will create a UI for the autorriger tool. Is dinamically created based on the folders and json files
+This will create a UI for the autorriger tool. Is dinamically created based on the .json files inside the folders
 
-NEEDS A UPDATE :)
 #----------------
 how to: 
 	
@@ -15,6 +14,8 @@ import Mosaic_Tools
 from Mosaic_Tools.UI import load_autoRigger
 reload(load_autoRigger)
 
+try:AutoRigger.close()
+except:pass
 AutoRigger = load_autoRigger.AutoRigger()
 AutoRigger.show()
 
@@ -23,7 +24,8 @@ dependencies:
 
 QT FILE
 ICONS
-MODULES FOLDER
+JSON FILES
+Main Mosaic
 
 #----------------
 licence: https://www.eulatemplate.com/live.php?token=ySe25XC0bKARQymXaGQGR8i4gvXMJgVS
@@ -45,7 +47,8 @@ import maya.mel as mel
 import os
 import sys
 import json
-import glob
+
+#-------------------------------------------------------------------
 
 #QT WIndow!
 PATH = os.path.dirname(__file__)
@@ -54,6 +57,31 @@ Title = 'Mosaic // Autor_Rigger'
 Folder = PATH.replace('\UI', '') 
 UI_File = 'autoRigger.ui'
 IconsPath =  Folder + '/Icons/'
+
+#-------------------------------------------------------------------
+
+#get all the paths for the blocks in the sys path
+file_path = (str(__file__))
+for folder in os.listdir(Folder + '/Blocks'):
+    #print (folder)
+    blocks_path = file_path.replace('UI\load_autoRigger.py','Blocks//{}'.format(folder))
+    #print (blocks_path)
+    if blocks_path not in sys.path:
+        sys.path.append(blocks_path)
+
+'''
+#Delete all pyc in this folders so we dont need the reload in the codes:  
+path = Folder + '/Blocks'
+for path, subdirs, files in os.walk(path):
+    for name in files:
+        print(os.path.join(path, name))
+        if '.pyc' in name:
+            print (name + ': Have been deleted')
+            os.remove(os.path.join(path, name))
+'''
+
+#-------------------------------------------------------------------
+
 
 def maya_main_window():
     
@@ -92,7 +120,7 @@ class AutoRigger(QtWidgets.QDialog):
     def create_connections(self):
 
         def Demo(self):
-            print 'This is a DemoFunc'
+            print ('This is a DemoFunc')
         
         #self.ui.ButtonName.clicked.connect(self.Demo)
         #self.ui.ButtonName.clicked.connect(lambda: print 'this is lambda')
@@ -101,27 +129,27 @@ class AutoRigger(QtWidgets.QDialog):
         print (name)
 
     def create_block_buttons(self):
-        'create all the buttons in the tabs blocks'   
-        blocks_folders = os.listdir(Folder + '/Blocks')
+        ''
+        #'create all the buttons in the tabs blocks' 
+        print (Folder)
+        blocks_folders = os.listdir(Folder + '\\Blocks')
+        #blocks_folders = ['01_Presets', '02_Biped']
+        print ('Block Folders : ' + str(blocks_folders))
+        
         for block_folder in blocks_folders:
-
-            #if '.py' or '.pyc' in block_folder:
-            #   print 'skiped ' + block_folder
-            #   continue
-
+            
             clean_folder_name = block_folder.split('_')[1]
             files = os.listdir(Folder + '/Blocks/' + block_folder )
-
+            
             for block_file in files:
-                print (block_file)
+                #print(block_file)
                 
                 if not '.json' in str(block_file): #if the file is not a json continue with the next one
-                    print 'skiped' + block_file
+                    #print ('skiped' + block_file)
                     continue                
-                
                 #read the json file with block information
                 real_path =  Folder + '/Blocks/' + block_folder + '/' + block_file
-                print (real_path)
+                #print (real_path)
                 with open(real_path, "r") as block_info:
                     block = json.load(block_info)               
 
@@ -129,6 +157,8 @@ class AutoRigger(QtWidgets.QDialog):
                 button = QPushButton(str(block_file).split('_')[1].replace('.json', ''))#get a nicer name
                 button.clicked.connect(partial (self.create_new_block, real_path))
                 button.setToolTip(block['Description'])
+                if block['Enable'] == 'False':
+                    button.setEnabled(False)
 
                 #parent to correct tab
                 if block_folder == '01_Presets':
@@ -145,13 +175,15 @@ class AutoRigger(QtWidgets.QDialog):
                     self.ui.other_layout.addWidget(button)  
 
                 button.setFixedSize(40, 40)
-
+                
     def create_new_block(self,bock_path):
+        
         #read json
         with open(bock_path, "r") as block_info:
             block = json.load(block_info) 
         
         exec block['import']
+        exec block['reload']
         exec block['exec_command']
 
     def delete_side_buttons(self):
@@ -164,7 +196,7 @@ class AutoRigger(QtWidgets.QDialog):
     def delete_properties_layout(self):
         'Clear All Properties Layout'
 
-
+#-------------------------------------------------------------------
 
 if __name__ == "__main__":
 
@@ -176,23 +208,6 @@ if __name__ == "__main__":
     AutoRigger_ui = AutoRigger()
     AutoRigger_ui.show()
 
-
-#get all the paths for the blocks in the sys path
-file_path = (str(__file__))
-for folder in os.listdir(Folder + '/Blocks'):
-    print (folder)
-    blocks_path = file_path.replace('UI\load_autoRigger.py','Blocks//{}'.format(folder))
-    print (blocks_path)
-    if blocks_path not in sys.path:
-        sys.path.append(blocks_path)
-
-#Delete all pyc in this folders so we dont need the reload in the codes:  
-
-path = Folder + '/Blocks'
-for path, subdirs, files in os.walk(path):
-    for name in files:
-        print(os.path.join(path, name))
-        if '.pyc' in name:
-            print name + 'DELETE THIS'
+#-------------------------------------------------------------------
 
 

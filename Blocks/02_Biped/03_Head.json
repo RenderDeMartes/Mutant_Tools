@@ -1,4 +1,11 @@
 {
     "Name" :  "Head",
-    "Description":"This will create a basic Head System"
+    "Description":"This will create a basic Head System",
+    
+    "Enable" :  "False",
+
+    "python_file" : "None.py",
+    "import":"from None import * ",
+    "exec_command" : "None()",    
+    "build_command":"nothing yet"
  }

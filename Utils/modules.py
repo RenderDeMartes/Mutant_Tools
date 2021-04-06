@@ -95,15 +95,32 @@ class Modules_class(kinematics.Kinematics_class):
 		arrowAxis = self.curve(type = '2dArrow')
 		cmds.rotate(90,90,0,cmds.listRelatives(arrowAxis, s=True)[0] + '.cv[0:9]')
 
-		self.asign_color(input = cmds.listRelatives(arrow, s=True)[0])
+		self.asign_color(input = cmds.listRelatives(arrow, s=True)[0], color = 'green')
 		self.asign_color(input = cmds.listRelatives(sphere, s=True)[0])
-		self.asign_color(input = cmds.listRelatives(arrowAxis, s=True)[0])
+		self.asign_color(input = cmds.listRelatives(arrowAxis, s=True)[0], color = 'red')
+
+		#create turn off and on attr
+		hide_attr = self.new_enum(input = joint, name = 'Helper')
+		print (hide_attr)
+		print (joint)
+		cmds.connectAttr(hide_attr, cmds.listRelatives(arrow, s=True)[0] + '.v', f=True)
+		cmds.connectAttr(hide_attr, cmds.listRelatives(sphere, s=True)[0] + '.v', f=True)
+		cmds.connectAttr(hide_attr, cmds.listRelatives(arrowAxis, s=True)[0] + '.v', f=True)
+
+		if setup['axis_helper'] == 'True':
+			cmds.setAttr(hide_attr, 1)
+		else:
+			cmds.setAttr(hide_attr, 0)
 
 		cmds.parent(cmds.listRelatives(arrow, s=True),joint,r=True, s=True)
 		cmds.parent(cmds.listRelatives(sphere, s=True),joint,r=True, s=True)
 		cmds.parent(cmds.listRelatives(arrowAxis, s=True),joint,r=True, s=True)
 
 		cmds.delete(sphere, arrow, arrowAxis)
+		cmds.select(joint)
+
+		return joint
+
 #----------------------------------------------------------------------------------------------------------------
 
 	def build_base(self, name='Asset_Name', size = 1):

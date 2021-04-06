@@ -1,4 +1,11 @@
 {
     "Name" :  "Spine",
-    "Description":"This will create a basic Spine System"
+    "Description":"This will create a basic Spine System",
+    
+    "Enable" :  "False",
+
+    "python_file" : "None.py",
+    "import":"from None import * ",
+    "exec_command" : "None()",    
+    "build_command":"nothing yet"
  }

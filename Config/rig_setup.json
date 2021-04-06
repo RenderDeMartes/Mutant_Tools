@@ -37,6 +37,7 @@
 
    "line_width" : "2",
    
+   "axis_helper":"True",
    "twist_axis" : "X",
    "twist_axis_head" : "X",
    "twist_axis_spine" : "X",
