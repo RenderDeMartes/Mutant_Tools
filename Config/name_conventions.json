@@ -1,4 +1,5 @@
 {
+   "module":"_Block",
 
    "left":		"L_",
    "right":		"R_",
@@ -37,7 +38,5 @@
    "condition":"_Condition",
    "blend":"_Blend",
 
-   "connected":"_Connected",
-
-   "module":"_Blocks"
+   "connected":"_Connected"
 }

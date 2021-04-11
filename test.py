@@ -4,8 +4,10 @@ from Mosaic_Tools.Utils import main_mosaic
 reload(Mosaic_Tools.Utils.main_mosaic)
 
 mt = main_mosaic.Mosaic()
-#mt.rig_base_module()
 
+#mt.create_block()
+#cmds.reorder( 'Mosaic_Block6', r=-1 )
+#mt.move_outliner(input = 'Mosaic_Block3', up =True)
 #mt.bounding_cube(axis = 'Z')
 #help(rdm)
 #from see import see
@@ -24,7 +26,7 @@ mt = main_mosaic.Mosaic()
 #mt.build_base(size = 3, name = 'lol')
 #mt.curve(type = 'root')
 
-
+'''
 import Mosaic_Tools
 from Mosaic_Tools.UI import load_autoRigger
 reload(load_autoRigger)
@@ -33,3 +35,4 @@ try:AutoRigger.close()
 except:pass
 AutoRigger = load_autoRigger.AutoRigger()
 AutoRigger.show()
+'''

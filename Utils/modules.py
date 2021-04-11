@@ -78,10 +78,53 @@ class Modules_class(kinematics.Kinematics_class):
 
 #----------------------------------------------------------------------------------------------------------------
 
-	def create_block(self, name = '', icon = ''):
+	def create_block(self, name = 'Mosaic', icon = ''):
 
 		cmds.select(cl=True)
-		container = cmds.container(name = name + nc['module'])
+		block = cmds.container(name = name + nc['module'],type='dagContainer')
+		cmds.setAttr('{}.iconName'.format(block), icon, type="string")
+		self.hide_attr(t=True, r=True, s=True,v=True)
+
+		if cmds.objExists('Mosaic_Build'):
+			pass
+		else:
+			cmds.group(n = 'Mosaic_Build', em=True)
+		print (block)
+		cmds.parent(block,'Mosaic_Build')
+
+		return block
+#----------------------------------------------------------------------------------------------------------------
+
+	def move_outliner(self, input = '', up = False, down = False):
+		
+		if input ==  '':
+			input = cmds.ls(sl=True)
+
+		try:
+			parent = cmds.listRelatives(input, p =True)
+			brothers = cmds.listRelatives(parent, c = True)
+			#print (brothers)
+
+			if up == True:
+				if brothers[0] == input:
+					print ('{} is top'.format(input))
+				else:
+					cmds.reorder(input, r= -1 )
+					print ('{} moved up'.format(input))
+
+			if down == True:
+				if brothers[-1] == input:
+					print ('{} is bottom'.format(input))
+				else:
+					cmds.reorder(input, r= 1 )		
+					print ('{} moved down'.format(input))
+
+		except:
+			if up == True:
+				cmds.reorder( input, r= -1 )
+			if down == True:
+				cmds.reorder( input, r= 1 )
+
 
 #----------------------------------------------------------------------------------------------------------------
 
@@ -94,10 +137,13 @@ class Modules_class(kinematics.Kinematics_class):
 
 		arrowAxis = self.curve(type = '2dArrow')
 		cmds.rotate(90,90,0,cmds.listRelatives(arrowAxis, s=True)[0] + '.cv[0:9]')
+		arrowFront = self.curve(type = '2dArrow')
+		cmds.rotate(90,0,90,cmds.listRelatives(arrowFront, s=True)[0] + '.cv[0:9]')
 
 		self.asign_color(input = cmds.listRelatives(arrow, s=True)[0], color = 'green')
 		self.asign_color(input = cmds.listRelatives(sphere, s=True)[0])
 		self.asign_color(input = cmds.listRelatives(arrowAxis, s=True)[0], color = 'red')
+		self.asign_color(input = cmds.listRelatives(arrowFront, s=True)[0], color = 'blue')
 
 		#create turn off and on attr
 		hide_attr = self.new_enum(input = joint, name = 'Helper')
@@ -106,6 +152,7 @@ class Modules_class(kinematics.Kinematics_class):
 		cmds.connectAttr(hide_attr, cmds.listRelatives(arrow, s=True)[0] + '.v', f=True)
 		cmds.connectAttr(hide_attr, cmds.listRelatives(sphere, s=True)[0] + '.v', f=True)
 		cmds.connectAttr(hide_attr, cmds.listRelatives(arrowAxis, s=True)[0] + '.v', f=True)
+		cmds.connectAttr(hide_attr, cmds.listRelatives(arrowFront, s=True)[0] + '.v', f=True)
 
 		if setup['axis_helper'] == 'True':
 			cmds.setAttr(hide_attr, 1)
@@ -115,11 +162,29 @@ class Modules_class(kinematics.Kinematics_class):
 		cmds.parent(cmds.listRelatives(arrow, s=True),joint,r=True, s=True)
 		cmds.parent(cmds.listRelatives(sphere, s=True),joint,r=True, s=True)
 		cmds.parent(cmds.listRelatives(arrowAxis, s=True),joint,r=True, s=True)
+		cmds.parent(cmds.listRelatives(arrowFront, s=True),joint,r=True, s=True)
 
-		cmds.delete(sphere, arrow, arrowAxis)
+		cmds.delete(sphere, arrow, arrowAxis,arrowFront)
 		cmds.select(joint)
 
 		return joint
+
+#----------------------------------------------------------------------------------------------------------------
+
+	def ask_name(self, text = ''):
+		ask_name = cmds.promptDialog(
+						title='Name Block',
+						message='Name:',
+						button=['OK', 'Cancel'],
+						defaultButton='OK',
+						cancelButton='Cancel',
+						dismissString='Cancel',
+						tx = text)
+
+		if ask_name == 'OK':
+				return cmds.promptDialog(query=True, text=True)	
+		else:
+			cmds.error('We need a name :)')
 
 #----------------------------------------------------------------------------------------------------------------
 

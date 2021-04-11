@@ -1,0 +1,12 @@
+{
+    "Name" :  "BaseA",
+    "Description":"This will create a Base to hold the rig (type A)",
+    
+    "Enable" :  "True",
+
+    "python_file" : "Exec_BaseA.py",
+    "import":"import Exec_BaseA ",
+    "reload":"reload(Exec_BaseA)",
+    "exec_command" : "Exec_BaseA.create_BaseA()",    
+    "build_command":"nothing yet"
+ }

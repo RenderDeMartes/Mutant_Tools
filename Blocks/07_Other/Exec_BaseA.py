@@ -13,7 +13,7 @@ mt = main_mosaic.Mosaic()
 
 #Read name conventions as nc[''] and setup as seup['']
 PATH = os.path.dirname(__file__)
-PATH = PATH.replace('\Blocks//02_Biped', '//Config') #change this path depending of the folder
+PATH = PATH.replace('\Blocks//07_Other', '//Config') #change this path depending of the folder
 
 JSON_FILE = (PATH + '/name_conventions.json')
 with open(JSON_FILE) as json_file:
@@ -29,29 +29,10 @@ with open(SETUP_FILE) as setup_file:
 
 #---------------------------------------------
 
-def create_limb_base(name = 'Limb'):
+def create_BaseA():
 
-    name = mt.ask_name(text = name)
-    if cmds.objExists('{}{}'.format(name,nc['module'])):
-        cmds.warning('Name already exists.')
-        return ''
-
-    limb_block = mt.create_block(name = name, icon = '')
-
-    cmds.select(cl=True)
-    joint_one = mt.create_joint_guide(name = name)
-    cmds.move(0,0,0)
-    joint_two = mt.create_joint_guide(name = name)
-    cmds.move(10,0,0)    
-    joint_three = mt.create_joint_guide(name = name)
-    cmds.move(20,0,0)
-    cmds.parent(joint_three, joint_two)
-    cmds.parent(joint_two, joint_one)
-
-    cmds.parent(joint_one, limb_block)
-    cmds.select(cl=True)
-
-    print('Limb Base Created Successfully'),
+    mt.build_base(size = 3, name = 'Mosaic_Tools')
+    print('BaseA Created Successfully'),
 
 #create_limb_base()
 
