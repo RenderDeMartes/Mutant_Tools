@@ -6,7 +6,7 @@
 
     "python_file" : "Exec_Limb.py",
     "import":"import Exec_Limb ",
-    "reload":"reload(Exec_Limb)",
+    "imp.reload":"reload(Exec_Limb)",
     "exec_command" : "Exec_Limb.create_limb_base()",    
     "build_command":"nothing yet"
  }

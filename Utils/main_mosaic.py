@@ -9,7 +9,7 @@ how to:
 import Mosaic_Tools
 import Mosaic_Tools.Utils
 from Mosaic_Tools.Utils import main_mosaic
-reload(Mosaic_Tools.Utils.main_mosaic)
+imp.reload(Mosaic_Tools.Utils.main_mosaic)
 
 mosaic = main_mosaic.Mosaic()
 mosaic.FUNC(ARGUMENTS)
@@ -52,27 +52,29 @@ import pymel.core as pm
 from maya import OpenMaya
 
 import os
+import imp
 import json
 import math
 
+
 try: 
 	import tools
-	reload(tools)
+	imp.reload(tools)
 	import kinematics
-	reload(kinematics)
+	imp.reload(kinematics)
 	import modules
-	reload(modules)
+	imp.reload(modules)
 	import blocks
-	reload(blocks)
+	imp.reload(blocks)
 except:
 	import Mosaic_Tools
 	import Mosaic_Tools.Utils
 	from Mosaic_Tools.Utils import tools
-	reload(Mosaic_Tools.Utils.tools)
+	imp.reload(Mosaic_Tools.Utils.tools)
 	from Mosaic_Tools.Utils import kinematics
-	reload(Mosaic_Tools.Utils.kinematics)
+	imp.reload(Mosaic_Tools.Utils.kinematics)
 	from Mosaic_Tools.Utils import modules
-	reload(Mosaic_Tools.Utils.modules)
+	imp.reload(Mosaic_Tools.Utils.modules)
 #----------------
 
 class Mosaic(modules.Modules_class):

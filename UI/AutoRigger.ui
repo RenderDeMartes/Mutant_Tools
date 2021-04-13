@@ -724,8 +724,8 @@ TextEditor--TextEditorWidget &gt; QWidget {
         </property>
         <layout class="QGridLayout" name="gridLayout_7">
          <item row="0" column="0">
-          <layout class="QVBoxLayout" name="side_layout">
-           <item>
+          <layout class="QGridLayout" name="side_layout">
+           <item row="0" column="0">
             <widget class="QGroupBox" name="horizontalGroupBox_3">
              <property name="maximumSize">
               <size>
@@ -1036,8 +1036,11 @@ background: qlineargradient(x1: 0, y1: 0.5, x2: 1, y2: 0.5, stop: 0 #44494b, sto
           <height>500</height>
          </size>
         </property>
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
         <property name="tabShape">
-         <enum>QTabWidget::Triangular</enum>
+         <enum>QTabWidget::Rounded</enum>
         </property>
         <property name="currentIndex">
          <number>0</number>
@@ -1121,8 +1124,8 @@ background: qlineargradient(x1: 0, y1: 0.5, x2: 1, y2: 0.5, stop: 0 #44494b, sto
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>448</width>
-               <height>43</height>
+               <width>81</width>
+               <height>38</height>
               </rect>
              </property>
              <layout class="QGridLayout" name="gridLayout_14">
@@ -1163,8 +1166,8 @@ background: qlineargradient(x1: 0, y1: 0.5, x2: 1, y2: 0.5, stop: 0 #44494b, sto
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>448</width>
-               <height>43</height>
+               <width>81</width>
+               <height>38</height>
               </rect>
              </property>
              <layout class="QGridLayout" name="gridLayout_15">
@@ -1205,8 +1208,8 @@ background: qlineargradient(x1: 0, y1: 0.5, x2: 1, y2: 0.5, stop: 0 #44494b, sto
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>448</width>
-               <height>43</height>
+               <width>81</width>
+               <height>38</height>
               </rect>
              </property>
              <layout class="QGridLayout" name="gridLayout_16">
@@ -1247,8 +1250,8 @@ background: qlineargradient(x1: 0, y1: 0.5, x2: 1, y2: 0.5, stop: 0 #44494b, sto
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>448</width>
-               <height>43</height>
+               <width>81</width>
+               <height>38</height>
               </rect>
              </property>
              <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -1289,8 +1292,8 @@ background: qlineargradient(x1: 0, y1: 0.5, x2: 1, y2: 0.5, stop: 0 #44494b, sto
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>448</width>
-               <height>43</height>
+               <width>81</width>
+               <height>38</height>
               </rect>
              </property>
              <layout class="QGridLayout" name="gridLayout_17">
@@ -1331,8 +1334,8 @@ background: qlineargradient(x1: 0, y1: 0.5, x2: 1, y2: 0.5, stop: 0 #44494b, sto
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>448</width>
-               <height>43</height>
+               <width>81</width>
+               <height>38</height>
               </rect>
              </property>
              <layout class="QGridLayout" name="gridLayout_18">

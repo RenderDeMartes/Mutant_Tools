@@ -1,11 +1,12 @@
 from maya import cmds
 import json
+import imp
 import os
 
 import Mosaic_Tools
 import Mosaic_Tools.Utils
 from Mosaic_Tools.Utils import main_mosaic
-reload(Mosaic_Tools.Utils.main_mosaic)
+imp.reload(Mosaic_Tools.Utils.main_mosaic)
 
 mt = main_mosaic.Mosaic()
 

@@ -12,7 +12,7 @@ how to:
 	
 import Mosaic_Tools
 from Mosaic_Tools.UI import load_autoRigger
-reload(load_autoRigger)
+imp.reload(load_autoRigger)
 
 try:AutoRigger.close()
 except:pass
@@ -46,6 +46,7 @@ import maya.cmds as cmds
 import maya.mel as mel
 
 import os
+import imp
 import sys
 import json
 
@@ -55,7 +56,7 @@ import json
 PATH = os.path.dirname(__file__)
 
 Title = 'Mosaic // Autor_Rigger'
-Folder = PATH.replace('\UI', '') 
+Folder = PATH.replace('\\UI', '') 
 UI_File = 'autoRigger.ui'
 IconsPath =  Folder + '/Icons/'
 #-------------------------------------------------------------------
@@ -63,7 +64,7 @@ IconsPath =  Folder + '/Icons/'
 import Mosaic_Tools
 import Mosaic_Tools.Utils
 from Mosaic_Tools.Utils import main_mosaic
-reload(Mosaic_Tools.Utils.main_mosaic)
+imp.reload(Mosaic_Tools.Utils.main_mosaic)
 
 mt = main_mosaic.Mosaic()
 
@@ -73,12 +74,12 @@ def add_sys_folders_remove_compiled():
     file_path = (str(__file__))
     for folder in os.listdir(Folder + '/Blocks'):
         #print (folder)
-        blocks_path = file_path.replace('UI\load_autoRigger.py','Blocks//{}'.format(folder))
+        blocks_path = file_path.replace('UI\\load_autoRigger.py','Blocks//{}'.format(folder))
         #print (blocks_path)
         if blocks_path not in sys.path:
             sys.path.append(blocks_path)
 
-    #Delete all pyc in the block folders so we dont need the reload in the codes:  
+    #Delete all pyc in the block folders so we dont need the imp.reload in the codes:  
     path = Folder + '//Blocks'
     for path, subdirs, files in os.walk(path):
         for name in files:
@@ -103,7 +104,7 @@ def add_sys_folders_remove_compiled():
 def maya_main_window(dockable=True):
     
     main_window_ptr = omui.MQtUtil.mainWindow()
-    return wrapInstance(long(main_window_ptr), QtWidgets.QWidget)
+    return wrapInstance(int(main_window_ptr), QtWidgets.QWidget)
 
 
 class AutoRigger(QtWidgets.QDialog):
@@ -225,10 +226,10 @@ class AutoRigger(QtWidgets.QDialog):
         with open(bock_path, "r") as block_info:
             block = json.load(block_info) 
         
-        exec block['import']
-        try:exec block['reload']
-        except: print ('couldnt reload {}'.format(bock_path))
-        exec block['exec_command']
+        exec (block['import'])
+        try:exec (block['imp.reload'])
+        except: print ('couldnt imp.reload {}'.format(bock_path))
+        exec (block['exec_command'])
         
         
     #-------------------------------------------------------------------
@@ -246,8 +247,8 @@ class AutoRigger(QtWidgets.QDialog):
         side_hbox = QGroupBox()
         self.ui.side_layout.addWidget(side_hbox)
 
-        up_button = QtWidgets.QPushButton(u'\u2191')
-        down_button = QtWidgets.QPushButton(u'\u2193')
+        up_button = QtWidgets.QPushButton('up')
+        down_button = QtWidgets.QPushButton('dw')
         up_button.setFixedSize(15,20)
         down_button.setFixedSize(15,20)
 

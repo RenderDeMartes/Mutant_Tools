@@ -19,7 +19,7 @@ how to:
 import Mosaic_Tools
 import Mosaic_Tools.Utils
 from Mosaic_Tools.Utils import kinematics
-reload(Mosaic_Tools.Utils.kinematics)
+imp.reload(Mosaic_Tools.Utils.kinematics)
 
 kin = kinematics.Kinematics_class()
 kin.FUNC_NAME(argument = '')
@@ -49,23 +49,24 @@ import pymel.core as pm
 from maya import OpenMaya
 
 import os
+import imp
 import json
 
 try: 
 	import tools
-	reload(tools)
+	imp.reload(tools)
 
 except:
 	import Mosaic_Tools
 	import Mosaic_Tools.Utils
 	from Mosaic_Tools.Utils import tools
-	reload(Mosaic_Tools.Utils.tools)
+	imp.reload(Mosaic_Tools.Utils.tools)
 
 #----------------------------------------------------------------------------------------------------------------
 
 #Read name conventions as nc[''] and setup as seup['']
 PATH = os.path.dirname(__file__)
-PATH = PATH.replace('\Utils', '//Config')
+PATH = PATH.replace('\\Utils', '//Config')
 
 JSON_FILE = (PATH+'/name_conventions.json')
 with open(JSON_FILE) as json_file:

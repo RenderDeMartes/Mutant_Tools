@@ -1,7 +1,8 @@
 import Mosaic_Tools
 import Mosaic_Tools.Utils
 from Mosaic_Tools.Utils import main_mosaic
-reload(Mosaic_Tools.Utils.main_mosaic)
+import imp
+imp.reload(Mosaic_Tools.Utils.main_mosaic)
 
 mt = main_mosaic.Mosaic()
 
@@ -26,13 +27,12 @@ mt = main_mosaic.Mosaic()
 #mt.build_base(size = 3, name = 'lol')
 #mt.curve(type = 'root')
 
-'''
 import Mosaic_Tools
 from Mosaic_Tools.UI import load_autoRigger
-reload(load_autoRigger)
+import imp
+imp.reload(load_autoRigger)
 
 try:AutoRigger.close()
 except:pass
 AutoRigger = load_autoRigger.AutoRigger()
 AutoRigger.show()
-'''

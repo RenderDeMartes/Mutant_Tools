@@ -24,7 +24,7 @@ how to:
 import Mosaic_Tools
 import Mosaic_Tools.Utils
 from Mosaic_Tools.Utils import tools
-reload(Mosaic_Tools.Utils.tools)
+imp.reload(Mosaic_Tools.Utils.tools)
 
 tool = tools.Tools_class()
 tool.FUNC_NAME(argument = '')
@@ -43,6 +43,7 @@ author:  Esteban Rodriguez <info@renderdemartes.com>
 
 '''
 import os
+import imp
 import json
 
 from  maya import mel
@@ -54,7 +55,8 @@ import pymel.core as pm
 
 #Read name conventions as nc[''] and setup as seup['']
 PATH = os.path.dirname(__file__)
-PATH = PATH.replace('\Utils', '//Config')
+print (PATH)
+PATH = PATH.replace('\\Utils', '//Config')
 
 JSON_FILE = (PATH + '/name_conventions.json')
 with open(JSON_FILE) as json_file:
