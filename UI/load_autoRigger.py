@@ -52,6 +52,25 @@ import json
 
 #-------------------------------------------------------------------
 
+#Read name conventions as nc[''] and setup as seup['']
+PATH = os.path.dirname(__file__)
+PATH = PATH.replace('\\UI', '//Config') #change this path depending of the folder
+
+JSON_FILE = (PATH + '/name_conventions.json')
+with open(JSON_FILE) as json_file:
+	nc = json.load(json_file)
+#Read curve shapes info
+CURVE_FILE = (PATH + '/curves.json')
+with open(CURVE_FILE) as curve_file:
+	curve_data = json.load(curve_file)
+#setup File
+SETUP_FILE = (PATH+'/rig_setup.json')
+with open(SETUP_FILE) as setup_file:
+	setup = json.load(setup_file)	
+
+
+#-------------------------------------------------------------------
+
 #QT WIndow!
 PATH = os.path.dirname(__file__)
 
@@ -194,10 +213,19 @@ class AutoRigger(QtWidgets.QDialog):
                     block = json.load(block_info)               
 
                 #create button
-                button = QPushButton(str(block_file).split('_')[1].replace('.json', ''))#get a nicer name
+                block_name = str(block_file).split('_')[1].replace('.json', '')
+                button = QPushButton()#give a nicer name
                 button.clicked.connect(partial (self.create_new_block, real_path))
                 button.clicked.connect(self.create_layout)
                 button.setToolTip(block['Description'])
+                try:
+                    button.setIcon(QtGui.QIcon(IconsPath + block['Icon']))
+                    button.setIconSize((QtCore.QSize(35, 35)))
+                    button.setStyleSheet("text-align:right;")
+                    #button.setText(block_name)
+                except:
+                    button.setText(block_name)
+
                 if block['Enable'] == 'False':
                     button.setEnabled(False)
 
@@ -218,9 +246,10 @@ class AutoRigger(QtWidgets.QDialog):
                     self.ui.other_layout.addWidget(button)  
 
                 button.setFixedSize(40, 40)
-                
+               
     #-------------------------------------------------------------------
     def create_new_block(self,bock_path):
+
         #this will create a new block in maya based on the info on the json files        
         #read json
         with open(bock_path, "r") as block_info:
@@ -247,13 +276,19 @@ class AutoRigger(QtWidgets.QDialog):
         side_hbox = QGroupBox()
         self.ui.side_layout.addWidget(side_hbox)
 
-        up_button = QtWidgets.QPushButton('up')
-        down_button = QtWidgets.QPushButton('dw')
+        up_button = QtWidgets.QPushButton('↑')
+        down_button = QtWidgets.QPushButton('↓')
         up_button.setFixedSize(15,20)
         down_button.setFixedSize(15,20)
 
-        edit_button = QtWidgets.QPushButton(pack_name)
+        edit_button = QtWidgets.QPushButton(pack_name.replace(nc['module'],''))
         edit_button.setFixedSize(75,50)
+
+        try:
+            edit_button.setIcon(QtGui.QIcon(cmds.getAttr('{}.iconName'.format(pack_name))))
+            edit_button.setIconSize((QtCore.QSize(30, 30)))
+        except:
+            edit_button.setText(pack_name)
 
         h_layout = QtWidgets.QHBoxLayout()
         v_layout = QtWidgets.QVBoxLayout()
@@ -273,9 +308,14 @@ class AutoRigger(QtWidgets.QDialog):
 
     def create_properties_layout(self):
         'Create All Properties Stuff'
+
     def delete_properties_layout(self):
-        'Clear All Properties Layout'
-    
+        # this will clear the side layout so we can move stuff around
+        for i in reversed(range(self.ui.properties_layout.count())): 
+            self.ui.properties_layout.itemAt(i).widget().setParent(None)
+
+        #make UI Scrolable
+        self.ui.properties_scroll.setWidgetResizable(True)    
     
     # CLOSE EVENTS _________________________________
     def closeEvent(self, event):

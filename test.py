@@ -5,7 +5,6 @@ import imp
 imp.reload(Mosaic_Tools.Utils.main_mosaic)
 
 mt = main_mosaic.Mosaic()
-
 #mt.create_block()
 #cmds.reorder( 'Mosaic_Block6', r=-1 )
 #mt.move_outliner(input = 'Mosaic_Block3', up =True)

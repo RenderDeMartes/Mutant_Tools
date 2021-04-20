@@ -55,7 +55,6 @@ import pymel.core as pm
 
 #Read name conventions as nc[''] and setup as seup['']
 PATH = os.path.dirname(__file__)
-print (PATH)
 PATH = PATH.replace('\\Utils', '//Config')
 
 JSON_FILE = (PATH + '/name_conventions.json')

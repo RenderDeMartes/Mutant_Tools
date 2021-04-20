@@ -32,13 +32,20 @@ with open(SETUP_FILE) as setup_file:
 
 def create_limb_base(name = 'Limb'):
 
+    #name checks and block creation
     name = mt.ask_name(text = name)
     if cmds.objExists('{}{}'.format(name,nc['module'])):
         cmds.warning('Name already exists.')
         return ''
 
-    limb_block = mt.create_block(name = name, icon = '')
+    limb_block = mt.create_block(name = name, icon = 'Limb' )
+    limb_config = limb_block[]
+    limb_block = limb_block[0]
 
+
+    #add attrs to the Limb Block for the UI to read
+
+    #limb base create
     cmds.select(cl=True)
     joint_one = mt.create_joint_guide(name = name)
     cmds.move(0,0,0)
@@ -51,6 +58,8 @@ def create_limb_base(name = 'Limb'):
 
     cmds.parent(joint_one, limb_block)
     cmds.select(cl=True)
+
+
 
     print('Limb Base Created Successfully'),
 

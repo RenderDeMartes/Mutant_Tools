@@ -79,7 +79,12 @@ class Modules_class(kinematics.Kinematics_class):
 
 #----------------------------------------------------------------------------------------------------------------
 
-	def create_block(self, name = 'Mosaic', icon = ''):
+	def create_block(self, name = 'Mosaic', icon = 'Limb'):
+
+		PATH = os.path.dirname(__file__)
+		PATH = PATH.replace('\\Utils', '//Icons//') #change this path depending of the folder
+		#print (PATH)
+		icon = PATH + icon + '.png'
 
 		cmds.select(cl=True)
 		block = cmds.container(name = name + nc['module'],type='dagContainer')
@@ -93,7 +98,11 @@ class Modules_class(kinematics.Kinematics_class):
 		print (block)
 		cmds.parent(block,'Mosaic_Build')
 
-		return block
+		#create network node with all the attrs
+		config = cmds.createNode('network', n = '{}_Config'.format(name))
+		cmds.connectAttr('{}.nodeState'.format(config), '{}.nodeState'.format(block))
+
+		return block,config 
 #----------------------------------------------------------------------------------------------------------------
 
 	def move_outliner(self, input = '', up = False, down = False):
@@ -242,9 +251,6 @@ class Modules_class(kinematics.Kinematics_class):
 		self.hide_attr(input =gimbal_ctrl , s = True)
 
 #----------------------------------------------------------------------------------------------------------------
-
-	def arm_leg_module(self):		
-		''
 
 
 

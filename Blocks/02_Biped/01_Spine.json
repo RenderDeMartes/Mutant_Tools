@@ -1,7 +1,8 @@
 {
     "Name" :  "Spine",
     "Description":"This will create a basic Spine System",
-    
+    "Icon":"Spine.png",
+
     "Enable" :  "False",
 
     "python_file" : "Exec_Limb.py",

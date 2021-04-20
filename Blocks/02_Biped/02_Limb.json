@@ -1,12 +1,21 @@
 {
     "Name" :  "Limb",
     "Description":"This will create a basic Limb System",
+    "Icon":"Limb.png",
 
     "Enable" :  "True",
 
     "python_file" : "Exec_Limb.py",
     "import":"import Exec_Limb ",
-    "imp.reload":"reload(Exec_Limb)",
+    "imp.reload":"imp.reload(Exec_Limb)",
     "exec_command" : "Exec_Limb.create_limb_base()",    
-    "build_command":"nothing yet"
+    "build_command":"nothing yet",
+
+    "attrs": {
+            "name_label":"Limb",
+            "parent_field":"new_locator",
+            "mirror_radio":"True, False, Right_Only",
+            "twistAmount_field": "4"
+            }
+
  }

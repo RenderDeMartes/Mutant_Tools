@@ -1,7 +1,8 @@
 {
     "Name" :  "Head",
     "Description":"This will create a basic Head System",
-    
+    "Icon":"Head.png",
+   
     "Enable" :  "False",
 
     "python_file" : "Exec_Limb.py",
