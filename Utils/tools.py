@@ -388,6 +388,18 @@ class Tools_class:
 		return '{}.{}'.format(input, name)
 
 	#----------------------------------------------------------------------------------------------------------------
+	def new_attr_interger(self, input= '', name = 'switch', min = 0 , max = 1, default = 0):
+		'''
+		create a int attr default is 0 to 1 and deafault value as 0
+		'''
+	
+		#add new attr as float
+		cmds.addAttr(input, ln = name, at = 'long', min = min, max = max, dv = default)
+		cmds.setAttr('{}.{}'.format(input, name), e = True, keyable = True)
+
+		return '{}.{}'.format(input, name)
+
+	#----------------------------------------------------------------------------------------------------------------
 	
 	def new_enum(self, input= '', name = 'switch', enums = 'Hide:Show'):
 		'''
@@ -397,6 +409,22 @@ class Tools_class:
 		#add new attr as float
 		cmds.addAttr(input, ln = name, at = 'enum', en = enums)
 		cmds.setAttr('{}.{}'.format(input, name), e = True, channelBox = True)
+
+		return '{}.{}'.format(input, name)
+
+	#----------------------------------------------------------------------------------------------------------------
+	
+	def new_boolean(self, input= '', name = 'bool', dv = 'True'):
+		'''
+		create an boolean attr in the attr lists for the input, default is going to be Hide and Show
+		'''
+		
+		#add new attr as float
+		cmds.addAttr(input, ln = name, at = 'bool')
+		cmds.setAttr('{}.{}'.format(input, name), e = True, channelBox = True)
+		if dv == 'True':
+			cmds.setAttr('{}.{}'.format(input, name), 1)
+		print (dv)
 
 		return '{}.{}'.format(input, name)
 	#----------------------------------------------------------------------------------------------------------------

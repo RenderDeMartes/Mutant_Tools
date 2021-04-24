@@ -28,6 +28,9 @@ SETUP_FILE = (PATH+'/rig_setup.json')
 with open(SETUP_FILE) as setup_file:
 	setup = json.load(setup_file)	
 
+MODULE_FILE = (os.path.dirname(__file__) +'/02_Limb.json')
+with open(MODULE_FILE) as module_file:
+	module = json.load(module_file)
 #---------------------------------------------
 
 def create_limb_base(name = 'Limb'):
@@ -38,12 +41,9 @@ def create_limb_base(name = 'Limb'):
         cmds.warning('Name already exists.')
         return ''
 
-    limb_block = mt.create_block(name = name, icon = 'Limb' )
-    limb_config = limb_block[]
+    limb_block = mt.create_block(name = name, icon = 'Limb',  attrs = module['attrs'], build_command = module['build_command'])
+    limb_config = limb_block[1]
     limb_block = limb_block[0]
-
-
-    #add attrs to the Limb Block for the UI to read
 
     #limb base create
     cmds.select(cl=True)

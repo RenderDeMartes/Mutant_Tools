@@ -106,7 +106,10 @@ def add_sys_folders_remove_compiled():
             if '.pyc' in str(name):
                 print (name + ': Have been deleted')
                 os.remove(os.path.join(path, name))
-    
+            if '__pycache__' in str(name):
+                print (name + ': Have been deleted')
+                os.remove(os.path.join(path, name))   
+
     # also remove pyc from UIs folder
     path = Folder 
     for path, subdirs, files in os.walk(path):
@@ -259,7 +262,6 @@ class AutoRigger(QtWidgets.QDialog):
         try:exec (block['imp.reload'])
         except: print ('couldnt imp.reload {}'.format(bock_path))
         exec (block['exec_command'])
-        
         
     #-------------------------------------------------------------------
     def delete_side_buttons(self):

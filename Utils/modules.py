@@ -56,8 +56,7 @@ except:
 	imp.reload(Mosaic_Tools.Utils.kinematics)
 
 
-#----------------
-
+#----------------------------------------------------------------------------------------------------------------
 
 #Read name conventions as nc[''] and setup as seup['']
 PATH = os.path.dirname(__file__)
@@ -70,6 +69,7 @@ SETUP_FILE = (PATH +'/rig_setup.json')
 with open(SETUP_FILE) as setup_file:
 	setup = json.load(setup_file)
 
+
 #----------------------------------------------------------------------------------------------------------------
 
 class Modules_class(kinematics.Kinematics_class):
@@ -79,7 +79,7 @@ class Modules_class(kinematics.Kinematics_class):
 
 #----------------------------------------------------------------------------------------------------------------
 
-	def create_block(self, name = 'Mosaic', icon = 'Limb'):
+	def create_block(self, name = 'Mosaic', icon = 'Limb', attrs = {'attrs':'something'}, build_command = 'print("Test")'):
 
 		PATH = os.path.dirname(__file__)
 		PATH = PATH.replace('\\Utils', '//Icons//') #change this path depending of the folder
@@ -101,7 +101,19 @@ class Modules_class(kinematics.Kinematics_class):
 		#create network node with all the attrs
 		config = cmds.createNode('network', n = '{}_Config'.format(name))
 		cmds.connectAttr('{}.nodeState'.format(config), '{}.nodeState'.format(block))
-
+		
+		self.string_attr(input = config, name = 'Build_Command', string = build_command)
+		for attr in attrs:
+			if 'string' in attr:
+				self.string_attr(input = config, name = attr.split('_')[0], string = attrs[attr])
+			elif 'enum' in attr:
+				self.new_enum(input= config, name = attr.split('_')[0], enums = attrs[attr])
+			elif 'float' in attr:
+				self.new_attr_interger(input= config, name = attr.split('_')[0], min = 1 , max = 20, default = int(attrs[attr]))
+			elif 'bool' in attr:
+				self.new_boolean(input= config, name = attr.split('_')[0], dv = attrs[attr])
+			
+			
 		return block,config 
 #----------------------------------------------------------------------------------------------------------------
 
