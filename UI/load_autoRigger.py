@@ -134,6 +134,7 @@ class AutoRigger(QtWidgets.QDialog):
     def __init__(self, parent=maya_main_window()):
         super(AutoRigger, self).__init__(parent)
 
+
         self.setWindowTitle(Title)
         #self.setFixedSize(680,475)
 
@@ -144,6 +145,7 @@ class AutoRigger(QtWidgets.QDialog):
         self.create_layout()
         self.create_connections()
 
+        
 
     def init_ui(self):
         
@@ -166,6 +168,15 @@ class AutoRigger(QtWidgets.QDialog):
                 self.create_side_button(pack_name = child, index = num)
 
         self.ui.layout().setContentsMargins(3, 3, 3, 3)          
+
+        '''
+        # this will clear the propieties layout so we can recreate stuff
+        for i in reversed(range(self.ui.properties_layout.count())): 
+            self.ui.properties_layout.itemAt(i).widget().setParent(None)
+
+        self.ui.side_scroll.setWidgetResizable(True)
+        '''
+
         #self.ui.ButtonName.setIcon(QtGui.QIcon(IconsPath+'Locator.png'))
 
     def create_connections(self):
@@ -262,6 +273,7 @@ class AutoRigger(QtWidgets.QDialog):
         try:exec (block['imp.reload'])
         except: print ('couldnt imp.reload {}'.format(bock_path))
         exec (block['exec_command'])
+        self.create_properties_layout(block = cmds.ls(sl=True)[0])
         
     #-------------------------------------------------------------------
     def delete_side_buttons(self):
@@ -301,15 +313,84 @@ class AutoRigger(QtWidgets.QDialog):
         h_layout.addWidget(edit_button)
 
         side_hbox.setLayout(h_layout)
-
         up_button.clicked.connect(partial (mt.move_outliner, pack_name, True, False))
         down_button.clicked.connect(partial (mt.move_outliner, pack_name, False, True))
+        #down_button.clicked.connect(partial (self.create_properties_layout, cmds.ls(sl=True)[0]))
+        #up_button.clicked.connect(partial (self.create_properties_layout, cmds.ls(sl=True)[0]))
+
         up_button.clicked.connect(self.create_layout)
         down_button.clicked.connect(self.create_layout)
 
+        edit_button.clicked.connect(partial (self.create_properties_layout, pack_name))
 
-    def create_properties_layout(self):
-        'Create All Properties Stuff'
+    def create_properties_layout(self, block):
+        #'Create All Properties Stuff'
+        #self.create_layout()
+        # this will clear the propieties layout so we can recreate stuff
+        for i in reversed(range(self.ui.properties_layout.count())): 
+            self.ui.properties_layout.itemAt(i).widget().setParent(None)
+            
+        print (block)
+        cmds.select(block)
+        config = cmds.listConnections(block)[1]
+        attrs =  cmds.listAttr(config , ud=True)
+        
+        #create may q box to hold the widgets
+        side_hbox = QGroupBox(block)
+        self.ui.properties_layout.addWidget(side_hbox)
+        v_layout = QtWidgets.QVBoxLayout()
+        side_hbox.setLayout(v_layout)
+
+        #get all attrs inf cofig node and get type so we can create UI depending of the type of attr
+        for attr in attrs:
+
+            #if the attrs is locked dont create anyting for it
+            if cmds.getAttr('{}.{}'.format(config,attr),settable = True ) == False:
+                continue
+
+            #main horizontal layout for each attr. they all have a label and the if is to add specific stuff
+            h_layout = QtWidgets.QHBoxLayout()
+            h_layout.setContentsMargins(3, 5, 3, 5)    
+            #divisor
+            layout_separator = QtWidgets.QLabel()
+            layout_separator.setStyleSheet("border : 5px solid grey; ")
+            layout_separator.setFixedHeight(1)
+            v_layout.addWidget(layout_separator) 
+            #label
+            label = QtWidgets.QLabel(attr + ': ')
+            label.setFixedHeight(50)
+            v_layout.addLayout(h_layout)
+            h_layout.addWidget(label)
+
+            #check Attrs type and create a layout diferente for each one
+            attr_type = cmds.getAttr('{}.{}'.format(config,attr), type = True)
+            if attr_type == 'string':
+                
+                print (attr + ': is string')
+                line_edit = QtWidgets.QLineEdit(cmds.getAttr('{}.{}'.format(config, attr)))
+                h_layout.addWidget(line_edit)
+
+                if 'Set' in attr: #if set in name it will create a greab button
+                    set_button = QtWidgets.QPushButton('Set Selection')    
+                    set_button.setFixedSize(80,35)
+                    h_layout.addWidget(set_button)
+
+            elif attr_type == 'enum':
+                print (attr + ': is enum')
+                
+               
+            elif attr_type == 'long':
+                print (attr + ': is long')
+
+
+            elif attr_type == 'bool':
+                print (attr + ': is bool')
+                checkbox = QtWidgets.QCheckBox(attr)    
+                checkbox.setChecked(cmds.getAttr('{}.{}'.format(config, attr)))
+                checkbox.setStyleSheet('background-color: none;')
+                h_layout.addWidget(checkbox)  
+                label.setParent(None)
+
 
     def delete_properties_layout(self):
         # this will clear the side layout so we can move stuff around

@@ -102,7 +102,8 @@ class Modules_class(kinematics.Kinematics_class):
 		config = cmds.createNode('network', n = '{}_Config'.format(name))
 		cmds.connectAttr('{}.nodeState'.format(config), '{}.nodeState'.format(block))
 		
-		self.string_attr(input = config, name = 'Build_Command', string = build_command)
+		build_command = self.string_attr(input = config, name = 'Build_Command', string = build_command)
+		cmds.setAttr(build_command, lock=True)
 		for attr in attrs:
 			if 'string' in attr:
 				self.string_attr(input = config, name = attr.split('_')[0], string = attrs[attr])

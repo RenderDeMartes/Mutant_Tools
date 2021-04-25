@@ -57,7 +57,7 @@ def create_limb_base(name = 'Limb'):
     cmds.parent(joint_two, joint_one)
 
     cmds.parent(joint_one, limb_block)
-    cmds.select(cl=True)
+    cmds.select(limb_block)
 
 
 

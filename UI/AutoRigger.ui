@@ -46,7 +46,7 @@ QTextEdit, QTextBrowser {
  */
 
 QLabel, QTabBar::tab, QMenuBar::item,
-QCheckBox, QGroupBox {
+QGroupBox {
     background-color: transparent;
     color: #bbbbbb;
     selection-color: #bbbbbb;
@@ -67,41 +67,32 @@ QGroupBox::title {
     subcontrol-position: top left;
     padding: 0 3px;
 }
-QCheckBox::indicator,
 QGroupBox::indicator {
     width: 13px;
     height: 13px;
 }
-QCheckBox::indicator:unchecked,
 QGroupBox::indicator:unchecked {
     image: url(:/qmldesigner/images/checkbox_unchecked.png);
 }
-QCheckBox::indicator:unchecked:hover,
 QGroupBox::indicator:unchecked:hover {
     image: url(:/qmldesigner/images/checkbox_unchecked_hover.png);
 }
-QCheckBox::indicator:unchecked:pressed,
 QGroupBox::indicator:unchecked:pressed {
     image: url(:/qmldesigner/images/checkbox_unchecked_pressed.png);
 }
-QCheckBox::indicator:checked,
 QGroupBox::indicator:checked {
     image: url(:/qmldesigner/images/checkbox_checked.png);
 }
-QCheckBox::indicator:checked:hover,
 QGroupBox::indicator:checked:hover {
     image: url(:/qmldesigner/images/checkbox_checked_hover.png);
 }
-QCheckBox::indicator:checked:pressed,
 QGroupBox::indicator:checked:pressed {
     image: url(:/qmldesigner/images/checkbox_checked_pressed.png);
 }
-QCheckBox::indicator:indeterminate:hover,
 QGroupBox::indicator:indeterminate:hover {
     background-color: #2222bb;
     image: url(:/qmldesigner/images/checkbox_indeterminate_hover.png); /* TODO: There is no shuch image */
 }
-QCheckBox::indicator:indeterminate:pressed,
 QGroupBox::indicator:indeterminate:pressed {
     background-color: #22bb22;
     image: url(:/qmldesigner/images/checkbox_indeterminate_pressed.png); /* TODO: There is no shuch image */
@@ -243,34 +234,6 @@ QComboBox QAbstractItemView {
     show-decoration-selected: 1; /* make the selection span the entire width of the view */
 }
 
-
-/*
- * RadioButton
- *
- * TODO: Checked circle is hard to spot
- */
-QRadioButton::indicator {
-    width: 13px;
-    height: 13px;
-}
-QRadioButton::indicator:unchecked {
-    image: url(:/qmldesigner/images/radiobutton_unchecked.png);
-}
-QRadioButton::indicator:unchecked:hover {
-    image: url(:/qmldesigner/images/radiobutton_unchecked_hover.png);
-}
-QRadioButton::indicator:unchecked:pressed {
-    image: url(:/qmldesigner/images/radiobutton_unchecked_pressed.png);
-}
-QRadioButton::indicator:checked {
-    image: url(:/qmldesigner/images/radiobutton_checked.png);
-}
-QRadioButton::indicator:checked:hover {
-    image: url(:/qmldesigner/images/radiobutton_checked_hover.png);
-}
-QRadioButton::indicator:checked:pressed {
-    image: url(:/qmldesigner/images/radiobutton_checked_pressed.png);
-}
 
 
 /*
@@ -776,7 +739,7 @@ TextEditor--TextEditorWidget &gt; QWidget {
                   </property>
                  </widget>
                 </item>
-                <item row="2" column="0">
+                <item row="1" column="0">
                  <widget class="QPushButton" name="pushButton_13">
                   <property name="maximumSize">
                    <size>
@@ -786,16 +749,6 @@ TextEditor--TextEditorWidget &gt; QWidget {
                   </property>
                   <property name="text">
                    <string>﹀</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="0">
-                 <widget class="QLabel" name="label">
-                  <property name="text">
-                   <string>0</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignCenter</set>
                   </property>
                  </widget>
                 </item>
@@ -816,7 +769,7 @@ TextEditor--TextEditorWidget &gt; QWidget {
                  </size>
                 </property>
                 <property name="text">
-                 <string>PushButton</string>
+                 <string>TestButton</string>
                 </property>
                </widget>
               </item>
@@ -865,7 +818,28 @@ TextEditor--TextEditorWidget &gt; QWidget {
             </property>
             <layout class="QGridLayout" name="gridLayout_20">
              <item row="0" column="0">
-              <layout class="QVBoxLayout" name="properties_layout"/>
+              <layout class="QVBoxLayout" name="properties_layout">
+               <item>
+                <widget class="QLabel" name="label_2">
+                 <property name="text">
+                  <string>Mosaic Autorigger</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item row="1" column="0">
+              <spacer name="verticalSpacer_2">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
              </item>
             </layout>
            </widget>

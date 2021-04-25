@@ -9,13 +9,13 @@
     "import":"import Exec_Limb ",
     "imp.reload":"imp.reload(Exec_Limb)",
     "exec_command" : "Exec_Limb.create_limb_base()",    
-    "build_command":"nothing_yet",
+    "build_command":"Exec_Limb.build_limb_block()",
 
     "attrs": {
-            "parent_string":"new_locator",
-            "mirror_enum":"True:False:Right_Only",
-            "twistAmount_float": "4",
-            "bendy_bool": "True"
+            "SetParent_string":"new_locator",
+            "Mirror_enum":"True:False:Right_Only",
+            "TwistAmount_float": "4",
+            "Ribbon_bool": "True"
             }
 
  }
