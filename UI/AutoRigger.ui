@@ -676,7 +676,7 @@ TextEditor--TextEditorWidget &gt; QWidget {
        <property name="widgetResizable">
         <bool>false</bool>
        </property>
-       <widget class="QWidget" name="scrollAreaWidgetContents_3">
+       <widget class="QWidget" name="side_scroll_2">
         <property name="geometry">
          <rect>
           <x>0</x>
@@ -946,7 +946,7 @@ background: qlineargradient(x1: 0, y1: 0.5, x2: 1, y2: 0.5, stop: 0 #44494b, sto
            </spacer>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton">
+           <widget class="QPushButton" name="build_btn">
             <property name="minimumSize">
              <size>
               <width>50</width>

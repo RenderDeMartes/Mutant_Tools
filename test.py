@@ -3,8 +3,8 @@ import Mosaic_Tools.Utils
 from Mosaic_Tools.Utils import main_mosaic
 import imp
 imp.reload(Mosaic_Tools.Utils.main_mosaic)
-
 mt = main_mosaic.Mosaic()
+
 #mt.create_block()
 #cmds.reorder( 'Mosaic_Block6', r=-1 )
 #mt.move_outliner(input = 'Mosaic_Block3', up =True)
@@ -26,6 +26,7 @@ mt = main_mosaic.Mosaic()
 #mt.build_base(size = 3, name = 'lol')
 #mt.curve(type = 'root')
 
+'''
 import Mosaic_Tools
 from Mosaic_Tools.UI import load_autoRigger
 import imp
@@ -35,3 +36,14 @@ try:AutoRigger.close()
 except:pass
 AutoRigger = load_autoRigger.AutoRigger()
 AutoRigger.show()
+'''
+
+import Mosaic_Tools
+from Mosaic_Tools.UI import load_blockBuilder
+import imp
+imp.reload(load_blockBuilder)
+
+try:BlockBuilder.close()
+except:pass
+BlockBuilder = load_blockBuilder.BlockBuilder()
+BlockBuilder.show()

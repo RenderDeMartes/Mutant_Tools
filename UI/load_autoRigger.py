@@ -78,6 +78,7 @@ Title = 'Mosaic // Autor_Rigger'
 Folder = PATH.replace('\\UI', '') 
 UI_File = 'autoRigger.ui'
 IconsPath =  Folder + '/Icons/'
+
 #-------------------------------------------------------------------
 
 import Mosaic_Tools
@@ -92,9 +93,9 @@ def add_sys_folders_remove_compiled():
     #get all the paths for the blocks in the sys path
     file_path = (str(__file__))
     for folder in os.listdir(Folder + '/Blocks'):
-        #print (folder)
+        print (folder)
         blocks_path = file_path.replace('UI\\load_autoRigger.py','Blocks//{}'.format(folder))
-        #print (blocks_path)
+        print (blocks_path)
         if blocks_path not in sys.path:
             sys.path.append(blocks_path)
 
@@ -145,7 +146,6 @@ class AutoRigger(QtWidgets.QDialog):
         self.create_layout()
         self.create_connections()
 
-        
 
     def init_ui(self):
         
@@ -168,20 +168,13 @@ class AutoRigger(QtWidgets.QDialog):
                 self.create_side_button(pack_name = child, index = num)
 
         self.ui.layout().setContentsMargins(3, 3, 3, 3)          
-
-        '''
-        # this will clear the propieties layout so we can recreate stuff
-        for i in reversed(range(self.ui.properties_layout.count())): 
-            self.ui.properties_layout.itemAt(i).widget().setParent(None)
-
-        self.ui.side_scroll.setWidgetResizable(True)
-        '''
-
-        #self.ui.ButtonName.setIcon(QtGui.QIcon(IconsPath+'Locator.png'))
+        self.ui.progressBar.setValue(0)        
+        self.ui.bar_label.setText('Mosaic')
 
     def create_connections(self):
         
         self.ui.reload_ui.clicked.connect(self.create_layout)
+        self.ui.build_btn.clicked.connect(self.buid_autorigger)
 
     #-------------------------------------------------------------------
     def create_block_buttons(self):
@@ -277,16 +270,18 @@ class AutoRigger(QtWidgets.QDialog):
         
     #-------------------------------------------------------------------
     def delete_side_buttons(self):
+        
         # this will clear the side layout so we can move stuff around
         for i in reversed(range(self.ui.side_layout.count())): 
             self.ui.side_layout.itemAt(i).widget().setParent(None)
 
         self.ui.side_scroll.setWidgetResizable(True)
 
+    #-------------------------------------------------------------------
     def create_side_button(self, pack_name = 'Mosaic_Block', index = 0):
 
         #This will create all the side buttons when the up buttons are clicked
-
+        
         side_hbox = QGroupBox()
         self.ui.side_layout.addWidget(side_hbox)
 
@@ -323,14 +318,16 @@ class AutoRigger(QtWidgets.QDialog):
 
         edit_button.clicked.connect(partial (self.create_properties_layout, pack_name))
 
+    #-------------------------------------------------------------------
     def create_properties_layout(self, block):
         #'Create All Properties Stuff'
-        #self.create_layout()
+        self.create_layout()
+
         # this will clear the propieties layout so we can recreate stuff
         for i in reversed(range(self.ui.properties_layout.count())): 
             self.ui.properties_layout.itemAt(i).widget().setParent(None)
             
-        print (block)
+        #print (block)
         cmds.select(block)
         config = cmds.listConnections(block)[1]
         attrs =  cmds.listAttr(config , ud=True)
@@ -344,11 +341,12 @@ class AutoRigger(QtWidgets.QDialog):
         #get all attrs inf cofig node and get type so we can create UI depending of the type of attr
         for attr in attrs:
 
-            #if the attrs is locked dont create anyting for it
-            if cmds.getAttr('{}.{}'.format(config,attr),settable = True ) == False:
-                continue
+            edit_attr =  '{}.{}'.format(config, attr)
 
-            #main horizontal layout for each attr. they all have a label and the if is to add specific stuff
+            #if the attrs is locked dont create anyting for it
+            if cmds.getAttr(edit_attr,settable = True ) == False:
+                continue
+            #main horizontal layout for each attr. they all have a label and the if is to add specific 
             h_layout = QtWidgets.QHBoxLayout()
             h_layout.setContentsMargins(3, 5, 3, 5)    
             #divisor
@@ -366,40 +364,122 @@ class AutoRigger(QtWidgets.QDialog):
             attr_type = cmds.getAttr('{}.{}'.format(config,attr), type = True)
             if attr_type == 'string':
                 
-                print (attr + ': is string')
+                #print (attr + ': is string')
                 line_edit = QtWidgets.QLineEdit(cmds.getAttr('{}.{}'.format(config, attr)))
+                line_edit.textChanged.connect(partial(self.lineEdit_update_attr,line_edit, edit_attr))
                 h_layout.addWidget(line_edit)
 
                 if 'Set' in attr: #if set in name it will create a greab button
                     set_button = QtWidgets.QPushButton('Set Selection')    
                     set_button.setFixedSize(80,35)
+                    set_button.clicked.connect(partial(self.lineEdit_get_selection,line_edit, edit_attr))
                     h_layout.addWidget(set_button)
 
+
             elif attr_type == 'enum':
-                print (attr + ': is enum')
-                
+                #get all the options in the config combo box and add them to a custom qt cumbo box
+                #print (attr + ': is enum')
+                enums = cmds.attributeQuery(attr, node=config, listEnum = True)[0]
+                enums = str(enums).split(':')
+                #print (enums)
+                enum_box = QtWidgets.QComboBox()
+                enum_box.addItems(enums)
+                enum_box.setCurrentIndex(cmds.getAttr(edit_attr))
+                enum_box.setStyleSheet('background-color: none;')
+                enum_box.currentIndexChanged.connect(partial(self.enum_update_attr,enum_box,edit_attr))
+
+                h_layout.addWidget(enum_box)
+               
                
             elif attr_type == 'long':
-                print (attr + ': is long')
+                #print (attr + ': is long')
+                
+                int_label = QtWidgets.QLabel(str(cmds.getAttr(edit_attr)))
+                int_slider = QtWidgets.QSlider(QtCore.Qt.Horizontal)
+                int_slider.setValue(cmds.getAttr(edit_attr))
+                int_slider.setMaximum(20)
+                int_slider.setStyleSheet('background-color: none;')
+                int_slider.valueChanged.connect(partial(self.slider_update_attr, int_label, int_slider, edit_attr))
 
+                h_layout.addWidget(int_label)
+                h_layout.addWidget(int_slider)
 
             elif attr_type == 'bool':
-                print (attr + ': is bool')
+                #print (attr + ': is bool')
                 checkbox = QtWidgets.QCheckBox(attr)    
                 checkbox.setChecked(cmds.getAttr('{}.{}'.format(config, attr)))
                 checkbox.setStyleSheet('background-color: none;')
                 h_layout.addWidget(checkbox)  
                 label.setParent(None)
+                checkbox.stateChanged.connect(partial(self.checkBox_update_attr, checkbox, edit_attr))
 
+    #-------------------------------------------------------------------
 
     def delete_properties_layout(self):
         # this will clear the side layout so we can move stuff around
         for i in reversed(range(self.ui.properties_layout.count())): 
             self.ui.properties_layout.itemAt(i).widget().setParent(None)
-
         #make UI Scrolable
         self.ui.properties_scroll.setWidgetResizable(True)    
-    
+
+    #-------------------------------------------------------------------
+    def lineEdit_update_attr(self, field, attr,*args):
+        cmds.setAttr(attr, field.text(), type = 'string')
+    def lineEdit_get_selection(self, field, attr,*args):
+        sel = cmds.ls(sl=True)
+        field.setText(str(sel))
+        cmds.setAttr(attr, str(sel), type = 'string')
+
+    def slider_update_attr(self, label, slider,attr, *args):
+        cmds.setAttr(attr, slider.value())
+        label.setText(str(slider.value()))
+
+    def checkBox_update_attr(self, checkBox,attr, *args):
+        cmds.setAttr(attr, checkBox.isChecked())
+
+    def enum_update_attr(self, comboBox, attr, *args):
+        cmds.setAttr(attr, comboBox.currentIndex())
+
+    #-------------------------------------------------------------------
+    def buid_autorigger(self):
+
+        self.ui.bar_label.setText('Starting the Build')
+
+        blocks = cmds.listRelatives('Mosaic_Build', c=True)
+        progress_max = len(blocks)
+        self.ui.progressBar.setMaximum(progress_max)
+        #select each block and run the build command and make progress bar move
+        for num, block in enumerate(blocks):
+            print ('Building: {}'.format(block))
+            self.ui.bar_label.setText('Building: {}'.format(block))
+            self.ui.bar_label.setToolTip('Building: {}'.format(block))
+
+            #building
+            cmds.select(block)
+            config = cmds.listConnections(block)[1]
+            import_command = cmds.getAttr('{}.Import_Command'.format(config))
+            buid_command = cmds.getAttr('{}.Build_Command'.format(config))
+
+            self.ui.bar_label.setText(buid_command)
+            self.ui.bar_label.setToolTip(buid_command)
+            
+            exec(import_command)
+            print ('Import successfully {}'.format(import_command))
+            exec(buid_command)
+            print ('Build successfully {}'.format(buid_command))
+
+            #succes message
+            self.ui.bar_label.setText('Succesfull build: {}'.format(block))
+            self.ui.bar_label.setToolTip('Succesfull build: {}'.format(block))
+            self.ui.progressBar.setValue((num + 1))
+            
+
+        #all succes message
+        self.ui.bar_label.setText('Mosaic Build Complete')
+        self.ui.bar_label.setToolTip('Mosaic Build Complete')
+
+    #-------------------------------------------------------------------
+
     # CLOSE EVENTS _________________________________
     def closeEvent(self, event):
 
@@ -407,7 +487,8 @@ class AutoRigger(QtWidgets.QDialog):
         try:
             cmds.scriptJob(kill=mosaic_sj)
             print ('ScripJob deleted')
-        except:pass
+        except:
+            pass
 
         print ('Mosaic_Tools Autorigger Closed')
 #-------------------------------------------------------------------

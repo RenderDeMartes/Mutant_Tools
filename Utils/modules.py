@@ -79,7 +79,7 @@ class Modules_class(kinematics.Kinematics_class):
 
 #----------------------------------------------------------------------------------------------------------------
 
-	def create_block(self, name = 'Mosaic', icon = 'Limb', attrs = {'attrs':'something'}, build_command = 'print("Test")'):
+	def create_block(self, name = 'Mosaic', icon = 'Limb', attrs = {'attrs':'something'}, build_command = 'print("Test")', import_command = 'print("Test2")'):
 
 		PATH = os.path.dirname(__file__)
 		PATH = PATH.replace('\\Utils', '//Icons//') #change this path depending of the folder
@@ -104,6 +104,8 @@ class Modules_class(kinematics.Kinematics_class):
 		
 		build_command = self.string_attr(input = config, name = 'Build_Command', string = build_command)
 		cmds.setAttr(build_command, lock=True)
+		import_command = self.string_attr(input = config, name = 'Import_Command', string = import_command)
+		cmds.setAttr(import_command, lock=True)
 		for attr in attrs:
 			if 'string' in attr:
 				self.string_attr(input = config, name = attr.split('_')[0], string = attrs[attr])

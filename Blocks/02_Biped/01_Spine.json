@@ -3,7 +3,7 @@
     "Description":"This will create a basic Spine System",
     "Icon":"Spine.png",
 
-    "Enable" :  "False",
+    "Enable" :  "True",
 
     "python_file" : "Exec_Limb.py",
     "import":"import Exec_Limb ",
