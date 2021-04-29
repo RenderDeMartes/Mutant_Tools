@@ -5,9 +5,9 @@
 
     "Enable" :  "True",
 
-    "python_file" : "exec_Limb.py",
-    "import":"import exec_Limb ",
-    "imp.reload":"imp.reload(Exec_Limb)",
+    "python_file" : "exec_limb.py",
+    "import":"import exec_limb ",
+    "imp.reload":"imp.reload(Exec_limb)",
     "exec_command" : "exec_limb.create_limb_block()",    
     "build_command":"exec_limb.build_limb_block()",
 

@@ -12,8 +12,8 @@ mt = main_mosaic.Mosaic()
 
 #---------------------------------------------
 
-TAB_FOLDER = 'TAB'
-PYBLOCK_NAME = 'exec_NAME'
+TAB_FOLDER = '02_Biped'
+PYBLOCK_NAME = 'exec_blockname'
 
 #Read name conventions as nc[''] and setup as seup['']
 PATH = os.path.dirname(__file__)
@@ -31,13 +31,13 @@ SETUP_FILE = (PATH+'/rig_setup.json')
 with open(SETUP_FILE) as setup_file:
 	setup = json.load(setup_file)	
 
-MODULE_FILE = (os.path.dirname(__file__) +'/num_name.json')
+MODULE_FILE = (os.path.dirname(__file__) +'/04_BlockName.json')
 with open(MODULE_FILE) as module_file:
 	module = json.load(module_file)
 
 #---------------------------------------------
 
-def create_NAME_block(name = NAME):
+def create_blockname_block(name = BlockName):
 
     #name checks and block creation
     name = mt.ask_name(text = name)
@@ -45,17 +45,17 @@ def create_NAME_block(name = NAME):
         cmds.warning('Name already exists.')
         return ''
 
-    NAME_block = mt.create_block(name = name, icon = 'ICON_NAME',  attrs = module['attrs'], build_command = module['build_command'], import_command = module['import'])
+    NAME_block = mt.create_block(name = name, icon = 'BlockName',  attrs = module['attrs'], build_command = module['build_command'], import_command = module['import'])
     NAME_config = NAME_block[1]
     NAME_block = NAME_block[0]
 
     print('Base Created Successfully'),
 
-#create_NAME_block()
+#create_blockname_block()
 
 #-------------------------
 
-def build_NAME_block():
+def build_blockname_block():
     print ('Hi :), this is working')
 
-#build_NAME_block()
+#build_blockname_block()

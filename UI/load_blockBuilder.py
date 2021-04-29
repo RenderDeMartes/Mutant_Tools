@@ -50,6 +50,7 @@ import os
 import imp
 import sys
 import json
+import glob
 import pprint
 
 from collections import OrderedDict
@@ -77,6 +78,8 @@ with open(SETUP_FILE) as setup_file:
 
 #QT WIndow!
 PATH = os.path.dirname(__file__)
+OTHERS_PATH = PATH.replace('\\UI', '//Others') #get presets path to read files
+BLOCKS_PATH = PATH.replace('\\UI', '//Blocks') #get Blocks paths to write files
 
 Title = 'Mosaic // Block Builder'
 Folder = PATH.replace('\\UI', '') 
@@ -170,11 +173,11 @@ class BlockBuilder(QtWidgets.QDialog):
 
         block_data['Enable'] =       'True'
 
-        block_data['python_file'] =  'exec_{}.py'.format(name)
-        block_data['import'] =       'import exec_{}.py'.format(name)        
-        block_data['imp.reload'] =   'imp.reload(exec_{})'.format(name)        
-        block_data['exec_command'] = 'Exec_{}.create_{}_block()'.format(name.lower(), name.lower())      
-        block_data['build_command'] ='Exec_{}.build_{}_block()'.format(name.lower(), name.lower()) 
+        block_data['python_file'] =  'exec_{}.py'.format(name.lower())
+        block_data['import'] =       'import exec_{}'.format(name.lower())        
+        block_data['imp.reload'] =   'imp.reload(exec_{})'.format(name.lower())        
+        block_data['exec_command'] = 'exec_{}.create_{}_block()'.format(name.lower(), name.lower())      
+        block_data['build_command'] ='exec_{}.build_{}_block()'.format(name.lower(), name.lower()) 
 
         attrs_data = OrderedDict()
         attrs_data[self.ui.attr_name_1.text()] = self.ui.attr_settings_1.text()
@@ -193,10 +196,44 @@ class BlockBuilder(QtWidgets.QDialog):
 
         block_data['attrs'] = attrs_data
 
-        with open('C://Users//info//OneDrive//Documentos//maya//2022//scripts//Mosaic_Tools//Blocks//02_Biped//test.json', 'w') as fp:
-            json.dump(block_data, fp, indent=4, sort_keys = False)
-
+        #find next number for the json file
+        all_blocks = glob.glob('{}//{}//*json'.format(BLOCKS_PATH, tab))
+        pprint.pprint(all_blocks)
+        
+        last_block = all_blocks[-1]
+        last_num = last_block.split('\\')[-1].split('_')[0]
+        print (last_num)
+        new_num = '0' + str(int(last_num[1]) + 1)
+        
+        
+        #write json file
+        with open('{}//{}//{}_{}.json'.format(BLOCKS_PATH, tab, new_num, name), 'w') as new_config:
+            json.dump(block_data, new_config, indent=4, sort_keys = False)
+        
         pprint.pprint(block_data)
+
+        #open exec python file and change it to fit new one
+        with open(OTHERS_PATH + '//exec_block.py') as exec_block:
+            exec_code = exec_block.read()
+        
+        new_exec_code = exec_code.replace("TAB_FOLDER = 'TAB'", "TAB_FOLDER = '{}'".format(tab))
+        new_exec_code = new_exec_code.replace("PYBLOCK_NAME = 'exec_NAME'", "PYBLOCK_NAME = 'exec_{}'".format(name.lower()))
+        new_exec_code = new_exec_code.replace("def create_NAME_block(name = NAME):", "def create_{}_block(name = {}):".format(name.lower(),name))
+        new_exec_code = new_exec_code.replace("#create_NAME_block()", "#create_{}_block()".format(name.lower()))
+        new_exec_code = new_exec_code.replace("def build_NAME_block():", "def build_{}_block():".format(name.lower()))
+        new_exec_code = new_exec_code.replace("#build_NAME_block()", "#build_{}_block()".format(name.lower()))
+
+        new_exec_code = new_exec_code.replace("/num_name.json", "/{}_{}.json".format(new_num, name))
+        new_exec_code = new_exec_code.replace("icon = 'ICON_NAME'", "icon = '{}'".format(name))
+        new_exec_code = new_exec_code.replace("def create_blockname_block(name = BlockName)", "def create_blockname_block(name = {})".format(name))
+
+        print (new_exec_code)
+
+        #write .py file
+        #write json file
+        with open('{}//{}//exec_{}.py'.format(BLOCKS_PATH, tab, name.lower()), 'w') as new_py:
+                new_py.write(new_exec_code)
+
     #-------------------------------------------------------------------
 
     # CLOSE EVENTS _________________________________

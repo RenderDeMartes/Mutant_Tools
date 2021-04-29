@@ -712,7 +712,7 @@ TextEditor--TextEditorWidget &gt; QWidget {
         <item>
          <widget class="QLineEdit" name="name_line">
           <property name="text">
-           <string>BlockName (Uppercase first)</string>
+           <string>BlockName</string>
           </property>
          </widget>
         </item>
