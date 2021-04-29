@@ -50,6 +50,9 @@ import os
 import imp
 import sys
 import json
+import pprint
+
+from collections import OrderedDict
 
 #-------------------------------------------------------------------
 
@@ -78,7 +81,7 @@ PATH = os.path.dirname(__file__)
 Title = 'Mosaic // Block Builder'
 Folder = PATH.replace('\\UI', '') 
 UI_File = 'blockBuilder.ui'
-IconsPath =  Folder + '/Icons/'
+IconsPath =  Folder + '//Icons//'
 #-------------------------------------------------------------------
 
 import Mosaic_Tools
@@ -110,7 +113,6 @@ class BlockBuilder(QtWidgets.QDialog):
         self.create_layout()
         self.create_connections()
 
-
     def init_ui(self):
         
         UIPath  = Folder + '/UI/'
@@ -128,12 +130,73 @@ class BlockBuilder(QtWidgets.QDialog):
         self.ui.layout().setContentsMargins(3, 3, 3, 3)          
 
     def create_connections(self):
+        
         ''
-        #self.ui.buttonName.clicked.connect(self.create_layout)
+        self.ui.create_button.clicked.connect(self.create_block)
 
     #-------------------------------------------------------------------
+    def create_block(self):
+        self.create_config()
+
+    def create_config(self):
+        
+        #grab the main info
+        name = self.ui.name_line.text()
+        description = self.ui.description_line.text()
+        icon = self.ui.icon_line.text()
+
+        if self.ui.presets_radio.isChecked():
+            tab = '01_Presets'
+        elif self.ui.biped_radio.isChecked():
+            tab = '02_Biped'
+        elif self.ui.facial_radio.isChecked():
+            tab = '03_Facial'
+        elif self.ui.animals_radio.isChecked():
+            tab = '04_Animals'
+        elif self.ui.clothes_radio.isChecked():
+            tab = '05_Clothes'
+        elif self.ui.props_radio.isChecked():
+            tab = '06_Props'
+        else :
+            tab = '07_Other'
 
 
+        #create the config dic with ordered dict so it can mantain the order we desire
+        block_data = OrderedDict()
+
+        block_data['Name'] =         name
+        block_data['Description'] =  description
+        block_data['Icon'] =         icon + '.png'
+
+        block_data['Enable'] =       'True'
+
+        block_data['python_file'] =  'exec_{}.py'.format(name)
+        block_data['import'] =       'import exec_{}.py'.format(name)        
+        block_data['imp.reload'] =   'imp.reload(exec_{})'.format(name)        
+        block_data['exec_command'] = 'Exec_{}.create_{}_block()'.format(name.lower(), name.lower())      
+        block_data['build_command'] ='Exec_{}.build_{}_block()'.format(name.lower(), name.lower()) 
+
+        attrs_data = OrderedDict()
+        attrs_data[self.ui.attr_name_1.text()] = self.ui.attr_settings_1.text()
+        attrs_data[self.ui.attr_name_2.text()] = self.ui.attr_settings_2.text()
+        attrs_data[self.ui.attr_name_3.text()] = self.ui.attr_settings_3.text()
+        attrs_data[self.ui.attr_name_4.text()] = self.ui.attr_settings_4.text()
+        attrs_data[self.ui.attr_name_5.text()] = self.ui.attr_settings_5.text()
+        attrs_data[self.ui.attr_name_6.text()] = self.ui.attr_settings_6.text()
+        attrs_data[self.ui.attr_name_7.text()] = self.ui.attr_settings_7.text()
+        attrs_data[self.ui.attr_name_8.text()] = self.ui.attr_settings_8.text()
+        attrs_data[self.ui.attr_name_9.text()] = self.ui.attr_settings_9.text()
+        attrs_data[self.ui.attr_name_10.text()] = self.ui.attr_settings_10.text()
+       
+        try:attrs_data.pop('') #remove empty keys if the line edit werent used
+        except:pass
+
+        block_data['attrs'] = attrs_data
+
+        with open('C://Users//info//OneDrive//Documentos//maya//2022//scripts//Mosaic_Tools//Blocks//02_Biped//test.json', 'w') as fp:
+            json.dump(block_data, fp, indent=4, sort_keys = False)
+
+        pprint.pprint(block_data)
     #-------------------------------------------------------------------
 
     # CLOSE EVENTS _________________________________

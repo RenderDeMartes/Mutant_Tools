@@ -683,7 +683,7 @@ TextEditor--TextEditorWidget &gt; QWidget {
     </layout>
    </item>
    <item row="0" column="0">
-    <widget class="QFrame" name="">
+    <widget class="QFrame" name="frame">
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_11">
@@ -710,7 +710,11 @@ TextEditor--TextEditorWidget &gt; QWidget {
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="name_line"/>
+         <widget class="QLineEdit" name="name_line">
+          <property name="text">
+           <string>BlockName (Uppercase first)</string>
+          </property>
+         </widget>
         </item>
        </layout>
       </item>
@@ -739,7 +743,11 @@ TextEditor--TextEditorWidget &gt; QWidget {
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="description_line"/>
+         <widget class="QLineEdit" name="description_line">
+          <property name="text">
+           <string>Whis will create a BLOCK that does something</string>
+          </property>
+         </widget>
         </item>
        </layout>
       </item>
@@ -811,28 +819,28 @@ TextEditor--TextEditorWidget &gt; QWidget {
           <number>0</number>
          </property>
          <item row="0" column="3">
-          <widget class="QRadioButton" name="animals_button">
+          <widget class="QRadioButton" name="animals_radio">
            <property name="text">
             <string>Animals</string>
            </property>
           </widget>
          </item>
          <item row="0" column="0">
-          <widget class="QRadioButton" name="presets_button">
+          <widget class="QRadioButton" name="presets_radio">
            <property name="text">
             <string>Presets</string>
            </property>
           </widget>
          </item>
          <item row="0" column="2">
-          <widget class="QRadioButton" name="facial_button">
+          <widget class="QRadioButton" name="facial_radio">
            <property name="text">
             <string>Facial</string>
            </property>
           </widget>
          </item>
          <item row="0" column="1">
-          <widget class="QRadioButton" name="biped_button">
+          <widget class="QRadioButton" name="biped_radio">
            <property name="text">
             <string>Biped</string>
            </property>
@@ -842,21 +850,21 @@ TextEditor--TextEditorWidget &gt; QWidget {
           </widget>
          </item>
          <item row="0" column="4">
-          <widget class="QRadioButton" name="clothes_button">
+          <widget class="QRadioButton" name="clothes_radio">
            <property name="text">
             <string>Clothes</string>
            </property>
           </widget>
          </item>
          <item row="0" column="5">
-          <widget class="QRadioButton" name="props_button">
+          <widget class="QRadioButton" name="props_radio">
            <property name="text">
             <string>Props</string>
            </property>
           </widget>
          </item>
          <item row="0" column="6">
-          <widget class="QRadioButton" name="other">
+          <widget class="QRadioButton" name="other_radio">
            <property name="text">
             <string>Other</string>
            </property>
@@ -1034,5 +1042,38 @@ TextEditor--TextEditorWidget &gt; QWidget {
   </layout>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>name_line</sender>
+   <signal>selectionChanged()</signal>
+   <receiver>name_line</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>258</x>
+     <y>29</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>200</x>
+     <y>21</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>description_line</sender>
+   <signal>selectionChanged()</signal>
+   <receiver>description_line</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>235</x>
+     <y>58</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>155</x>
+     <y>50</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

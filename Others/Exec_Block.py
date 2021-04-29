@@ -12,9 +12,12 @@ mt = main_mosaic.Mosaic()
 
 #---------------------------------------------
 
+TAB_FOLDER = 'TAB_FOLDER'
+PYBLOCK_NAME = 'Exec_NAME'
+
 #Read name conventions as nc[''] and setup as seup['']
 PATH = os.path.dirname(__file__)
-PATH = PATH.replace('\Blocks//02_Biped', '//Config') #change this path depending of the folder
+PATH = PATH.replace('\Blocks//{}', '//Config'.format(TAB_FOLDER)) #change this path depending of the folder
 
 JSON_FILE = (PATH + '/name_conventions.json')
 with open(JSON_FILE) as json_file:
@@ -28,12 +31,13 @@ SETUP_FILE = (PATH+'/rig_setup.json')
 with open(SETUP_FILE) as setup_file:
 	setup = json.load(setup_file)	
 
-MODULE_FILE = (os.path.dirname(__file__) +'/02_Limb.json')
+MODULE_FILE = (os.path.dirname(__file__) +'/{}_config.json'.format(NAME))
 with open(MODULE_FILE) as module_file:
 	module = json.load(module_file)
+
 #---------------------------------------------
 
-def create_limb_block(name = 'Limb'):
+def create_NAME_block(name = NAME):
 
     #name checks and block creation
     name = mt.ask_name(text = name)
@@ -41,31 +45,17 @@ def create_limb_block(name = 'Limb'):
         cmds.warning('Name already exists.')
         return ''
 
-    limb_block = mt.create_block(name = name, icon = 'Limb',  attrs = module['attrs'], build_command = module['build_command'], import_command = module['import'])
-    limb_config = limb_block[1]
-    limb_block = limb_block[0]
+    NAME_block = mt.create_block(name = name, icon = 'ICON_NAME',  attrs = module['attrs'], build_command = module['build_command'], import_command = module['import'])
+    NAME_config = NAME_block[1]
+    NAME_block = NAME_block[0]
 
-    #limb base create
-    cmds.select(cl=True)
-    joint_one = mt.create_joint_guide(name = name)
-    cmds.move(0,0,0)
-    joint_two = mt.create_joint_guide(name = name)
-    cmds.move(10,0,0)    
-    joint_three = mt.create_joint_guide(name = name)
-    cmds.move(20,0,0)
-    cmds.parent(joint_three, joint_two)
-    cmds.parent(joint_two, joint_one)
-
-    cmds.parent(joint_one, limb_block)
-    cmds.select(limb_block)
-
-
-
-    print('Limb Base Created Successfully'),
+    print('Base Created Successfully'),
 
 #create_limb_base()
 
 #-------------------------
 
-def build_limb_block():
-    print ('holi')
+def build_NAME_block():
+    print ('HI :), this is working')
+
+#build_NAME_block
