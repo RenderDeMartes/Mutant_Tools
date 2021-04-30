@@ -225,12 +225,12 @@ class BlockBuilder(QtWidgets.QDialog):
 
         new_exec_code = new_exec_code.replace("/num_name.json", "/{}_{}.json".format(new_num, name))
         new_exec_code = new_exec_code.replace("icon = 'ICON_NAME'", "icon = '{}'".format(name))
-        new_exec_code = new_exec_code.replace("def create_blockname_block(name = BlockName)", "def create_blockname_block(name = {})".format(name))
+        new_exec_code = new_exec_code.replace("def create_blockname_block(name = BlockName)", "def create_blockname_block(name = '{}')".format(name))
 
         print (new_exec_code)
 
         #write .py file
-        #write json file
+       
         with open('{}//{}//exec_{}.py'.format(BLOCKS_PATH, tab, name.lower()), 'w') as new_py:
                 new_py.write(new_exec_code)
 
@@ -254,20 +254,12 @@ if __name__ == "__main__":
 
 #-------------------------------------------------------------------
 
-
 '''
-#create script Job for laoding the UI
-def mosaic_script_job():
-    try:
-        sel = cmds.ls(sl=True)[-1]
-        if str(sel).endswith('_Block'):
-            self.create_layout()
-    except:pass
-mosaic_sj = cmds.scriptJob(event=["SelectionChanged", mosaic_script_job])
-       
+#Notes
 
-#cmds.scriptJob(kill=mosaic_sj)
-#cmds.scriptJob(ka=1)
+
+
+
 
 
 '''
