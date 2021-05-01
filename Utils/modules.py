@@ -106,6 +106,7 @@ class Modules_class(kinematics.Kinematics_class):
 		cmds.setAttr(build_command, lock=True)
 		import_command = self.string_attr(input = config, name = 'Import_Command', string = import_command)
 		cmds.setAttr(import_command, lock=True)
+		
 		for attr in attrs:
 			if 'string' in attr:
 				self.string_attr(input = config, name = attr.split('_')[0], string = attrs[attr])

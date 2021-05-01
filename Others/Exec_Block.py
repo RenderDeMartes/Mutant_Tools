@@ -37,7 +37,7 @@ with open(MODULE_FILE) as module_file:
 
 #---------------------------------------------
 
-def create_NAME_block(name = NAME):
+def create_NAME_block(name = 'NAME'):
 
     #name checks and block creation
     name = mt.ask_name(text = name)
@@ -56,6 +56,12 @@ def create_NAME_block(name = NAME):
 #-------------------------
 
 def build_NAME_block():
+
+    block = cmds.ls(sl=True)
+    config = ''
+
     print ('Hi :), this is working')
+
+
 
 #build_NAME_block()

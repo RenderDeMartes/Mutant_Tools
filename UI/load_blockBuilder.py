@@ -225,7 +225,7 @@ class BlockBuilder(QtWidgets.QDialog):
 
         new_exec_code = new_exec_code.replace("/num_name.json", "/{}_{}.json".format(new_num, name))
         new_exec_code = new_exec_code.replace("icon = 'ICON_NAME'", "icon = '{}'".format(name))
-        new_exec_code = new_exec_code.replace("def create_blockname_block(name = BlockName)", "def create_blockname_block(name = '{}')".format(name))
+        new_exec_code = new_exec_code.replace("def create_blockname_block(name = 'BlockName')", "def create_{}_block(name = '{}')".format(name.lower(), name))
 
         print (new_exec_code)
 
