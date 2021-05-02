@@ -46,8 +46,8 @@ def create_NAME_block(name = 'NAME'):
         return ''
 
     block = mt.create_block(name = name, icon = 'ICON_NAME',  attrs = module['attrs'], build_command = module['build_command'], import_command = module['import'])
-    config = NAME_block[1]
-    block = NAME_block[0]
+    config = block[1]
+    block = block[0]
       
     #cmds.getAttr('{}.AttrName'.format(config)) #get attrs from config
     #cmds.getAttr('{}.AttrName'.format(config), asString = True) #for enums
@@ -65,6 +65,10 @@ def build_NAME_block():
     config = cmds.listConnections(block)[1]
     block = block[0]
     guide = cmds.listRelatives(block, c=True)[0]
+
+    #groups for later cleaning
+    main_ctrl_group = []
+    main_rig_group = []
 
     #cmds.getAttr('{}.AttrName'.format(config))
     #cmds.getAttr('{}.AttrName'.format(config), asString = True)

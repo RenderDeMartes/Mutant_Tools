@@ -1,0 +1,23 @@
+{
+    "Name": "L_Hip",
+    "Description": "This will create a HIP System to connect your legs",
+
+    "Icon": "Hip.png",
+
+    "Enable": "True",
+
+    "python_file": "exec_hip.py",
+    "import": "import exec_hip",
+    "imp.reload": "imp.reload(exec_hip)",
+    "exec_command": "exec_hip.create_hip_block()",
+    "build_command": "exec_hip.build_hip_block()",
+
+    "attrs": {
+        "SetParent_string": "new_locator",
+        "Mirror_enum": "True:False:Right_Only",
+        "Blends_string": "COG_Ctrl,GLobal_Ctrl,Root_Ctrl,Spine_04_Ctrl",
+        "CtrlType_enum": "hexagon:sphere:cube:square:octagon:pringle:feet:hand:circleY:circleX:circleZ:3dArrow:2dArrow:mover:2dArrow:root:cog",
+        "CtrlSize_float": "4",
+        "SetGameParent_string": ""
+    }
+}

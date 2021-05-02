@@ -12,7 +12,7 @@ mt = main_mosaic.Mosaic()
 
 #---------------------------------------------
 
-TAB_FOLDER = '07_Other'
+TAB_FOLDER = '08_Other'
 PYBLOCK_NAME = 'exec_single_fk'
 
 #Read name conventions as nc[''] and setup as seup['']
@@ -93,6 +93,7 @@ def build_single_fk_block():
 
     #create joint and joint steps if True
     if cmds.getAttr('{}.CreateJoint'.format(config)) == True : 
+        cmds.select(cl=True)
         jnt = cmds.joint(n = str(loc_guide).replace(nc['locator'], nc['joint']))
         cmds.delete(cmds.parentConstraint(loc_guide,jnt , mo=False ))
         
@@ -101,7 +102,6 @@ def build_single_fk_block():
         cmds.parentConstraint(ctrl, jnt)
         try:cmds.parent(jnt, cmds.getAttr('{}.SetJointParent'.format(config)))
         except:pass
-
 
     #clean if COG
     if 'COG' in str(ctrl):

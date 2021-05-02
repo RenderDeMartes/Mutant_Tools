@@ -110,7 +110,7 @@ class BlockBuilder(QtWidgets.QDialog):
 		super(BlockBuilder, self).__init__(parent)
 
 		self.setWindowTitle(Title)
-		self.setFixedSize(453,545)
+		self.setFixedSize(453,580)
 
 		self.init_ui()
 		self.create_layout()
@@ -215,7 +215,13 @@ class BlockBuilder(QtWidgets.QDialog):
 		pprint.pprint(block_data)
 
 		#open exec python file and change it to fit new one
-		with open(OTHERS_PATH + '//exec_block.py') as exec_block:
+		
+		if self.ui.simple_block.isChecked():
+			base_python_preset = OTHERS_PATH + '//exec_block.py'
+		else:
+			base_python_preset = OTHERS_PATH + '//exec_block_sides.py'
+
+		with open(base_python_preset) as exec_block:
 			exec_code = exec_block.read()
 		
 		new_exec_code = exec_code.replace("TAB_FOLDER = 'TAB'", "TAB_FOLDER = '{}'".format(tab))

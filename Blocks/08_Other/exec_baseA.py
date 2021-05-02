@@ -14,7 +14,7 @@ mt = main_mosaic.Mosaic()
 
 #Read name conventions as nc[''] and setup as seup['']
 PATH = os.path.dirname(__file__)
-PATH = PATH.replace('\Blocks//07_Other', '//Config') #change this path depending of the folder
+PATH = PATH.replace('\Blocks//08_Other', '//Config') #change this path depending of the folder
 
 JSON_FILE = (PATH + '/name_conventions.json')
 with open(JSON_FILE) as json_file:

@@ -12,8 +12,8 @@ mt = main_mosaic.Mosaic()
 
 #---------------------------------------------
 
-TAB_FOLDER = '02_Biped'
-PYBLOCK_NAME = 'exec_clavicle'
+TAB_FOLDER = 'TAB'
+PYBLOCK_NAME = 'exec_NAME'
 
 #Read name conventions as nc[''] and setup as seup['']
 PATH = os.path.dirname(__file__)
@@ -31,13 +31,13 @@ SETUP_FILE = (PATH+'/rig_setup.json')
 with open(SETUP_FILE) as setup_file:
 	setup = json.load(setup_file)	
 
-MODULE_FILE = (os.path.dirname(__file__) +'/03_Clavicle.json')
+MODULE_FILE = (os.path.dirname(__file__) +'/num_name.json')
 with open(MODULE_FILE) as module_file:
 	module = json.load(module_file)
 
 #---------------------------------------------
 
-def create_clavicle_block(name = 'Clavicle'):
+def create_NAME_block(name = 'NAME'):
 
     #name checks and block creation
     name = mt.ask_name(text = module['Name'])
@@ -45,28 +45,21 @@ def create_clavicle_block(name = 'Clavicle'):
         cmds.warning('Name already exists.')
         return ''
 
-    block = mt.create_block(name =  name, icon = 'Clavicle',  attrs = module['attrs'], build_command = module['build_command'], import_command = module['import'])
+    block = mt.create_block(name = name, icon = 'ICON_NAME',  attrs = module['attrs'], build_command = module['build_command'], import_command = module['import'])
     config = block[1]
     block = block[0]
-
-    cmds.select(cl=True)
-    clav_guide = mt.create_joint_guide(name = name)
-    cmds.move(5,0,0)
-    clav_guideEnd = mt.create_joint_guide(name = name + '_End')
-    cmds.move(15,0,0)
-    cmds.parent(clav_guideEnd, clav_guide)
-    cmds.parent(clav_guide, block)
-    cmds.select(block)
-
-    mt.orient_joint(input = clav_guide)
+      
+    #cmds.getAttr('{}.AttrName'.format(config)) #get attrs from config
+    #cmds.getAttr('{}.AttrName'.format(config), asString = True) #for enums
+    #joint_one = mt.create_joint_guide(name = name) #guide base with shapes
 
     print('{} Created Successfully'.format(name))
 
-#create_clavicle_block()
+#create_NAME_block()
 
 #-------------------------
 
-def build_clavicle_block():
+def build_NAME_block():
 
     block = cmds.ls(sl=True)
     config = cmds.listConnections(block)[1]
@@ -79,9 +72,12 @@ def build_clavicle_block():
     print (new_guide)
     to_build = [new_guide]
 
-    #use this group for later cleaning, just assign them when you create the top on hi
+    #use this group for later cleaning, just assign them when you create the top on hierarchy
     clean_rig_grp = ''
     clean_ctrl_grp = ''
+
+
+    #prep work for right side ------------------------------------------------------
 
     #if mirror is set only to right we need to build on left for mirror behavior then putt it back to righ side
     if cmds.getAttr('{}.Mirror'.format(config), asString = True) == 'Right_Only':
@@ -95,6 +91,7 @@ def build_clavicle_block():
         right_guide = mt.duplicate_change_names(input = new_guide, hi = True, search=nc['left'], replace =nc['right'])[0]
         to_build.append(right_guide)
         print (to_build)
+
 
     #build ------------------------------------------------------
     for side_guide in to_build:
@@ -115,29 +112,23 @@ def build_clavicle_block():
         else:
             color = setup['main_color']       
 
-        #main funcion
-        cmds.select(side_guide)
-        fk_chain = mt.fk_chain(input = '', 
-                    size = cmds.getAttr('{}.CtrlSize'.format(config)), 
-                    color = color, 
-                    curve_type = cmds.getAttr('{}.CtrlType'.format(config), asString = True))
 
-        for_parent = cmds.listRelatives(fk_chain[0], p=True)
-        mt.hide_attr(fk_chain[0], s=True)
-        print (fk_chain)
-            
-        #create bind Joints for the skin
+        #main funcion -------------------------------------------
+        cmds.select(side_guide)
+
+
+        #create bind Joints for the skin ------------------------- 
+        '''
         bind_joint = cmds.duplicate(side_guide, po=True, n = side_guide.replace(nc['joint'], nc['joint_bind']))[0] 
         cmds.parentConstraint(side_guide, bind_joint, mo = False)
         try: cmds.parent(bind_joint, w=True)
         except:pass
         cmds.setAttr('{}.radius'.format(bind_joint), 1.5)
+        '''
 
-        #auto clav group for later when limb is build
-        auto_grp = mt.root_grp(input = fk_chain[0], custom = True, custom_name = '_AutoFK', autoRoot = False, replace_nc = False)[0]
-        
+        #flip right rig  to right side ------------------------- 
+        '''
         #check if the mirror attrs to Only_Right or mirror to True
-           
         if cmds.getAttr('{}.Mirror'.format(config), asString = True) == 'Right_Only':
             miror_ctrl_grp = mt.mirror_group(cmds.listRelatives(auto_grp, p=True)[0], world = True)
             miror_jnt_grp = mt.mirror_group(new_guide, world = True)
@@ -152,27 +143,28 @@ def build_clavicle_block():
                 cmds.parentConstraint(block_parent, miror_ctrl_grp , mo = True) 
                 clean_rig_grp = miror_jnt_grp
                 clean_ctrl_grp = miror_ctrl_grp
-
             else:
                 cmds.parentConstraint(block_parent, for_parent , mo = True) 
                 clean_rig_grp = side_guide
                 clean_ctrl_grp = for_parent        
-        else:
+        
+        else: #only left side
             cmds.parentConstraint(block_parent, for_parent , mo = True) 
-            clean_rig_grp = side_guide
-            clean_ctrl_grp = for_parent
+        '''
 
         #blends
-        blends_grp = mt.root_grp(input = auto_grp, custom = True, custom_name = '_Blends', autoRoot = False, replace_nc = False)[0]
-        blends_grp = cmds.rename(blends_grp , blends_grp.replace('_AutoFK_Grp',''))
+        '''
+        blends_grp = mt.root_grp(input = '', custom = True, custom_name = 'Blends', autoRoot = False, replace_nc = False)[0]
+        blends_grp = blends_grp.replace('_AutoFK','')
         bends = cmds.getAttr('{}.Blends'.format(config).split(':'))
         for blend in bends:
             ''
             #cmds.orientConstraint()
+        '''
 
-        #Clean ----------------------------
-
-        #game parents
+        #Clean -------------------------------------------
+        '''
+        #game parents for bind joints
         game_parent = cmds.getAttr('{}.SetGameParent'.format(config))
         if side_guide.startswith(nc['right']):
             game_parent = game_parent.replace(nc['left'],nc['right'])
@@ -189,17 +181,12 @@ def build_clavicle_block():
 
         #clean rig
         cmds.parent(clean_rig_grp, '{}{}'.format(setup['rig_groups']['misc'], nc['group']))
+
+        '''  
         
-        #clean the attrs in the blends and auto grps
-        cmds.rotate(0,0,0, blends_grp)
-        cmds.scale(1,1,1, blends_grp)
-        cmds.rotate(0,0,0, auto_grp)
-        cmds.scale(1,1,1, auto_grp)
-        
+
+    # build complete ----------------------------------------------------    
     print ('Build {} Success'.format(block))
 
-    
 
-
-
-#build_clavicle_block()
+#build_NAME_block()

@@ -137,7 +137,7 @@ class AutoRigger(QtWidgets.QDialog):
 
 
         self.setWindowTitle(Title)
-        #self.setFixedSize(680,475)
+        self.setFixedSize(505,552)
 
         #load blocks folders to sys and remove all the compiled info in BLOCKS and UI Folder
         add_sys_folders_remove_compiled()
@@ -157,6 +157,7 @@ class AutoRigger(QtWidgets.QDialog):
         self.ui = loader.load(f, parentWidget=self)
 
         f.close()
+        
     #-------------------------------------------------------------------
 
     def create_layout(self):
@@ -195,9 +196,11 @@ class AutoRigger(QtWidgets.QDialog):
             self.ui.clothes_layout.itemAt(i).widget().setParent(None)
         for i in reversed(range(self.ui.props_layout.count())): 
             self.ui.props_layout.itemAt(i).widget().setParent(None)
+        for i in reversed(range(self.ui.games_layout.count())): 
+            self.ui.games_layout.itemAt(i).widget().setParent(None)
         for i in reversed(range(self.ui.other_layout.count())): 
             self.ui.other_layout.itemAt(i).widget().setParent(None)
-   
+      
         #'create all the buttons in the tabs blocks' 
         #print ('Relaod UI')
         #print (Folder)
@@ -219,8 +222,14 @@ class AutoRigger(QtWidgets.QDialog):
                 #read the json file with block information
                 real_path =  Folder + '/Blocks/' + block_folder + '/' + block_file
                 #print (real_path)
+
                 with open(real_path, "r") as block_info:
-                    block = json.load(block_info)               
+                    block = json.load(block_info)   
+                    #reaload with json files info if dev mode is on, off loads faster   
+                    if setup['dev_mode'] == 'On':        
+                        exec(block['import'])
+                        exec(block['imp.reload'])
+                        print ('reloading {}'.format(block_file))
 
                 #create button
                 block_name = str(block_file).split('_')[1].replace('.json', '')
@@ -252,6 +261,8 @@ class AutoRigger(QtWidgets.QDialog):
                     self.ui.clothes_layout.addWidget(button) 
                 elif block_folder == '06_Props':
                     self.ui.props_layout.addWidget(button) 
+                elif block_folder == '07_Games':
+                    self.ui.games_layout.addWidget(button) 
                 else:
                     self.ui.other_layout.addWidget(button)  
 
@@ -492,6 +503,8 @@ class AutoRigger(QtWidgets.QDialog):
 
         cmds.undoInfo(closeChunk=True)
     #-------------------------------------------------------------------
+
+
 
     # CLOSE EVENTS _________________________________
     def closeEvent(self, event):

@@ -954,7 +954,7 @@ class Kinematics_class(tools.Tools_class):
 		if input == '':
 			input = cmds.ls(sl=True)[0]
 
-		mirror_grp =cmds.group(em=True, n = '{}Mirror{}'.format(input, nc['group']))
+		mirror_grp =cmds.group(em=True, n = '{}_Mirror{}'.format(input,nc['group']))
 		cmds.parent(input, mirror_grp)
 		
 		if world == True:
