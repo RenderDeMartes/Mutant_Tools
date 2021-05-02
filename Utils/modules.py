@@ -157,7 +157,7 @@ class Modules_class(kinematics.Kinematics_class):
 	def create_joint_guide(self, name = 'Guide'):
 		
 		cmds.select(cl=True)
-		joint = cmds.joint(n = name + nc['joint'])
+		joint = cmds.joint(n = name + nc['guide'])
 		arrow = self.curve(type = '2dArrow')
 		sphere = self.curve(type = 'sphere')
 
@@ -194,6 +194,21 @@ class Modules_class(kinematics.Kinematics_class):
 		cmds.select(joint)
 
 		return joint
+#----------------------------------------------------------------------------------------------------------------
+
+	def orient_joint(self, input = ''):
+	
+		if input =='':
+			input = cmds.ls(sl=True)[0]
+
+		cmds.makeIdentity(input, apply=True, t=True, r=True, s=True ,n=False, pn=1)
+
+		if setup['twist_axis'] == 'Y':
+			cmds.joint(input, e = True, oj = 'yxz' , ch=True, secondaryAxisOrient = '{}'.format(setup['secondaryAxisOrient']))
+		elif setup['twist_axis'] == 'X':
+			cmds.joint(input, e = True, oj = 'xyz' , ch=True, secondaryAxisOrient = '{}'.format(setup['secondaryAxisOrient']))
+		else:
+			cmds.joint(input, e = True, oj = 'zyx' , ch=True, secondaryAxisOrient = '{}'.format(setup['secondaryAxisOrient']))
 
 #----------------------------------------------------------------------------------------------------------------
 
@@ -214,7 +229,25 @@ class Modules_class(kinematics.Kinematics_class):
 
 #----------------------------------------------------------------------------------------------------------------
 
-	def build_base(self, name='Asset_Name', size = 1):
+	def duplciate_and_remove_guides(self, input = ''):
+		'this will ducplicate the top chain joint and change the _Guide for _Jnt and rename all the chils plus parent to the world'
+
+		if input == '':
+			input = cmds.ls(sl=True)[0]
+
+		#duplicate the joints
+		clean_joints = cmds.duplicate(input , to = True, n = input.replace(nc['guide'], nc['joint']), rc=True)
+		for jnt in clean_joints:
+			if jnt.endswith('1'):
+				cmds.rename(jnt, jnt.replace('1', '')) 
+
+		cmds.parent(clean_joints[0], w=True)
+
+		return clean_joints[0]
+
+#----------------------------------------------------------------------------------------------------------------
+
+	def build_baseA(self, name='Asset_Name', size = 1):
 		'''
 		This will crate the base structure for any kinf of rig with the same base sctructure
 		'''
@@ -263,8 +296,10 @@ class Modules_class(kinematics.Kinematics_class):
 		cmds.parent(main_ctrl_grp, gimbal_ctrl)
 
 		#clean
-		self.hide_attr(input =mover_ctrl , s = True)
-		self.hide_attr(input =gimbal_ctrl , s = True)
+		self.hide_attr(input = mover_ctrl , s = True)
+		self.hide_attr(input = gimbal_ctrl , s = True)
+
+		return(global_ctrl, mover_ctrl, gimbal_ctrl)
 
 #----------------------------------------------------------------------------------------------------------------
 

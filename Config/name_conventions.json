@@ -1,5 +1,6 @@
 {
    "module":"_Block",
+   "guide": "_Guide",
 
    "left":		"L_",
    "right":		"R_",
@@ -12,6 +13,7 @@
    "joint_end":	"_JntEnd",
    "joint_bind": "_Bnd",
    "joint_ctrl": "_JntCtrl",
+   
    "ik": "_Ik_Jnt",
    "fk": "_Fk_Jnt",
 

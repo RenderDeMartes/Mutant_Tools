@@ -40,16 +40,20 @@ with open(MODULE_FILE) as module_file:
 def create_NAME_block(name = 'NAME'):
 
     #name checks and block creation
-    name = mt.ask_name(text = name)
+    name = mt.ask_name(text = module['Name'])
     if cmds.objExists('{}{}'.format(name,nc['module'])):
         cmds.warning('Name already exists.')
         return ''
 
-    NAME_block = mt.create_block(name = name, icon = 'ICON_NAME',  attrs = module['attrs'], build_command = module['build_command'], import_command = module['import'])
-    NAME_config = NAME_block[1]
-    NAME_block = NAME_block[0]
+    block = mt.create_block(name = name, icon = 'ICON_NAME',  attrs = module['attrs'], build_command = module['build_command'], import_command = module['import'])
+    config = NAME_block[1]
+    block = NAME_block[0]
+      
+    #cmds.getAttr('{}.AttrName'.format(config)) #get attrs from config
+    #cmds.getAttr('{}.AttrName'.format(config), asString = True) #for enums
+    #joint_one = mt.create_joint_guide(name = name) #guide base with shapes
 
-    print('Base Created Successfully'),
+    print('{} Created Successfully'.format(name))
 
 #create_NAME_block()
 
@@ -58,9 +62,26 @@ def create_NAME_block(name = 'NAME'):
 def build_NAME_block():
 
     block = cmds.ls(sl=True)
-    config = ''
+    config = cmds.listConnections(block)[1]
+    block = block[0]
+    guide = cmds.listRelatives(block, c=True)[0]
 
-    print ('Hi :), this is working')
+    #cmds.getAttr('{}.AttrName'.format(config))
+    #cmds.getAttr('{}.AttrName'.format(config), asString = True)
+
+    #orient the joints
+    mt.orient_joint(input = guide)
+    new_guide = mt.duplciate_and_remove_guides(guide)
+    print (new_guide)
+    to_build = [new_guide]
+
+    #use this locator in case parent is set to new locator
+    if cmds.getAttr('{}.SetParent'.format(config)) == 'new_locator':
+        block_parent = cmds.spaceLocator( n = '{}'.format(str(block).replace(nc['module'],nc['locator'])))
+    else:
+        block_parent = cmds.getAttr('{}.SetParent'.format(config))
+
+    print ('Build {} Success'.format(block))
 
 
 

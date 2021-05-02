@@ -164,8 +164,11 @@ class AutoRigger(QtWidgets.QDialog):
         self.delete_side_buttons()
         
         if cmds.objExists('Mosaic_Build'):
-            for num, child in enumerate(cmds.listRelatives('Mosaic_Build', c=True)):
-                self.create_side_button(pack_name = child, index = num)
+            try:
+                for num, child in enumerate(cmds.listRelatives('Mosaic_Build', c=True)):
+                    self.create_side_button(pack_name = child, index = num)
+            except:
+                print ('Mosaic_Build Grp is empty')
 
         self.ui.layout().setContentsMargins(3, 3, 3, 3)          
         self.ui.progressBar.setValue(0)        
@@ -279,7 +282,7 @@ class AutoRigger(QtWidgets.QDialog):
 
     #-------------------------------------------------------------------
     def create_side_button(self, pack_name = 'Mosaic_Block', index = 0):
-
+      
         #This will create all the side buttons when the up buttons are clicked
         
         side_hbox = QGroupBox()
@@ -427,8 +430,13 @@ class AutoRigger(QtWidgets.QDialog):
         cmds.setAttr(attr, field.text(), type = 'string')
     def lineEdit_get_selection(self, field, attr,*args):
         sel = cmds.ls(sl=True)
-        field.setText(str(sel))
-        cmds.setAttr(attr, str(sel), type = 'string')
+        #remove ugly lists keys
+        nice_selection = str(sel).replace("[", "")
+        nice_selection = str(nice_selection).replace("]", "")
+        nice_selection = str(nice_selection).replace("'", "")
+        
+        field.setText(nice_selection)
+        cmds.setAttr(attr, nice_selection, type = 'string')
 
     def slider_update_attr(self, label, slider,attr, *args):
         cmds.setAttr(attr, slider.value())
@@ -444,6 +452,8 @@ class AutoRigger(QtWidgets.QDialog):
     def buid_autorigger(self):
 
         self.ui.bar_label.setText('Starting the Build')
+
+        cmds.undoInfo(openChunk=True)
 
         blocks = cmds.listRelatives('Mosaic_Build', c=True)
         progress_max = len(blocks)
@@ -478,6 +488,9 @@ class AutoRigger(QtWidgets.QDialog):
         self.ui.bar_label.setText('Mosaic Build Complete')
         self.ui.bar_label.setToolTip('Mosaic Build Complete')
 
+        cmds.setAttr('Mosaic_Build.v', 0)
+
+        cmds.undoInfo(closeChunk=True)
     #-------------------------------------------------------------------
 
     # CLOSE EVENTS _________________________________

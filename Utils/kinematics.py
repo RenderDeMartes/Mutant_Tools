@@ -80,7 +80,7 @@ with open(SETUP_FILE) as setup_file:
 
 class Kinematics_class(tools.Tools_class):
 	
-	def fk_chain(self, size = 1, color = setup['main_color'], curve_type = setup['fk_ctrl'], scale = True, twist_axis = setup['twist_axis']) :
+	def fk_chain(self, input = '', size = 1, color = setup['main_color'], curve_type = setup['fk_ctrl'], scale = True, twist_axis = setup['twist_axis']) :
 		'''
 		create a FK Chain with selected joints, settings can be change in the setup json file
 		'''
@@ -949,4 +949,23 @@ class Kinematics_class(tools.Tools_class):
 
 	#----------------------------------------------------------------------------------------------------------------
 
-	
+	def mirror_group(self, input = '', world = True):
+
+		if input == '':
+			input = cmds.ls(sl=True)[0]
+
+		mirror_grp =cmds.group(em=True, n = '{}Mirror{}'.format(input, nc['group']))
+		cmds.parent(input, mirror_grp)
+		
+		if world == True:
+			cmds.xform(mirror_grp, rp= (0,0,0), sp = (0,0,0))
+
+		cmds.setAttr('{}.scaleX'.format(mirror_grp), -1)
+		cmds.setAttr('{}.scaleY'.format(mirror_grp), -1)
+		cmds.setAttr('{}.scaleZ'.format(mirror_grp), -1)
+
+		cmds.setAttr('{}.rotateX'.format(mirror_grp), 180)
+
+		return mirror_grp
+
+#----------------------------------------------------------------------------------------------------------------

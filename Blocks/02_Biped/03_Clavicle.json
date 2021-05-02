@@ -1,0 +1,28 @@
+{
+    "Name": "L_Clavicle",
+    "Description": "This will create a Clavicle system.",
+
+    "Icon": "Clavicle.png",
+
+    "Enable": "True",
+
+    "python_file": "exec_clavicle.py",
+    "import": "import exec_clavicle",
+    "imp.reload": "imp.reload(exec_clavicle)",
+    "exec_command": "exec_clavicle.create_clavicle_block()",
+    "build_command": "exec_clavicle.build_clavicle_block()",
+
+    "attrs": {
+
+    
+        "SetParent_string": "new_locator",
+        "Mirror_enum": "True:False:Right_Only",
+        "Blends_string": "COG_Ctrl,GLobal_Ctrl,Root_Ctrl,Spine_04_Ctrl",
+
+        "CtrlType_enum": "circleY:sphere:cube:square:octagon:hexagon:pringle:feet:hand:circleX:circleZ:3dArrow:2dArrow:mover:2dArrow:root:cog",
+        "CtrlSize_float": "4",
+
+        "SetGameParent_string" : ""
+
+    }
+}

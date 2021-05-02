@@ -892,7 +892,7 @@ TextEditor--TextEditorWidget &gt; QWidget {
         <item>
          <widget class="QLineEdit" name="attr_name_1">
           <property name="text">
-           <string>setParent_string</string>
+           <string>SetParent_string</string>
           </property>
          </widget>
         </item>
@@ -928,7 +928,7 @@ TextEditor--TextEditorWidget &gt; QWidget {
         <item>
          <widget class="QLineEdit" name="attr_name_3">
           <property name="text">
-           <string>Twist_amount</string>
+           <string>TwistAmount_float</string>
           </property>
          </widget>
         </item>
@@ -971,7 +971,7 @@ TextEditor--TextEditorWidget &gt; QWidget {
         <item>
          <widget class="QLineEdit" name="attr_settings_5">
           <property name="text">
-           <string>COG_Ctrl,GLobal,Ctrl,Root_Ctrl</string>
+           <string>COG_Ctrl,GLobal_Ctrl,Root_Ctrl</string>
           </property>
          </widget>
         </item>
@@ -980,7 +980,11 @@ TextEditor--TextEditorWidget &gt; QWidget {
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_6">
         <item>
-         <widget class="QLineEdit" name="attr_name_6"/>
+         <widget class="QLineEdit" name="attr_name_6">
+          <property name="text">
+           <string>SetGameParent_string</string>
+          </property>
+         </widget>
         </item>
         <item>
          <widget class="QLineEdit" name="attr_settings_6"/>

@@ -101,7 +101,7 @@ class Tools_class:
 	#create a group over the 
 	def	root_grp(self, input = '', custom = False, custom_name = 'customName', autoRoot = False, replace_nc = False):
 		'''
-		create offsete groups for desire transforms
+		create offset/root groups for desire transforms
 		'''
 
 		#Check input

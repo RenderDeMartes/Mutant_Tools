@@ -42,7 +42,7 @@ from PySide2.QtWidgets import *
 
 import maya.OpenMayaUI as omui
 from functools import partial
-#import pymel.core as pm
+from maya import OpenMaya
 import maya.cmds as cmds
 import maya.mel as mel
 
@@ -99,158 +99,159 @@ mt = main_mosaic.Mosaic()
 
 
 def maya_main_window(dockable=True):
-    
-    main_window_ptr = omui.MQtUtil.mainWindow()
-    return wrapInstance(int(main_window_ptr), QtWidgets.QWidget)
+	
+	main_window_ptr = omui.MQtUtil.mainWindow()
+	return wrapInstance(int(main_window_ptr), QtWidgets.QWidget)
 
 
 class BlockBuilder(QtWidgets.QDialog):
-    
-    def __init__(self, parent=maya_main_window()):
-        super(BlockBuilder, self).__init__(parent)
+	
+	def __init__(self, parent=maya_main_window()):
+		super(BlockBuilder, self).__init__(parent)
 
-        self.setWindowTitle(Title)
-        self.setFixedSize(453,545)
+		self.setWindowTitle(Title)
+		self.setFixedSize(453,545)
 
-        self.init_ui()
-        self.create_layout()
-        self.create_connections()
+		self.init_ui()
+		self.create_layout()
+		self.create_connections()
 
-    def init_ui(self):
-        
-        UIPath  = Folder + '/UI/'
-        f = QtCore.QFile(UIPath + UI_File)
-        f.open(QtCore.QFile.ReadOnly)
+	def init_ui(self):
+		
+		UIPath  = Folder + '/UI/'
+		f = QtCore.QFile(UIPath + UI_File)
+		f.open(QtCore.QFile.ReadOnly)
 
-        loader = QtUiTools.QUiLoader()
-        self.ui = loader.load(f, parentWidget=self)
+		loader = QtUiTools.QUiLoader()
+		self.ui = loader.load(f, parentWidget=self)
 
-        f.close()
-    #-------------------------------------------------------------------
+		f.close()
+	#-------------------------------------------------------------------
 
-    def create_layout(self):
+	def create_layout(self):
 
-        self.ui.layout().setContentsMargins(3, 3, 3, 3)          
+		self.ui.layout().setContentsMargins(3, 3, 3, 3)          
 
-    def create_connections(self):
-        
-        ''
-        self.ui.create_button.clicked.connect(self.create_block)
+	def create_connections(self):
+		
+		''
+		self.ui.create_button.clicked.connect(self.create_block)
 
-    #-------------------------------------------------------------------
-    def create_block(self):
-        self.create_config()
+	#-------------------------------------------------------------------
+	def create_block(self):
+		self.create_config()
+		OpenMaya.MGlobal.displayInfo('Block Created Succesfully')
+		self.close()
 
-    def create_config(self):
-        
-        #grab the main info
-        name = self.ui.name_line.text()
-        description = self.ui.description_line.text()
-        icon = self.ui.icon_line.text()
+	def create_config(self):
+		
+		#grab the main info
+		name = self.ui.name_line.text()
+		description = self.ui.description_line.text()
+		icon = self.ui.icon_line.text()
 
-        if self.ui.presets_radio.isChecked():
-            tab = '01_Presets'
-        elif self.ui.biped_radio.isChecked():
-            tab = '02_Biped'
-        elif self.ui.facial_radio.isChecked():
-            tab = '03_Facial'
-        elif self.ui.animals_radio.isChecked():
-            tab = '04_Animals'
-        elif self.ui.clothes_radio.isChecked():
-            tab = '05_Clothes'
-        elif self.ui.props_radio.isChecked():
-            tab = '06_Props'
-        else :
-            tab = '07_Other'
+		if self.ui.presets_radio.isChecked():
+			tab = '01_Presets'
+		elif self.ui.biped_radio.isChecked():
+			tab = '02_Biped'
+		elif self.ui.facial_radio.isChecked():
+			tab = '03_Facial'
+		elif self.ui.animals_radio.isChecked():
+			tab = '04_Animals'
+		elif self.ui.clothes_radio.isChecked():
+			tab = '05_Clothes'
+		elif self.ui.props_radio.isChecked():
+			tab = '06_Props'
+		else :
+			tab = '07_Other'
 
 
-        #create the config dic with ordered dict so it can mantain the order we desire
-        block_data = OrderedDict()
+		#create the config dic with ordered dict so it can mantain the order we desire
+		block_data = OrderedDict()
 
-        block_data['Name'] =         name
-        block_data['Description'] =  description
-        block_data['Icon'] =         icon + '.png'
+		block_data['Name'] =         name
+		block_data['Description'] =  description
+		block_data['Icon'] =         icon + '.png'
 
-        block_data['Enable'] =       'True'
+		block_data['Enable'] =       'True'
 
-        block_data['python_file'] =  'exec_{}.py'.format(name.lower())
-        block_data['import'] =       'import exec_{}'.format(name.lower())        
-        block_data['imp.reload'] =   'imp.reload(exec_{})'.format(name.lower())        
-        block_data['exec_command'] = 'exec_{}.create_{}_block()'.format(name.lower(), name.lower())      
-        block_data['build_command'] ='exec_{}.build_{}_block()'.format(name.lower(), name.lower()) 
+		block_data['python_file'] =  'exec_{}.py'.format(name.lower())
+		block_data['import'] =       'import exec_{}'.format(name.lower())        
+		block_data['imp.reload'] =   'imp.reload(exec_{})'.format(name.lower())        
+		block_data['exec_command'] = 'exec_{}.create_{}_block()'.format(name.lower(), name.lower())      
+		block_data['build_command'] ='exec_{}.build_{}_block()'.format(name.lower(), name.lower()) 
 
-        attrs_data = OrderedDict()
-        attrs_data[self.ui.attr_name_1.text()] = self.ui.attr_settings_1.text()
-        attrs_data[self.ui.attr_name_2.text()] = self.ui.attr_settings_2.text()
-        attrs_data[self.ui.attr_name_3.text()] = self.ui.attr_settings_3.text()
-        attrs_data[self.ui.attr_name_4.text()] = self.ui.attr_settings_4.text()
-        attrs_data[self.ui.attr_name_5.text()] = self.ui.attr_settings_5.text()
-        attrs_data[self.ui.attr_name_6.text()] = self.ui.attr_settings_6.text()
-        attrs_data[self.ui.attr_name_7.text()] = self.ui.attr_settings_7.text()
-        attrs_data[self.ui.attr_name_8.text()] = self.ui.attr_settings_8.text()
-        attrs_data[self.ui.attr_name_9.text()] = self.ui.attr_settings_9.text()
-        attrs_data[self.ui.attr_name_10.text()] = self.ui.attr_settings_10.text()
-       
-        try:attrs_data.pop('') #remove empty keys if the line edit werent used
-        except:pass
+		attrs_data = OrderedDict()
+		attrs_data[self.ui.attr_name_1.text()] = self.ui.attr_settings_1.text()
+		attrs_data[self.ui.attr_name_2.text()] = self.ui.attr_settings_2.text()
+		attrs_data[self.ui.attr_name_3.text()] = self.ui.attr_settings_3.text()
+		attrs_data[self.ui.attr_name_4.text()] = self.ui.attr_settings_4.text()
+		attrs_data[self.ui.attr_name_5.text()] = self.ui.attr_settings_5.text()
+		attrs_data[self.ui.attr_name_6.text()] = self.ui.attr_settings_6.text()
+		attrs_data[self.ui.attr_name_7.text()] = self.ui.attr_settings_7.text()
+		attrs_data[self.ui.attr_name_8.text()] = self.ui.attr_settings_8.text()
+		attrs_data[self.ui.attr_name_9.text()] = self.ui.attr_settings_9.text()
+		attrs_data[self.ui.attr_name_10.text()] = self.ui.attr_settings_10.text()
+	   
+		try:attrs_data.pop('') #remove empty keys if the line edit werent used
+		except:pass
 
-        block_data['attrs'] = attrs_data
+		block_data['attrs'] = attrs_data
 
-        #find next number for the json file
-        all_blocks = glob.glob('{}//{}//*json'.format(BLOCKS_PATH, tab))
-        pprint.pprint(all_blocks)
-        
-        last_block = all_blocks[-1]
-        last_num = last_block.split('\\')[-1].split('_')[0]
-        print (last_num)
-        new_num = '0' + str(int(last_num[1]) + 1)
-        
-        
-        #write json file
-        with open('{}//{}//{}_{}.json'.format(BLOCKS_PATH, tab, new_num, name), 'w') as new_config:
-            json.dump(block_data, new_config, indent=4, sort_keys = False)
-        
-        pprint.pprint(block_data)
+		#find next number for the json file
+		all_blocks = glob.glob('{}//{}//*json'.format(BLOCKS_PATH, tab))
+		pprint.pprint(all_blocks)
+		
+		last_block = all_blocks[-1]
+		last_num = last_block.split('\\')[-1].split('_')[0]
+		print (last_num)
+		new_num = '0' + str(int(last_num[1]) + 1)
+		
+		
+		#write json file
+		with open('{}//{}//{}_{}.json'.format(BLOCKS_PATH, tab, new_num, name), 'w') as new_config:
+			json.dump(block_data, new_config, indent=4, sort_keys = False)
+		
+		pprint.pprint(block_data)
 
-        #open exec python file and change it to fit new one
-        with open(OTHERS_PATH + '//exec_block.py') as exec_block:
-            exec_code = exec_block.read()
-        
-        new_exec_code = exec_code.replace("TAB_FOLDER = 'TAB'", "TAB_FOLDER = '{}'".format(tab))
-        new_exec_code = new_exec_code.replace("PYBLOCK_NAME = 'exec_NAME'", "PYBLOCK_NAME = 'exec_{}'".format(name.lower()))
-        new_exec_code = new_exec_code.replace("def create_NAME_block(name = NAME):", "def create_{}_block(name = {}):".format(name.lower(),name))
-        new_exec_code = new_exec_code.replace("#create_NAME_block()", "#create_{}_block()".format(name.lower()))
-        new_exec_code = new_exec_code.replace("def build_NAME_block():", "def build_{}_block():".format(name.lower()))
-        new_exec_code = new_exec_code.replace("#build_NAME_block()", "#build_{}_block()".format(name.lower()))
+		#open exec python file and change it to fit new one
+		with open(OTHERS_PATH + '//exec_block.py') as exec_block:
+			exec_code = exec_block.read()
+		
+		new_exec_code = exec_code.replace("TAB_FOLDER = 'TAB'", "TAB_FOLDER = '{}'".format(tab))
+		new_exec_code = new_exec_code.replace("PYBLOCK_NAME = 'exec_NAME'", "PYBLOCK_NAME = 'exec_{}'".format(name.lower()))
+		new_exec_code = new_exec_code.replace("create_NAME_block(name = 'NAME')", "create_{}_block(name = '{}')".format(name.lower(),name))
+		new_exec_code = new_exec_code.replace("#create_NAME_block()", "#create_{}_block()".format(name.lower()))
+		new_exec_code = new_exec_code.replace("def build_NAME_block():", "def build_{}_block():".format(name.lower()))
+		new_exec_code = new_exec_code.replace("#build_NAME_block()", "#build_{}_block()".format(name.lower()))
 
-        new_exec_code = new_exec_code.replace("/num_name.json", "/{}_{}.json".format(new_num, name))
-        new_exec_code = new_exec_code.replace("icon = 'ICON_NAME'", "icon = '{}'".format(name))
-        new_exec_code = new_exec_code.replace("def create_blockname_block(name = 'BlockName')", "def create_{}_block(name = '{}')".format(name.lower(), name))
+		new_exec_code = new_exec_code.replace("/num_name.json", "/{}_{}.json".format(new_num, name))
+		new_exec_code = new_exec_code.replace("icon = 'ICON_NAME'", "icon = '{}'".format(icon))
 
-        print (new_exec_code)
+		print (new_exec_code)
 
-        #write .py file
-       
-        with open('{}//{}//exec_{}.py'.format(BLOCKS_PATH, tab, name.lower()), 'w') as new_py:
-                new_py.write(new_exec_code)
+		#write .py file
+	   
+		with open('{}//{}//exec_{}.py'.format(BLOCKS_PATH, tab, name.lower()), 'w') as new_py:
+				new_py.write(new_exec_code)
 
-    #-------------------------------------------------------------------
+	#-------------------------------------------------------------------
 
-    # CLOSE EVENTS _________________________________
-    def closeEvent(self, event):
-        ''
+	# CLOSE EVENTS _________________________________
+	def closeEvent(self, event):
+		''
 
 #-------------------------------------------------------------------
 
 if __name__ == "__main__":
 
-    try:
-        BlockBuilder_ui.close() # pylint: disable=E0601
-        BlockBuilder_ui.deleteLater()
-    except:
-        pass
-    BlockBuilder_ui = BlockBuilder()
-    BlockBuilder_ui.show()
+	try:
+		BlockBuilder_ui.close() # pylint: disable=E0601
+		BlockBuilder_ui.deleteLater()
+	except:
+		pass
+	BlockBuilder_ui = BlockBuilder()
+	BlockBuilder_ui.show()
 
 #-------------------------------------------------------------------
 

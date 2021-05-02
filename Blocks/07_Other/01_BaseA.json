@@ -6,15 +6,17 @@
     "Enable" :  "True",
 
     
-    "python_file" : "Exec_BaseA.py",
-    "import":"import Exec_BaseA ",
-    "imp.reload":"imp.reload(Exec_BaseA)",
-    "exec_command" : "Exec_BaseA.create_BaseA()",    
-    "build_command":"nothing yet",
+    "python_file" : "exec_baseA.py",
+    "import":"import exec_baseA ",
+    "imp.reload":"imp.reload(exec_baseA)",
+    "exec_command" : "exec_baseA.create_BaseA()",    
+    "build_command":"exec_baseA.build_baseA_block()",
  
     "attrs": {
-        "name":"new_name"
-            }
+        "Name_string":"Mosaic_Tools",
+        "CtrlScale_float":"4",
+        "CtrlColor_enum": "lightBlue:blue:white:purple:green:red:yellow:grey"
+    }
 }
 
  

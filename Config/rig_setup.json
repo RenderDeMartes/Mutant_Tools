@@ -21,7 +21,7 @@
    "main_ctrl_grp":"Rig_Ctrl",
 
    "right_color" : "red",
-   "left_color" : "relightd",
+   "left_color" : "blue",
    "center_color" : "yellow",
    "main_color" : "lightBlue",
    "gimbal_color" : "grey",
@@ -38,11 +38,8 @@
    "line_width" : "2",
    
    "axis_helper":"True",
-   "twist_axis" : "X",
-   "twist_axis_head" : "X",
-   "twist_axis_spine" : "X",
-   "twist_axis_arms" : "X",
-   "twist_axis_legs" : "X",
+   "twist_axis" : "Y",
+   "secondaryAxisOrient" : "zup", 
 
    "stretch_default":"1",
    "volume_preservation":"0.5"
