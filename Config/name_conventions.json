@@ -40,5 +40,7 @@
    "condition":"_Condition",
    "blend":"_Blend",
 
-   "connected":"_Connected"
+   "connected":"_Connected",
+
+   "skin_cluster": "_Skin"
 }

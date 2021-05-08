@@ -48,7 +48,7 @@ import json
 
 from  maya import mel
 from maya import cmds
-import pymel.core as pm
+#import pymel.core as pm
 
 
 #----------------------------------------------------------------------------------------------------------------
@@ -79,7 +79,6 @@ class Tools_class:
 		self.input = input
 
 	#----------------------------------------------------------------------------------------------------------------			
-	#input can be an argument or a selection
 
 	def check_input(self, func = '', print_input = False):
 		'''
@@ -98,7 +97,6 @@ class Tools_class:
 	
 	
 	#----------------------------------------------------------------------------------------------------------------			
-	#create a group over the 
 	def	root_grp(self, input = '', custom = False, custom_name = 'customName', autoRoot = False, replace_nc = False):
 		'''
 		create offset/root groups for desire transforms
@@ -158,7 +156,6 @@ class Tools_class:
 		return groups    
 
 	#----------------------------------------------------------------------------------------------------------------		
-	#Search and Replace names
 	
 	def replace_name(self, input = '', search = '', replace = '', hi = False):
 		'''
@@ -167,18 +164,17 @@ class Tools_class:
 			
 		if hi ==True:
 
-			pm.mel.searchReplaceNames(search, replace, "hierarchy")
+			mel.eval( 'searchReplaceNames {} {} "hierarchy"'.format(search, replace))
 			cmds.select(hi = True)
 	
 		else:
-			pm.mel.searchReplaceNames(search, replace, "selected")
+			mel.eval( 'searchReplaceNames {} {} "selected"'.format(search, replace))
 	
 	
 		return cmds.ls(sl = True)
 
 
 	#----------------------------------------------------------------------------------------------------------------		
-	#Asign Color
 	
 	def asign_color(self, input = '', color = 'lightBlue'):
 		'''
@@ -252,18 +248,17 @@ class Tools_class:
 				
 			#show and unlock everything
 			if (show):
-				sel=pm.ls(long=1, sl=1)
+				sel=cmds.ls(long=1, sl=1)
 				attrs = ['.tx','.ty','.tz','.rx','.ry','.rz','.sx','.sy','.sz','.v']
 				
 				for eachObj in sel:
 					for attr in attrs:	        
-						pm.listAttr(eachObj, ud=1)
-						pm.setAttr('{}{}'.format(eachObj, attr), k=True)
-						pm.setAttr('{}{}'.format(eachObj,attr), l=False)
+						cmds.listAttr(eachObj, ud=1)
+						cmds.setAttr('{}{}'.format(eachObj, attr), k=True)
+						cmds.setAttr('{}{}'.format(eachObj,attr), l=False)
 
 	#----------------------------------------------------------------------------------------------------------------					
 
-	# meter size
 	def curve(self,input = '', type = 'cube', rename = True, custom_name = False, name = '', size = 1):
 		'''
 		create curves shapes based on the curve json file
@@ -745,6 +740,41 @@ class Tools_class:
 	   return crv
 
 	#----------------------------------------------------------------------------------------------------------------		
+	
+	def nurbs_between(self, start, end):
+		#creates a nurbs plane between 2 transforms
+		
+		name = start.replace(nc['joint'], '') +'_'+ end.replace(nc['joint'], '')+ nc['nurb']  
+		surface = cmds.nurbsPlane(d = 1, ch = False, n = name)[0]
+		temp_cluster1 = cmds.cluster('{}.cv[0:1][0]'.format(surface))
+		temp_cluster2 = cmds.cluster('{}.cv[0:1][1]'.format(surface))
+
+		cmds.delete(cmds.parentConstraint(start,temp_cluster1, mo =False))
+		cmds.delete(cmds.parentConstraint(end,temp_cluster2, mo =False))
+		cmds.delete(surface, constructionHistory = True)
+		
+		return surface
+		
+
+	#----------------------------------------------------------------------------------------------------------------		
+
+	def nurbs_between_trio(self, start, mid, end):
+		#creates a nurbs plane between 3 transforms
+
+		name = start.replace(nc['joint'], '') +'_'+ end.replace(nc['joint'], '')+ nc['nurb']  
+		surface = cmds.nurbsPlane(d = 1, ch = False, n = name)[0]
+		temp_cluster1 = cmds.cluster('{}.cv[0][0:1]'.format(surface))
+		temp_cluster2 = cmds.cluster('{}.cv[1][0:1]'.format(surface))
+		temp_cluster3 = cmds.cluster('{}.cv[2][0:1]'.format(surface))
+
+		cmds.delete(cmds.parentConstraint(start,temp_cluster1, mo =False))
+		cmds.delete(cmds.parentConstraint(mid,temp_cluster2, mo =False))
+		cmds.delete(cmds.parentConstraint(end,temp_cluster2, mo =False))
+		cmds.delete(surface, constructionHistory = True)
+
+		return surface
+
+	#----------------------------------------------------------------------------------------------------------------		
 
 	def create_ik_spline_twist(self, start, end, curve):
 		#create ik spline based on 2 joints and one curve
@@ -831,7 +861,6 @@ class Tools_class:
 		cmds.delete(cmds.parentConstraint(cluster[1], transform, mo=False))
 
 	#----------------------------------------------------------------------------------------------------------------
-	#connect two transforms with a line
 	def connect_with_line(self, start='', end=''):
 		'''
 		create a line in between 2 transforms (start and end)
@@ -867,7 +896,6 @@ class Tools_class:
 		return connect_with_line_assets
 
 	#----------------------------------------------------------------------------------------------------------------
-	#lock and unlock nodes
 	def lock_node(self, input = '', unlock=False):
 		'''
 		this will lock and unlock (with the attr True) any input node
@@ -884,16 +912,14 @@ class Tools_class:
 
 	#----------------------------------------------------------------------------------------------------------------
 
-	#tail/ finger, curl FK pero en kinnematics
-	#world mirror para sistemas completos
+
+	#----------------------------------------------------------------------------------------------------------------
+
 	#Sliders
 	#skinning pero puede ser una clase nueva: bind skin, transfer skin, select from, copy, add, remove, remove unused, copy weight, paste weight, Mirror, joints edit on, joints edit off, import y export
-	#controles con forma de base, root, cog, orient templates
 	#show/hide by type
-
-	#revisar bounding cubes en setup
-	#REVISAR NOMBRES DE CLUSTERS
 
 
 #tool = Tools_class()
+
 

@@ -99,9 +99,15 @@ def build_single_fk_block():
         
         #cmds.delete(loc_guide)
 
-        cmds.parentConstraint(ctrl, jnt)
         try:cmds.parent(jnt, cmds.getAttr('{}.SetJointParent'.format(config)))
         except:pass
+
+        #parent to ctlr or tr gimbal
+        if cmds.objExists(gimbal_ctrl):
+            cmds.parentConstraint(gimbal_ctrl, jnt)
+        else:
+            cmds.parentConstraint(ctrl, jnt)
+
 
     #clean if COG
     if 'COG' in str(ctrl):

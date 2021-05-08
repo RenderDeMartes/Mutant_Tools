@@ -35,7 +35,7 @@ author:  Esteban Rodriguez <info@renderdemartes.com>
 
 import maya.mel
 from maya import cmds
-import pymel.core as pm
+#import pymel.core as pm
 from maya import OpenMaya
 
 import os
@@ -227,6 +227,7 @@ class Modules_class(kinematics.Kinematics_class):
 		else:
 			cmds.error('We need a name :)')
 
+
 #----------------------------------------------------------------------------------------------------------------
 
 	def duplciate_and_remove_guides(self, input = ''):
@@ -238,8 +239,11 @@ class Modules_class(kinematics.Kinematics_class):
 		#duplicate the joints
 		clean_joints = cmds.duplicate(input , to = True, n = input.replace(nc['guide'], nc['joint']), rc=True)
 		for jnt in clean_joints:
+			if nc['guide'] in str(jnt):
+				jnt = cmds.rename(jnt, jnt.replace(nc['guide'], nc['joint'])) 
 			if jnt.endswith('1'):
-				cmds.rename(jnt, jnt.replace('1', '')) 
+				jnt =cmds.rename(jnt, jnt.replace('1', '')) 
+
 
 		cmds.parent(clean_joints[0], w=True)
 

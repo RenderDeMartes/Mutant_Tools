@@ -52,7 +52,7 @@ def create_clavicle_block(name = 'Clavicle'):
     cmds.select(cl=True)
     clav_guide = mt.create_joint_guide(name = name)
     cmds.move(5,0,0)
-    clav_guideEnd = mt.create_joint_guide(name = name + '_End')
+    clav_guideEnd = mt.create_joint_guide(name = name + 'End')
     cmds.move(15,0,0)
     cmds.parent(clav_guideEnd, clav_guide)
     cmds.parent(clav_guide, block)

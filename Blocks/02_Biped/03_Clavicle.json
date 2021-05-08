@@ -13,7 +13,6 @@
     "build_command": "exec_clavicle.build_clavicle_block()",
 
     "attrs": {
-
     
         "SetParent_string": "new_locator",
         "Mirror_enum": "True:False:Right_Only",

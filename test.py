@@ -25,6 +25,7 @@ mt = main_mosaic.Mosaic()
 #mt.create_joint_guide()
 #mt.build_base(size = 3, name = 'lol')
 #mt.curve(type = 'root')
+mt.basic_ribbon_between('joint1', 'joint2', 4 , 'hola')
 
 '''
 import Mosaic_Tools

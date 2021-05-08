@@ -45,7 +45,7 @@ import math
 
 import maya.mel as mel
 from maya import cmds
-import pymel.core as pm
+#import pymel.core as pm
 from maya import OpenMaya
 
 import os
@@ -968,4 +968,74 @@ class Kinematics_class(tools.Tools_class):
 
 		return mirror_grp
 
+#----------------------------------------------------------------------------------------------------------------
+
+	def basic_ribbon_between(self, start = '', end = '', divisions = 5, name = 'Ribbon', ctrl_type = 'circleY'):
+		#this will create a plane between 2 objects and then create a ribbon rig for you
+
+		if start ==  '':
+			start = cmds.ls(sl=True)[0]
+			end = cmds.ls(sl=True)[1]
+
+		#create a nurbs etween and then create the follicles to it
+		surface = self.nurbs_between(start=start,end=end)
+		surface = cmds.rebuildSurface(surface, ch =False, dv=3,du=3, su=0,sv=divisions)
+		surface = cmds.rename(surface, name + nc['nurb'])
+
+		cmds.select(surface)
+		mel.eval("createHair 1 {} 10 0 0 0 0 5 0 1 2 1".format(divisions))
+		cmds.delete ('hairSystem1','pfxHair1','nucleus1')
+		cmds.setAttr( surface +'.inheritsTransform', 0)
+		
+		fol_joints = []
+		ctrl_joints = []
+		for num in range (1, divisions+1):
+			#delete crated curve and folicle rename
+			fol = cmds.rename(cmds.listRelatives('curve' + str (num) , p=True), name + '_' +str(num) + nc['follicle'] )
+			try:cmds.delete ('curve' + str (num) )
+			except: pass
+			#create joints for later bind
+			cmds.select(fol)
+			jnt = cmds.joint(n = fol + nc ['joint'])
+			fol_joints.append(jnt)
+
+			#joint to bind the ruibbon and add ctrls
+			cmds.select(cl=True)
+			cltr_joint = cmds.joint(n = fol.replace(nc ['follicle'],nc ['joint']))
+			self.match(cltr_joint, jnt)
+			cmds.setAttr('{}.radius'.format(cltr_joint), 1.25)
+			ctrl_joints.append(cltr_joint)
+
+		cmds.rename ('hairSystem1Follicles', name + nc['follicle']+nc['group'])
+		
+		follicles = cmds.ls(name + nc['follicle']+nc['group'], dag = True, type = 'follicle')
+
+		#bind skin to nurbs
+		cmds.select(ctrl_joints, surface)
+		cmds.skinCluster(n = name.replace(nc['joint'], nc['skin_cluster']), toSelectedBones=True)
+		cmds.select(surface)
+		mel.eval('doPruneSkinClusterWeightsArgList 1 { "0.3" };')
+
+		#controllers
+		controllers =[]
+		roots_grps = []
+		for jnt in ctrl_joints:
+			cmds.select(jnt)
+			ctrl = self.curve(type = ctrl_type, custom_name= True, name = str(jnt).replace(nc['joint'], nc['ctrl']))
+			grp = self.root_grp()[0]
+			cmds.parentConstraint(ctrl , jnt, mo=True)
+			cmds.scaleConstraint(ctrl , jnt, mo=True)
+			controllers.append(ctrl)
+			roots_grps.append(grp)
+
+		cmds.group(roots_grps, n = name + nc['ctrl'] + nc['group'])
+		cmds.group(ctrl_joints, n = name + nc['joint'] + nc['group'])
+
+		return {'surface':surface, 
+				'follicles':follicles,
+				'fol_joints':fol_joints,
+				'ctrl_joints':ctrl_joints,
+				'controllers':controllers}
+
+	
 #----------------------------------------------------------------------------------------------------------------

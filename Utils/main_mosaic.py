@@ -48,7 +48,7 @@ time.sleep(1)
 cmds.progressWindow(edit=True, progress=2, status='Loading RdM Tools V{}'.format(version))
 '''
 import maya.mel
-import pymel.core as pm
+#import pymel.core as pm
 from maya import OpenMaya
 
 import os
