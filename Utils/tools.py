@@ -483,6 +483,8 @@ class Tools_class:
 		'''
 		duplicate any herachy with no duplicated names but with clean ones
 		'''
+		'''
+		#this doesnt work
 		if input != '':
 			self.input = [input]
 			
@@ -490,6 +492,13 @@ class Tools_class:
 			self.input = input
 
 		self.check_input('duplicate_change_names')	
+		'''
+		
+		if input == '':
+			self.input = cmds.ls(sl=True)
+		
+		else:
+			self.input = input
 
 		#error if search dont exists
 		#duplicate and search and replace names

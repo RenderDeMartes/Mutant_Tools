@@ -970,7 +970,7 @@ class Kinematics_class(tools.Tools_class):
 
 #----------------------------------------------------------------------------------------------------------------
 
-	def basic_ribbon_between(self, start = '', end = '', divisions = 5, name = 'Ribbon', ctrl_type = 'circleY'):
+	def basic_ribbon(self, start = '', end = '', divisions = 5, name = 'Ribbon', ctrl_type = 'circleY',size = 1):
 		#this will create a plane between 2 objects and then create a ribbon rig for you
 
 		if start ==  '':
@@ -980,7 +980,7 @@ class Kinematics_class(tools.Tools_class):
 		#create a nurbs etween and then create the follicles to it
 		surface = self.nurbs_between(start=start,end=end)
 		surface = cmds.rebuildSurface(surface, ch =False, dv=3,du=3, su=0,sv=divisions)
-		surface = cmds.rename(surface, name + nc['nurb'])
+		surface = cmds.rename(surface, name + nc['joint'] +nc['nurb'])
 
 		cmds.select(surface)
 		mel.eval("createHair 1 {} 10 0 0 0 0 5 0 1 2 1".format(divisions))
@@ -1019,23 +1019,73 @@ class Kinematics_class(tools.Tools_class):
 		#controllers
 		controllers =[]
 		roots_grps = []
-		for jnt in ctrl_joints:
+		for num, jnt in enumerate(ctrl_joints):
 			cmds.select(jnt)
-			ctrl = self.curve(type = ctrl_type, custom_name= True, name = str(jnt).replace(nc['joint'], nc['ctrl']))
+			ctrl = self.curve(type = ctrl_type, custom_name= True, name = str(jnt).replace(nc['joint'], nc['ctrl']), size = size * 0.75)
 			grp = self.root_grp()[0]
 			cmds.parentConstraint(ctrl , jnt, mo=True)
-			cmds.scaleConstraint(ctrl , jnt, mo=True)
+			#cmds.scaleConstraint(ctrl , jnt, mo=True)
 			controllers.append(ctrl)
 			roots_grps.append(grp)
+			cmds.scaleConstraint(ctrl ,fol_joints[num], mo=True)
 
-		cmds.group(roots_grps, n = name + nc['ctrl'] + nc['group'])
+		main_ctrl_grp = cmds.group(roots_grps, n = name + nc['ctrl'] + nc['group'])
 		cmds.group(ctrl_joints, n = name + nc['joint'] + nc['group'])
 
 		return {'surface':surface, 
 				'follicles':follicles,
 				'fol_joints':fol_joints,
 				'ctrl_joints':ctrl_joints,
-				'controllers':controllers}
+				'controllers':controllers,
+				'controllers_grp':main_ctrl_grp,
+}
 
 	
 #----------------------------------------------------------------------------------------------------------------
+
+	def ribbon_between(self, start = '', end = '', divisions = 5, name = 'Ribbon', ctrl_type = 'circleY', size = 1):
+		
+		if start ==  '':
+			start = cmds.ls(sl=True)[0]
+			end = cmds.ls(sl=True)[1]
+		
+		#run main basic ribbon
+		basic_ribbon = self.basic_ribbon(start = start, end = end, divisions = divisions, name = name, ctrl_type = ctrl_type, size = size)
+		
+		#create a new nursb to drive the ctrls
+		ctrl_surface = cmds.duplicate(basic_ribbon['surface'], n = name + nc['ctrl'] +nc['nurb'])[0]
+		ctrl_surface = cmds.rebuildSurface(ctrl_surface, ch =False, dv=1,du=1, su=1,sv=1)[0]
+
+		cmds.select(ctrl_surface)
+		mel.eval("createHair 1 {} 10 0 0 0 0 5 0 1 2 1".format(divisions))
+		cmds.delete ('hairSystem1','pfxHair1','nucleus1')
+		cmds.setAttr( ctrl_surface +'.inheritsTransform', 0)
+		
+		fol_joints = []
+		for num in range (1, divisions+1):
+			#delete crated curve and folicle rename
+			fol = cmds.rename(cmds.listRelatives('curve' + str (num) , p=True), name + nc['ctrl'] + '_' +str(num) + nc['follicle'] )
+			try:cmds.delete ('curve' + str (num) )
+			except: pass
+
+			#parent fol to ctrl offset grp
+			cmds.parentConstraint(fol,cmds.listRelatives(basic_ribbon['controllers'][num-1], p=True))
+		
+		ctrl_fol_grp = cmds.rename ('hairSystem1Follicles', name + nc['follicle']+nc['ctrl']+nc['group'])
+		
+		#bind skin to nurbs
+		cmds.select(start,end, ctrl_surface)
+		skin = cmds.skinCluster(n = name.replace(nc['joint'], nc['skin_cluster']), toSelectedBones=True, dr = 10)[0]
+		cmds.skinPercent(skin, '{}.cv[0:1][1]'.format(ctrl_surface), transformValue=[(end, 1)])
+		cmds.skinPercent(skin, '{}.cv[0:1][0]'.format(ctrl_surface), transformValue=[(start, 1)])
+
+
+		cmds.group(basic_ribbon['surface'], ctrl_surface , n = name + nc['nurb'] + nc['group'])
+
+		return {'surface':[basic_ribbon['surface'],ctrl_surface], 
+				'follicles':basic_ribbon['follicles'],
+				'fol_joints':basic_ribbon['fol_joints'],
+				'ctrl_joints':basic_ribbon['ctrl_joints'],
+				'controllers':basic_ribbon['controllers'],
+				'controllers_grp':basic_ribbon['controllers_grp'],
+				'ctrl_fol_grp': ctrl_fol_grp}

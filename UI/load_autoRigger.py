@@ -275,13 +275,17 @@ class AutoRigger(QtWidgets.QDialog):
 		#read json
 		with open(bock_path, "r") as block_info:
 			block = json.load(block_info) 
-		
+
+		cmds.undoInfo(openChunk=True)
+
 		exec (block['import'])
 		try:exec (block['imp.reload'])
 		except: print ('couldnt imp.reload {}'.format(bock_path))
 		exec (block['exec_command'])
 		self.create_properties_layout(block = cmds.ls(sl=True)[0])
 		
+		cmds.undoInfo(closeChunk=True)
+
 	#-------------------------------------------------------------------
 	def delete_side_buttons(self):
 		

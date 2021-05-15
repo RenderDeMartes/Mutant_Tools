@@ -42,14 +42,12 @@ with open(MODULE_FILE) as module_file:
 def create_head_block(name = 'Head'):
 
     #name checks and block creation
-    name = mt.ask_name(text = module['Name'])
+    name = mt.ask_name(text = module['Name'], ask_for = 'Neck and Head Names (Separete with a _ )')
     if cmds.objExists('{}{}'.format(name,nc['module'])):
         cmds.warning('Name already exists.')
         return ''
-    names = name.split('_')
-    neck_name = names[0]
-    head_name = names[1]
 
+   
     block = mt.create_block(name = name, icon = 'HeadNeck',  attrs = module['attrs'], build_command = module['build_command'], import_command = module['import'])
     config = block[1]
     block = block[0]
@@ -80,6 +78,8 @@ def create_head_block(name = 'Head'):
 
 def build_head_block():
 
+    mt.check_is_there_is_base()
+
     block = cmds.ls(sl=True)
     config = cmds.listConnections(block)[1]
     block = block[0]
@@ -94,7 +94,7 @@ def build_head_block():
 
     #orient the joints
     mt.orient_joint(input = guide)
-    new_guide = mt.duplciate_and_remove_guides(guide)
+    new_guide = mt.duplicate_and_remove_guides(guide)
 
     #use this locator in case parent is set to new locator
     if cmds.getAttr('{}.SetParent'.format(config)) == 'new_locator':
@@ -107,25 +107,93 @@ def build_head_block():
     ribbon_amount = cmds.getAttr('{}.SecundaryRibbon'.format(config))
     ctrl_type = cmds.getAttr('{}.HeadCtrlType'.format(config), asString = True)
     ctrl_size = cmds.getAttr('{}.CtrlSize'.format(config))
-    ctrl_color = cmds.getAttr('{}.CtrlColor'.format(config))
+    ctrl_color = cmds.getAttr('{}.CtrlColor'.format(config), asString = True)
 
     neck_joint = new_guide
     head_joint = cmds.listRelatives(new_guide, c=True)[0]
 
+    game_parent = cmds.getAttr('{}.SetGameParent'.format(config), asString = True)
+
+
     #Build--------------------------
+    cmds.select(neck_joint)
+    dumb_head = cmds.joint(n = head_joint.replace(nc['joint'], nc['null'] + nc['joint']))
+    mt.match(dumb_head , head_joint)
+    cmds.pointConstraint(head_joint, dumb_head)
 
-    ribbon = mt.basic_ribbon_between(neck_joint, head_joint, ribbon_amount , str(neck_joint).replace(nc['joint'], ''))
+    ribbon = mt.ribbon_between(start=neck_joint, end=dumb_head, divisions=ribbon_amount , name=str(neck_joint).replace(nc['joint'], ''), size = ctrl_size)
     
-    #mid joint
-    mid_neck_joint = mt.joints_middle_no_chain( start = neck_joint, end=head_joint, axis = setup['twist_axis'], amount =6, name = 'Mid')
-    cmds.delete(cmds.parentConstraint(neck_joint, head_joint, mid_neck_joint, mo=False))
+    '''
+    ribbon =    {'surface':[basic_ribbon['surface'],ctrl_surface], 
+				'follicles':basic_ribbon['follicles'],
+				'fol_joints':basic_ribbon['fol_joints'],
+				'ctrl_joints':basic_ribbon['ctrl_joints'],
+				'controllers':basic_ribbon['controllers'],
+				'controllers_grp':basic_ribbon['controllers_grp']}
+    '''
+
+    #Fk chain neck and head
+    cmds.select(neck_joint, head_joint)
+    fk_chain = mt.fk_chain(input = '', 
+                           size = ctrl_size, 
+                           color = ctrl_color, 
+                           curve_type = ctrl_type)
     
-     #create controllers
+    #blends
+    neck_blends_grp = mt.root_grp(input = fk_chain[0], custom = True, custom_name = '_Blends', autoRoot = False, replace_nc = False)[0]
+    head_blends_grp = mt.root_grp(input = fk_chain[1], custom = True, custom_name = '_Blends', autoRoot = False, replace_nc = False)[0]
 
 
+    #bind joints
+    bind_joints = []
+    for jnt in ribbon['fol_joints']:
+        try: last_bind_joint = bind_joint
+        except:pass
+        bind_joint = mt.duplicate_change_names( input = jnt, hi = False, search=nc['follicle']+nc['joint'], replace = nc['joint_bind'])[0]
+        cmds.delete(cmds.pickWalk(bind_joint, d='down'))#clean th dirty constraint
+        cmds.parentConstraint(jnt, bind_joint)
+        cmds.scaleConstraint(jnt, bind_joint)
 
+        #clean bind joints and radius to 1.5
+        cmds.setAttr('{}.radius'.format(bind_joint), 1.5)
+        print (bind_joint)
+        try:
+            cmds.parent(bind_joint,last_bind_joint)
+        except:
+            cmds.parent(bind_joint, w=True)
+        
+        bind_joints.append(bind_joint)
+
+    #parent to game 
+    if cmds.objExists(game_parent):
+        cmds.parent(bind_joints[0], game_parent)
+    else: 
+        cmds.parent(bind_joints[0], 'Bind_Joints_Grp')
+
+    #parent system
+    cmds.parentConstraint(block_parent, cmds.listRelatives(neck_blends_grp, p=True), mo=True)
+
+    #clean a bit
+    cmds.parent(ribbon['controllers_grp'], fk_chain[0])
+    clean_rig_grp = cmds.group(em=True, n = '{}{}'.format(block.replace(nc['module'],'_Rig'), nc['group']))
+    cmds.parent(clean_rig_grp, setup['rig_groups']['misc']+ nc['group'])
+
+    cmds.parent(cmds.listRelatives(neck_blends_grp, p=True),setup['base_groups']['control'] + nc['group'])
+    cmds.parent(cmds.listRelatives(cmds.listRelatives(ribbon['fol_joints'][0], p=True),p=True),clean_rig_grp)
+    cmds.parent(cmds.listRelatives(ribbon['surface'][0], p=True),clean_rig_grp)
+    cmds.parent(neck_joint,clean_rig_grp)
+    cmds.parent(cmds.listRelatives(ribbon['ctrl_joints'][0], p=True),clean_rig_grp)
+
+    cmds.parent(ribbon['ctrl_fol_grp'],clean_rig_grp)
+
+
+    #done
     print ('Build {} Success'.format(block))
 
 
-
 #build_head_block()
+
+'''
+Neck_Ctrl_Grp parent hi to fk_chain[0]
+
+'''

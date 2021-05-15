@@ -61,6 +61,9 @@ def create_NAME_block(name = 'NAME'):
 
 def build_NAME_block():
 
+    mt.check_is_there_is_base()
+
+
     block = cmds.ls(sl=True)
     config = cmds.listConnections(block)[1]
     block = block[0]
@@ -68,7 +71,7 @@ def build_NAME_block():
 
     #orient the joints
     mt.orient_joint(input = guide)
-    new_guide = mt.duplciate_and_remove_guides(guide)
+    new_guide = mt.duplicate_and_remove_guides(guide)
     print (new_guide)
     to_build = [new_guide]
 
@@ -162,7 +165,7 @@ def build_NAME_block():
             #cmds.orientConstraint()
         '''
 
-        #Clean -------------------------------------------
+        #Finish -------------------------------------------
         '''
         #game parents for bind joints
         game_parent = cmds.getAttr('{}.SetGameParent'.format(config))
@@ -179,11 +182,15 @@ def build_NAME_block():
         #clean ctrls
         cmds.parent(clean_ctrl_grp, 'Rig_Ctrl_Grp')
 
-        #clean rig
+        #parent rig
         cmds.parent(clean_rig_grp, '{}{}'.format(setup['rig_groups']['misc'], nc['group']))
 
         '''  
-        
+
+    #clean a bit
+    clean_rig_grp = cmds.group(em=True, n = '{}{}'.format(block.replace(nc['module'],'_Rig'), nc['group']))
+
+    
 
     # build complete ----------------------------------------------------    
     print ('Build {} Success'.format(block))

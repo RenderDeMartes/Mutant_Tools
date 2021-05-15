@@ -212,10 +212,10 @@ class Modules_class(kinematics.Kinematics_class):
 
 #----------------------------------------------------------------------------------------------------------------
 
-	def ask_name(self, text = ''):
+	def ask_name(self, text = '', ask_for = 'Name'):
 		ask_name = cmds.promptDialog(
 						title='Name Block',
-						message='Name:',
+						message=ask_for,
 						button=['OK', 'Cancel'],
 						defaultButton='OK',
 						cancelButton='Cancel',
@@ -227,10 +227,51 @@ class Modules_class(kinematics.Kinematics_class):
 		else:
 			cmds.error('We need a name :)')
 
+#----------------------------------------------------------------------------------------------------------------
+
+	def dual_ask_name(self, textA = 'Name 1', text_B = 'Name 2', command = ''):
+
+		class dual_ask():
+
+			def __init__(self):
+				self.input1 = ''
+				self.input2 = ''
+				
+				self.show_window()
+
+			def show_window(self):
+
+				windowID = 'Dual_Name'
+			
+				if cmds.window(windowID, exists = True):
+					cmds.deleteUI(windowID)
+			
+				def close_UI(*args):
+				
+					windowID = 'Dual Name'
+				
+					self.input1 = cmds.textFieldGrp( 'textField_A', query = True, text = True)
+					self.input2 = cmds.textFieldGrp( 'textField_B', query = True, text = True)
+					return 
+					cmds.deleteUI(window)
+
+					exec(command)
+
+				window = cmds.window(windowID)
+				cmds.rowColumnLayout()
+			
+				cmds.textFieldGrp('textField_A', label = textA )
+				cmds.textFieldGrp('textField_B', label = text_B )
+			
+				cmds.button(label = 'Create', command = close_UI)
+			
+				cmds.showWindow(window)
+
+		#names = dual_ask()
 
 #----------------------------------------------------------------------------------------------------------------
 
-	def duplciate_and_remove_guides(self, input = ''):
+	def duplicate_and_remove_guides(self, input = ''):
 		'this will ducplicate the top chain joint and change the _Guide for _Jnt and rename all the chils plus parent to the world'
 
 		if input == '':
@@ -307,7 +348,19 @@ class Modules_class(kinematics.Kinematics_class):
 
 #----------------------------------------------------------------------------------------------------------------
 
+	def check_is_there_is_base(self, base = 'BaseA'):
 
+		'this one is ment to be in the start of all the modules so if there is no base it will create one for you'
 
-		
+		sel = cmds.ls(sl=True)#this will remember previews selection so it wont affect any build
+
+		if base == 'BaseA':
+			if cmds.objExists('Rig_Grp'):
+				pass
+			else:
+				base = self.build_baseA(name = 'Mosaic_Tools')
+				print('BaseA Created Successfully')
+
+		cmds.select(sel)#return to previews selection after the build
+
 

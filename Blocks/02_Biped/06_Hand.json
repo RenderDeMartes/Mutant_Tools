@@ -1,0 +1,20 @@
+{
+    "Name": "L_Hand",
+    "Description": "Hand Block with 5 fingers or less",
+    "Icon": "Hand.png",
+    "Enable": "True",
+    "python_file": "exec_hand.py",
+    "import": "import exec_hand",
+    "imp.reload": "imp.reload(exec_hand)",
+    "exec_command": "exec_hand.create_hand_block()",
+    "build_command": "exec_hand.build_hand_block()",
+    "attrs": {
+        "SetParent_string": "new_locator",
+        "SetAttrsCtrl_string": "new_ctrl",
+
+        "Mirror_enum": "True:False:Right_Only",
+  
+        "Blends_string": "Wrist,Shoulder,Root_Ctrl",
+        "SetGameParent_string": ""
+    }
+}

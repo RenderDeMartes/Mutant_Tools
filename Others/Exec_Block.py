@@ -61,6 +61,8 @@ def create_NAME_block(name = 'NAME'):
 
 def build_NAME_block():
 
+    mt.check_is_there_is_base()
+
     block = cmds.ls(sl=True)
     config = cmds.listConnections(block)[1]
     block = block[0]
@@ -75,7 +77,7 @@ def build_NAME_block():
 
     #orient the joints
     mt.orient_joint(input = guide)
-    new_guide = mt.duplciate_and_remove_guides(guide)
+    new_guide = mt.duplicate_and_remove_guides(guide)
     print (new_guide)
     to_build = [new_guide]
 
@@ -84,6 +86,11 @@ def build_NAME_block():
         block_parent = cmds.spaceLocator( n = '{}'.format(str(block).replace(nc['module'],'_Parent' + nc['locator'])))
     else:
         block_parent = cmds.getAttr('{}.SetParent'.format(config))
+
+
+    #clean a bit
+    clean_rig_grp = cmds.group(em=True, n = '{}{}'.format(block.replace(nc['module'],'_Rig'), nc['group']))
+
 
     print ('Build {} Success'.format(block))
 

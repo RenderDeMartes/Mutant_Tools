@@ -13,7 +13,7 @@ mt = main_mosaic.Mosaic()
 #---------------------------------------------
 
 TAB_FOLDER = '02_Biped'
-PYBLOCK_NAME = 'exec_hip'
+PYBLOCK_NAME = 'exec_hand'
 
 #Read name conventions as nc[''] and setup as seup['']
 PATH = os.path.dirname(__file__)
@@ -31,45 +31,99 @@ SETUP_FILE = (PATH+'/rig_setup.json')
 with open(SETUP_FILE) as setup_file:
 	setup = json.load(setup_file)	
 
-MODULE_FILE = (os.path.dirname(__file__) +'/04_Hip.json')
+MODULE_FILE = (os.path.dirname(__file__) +'/06_Hand.json')
 with open(MODULE_FILE) as module_file:
 	module = json.load(module_file)
 
 #---------------------------------------------
 
-def create_hip_block(name = 'Hip'):
+def create_hand_block(name = 'Hand'):
+
 
     #name checks and block creation
     name = mt.ask_name(text = module['Name'])
     if cmds.objExists('{}{}'.format(name,nc['module'])):
         cmds.warning('Name already exists.')
         return ''
+    fingers = mt.ask_name(text = 'Thumb_Index_Middle_Ring_Pinky', ask_for = 'Comfirm fingers (Delete if not needed)')
 
-    block = mt.create_block(name = name, icon = 'Hip',  attrs = module['attrs'], build_command = module['build_command'], import_command = module['import'])
+    block = mt.create_block(name = name, icon = 'Hand',  attrs = module['attrs'], build_command = module['build_command'], import_command = module['import'])
     config = block[1]
     block = block[0]
+    
+        
+    cmds.select (cl = True)
+    palm = mt.create_joint_guide(name = name + '_Palm')
 
-    cmds.select(cl=True)
-    clav_guide = mt.create_joint_guide(name = name)
-    cmds.move(3,0,0)
-    clav_guideEnd = mt.create_joint_guide(name = name + 'End')
-    cmds.move(9,0,0)
-    cmds.parent(clav_guideEnd, clav_guide)
-    cmds.parent(clav_guide, block)
+    def genericFinger (finger, phalanges,x,y,z,mult):
+        cmds.select (palm)
+        guides = []
+        for f in range(phalanges- 1):
+            try:old_guide = guide
+            except:pass
+            guide = mt.create_joint_guide(name = (name + '_' + finger + '_' + str (f)))
+            cmds.move(f*mult,0,0)
+            cmds.move (x,y,z, r = True)    
+            try: cmds.parent(guide, old_guide)
+            except:pass
+            guides.append(guide)
+        return guides
+
+        cmds.select (cl = True)
+                  
+    if 'Index' in fingers: 
+        indexs = genericFinger ('Index', 5,4,0,3,3)
+        cmds.parent(indexs[0], palm)
+
+    if 'Middle' in fingers: 
+        middles = genericFinger ('Middle', 5,4,0,0,4.5)
+        cmds.parent(middles[0], palm)
+           
+    if 'Ring' in fingers: 
+        rings = genericFinger ('Ring', 5,4,0,-3,4)
+        cmds.parent(rings[0], palm)
+    
+    if 'Pinky' in fingers: 
+        pinkys = genericFinger ('Pinky', 5,4,0,-6,3)
+        cmds.parent(pinkys[0], palm)
+          
+    if 'Thumb' in fingers: 
+        thumbs = genericFinger ('Thumb', 4,3,0,7,3)
+        cmds.setAttr ('{}.rotateY'.format(thumbs[0]), -50)
+        
+        inner_cup = mt.create_joint_guide(name = (name + '_' + 'InnerCup' ))
+        cmds.delete(cmds.parentConstraint(palm, thumbs[0],inner_cup, mo=False))
+        
+        cmds.parent(thumbs[0], inner_cup)
+        cmds.parent(inner_cup, palm)
+
+    #create Outter Cup joints
+    if 'Pinky' or 'Ring' in fingers:
+        outter_cup = mt.create_joint_guide(name = (name + '_' + 'OutterCup' ))
+        try:cmds.delete(cmds.parentConstraint(palm, pinkys[0],outter_cup ,mo=False))
+        except:cmds.delete(cmds.parentConstraint(palm, rings[0],outter_cup ,mo=False))
+
+        if cmds.objExists(pinkys[0]):
+            cmds.parent(pinkys[0], outter_cup)
+
+        if cmds.objExists(rings[0]):
+            cmds.parent(rings[0], outter_cup)
+
+        cmds.parent(outter_cup, palm)
+    
+    cmds.parent(palm, block)
+
     cmds.select(block)
-
-    mt.orient_joint(input = clav_guide)
-
-
     print('{} Created Successfully'.format(name))
 
-#create_hip_block()
+#create_hand_block()
 
 #-------------------------
 
-def build_hip_block():
+def build_hand_block():
 
     mt.check_is_there_is_base()
+
 
     block = cmds.ls(sl=True)
     config = cmds.listConnections(block)[1]
@@ -125,29 +179,22 @@ def build_hip_block():
 
         #main funcion -------------------------------------------
         cmds.select(side_guide)
-        fk_chain = mt.fk_chain(input = '', 
-                    size = cmds.getAttr('{}.CtrlSize'.format(config)), 
-                    color = color, 
-                    curve_type = cmds.getAttr('{}.CtrlType'.format(config), asString = True))
 
-        for_parent = cmds.listRelatives(fk_chain[0], p=True)
-        mt.hide_attr(fk_chain[0], s=True)
-        print (fk_chain)
-            
-        #create bind Joints for the skin
+
+        #create bind Joints for the skin ------------------------- 
+        '''
         bind_joint = cmds.duplicate(side_guide, po=True, n = side_guide.replace(nc['joint'], nc['joint_bind']))[0] 
         cmds.parentConstraint(side_guide, bind_joint, mo = False)
         try: cmds.parent(bind_joint, w=True)
         except:pass
-        cmds.setAttr('{}.radius'.format(bind_joint), 1.5)   
-
-        #blends groups
-        blends_grp = mt.root_grp(input = fk_chain[0], custom = True, custom_name = '_Blends', autoRoot = False, replace_nc = False)[0]
+        cmds.setAttr('{}.radius'.format(bind_joint), 1.5)
+        '''
 
         #flip right rig  to right side ------------------------- 
+        '''
         #check if the mirror attrs to Only_Right or mirror to True
         if cmds.getAttr('{}.Mirror'.format(config), asString = True) == 'Right_Only':
-            miror_ctrl_grp = mt.mirror_group(cmds.listRelatives(blends_grp, p=True)[0], world = True)
+            miror_ctrl_grp = mt.mirror_group(cmds.listRelatives(auto_grp, p=True)[0], world = True)
             miror_jnt_grp = mt.mirror_group(new_guide, world = True)
             cmds.parentConstraint(block_parent, miror_ctrl_grp , mo = True)     
             clean_rig_grp = miror_jnt_grp
@@ -155,7 +202,7 @@ def build_hip_block():
 
         elif cmds.getAttr('{}.Mirror'.format(config), asString = True) == 'True':
             if str(side_guide).startswith(nc['right']) :
-                miror_ctrl_grp = mt.mirror_group(cmds.listRelatives(blends_grp, p=True)[0], world = True)
+                miror_ctrl_grp = mt.mirror_group(cmds.listRelatives(auto_grp, p=True)[0], world = True)
                 miror_jnt_grp = mt.mirror_group(side_guide, world = True)
                 cmds.parentConstraint(block_parent, miror_ctrl_grp , mo = True) 
                 clean_rig_grp = miror_jnt_grp
@@ -167,17 +214,20 @@ def build_hip_block():
         
         else: #only left side
             cmds.parentConstraint(block_parent, for_parent , mo = True) 
-            clean_rig_grp = side_guide
-            clean_ctrl_grp = for_parent   
+        '''
 
         #blends
+        '''
+        blends_grp = mt.root_grp(input = '', custom = True, custom_name = 'Blends', autoRoot = False, replace_nc = False)[0]
+        blends_grp = blends_grp.replace('_AutoFK','')
         bends = cmds.getAttr('{}.Blends'.format(config).split(':'))
         for blend in bends:
             ''
             #cmds.orientConstraint()
-        
+        '''
 
-        #Clean -------------------------------------------
+        #Finish -------------------------------------------
+        '''
         #game parents for bind joints
         game_parent = cmds.getAttr('{}.SetGameParent'.format(config))
         if side_guide.startswith(nc['right']):
@@ -193,14 +243,18 @@ def build_hip_block():
         #clean ctrls
         cmds.parent(clean_ctrl_grp, 'Rig_Ctrl_Grp')
 
-        #clean rig
+        #parent rig
         cmds.parent(clean_rig_grp, '{}{}'.format(setup['rig_groups']['misc'], nc['group']))
 
-          
-        
+        '''  
+
+    #clean a bit
+    clean_rig_grp = cmds.group(em=True, n = '{}{}'.format(block.replace(nc['module'],'_Rig'), nc['group']))
+
+    
 
     # build complete ----------------------------------------------------    
     print ('Build {} Success'.format(block))
 
 
-#build_hip_block()
+#build_hand_block()

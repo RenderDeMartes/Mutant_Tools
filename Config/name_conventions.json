@@ -1,6 +1,7 @@
 {
    "module":"_Block",
    "guide": "_Guide",
+   "null": "_Null",
 
    "left":		"L_",
    "right":		"R_",

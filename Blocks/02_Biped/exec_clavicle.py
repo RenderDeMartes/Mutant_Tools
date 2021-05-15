@@ -68,6 +68,8 @@ def create_clavicle_block(name = 'Clavicle'):
 
 def build_clavicle_block():
 
+    mt.check_is_there_is_base()
+
     block = cmds.ls(sl=True)
     config = cmds.listConnections(block)[1]
     block = block[0]
@@ -75,7 +77,7 @@ def build_clavicle_block():
 
     #orient the joints
     mt.orient_joint(input = guide)
-    new_guide = mt.duplciate_and_remove_guides(guide)
+    new_guide = mt.duplicate_and_remove_guides(guide)
     print (new_guide)
     to_build = [new_guide]
 
