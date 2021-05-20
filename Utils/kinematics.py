@@ -120,7 +120,7 @@ class Kinematics_class(tools.Tools_class):
 				cmds.scaleConstraint(fk_controller,bone) #parent Ctrl to Bone
 
 			#Organize a bit
-			self.asign_color(fk_controller, color)
+			self.assign_color(fk_controller, color)
 			self.hide_attr(fk_controller, s = 1 - scale, v = True)
 
 			#try to parent it to create chain 
@@ -451,7 +451,7 @@ class Kinematics_class(tools.Tools_class):
 
 		for c in ik_system:
 			cmds.select(c)
-			self.asign_color(color = color)
+			self.assign_color(color = color)
 
 		#put the ik in the return list
 		ik_system.append(ik_handle)		

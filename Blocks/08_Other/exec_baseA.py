@@ -52,7 +52,6 @@ def create_BaseA(name = 'BaseA'):
 
     print('BaseA Block added Successfully')
 
-#create_limb_base()
 
 #-------------------------
 
@@ -63,9 +62,9 @@ def build_baseA_block():
     
     base = mt.build_baseA(size = cmds.getAttr('{}.CtrlScale'.format(config)), name = cmds.getAttr('{}.Name'.format(config)))
     print (base)
-    mt.asign_color(input = base[0], color = cmds.getAttr('{}.CtrlColor'.format(config), asString = True))
-    mt.asign_color(input = base[1], color = cmds.getAttr('{}.CtrlColor'.format(config), asString = True))
-    mt.asign_color(input = base[2], color = cmds.getAttr('{}.CtrlColor'.format(config), asString = True))
+    mt.assign_color(input = base[0], color = cmds.getAttr('{}.CtrlColor'.format(config), asString = True))
+    mt.assign_color(input = base[1], color = cmds.getAttr('{}.CtrlColor'.format(config), asString = True))
+    mt.assign_color(input = base[2], color = cmds.getAttr('{}.CtrlColor'.format(config), asString = True))
 
 
     print('BaseA Created Successfully')

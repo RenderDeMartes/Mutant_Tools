@@ -11,7 +11,13 @@
     "attrs": {
         "SetParent_string": "new_locator",
         "SetAttrsCtrl_string": "new_ctrl",
+        "SetCtrlAttrsParent_string": "L_Hand_Palm_Jnt",
 
+        "CtrlSize_float": "4",
+        "CtrlType_enum": "bounding_cube:circleY:circleX:circleY:pin_cube",
+
+        "CurlAxis_enum": "X:Y:Z",
+      
         "Mirror_enum": "True:False:Right_Only",
   
         "Blends_string": "Wrist,Shoulder,Root_Ctrl",

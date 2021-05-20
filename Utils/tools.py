@@ -9,7 +9,7 @@ self.check_input() #print input infomation
 self.input_unit() #convert input list in a string
 
 root_grp(input = '', repalce_np = False) #Create a group over the input		
-asign_color(input = '', color = '') #asign color to the input
+assign_color(input = '', color = '') #asign color to the input
 replace_name(input = '', custom = False, custom_name = 'customName', autoRoot = True, replace_nc = False) #Change names with or without Hierarchy
 hide_attr(input = '',t= False, r = False, s = False, v = False, show = False) #Hide attrs in channel box o show them all
 curve(type = 'cube', rename = True, custom_name = False, name = '',  size = 1) #based on curves.json file
@@ -176,7 +176,7 @@ class Tools_class:
 
 	#----------------------------------------------------------------------------------------------------------------		
 	
-	def asign_color(self, input = '', color = 'lightBlue'):
+	def assign_color(self, input = '', color = 'lightBlue'):
 		'''
 		assing color to desire transform
 		'''
@@ -205,7 +205,7 @@ class Tools_class:
 			cmds.setAttr ('{}.overrideColor'.format(obj), color_num)
 			
 	#----------------------------------------------------------------------------------------------------------------					
-	def hide_attr(self, input = '', t= False, r = False, s = False, v = False, show = False):
+	def hide_attr(self, input = '', t= False, r = False, s = False, v = False, rotate_order = False, show = False):
 		'''
 		hide translate, rotate, scale and visivility from attrs channel box
 		'''
@@ -245,7 +245,11 @@ class Tools_class:
 			if (v):
 				for V in self.input:
 					cmds.setAttr('{}.visibility'.format(V),lock = True, keyable = False, channelBox = False)        
-				
+			if (rotate_order):
+				for ro in self.input:
+					cmds.setAttr('{}.RotateOrder'.format(ro),lock = True, keyable = False, channelBox = False)        
+								
+			
 			#show and unlock everything
 			if (show):
 				sel=cmds.ls(long=1, sl=1)
@@ -287,7 +291,7 @@ class Tools_class:
 		#match to selection and assing color if possible
 		try:self.match(ctrl, sel)
 		except:pass
-		self.asign_color(color = setup['main_color'])
+		self.assign_color(color = setup['main_color'])
 
 		#connect rotate order to itself
 		self.connect_rotate_order(input = ctrl, object = ctrl)
@@ -428,10 +432,15 @@ class Tools_class:
 		'''
 		create this attr in the attr lists __________
 		'''
-		line_attr = self.new_enum(input= input, name = '_'*lines, enums = '{}:'.format(name))
-		cmds.setAttr(line_attr,e=True, lock = True)
 
-		return line_attr
+		for num in reversed(range(lines)):
+			try:
+				line_attr = self.new_enum(input= input, name = '_'*num, enums = '{}:'.format(name))
+				cmds.setAttr(line_attr,e=True, lock = True)
+			except:
+				continue
+
+			return line_attr
 
 	#----------------------------------------------------------------------------------------------------------------
 
@@ -695,7 +704,7 @@ class Tools_class:
 	                                                        
 	                #Colores
 	                cmds.setAttr (Curva+'.overrideEnabled', 1)
-	                self.asign_color(Curva, color = color)
+	                self.assign_color(Curva, color = color)
 	                cmds.setAttr('{}.lineWidth'.format(Curva), int(setup['line_width']))
 
 	                      

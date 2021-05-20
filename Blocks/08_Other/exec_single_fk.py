@@ -70,7 +70,7 @@ def build_single_fk_block():
 
     ctrl = mt.curve(input = loc_guide, type = cmds.getAttr('{}.CtrlType'.format(config), asString=True), rename = True, custom_name = False, name = '', 
                                        size = cmds.getAttr('{}.CtrlSize'.format(config)))
-    mt.asign_color(input = ctrl, color = cmds.getAttr('{}.CtrlColor'.format(config), asString = True))
+    mt.assign_color(input = ctrl, color = cmds.getAttr('{}.CtrlColor'.format(config), asString = True))
 
     root = mt.root_grp(input = ctrl)
 
@@ -83,7 +83,7 @@ def build_single_fk_block():
         gimbal_ctrl = mt.curve(input = loc_guide, type = cmds.getAttr('{}.CtrlType'.format(config), asString=True), rename = False, custom_name = True, 
                                                   name = ctrl.replace(nc['ctrl'], nc['gimbal_ctrl']), 
                                                   size = cmds.getAttr('{}.CtrlSize'.format(config)) * 0.8 )        
-        mt.asign_color(input = gimbal_ctrl, color = cmds.getAttr('{}.CtrlColor'.format(config), asString = True))
+        mt.assign_color(input = gimbal_ctrl, color = cmds.getAttr('{}.CtrlColor'.format(config), asString = True))
 
         cmds.parent(gimbal_ctrl, ctrl)
         

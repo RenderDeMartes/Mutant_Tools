@@ -51,7 +51,10 @@ def create_head_block(name = 'Head'):
     block = mt.create_block(name = name, icon = 'HeadNeck',  attrs = module['attrs'], build_command = module['build_command'], import_command = module['import'])
     config = block[1]
     block = block[0]
-      
+    
+    neck_name = name.split('_')[0]
+    head_name = name.split('_')[1]
+
     cmds.select(cl=True)
     neck_guide = mt.create_joint_guide(name = neck_name)
     cmds.move(0,0,0)

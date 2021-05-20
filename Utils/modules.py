@@ -166,10 +166,10 @@ class Modules_class(kinematics.Kinematics_class):
 		arrowFront = self.curve(type = '2dArrow')
 		cmds.rotate(90,0,90,cmds.listRelatives(arrowFront, s=True)[0] + '.cv[0:9]')
 
-		self.asign_color(input = cmds.listRelatives(arrow, s=True)[0], color = 'green')
-		self.asign_color(input = cmds.listRelatives(sphere, s=True)[0])
-		self.asign_color(input = cmds.listRelatives(arrowAxis, s=True)[0], color = 'red')
-		self.asign_color(input = cmds.listRelatives(arrowFront, s=True)[0], color = 'blue')
+		self.assign_color(input = cmds.listRelatives(arrow, s=True)[0], color = 'green')
+		self.assign_color(input = cmds.listRelatives(sphere, s=True)[0])
+		self.assign_color(input = cmds.listRelatives(arrowAxis, s=True)[0], color = 'red')
+		self.assign_color(input = cmds.listRelatives(arrowFront, s=True)[0], color = 'blue')
 
 		#create turn off and on attr
 		hide_attr = self.new_enum(input = joint, name = 'Helper')
@@ -223,9 +223,17 @@ class Modules_class(kinematics.Kinematics_class):
 						tx = text)
 
 		if ask_name == 'OK':
-				return cmds.promptDialog(query=True, text=True)	
+			if cmds.objExists(cmds.promptDialog(query=True, text=True)+nc['module']):
+				print ('Name exists error')
+				cmds.confirmDialog( title='Error', 
+									message='Error: Block name already exists', 
+									button=["Oh! ok!"])
+
+			return cmds.promptDialog(query=True, text=True)	
+
 		else:
 			cmds.error('We need a name :)')
+			
 
 #----------------------------------------------------------------------------------------------------------------
 

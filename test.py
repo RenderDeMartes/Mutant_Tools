@@ -24,7 +24,7 @@ mt = main_mosaic.Mosaic()
 #mt.connect_with_line()
 #mt.create_joint_guide()
 #mt.build_base(size = 3, name = 'lol')
-#mt.curve(type = 'root')
+#mt.curve(type = 'pin_cube')
 #mt.ribbon_between('joint1', 'joint2', 4 , 'hola')
 #mt.check_is_there_is_base()
 
