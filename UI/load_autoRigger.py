@@ -41,6 +41,7 @@ from PySide2.QtWidgets import *
 
 import maya.OpenMayaUI as omui
 from functools import partial
+from maya import OpenMaya
 #import pymel.core as pm
 import maya.cmds as cmds
 import maya.mel as mel
@@ -145,6 +146,7 @@ class AutoRigger(QtWidgets.QDialog):
 		self.init_ui()
 		self.create_layout()
 		self.create_connections()
+		OpenMaya.MGlobal.displayInfo('♥')
 
 
 	def init_ui(self):
@@ -175,9 +177,13 @@ class AutoRigger(QtWidgets.QDialog):
 		self.ui.progressBar.setValue(0)        
 		self.ui.bar_label.setText('Mosaic')
 
+	def reload_ui(self):
+		self.create_layout()
+		OpenMaya.MGlobal.displayInfo('♥')
+
 	def create_connections(self):
 		
-		self.ui.reload_ui.clicked.connect(self.create_layout)
+		self.ui.reload_ui.clicked.connect(self.reload_ui)
 		self.ui.build_btn.clicked.connect(self.buid_autorigger)
 
 	#-------------------------------------------------------------------

@@ -1,5 +1,5 @@
 {
-    "Name" :  "Limb",
+    "Name" :  "L_Shoulder,L_Elbow,L_Wrist",
     "Description":"This will create a basic Limb System",
     "Icon":"Limb.png",
 
@@ -13,10 +13,22 @@
 
     "attrs": {
             "SetParent_string":"new_locator",
+
             "Mirror_enum":"True:False:Right_Only",
+
+            "CtrlSize_float": "4",
             "TwistAmount_float": "4",
             "Ribbon_bool": "True",
-            "Blends_string":"Clavicle_Ctrl,Spine_05_Ctrl,COG_Ctrl,GLobal,Ctrl,Root_Ctrl"
+
+            "IkCtrlType_enum": "cube:sphere",
+            "PVCtrlType_enum": "sphere:cube",
+            "IkTopCtrlType_enum": "pin_cube:cube:sphere:circleY:circleX:circleY",
+            "FKCtrlType_enum": "bounding_cube:circleY:circleX:circleY:pin_cube",
+
+            "Blends_string":"Clavicle_Ctrl,Spine_05_Ctrl,COG_Ctrl,GLobal,Ctrl,Root_Ctrl",
+
+            "SetGameParent_string": ""
+
             }
 
  }

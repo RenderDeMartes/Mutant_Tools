@@ -27,7 +27,7 @@ mt = main_mosaic.Mosaic()
 #mt.curve(type = 'pin_cube')
 #mt.ribbon_between('joint1', 'joint2', 4 , 'hola')
 #mt.check_is_there_is_base()
-
+#mt.connect_with_line('R_Knee_Ik_Jnt','R_Wrist_Ik_PoleVector_Ctrl')
 '''
 import Mosaic_Tools
 from Mosaic_Tools.UI import load_autoRigger

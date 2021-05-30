@@ -286,8 +286,7 @@ class Kinematics_class(tools.Tools_class):
 		for joint in joints_for_distance:
 			current_distance = cmds.getAttr (joint + str ('.translate'+ axis))   
 			total_distance = total_distance + current_distance  
-			
-			
+		
 		if total_distance < 0:
 			total_distance = total_distance * -1  
 			
@@ -422,7 +421,7 @@ class Kinematics_class(tools.Tools_class):
 			pv_ctrl = cmds.rename(pv_ctrl, pv_ctrl.replace(nc['joint'],''))
 
 			ik_system.append(pv_ctrl)
-			self.match(pv_ctrl, pv_loc)
+			self.match(pv_ctrl, pv_loc, r=False)
 			cmds.delete(pv_loc)
 			cmds.poleVectorConstraint(pv_ctrl, ik_handle)
 			pv_grp = self.root_grp(replace_nc = True)        
@@ -430,11 +429,16 @@ class Kinematics_class(tools.Tools_class):
 			#clean controller
 			self.hide_attr(pv_ctrl, r = True,  s = True, v = True)
 
+			#connect with line
+			line = self.connect_with_line(pv_ctrl, cmds.listRelatives(end, p=True)[0])
+			print (line)
+			
 		#create top controler
-		top_ctrl = self.curve(type = top_curve, rename = False, custom_name = True, name = '{}{}'.format(start.replace(nc['joint'], ''), nc ['ctrl']), size = size)
-		self.match(top_ctrl, start)
+		cmds.select(cl=True)
+		top_ctrl = self.curve(type = top_curve, rename = False, custom_name = True, name = '{}{}'.format(start.replace(nc['joint'], ''), nc ['ctrl']), size = size*0.5)
+		self.match(top_ctrl, start, r=False)
 		top_grp = self.root_grp(replace_nc = True)
-
+		
 		self.hide_attr(top_ctrl,r = True,  s = True, v = True)
 		ik_system.append(top_ctrl)
 
@@ -448,6 +452,7 @@ class Kinematics_class(tools.Tools_class):
 		cmds.parent(pv_grp[0],ik_main_grp)
 		cmds.parent(IK_grp[0],ik_main_grp)
 		cmds.parent(top_grp[0],ik_main_grp)
+		#cmds.parent(line[0],ik_main_grp)
 
 		for c in ik_system:
 			cmds.select(c)
@@ -455,9 +460,15 @@ class Kinematics_class(tools.Tools_class):
 
 		#put the ik in the return list
 		ik_system.append(ik_handle)		
+		#add the line at the end
+		ik_system.append(line[0])		
 
 		return ik_system
+		'''
+		['L_Wrist_Ik_Ctrl', 'L_Wrist_Ik_PoleVector_Ctrl', 'L_Shoulder_Ik_Ctrl', 'L_Wrist_Ik_IKrp', 
+		'L_Wrist_Ik_PoleVector_Ctrl_L_Elbow_Ik_Jnt_Connected_Crv']
 
+		'''
 	#----------------------------------------------------------------------------------------------------------------
 
 	def joints_middle(self, start = '', end = '', axis = setup['twist_axis'], amount = 4, name = 'Twist'):
@@ -475,14 +486,14 @@ class Kinematics_class(tools.Tools_class):
 		#create joints in between
 		for i in range(amount):
 			#duplicate joint and delete children
-			middle_joint = cmds.duplicate(start, n = '{}_{}_{}{}'.format(start,name,i, nc['joint']), rc = True)[0]
+			middle_joint = cmds.duplicate(start, n = '{}_{}_{}{}'.format(start.replace(nc['joint'], ''),name,i, nc['joint']), rc = True)[0]
 			cmds.delete(cmds.listRelatives(middle_joint, c = True))
 
 			middle_joints.append(middle_joint)
 
 			#if the new joint is not the first parent it to the last one
-			if cmds.objExists('{}_{}_{}{}'.format(start,name,i - 1, nc['joint'])):
-				cmds.parent(middle_joint,'{}_{}_{}{}'.format(start,name,i - 1, nc['joint']))
+			if cmds.objExists('{}_{}_{}{}'.format(start.replace(nc['joint'], ''),name,i - 1, nc['joint'])):
+				cmds.parent(middle_joint,'{}_{}_{}{}'.format(start.replace(nc['joint'], ''),name,i - 1, nc['joint']))
 			
 			else:
 				try:cmds.parent(middle_joint, w=True)
@@ -772,7 +783,8 @@ class Kinematics_class(tools.Tools_class):
 		print (pv_distance)
 		cmds.select(cmds.listRelatives(ik_system[1], p=True))  
 		cmds.move(pv_distance*1.5, 0, 0 , r=1, os=1, wd=1) 
-		
+		cmds.rotate(0,0,0)
+
 		#add ik group to return groups
 		return_groups.append(cmds.listRelatives(ik_system[0], p =True)[0])
 		return_groups.append(cmds.listRelatives(ik_system[2], p =True)[0])
@@ -850,6 +862,21 @@ class Kinematics_class(tools.Tools_class):
 
 		return {'ik_fk':ik_fk,'upper_twist':upper_twist, 'lower_twist':lower_twist}
 
+        #IKFK 
+        #[0] ['L_Shoulder_Jnt', 'L_Elbow_Jnt', 'L_Wrist_Jnt'],
+        #[1] ['L_Shoulder_Ik_Jnt', 'L_Elbow_Ik_Jnt', 'L_Wrist_Ik_Jnt'], 
+        #[2] ['L_Shoulder_Fk_Jnt', 'L_Elbow_Fk_Jnt', 'L_Wrist_Fk_Jnt'], 
+        #[3] ['L_Shoulder_Fk_Ctrl', 'L_Elbow_Fk_Ctrl', 'L_Wrist_Fk_Ctrl'], 
+        #[4] ['L_Wrist_Ik_Ctrl', 'L_Wrist_Ik_PoleVector_Ctrl', 'L_Shoulder_Ik_Ctrl', 'L_Wrist_Ik_IKrp', 'L_Wrist_Ik_PoleVector_Ctrl_L_Elbow_Ik_Jnt_Connected_Crv', ('L_Wrist_Ik_IKrp_Stretchy_Grp', 'L_Wrist_Ik_IKrp_NormalScale_Loc', ['L_Wrist_Ik_Jnt_Stretchy_Loc'], ['L_Shoulder_Ik_Jnt_Stretchy_Loc'], ['L_Elbow_Ik_Jnt_Stretchy_Loc'], 'L_Shoulder_Ik_Jnt_L_Wrist_Ik_Jnt_Distance_Shape', 'L_Elbow_Ik_Jnt_L_Wrist_Ik_Jnt_Distance_Shape', 'L_Shoulder_Ik_Jnt_L_Elbow_Ik_Jnt_Distance_Shape')], ['L_Shoulder_Fk_Ctrl_Offset_Grp', 'L_Wrist_Ik_Ctrl_Offset_Grp', 'L_Shoulder_Ik_Ctrl_Offset_Grp', 'L_Shoulder_Ik_Jnt_Ctrl_Grp'])
+        #[5] ['L_Shoulder_Fk_Ctrl_Offset_Grp', 'L_Wrist_Ik_Ctrl_Offset_Grp', 'L_Shoulder_Ik_Ctrl_Offset_Grp', 'L_Shoulder_Ik_Jnt_Ctrl_Grp'])
+
+		#twist stuff
+        #ikfk['upper_twist']
+        #ikfk['lower_twist']
+        #ikfk['lower_twist']['twist_grp'] = 'R_Shoulder_Jnt_R_Elbow_Jnt_Twist_Grp'
+        #ikfk['lower_twist']['no_twist_grp'] = 'R_Shoulder_Jnt_NoTwist_Grp'
+        #ikfk['lower_twist']['joints'] = '['R_Shoulder_Jnt_Twist_0_Jnt', 'R_Shoulder_Jnt_Twist_1_Jnt', 'R_Shoulder_Jnt_Twist_2_Jnt', 'R_Shoulder_Jnt_Twist_3_Jnt']'
+        #ikfk['lower_twist']['curve'] = 'R_Shoulder_Jnt_Crv'
 
 	#----------------------------------------------------------------------------------------------------------------
 
@@ -911,7 +938,7 @@ class Kinematics_class(tools.Tools_class):
 		#create joints for controlling the chain ik
 		ik_joints = self.joints_middle_no_chain(start = start, end=end, axis = twist_axis, amount = amount, name = 'Ik')
 		cmds.skinCluster(ik_joints,spline_curve, tsb=True)
-			
+		
 		#create a ctrl for the iks
 		ik_controllers=[]
 		for num, jnt in enumerate(ik_joints):
@@ -1037,8 +1064,7 @@ class Kinematics_class(tools.Tools_class):
 				'fol_joints':fol_joints,
 				'ctrl_joints':ctrl_joints,
 				'controllers':controllers,
-				'controllers_grp':main_ctrl_grp,
-}
+				'controllers_grp':main_ctrl_grp}
 
 	
 #----------------------------------------------------------------------------------------------------------------
@@ -1089,3 +1115,11 @@ class Kinematics_class(tools.Tools_class):
 				'controllers':basic_ribbon['controllers'],
 				'controllers_grp':basic_ribbon['controllers_grp'],
 				'ctrl_fol_grp': ctrl_fol_grp}
+
+
+#--------------------------------
+'''
+PV orientado al mundo
+TOP IK orientado al mundo 
+
+'''

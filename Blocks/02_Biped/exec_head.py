@@ -42,7 +42,7 @@ with open(MODULE_FILE) as module_file:
 def create_head_block(name = 'Head'):
 
     #name checks and block creation
-    name = mt.ask_name(text = module['Name'], ask_for = 'Neck and Head Names (Separete with a _ )')
+    name = mt.ask_name(text = module['Name'], ask_for = 'Neck and Head Names (Separete with a , )')
     if cmds.objExists('{}{}'.format(name,nc['module'])):
         cmds.warning('Name already exists.')
         return ''

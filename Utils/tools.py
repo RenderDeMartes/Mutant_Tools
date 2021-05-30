@@ -911,6 +911,8 @@ class Tools_class:
 
 		connect_with_line_assets = [cv, cluster_start[1], cluster_end[1]]
 
+		cmds.parent(cluster_start[1], cluster_end[1],cv)
+
 		return connect_with_line_assets
 
 	#----------------------------------------------------------------------------------------------------------------

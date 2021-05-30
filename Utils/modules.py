@@ -202,14 +202,16 @@ class Modules_class(kinematics.Kinematics_class):
 			input = cmds.ls(sl=True)[0]
 
 		cmds.makeIdentity(input, apply=True, t=True, r=True, s=True ,n=False, pn=1)
-
-		if setup['twist_axis'] == 'Y':
-			cmds.joint(input, e = True, oj = 'yxz' , ch=True, secondaryAxisOrient = '{}'.format(setup['secondaryAxisOrient']))
-		elif setup['twist_axis'] == 'X':
-			cmds.joint(input, e = True, oj = 'xyz' , ch=True, secondaryAxisOrient = '{}'.format(setup['secondaryAxisOrient']))
-		else:
-			cmds.joint(input, e = True, oj = 'zyx' , ch=True, secondaryAxisOrient = '{}'.format(setup['secondaryAxisOrient']))
-
+		try:
+			if setup['twist_axis'] == 'Y':
+				cmds.joint(input, e = True, oj = 'yxz' , ch=True, secondaryAxisOrient = '{}'.format(setup['secondaryAxisOrient']))
+			elif setup['twist_axis'] == 'X':
+				cmds.joint(input, e = True, oj = 'xyz' , ch=True, secondaryAxisOrient = '{}'.format(setup['secondaryAxisOrient']))
+			else:
+				cmds.joint(input, e = True, oj = 'zyx' , ch=True, secondaryAxisOrient = '{}'.format(setup['secondaryAxisOrient']))
+		except:
+			print ('Error while orienting joints, sorry')
+			
 #----------------------------------------------------------------------------------------------------------------
 
 	def ask_name(self, text = '', ask_for = 'Name'):
