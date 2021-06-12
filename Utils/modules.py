@@ -214,7 +214,7 @@ class Modules_class(kinematics.Kinematics_class):
 			
 #----------------------------------------------------------------------------------------------------------------
 
-	def ask_name(self, text = '', ask_for = 'Name'):
+	def ask_name(self, text = '', ask_for = 'Name', check_split = False):
 		ask_name = cmds.promptDialog(
 						title='Name Block',
 						message=ask_for,
@@ -225,11 +225,18 @@ class Modules_class(kinematics.Kinematics_class):
 						tx = text)
 
 		if ask_name == 'OK':
-			if cmds.objExists(cmds.promptDialog(query=True, text=True)+nc['module']):
+			if cmds.objExists(cmds.promptDialog(query=True, text=True).replace(',','_')+nc['module']):
 				print ('Name exists error')
 				cmds.confirmDialog( title='Error', 
 									message='Error: Block name already exists', 
 									button=["Oh! ok!"])
+
+			if check_split == True:
+				if cmds.objExists(cmds.promptDialog(query=True, text=True).split(',')[0]+nc['module']):
+					print ('Name exists error')
+					cmds.confirmDialog( title='Error', 
+										message='Error: Block name already exists', 
+										button=["Oh! ok!"])
 
 			return cmds.promptDialog(query=True, text=True)	
 
@@ -372,5 +379,21 @@ class Modules_class(kinematics.Kinematics_class):
 				print('BaseA Created Successfully')
 
 		cmds.select(sel)#return to previews selection after the build
+
+#----------------------------------------------------------------------------------------------------------------
+
+	def mosaic_logger(self, mode = 'create'):
+
+		log_file = PATH.replace('//Config', '//log.txt')
+
+		if mode == 'create': 
+			print (log_file)
+			cmds.scriptEditorInfo(historyFilename=log_file, writeHistory=True)
+		elif mode == 'stop':
+			cmds.scriptEditorInfo(writeHistory=False)
+		elif mode == 'clear':
+			open(log_file, 'w').close()
+		else:
+			return None
 
 

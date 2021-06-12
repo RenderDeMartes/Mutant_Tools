@@ -38,7 +38,7 @@
    "line_width" : "2",
    
    "axis_helper":"True",
-   "twist_axis" : "Y",
+   "twist_axis" : "X",
    "secondaryAxisOrient" : "zup", 
 
    "stretch_default":"1",

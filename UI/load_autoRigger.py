@@ -136,7 +136,7 @@ class AutoRigger(QtWidgets.QDialog):
 	def __init__(self, parent=maya_main_window()):
 		super(AutoRigger, self).__init__(parent)
 
-
+		#UI Init
 		self.setWindowTitle(Title)
 		self.setFixedSize(505,552)
 
@@ -148,6 +148,10 @@ class AutoRigger(QtWidgets.QDialog):
 		self.create_connections()
 		OpenMaya.MGlobal.displayInfo('♥')
 
+		#Data init
+		self.current_block = None
+		self.current_block_folder = None
+		
 
 	def init_ui(self):
 		
@@ -177,9 +181,22 @@ class AutoRigger(QtWidgets.QDialog):
 		self.ui.progressBar.setValue(0)        
 		self.ui.bar_label.setText('Mosaic')
 
+		#set Manual Icons
+		self.ui.prebuild.setIcon(QtGui.QIcon(IconsPath + 'PRECODE.png'))
+		self.ui.current_code.setIcon(QtGui.QIcon(IconsPath + 'CODE.png'))
+		self.ui.postbuild.setIcon(QtGui.QIcon(IconsPath + 'POSTCODE.png'))
+		self.ui.reload_ui.setIcon(QtGui.QIcon(IconsPath + 'RELOAD.png'))
+		self.ui.log.setIcon(QtGui.QIcon(IconsPath + 'LOG.png'))
+
+
 	def reload_ui(self):
 		self.create_layout()
 		OpenMaya.MGlobal.displayInfo('♥')
+		
+		#rest propierties layout too
+		for i in reversed(range(self.ui.properties_layout.count())): 
+			self.ui.properties_layout.itemAt(i).widget().setParent(None)
+		self.ui.block_label.setText('Mosaic Autorigger')
 
 	def create_connections(self):
 		
@@ -325,8 +342,12 @@ class AutoRigger(QtWidgets.QDialog):
 		self.ui.side_layout.addWidget(side_hbox)
 
 		#up down buttons
-		up_button = QtWidgets.QPushButton('↑')
-		down_button = QtWidgets.QPushButton('↓')
+		#up_button = QtWidgets.QPushButton('↑')
+		up_button = QtWidgets.QPushButton()
+		up_button.setIcon(QtGui.QIcon(IconsPath + 'Up.png'))
+		#down_button = QtWidgets.QPushButton('↓')
+		down_button = QtWidgets.QPushButton()
+		down_button.setIcon(QtGui.QIcon(IconsPath + 'Down.png'))
 		up_button.setFixedSize(15,20)
 		down_button.setFixedSize(15,20)
 
@@ -341,8 +362,10 @@ class AutoRigger(QtWidgets.QDialog):
 			edit_button.setText(pack_name)
 
 		#delete button
-		delete_button = QtWidgets.QPushButton('✖')
+		#delete_button = QtWidgets.QPushButton('✖')
+		delete_button = QtWidgets.QPushButton()
 		delete_button.setFixedSize(15,15)
+		delete_button.setIcon(QtGui.QIcon(IconsPath + 'delete.png'))
 		#delete_button.setIcon(QtGui.QIcon(IconsPath + 'Delete.png'))
 		delete_button.setToolTip('Delete: {}'.format(pack_name))
 
@@ -375,19 +398,39 @@ class AutoRigger(QtWidgets.QDialog):
 		# this will clear the propieties layout so we can recreate stuff
 		for i in reversed(range(self.ui.properties_layout.count())): 
 			self.ui.properties_layout.itemAt(i).widget().setParent(None)
-			
+		
+		#collect data for opening logs and codes
+		self.current_block = block
+		print (self.current_block)
+
 		#print (block)
 		cmds.select(block)
 		config = cmds.listConnections(block)[1]
 		attrs =  cmds.listAttr(config , ud=True)
 		
 		#create may q box to hold the widgets
-		side_hbox = QGroupBox(block)
+		#side_hbox = QGroupBox(block)
+		side_hbox = QGroupBox()
+		self.ui.block_label.setText(block)
+
 		self.ui.properties_layout.addWidget(side_hbox)
 		v_layout = QtWidgets.QVBoxLayout()
 		side_hbox.setLayout(v_layout)
 
 		#get all attrs inf cofig node and get type so we can create UI depending of the type of attr
+
+		#Precode and Postcode attrs Code
+		if 'precode' in attrs:
+			self.ui.prebuild.setIcon(QtGui.QIcon(IconsPath + 'PRECODE_ON.png'))
+		else:
+			self.ui.prebuild.setIcon(QtGui.QIcon(IconsPath + 'PRECODE.png'))
+
+		if 'postcode' in attrs:
+			self.ui.postbuild.setIcon(QtGui.QIcon(IconsPath + 'POSTCODE_ON.png'))
+		else:
+			self.ui.postbuild.setIcon(QtGui.QIcon(IconsPath + 'POSTCODE.png'))
+
+		#depending of the attr type create the UI 
 		for attr in attrs:
 
 			edit_attr =  '{}.{}'.format(config, attr)
@@ -411,8 +454,12 @@ class AutoRigger(QtWidgets.QDialog):
 
 			#check Attrs type and create a layout diferente for each one
 			attr_type = cmds.getAttr('{}.{}'.format(config,attr), type = True)
+
+
+			#-----------------------------------------------------------------
 			if attr_type == 'string':
-				
+
+				#Main strings attrs UI
 				#print (attr + ': is string')
 				line_edit = QtWidgets.QLineEdit(cmds.getAttr('{}.{}'.format(config, attr)))
 				line_edit.textChanged.connect(partial(self.lineEdit_update_attr,line_edit, edit_attr))
@@ -424,7 +471,7 @@ class AutoRigger(QtWidgets.QDialog):
 					set_button.clicked.connect(partial(self.lineEdit_get_selection,line_edit, edit_attr))
 					h_layout.addWidget(set_button)
 
-
+			#-----------------------------------------------------------------
 			elif attr_type == 'enum':
 				#get all the options in the config combo box and add them to a custom qt cumbo box
 				#print (attr + ': is enum')
@@ -439,7 +486,7 @@ class AutoRigger(QtWidgets.QDialog):
 
 				h_layout.addWidget(enum_box)
 			   
-			   
+			#-----------------------------------------------------------------
 			elif attr_type == 'long':
 				#print (attr + ': is long')
 				
@@ -453,6 +500,7 @@ class AutoRigger(QtWidgets.QDialog):
 				h_layout.addWidget(int_label)
 				h_layout.addWidget(int_slider)
 
+			#-----------------------------------------------------------------
 			elif attr_type == 'bool':
 				#print (attr + ': is bool')
 				checkbox = QtWidgets.QCheckBox(attr)    
@@ -461,6 +509,7 @@ class AutoRigger(QtWidgets.QDialog):
 				h_layout.addWidget(checkbox)  
 				label.setParent(None)
 				checkbox.stateChanged.connect(partial(self.checkBox_update_attr, checkbox, edit_attr))
+
 
 	#-------------------------------------------------------------------
 
@@ -501,12 +550,27 @@ class AutoRigger(QtWidgets.QDialog):
 
 		cmds.undoInfo(openChunk=True)
 
+		#log
+		try:
+			mt.mosaic_logger(mode = 'clear')
+			mt.mosaic_logger(mode = 'stop')
+		except:
+			pass
+
+		#build
 		blocks = cmds.listRelatives('Mosaic_Build', c=True)
 		progress_max = len(blocks)
 		self.ui.progressBar.setMaximum(progress_max)
 		#select each block and run the build command and make progress bar move
 		for num, block in enumerate(blocks):
+			
+			#log
+			mt.mosaic_logger(mode = 'create')
+
+			print ('------------------------------------------------------------------------------------')
 			print ('Building: {}'.format(block))
+			print ('------------------------------------------------------------------------------------')
+
 			self.ui.bar_label.setText('Building: {}'.format(block))
 			self.ui.bar_label.setToolTip('Building: {}'.format(block))
 
@@ -529,6 +593,9 @@ class AutoRigger(QtWidgets.QDialog):
 			self.ui.bar_label.setToolTip('Succesfull build: {}'.format(block))
 			self.ui.progressBar.setValue((num + 1))
 			
+			#log
+			mt.mosaic_logger(mode = 'stop')
+
 
 		#all succes message
 		self.ui.bar_label.setText('Mosaic Build Complete')
@@ -538,7 +605,6 @@ class AutoRigger(QtWidgets.QDialog):
 
 		cmds.undoInfo(closeChunk=True)
 	#-------------------------------------------------------------------
-
 
 
 	# CLOSE EVENTS _________________________________

@@ -830,7 +830,7 @@ class Kinematics_class(tools.Tools_class):
 
 	#----------------------------------------------------------------------------------------------------------------
 
-	def twist_fk_ik(self, start = '', mid = '', end = '', size = 1, color = setup['main_color'], mode = setup['ik_fk_method'], twist_axis = setup['twist_axis']):
+	def twist_fk_ik(self, start = '', mid = '', end = '', size = 1, color = setup['main_color'], mode = setup['ik_fk_method'], twist_axis = setup['twist_axis'], twist_amount = 6):
 		
 		'''
 		create a ik fk chain with a switch for 3 joints, includes the twist information so is a full limb module
@@ -842,8 +842,8 @@ class Kinematics_class(tools.Tools_class):
 		#add the twists
 		main_joints = ik_fk[0]
 
-		upper_twist = self.advance_twist(main_joints[0],main_joints[1],mode = 'up', axis = twist_axis, driver = start)
-		lower_twist = self.advance_twist(main_joints[1],main_joints[2],mode = 'down', axis = twist_axis, driver = upper_twist['joints'][-1])
+		upper_twist = self.advance_twist(main_joints[0],main_joints[1],mode = 'up', axis = twist_axis, driver = start, amount =twist_amount)
+		lower_twist = self.advance_twist(main_joints[1],main_joints[2],mode = 'down', axis = twist_axis, driver = upper_twist['joints'][-1],amount =twist_amount)
 		
 		print (upper_twist)
 
