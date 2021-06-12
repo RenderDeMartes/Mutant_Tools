@@ -37,9 +37,11 @@ with open(MODULE_FILE) as module_file:
 def create_limb_block(name = 'Limb'):
 
     #name checks and block creation
-    name = mt.ask_name(text = module['Name'], ask_for = 'Limb Names (Separete with a , ), Use it for arms and legs!')
+    name = mt.ask_name(text = module['Name'], 
+                       ask_for = 'Limb Names (Separete with a , ), Use it for arms and legs!',
+                       check_split = True) 
     
-    if cmds.objExists('{}{}'.format(name,nc['module'])):
+    if cmds.objExists('{}{}'.format(name.split(',')[0],nc['module'])):
         cmds.warning('Name already exists.')
         return ''
 
@@ -109,10 +111,10 @@ def build_limb_block():
     cmds.parent(joint_two, new_guide)
     cmds.parent(joint_three, joint_two)
     
-    
     #ctrl attrs
     ctrl_size = cmds.getAttr('{}.CtrlSize'.format(config))
     game_parent = cmds.getAttr('{}.SetGameParent'.format(config), asString = True)
+    twist_amount = cmds.getAttr('{}.TwistAmount'.format(config))
 
     #use this group for later cleaning, just assign them when you create the top on hierarchy
     clean_rig_grp = ''
@@ -160,7 +162,7 @@ def build_limb_block():
         limb_b = cmds.ls(sl=True)[1]
         limb_c = cmds.ls(sl=True)[2]
         
-        ikfk = mt.twist_fk_ik(start = '', mid = '', end = '', size = ctrl_size, color = color)
+        ikfk = mt.twist_fk_ik(start = '', mid = '', end = '', size = ctrl_size, color = color, twist_amount = twist_amount)
         
         print ('----------------IK FK------------------')
 
@@ -198,7 +200,6 @@ def build_limb_block():
         cmds.parent(ikfk['ik_fk'][0][0], clean_rig_grp)
         cmds.parent(ikfk['ik_fk'][1][0], clean_rig_grp)
         cmds.parent(ikfk['ik_fk'][2][0], clean_rig_grp)
-        cmds.parent(ikfk['ik_fk'][4][4], clean_rig_grp)
 
         cmds.parent(ikfk['ik_fk'][4][5][0], clean_rig_grp)
         cmds.parent(cmds.listRelatives(ikfk['ik_fk'][4][3], p=True), clean_rig_grp)
@@ -241,23 +242,32 @@ def build_limb_block():
         #check if the mirror attrs to Only_Right or mirror to True
         if cmds.getAttr('{}.Mirror'.format(config), asString = True) == 'Right_Only':
             mirror_ctrl_grp = mt.mirror_group(clean_ctrl_grp, world = True)
-            #miror_jnt_grp = mt.mirror_group(clean_rig_grp, world = True)
-            cmds.parentConstraint(block_parent, miror_ctrl_grp , mo = True)     
-            clean_rig_grp = miror_jnt_grp
-            clean_ctrl_grp = miror_ctrl_grp
+
+            cmds.parentConstraint(block_parent, ikfk['ik_fk'][5][0] , mo = True)     
+            cmds.parentConstraint(block_parent, cmds.listRelatives(ikfk['ik_fk'][4][2], p=True) , mo = True)     
+            
+            clean_rig_grp = mirror_ctrl_grp
+            clean_ctrl_grp = mirror_ctrl_grp
 
         elif cmds.getAttr('{}.Mirror'.format(config), asString = True) == 'True':
             if str(side_guide).startswith(nc['right']) :
                 mirror_ctrl_grp = mt.mirror_group(clean_ctrl_grp, world = True)
-                #miror_jnt_grp = mt.mirror_group(clean_rig_grp, world = True)
-                cmds.parentConstraint(block_parent, mirror_ctrl_grp , mo = True) 
-                clean_ctrl_grp = miror_ctrl_grp
+
+                cmds.parentConstraint(block_parent, ikfk['ik_fk'][5][0] , mo = True)     
+                cmds.parentConstraint(block_parent, cmds.listRelatives(ikfk['ik_fk'][4][2], p=True) , mo = True)     
+
+                clean_ctrl_grp = mirror_ctrl_grp
             else:
-                cmds.parentConstraint(block_parent, clean_ctrl_grp , mo = True) 
+                cmds.parentConstraint(block_parent, ikfk['ik_fk'][5][0] , mo = True)     
+                cmds.parentConstraint(block_parent, cmds.listRelatives(ikfk['ik_fk'][4][2], p=True) , mo = True)     
+
                 clean_ctrl_grp = clean_ctrl_grp        
         
         else: #only left side
-            cmds.parentConstraint(block_parent, for_parent , mo = True) 
+
+                cmds.parentConstraint(block_parent, ikfk['ik_fk'][5][0] , mo = True)     
+                cmds.parentConstraint(block_parent, cmds.listRelatives(ikfk['ik_fk'][4][2], p=True) , mo = True)     
+
 
         #blends
         '''
@@ -270,23 +280,29 @@ def build_limb_block():
         '''
 
         #Finish -------------------------------------------
-        '''
+        
         #game parents for bind joints
         game_parent = cmds.getAttr('{}.SetGameParent'.format(config))
         if side_guide.startswith(nc['right']):
             game_parent = game_parent.replace(nc['left'],nc['right'])
 
         if cmds.objExists(game_parent):
-            cmds.parent(bind_joint, game_parent) 
+            cmds.parent(bind_joints[0], game_parent) 
+        
         else: 
             bind_jnt_grp = '{}{}'.format(setup['rig_groups']['bind_joints'], nc['group'])
             if cmds.objExists(bind_jnt_grp):
-                cmds.parent(bind_joint, bind_jnt_grp) 
+                cmds.parent(bind_joints[0], bind_jnt_grp) 
            
         #clean ctrls
-        cmds.parent(clean_ctrl_grp, 'Rig_Ctrl_Grp')
+        cmds.parent(clean_ctrl_grp, setup['base_groups']['control']+ nc['group'])
+        cmds.parentConstraint('Rig_Ctrl_Grp' , clean_ctrl_grp,mo=True)
+        cmds.scaleConstraint('Rig_Ctrl_Grp' , clean_ctrl_grp,mo=True)
 
         #parent rig
         cmds.parent(clean_rig_grp, '{}{}'.format(setup['rig_groups']['misc'], nc['group']))
 
-        '''  
+        #connected
+        cmds.parent(ikfk['ik_fk'][4][4], clean_ctrl_grp)
+
+          

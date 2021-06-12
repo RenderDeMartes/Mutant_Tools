@@ -43,7 +43,8 @@ def create_head_block(name = 'Head'):
 
     #name checks and block creation
     name = mt.ask_name(text = module['Name'], ask_for = 'Neck and Head Names (Separete with a , )')
-    if cmds.objExists('{}{}'.format(name,nc['module'])):
+
+    if cmds.objExists('{}{}'.format(name.replace(',','_'),nc['module'])):
         cmds.warning('Name already exists.')
         return ''
 
@@ -52,8 +53,8 @@ def create_head_block(name = 'Head'):
     config = block[1]
     block = block[0]
     
-    neck_name = name.split('_')[0]
-    head_name = name.split('_')[1]
+    neck_name = name.split(',')[0]
+    head_name = name.split(',')[1]
 
     cmds.select(cl=True)
     neck_guide = mt.create_joint_guide(name = neck_name)

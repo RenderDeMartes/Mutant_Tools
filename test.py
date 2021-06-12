@@ -29,6 +29,13 @@ mt = main_mosaic.Mosaic()
 #mt.check_is_there_is_base()
 #mt.connect_with_line('R_Knee_Ik_Jnt','R_Wrist_Ik_PoleVector_Ctrl')
 '''
+mt.mosaic_logger(mode = 'create')
+mt.mosaic_logger(mode = 'stop')
+mt.mosaic_logger(mode = 'clear')
+'''
+
+
+'''
 import Mosaic_Tools
 from Mosaic_Tools.UI import load_autoRigger
 import imp
