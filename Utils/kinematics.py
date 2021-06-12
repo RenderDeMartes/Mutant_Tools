@@ -16,10 +16,10 @@ NEEDS A UPDATE :)
 #----------------
 how to: 
 	
-import Mosaic_Tools
-import Mosaic_Tools.Utils
-from Mosaic_Tools.Utils import kinematics
-imp.reload(Mosaic_Tools.Utils.kinematics)
+import Mutant_Tools
+import Mutant_Tools.Utils
+from Mutant_Tools.Utils import kinematics
+imp.reload(Mutant_Tools.Utils.kinematics)
 
 kin = kinematics.Kinematics_class()
 kin.FUNC_NAME(argument = '')
@@ -57,10 +57,10 @@ try:
 	imp.reload(tools)
 
 except:
-	import Mosaic_Tools
-	import Mosaic_Tools.Utils
-	from Mosaic_Tools.Utils import tools
-	imp.reload(Mosaic_Tools.Utils.tools)
+	import Mutant_Tools
+	import Mutant_Tools.Utils
+	from Mutant_Tools.Utils import tools
+	imp.reload(Mutant_Tools.Utils.tools)
 
 #----------------------------------------------------------------------------------------------------------------
 

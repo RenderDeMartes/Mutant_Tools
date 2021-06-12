@@ -6,10 +6,10 @@ date: 21/04/2020
 #----------------
 how to: 
 	
-import Mosaic_Tools
-import Mosaic_Tools.Utils
-from Mosaic_Tools.Utils import modules
-imp.reload(Mosaic_Tools.Utils.modules)
+import Mutant_Tools
+import Mutant_Tools.Utils
+from Mutant_Tools.Utils import modules
+imp.reload(Mutant_Tools.Utils.modules)
 
 modules = modules.RdM()
 modules.FUNC(ARGUMENTS)
@@ -48,12 +48,12 @@ try:
 	import kinematics
 	imp.reload(kinematics)
 except:
-	import Mosaic_Tools
-	import Mosaic_Tools.Utils
-	from Mosaic_Tools.Utils import tools
-	imp.reload(Mosaic_Tools.Utils.tools)
-	from Mosaic_Tools.Utils import kinematics
-	imp.reload(Mosaic_Tools.Utils.kinematics)
+	import Mutant_Tools
+	import Mutant_Tools.Utils
+	from Mutant_Tools.Utils import tools
+	imp.reload(Mutant_Tools.Utils.tools)
+	from Mutant_Tools.Utils import kinematics
+	imp.reload(Mutant_Tools.Utils.kinematics)
 
 
 #----------------------------------------------------------------------------------------------------------------
@@ -79,7 +79,7 @@ class Modules_class(kinematics.Kinematics_class):
 
 #----------------------------------------------------------------------------------------------------------------
 
-	def create_block(self, name = 'Mosaic', icon = 'Limb', attrs = {'attrs':'something'}, build_command = 'print("Test")', import_command = 'print("Test2")'):
+	def create_block(self, name = 'Mutant', icon = 'Limb', attrs = {'attrs':'something'}, build_command = 'print("Test")', import_command = 'print("Test2")'):
 
 		PATH = os.path.dirname(__file__)
 		PATH = PATH.replace('\\Utils', '//Icons//') #change this path depending of the folder
@@ -91,12 +91,12 @@ class Modules_class(kinematics.Kinematics_class):
 		cmds.setAttr('{}.iconName'.format(block), icon, type="string")
 		self.hide_attr(t=True, r=True, s=True,v=True)
 
-		if cmds.objExists('Mosaic_Build'):
+		if cmds.objExists('Mutant_Build'):
 			pass
 		else:
-			cmds.group(n = 'Mosaic_Build', em=True)
+			cmds.group(n = 'Mutant_Build', em=True)
 		print (block)
-		cmds.parent(block,'Mosaic_Build')
+		cmds.parent(block,'Mutant_Build')
 
 		#create network node with all the attrs
 		config = cmds.createNode('network', n = '{}_Config'.format(name))
@@ -375,14 +375,14 @@ class Modules_class(kinematics.Kinematics_class):
 			if cmds.objExists('Rig_Grp'):
 				pass
 			else:
-				base = self.build_baseA(name = 'Mosaic_Tools')
+				base = self.build_baseA(name = 'Mutant_Tools')
 				print('BaseA Created Successfully')
 
 		cmds.select(sel)#return to previews selection after the build
 
 #----------------------------------------------------------------------------------------------------------------
 
-	def mosaic_logger(self, mode = 'create'):
+	def Mutant_logger(self, mode = 'create'):
 
 		log_file = PATH.replace('//Config', '//log.txt')
 

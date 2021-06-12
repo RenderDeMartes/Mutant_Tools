@@ -10,8 +10,8 @@ This will create a UI for the autorriger tool. Is dinamically created based on t
 #----------------
 how to: 
 	
-import Mosaic_Tools
-from Mosaic_Tools.UI import load_blockBuilder
+import Mutant_Tools
+from Mutant_Tools.UI import load_blockBuilder
 import imp
 imp.reload(load_blockBuilder)
 
@@ -26,7 +26,7 @@ dependencies:
 QT FILE
 ICONS
 JSON FILES
-Main Mosaic
+Main Mutant
 
 #----------------
 licence: https://www.eulatemplate.com/live.php?token=ySe25XC0bKARQymXaGQGR8i4gvXMJgVS
@@ -81,18 +81,18 @@ PATH = os.path.dirname(__file__)
 OTHERS_PATH = PATH.replace('\\UI', '//Others') #get presets path to read files
 BLOCKS_PATH = PATH.replace('\\UI', '//Blocks') #get Blocks paths to write files
 
-Title = 'Mosaic // Block Builder'
+Title = 'Mutant // Block Builder'
 Folder = PATH.replace('\\UI', '') 
 UI_File = 'blockBuilder.ui'
 IconsPath =  Folder + '//Icons//'
 #-------------------------------------------------------------------
 
-import Mosaic_Tools
-import Mosaic_Tools.Utils
-from Mosaic_Tools.Utils import main_mosaic
-imp.reload(Mosaic_Tools.Utils.main_mosaic)
+import Mutant_Tools
+import Mutant_Tools.Utils
+from Mutant_Tools.Utils import main_mutant
+imp.reload(Mutant_Tools.Utils.main_mutant)
 
-mt = main_mosaic.Mosaic()
+mt = main_mutant.Mutant()
 
 
 #-------------------------------------------------------------------

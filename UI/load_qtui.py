@@ -10,8 +10,8 @@ This will create a UI for the autorriger tool. Is dinamically created based on t
 #----------------
 how to: 
 	
-import Mosaic_Tools
-from Mosaic_Tools.UI import load_name
+import Mutant_Tools
+from Mutant_Tools.UI import load_name
 imp.reload(load_name)
 
 try:name.close()
@@ -25,7 +25,7 @@ dependencies:
 QT FILE
 ICONS
 JSON FILES
-Main Mosaic
+Main Mutant
 
 #----------------
 licence: https://www.eulatemplate.com/live.php?token=ySe25XC0bKARQymXaGQGR8i4gvXMJgVS
@@ -80,12 +80,12 @@ UI_File = 'name.ui'
 IconsPath =  Folder + '/Icons/' #icons path
 #-------------------------------------------------------------------
 
-import Mosaic_Tools
-import Mosaic_Tools.Utils
-from Mosaic_Tools.Utils import main_mosaic
-imp.reload(Mosaic_Tools.Utils.main_mosaic)
+import Mutant_Tools
+import Mutant_Tools.Utils
+from Mutant_Tools.Utils import main_mutant
+imp.reload(Mutant_Tools.Utils.main_mutant)
 
-mt = main_mosaic.Mosaic()
+mt = main_mutant.Mutant()
 
 
 #-------------------------------------------------------------------

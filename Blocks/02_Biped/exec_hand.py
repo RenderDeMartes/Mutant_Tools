@@ -3,12 +3,12 @@ import json
 import imp
 import os
 
-import Mosaic_Tools
-import Mosaic_Tools.Utils
-from Mosaic_Tools.Utils import main_mosaic
-imp.reload(Mosaic_Tools.Utils.main_mosaic)
+import Mutant_Tools
+import Mutant_Tools.Utils
+from Mutant_Tools.Utils import main_mutant
+imp.reload(Mutant_Tools.Utils.main_mutant)
 
-mt = main_mosaic.Mosaic()
+mt = main_mutant.Mutant()
 
 #---------------------------------------------
 

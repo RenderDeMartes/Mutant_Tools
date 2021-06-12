@@ -21,10 +21,10 @@ NEEDS A UPDATE :)
 #----------------
 how to: 
 	
-import Mosaic_Tools
-import Mosaic_Tools.Utils
-from Mosaic_Tools.Utils import tools
-imp.reload(Mosaic_Tools.Utils.tools)
+import Mutant_Tools
+import Mutant_Tools.Utils
+from Mutant_Tools.Utils import tools
+imp.reload(Mutant_Tools.Utils.tools)
 
 tool = tools.Tools_class()
 tool.FUNC_NAME(argument = '')

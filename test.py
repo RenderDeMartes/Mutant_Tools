@@ -1,13 +1,13 @@
-import Mosaic_Tools
-import Mosaic_Tools.Utils
-from Mosaic_Tools.Utils import main_mosaic
+import Mutant_Tools
+import Mutant_Tools.Utils
+from Mutant_Tools.Utils import main_mutant
 import imp
-imp.reload(Mosaic_Tools.Utils.main_mosaic)
-mt = main_mosaic.Mosaic()
+imp.reload(Mutant_Tools.Utils.main_mutant)
+mt = main_mutant.Mutant()
 
 #mt.create_block()
-#cmds.reorder( 'Mosaic_Block6', r=-1 )
-#mt.move_outliner(input = 'Mosaic_Block3', up =True)
+#cmds.reorder( 'Mutant_Block6', r=-1 )
+#mt.move_outliner(input = 'Mutant_Block3', up =True)
 #mt.bounding_cube(axis = 'Z')
 #help(rdm)
 #from see import see
@@ -29,15 +29,15 @@ mt = main_mosaic.Mosaic()
 #mt.check_is_there_is_base()
 #mt.connect_with_line('R_Knee_Ik_Jnt','R_Wrist_Ik_PoleVector_Ctrl')
 '''
-mt.mosaic_logger(mode = 'create')
-mt.mosaic_logger(mode = 'stop')
-mt.mosaic_logger(mode = 'clear')
+mt.Mutant_logger(mode = 'create')
+mt.Mutant_logger(mode = 'stop')
+mt.Mutant_logger(mode = 'clear')
 '''
 
 
 '''
-import Mosaic_Tools
-from Mosaic_Tools.UI import load_autoRigger
+import Mutant_Tools
+from Mutant_Tools.UI import load_autoRigger
 import imp
 imp.reload(load_autoRigger)
 
@@ -46,8 +46,8 @@ except:pass
 AutoRigger = load_autoRigger.AutoRigger()
 AutoRigger.show()
 
-import Mosaic_Tools
-from Mosaic_Tools.UI import load_blockBuilder
+import Mutant_Tools
+from Mutant_Tools.UI import load_blockBuilder
 import imp
 imp.reload(load_blockBuilder)
 

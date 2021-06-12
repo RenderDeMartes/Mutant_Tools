@@ -10,8 +10,8 @@ This will create a UI for the autorriger tool. Is dinamically created based on t
 #----------------
 how to: 
 	
-import Mosaic_Tools
-from Mosaic_Tools.UI import load_autoRigger
+import Mutant_Tools
+from Mutant_Tools.UI import load_autoRigger
 imp.reload(load_autoRigger)
 
 try:AutoRigger.close()
@@ -25,7 +25,7 @@ dependencies:
 QT FILE
 ICONS
 JSON FILES
-Main Mosaic
+Main Mutant
 
 #----------------
 licence: https://www.eulatemplate.com/live.php?token=ySe25XC0bKARQymXaGQGR8i4gvXMJgVS
@@ -75,19 +75,19 @@ with open(SETUP_FILE) as setup_file:
 #QT WIndow!
 PATH = os.path.dirname(__file__)
 
-Title = 'Mosaic // Autor_Rigger'
+Title = 'Mutant // Autor_Rigger'
 Folder = PATH.replace('\\UI', '') 
 UI_File = 'autoRigger.ui'
 IconsPath =  Folder + '/Icons/'
 
 #-------------------------------------------------------------------
 
-import Mosaic_Tools
-import Mosaic_Tools.Utils
-from Mosaic_Tools.Utils import main_mosaic
-imp.reload(Mosaic_Tools.Utils.main_mosaic)
+import Mutant_Tools
+import Mutant_Tools.Utils
+from Mutant_Tools.Utils import main_mutant
+imp.reload(Mutant_Tools.Utils.main_mutant)
 
-mt = main_mosaic.Mosaic()
+mt = main_mutant.Mutant()
 
 #-------------------------------------------------------------------
 def add_sys_folders_remove_compiled():
@@ -170,16 +170,16 @@ class AutoRigger(QtWidgets.QDialog):
 		self.create_block_buttons()
 		self.delete_side_buttons()
 		
-		if cmds.objExists('Mosaic_Build'):
+		if cmds.objExists('Mutant_Build'):
 			try:
-				for num, child in enumerate(cmds.listRelatives('Mosaic_Build', c=True)):
+				for num, child in enumerate(cmds.listRelatives('Mutant_Build', c=True)):
 					self.create_side_button(pack_name = child, index = num)
 			except:
-				print ('Mosaic_Build Grp is empty')
+				print ('Mutant_Build Grp is empty')
 
 		self.ui.layout().setContentsMargins(3, 3, 3, 3)          
 		self.ui.progressBar.setValue(0)        
-		self.ui.bar_label.setText('Mosaic')
+		self.ui.bar_label.setText('Mutant')
 
 		#set Manual Icons
 		self.ui.prebuild.setIcon(QtGui.QIcon(IconsPath + 'PRECODE.png'))
@@ -196,7 +196,7 @@ class AutoRigger(QtWidgets.QDialog):
 		#rest propierties layout too
 		for i in reversed(range(self.ui.properties_layout.count())): 
 			self.ui.properties_layout.itemAt(i).widget().setParent(None)
-		self.ui.block_label.setText('Mosaic Autorigger')
+		self.ui.block_label.setText('Mutant Autorigger')
 
 	def create_connections(self):
 		
@@ -334,7 +334,7 @@ class AutoRigger(QtWidgets.QDialog):
 		self.create_layout()
 
 	#-------------------------------------------------------------------
-	def create_side_button(self, pack_name = 'Mosaic_Block', index = 0):
+	def create_side_button(self, pack_name = 'Mutant_Block', index = 0):
 	  
 		#This will create all the side buttons when the up buttons are clicked
 		
@@ -552,20 +552,20 @@ class AutoRigger(QtWidgets.QDialog):
 
 		#log
 		try:
-			mt.mosaic_logger(mode = 'clear')
-			mt.mosaic_logger(mode = 'stop')
+			mt.Mutant_logger(mode = 'clear')
+			mt.Mutant_logger(mode = 'stop')
 		except:
 			pass
 
 		#build
-		blocks = cmds.listRelatives('Mosaic_Build', c=True)
+		blocks = cmds.listRelatives('Mutant_Build', c=True)
 		progress_max = len(blocks)
 		self.ui.progressBar.setMaximum(progress_max)
 		#select each block and run the build command and make progress bar move
 		for num, block in enumerate(blocks):
 			
 			#log
-			mt.mosaic_logger(mode = 'create')
+			mt.Mutant_logger(mode = 'create')
 
 			print ('------------------------------------------------------------------------------------')
 			print ('Building: {}'.format(block))
@@ -594,14 +594,14 @@ class AutoRigger(QtWidgets.QDialog):
 			self.ui.progressBar.setValue((num + 1))
 			
 			#log
-			mt.mosaic_logger(mode = 'stop')
+			mt.Mutant_logger(mode = 'stop')
 
 
 		#all succes message
-		self.ui.bar_label.setText('Mosaic Build Complete')
-		self.ui.bar_label.setToolTip('Mosaic Build Complete')
+		self.ui.bar_label.setText('Mutant Build Complete')
+		self.ui.bar_label.setToolTip('Mutant Build Complete')
 
-		cmds.setAttr('Mosaic_Build.v', 0)
+		cmds.setAttr('Mutant_Build.v', 0)
 
 		cmds.undoInfo(closeChunk=True)
 	#-------------------------------------------------------------------
@@ -612,12 +612,12 @@ class AutoRigger(QtWidgets.QDialog):
 
 		#delete the script job created for the realding of the UI
 		try:
-			cmds.scriptJob(kill=mosaic_sj)
+			cmds.scriptJob(kill=Mutant_sj)
 			print ('ScripJob deleted')
 		except:
 			pass
 
-		print ('Mosaic_Tools Autorigger Closed')
+		print ('Mutant_Tools Autorigger Closed')
 #-------------------------------------------------------------------
 
 if __name__ == "__main__":
@@ -635,16 +635,16 @@ if __name__ == "__main__":
 
 '''
 #create script Job for laoding the UI
-def mosaic_script_job():
+def Mutant_script_job():
 	try:
 		sel = cmds.ls(sl=True)[-1]
 		if str(sel).endswith('_Block'):
 			self.create_layout()
 	except:pass
-mosaic_sj = cmds.scriptJob(event=["SelectionChanged", mosaic_script_job])
+Mutant_sj = cmds.scriptJob(event=["SelectionChanged", Mutant_script_job])
 	   
 
-#cmds.scriptJob(kill=mosaic_sj)
+#cmds.scriptJob(kill=Mutant_sj)
 #cmds.scriptJob(ka=1)
 
 

@@ -1274,7 +1274,7 @@ TextEditor--TextEditorWidget &gt; QWidget {
                <item>
                 <widget class="QLabel" name="block_label">
                  <property name="text">
-                  <string>Mosaic Autorigger</string>
+                  <string>Mutant Autorigger</string>
                  </property>
                 </widget>
                </item>
@@ -1560,7 +1560,7 @@ background: qlineargradient(x1: 0, y1: 0.5, x2: 1, y2: 0.5, stop: 0 #44494b, sto
              </size>
             </property>
             <property name="toolTip">
-             <string>Build the Mosaic Build Group</string>
+             <string>Build the Mutant Build Group</string>
             </property>
             <property name="text">
              <string>Build</string>

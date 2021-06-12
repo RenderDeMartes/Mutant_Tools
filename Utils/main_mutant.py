@@ -6,13 +6,13 @@ date: 21/04/2020
 #----------------
 how to: 
 	
-import Mosaic_Tools
-import Mosaic_Tools.Utils
-from Mosaic_Tools.Utils import main_mosaic
-imp.reload(Mosaic_Tools.Utils.main_mosaic)
+import Mutant_Tools
+import Mutant_Tools.Utils
+from Mutant_Tools.Utils import main_mutant
+imp.reload(Mutant_Tools.Utils.main_mutant)
 
-mosaic = main_mosaic.Mosaic()
-mosaic.FUNC(ARGUMENTS)
+Mutant = main_mutant.Mutant()
+Mutant.FUNC(ARGUMENTS)
 
 #----------------
 dependencies:   
@@ -67,31 +67,31 @@ try:
 	import blocks
 	imp.reload(blocks)
 except:
-	import Mosaic_Tools
-	import Mosaic_Tools.Utils
-	from Mosaic_Tools.Utils import tools
-	imp.reload(Mosaic_Tools.Utils.tools)
-	from Mosaic_Tools.Utils import kinematics
-	imp.reload(Mosaic_Tools.Utils.kinematics)
-	from Mosaic_Tools.Utils import modules
-	imp.reload(Mosaic_Tools.Utils.modules)
+	import Mutant_Tools
+	import Mutant_Tools.Utils
+	from Mutant_Tools.Utils import tools
+	imp.reload(Mutant_Tools.Utils.tools)
+	from Mutant_Tools.Utils import kinematics
+	imp.reload(Mutant_Tools.Utils.kinematics)
+	from Mutant_Tools.Utils import modules
+	imp.reload(Mutant_Tools.Utils.modules)
 #----------------
 
-class Mosaic(modules.Modules_class):
+class Mutant(modules.Modules_class):
 
 	def __init__ (self):
 		
-		if cmds.objExists('Mosaic_Tools'):
-			print ('Mosaic node created on:{} with version {}'.format(cmds.getAttr('Mosaic_Tools.Date'),cmds.getAttr('Mosaic_Tools.Version')))
+		if cmds.objExists('Mutant_Tools'):
+			print ('Mutant node created on:{} with version {}'.format(cmds.getAttr('Mutant_Tools.Date'),cmds.getAttr('Mutant_Tools.Version')))
 
 		else:
-			mosaic_node = cmds.createNode('network',n='Mosaic_Tools')
-			date_attr = self.string_attr(mosaic_node, 'Date', time.ctime())
+			Mutant_node = cmds.createNode('network',n='Mutant_Tools')
+			date_attr = self.string_attr(Mutant_node, 'Date', time.ctime())
 			cmds.setAttr(date_attr, l=True)
-			version_attr = self.string_attr(mosaic_node, 'Version', version)
+			version_attr = self.string_attr(Mutant_node, 'Version', version)
 			cmds.setAttr(version_attr, l=True)
 
-		OpenMaya.MGlobal.displayInfo('Mosaic_Tools {}'.format(version))
+		OpenMaya.MGlobal.displayInfo('Mutant_Tools {}'.format(version))
 
 	
 

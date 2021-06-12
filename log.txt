@@ -1,11 +1,18 @@
 ------------------------------------------------------------------------------------
-Building: L_Shoulder_Block
+Building: Spine_Block
 ------------------------------------------------------------------------------------
-Import successfully import exec_limb 
+Import successfully import exec_spine
 {'geometry': 'Geo', 'control': 'Ctrl', 'rig': 'Rig'}
 {'render_geo': 'Render_Geo'}
 {'bind_joints': 'Bind_Joints', 'bind_geo': 'Bind_Geo', 'misc': 'Miscellaneous', 'template': 'Template'}
 BaseA Created Successfully
+Spine_Base_Jnt
+Build Spine_Block Success
+Build successfully exec_spine.build_spine_block()
+------------------------------------------------------------------------------------
+Building: L_Shoulder_Block
+------------------------------------------------------------------------------------
+Import successfully import exec_limb 
 L_Shoulder_Jnt
 // Replaced 3 names.
 ['L_Shoulder_Jnt', 'R_Shoulder_Jnt']
@@ -31,7 +38,7 @@ creating ik Chain for : L_Shoulder_Jnt
 // Error: searchReplaceNames _Jnt  "selected"; // 
 // Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
 IK = ['L_Wrist_Ik_Ctrl', 'L_Wrist_Ik_PoleVector_Ctrl', 'L_Shoulder_Ik_Ctrl', 'L_Wrist_Ik_IKrp', 'L_Wrist_Ik_PoleVector_Ctrl_L_Elbow_Ik_Jnt_Connected_Crv']
-10.049875621120895
+10.049875621120897
 ['L_Shoulder_Fk_Ctrl_Offset_Grp', 'L_Wrist_Ik_Ctrl_Offset_Grp', 'L_Shoulder_Ik_Ctrl_Offset_Grp', 'L_Shoulder_Ik_Jnt_Ctrl_Grp']
 __________
 adding loc to ['L_Shoulder_Fk_Ctrl']
@@ -94,7 +101,7 @@ creating ik Chain for : R_Shoulder_Jnt
 // Error: searchReplaceNames _Jnt  "selected"; // 
 // Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
 IK = ['R_Wrist_Ik_Ctrl', 'R_Wrist_Ik_PoleVector_Ctrl', 'R_Shoulder_Ik_Ctrl', 'R_Wrist_Ik_IKrp', 'R_Wrist_Ik_PoleVector_Ctrl_R_Elbow_Ik_Jnt_Connected_Crv']
-10.049875621120895
+10.049875621120897
 ['R_Shoulder_Fk_Ctrl_Offset_Grp', 'R_Wrist_Ik_Ctrl_Offset_Grp', 'R_Shoulder_Ik_Ctrl_Offset_Grp', 'R_Shoulder_Ik_Jnt_Ctrl_Grp']
 __________
 adding loc to ['R_Shoulder_Fk_Ctrl']
@@ -136,23 +143,3 @@ R_Elbow_Twist_2_Bnd
 R_Elbow_Twist_3_Bnd
 ['R_Shoulder_Twist_0_Bnd', 'R_Shoulder_Twist_1_Bnd', 'R_Shoulder_Twist_2_Bnd', 'R_Shoulder_Twist_3_Bnd', 'R_Elbow_Twist_0_Bnd', 'R_Elbow_Twist_1_Bnd', 'R_Elbow_Twist_2_Bnd', 'R_Elbow_Twist_3_Bnd']
 Build successfully exec_limb.build_limb_block()
-------------------------------------------------------------------------------------
-Building: L_Clavicle_Block
-------------------------------------------------------------------------------------
-Import successfully import exec_clavicle
-L_Clavicle_Jnt
-// Replaced 2 names.
-['L_Clavicle_Jnt', 'R_Clavicle_Jnt']
-['L_Clavicle_Ctrl']
-# Warning: Object, 'L_Clavicle_Bnd', skipped. It is already a child of the parent, 'world'. # 
-['R_Clavicle_Ctrl']
-# Warning: Object, 'R_Clavicle_Bnd', skipped. It is already a child of the parent, 'world'. # 
-Build L_Clavicle_Block Success
-Build successfully exec_clavicle.build_clavicle_block()
-------------------------------------------------------------------------------------
-Building: Spine_Block
-------------------------------------------------------------------------------------
-Import successfully import exec_spine
-Spine_Base_Jnt
-Build Spine_Block Success
-Build successfully exec_spine.build_spine_block()
