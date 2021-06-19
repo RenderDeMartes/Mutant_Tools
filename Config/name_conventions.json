@@ -14,7 +14,8 @@
    "joint_end":	"_JntEnd",
    "joint_bind": "_Bnd",
    "joint_ctrl": "_JntCtrl",
-   
+   "joint_twist": "_JntTwist",
+
    "ik": "_Ik_Jnt",
    "fk": "_Fk_Jnt",
 

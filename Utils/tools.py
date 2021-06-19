@@ -618,7 +618,7 @@ class Tools_class:
 		#print initial statement
 		print ('adding loc to {}'.format(self.input))
 
-		#create a dummy loc 
+		#create a dummy loc
 		if cmds.objExists(obj_name + nc['locator']):
 			loc_shape = obj_name + nc['locator']
 		else:
@@ -639,6 +639,7 @@ class Tools_class:
 			if cmds.attributeQuery(attr_name, node=loc_shape, exists=True):
 				pass
 			else:
+				self.line_attr(input= loc_shape, name = 'MT')
 				cmds.addAttr(loc_shape, ln= attr_name, max=1, dv=0, at='double', min=0)
 				cmds.setAttr('{}.{}'.format(loc_shape, attr_name), e=1, keyable=True)
 		except:

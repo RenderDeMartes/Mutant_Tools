@@ -14,7 +14,7 @@
 
     "attrs": {
         "SetParent_string": "new_locator",
-        "BindJoints_float": "4",
+        "CtrlSize_float": "4",
         "SetGameParent_string": ""
     }
 }

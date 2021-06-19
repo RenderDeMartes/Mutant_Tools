@@ -110,7 +110,7 @@ class BlockBuilder(QtWidgets.QDialog):
 		super(BlockBuilder, self).__init__(parent)
 
 		self.setWindowTitle(Title)
-		self.setFixedSize(453,580)
+		self.setFixedSize(468,580)
 
 		self.init_ui()
 		self.create_layout()
@@ -162,8 +162,10 @@ class BlockBuilder(QtWidgets.QDialog):
 			tab = '05_Clothes'
 		elif self.ui.props_radio.isChecked():
 			tab = '06_Props'
+		elif self.ui.games_radio.isChecked():
+			tab = '07_Games'
 		else :
-			tab = '07_Other'
+			tab = '08_Other'
 
 
 		#create the config dic with ordered dict so it can mantain the order we desire

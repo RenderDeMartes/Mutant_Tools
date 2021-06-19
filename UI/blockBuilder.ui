@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>453</width>
+    <width>470</width>
     <height>576</height>
    </rect>
   </property>
@@ -792,20 +792,6 @@ TextEditor--TextEditorWidget &gt; QWidget {
          <property name="spacing">
           <number>0</number>
          </property>
-         <item row="0" column="3">
-          <widget class="QRadioButton" name="animals_radio">
-           <property name="text">
-            <string>Animals</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="0">
-          <widget class="QRadioButton" name="presets_radio">
-           <property name="text">
-            <string>Presets</string>
-           </property>
-          </widget>
-         </item>
          <item row="0" column="2">
           <widget class="QRadioButton" name="facial_radio">
            <property name="text">
@@ -823,10 +809,10 @@ TextEditor--TextEditorWidget &gt; QWidget {
            </property>
           </widget>
          </item>
-         <item row="0" column="4">
-          <widget class="QRadioButton" name="clothes_radio">
+         <item row="0" column="3">
+          <widget class="QRadioButton" name="animals_radio">
            <property name="text">
-            <string>Clothes</string>
+            <string>Animals</string>
            </property>
           </widget>
          </item>
@@ -837,10 +823,31 @@ TextEditor--TextEditorWidget &gt; QWidget {
            </property>
           </widget>
          </item>
-         <item row="0" column="6">
+         <item row="0" column="0">
+          <widget class="QRadioButton" name="presets_radio">
+           <property name="text">
+            <string>Presets</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="4">
+          <widget class="QRadioButton" name="clothes_radio">
+           <property name="text">
+            <string>Clothes</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="7">
           <widget class="QRadioButton" name="other_radio">
            <property name="text">
             <string>Other</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="6">
+          <widget class="QRadioButton" name="games_radio">
+           <property name="text">
+            <string>Games</string>
            </property>
           </widget>
          </item>
@@ -1043,38 +1050,5 @@ TextEditor--TextEditorWidget &gt; QWidget {
   </layout>
  </widget>
  <resources/>
- <connections>
-  <connection>
-   <sender>description_line</sender>
-   <signal>selectionChanged()</signal>
-   <receiver>description_line</receiver>
-   <slot>clear()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>235</x>
-     <y>58</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>155</x>
-     <y>50</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>name_line</sender>
-   <signal>selectionChanged()</signal>
-   <receiver>name_line</receiver>
-   <slot>clear()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>258</x>
-     <y>29</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>200</x>
-     <y>21</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>
