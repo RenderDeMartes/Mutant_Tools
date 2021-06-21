@@ -298,9 +298,19 @@ class Modules_class(kinematics.Kinematics_class):
 		clean_joints = cmds.duplicate(input , to = True, n = input.replace(nc['guide'], nc['joint']), rc=True)
 		for jnt in clean_joints:
 			if nc['guide'] in str(jnt):
-				jnt = cmds.rename(jnt, jnt.replace(nc['guide'], nc['joint'])) 
+				jnt = cmds.rename(jnt, jnt.replace(nc['guide'], nc['joint']))
+
+				try:cmds.deleteAttr( '{}.Helper'.format(jnt) )
+				except:pass
+
 			if jnt.endswith('1'):
-				jnt =cmds.rename(jnt, jnt.replace('1', '')) 
+				jnt =cmds.rename(jnt, jnt.replace('1', ''))
+
+			try:
+				parent = cmds.listRelatives(jnt, p=True)
+				cmds.parent(jnt,w=True)
+				cmds.parent( jnt, parent)
+			except:pass
 
 
 		cmds.parent(clean_joints[0], w=True)

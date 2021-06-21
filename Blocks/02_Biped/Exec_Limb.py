@@ -207,36 +207,6 @@ def build_limb_block():
         cmds.parent(ikfk['ik_fk'][5][0], clean_ctrl_grp)
         cmds.parent(cmds.listRelatives(ikfk['ik_fk'][4][0], p=True), clean_ctrl_grp)
         cmds.parent(cmds.listRelatives(cmds.listRelatives(ikfk['ik_fk'][4][1], p=True), p=True), clean_ctrl_grp)
-        
-
-        #create bind Joints for the skin ------------------------- 
-        #bind joints
-        bind_joints = []
-        twist_joints = ikfk['upper_twist']['joints'] + ikfk['lower_twist']['joints']
-        bind_joint = ''
-        last_bind_joint = ''
-
-        for jnt in twist_joints:
-            try: last_bind_joint = bind_joint
-            except:pass
-            #bind_joint = mt.duplicate_change_names( input = jnt, hi = False, search=nc['joint'], replace = nc['joint_bind'])[0]
-            #cmds.delete(cmds.pickWalk(bind_joints, d='down'))#clean the dirty constraint
-            #cmds.delete(cmds.listRelatives(bind_joint, ad=True))
-            bind_joint = cmds.duplicate(jnt, po=True, n= jnt.replace(nc['joint'], nc['joint_bind']))[0]
-            cmds.parentConstraint(jnt, bind_joint)
-            cmds.scaleConstraint(jnt, bind_joint)
-
-            #clean bind joints and radius to 1.5
-            print (bind_joint)
-            try:
-                cmds.parent(bind_joint,last_bind_joint)
-            except:
-                cmds.parent(bind_joint, w=True)
-            
-            bind_joints.append(bind_joint)
-            cmds.setAttr('{}.radius'.format(bind_joint), 1.5)
-
-        print (bind_joints)
 
         #flip right rig  to right side ------------------------- 
         #check if the mirror attrs to Only_Right or mirror to True
@@ -253,16 +223,16 @@ def build_limb_block():
             if str(side_guide).startswith(nc['right']) :
                 mirror_ctrl_grp = mt.mirror_group(clean_ctrl_grp, world = True)
 
-                cmds.parentConstraint(block_parent, ikfk['ik_fk'][5][0] , mo = True)     
-                cmds.parentConstraint(block_parent, cmds.listRelatives(ikfk['ik_fk'][4][2], p=True) , mo = True)     
+                cmds.parentConstraint(block_parent, ikfk['ik_fk'][5][0] , mo = True)
+                cmds.parentConstraint(block_parent, cmds.listRelatives(ikfk['ik_fk'][4][2], p=True) , mo = True)
 
                 clean_ctrl_grp = mirror_ctrl_grp
             else:
-                cmds.parentConstraint(block_parent, ikfk['ik_fk'][5][0] , mo = True)     
-                cmds.parentConstraint(block_parent, cmds.listRelatives(ikfk['ik_fk'][4][2], p=True) , mo = True)     
+                cmds.parentConstraint(block_parent, ikfk['ik_fk'][5][0] , mo = True)
+                cmds.parentConstraint(block_parent, cmds.listRelatives(ikfk['ik_fk'][4][2], p=True) , mo = True)
 
-                clean_ctrl_grp = clean_ctrl_grp        
-        
+                clean_ctrl_grp = clean_ctrl_grp
+
         else: #only left side
 
                 cmds.parentConstraint(block_parent, ikfk['ik_fk'][5][0] , mo = True)     
@@ -278,6 +248,34 @@ def build_limb_block():
             ''
             #cmds.orientConstraint()
         '''
+
+        #create bind Joints for the skin -------------------------
+        #bind joints
+        bind_joints = []
+        twist_joints = ikfk['upper_twist']['joints'] + ikfk['lower_twist']['joints']
+        bind_joint = ''
+
+        for jnt in twist_joints:
+            try: cmds.select(bind_joint)
+            except:pass
+            #bind_joint = mt.duplicate_change_names( input = jnt, hi = False, search=nc['joint'], replace = nc['joint_bind'])[0]
+            #cmds.delete(cmds.pickWalk(bind_joints, d='down'))#clean the dirty constraint
+            #cmds.delete(cmds.listRelatives(bind_joint, ad=True))
+            bind_joint = cmds.joint(n = jnt.replace(nc['joint'], nc['joint_bind']))
+            #mt.orient_joint(input=bind_joint)
+            cmds.delete(cmds.parentConstraint(jnt, bind_joint, mo=False))
+            cmds.delete(cmds.scaleConstraint(jnt, bind_joint, mo=False))
+            cmds.makeIdentity(a=True,t=True,s=True,r=True)
+            cmds.pointConstraint(jnt, bind_joint, mo=False)
+            cmds.orientConstraint(jnt, bind_joint, mo=False)
+            cmds.scaleConstraint(jnt, bind_joint, mo=True)
+
+            #clean bind joints and radius to 1.5
+            print (bind_joint)
+
+            bind_joints.append(bind_joint)
+            cmds.setAttr('{}.radius'.format(bind_joint),2)
+
 
         #Finish -------------------------------------------
         
@@ -304,5 +302,7 @@ def build_limb_block():
 
         #connected
         cmds.parent(ikfk['ik_fk'][4][4], clean_ctrl_grp)
+
+
 
           

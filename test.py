@@ -34,6 +34,7 @@ mt.Mutant_logger(mode = 'stop')
 mt.Mutant_logger(mode = 'clear')
 '''
 
+mt.replace_connection_with_doublelinear('Spine_Belly_Jnt','scaleX')
 
 '''
 import Mutant_Tools

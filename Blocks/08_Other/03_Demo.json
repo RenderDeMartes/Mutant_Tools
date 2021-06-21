@@ -1,0 +1,19 @@
+{
+    "Name": "Demo",
+    "Description": "This is the DEV DEMO Block to learn how to code a block",
+    "Icon": "Demo.png",
+    "Enable": "True",
+    "python_file": "exec_demo.py",
+    "import": "import exec_demo",
+    "imp.reload": "imp.reload(exec_demo)",
+    "exec_command": "exec_demo.create_demo_block()",
+    "build_command": "exec_demo.build_demo_block()",
+    "attrs": {
+        "SetParent_string": "new_locator",
+        "Mirror_enum": "True:False:Right_Only",
+        "TwistAmount_float": "4",
+        "Ribbon_bool": "True",
+        "Blends_string": "COG_Ctrl,GLobal_Ctrl,Root_Ctrl",
+        "SetGameParent_string": ""
+    }
+}

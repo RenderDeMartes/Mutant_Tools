@@ -41,8 +41,8 @@
    "distance":"_Distance",
    "condition":"_Condition",
    "blend":"_Blend",
-
    "connected":"_Connected",
+   "skin_cluster": "_Skin",
+   "expression": "_Expression"
 
-   "skin_cluster": "_Skin"
 }

@@ -663,72 +663,72 @@ class Tools_class:
 
 		#BASED ON OLD ONE in RDM Tools V1 (Sorry for the spanish i just copy paste it)
 
-	    #Im deleting one node so if theres one already in the scene i dont want to delete it
-	    if cmds.objExists('makeTextCurves1'):
-	        cmds.rename ('makeTextCurves1','makeTextCurves1LOL')
-	        
-	    #Lets Create some curves    
-	    Texto = '_'+ name_text
-	    Color = color
+		#Im deleting one node so if theres one already in the scene i dont want to delete it
+		if cmds.objExists('makeTextCurves1'):
+			cmds.rename ('makeTextCurves1','makeTextCurves1LOL')
 
-	    LetrasDobles = []
-	    
-	    Text = cmds.textCurves (n= Texto, t = Texto, o = True, f = font)    
-	    Lista= cmds.listRelatives (Text, ad = True)
-	    
-	    #print Lista
-	    Shape = Lista[1]
-	    #print Shape
-	    cmds.delete ('makeTextCurves1')
-	    for Curva in Lista:
-	        if cmds.objectType(str(Curva), isType='nurbsCurve'):
-	            #print Curva
-	            #Get Parents
-	            curvaPapa = cmds.listRelatives(Curva, p = True)
-	            #print 'Curva papa ' + str(curvaPapa)
-	            curvaAbuelo = cmds.listRelatives(curvaPapa, p = True)
-	            #print 'curva Abuelo '+(curvaAbuelo[0])
-	    
-	            #letters like e and o have 2 curves instead of 1
-	            DobleCurva = cmds.listRelatives(curvaAbuelo)
-	            
-	            if len(DobleCurva)==2:
-	                                
-	                #print 'DobleCurva ' + str(DobleCurva)
-	                LetrasDobles.append (Curva)
-	                            
-	            else:                        
-	                #parent to first shape
-	                if not Shape == curvaPapa[0]:
-	                    cmds.makeIdentity (curvaAbuelo, a = True, t = True , r = True)
-	                    cmds.parent (Curva, Shape, r = True, s = True)
-	                                                        
-	                #Colores
-	                cmds.setAttr (Curva+'.overrideEnabled', 1)
-	                self.assign_color(Curva, color = color)
-	                cmds.setAttr('{}.lineWidth'.format(Curva), int(setup['line_width']))
+		#Lets Create some curves
+		Texto = '_'+ name_text
+		Color = color
 
-	                      
-	    #Do stuff for the Double Letters
-	        #print LetrasDobles
-	    for dl in LetrasDobles:
-	        dlPapa = cmds.listRelatives (dl, p = True)
-	        dlAbuelo = cmds.listRelatives (dlPapa, p = True)
-	        cmds.makeIdentity (dlAbuelo, a = True, t = True , r = True)
-	        cmds.parent(dl, Shape, r = True, s = True)
-	        cmds.setAttr (dl+'.overrideEnabled', 1)
-	        cmds.setAttr (dl+'.overrideColor', Color)
-	                   
-	    #Organizing
-	    cmds.parent (Shape, w = True)       
-	    cmds.rename (Shape, Texto + str(nc['ctrl'])) 
-	    cmds.delete(Text[0])
-	    cmds.delete (Texto + str(nc['ctrl']+'Shape'))
-	    cmds.move (-0.5,0,0, r = True)
-	    cmds.xform(cp= True)
-	    cmds.rename(name_text + nc['curve'])
+		LetrasDobles = []
 
-	    return name_text + nc['curve']
+		Text = cmds.textCurves (n= Texto, t = Texto, o = True, f = font)
+		Lista= cmds.listRelatives (Text, ad = True)
+
+		#print Lista
+		Shape = Lista[1]
+		#print Shape
+		cmds.delete ('makeTextCurves1')
+		for Curva in Lista:
+			if cmds.objectType(str(Curva), isType='nurbsCurve'):
+				#print Curva
+				#Get Parents
+				curvaPapa = cmds.listRelatives(Curva, p = True)
+				#print 'Curva papa ' + str(curvaPapa)
+				curvaAbuelo = cmds.listRelatives(curvaPapa, p = True)
+				#print 'curva Abuelo '+(curvaAbuelo[0])
+
+				#letters like e and o have 2 curves instead of 1
+				DobleCurva = cmds.listRelatives(curvaAbuelo)
+
+				if len(DobleCurva)==2:
+
+					#print 'DobleCurva ' + str(DobleCurva)
+					LetrasDobles.append (Curva)
+
+				else:
+					#parent to first shape
+					if not Shape == curvaPapa[0]:
+						cmds.makeIdentity (curvaAbuelo, a = True, t = True , r = True)
+						cmds.parent (Curva, Shape, r = True, s = True)
+
+					#Colores
+					cmds.setAttr (Curva+'.overrideEnabled', 1)
+					self.assign_color(Curva, color = color)
+					cmds.setAttr('{}.lineWidth'.format(Curva), int(setup['line_width']))
+
+
+		#Do stuff for the Double Letters
+			#print LetrasDobles
+		for dl in LetrasDobles:
+			dlPapa = cmds.listRelatives (dl, p = True)
+			dlAbuelo = cmds.listRelatives (dlPapa, p = True)
+			cmds.makeIdentity (dlAbuelo, a = True, t = True , r = True)
+			cmds.parent(dl, Shape, r = True, s = True)
+			cmds.setAttr (dl+'.overrideEnabled', 1)
+			cmds.setAttr (dl+'.overrideColor', Color)
+
+		#Organizing
+		cmds.parent (Shape, w = True)
+		cmds.rename (Shape, Texto + str(nc['ctrl']))
+		cmds.delete(Text[0])
+		cmds.delete (Texto + str(nc['ctrl']+'Shape'))
+		cmds.move (-0.5,0,0, r = True)
+		cmds.xform(cp= True)
+		cmds.rename(name_text + nc['curve'])
+
+		return name_text + nc['curve']
 			
 	#----------------------------------------------------------------------------------------------------------------		
 
@@ -798,20 +798,20 @@ class Tools_class:
 	def create_ik_spline_twist(self, start, end, curve):
 		#create ik spline based on 2 joints and one curve
 
-	    # ik spline solver
-	    ikSpline = cmds.ikHandle(sj=start,
-	                             ee=end,
-	                             sol='ikSplineSolver',
-	                             n=start + '_Twist' + nc['ik_spline'],
-	                             c = curve,
-	                             ccv=False,
-	                             pcv = False)
+		# ik spline solver
+		ikSpline = cmds.ikHandle(sj=start,
+								 ee=end,
+								 sol='ikSplineSolver',
+								 n=start + '_Twist' + nc['ik_spline'],
+								 c = curve,
+								 ccv=False,
+								 pcv = False)
 
-	    effector_spline = cmds.rename(ikSpline[1],
-	                                 start + '_Twist' + nc['effector'])
-	    ikSpline = ikSpline[0]
-	        
-	    return {'ikHandle': ikSpline, 'effector': effector_spline}
+		effector_spline = cmds.rename(ikSpline[1], start + '_Twist' + nc['effector'])
+		ikSpline = ikSpline[0]
+		spline_curve = ikSpline[2]
+
+		return {'ikHandle': ikSpline, 'effector': effector_spline, 'curve': spline_curve}
 
 	#----------------------------------------------------------------------------------------------------------------		
 
@@ -831,6 +831,8 @@ class Tools_class:
 
 		if mode == 'divide':
 			cmds.setAttr(str(md_node)+'.operation', 2)
+		elif mode == 'power':
+			cmds.setAttr(str(md_node) + '.operation', 3)
 		else:
 			cmds.setAttr(str(md_node)+'.operation', 1)
 
@@ -852,8 +854,11 @@ class Tools_class:
 			cmds.connectAttr(in_x2, '{}.input2.input2X'.format(md_node), f=True)
 
 		#connect output
+		if out_x == '':
+			return md_node
+
 		if force: 
-				cmds.connectAttr('{}.output.outputX'.format(md_node), out_x, f=True)
+			cmds.connectAttr('{}.output.outputX'.format(md_node), out_x, f=True)
 		else:
 			cmds.connectAttr('{}.output.outputX'.format(md_node), out_x)
 
@@ -933,6 +938,15 @@ class Tools_class:
 
 	#----------------------------------------------------------------------------------------------------------------
 
+	def replace_connection_with_doublelinear(self, input = '', attr = '', name = 'DoubleLinear'):
+
+		double_linear = cmds.shadingNode('addDoubleLinear', asUtility=True, name = name)
+		connection_to_replace = cmds.listConnections('{}.{}'.format(input,attr), p=True)[0]
+		print (connection_to_replace)
+		cmds.connectAttr('{}'.format(connection_to_replace), '{}.input1'.format(double_linear), f=True)
+		cmds.connectAttr('{}.output'.format(double_linear), '{}.{}'.format(input,attr), f=True)
+
+		return double_linear
 
 	#----------------------------------------------------------------------------------------------------------------
 
