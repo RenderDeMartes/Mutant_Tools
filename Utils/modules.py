@@ -116,9 +116,8 @@ class Modules_class(kinematics.Kinematics_class):
 				self.new_attr_interger(input= config, name = attr.split('_')[0], min = 1 , max = 20, default = int(attrs[attr]))
 			elif 'bool' in attr:
 				self.new_boolean(input= config, name = attr.split('_')[0], dv = attrs[attr])
-			
-			
-		return block,config 
+
+		return block,config
 #----------------------------------------------------------------------------------------------------------------
 
 	def move_outliner(self, input = '', up = False, down = False):

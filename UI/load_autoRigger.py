@@ -404,7 +404,7 @@ class AutoRigger(QtWidgets.QDialog):
 		print (self.current_block)
 
 		#print (block)
-		cmds.select(block)
+		cmds.select(self.current_block)
 		config = cmds.listConnections(block)[1]
 		attrs =  cmds.listAttr(config , ud=True)
 		
@@ -471,6 +471,15 @@ class AutoRigger(QtWidgets.QDialog):
 					set_button.clicked.connect(partial(self.lineEdit_get_selection,line_edit, edit_attr))
 					h_layout.addWidget(set_button)
 
+				if 'Code' in attr:  # if code  in name it will create a larger box
+					line_edit.setParent(None)
+					print('codeBLock')
+					plainText_edit = QtWidgets.QPlainTextEdit(cmds.getAttr('{}.{}'.format(config, attr)))
+					plainText_edit.textChanged.connect(partial(self.lineEdit_update_attr,plainText_edit, edit_attr))
+					slider = QtWidgets.QSlider()
+					h_layout.addWidget(plainText_edit)
+					h_layout.addWidget(plainText_edit)
+
 			#-----------------------------------------------------------------
 			elif attr_type == 'enum':
 				#get all the options in the config combo box and add them to a custom qt cumbo box
@@ -509,6 +518,7 @@ class AutoRigger(QtWidgets.QDialog):
 				h_layout.addWidget(checkbox)  
 				label.setParent(None)
 				checkbox.stateChanged.connect(partial(self.checkBox_update_attr, checkbox, edit_attr))
+			#-----------------------------------------------------------------
 
 
 	#-------------------------------------------------------------------
@@ -522,7 +532,11 @@ class AutoRigger(QtWidgets.QDialog):
 
 	#-------------------------------------------------------------------
 	def lineEdit_update_attr(self, field, attr,*args):
-		cmds.setAttr(attr, field.text(), type = 'string')
+		try:#simple line edits
+			cmds.setAttr(attr, field.text(), type = 'string')
+		except:#code plain Texts
+			cmds.setAttr(attr, field.toPlainText(), type = 'string')
+
 	def lineEdit_get_selection(self, field, attr,*args):
 		sel = cmds.ls(sl=True)
 		#remove ugly lists keys

@@ -681,6 +681,23 @@ p, li { white-space: pre-wrap; }
           </spacer>
          </item>
          <item>
+          <widget class="QRadioButton" name="python_radio">
+           <property name="text">
+            <string>Python</string>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QRadioButton" name="mel_radio">
+           <property name="text">
+            <string>Mel</string>
+           </property>
+          </widget>
+         </item>
+         <item>
           <widget class="QPushButton" name="pushButton">
            <property name="minimumSize">
             <size>
