@@ -92,8 +92,8 @@ def build_spine_block():
     #cmds.getAttr('{}.AttrName'.format(config), asString = True)
 
     #groups for later cleaning
-    clean_rig_grp = ''
-    clean_ctrl_grp = ''
+    clean_ctrl_grp = cmds.group(em=True, name = name + nc['ctrl'] + nc['group'])
+    clean_joint_grp = cmds.group(em=True, name = name + nc['joint'] + nc['group'])
 
     #orient the joints
     mt.orient_joint(input = guide)
@@ -136,6 +136,8 @@ def build_spine_block():
                                   name + nc['effector'])
     ikSpline = ikSpline[0]
 
+    ik_grp = cmds.group(ikSpline, spline_curve, n = name + '_Ik' + nc['group'])
+
     #move cv to fit the joints
     belly_pos = cmds.xform('{}_Belly{}'.format(name, nc['joint']), q=True, ws=True, t=True)
     cmds.move(belly_pos[0],belly_pos[1],belly_pos[2],'{}.cv[2]'.format(spline_curve))
@@ -155,6 +157,8 @@ def build_spine_block():
 
     cmds.skinCluster(ctrl_joints[:-1], spline_curve, tsb=True)
 
+    cmds.parent(ctrl_joints, spine_joints[0], clean_joint_grp)
+
     #create controllers
     spine_ctrls = []
 
@@ -170,8 +174,8 @@ def build_spine_block():
     cmds.parentConstraint(base_ctrl, ctrl_joints[0], mo=True)
     cmds.parentConstraint(base_ctrl, spine_joints[-1], mo=True)
     spine_ctrls.append(base_ctrl)
-
     cmds.select(cl=True)
+
     chest_ctrl = mt.curve(input = '',
                          type = 'cube', rename = True,
                          custom_name = True,
@@ -272,20 +276,6 @@ def build_spine_block():
     base_volume =mt.new_attr(input= stretchy_attr.split('.')[0], name = 'BaseVolume', min = 0.01 , max = 10, default = 1)
 
     #Stretchy
-    '''
-    curve_info_node = cmds.shadingNode("curveInfo", asUtility = True, n = name + "_curveInfo_Node")
-    cmds.connectAttr('{}.worldSpace[0]'.format(cmds.listRelatives(spline_curve,shapes=True)[0]),'{}.inputCurve'.format(curve_info_node),f=True)
-    original_len = cmds.getAttr('{}.arcLength'.format(curve_info_node))
-
-    condition_node = cmds.shadingNode("condition", asUtility = True, n = name + "_Stretch_Condition_Node")
-    cmds.setAttr(condition_node + '.operation', 2 )
-    cmds.setAttr(condition_node + '.secondTerm', original_len)
-    cmds.connectAttr('{}.arcLength'.format(curve_info_node), condition_node + '.firstTerm')
-
-    mult_offset = mt.connect_md_node(in_x1=original_len, in_x2 = offset_attr, out_x= condition_node + '.secondTerm', mode='mult', name= 'OffsetMult', force=False)
-
-    new_scale_offset = mt.connect_md_node(in_x1='{}.arcLength'.format(curve_info_node), in_x2 = original_len, out_x= condition_node + '.colorIfTrueR', mode='divide', name= 'NewScale', force=False)
-    '''
 
     curve_info_node = cmds.shadingNode("curveInfo", asUtility = True, n = name + "_curveInfo_Node")
     cmds.connectAttr('{}.worldSpace[0]'.format(cmds.listRelatives(spline_curve,shapes=True)[0]),'{}.inputCurve'.format(curve_info_node),f=True)
@@ -294,6 +284,7 @@ def build_spine_block():
 
     #normalize
     normalize_loc = cmds.spaceLocator(n = name + '_Normalize' + nc['locator'])[0]
+    cmds.parent(normalize_loc, ik_grp)
     normalize_node = mt.connect_md_node(in_x1= arch_lenght_attr,
                                    in_x2 = normalize_loc + '.scaleX',
                                    out_x= '',
@@ -433,16 +424,17 @@ def build_spine_block():
 
     #clean a bit
     clean_rig_grp = cmds.group(em=True, n = '{}{}'.format(block.replace(nc['module'],'_Rig'), nc['group']))
+    cmds.parent(clean_joint_grp, ik_grp, clean_rig_grp)
+    cmds.parent(base_fk_offset,clean_ctrl_grp)
 
+
+    cmds.parent(clean_ctrl_grp, setup['base_groups']['control'] + nc['group'])
+    cmds.parent(clean_rig_grp, '{}{}'.format(setup['rig_groups']['misc'], nc['group']))
 
     print ('Build {} Success'.format(block))
-
 
 
 #build_spine_block()
 
 """
-Stretchy
-COG as option?
-
 """

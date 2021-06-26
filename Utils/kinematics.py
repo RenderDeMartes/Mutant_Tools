@@ -378,7 +378,7 @@ class Kinematics_class(tools.Tools_class):
 		
 	#----------------------------------------------------------------------------------------------------------------
 
-	def simple_ik_chain(self, start = '', end = '', size = 1, color = setup['main_color'], ik_curve = setup['ik_ctrl'], pv_curve = setup['pv_ctrl'], pv = True, top_curve = setup['top_ik_ctrl']):
+	def simple_ik_chain(self, start = '', end = '', size = 1, color = setup['main_color'], ik_curve = setup['ik_ctrl'], pv_curve = setup['pv_ctrl'], pv = True, top_curve = setup['top_ik_ctrl'], mirror_behavior = True):
 		'''
 		create a ik chain for desire joints
 		'''
@@ -401,8 +401,15 @@ class Kinematics_class(tools.Tools_class):
 
 		ik_system.append(ctrl)
 		self.match(ctrl, end)
+		cmds.rotate(0,0,0, a=True)
+		cmds.delete(cmds.orientConstraint(end, ctrl,mo=False, skip = setup['twist_axis'].lower()))
+
 		IK_grp = self.root_grp(replace_nc = True)
 		self.hide_attr(ctrl, s = True, v = True)
+
+		if mirror_behavior == True:
+			if ctrl.startswith(nc['right']):
+				self.mirror_group( input=IK_grp, world=False)
 
 		cmds.orientConstraint(ctrl, end ,mo =True)
 
@@ -415,16 +422,22 @@ class Kinematics_class(tools.Tools_class):
 
 			#create pole vector in correct position
 			pv_loc = self.pole_vector_placement(bone_one = start, bone_two = cmds.listRelatives(end, p = True), bone_three = end)
-	 
+
 			#create controller in position with offset grp
 			pv_ctrl = self.curve(type = pv_curve, rename = False, custom_name = True, name = '{}{}{}'.format(end,nc ['pole_vector'], nc ['ctrl']), size = size/2)
 			pv_ctrl = cmds.rename(pv_ctrl, pv_ctrl.replace(nc['joint'],''))
-
+			#cmds.rotate(0,0,0)
 			ik_system.append(pv_ctrl)
-			self.match(pv_ctrl, pv_loc, r=False)
+			cmds.pointConstraint(pv_loc, pv_ctrl, mo=False)
 			cmds.delete(pv_loc)
+			pv_grp = self.root_grp(replace_nc = True)
+
+			if mirror_behavior == True:
+				if pv_ctrl.startswith(nc['right']):
+					self.root_grp(pv_grp)
+					#self.mirror_group(input=pv_ctrl, world=False)
+
 			cmds.poleVectorConstraint(pv_ctrl, ik_handle)
-			pv_grp = self.root_grp(replace_nc = True)        
 
 			#clean controller
 			self.hide_attr(pv_ctrl, r = True,  s = True, v = True)
@@ -442,6 +455,10 @@ class Kinematics_class(tools.Tools_class):
 		self.hide_attr(top_ctrl,r = True,  s = True, v = True)
 		ik_system.append(top_ctrl)
 
+		if mirror_behavior == True:
+			if top_ctrl.startswith(nc['right']):
+				self.mirror_group(input=top_grp, world=False)
+
 		cmds.parentConstraint(top_ctrl, start)
 
 		#organize and add color
@@ -449,9 +466,14 @@ class Kinematics_class(tools.Tools_class):
 		#create IK Grp
 		cmds.select(cl=True)
 		ik_main_grp = cmds.group(n = start + nc['ctrl'] + nc ['group'], em =True)
-		cmds.parent(pv_grp[0],ik_main_grp)
-		cmds.parent(IK_grp[0],ik_main_grp)
-		cmds.parent(top_grp[0],ik_main_grp)
+		if start.startswith(nc['right']):
+			cmds.parent(cmds.listRelatives(pv_grp[0], p=True), ik_main_grp)
+			cmds.parent(cmds.listRelatives(IK_grp[0], p=True), ik_main_grp)
+			cmds.parent(cmds.listRelatives(top_grp[0], p=True), ik_main_grp)
+		else:
+			cmds.parent(pv_grp[0], ik_main_grp)
+			cmds.parent(IK_grp[0], ik_main_grp)
+			cmds.parent(top_grp[0], ik_main_grp)
 		#cmds.parent(line[0],ik_main_grp)
 
 		for c in ik_system:
@@ -673,7 +695,7 @@ class Kinematics_class(tools.Tools_class):
 
 #----------------------------------------------------------------------------------------------------------------
 
-	def advance_twist(self, start = '', end = '', axis = setup['twist_axis'], amount = 4, mode = 'up', driver = ''):
+	def advance_twist(self, start = '', end = '', axis = setup['twist_axis'], amount = 4, mode = 'up', driver = '', inverse =False):
 		'''
 		create twist system for the chain, 
 		this one can only be used by selecting from top to buttom joints but you can change the mode to up or down for desire effect
@@ -704,8 +726,16 @@ class Kinematics_class(tools.Tools_class):
 		crv = self.curve_between(start=start, end=end)
 		ik_spline = self.create_ik_spline_twist(start=twist_joints[0], end=twist_joints[-1], curve=crv)
 
-		cmds.connectAttr('{}.rotate{}'.format(twist_locator,axis),'{}.twist'.format(ik_spline['ikHandle'])) 
-		
+		if inverse == True:
+			mult = -1
+		else:
+			mult = 1
+		twist_md = self.connect_md_node(in_x1 = '{}.rotate{}'.format(twist_locator,axis)
+										, in_x2 = mult,
+										out_x = '{}.twist'.format(ik_spline['ikHandle']),
+										mode = 'mult',
+										name = 'TwistMult')
+
 		cmds.setAttr('{}.visibility'.format(twist_reader['twist_grp']), 0)
 		twist_grp = cmds.group(twist_joints[0],crv, ik_spline['ikHandle'],twist_loc_grp, twist_reader['ik'] , n = '{}_{}_Twist{}'.format(start,end,nc['group']))
 		
@@ -781,9 +811,17 @@ class Kinematics_class(tools.Tools_class):
 		#correct pv placement and connect with line
 		pv_distance = cmds.getAttr('{}.translate{}'.format(mid, twist_axis))
 		print (pv_distance)
-		cmds.select(cmds.listRelatives(ik_system[1], p=True))  
-		cmds.move(pv_distance*1.5, 0, 0 , r=1, os=1, wd=1) 
-		cmds.rotate(0,0,0)
+		cmds.select(cmds.listRelatives(ik_system[1], p=True))
+		'''
+		if start.startswith(nc['right']):
+			cmds.move(pv_distance*-1.5, 0, 0 , r=1, os=1, wd=1)
+			#cmds.rotate(0,0,0)
+		else:
+			cmds.move(pv_distance*1.5, 0, 0 , r=1, os=1, wd=1)
+			#cmds.rotate(0,0,0)
+		'''
+		cmds.move(pv_distance * 1.5, 0, 0, r=1, os=1, wd=1)
+		#cmds.rotate(0,0,0)
 
 		#add ik group to return groups
 		return_groups.append(cmds.listRelatives(ik_system[0], p =True)[0])
@@ -825,6 +863,8 @@ class Kinematics_class(tools.Tools_class):
 		ik_stretch = self.streatchy_ik(ik = ik_system[3], ik_ctrl= ik_system[0], top_ctrl = ik_system[2], pv_ctrl = ik_system[1], attrs_location = '{}_Switch_Loc'.format(start), name = '', axis = twist_axis)
 		ik_system.append(ik_stretch)
 
+
+
 		print (main_joints, ik_joints, fk_joints, fk_system, ik_system, return_groups)
 		return main_joints, ik_joints, fk_joints, fk_system, ik_system, return_groups
 
@@ -842,8 +882,13 @@ class Kinematics_class(tools.Tools_class):
 		#add the twists
 		main_joints = ik_fk[0]
 
+		if main_joints[0].startswith(nc['right']):
+			right_inverse = True
+		else:
+			right_inverse = False
+
 		upper_twist = self.advance_twist(main_joints[0],main_joints[1],mode = 'up', axis = twist_axis, driver = start, amount =twist_amount)
-		lower_twist = self.advance_twist(main_joints[1],main_joints[2],mode = 'down', axis = twist_axis, driver = upper_twist['joints'][-1],amount =twist_amount)
+		lower_twist = self.advance_twist(main_joints[1],main_joints[2],mode = 'down', axis = twist_axis, driver = upper_twist['joints'][-1],amount =twist_amount, inverse = right_inverse)
 		
 		print (upper_twist)
 
@@ -891,7 +936,6 @@ class Kinematics_class(tools.Tools_class):
 			end = cmds.ls(sl=True)[-1]
 
 		print ('joints are: {} to {}'.format(start,end))
-
 		
 		#put name conventions to main chain and manage errors
 		if str(start).endswith(nc['joint']):
@@ -981,7 +1025,8 @@ class Kinematics_class(tools.Tools_class):
 		if input == '':
 			input = cmds.ls(sl=True)[0]
 
-		mirror_grp =cmds.group(em=True, n = '{}_Mirror{}'.format(input,nc['group']))
+		mirror_grp =cmds.group(em=True, n = '{}Mirror{}'.format(input,nc['group']))
+		cmds.delete(cmds.parentConstraint(input, mirror_grp))
 		cmds.parent(input, mirror_grp)
 		
 		if world == True:
@@ -1118,8 +1163,3 @@ class Kinematics_class(tools.Tools_class):
 
 
 #--------------------------------
-'''
-PV orientado al mundo
-TOP IK orientado al mundo 
-
-'''

@@ -1,6 +1,7 @@
 from maya import cmds
 from maya import mel
 import json
+import imp
 import os
 
 import Mutant_Tools
@@ -45,7 +46,7 @@ def create_code_block(name = 'Code'):
         cmds.warning('Name already exists.')
         return ''
 
-    block = mt.create_block(name = name, icon = 'Python',  attrs = module['attrs'], build_command = module['build_command'], import_command = module['import'])
+    block = mt.create_block(name = name, icon = 'Code',  attrs = module['attrs'], build_command = module['build_command'], import_command = module['import'])
     config = block[1]
     block = block[0]
 

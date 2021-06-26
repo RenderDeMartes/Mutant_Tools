@@ -4,7 +4,7 @@ from Mutant_Tools.Utils import main_mutant
 import imp
 imp.reload(Mutant_Tools.Utils.main_mutant)
 mt = main_mutant.Mutant()
-
+main_mutant.__file__
 #mt.create_block()
 #cmds.reorder( 'Mutant_Block6', r=-1 )
 #mt.move_outliner(input = 'Mutant_Block3', up =True)
@@ -16,8 +16,7 @@ mt = main_mutant.Mutant()
 #mt.streatchy_ik(ik_ctrl = 'joint3_Ik_Ctrl',top_ctrl = 'joint1_Ik_Ctrl', attrs_location= 'joint3_Fk_Ctrl|joint1_Jnt_Switch_Loc')
 #mt.connect_md_node(in_x1='joint1_Jnt.translateX',in_x2=5,out_x = 'joint2_Jnt.visibility', mode = 'divide')
 #miror_grp = mt.mirror_group('Clavicle_Ctrl_Offset_Grp', world = True)
-#ikfk = mt.twist_fk_ik(start = '', mid = '', end = '', size = 3, color = 'red')
-#mt.twist_rotate_info()
+#ff#mt.twist_rotate_info()
 #mt.advance_twist(mode = 'down')
 #mt.joints_middle_no_chain()
 #mt.invert_fk_chain()

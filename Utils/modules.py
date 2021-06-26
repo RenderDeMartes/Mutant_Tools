@@ -101,12 +101,16 @@ class Modules_class(kinematics.Kinematics_class):
 		#create network node with all the attrs
 		config = cmds.createNode('network', n = '{}_Config'.format(name))
 		cmds.connectAttr('{}.nodeState'.format(config), '{}.nodeState'.format(block))
-		
+
+		#-----------------------------------------------------------------------------------------
+		precode = self.string_attr(input = config, name = 'precode', string = '')
+
 		build_command = self.string_attr(input = config, name = 'Build_Command', string = build_command)
 		cmds.setAttr(build_command, lock=True)
 		import_command = self.string_attr(input = config, name = 'Import_Command', string = import_command)
 		cmds.setAttr(import_command, lock=True)
-		
+
+		#main block attrs
 		for attr in attrs:
 			if 'string' in attr:
 				self.string_attr(input = config, name = attr.split('_')[0], string = attrs[attr])
@@ -116,6 +120,9 @@ class Modules_class(kinematics.Kinematics_class):
 				self.new_attr_interger(input= config, name = attr.split('_')[0], min = 1 , max = 20, default = int(attrs[attr]))
 			elif 'bool' in attr:
 				self.new_boolean(input= config, name = attr.split('_')[0], dv = attrs[attr])
+
+		postcode = self.string_attr(input = config, name = 'postcode', string = '')
+		#-----------------------------------------------------------------------------------------
 
 		return block,config
 #----------------------------------------------------------------------------------------------------------------
@@ -403,6 +410,6 @@ class Modules_class(kinematics.Kinematics_class):
 		elif mode == 'clear':
 			open(log_file, 'w').close()
 		else:
-			return None
+			return log_file
 
 

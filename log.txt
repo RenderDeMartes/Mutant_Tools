@@ -1,6 +1,36 @@
 ------------------------------------------------------------------------------------
-Building: Code_Block
+Building: Spine_Block
 ------------------------------------------------------------------------------------
-Import successfully import exec_code
-Build Code_Block Success
-Build successfully exec_code.build_code_block()
+Import successfully import exec_spine
+{'geometry': 'Geo', 'control': 'Ctrl', 'rig': 'Rig'}
+{'render_geo': 'Render_Geo'}
+{'bind_joints': 'Bind_Joints', 'bind_geo': 'Bind_Geo', 'misc': 'Miscellaneous', 'template': 'Template'}
+BaseA Created Successfully
+# Warning: History will be off for the command since Keep Originals is off and a selected item has no history. # 
+Spine Joints:
+Spine_Base_Jnt
+Spine_Belly_Jnt
+Spine_Chest_Jnt
+Spine_End_Jnt
+adding loc to ['Spine_Base_Ctrl']
+adding loc to ['Spine_Chest_Ctrl']
+adding loc to ['Spine_Belly_Ctrl']
+adding loc to ['Spine_Belly_FK_Ctrl']
+adding loc to ['Spine_Base_FK_Ctrl']
+# Warning: Name '_________' of new attribute clashes with an existing attribute of node 'Spine_Attrs_Loc'. # 
+# Warning: Name '_________' of new attribute clashes with an existing attribute of node 'Spine_Attrs_Loc'. # 
+# Warning: Name '________' of new attribute clashes with an existing attribute of node 'Spine_Attrs_Loc'. # 
+# Warning: Name '_________' of new attribute clashes with an existing attribute of node 'Spine_Attrs_Loc'. # 
+# Warning: Name '________' of new attribute clashes with an existing attribute of node 'Spine_Attrs_Loc'. # 
+# Warning: Name '_______' of new attribute clashes with an existing attribute of node 'Spine_Attrs_Loc'. # 
+Breathing...
+# Warning: Name '_________' of new attribute clashes with an existing attribute of node 'Spine_Attrs_Loc'. # 
+# Warning: Name '________' of new attribute clashes with an existing attribute of node 'Spine_Attrs_Loc'. # 
+# Warning: Name '_______' of new attribute clashes with an existing attribute of node 'Spine_Attrs_Loc'. # 
+# Warning: Name '______' of new attribute clashes with an existing attribute of node 'Spine_Attrs_Loc'. # 
+Spine_Belly_Jnt_SquashExtra_MD.outputX
+Spine_OffOnVolume_Blend1.outputR
+Spine_Chest_Jnt_SquashExtra_MD.outputX
+Spine_OffOnVolume_Blend2.outputR
+Build Spine_Block Success
+Build successfully exec_spine.build_spine_block()

@@ -46,6 +46,9 @@ from maya import OpenMaya
 import maya.cmds as cmds
 import maya.mel as mel
 
+from Mutant_Tools.UI import load_codeReader
+imp.reload(load_codeReader)
+
 import os
 import imp
 import sys
@@ -202,6 +205,11 @@ class AutoRigger(QtWidgets.QDialog):
 		
 		self.ui.reload_ui.clicked.connect(self.reload_ui)
 		self.ui.build_btn.clicked.connect(self.buid_autorigger)
+
+		self.ui.prebuild.clicked.connect(lambda : self.edit_prebuild_code(self.current_block))
+		self.ui.current_code.clicked.connect(lambda : self.view_build_code(self.current_block))
+		self.ui.postbuild.clicked.connect(lambda : self.edit_postbuild_code(self.current_block))
+		self.ui.log.clicked.connect(lambda : self.view_log(self.current_block))
 
 	#-------------------------------------------------------------------
 	def create_block_buttons(self):
@@ -419,18 +427,12 @@ class AutoRigger(QtWidgets.QDialog):
 
 		#get all attrs inf cofig node and get type so we can create UI depending of the type of attr
 
-		#Precode and Postcode attrs Code
-		if 'precode' in attrs:
-			self.ui.prebuild.setIcon(QtGui.QIcon(IconsPath + 'PRECODE_ON.png'))
-		else:
-			self.ui.prebuild.setIcon(QtGui.QIcon(IconsPath + 'PRECODE.png'))
+		self.check_precode(block)
+		self.check_postcode(block)
 
-		if 'postcode' in attrs:
-			self.ui.postbuild.setIcon(QtGui.QIcon(IconsPath + 'POSTCODE_ON.png'))
-		else:
-			self.ui.postbuild.setIcon(QtGui.QIcon(IconsPath + 'POSTCODE.png'))
+		self.current_block = block
 
-		#depending of the attr type create the UI 
+		#depending of the attr type create the UI
 		for attr in attrs:
 
 			edit_attr =  '{}.{}'.format(config, attr)
@@ -438,7 +440,11 @@ class AutoRigger(QtWidgets.QDialog):
 			#if the attrs is locked dont create anyting for it
 			if cmds.getAttr(edit_attr,settable = True ) == False:
 				continue
-			#main horizontal layout for each attr. they all have a label and the if is to add specific 
+			#if attr is any of this continue
+			skips = ['precode', 'postcode']
+			if attr in skips: continue
+
+			#main horizontal layout for each attr. they all have a label and the if is to add specific
 			h_layout = QtWidgets.QHBoxLayout()
 			h_layout.setContentsMargins(3, 5, 3, 5)    
 			#divisor
@@ -471,9 +477,8 @@ class AutoRigger(QtWidgets.QDialog):
 					set_button.clicked.connect(partial(self.lineEdit_get_selection,line_edit, edit_attr))
 					h_layout.addWidget(set_button)
 
-				if 'Code' in attr:  # if code  in name it will create a larger box
+				if attr == 'Code':  # if code  in name it will create a larger box
 					line_edit.setParent(None)
-					print('codeBLock')
 					plainText_edit = QtWidgets.QPlainTextEdit(cmds.getAttr('{}.{}'.format(config, attr)))
 					plainText_edit.textChanged.connect(partial(self.lineEdit_update_attr,plainText_edit, edit_attr))
 					slider = QtWidgets.QSlider()
@@ -618,8 +623,108 @@ class AutoRigger(QtWidgets.QDialog):
 		cmds.setAttr('Mutant_Build.v', 0)
 
 		cmds.undoInfo(closeChunk=True)
+
+	#-------------------------------------------------------------------
+	def check_precode(self, block):
+
+		config = cmds.listConnections(block)[1]
+
+		# Precode and Postcode attrs Code
+		if cmds.getAttr('{}.precode'.format(config)) != '':
+			self.ui.prebuild.setIcon(QtGui.QIcon(IconsPath + 'PRECODE_ON.png'))
+		else:
+			self.ui.prebuild.setIcon(QtGui.QIcon(IconsPath + 'PRECODE.png'))
+
+	#-------------------------------------------------------------------
+	def check_postcode(self, block):
+
+		config = cmds.listConnections(block)[1]
+
+		# Precode and Postcode attrs Code
+		if cmds.getAttr('{}.postcode'.format(config)) != '':
+			self.ui.postbuild.setIcon(QtGui.QIcon(IconsPath + 'POSTCODE_ON.png'))
+		else:
+			self.ui.postbuild.setIcon(QtGui.QIcon(IconsPath + 'POSTCODE.png'))
+
 	#-------------------------------------------------------------------
 
+	def edit_prebuild_code(self, block):
+
+		config = cmds.listConnections(block)[1]
+
+		#get past code
+		pastcode_attr = cmds.getAttr('{}.precode'.format(config))
+
+		try:
+			codeUI.close()
+		except:
+			pass
+
+		codeUI = load_codeReader.Code_Reader(mode='write', code= pastcode_attr, config_attr = '{}.precode'.format(config))
+		codeUI.show()
+
+	#-------------------------------------------------------------------
+
+	def view_build_code(self, block):
+
+		config = cmds.listConnections(block)[1]
+
+		import_command = cmds.getAttr('{}.Import_Command'.format(config))
+		build_file = import_command.replace('import ', '')
+
+		current_path = Folder + '//Blocks'
+		script_name = build_file + '.py'
+
+		# if we need find it first
+		for root, dirs, files in os.walk(current_path):
+			for name in files:
+				if name == script_name:
+					file_path = os.path.abspath(os.path.join(root, name))
+
+		with open(file_path) as build_data:
+			build_script = build_data.read()
+
+		try:
+			codeUI.close()
+		except:
+			pass
+
+		codeUI = load_codeReader.Code_Reader(mode='view', code= build_script, config_attr = '')
+		codeUI.show()
+	#-------------------------------------------------
+
+	def edit_postbuild_code(self, block):
+		config = cmds.listConnections(block)[1]
+
+		#get past code
+		postcode_attr = cmds.getAttr('{}.postcode'.format(config))
+
+		try:
+			codeUI.close()
+		except:
+			pass
+
+		codeUI = load_codeReader.Code_Reader(mode='write', code= postcode_attr, config_attr = '{}.postcode'.format(config))
+		codeUI.show()
+	#-------------------------------------------------------------------
+
+	def view_log(self, block):
+
+		log_file = mt.Mutant_logger(mode = 'log')
+		with open(log_file) as log_data:
+			log = log_data.read()
+
+		#log
+		try:
+			codeUI.close()
+		except:
+			pass
+
+		codeUI = load_codeReader.Code_Reader(mode='view', code= log, config_attr = '')
+		codeUI.ui.code_text.verticalScrollBar().setValue(codeUI.ui.code_text.verticalScrollBar().maximum())
+		codeUI.show()
+
+	#-------------------------------------------------------------------
 
 	# CLOSE EVENTS _________________________________
 	def closeEvent(self, event):
