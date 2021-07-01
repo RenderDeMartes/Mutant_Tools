@@ -104,13 +104,13 @@ def maya_main_window(dockable=True):
 	return wrapInstance(int(main_window_ptr), QtWidgets.QWidget)
 
 
-class BlockBuilder(QtWidgets.QDialog):
+class BlockBuilder(QtWidgets.QMainWindow):
 	
 	def __init__(self, parent=maya_main_window()):
 		super(BlockBuilder, self).__init__(parent)
 
 		self.setWindowTitle(Title)
-		self.setFixedSize(468,580)
+		self.resize(468,580)
 
 		self.init_ui()
 		self.create_layout()

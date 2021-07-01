@@ -777,8 +777,8 @@ TextEditor--TextEditorWidget &gt; QWidget {
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>81</width>
-               <height>38</height>
+               <width>463</width>
+               <height>43</height>
               </rect>
              </property>
              <layout class="QGridLayout" name="gridLayout_14">
@@ -819,8 +819,8 @@ TextEditor--TextEditorWidget &gt; QWidget {
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>81</width>
-               <height>38</height>
+               <width>463</width>
+               <height>43</height>
               </rect>
              </property>
              <layout class="QGridLayout" name="gridLayout_15">
@@ -861,8 +861,8 @@ TextEditor--TextEditorWidget &gt; QWidget {
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>81</width>
-               <height>38</height>
+               <width>463</width>
+               <height>43</height>
               </rect>
              </property>
              <layout class="QGridLayout" name="gridLayout_16">
@@ -903,8 +903,8 @@ TextEditor--TextEditorWidget &gt; QWidget {
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>81</width>
-               <height>38</height>
+               <width>463</width>
+               <height>43</height>
               </rect>
              </property>
              <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -945,8 +945,8 @@ TextEditor--TextEditorWidget &gt; QWidget {
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>81</width>
-               <height>38</height>
+               <width>463</width>
+               <height>43</height>
               </rect>
              </property>
              <layout class="QGridLayout" name="gridLayout_17">
@@ -987,8 +987,8 @@ TextEditor--TextEditorWidget &gt; QWidget {
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>81</width>
-               <height>38</height>
+               <width>463</width>
+               <height>43</height>
               </rect>
              </property>
              <layout class="QGridLayout" name="gridLayout_21">
@@ -1029,8 +1029,8 @@ TextEditor--TextEditorWidget &gt; QWidget {
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>81</width>
-               <height>38</height>
+               <width>463</width>
+               <height>43</height>
               </rect>
              </property>
              <layout class="QGridLayout" name="gridLayout_18">
@@ -1079,7 +1079,7 @@ TextEditor--TextEditorWidget &gt; QWidget {
        </property>
        <property name="maximumSize">
         <size>
-         <width>200</width>
+         <width>16777215</width>
          <height>16777215</height>
         </size>
        </property>
@@ -1112,7 +1112,7 @@ TextEditor--TextEditorWidget &gt; QWidget {
         </property>
         <property name="maximumSize">
          <size>
-          <width>150</width>
+          <width>16777215</width>
           <height>16777215</height>
          </size>
         </property>

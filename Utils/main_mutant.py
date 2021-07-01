@@ -34,6 +34,7 @@ licence: https://www.eulatemplate.com/live.php?token=ySe25XC0bKARQymXaGQGR8i4gvX
 author:  Esteban Rodriguez <info@renderdemartes.com>
 
 '''
+
 version = '1.0.0'
 
 #loading screen so it looks nicer

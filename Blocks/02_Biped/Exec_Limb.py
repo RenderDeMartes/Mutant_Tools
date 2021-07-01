@@ -26,7 +26,7 @@ with open(CURVE_FILE) as curve_file:
 #setup File
 SETUP_FILE = (PATH+'/rig_setup.json')
 with open(SETUP_FILE) as setup_file:
-	setup = json.load(setup_file)	
+	setup = json.load(setup_file)
 
 MODULE_FILE = (os.path.dirname(__file__) +'/02_Limb.json')
 with open(MODULE_FILE) as module_file:
@@ -37,16 +37,16 @@ with open(MODULE_FILE) as module_file:
 def create_limb_block(name = 'Limb'):
 
     #name checks and block creation
-    name = mt.ask_name(text = module['Name'], 
-                       ask_for = 'Limb Names (Separete with a , ), Use it for arms and legs!',
-                       check_split = True) 
-    
+    name = mt.ask_name(text = module['Name'],
+                       ask_for = 'Limb Names (Separete with a , ), Needs to start with L_ or R_ ',
+                       check_split = True)
+
     if cmds.objExists('{}{}'.format(name.split(',')[0],nc['module'])):
         cmds.warning('Name already exists.')
         return ''
 
     limb_block = mt.create_block(name = name.split(',')[0], icon = 'Limb',  attrs = module['attrs'], build_command = module['build_command'], import_command = module['import'])
-    limb_config = limb_block[1] 
+    limb_config = limb_block[1]
     limb_block = limb_block[0]
 
     name = name.split(',')
@@ -55,7 +55,7 @@ def create_limb_block(name = 'Limb'):
     joint_one = mt.create_joint_guide(name = name[0])
     cmds.move(0,0,0)
     joint_two = mt.create_joint_guide(name = name[1])
-    cmds.move(10,0,-1)    
+    cmds.move(10,0,-1)
     joint_three = mt.create_joint_guide(name = name[2])
     cmds.move(20,0,0)
     cmds.parent(joint_three, joint_two)
@@ -67,7 +67,7 @@ def create_limb_block(name = 'Limb'):
     mt.orient_joint(input = joint_one)
     mt.orient_joint(input = joint_two)
     mt.orient_joint(input = joint_three)
-    
+
     cmds.select(limb_block)
 
     cmds.setAttr("{}.jointOrientX".format(joint_three), 0)
@@ -83,12 +83,12 @@ def create_limb_block(name = 'Limb'):
 def build_limb_block():
 
     mt.check_is_there_is_base()
- 
+
     block = cmds.ls(sl=True)
     config = cmds.listConnections(block)[1]
     block = block[0]
     guide = cmds.listRelatives(block, c=True)[0]
-       
+
     new_guide = mt.duplicate_and_remove_guides(guide)
     print (new_guide)
     to_build = [new_guide]
@@ -104,13 +104,13 @@ def build_limb_block():
     cmds.setAttr("{}.jointOrientZ".format(joint_three), 0)
 
     #i have no idea why bt this shit doesnt work if we dont unparent and then aprent them
-    
+
     joint_two = cmds.listRelatives(joint_three, p=True)
     cmds.parent(joint_three, w=True)
     cmds.parent(joint_two, w=True)
     cmds.parent(joint_two, new_guide)
     cmds.parent(joint_three, joint_two)
-    
+
     #ctrl attrs
     ctrl_size = cmds.getAttr('{}.CtrlSize'.format(config))
     game_parent = cmds.getAttr('{}.SetGameParent'.format(config), asString = True)
@@ -124,17 +124,18 @@ def build_limb_block():
 
     #if mirror is set only to right we need to build on left for mirror behavior then putt it back to righ side
     if cmds.getAttr('{}.Mirror'.format(config), asString = True) == 'Right_Only':
-        miror_grp = mt.mirror_group(new_guide, world = True)
-        cmds.makeIdentity(miror_grp, a=True, t=True, r=True, s=True)
-        cmds.parent(new_guide, w = True)
-        cmds.delete(miror_grp)
-        mt.orient_joint(input = new_guide)
+        right_guide = mirror = cmds.mirrorJoint(new_guide, mirrorYZ = True, mirrorBehavior=True, searchReplace = (nc['left'],nc['right']))[0]
+        mt.orient_joint(input = right_guide)
+        to_build.append(right_guide)
+        cmds.delete(new_guide)
+        to_build.remove(new_guide)
 
     elif cmds.getAttr('{}.Mirror'.format(config), asString = True) == 'True':
-        right_guide = mt.duplicate_change_names(input = new_guide, hi = True, search=nc['left'], replace =nc['right'])[0]
+        right_guide = mirror = cmds.mirrorJoint(new_guide, mirrorYZ = True, mirrorBehavior=True, searchReplace = (nc['left'],nc['right']))[0]
+        mt.orient_joint(input = right_guide)
         to_build.append(right_guide)
-        print (to_build)
 
+        print (to_build)
 
     #build ------------------------------------------------------
     for side_guide in to_build:
@@ -151,9 +152,9 @@ def build_limb_block():
         if str(side_guide).startswith(nc['left']):
             color = setup['left_color']
         elif str(side_guide).startswith(nc['right']):
-            color = setup['right_color']       
+            color = setup['right_color']
         else:
-            color = setup['main_color']       
+            color = setup['main_color']
 
 
         #main funcion -------------------------------------------
@@ -161,20 +162,21 @@ def build_limb_block():
         limb_a = cmds.ls(sl=True)[0]
         limb_b = cmds.ls(sl=True)[1]
         limb_c = cmds.ls(sl=True)[2]
-        
+
         ikfk = mt.twist_fk_ik(start = '', mid = '', end = '', size = ctrl_size, color = color, twist_amount = twist_amount)
-        
+
+        #ikfk = mt.simple_fk_ik(start = '', mid = '', end = '', size = ctrl_size, color = color)
+
         print ('----------------IK FK------------------')
 
         #clean a bit
-
         print (ikfk['ik_fk'])
 
         #ikfk['ik_fk'[#]]
         #[0] ['L_Shoulder_Jnt', 'L_Elbow_Jnt', 'L_Wrist_Jnt'],
-        #[1] ['L_Shoulder_Ik_Jnt', 'L_Elbow_Ik_Jnt', 'L_Wrist_Ik_Jnt'], 
-        #[2] ['L_Shoulder_Fk_Jnt', 'L_Elbow_Fk_Jnt', 'L_Wrist_Fk_Jnt'], 
-        #[3] ['L_Shoulder_Fk_Ctrl', 'L_Elbow_Fk_Ctrl', 'L_Wrist_Fk_Ctrl'], 
+        #[1] ['L_Shoulder_Ik_Jnt', 'L_Elbow_Ik_Jnt', 'L_Wrist_Ik_Jnt'],
+        #[2] ['L_Shoulder_Fk_Jnt', 'L_Elbow_Fk_Jnt', 'L_Wrist_Fk_Jnt'],
+        #[3] ['L_Shoulder_Fk_Ctrl', 'L_Elbow_Fk_Ctrl', 'L_Wrist_Fk_Ctrl'],
         #[4] ['L_Wrist_Ik_Ctrl', 'L_Wrist_Ik_PoleVector_Ctrl', 'L_Shoulder_Ik_Ctrl', 'L_Wrist_Ik_IKrp', 'L_Wrist_Ik_PoleVector_Ctrl_L_Elbow_Ik_Jnt_Connected_Crv', ('L_Wrist_Ik_IKrp_Stretchy_Grp', 'L_Wrist_Ik_IKrp_NormalScale_Loc', ['L_Wrist_Ik_Jnt_Stretchy_Loc'], ['L_Shoulder_Ik_Jnt_Stretchy_Loc'], ['L_Elbow_Ik_Jnt_Stretchy_Loc'], 'L_Shoulder_Ik_Jnt_L_Wrist_Ik_Jnt_Distance_Shape', 'L_Elbow_Ik_Jnt_L_Wrist_Ik_Jnt_Distance_Shape', 'L_Shoulder_Ik_Jnt_L_Elbow_Ik_Jnt_Distance_Shape')], ['L_Shoulder_Fk_Ctrl_Offset_Grp', 'L_Wrist_Ik_Ctrl_Offset_Grp', 'L_Shoulder_Ik_Ctrl_Offset_Grp', 'L_Shoulder_Ik_Jnt_Ctrl_Grp'])
         #[5] ['L_Shoulder_Fk_Ctrl_Offset_Grp', 'L_Wrist_Ik_Ctrl_Offset_Grp', 'L_Shoulder_Ik_Ctrl_Offset_Grp', 'L_Shoulder_Ik_Jnt_Ctrl_Grp'])
 
@@ -204,29 +206,36 @@ def build_limb_block():
         cmds.parent(ikfk['ik_fk'][4][5][0], clean_rig_grp)
         cmds.parent(cmds.listRelatives(ikfk['ik_fk'][4][3], p=True), clean_rig_grp)
 
-        cmds.parent(ikfk['ik_fk'][5][0], clean_ctrl_grp)
-        cmds.parent(cmds.listRelatives(ikfk['ik_fk'][4][0], p=True), clean_ctrl_grp)
-        cmds.parent(cmds.listRelatives(cmds.listRelatives(ikfk['ik_fk'][4][1], p=True), p=True), clean_ctrl_grp)
+        #side stuff giving errors
+        if side_guide.startswith(nc['right']):
+            cmds.parent(ikfk['ik_fk'][5][0], clean_ctrl_grp)
+            cmds.parent(cmds.listRelatives(cmds.listRelatives(ikfk['ik_fk'][4][0], p=True), p=True), clean_ctrl_grp)
+            cmds.parent(cmds.listRelatives(cmds.listRelatives(cmds.listRelatives(ikfk['ik_fk'][4][1], p=True), p=True),p=True), clean_ctrl_grp)
 
-        #flip right rig  to right side ------------------------- 
+        else:
+            cmds.parent(ikfk['ik_fk'][5][0], clean_ctrl_grp)
+            cmds.parent(cmds.listRelatives(ikfk['ik_fk'][4][0], p=True), clean_ctrl_grp)
+            cmds.parent(cmds.listRelatives(cmds.listRelatives(ikfk['ik_fk'][4][1], p=True), p=True), clean_ctrl_grp)
+
+        #flip right rig  to right side -------------------------
         #check if the mirror attrs to Only_Right or mirror to True
         if cmds.getAttr('{}.Mirror'.format(config), asString = True) == 'Right_Only':
-            mirror_ctrl_grp = mt.mirror_group(clean_ctrl_grp, world = True)
 
-            cmds.parentConstraint(block_parent, ikfk['ik_fk'][5][0] , mo = True)     
-            cmds.parentConstraint(block_parent, cmds.listRelatives(ikfk['ik_fk'][4][2], p=True) , mo = True)     
-            
-            clean_rig_grp = mirror_ctrl_grp
-            clean_ctrl_grp = mirror_ctrl_grp
+            #mirror_ctrl_grp = mt.mirror_group(clean_ctrl_grp, world = True)
+
+            cmds.parentConstraint(block_parent, ikfk['ik_fk'][5][0] , mo = True)
+            cmds.parentConstraint(block_parent, cmds.listRelatives(ikfk['ik_fk'][4][2], p=True) , mo = True)
+
 
         elif cmds.getAttr('{}.Mirror'.format(config), asString = True) == 'True':
+            ''
             if str(side_guide).startswith(nc['right']) :
-                mirror_ctrl_grp = mt.mirror_group(clean_ctrl_grp, world = True)
+                #mirror_ctrl_grp = mt.mirror_group(clean_ctrl_grp, world = True)
 
                 cmds.parentConstraint(block_parent, ikfk['ik_fk'][5][0] , mo = True)
                 cmds.parentConstraint(block_parent, cmds.listRelatives(ikfk['ik_fk'][4][2], p=True) , mo = True)
 
-                clean_ctrl_grp = mirror_ctrl_grp
+                clean_ctrl_grp = clean_ctrl_grp
             else:
                 cmds.parentConstraint(block_parent, ikfk['ik_fk'][5][0] , mo = True)
                 cmds.parentConstraint(block_parent, cmds.listRelatives(ikfk['ik_fk'][4][2], p=True) , mo = True)
@@ -235,8 +244,12 @@ def build_limb_block():
 
         else: #only left side
 
-                cmds.parentConstraint(block_parent, ikfk['ik_fk'][5][0] , mo = True)     
-                cmds.parentConstraint(block_parent, cmds.listRelatives(ikfk['ik_fk'][4][2], p=True) , mo = True)     
+                cmds.parentConstraint(block_parent, ikfk['ik_fk'][5][0] , mo = True)
+                cmds.parentConstraint(block_parent, cmds.listRelatives(ikfk['ik_fk'][4][2], p=True) , mo = True)
+
+
+        #FIXES FOR RIGHT SIDE:
+
 
 
         #blends
@@ -278,20 +291,20 @@ def build_limb_block():
 
 
         #Finish -------------------------------------------
-        
+
         #game parents for bind joints
         game_parent = cmds.getAttr('{}.SetGameParent'.format(config))
         if side_guide.startswith(nc['right']):
             game_parent = game_parent.replace(nc['left'],nc['right'])
 
         if cmds.objExists(game_parent):
-            cmds.parent(bind_joints[0], game_parent) 
-        
-        else: 
+            cmds.parent(bind_joints[0], game_parent)
+
+        else:
             bind_jnt_grp = '{}{}'.format(setup['rig_groups']['bind_joints'], nc['group'])
             if cmds.objExists(bind_jnt_grp):
-                cmds.parent(bind_joints[0], bind_jnt_grp) 
-           
+                cmds.parent(bind_joints[0], bind_jnt_grp)
+
         #clean ctrls
         cmds.parent(clean_ctrl_grp, setup['base_groups']['control']+ nc['group'])
         cmds.parentConstraint('Rig_Ctrl_Grp' , clean_ctrl_grp,mo=True)
@@ -303,6 +316,3 @@ def build_limb_block():
         #connected
         cmds.parent(ikfk['ik_fk'][4][4], clean_ctrl_grp)
 
-
-
-          

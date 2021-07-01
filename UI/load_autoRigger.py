@@ -3,13 +3,13 @@ version: 1.0.0
 date: 21/04/2020
 
 #----------------
-content: 
+content:
 
 This will create a UI for the autorriger tool. Is dinamically created based on the .json files inside the folders
 
 #----------------
-how to: 
-	
+how to:
+
 import Mutant_Tools
 from Mutant_Tools.UI import load_autoRigger
 imp.reload(load_autoRigger)
@@ -20,7 +20,7 @@ AutoRigger = load_autoRigger.AutoRigger()
 AutoRigger.show()
 
 #----------------
-dependencies:   
+dependencies:
 
 QT FILE
 ICONS
@@ -46,13 +46,15 @@ from maya import OpenMaya
 import maya.cmds as cmds
 import maya.mel as mel
 
-from Mutant_Tools.UI import load_codeReader
-imp.reload(load_codeReader)
-
 import os
 import imp
 import sys
 import json
+
+
+from Mutant_Tools.UI import load_codeReader
+imp.reload(load_codeReader)
+
 
 #-------------------------------------------------------------------
 
@@ -70,7 +72,7 @@ with open(CURVE_FILE) as curve_file:
 #setup File
 SETUP_FILE = (PATH+'/rig_setup.json')
 with open(SETUP_FILE) as setup_file:
-	setup = json.load(setup_file)	
+	setup = json.load(setup_file)
 
 
 #-------------------------------------------------------------------
@@ -79,7 +81,7 @@ with open(SETUP_FILE) as setup_file:
 PATH = os.path.dirname(__file__)
 
 Title = 'Mutant // Autor_Rigger'
-Folder = PATH.replace('\\UI', '') 
+Folder = PATH.replace('\\UI', '')
 UI_File = 'autoRigger.ui'
 IconsPath =  Folder + '/Icons/'
 
@@ -103,7 +105,7 @@ def add_sys_folders_remove_compiled():
 		if blocks_path not in sys.path:
 			sys.path.append(blocks_path)
 
-	#Delete all pyc in the block folders so we dont need the imp.reload in the codes:  
+	#Delete all pyc in the block folders so we dont need the imp.reload in the codes:
 	path = Folder + '//Blocks'
 	for path, subdirs, files in os.walk(path):
 		for name in files:
@@ -113,10 +115,10 @@ def add_sys_folders_remove_compiled():
 				os.remove(os.path.join(path, name))
 			if '__pycache__' in str(name):
 				print (name + ': Have been deleted')
-				os.remove(os.path.join(path, name))   
+				os.remove(os.path.join(path, name))
 
 	# also remove pyc from UIs folder
-	path = Folder 
+	path = Folder
 	for path, subdirs, files in os.walk(path):
 		for name in files:
 			#print('Search: ' + os.path.join(path, name))
@@ -129,19 +131,19 @@ def add_sys_folders_remove_compiled():
 
 
 def maya_main_window(dockable=True):
-	
+
 	main_window_ptr = omui.MQtUtil.mainWindow()
 	return wrapInstance(int(main_window_ptr), QtWidgets.QWidget)
 
 
-class AutoRigger(QtWidgets.QDialog):
-	
+class AutoRigger(QtWidgets.QMainWindow):
+
 	def __init__(self, parent=maya_main_window()):
 		super(AutoRigger, self).__init__(parent)
 
 		#UI Init
 		self.setWindowTitle(Title)
-		self.setFixedSize(505,552)
+		self.resize(505, 552)
 
 		#load blocks folders to sys and remove all the compiled info in BLOCKS and UI Folder
 		add_sys_folders_remove_compiled()
@@ -154,10 +156,10 @@ class AutoRigger(QtWidgets.QDialog):
 		#Data init
 		self.current_block = None
 		self.current_block_folder = None
-		
+
 
 	def init_ui(self):
-		
+
 		UIPath  = Folder + '/UI/'
 		f = QtCore.QFile(UIPath + UI_File)
 		f.open(QtCore.QFile.ReadOnly)
@@ -166,13 +168,13 @@ class AutoRigger(QtWidgets.QDialog):
 		self.ui = loader.load(f, parentWidget=self)
 
 		f.close()
-		
+
 	#-------------------------------------------------------------------
 
 	def create_layout(self):
 		self.create_block_buttons()
 		self.delete_side_buttons()
-		
+
 		if cmds.objExists('Mutant_Build'):
 			try:
 				for num, child in enumerate(cmds.listRelatives('Mutant_Build', c=True)):
@@ -180,8 +182,8 @@ class AutoRigger(QtWidgets.QDialog):
 			except:
 				print ('Mutant_Build Grp is empty')
 
-		self.ui.layout().setContentsMargins(3, 3, 3, 3)          
-		self.ui.progressBar.setValue(0)        
+		self.ui.layout().setContentsMargins(3, 3, 3, 3)
+		self.ui.progressBar.setValue(0)
 		self.ui.bar_label.setText('Mutant')
 
 		#set Manual Icons
@@ -195,14 +197,14 @@ class AutoRigger(QtWidgets.QDialog):
 	def reload_ui(self):
 		self.create_layout()
 		OpenMaya.MGlobal.displayInfo('♥')
-		
+
 		#rest propierties layout too
-		for i in reversed(range(self.ui.properties_layout.count())): 
+		for i in reversed(range(self.ui.properties_layout.count())):
 			self.ui.properties_layout.itemAt(i).widget().setParent(None)
 		self.ui.block_label.setText('Mutant Autorigger')
 
 	def create_connections(self):
-		
+
 		self.ui.reload_ui.clicked.connect(self.reload_ui)
 		self.ui.build_btn.clicked.connect(self.buid_autorigger)
 
@@ -213,51 +215,51 @@ class AutoRigger(QtWidgets.QDialog):
 
 	#-------------------------------------------------------------------
 	def create_block_buttons(self):
-		
+
 		#first we delete all the previews items on the layouts
-		for i in reversed(range(self.ui.presets_layout.count())): 
+		for i in reversed(range(self.ui.presets_layout.count())):
 			self.ui.presets_layout.itemAt(i).widget().setParent(None)
-		for i in reversed(range(self.ui.biped_layout.count())): 
+		for i in reversed(range(self.ui.biped_layout.count())):
 			self.ui.biped_layout.itemAt(i).widget().setParent(None)
-		for i in reversed(range(self.ui.facial_layout.count())): 
+		for i in reversed(range(self.ui.facial_layout.count())):
 			self.ui.facial_layout.itemAt(i).widget().setParent(None)
-		for i in reversed(range(self.ui.animals_layout.count())): 
+		for i in reversed(range(self.ui.animals_layout.count())):
 			self.ui.animals_layout.itemAt(i).widget().setParent(None)
-		for i in reversed(range(self.ui.clothes_layout.count())): 
+		for i in reversed(range(self.ui.clothes_layout.count())):
 			self.ui.clothes_layout.itemAt(i).widget().setParent(None)
-		for i in reversed(range(self.ui.props_layout.count())): 
+		for i in reversed(range(self.ui.props_layout.count())):
 			self.ui.props_layout.itemAt(i).widget().setParent(None)
-		for i in reversed(range(self.ui.games_layout.count())): 
+		for i in reversed(range(self.ui.games_layout.count())):
 			self.ui.games_layout.itemAt(i).widget().setParent(None)
-		for i in reversed(range(self.ui.other_layout.count())): 
+		for i in reversed(range(self.ui.other_layout.count())):
 			self.ui.other_layout.itemAt(i).widget().setParent(None)
-	  
-		#'create all the buttons in the tabs blocks' 
+
+		#'create all the buttons in the tabs blocks'
 		#print ('Relaod UI')
 		#print (Folder)
 		blocks_folders = os.listdir(Folder + '\\Blocks')
 		#blocks_folders = ['01_Presets', '02_Biped']
 		#print ('Block Folders : ' + str(blocks_folders))
-		
+
 		for block_folder in blocks_folders:
-			
+
 			clean_folder_name = block_folder.split('_')[1]
 			files = os.listdir(Folder + '/Blocks/' + block_folder )
-			
+
 			for block_file in files:
 				#print(block_file)
-				
+
 				if not '.json' in str(block_file): #if the file is not a json continue with the next one
 					#print ('skiped' + block_file)
-					continue                
+					continue
 				#read the json file with block information
 				real_path =  Folder + '/Blocks/' + block_folder + '/' + block_file
 				#print (real_path)
 
 				with open(real_path, "r") as block_info:
-					block = json.load(block_info)   
-					#reaload with json files info if dev mode is on, off loads faster   
-					if setup['dev_mode'] == 'On':        
+					block = json.load(block_info)
+					#reaload with json files info if dev mode is on, off loads faster
+					if setup['dev_mode'] == 'On':
 						exec(block['import'])
 						exec(block['imp.reload'])
 						print ('reloading {}'.format(block_file))
@@ -281,31 +283,31 @@ class AutoRigger(QtWidgets.QDialog):
 
 				#parent to correct tab
 				if block_folder == '01_Presets':
-					self.ui.presets_layout.addWidget(button)        
+					self.ui.presets_layout.addWidget(button)
 				elif block_folder == '02_Biped':
-					self.ui.biped_layout.addWidget(button)              
+					self.ui.biped_layout.addWidget(button)
 				elif block_folder == '03_Facial':
-					self.ui.facial_layout.addWidget(button)  
+					self.ui.facial_layout.addWidget(button)
 				elif block_folder == '04_Animals':
-					self.ui.animals_layout.addWidget(button)  
+					self.ui.animals_layout.addWidget(button)
 				elif block_folder == '05_Clothes':
-					self.ui.clothes_layout.addWidget(button) 
+					self.ui.clothes_layout.addWidget(button)
 				elif block_folder == '06_Props':
-					self.ui.props_layout.addWidget(button) 
+					self.ui.props_layout.addWidget(button)
 				elif block_folder == '07_Games':
-					self.ui.games_layout.addWidget(button) 
+					self.ui.games_layout.addWidget(button)
 				else:
-					self.ui.other_layout.addWidget(button)  
+					self.ui.other_layout.addWidget(button)
 
 				button.setFixedSize(40, 40)
-			   
+
 	#-------------------------------------------------------------------
 	def create_new_block(self,bock_path):
 
-		#this will create a new block in maya based on the info on the json files        
+		#this will create a new block in maya based on the info on the json files
 		#read json
 		with open(bock_path, "r") as block_info:
-			block = json.load(block_info) 
+			block = json.load(block_info)
 
 		cmds.undoInfo(openChunk=True)
 
@@ -314,14 +316,14 @@ class AutoRigger(QtWidgets.QDialog):
 		except: print ('couldnt imp.reload {}'.format(bock_path))
 		exec (block['exec_command'])
 		self.create_properties_layout(block = cmds.ls(sl=True)[0])
-		
+
 		cmds.undoInfo(closeChunk=True)
 
 	#-------------------------------------------------------------------
 	def delete_side_buttons(self):
-		
+
 		# this will clear the side layout so we can move stuff around
-		for i in reversed(range(self.ui.side_layout.count())): 
+		for i in reversed(range(self.ui.side_layout.count())):
 			self.ui.side_layout.itemAt(i).widget().setParent(None)
 
 		self.ui.side_scroll.setWidgetResizable(True)
@@ -343,9 +345,9 @@ class AutoRigger(QtWidgets.QDialog):
 
 	#-------------------------------------------------------------------
 	def create_side_button(self, pack_name = 'Mutant_Block', index = 0):
-	  
+
 		#This will create all the side buttons when the up buttons are clicked
-		
+
 		side_hbox = QGroupBox()
 		self.ui.side_layout.addWidget(side_hbox)
 
@@ -404,9 +406,9 @@ class AutoRigger(QtWidgets.QDialog):
 		self.create_layout()
 
 		# this will clear the propieties layout so we can recreate stuff
-		for i in reversed(range(self.ui.properties_layout.count())): 
+		for i in reversed(range(self.ui.properties_layout.count())):
 			self.ui.properties_layout.itemAt(i).widget().setParent(None)
-		
+
 		#collect data for opening logs and codes
 		self.current_block = block
 		print (self.current_block)
@@ -415,7 +417,7 @@ class AutoRigger(QtWidgets.QDialog):
 		cmds.select(self.current_block)
 		config = cmds.listConnections(block)[1]
 		attrs =  cmds.listAttr(config , ud=True)
-		
+
 		#create may q box to hold the widgets
 		#side_hbox = QGroupBox(block)
 		side_hbox = QGroupBox()
@@ -446,12 +448,12 @@ class AutoRigger(QtWidgets.QDialog):
 
 			#main horizontal layout for each attr. they all have a label and the if is to add specific
 			h_layout = QtWidgets.QHBoxLayout()
-			h_layout.setContentsMargins(3, 5, 3, 5)    
+			h_layout.setContentsMargins(3, 5, 3, 5)
 			#divisor
 			layout_separator = QtWidgets.QLabel()
 			layout_separator.setStyleSheet("border : 5px solid grey; ")
 			layout_separator.setFixedHeight(1)
-			v_layout.addWidget(layout_separator) 
+			v_layout.addWidget(layout_separator)
 			#label
 			label = QtWidgets.QLabel(attr + ': ')
 			label.setFixedHeight(50)
@@ -472,7 +474,7 @@ class AutoRigger(QtWidgets.QDialog):
 				h_layout.addWidget(line_edit)
 
 				if 'Set' in attr: #if set in name it will create a greab button
-					set_button = QtWidgets.QPushButton('Set Selection')    
+					set_button = QtWidgets.QPushButton('Set Selection')
 					set_button.setFixedSize(80,35)
 					set_button.clicked.connect(partial(self.lineEdit_get_selection,line_edit, edit_attr))
 					h_layout.addWidget(set_button)
@@ -499,11 +501,11 @@ class AutoRigger(QtWidgets.QDialog):
 				enum_box.currentIndexChanged.connect(partial(self.enum_update_attr,enum_box,edit_attr))
 
 				h_layout.addWidget(enum_box)
-			   
+
 			#-----------------------------------------------------------------
 			elif attr_type == 'long':
 				#print (attr + ': is long')
-				
+
 				int_label = QtWidgets.QLabel(str(cmds.getAttr(edit_attr)))
 				int_slider = QtWidgets.QSlider(QtCore.Qt.Horizontal)
 				int_slider.setValue(cmds.getAttr(edit_attr))
@@ -517,10 +519,10 @@ class AutoRigger(QtWidgets.QDialog):
 			#-----------------------------------------------------------------
 			elif attr_type == 'bool':
 				#print (attr + ': is bool')
-				checkbox = QtWidgets.QCheckBox(attr)    
+				checkbox = QtWidgets.QCheckBox(attr)
 				checkbox.setChecked(cmds.getAttr('{}.{}'.format(config, attr)))
 				checkbox.setStyleSheet('background-color: none;')
-				h_layout.addWidget(checkbox)  
+				h_layout.addWidget(checkbox)
 				label.setParent(None)
 				checkbox.stateChanged.connect(partial(self.checkBox_update_attr, checkbox, edit_attr))
 			#-----------------------------------------------------------------
@@ -530,10 +532,10 @@ class AutoRigger(QtWidgets.QDialog):
 
 	def delete_properties_layout(self):
 		# this will clear the side layout so we can move stuff around
-		for i in reversed(range(self.ui.properties_layout.count())): 
+		for i in reversed(range(self.ui.properties_layout.count())):
 			self.ui.properties_layout.itemAt(i).widget().setParent(None)
 		#make UI Scrolable
-		self.ui.properties_scroll.setWidgetResizable(True)    
+		self.ui.properties_scroll.setWidgetResizable(True)
 
 	#-------------------------------------------------------------------
 	def lineEdit_update_attr(self, field, attr,*args):
@@ -548,7 +550,7 @@ class AutoRigger(QtWidgets.QDialog):
 		nice_selection = str(sel).replace("[", "")
 		nice_selection = str(nice_selection).replace("]", "")
 		nice_selection = str(nice_selection).replace("'", "")
-		
+
 		field.setText(nice_selection)
 		cmds.setAttr(attr, nice_selection, type = 'string')
 
@@ -582,7 +584,7 @@ class AutoRigger(QtWidgets.QDialog):
 		self.ui.progressBar.setMaximum(progress_max)
 		#select each block and run the build command and make progress bar move
 		for num, block in enumerate(blocks):
-			
+
 			#log
 			mt.Mutant_logger(mode = 'create')
 
@@ -601,7 +603,7 @@ class AutoRigger(QtWidgets.QDialog):
 
 			self.ui.bar_label.setText(buid_command)
 			self.ui.bar_label.setToolTip(buid_command)
-			
+
 			exec(import_command)
 			print ('Import successfully {}'.format(import_command))
 			exec(buid_command)
@@ -611,7 +613,7 @@ class AutoRigger(QtWidgets.QDialog):
 			self.ui.bar_label.setText('Succesfull build: {}'.format(block))
 			self.ui.bar_label.setToolTip('Succesfull build: {}'.format(block))
 			self.ui.progressBar.setValue((num + 1))
-			
+
 			#log
 			mt.Mutant_logger(mode = 'stop')
 
