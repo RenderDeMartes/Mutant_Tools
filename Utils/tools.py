@@ -949,6 +949,28 @@ class Tools_class:
 
 	#----------------------------------------------------------------------------------------------------------------
 
+	def write_json(self, path, json_file, data):
+
+		write_json = path + json_file
+
+		with open(write_json, 'w', encoding='utf-8') as f:
+			json.dump(data, f, ensure_ascii=False, indent=4)
+
+		return write_json
+	#----------------------------------------------------------------------------------------------------------------
+
+	def read_json(self, path, json_file):
+
+		json_data = path + json_file
+
+		with open(json_data) as f:
+			data = json.load(f)
+
+		return data
+
+	#----------------------------------------------------------------------------------------------------------------
+
+
 	#Sliders
 	#skinning pero puede ser una clase nueva: bind skin, transfer skin, select from, copy, add, remove, remove unused, copy weight, paste weight, Mirror, joints edit on, joints edit off, import y export
 	#show/hide by type

@@ -91,8 +91,6 @@ def create_foot_block(name = 'Foot'):
     cmds.parent(heel_mid, ankle)
     cmds.parent(ankle, block)
 
-
-
     print('{} Created Successfully'.format(name))
 
 #create_foot_block()
