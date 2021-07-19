@@ -400,7 +400,7 @@ class Modules_class(kinematics.Kinematics_class):
 
 	def Mutant_logger(self, mode = 'create'):
 
-		log_file = PATH.replace('//Config', '//log.txt')
+		log_file = PATH.replace('/Config', '/log.txt')
 
 		if mode == 'create': 
 			print (log_file)

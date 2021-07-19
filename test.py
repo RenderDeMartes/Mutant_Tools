@@ -4,7 +4,6 @@ from Mutant_Tools.Utils import main_mutant
 import imp
 imp.reload(Mutant_Tools.Utils.main_mutant)
 mt = main_mutant.Mutant()
-main_mutant.__file__
 #mt.create_block()
 #cmds.reorder( 'Mutant_Block6', r=-1 )
 #mt.move_outliner(input = 'Mutant_Block3', up =True)
@@ -33,7 +32,7 @@ mt.Mutant_logger(mode = 'stop')
 mt.Mutant_logger(mode = 'clear')
 '''
 
-mt.replace_connection_with_doublelinear('Spine_Belly_Jnt','scaleX')
+#mt.replace_connection_with_doublelinear('Spine_Belly_Jnt','scaleX')
 
 '''
 import Mutant_Tools

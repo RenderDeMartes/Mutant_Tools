@@ -9,7 +9,7 @@ This will create a UI for the autorriger tool. Is dinamically created based on t
 
 #----------------
 how to:
-
+import imp
 import Mutant_Tools
 from Mutant_Tools.UI import load_autoRigger
 imp.reload(load_autoRigger)
@@ -149,6 +149,7 @@ class AutoRigger(QtWidgets.QMainWindow):
 		add_sys_folders_remove_compiled()
 
 		self.init_ui()
+		self.create_menus()
 		self.create_layout()
 		self.create_connections()
 		OpenMaya.MGlobal.displayInfo('♥')
@@ -170,6 +171,34 @@ class AutoRigger(QtWidgets.QMainWindow):
 		f.close()
 
 	#-------------------------------------------------------------------
+	def create_menus(self):
+
+		#create menu bar
+		self.menuBar = QtWidgets.QMenuBar()  # requires parent
+
+		#Blocks Menu
+		self.fileMenu = QtWidgets.QMenu(self)
+		self.fileMenu.setTitle("File")
+		self.fileMenu.addAction("Load Positions")
+		self.fileMenu.addAction("Save Positions")
+		self.menuBar.addMenu(self.fileMenu)
+
+		#Block Menu
+		self.blockMenu = QtWidgets.QMenu(self)
+		self.blockMenu.setTitle("Block")
+		self.blockMenu.addAction("Create Block")
+		self.menuBar.addMenu(self.blockMenu)
+
+		#Tutorial Menu
+		self.tutorialMenu = QtWidgets.QMenu(self)
+		self.tutorialMenu.setTitle("Tutorial")
+		self.tutorialMenu.addAction("Step by Step")
+		self.tutorialMenu.addAction("Documentation")
+		self.menuBar.addMenu(self.tutorialMenu)
+
+
+		#add menu bar to layout
+		self.ui.menuLayout.addWidget(self.menuBar)
 
 	def create_layout(self):
 		self.create_block_buttons()
@@ -663,6 +692,7 @@ class AutoRigger(QtWidgets.QMainWindow):
 			pass
 
 		codeUI = load_codeReader.Code_Reader(mode='write', code= pastcode_attr, config_attr = '{}.precode'.format(config))
+		codeUI.set_path_label(code_path = '{}.precode'.format(config))
 		codeUI.show()
 
 	#-------------------------------------------------------------------
@@ -692,6 +722,7 @@ class AutoRigger(QtWidgets.QMainWindow):
 			pass
 
 		codeUI = load_codeReader.Code_Reader(mode='view', code= build_script, config_attr = '')
+		codeUI.set_path_label(code_path = file_path)
 		codeUI.show()
 	#-------------------------------------------------
 
@@ -707,6 +738,7 @@ class AutoRigger(QtWidgets.QMainWindow):
 			pass
 
 		codeUI = load_codeReader.Code_Reader(mode='write', code= postcode_attr, config_attr = '{}.postcode'.format(config))
+		codeUI.set_path_label(code_path = '{}.postcode'.format(config))
 		codeUI.show()
 	#-------------------------------------------------------------------
 
@@ -724,6 +756,7 @@ class AutoRigger(QtWidgets.QMainWindow):
 
 		codeUI = load_codeReader.Code_Reader(mode='view', code= log, config_attr = '')
 		codeUI.ui.code_text.verticalScrollBar().setValue(codeUI.ui.code_text.verticalScrollBar().maximum())
+		codeUI.set_path_label(code_path =  PATH.replace('\\UI', '/log.txt'))
 		codeUI.show()
 
 	#-------------------------------------------------------------------

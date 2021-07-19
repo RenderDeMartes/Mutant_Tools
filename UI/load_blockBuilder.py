@@ -8,8 +8,9 @@ content:
 This will create a UI for the autorriger tool. Is dinamically created based on the .json files inside the folders
 
 #----------------
-how to: 
-	
+how to:
+
+import imp
 import Mutant_Tools
 from Mutant_Tools.UI import load_blockBuilder
 import imp

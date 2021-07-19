@@ -116,6 +116,13 @@ def build_foot_block():
     clean_rig_grp = ''
     clean_ctrl_grp = ''
 
+    #get attrs
+    switch_attr =     cmds.getAttr('{}.SwitchAttr'.format(config), asString=True)
+    block_parent_ik =     cmds.getAttr('{}.IKParent'.format(config), asString=True)
+    block_parent_fk =     cmds.getAttr('{}.FKParent'.format(config), asString=True)
+    main_ik =      cmds.getAttr('{}.IKLeg'.format(config), asString=True)
+    size =     cmds.getAttr('{}.CtrlSize'.format(config), asString=True)
+
 
     #prep work for right side ------------------------------------------------------
 
@@ -154,10 +161,75 @@ def build_foot_block():
 
 
         #main funcion -------------------------------------------
+        #change joints order
+        all_joints = cmds.listRelatives(side_guide, c=True, ad=True)
+        all_joints.insert(0,side_guide)
+        print (all_joints)
+        rbl_jnts = [all_joints[1], all_joints[3],all_joints[4],all_joints[5],all_joints[7]]
+
+        #all_joints : ['L_Foot_Ankle_Jnt', 'L_Foot_Heel_Jnt', 'L_Foot_Toes_Jnt', 'L_Foot_In_Jnt',
+        #              'L_Foot_Out_Jnt', 'L_Foot_BallFloor_Jnt', 'L_Foot_Ball_Jnt', 'L_Foot_HeelMid_Jnt']
+        for jnt in all_joints:
+            try:cmds.parent(jnt, w=True)
+            except:pass
+
+        #hardcoded parents
+
+        cmds.parent(all_joints[6],all_joints[0])
+        cmds.parent(all_joints[2],all_joints[6])
+        cmds.parent(all_joints[7],all_joints[1])
+        cmds.parent(all_joints[5],all_joints[7])
+        cmds.parent(all_joints[1],all_joints[3])
+        cmds.parent(all_joints[3],all_joints[4])
+
+        #create missing rfl joints
+
+        #create groups for RFL in correct order
+        rfl_main_grps = []
+        for jnt in rbl_jnts:
+            main_grp = cmds.group(em=True, n = jnt.replace(nc['joint'], '_RFL' + nc['group']))
+            cmds.delete(cmds.parentConstraint(jnt,main_grp,mo=False))
+            rfl_main_grps.append(main_grp)
+
+        for jnt in all_joints[0],all_joints[2],all_joints[6]:
+            main_grp = cmds.group(em=True, n = jnt.replace(nc['joint'], '_RFL' + nc['group']))
+            cmds.delete(cmds.parentConstraint(jnt,main_grp,mo=False))
+            rfl_main_grps.append(main_grp)
+
+        print (rfl_main_grps)
+
+        #hardcoded parents... again
+        #['L_Foot_Heel_RFL_Grp' 0 , 'L_Foot_In_RFL_Grp' 1 , 'L_Foot_Out_RFL_Grp' 2 , 'L_Foot_BallFloor_RFL_Grp' 3,
+        # 'L_Foot_HeelMid_RFL_Grp' 4 , 'L_Foot_Ankle_RFL_Grp' 5 , 'L_Foot_Toes_RFL_Grp' 6 , 'L_Foot_Ball_RFL_Grp' 7 ]
+
+        cmds.parent(rfl_main_grps[5],rfl_main_grps[7])
+        cmds.parent(rfl_main_grps[7],rfl_main_grps[6])
+        cmds.parent(rfl_main_grps[6],rfl_main_grps[3])
+        cmds.parent(rfl_main_grps[3],rfl_main_grps[4])
+        cmds.parent(rfl_main_grps[4],rfl_main_grps[0])
+        cmds.parent(rfl_main_grps[0],rfl_main_grps[1])
+        cmds.parent(rfl_main_grps[1],rfl_main_grps[2])
+
+        for grp in rfl_main_grps:
+            cmds.select(grp)
+            autoA = mt.root_grp(autoRoot=True)
+            autoB = mt.root_grp()
+
+        #FK IK JOINTS
+        cmds.delete(rbl_jnts)
+
         cmds.select(side_guide)
+        ik_joints = self.duplicate_change_names(input=side_guide, hi=True, search=nc['joint'], replace=nc['ik'])
+        cmds.select(side_guide)
+        fk_joints = self.duplicate_change_names(input=side_guide, hi=True, search=nc['joint'], replace=nc['fk'])
 
+        for num, jnt in enumerate(all_joints[:3]):
+            if setup['ik_fk_method'] == 'blend':
+                self.switch_blend_colors(this=fk_joints[num], that=ik_joints[num], main=jnt, attr=switch_attr)
+            else:
+                self.switch_constraints(this=fk_joints[num], that=ik_joints[num], main=jnt, attr=switch_attr)
 
-        #create bind Joints for the skin ------------------------- 
+        #create bind Joints for the skin -------------------------
         '''
         bind_joint = cmds.duplicate(side_guide, po=True, n = side_guide.replace(nc['joint'], nc['joint_bind']))[0] 
         cmds.parentConstraint(side_guide, bind_joint, mo = False)

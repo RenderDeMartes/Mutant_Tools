@@ -97,7 +97,7 @@ def maya_main_window(dockable=True):
     return wrapInstance(int(main_window_ptr), QtWidgets.QWidget)
 
 
-class name(QtWidgets.QDialog):
+class name(QtWidgets.QMainWindow):
     
     def __init__(self, parent=maya_main_window()):
         super(name, self).__init__(parent)

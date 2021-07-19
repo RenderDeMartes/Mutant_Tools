@@ -35,11 +35,12 @@ author:  Esteban Rodriguez <info@renderdemartes.com>
 
 '''
 
-version = '1.0.0'
+version = '0.01'
 
 #loading screen so it looks nicer
 import time
 from maya import cmds
+import urllib.request
 
 '''
 cmds.progressWindow(title='Loading RdM Tools V3', progress=0, status='Starting', isInterruptable=True,maxValue=3)
@@ -94,7 +95,32 @@ class Mutant(modules.Modules_class):
 
 		OpenMaya.MGlobal.displayInfo('Mutant_Tools {}'.format(version))
 
-	
+		#self.check_update()
+
+	def check_update(self):
+
+		url = 'https://mutanttools.com/current_version/'
+		oURL = urllib.request.urlopen(url)
+
+		url_lines = oURL.readlines()
+		for line in url_lines:
+			if 'Version' in str(line):
+				version_line = str(line)
+
+		current_version = version_line.replace("b'<p>Version=", '')
+		current_version = current_version.replace("</p>\\n'", '')
+
+		if current_version == []:
+			pass
+		elif current_version == '':
+			pass
+		else:
+			if current_version == version:
+				pass
+			else:
+				OpenMaya.MGlobal.displayInfo('Mutant_Tools: There is a new version available: Installed: {}, Available: {}'.format(version, current_version))
+
+		return current_version
 
 '''
 cmds.progressWindow(edit=True, progress=3, status='Enjoy :)')
