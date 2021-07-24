@@ -106,7 +106,7 @@ class Code_Reader(QtWidgets.QMainWindow):
 		super(Code_Reader, self).__init__(parent)
 
 		#self.setWindowTitle(Title)
-		#self.resize(680,475)
+		self.resize(680,475)
 
 		self.init_ui()
 		self.create_layout()
@@ -119,6 +119,7 @@ class Code_Reader(QtWidgets.QMainWindow):
 		self.modify_ui_based_on_mode()
 		self.code_path = 'local'
 
+		#self.move_top_right()
 
 	def init_ui(self):
 
@@ -131,6 +132,11 @@ class Code_Reader(QtWidgets.QMainWindow):
 
 		f.close()
 	#-------------------------------------------------------------------
+
+	def move_top_right(self):
+
+		top_right = QApplication.desktop().availableGeometry().topRight()
+		self.move(top_right)
 
 	def create_layout(self):
 

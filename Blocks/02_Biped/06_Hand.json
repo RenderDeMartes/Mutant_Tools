@@ -9,6 +9,7 @@
     "exec_command": "exec_hand.create_hand_block()",
     "build_command": "exec_hand.build_hand_block()",
     "attrs": {
+
         "SetParent_string": "new_locator",
         "SetAttrsCtrl_string": "new_ctrl",
         "SetCtrlAttrsParent_string": "L_Hand_Palm_Jnt",

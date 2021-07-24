@@ -21,19 +21,19 @@ PATH = PATH.replace('\Blocks//{}'.format(TAB_FOLDER), '//Config') #change this p
 
 JSON_FILE = (PATH + '/name_conventions.json')
 with open(JSON_FILE) as json_file:
-	nc = json.load(json_file)
+    nc = json.load(json_file)
 #Read curve shapes info
 CURVE_FILE = (PATH + '/curves.json')
 with open(CURVE_FILE) as curve_file:
-	curve_data = json.load(curve_file)
+    curve_data = json.load(curve_file)
 #setup File
 SETUP_FILE = (PATH+'/rig_setup.json')
 with open(SETUP_FILE) as setup_file:
-	setup = json.load(setup_file)	
+    setup = json.load(setup_file)
 
 MODULE_FILE = (os.path.dirname(__file__) +'/07_Foot.json')
 with open(MODULE_FILE) as module_file:
-	module = json.load(module_file)
+    module = json.load(module_file)
 
 #---------------------------------------------
 
@@ -91,6 +91,8 @@ def create_foot_block(name = 'Foot'):
     cmds.parent(heel_mid, ankle)
     cmds.parent(ankle, block)
 
+    cmds.select(block)
+
     print('{} Created Successfully'.format(name))
 
 #create_foot_block()
@@ -117,12 +119,12 @@ def build_foot_block():
     clean_ctrl_grp = ''
 
     #get attrs
-    switch_attr =     cmds.getAttr('{}.SwitchAttr'.format(config), asString=True)
-    block_parent_ik =     cmds.getAttr('{}.IKParent'.format(config), asString=True)
-    block_parent_fk =     cmds.getAttr('{}.FKParent'.format(config), asString=True)
-    main_ik =      cmds.getAttr('{}.IKLeg'.format(config), asString=True)
-    size =     cmds.getAttr('{}.CtrlSize'.format(config), asString=True)
-
+    ikfk_switch_attr = cmds.getAttr('{}.SwitchIKFKAttr'.format(config), asString=True)
+    rfl_attr = cmds.getAttr('{}.IKRFLAttr'.format(config), asString=True)
+    block_parent_ik = cmds.getAttr('{}.IKParent'.format(config), asString=True)
+    block_parent_fk = cmds.getAttr('{}.FKParent'.format(config), asString=True)
+    main_ik = cmds.getAttr('{}.IKLeg'.format(config), asString=True)
+    size = cmds.getAttr('{}.CtrlSize'.format(config), asString=True)
 
     #prep work for right side ------------------------------------------------------
 
@@ -210,33 +212,124 @@ def build_foot_block():
         cmds.parent(rfl_main_grps[0],rfl_main_grps[1])
         cmds.parent(rfl_main_grps[1],rfl_main_grps[2])
 
+
         for grp in rfl_main_grps:
             cmds.select(grp)
             autoA = mt.root_grp(autoRoot=True)
             autoB = mt.root_grp()
 
+
         #FK IK JOINTS
         cmds.delete(rbl_jnts)
 
         cmds.select(side_guide)
-        ik_joints = self.duplicate_change_names(input=side_guide, hi=True, search=nc['joint'], replace=nc['ik'])
+        ik_joints = mt.duplicate_change_names(input=side_guide, hi=True, search=nc['joint'], replace=nc['ik'])
         cmds.select(side_guide)
-        fk_joints = self.duplicate_change_names(input=side_guide, hi=True, search=nc['joint'], replace=nc['fk'])
+        fk_joints = mt.duplicate_change_names(input=side_guide, hi=True, search=nc['joint'], replace=nc['fk'])
+        print (ik_joints)#['R_Foot_Ankle_Ik_Jnt', 'R_Foot_Ball_Ik_Jnt', 'R_Foot_Toes_Ik_Jnt']
+        print (fk_joints)#['R_Foot_Ankle_Fk_Jnt', 'R_Foot_Ball_Fk_Jnt', 'R_Foot_Toes_Fk_Jnt']
 
-        for num, jnt in enumerate(all_joints[:3]):
-            if setup['ik_fk_method'] == 'blend':
-                self.switch_blend_colors(this=fk_joints[num], that=ik_joints[num], main=jnt, attr=switch_attr)
-            else:
-                self.switch_constraints(this=fk_joints[num], that=ik_joints[num], main=jnt, attr=switch_attr)
+
+        #fk
+        parent_fk = block_parent_fk
+        if parent_fk == 'new_locator':
+            parent_fk = cmds.spaceLocator(n='{}_ParentFK{}'.format(fk_joints[0], nc['locator']))[0]
+        else:
+            if parent_fk.startswith(nc['left']) and side_guide.startswith(nc['right']):
+                parent_fk = parent_fk.replace(nc['left'], nc['right'])
+
+        cmds.parentConstraint(parent_fk, fk_joints[0], mo=True)
+
+        #IK
+        # create ik handle
+        ankle_ikSpline = cmds.ikHandle(sj=ik_joints[0],
+                                         ee=ik_joints[1],
+                                         sol='ikSCsolver',
+                                         n=ik_joints[0].replace(nc['joint'], nc['ik_sc']),
+                                         ccv=False,
+                                         pcv=False)
+
+        ball_ikSpline = cmds.ikHandle(sj=ik_joints[1],
+                                       ee=ik_joints[2],
+                                       sol='ikSCsolver',
+                                       n= ik_joints[1].replace(nc['joint'], nc['ik_sc']),
+                                       ccv=False,
+                                       pcv=False)
+
+        cmds.parent(ankle_ikSpline[0], rfl_main_grps[7])
+        cmds.parent(ball_ikSpline[0], rfl_main_grps[6])
+
+        if main_ik == 'new_locator':
+            cmds.parent(cmds.spaceLocator(n = ik_joints[0].replace(nc['joint'],'_Parent_Here')), rfl_main_grps[5])
+        else:
+            cmds.parent(ball_ikSpline, rfl_main_grps[5])
+
+        #create share controller in case we dont have a switch attr to put it in there
+        shared_ik_loc = cmds.spaceLocator(n = ik_joints[1].replace(nc['joint'], '_Share'+nc['locator']))[0]
+        shared_loc_grp = mt.root_grp()[0]
+        mt.match(shared_loc_grp, rfl_main_grps[7], r=True,t=True)
+
+        cmds.parent(shared_loc_grp, rfl_main_grps[6])
+        cmds.parent(ball_ikSpline[0],shared_ik_loc)
+
+        share_ctrl = mt.curve(input= '',
+                              type='circleX',
+                              rename=True,
+                              custom_name=True,
+                              name=side_guide.replace(nc['joint'], '_Share'+nc['ctrl']),
+                              size=size)
+        mt.hide_attr(s=True)
+        share_grp = mt.root_grp()[0]
+        mt.match(share_grp, rfl_main_grps[7], r=True,t=True)
+
+        mt.root_grp(fk_joints[1])
+        cmds.connectAttr('{}.translate'.format(share_ctrl), '{}.translate'.format(fk_joints[1]))
+        cmds.connectAttr('{}.rotate'.format(share_ctrl), '{}.rotate'.format( fk_joints[1]))
+        cmds.connectAttr('{}.translate'.format(share_ctrl), '{}.translate'.format(shared_ik_loc))
+        cmds.connectAttr('{}.rotate'.format(share_ctrl), '{}.rotate'.format(shared_ik_loc))
+
+        parent_ik = block_parent_ik
+        if parent_ik == 'new_locator':
+            parent_ik = cmds.spaceLocator(n = '{}_ParentIK{}'.format(fk_joints[0], nc['locator']))[0]
+        else:
+            if parent_ik.startswith(nc['left']) and side_guide.startswith(nc['right']):
+                parent_ik = parent_ik.replace(nc['left'], nc['right'])
+
+        cmds.parentConstraint(parent_ik, ik_joints[0], mo=True)
+
+
+        #add ik fk ctrl shape
+        if ikfk_switch_attr == 'new_attr':
+            cmds.select(share_ctrl)
+            switch_attr = mt.shape_with_attr(input='', obj_name='{}_Switch'.format(share_ctrl),
+                                                   attr_name='Switch_IK_FK')
+        else:
+            switch_attr = ikfk_switch_attr
+
+        main_joints = cmds.listRelatives(side_guide, c=True, ad=True)
+        main_joints.insert(0,side_guide)
+        mt.switch_constraints(this=ik_joints[0], that=fk_joints[0], main=main_joints[0], attr=switch_attr)
+        mt.switch_constraints(this=ik_joints[1], that=fk_joints[1], main=main_joints[1], attr=switch_attr)
+        mt.switch_constraints(this=ik_joints[2], that=fk_joints[2], main=main_joints[2], attr=switch_attr)
+
+        #switch ik fk in the shared ctrl
+        mt.switch_constraints(this=parent_ik, that=parent_fk, main=share_grp, attr=switch_attr)
+
+
+        #IK RFL Attrs
+
 
         #create bind Joints for the skin -------------------------
-        '''
-        bind_joint = cmds.duplicate(side_guide, po=True, n = side_guide.replace(nc['joint'], nc['joint_bind']))[0] 
-        cmds.parentConstraint(side_guide, bind_joint, mo = False)
-        try: cmds.parent(bind_joint, w=True)
+        ankle_bind_joint = cmds.duplicate(main_joints[0], po=True, n = main_joints[0].replace(nc['joint'], nc['joint_bind']))[0]
+        cmds.parentConstraint(main_joints[0], ankle_bind_joint, mo = False)
+        try: cmds.parent(ankle_bind_joint, w=True)
         except:pass
-        cmds.setAttr('{}.radius'.format(bind_joint), 1.5)
-        '''
+        cmds.setAttr('{}.radius'.format(ankle_bind_joint), 1.5)
+
+        ball_bind_joint = cmds.duplicate(main_joints[2], po=True, n = main_joints[2].replace(nc['joint'], nc['joint_bind']))[0]
+        cmds.parentConstraint(main_joints[2], ball_bind_joint, mo = False)
+        cmds.parent(ball_bind_joint, ankle_bind_joint)
+        cmds.setAttr('{}.radius'.format(ball_bind_joint), 1.5)
 
         #flip right rig  to right side ------------------------- 
         '''

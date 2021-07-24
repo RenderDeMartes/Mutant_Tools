@@ -635,8 +635,20 @@ class AutoRigger(QtWidgets.QMainWindow):
 
 			exec(import_command)
 			print ('Import successfully {}'.format(import_command))
-			exec(buid_command)
-			print ('Build successfully {}'.format(buid_command))
+			#if error in build show log and stop log writing
+			try:
+				#Build the blocks
+				exec(buid_command)
+				print ('Build successfully {}'.format(buid_command))
+			except Exception:
+				import traceback
+				traceback.print_exc()
+				mt.Mutant_logger(mode='stop')
+				self.view_log(block = block)
+				cmds.undoInfo(closeChunk=True)
+				if setup['dev_mode'] != 'On':
+					cmds.undo()
+				return
 
 			#succes message
 			self.ui.bar_label.setText('Succesfull build: {}'.format(block))
@@ -646,8 +658,13 @@ class AutoRigger(QtWidgets.QMainWindow):
 			#log
 			mt.Mutant_logger(mode = 'stop')
 
+			#Stop Block
+			if block == 'Stop_Block':
+				print ('User Stop')
+				cmds.undoInfo(closeChunk=True)
+				return
 
-		#all succes message
+		#all success message
 		self.ui.bar_label.setText('Mutant Build Complete')
 		self.ui.bar_label.setToolTip('Mutant Build Complete')
 

@@ -1,0 +1,23 @@
+{
+    "Name": "Rename",
+    "Description": "Rename nodes",
+    "Icon": "Rename.png",
+    "Enable": "True",
+    "python_file": "exec_rename.py",
+    "import": "import exec_rename",
+    "imp.reload": "imp.reload(exec_rename)",
+    "exec_command": "exec_rename.create_rename_block()",
+    "build_command": "exec_rename.build_rename_block()",
+    "attrs": {
+        "RenameA_string": "from,to",
+        "RenameB_string": "",
+        "RenameC_string": "",
+        "RenameD_string": "",
+        "RenameE_string": "",
+        "RenameF_string": "",
+        "RenameG_string": "",
+        "RenameH_string": "",
+        "RenameI_string": "",
+        "RenameJ_string": ""
+    }
+}

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>625</width>
-    <height>445</height>
+    <width>641</width>
+    <height>519</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -646,8 +646,8 @@ TextEditor--TextEditorWidget &gt; QWidget {
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>605</width>
-        <height>425</height>
+        <width>621</width>
+        <height>499</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_2">
@@ -738,6 +738,9 @@ TextEditor--TextEditorWidget &gt; QWidget {
        </item>
        <item row="1" column="0">
         <widget class="QPlainTextEdit" name="code_text">
+         <property name="verticalScrollBarPolicy">
+          <enum>Qt::ScrollBarAlwaysOn</enum>
+         </property>
          <property name="plainText">
           <string/>
          </property>

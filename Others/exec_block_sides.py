@@ -53,6 +53,8 @@ def create_NAME_block(name = 'NAME'):
     #cmds.getAttr('{}.AttrName'.format(config), asString = True) #for enums
     #joint_one = mt.create_joint_guide(name = name) #guide base with shapes
 
+    cmds.select(block)
+
     print('{} Created Successfully'.format(name))
 
 #create_NAME_block()

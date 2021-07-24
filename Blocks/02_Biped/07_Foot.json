@@ -13,12 +13,18 @@
     "build_command": "exec_foot.build_foot_block()",
 
     "attrs": {
+        "SetParent_string": "new_locator",
+
         "IKParent_string": "new_locator",
         "FKParent_string": "new_locator",
+
         "Mirror_enum": "True:False:Right_Only",
-        "SwitchAttr_string": "New",
-        "IKLeg_string": "None",
-        "CtrlSize_float": "4",
+
+        "SwitchIKFKAttr_string": "new_attr",
+        "IKRFLAttr_string": "new_attr",
+
+        "IKLeg_string": "new_locator",
+        "CtrlSize_float": "1",
         "SetGameParent_string": ""
     }
 }
