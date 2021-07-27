@@ -12,9 +12,14 @@ mt = main_mutant.Mutant()
 
 #---------------------------------------------
 
+#---------------------------------------------
+
+TAB_FOLDER = '02_Biped'
+PYBLOCK_NAME = 'exec_head'
+
 #Read name conventions as nc[''] and setup as seup['']
 PATH = os.path.dirname(__file__)
-PATH = PATH.replace('\Blocks//02_Biped', '//Config') #change this path depending of the folder
+PATH = PATH.replace('\Blocks//{}'.format(TAB_FOLDER), '//Config') #change this path depending of the folder
 
 JSON_FILE = (PATH + '/name_conventions.json')
 with open(JSON_FILE) as json_file:
@@ -28,11 +33,10 @@ SETUP_FILE = (PATH+'/rig_setup.json')
 with open(SETUP_FILE) as setup_file:
 	setup = json.load(setup_file)
 
-MODULE_FILE = (os.path.dirname(__file__) +'/02_Limb.json')
+MODULE_FILE = (os.path.dirname(__file__) +'/04_Limb.json')
 with open(MODULE_FILE) as module_file:
 	module = json.load(module_file)
 
-#---------------------------------------------
 
 def create_limb_block(name = 'Limb'):
 

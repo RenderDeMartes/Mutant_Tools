@@ -17,7 +17,30 @@ L_Foot_Ankle_Jnt
 ['L_Foot_Ankle_Ik_Jnt', 'L_Foot_Ball_Ik_Jnt', 'L_Foot_Toes_Ik_Jnt']
 ['L_Foot_Ankle_Fk_Jnt', 'L_Foot_Ball_Fk_Jnt', 'L_Foot_Toes_Fk_Jnt']
 adding loc to ['L_Foot_Ankle_Share_Ctrl']
-# Warning: Object, 'L_Foot_Ankle_Bnd', skipped. It is already a child of the parent, 'world'. # 
+RollToes
+L_Foot_Toes_RFL_Grp_Auto_Grp.rotateX
+PivotToes
+L_Foot_Toes_RFL_Grp_Auto_Grp.rotateY
+PivotBallFloor
+L_Foot_BallFloor_RFL_Grp_Auto_Grp.rotateZ
+RollBall
+L_Foot_Ball_RFL_Grp_Auto_Grp.rotateZ
+PivotBall
+L_Foot_Ball_RFL_Grp_Auto_Grp.rotateY
+PivotHeelMid
+L_Foot_HeelMid_RFL_Grp_Auto_Grp.rotateY
+RollHeel
+L_Foot_Heel_RFL_Grp_Auto_Grp.rotateX
+PivotHeel
+L_Foot_Heel_RFL_Grp_Auto_Grp.rotateY
+RollOut
+L_Foot_BallFloor_RFL_Grp_Auto_Grp.rotateZ
+PivotOut
+L_Foot_BallFloor_RFL_Grp_Auto_Grp.rotateY
+RollIn
+L_Foot_BallFloor_RFL_Grp_Auto_Grp.rotateZ
+PivotIn
+L_Foot_BallFloor_RFL_Grp_Auto_Grp.rotateY
 ['R_Foot_Ankle_Jnt', 'R_Foot_Heel_Jnt', 'R_Foot_Toes_Jnt', 'R_Foot_In_Jnt', 'R_Foot_Out_Jnt', 'R_Foot_BallFloor_Jnt', 'R_Foot_Ball_Jnt', 'R_Foot_HeelMid_Jnt']
 # Warning: Object, 'R_Foot_Ankle_Jnt', skipped. It is already a child of the parent, 'world'. # 
 ['R_Foot_Heel_RFL_Grp', 'R_Foot_In_RFL_Grp', 'R_Foot_Out_RFL_Grp', 'R_Foot_BallFloor_RFL_Grp', 'R_Foot_HeelMid_RFL_Grp', 'R_Foot_Ankle_RFL_Grp', 'R_Foot_Toes_RFL_Grp', 'R_Foot_Ball_RFL_Grp']
@@ -26,6 +49,29 @@ adding loc to ['L_Foot_Ankle_Share_Ctrl']
 ['R_Foot_Ankle_Ik_Jnt', 'R_Foot_Ball_Ik_Jnt', 'R_Foot_Toes_Ik_Jnt']
 ['R_Foot_Ankle_Fk_Jnt', 'R_Foot_Ball_Fk_Jnt', 'R_Foot_Toes_Fk_Jnt']
 adding loc to ['R_Foot_Ankle_Share_Ctrl']
-# Warning: Object, 'R_Foot_Ankle_Bnd', skipped. It is already a child of the parent, 'world'. # 
+RollToes
+R_Foot_Toes_RFL_Grp_Auto_Grp.rotateX
+PivotToes
+R_Foot_Toes_RFL_Grp_Auto_Grp.rotateY
+PivotBallFloor
+R_Foot_BallFloor_RFL_Grp_Auto_Grp.rotateZ
+RollBall
+R_Foot_Ball_RFL_Grp_Auto_Grp.rotateZ
+PivotBall
+R_Foot_Ball_RFL_Grp_Auto_Grp.rotateY
+PivotHeelMid
+R_Foot_HeelMid_RFL_Grp_Auto_Grp.rotateY
+RollHeel
+R_Foot_Heel_RFL_Grp_Auto_Grp.rotateX
+PivotHeel
+R_Foot_Heel_RFL_Grp_Auto_Grp.rotateY
+RollOut
+R_Foot_BallFloor_RFL_Grp_Auto_Grp.rotateZ
+PivotOut
+R_Foot_BallFloor_RFL_Grp_Auto_Grp.rotateY
+RollIn
+R_Foot_BallFloor_RFL_Grp_Auto_Grp.rotateZ
+PivotIn
+R_Foot_BallFloor_RFL_Grp_Auto_Grp.rotateY
 Build L_Foot_Block Success
 Build successfully exec_foot.build_foot_block()

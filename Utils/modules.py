@@ -234,7 +234,8 @@ class Modules_class(kinematics.Kinematics_class):
 			if cmds.objExists(cmds.promptDialog(query=True, text=True).replace(',','_')+nc['module']):
 				print ('Name exists error')
 				cmds.confirmDialog( title='Error', 
-									message='Error: Block name already exists', 
+									message='Error "{}": Block name already exists.'.format(
+										cmds.promptDialog(query=True, text=True).replace(',','_')+nc['module']),
 									button=["Oh! ok!"])
 
 			if check_split == True:

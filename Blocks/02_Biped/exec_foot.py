@@ -120,7 +120,7 @@ def build_foot_block():
 
     #get attrs
     ikfk_switch_attr = cmds.getAttr('{}.SwitchIKFKAttr'.format(config), asString=True)
-    rfl_attr = cmds.getAttr('{}.IKRFLAttr'.format(config), asString=True)
+    rfl_attr = cmds.getAttr('{}.IkAttrsPosition'.format(config), asString=True)
     block_parent_ik = cmds.getAttr('{}.IKParent'.format(config), asString=True)
     block_parent_fk = cmds.getAttr('{}.FKParent'.format(config), asString=True)
     main_ik = cmds.getAttr('{}.IKLeg'.format(config), asString=True)
@@ -157,9 +157,9 @@ def build_foot_block():
         if str(side_guide).startswith(nc['left']):
             color = setup['left_color']
         elif str(side_guide).startswith(nc['right']):
-            color = setup['right_color']       
+            color = setup['right_color']
         else:
-            color = setup['main_color']       
+            color = setup['main_color']
 
 
         #main funcion -------------------------------------------
@@ -262,7 +262,10 @@ def build_foot_block():
         if main_ik == 'new_locator':
             cmds.parent(cmds.spaceLocator(n = ik_joints[0].replace(nc['joint'],'_Parent_Here')), rfl_main_grps[5])
         else:
-            cmds.parent(ball_ikSpline, rfl_main_grps[5])
+            if main_ik.startswith(nc['left']) and side_guide.startswith(nc['right']):
+                cmds.parent(main_ik.replace(nc['left'], nc['right']), rfl_main_grps[5])
+            else:
+                cmds.parent(main_ik, rfl_main_grps[5])
 
         #create share controller in case we dont have a switch attr to put it in there
         shared_ik_loc = cmds.spaceLocator(n = ik_joints[1].replace(nc['joint'], '_Share'+nc['locator']))[0]
@@ -315,10 +318,35 @@ def build_foot_block():
         #switch ik fk in the shared ctrl
         mt.switch_constraints(this=parent_ik, that=parent_fk, main=share_grp, attr=switch_attr)
 
-
         #IK RFL Attrs
+        if rfl_attr == 'shared_ctrl':
+            ik_attrs_shape = share_ctrl
+        else:
+            if rfl_attr.startswith(nc['left']) and side_guide.startswith(nc['right']):
+                ik_attrs_shape = rfl_attr.replace(nc['left'], nc['right'])
+
+        # ['L_Foot_Heel_RFL_Grp' 0 , 'L_Foot_In_RFL_Grp' 1 , 'L_Foot_Out_RFL_Grp' 2 , 'L_Foot_BallFloor_RFL_Grp' 3,
+        # 'L_Foot_HeelMid_RFL_Grp' 4 , 'L_Foot_Ankle_RFL_Grp' 5 , 'L_Foot_Toes_RFL_Grp' 6 , 'L_Foot_Ball_RFL_Grp' 7 ]
+        rfl_attrs = {'RollToes':'{}.rotateX'.format(cmds.listRelatives(rfl_main_grps[6],p=True)[0]),
+                     'PivotToes':'{}.rotateY'.format(cmds.listRelatives(rfl_main_grps[6],p=True)[0]),
+                     'PivotBallFloor':'{}.rotateZ'.format(cmds.listRelatives(rfl_main_grps[3],p=True)[0]),
+                     'RollBall':'{}.rotateZ'.format(cmds.listRelatives(rfl_main_grps[7],p=True)[0]),
+                     'PivotBall':'{}.rotateY'.format(cmds.listRelatives(rfl_main_grps[7],p=True)[0]),
+                     'PivotHeelMid':'{}.rotateY'.format(cmds.listRelatives(rfl_main_grps[4],p=True)[0]),
+                     'RollHeel':'{}.rotateX'.format(cmds.listRelatives(rfl_main_grps[0],p=True)[0]),
+                     'PivotHeel':'{}.rotateY'.format(cmds.listRelatives(rfl_main_grps[0],p=True)[0]),
+                     'RollOut':'{}.rotateZ'.format(cmds.listRelatives(rfl_main_grps[3],p=True)[0]),
+                     'PivotOut':'{}.rotateY'.format(cmds.listRelatives(rfl_main_grps[3],p=True)[0]),
+                     'RollIn':'{}.rotateZ'.format(cmds.listRelatives(rfl_main_grps[3],p=True)[0]),
+                     'PivotIn':'{}.rotateY'.format(cmds.listRelatives(rfl_main_grps[3],p=True)[0])
+                     }
+
+        for attr in rfl_attrs:
+            print (attr)
+            print (rfl_attrs[attr])
 
 
+        '''
         #create bind Joints for the skin -------------------------
         ankle_bind_joint = cmds.duplicate(main_joints[0], po=True, n = main_joints[0].replace(nc['joint'], nc['joint_bind']))[0]
         cmds.parentConstraint(main_joints[0], ankle_bind_joint, mo = False)
@@ -331,13 +359,14 @@ def build_foot_block():
         cmds.parent(ball_bind_joint, ankle_bind_joint)
         cmds.setAttr('{}.radius'.format(ball_bind_joint), 1.5)
 
-        #flip right rig  to right side ------------------------- 
-        '''
+
+        #flip right rig  to right side -------------------------
+
         #check if the mirror attrs to Only_Right or mirror to True
         if cmds.getAttr('{}.Mirror'.format(config), asString = True) == 'Right_Only':
             miror_ctrl_grp = mt.mirror_group(cmds.listRelatives(auto_grp, p=True)[0], world = True)
             miror_jnt_grp = mt.mirror_group(new_guide, world = True)
-            cmds.parentConstraint(block_parent, miror_ctrl_grp , mo = True)     
+            cmds.parentConstraint(block_parent, miror_ctrl_grp , mo = True)
             clean_rig_grp = miror_jnt_grp
             clean_ctrl_grp = miror_ctrl_grp
 
@@ -345,16 +374,16 @@ def build_foot_block():
             if str(side_guide).startswith(nc['right']) :
                 miror_ctrl_grp = mt.mirror_group(cmds.listRelatives(auto_grp, p=True)[0], world = True)
                 miror_jnt_grp = mt.mirror_group(side_guide, world = True)
-                cmds.parentConstraint(block_parent, miror_ctrl_grp , mo = True) 
+                cmds.parentConstraint(block_parent, miror_ctrl_grp , mo = True)
                 clean_rig_grp = miror_jnt_grp
                 clean_ctrl_grp = miror_ctrl_grp
             else:
-                cmds.parentConstraint(block_parent, for_parent , mo = True) 
+                cmds.parentConstraint(block_parent, for_parent , mo = True)
                 clean_rig_grp = side_guide
-                clean_ctrl_grp = for_parent        
-        
+                clean_ctrl_grp = for_parent
+
         else: #only left side
-            cmds.parentConstraint(block_parent, for_parent , mo = True) 
+            cmds.parentConstraint(block_parent, for_parent , mo = True)
         '''
 
         #blends
@@ -375,12 +404,12 @@ def build_foot_block():
             game_parent = game_parent.replace(nc['left'],nc['right'])
 
         if cmds.objExists(game_parent):
-            cmds.parent(bind_joint, game_parent) 
-        else: 
+            cmds.parent(bind_joint, game_parent)
+        else:
             bind_jnt_grp = '{}{}'.format(setup['rig_groups']['bind_joints'], nc['group'])
             if cmds.objExists(bind_jnt_grp):
-                cmds.parent(bind_joint, bind_jnt_grp) 
-           
+                cmds.parent(bind_joint, bind_jnt_grp)
+
         #clean ctrls
         cmds.parent(clean_ctrl_grp, 'Rig_Ctrl_Grp')
 

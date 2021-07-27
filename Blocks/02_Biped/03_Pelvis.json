@@ -1,16 +1,16 @@
 {
-    "Name": "L_Hip",
-    "Description": "This will create a HIP System to connect your legs",
+    "Name": "L_Pelvis",
+    "Description": "This will create a Pelvis System to connect your legs",
 
-    "Icon": "Hip.png",
+    "Icon": "Pelvis.png",
 
     "Enable": "True",
 
-    "python_file": "exec_hip.py",
-    "import": "import exec_hip",
-    "imp.reload": "imp.reload(exec_hip)",
-    "exec_command": "exec_hip.create_hip_block()",
-    "build_command": "exec_hip.build_hip_block()",
+    "python_file": "exec_pelvis.py",
+    "import": "import exec_pelvis",
+    "imp.reload": "imp.reload(exec_pelvis)",
+    "exec_command": "exec_pelvis.create_pelvis_block()",
+    "build_command": "exec_pelvis.build_pelvis_block()",
 
     "attrs": {
         "SetParent_string": "new_locator",

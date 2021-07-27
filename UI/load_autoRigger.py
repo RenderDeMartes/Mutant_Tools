@@ -514,7 +514,14 @@ class AutoRigger(QtWidgets.QMainWindow):
 					plainText_edit.textChanged.connect(partial(self.lineEdit_update_attr,plainText_edit, edit_attr))
 					slider = QtWidgets.QSlider()
 					h_layout.addWidget(plainText_edit)
+
+				if attr == 'Help':  # if non string do a code box but non editable
+					line_edit.setParent(None)
+					plainText_edit = QtWidgets.QPlainTextEdit(cmds.getAttr('{}.{}'.format(config, attr)))
+					plainText_edit.textChanged.connect(partial(self.lineEdit_update_attr,plainText_edit, edit_attr))
+					slider = QtWidgets.QSlider()
 					h_layout.addWidget(plainText_edit)
+					plainText_edit.setReadOnly(True)
 
 			#-----------------------------------------------------------------
 			elif attr_type == 'enum':

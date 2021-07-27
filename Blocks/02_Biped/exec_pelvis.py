@@ -13,7 +13,7 @@ mt = main_mutant.Mutant()
 #---------------------------------------------
 
 TAB_FOLDER = '02_Biped'
-PYBLOCK_NAME = 'exec_hip'
+PYBLOCK_NAME = 'exec_head'
 
 #Read name conventions as nc[''] and setup as seup['']
 PATH = os.path.dirname(__file__)
@@ -29,15 +29,16 @@ with open(CURVE_FILE) as curve_file:
 #setup File
 SETUP_FILE = (PATH+'/rig_setup.json')
 with open(SETUP_FILE) as setup_file:
-	setup = json.load(setup_file)	
+	setup = json.load(setup_file)
 
-MODULE_FILE = (os.path.dirname(__file__) +'/04_Hip.json')
+MODULE_FILE = (os.path.dirname(__file__) +'/03_Pelvis.json')
 with open(MODULE_FILE) as module_file:
 	module = json.load(module_file)
 
+
 #---------------------------------------------
 
-def create_hip_block(name = 'Hip'):
+def create_pelvis_block(name = 'Pelvis'):
 
     #name checks and block creation
     name = mt.ask_name(text = module['Name'])
@@ -45,7 +46,7 @@ def create_hip_block(name = 'Hip'):
         cmds.warning('Name already exists.')
         return ''
 
-    block = mt.create_block(name = name, icon = 'Hip',  attrs = module['attrs'], build_command = module['build_command'], import_command = module['import'])
+    block = mt.create_block(name = name, icon = 'Pelvis',  attrs = module['attrs'], build_command = module['build_command'], import_command = module['import'])
     config = block[1]
     block = block[0]
 
@@ -67,7 +68,7 @@ def create_hip_block(name = 'Hip'):
 
 #-------------------------
 
-def build_hip_block():
+def build_pelvis_block():
 
     mt.check_is_there_is_base()
 

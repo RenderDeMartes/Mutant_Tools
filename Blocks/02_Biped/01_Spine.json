@@ -15,6 +15,7 @@
     "attrs": {
         "SetParent_string": "new_locator",
         "CtrlSize_float": "4",
-        "SetGameParent_string": ""
+        "SetGameParent_string": "",
+        "Help_string" : "Possible parent: Spine_End_Bnd"
     }
 }
