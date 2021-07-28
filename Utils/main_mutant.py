@@ -99,6 +99,7 @@ class Mutant(modules.Modules_class):
 
 	def check_update(self):
 
+		version_line = ''
 		url = 'https://mutanttools.com/current_version/'
 		oURL = urllib.request.urlopen(url)
 

@@ -335,16 +335,19 @@ def build_foot_block():
                      'PivotHeelMid':'{}.rotateY'.format(cmds.listRelatives(rfl_main_grps[4],p=True)[0]),
                      'RollHeel':'{}.rotateX'.format(cmds.listRelatives(rfl_main_grps[0],p=True)[0]),
                      'PivotHeel':'{}.rotateY'.format(cmds.listRelatives(rfl_main_grps[0],p=True)[0]),
-                     'RollOut':'{}.rotateZ'.format(cmds.listRelatives(rfl_main_grps[3],p=True)[0]),
-                     'PivotOut':'{}.rotateY'.format(cmds.listRelatives(rfl_main_grps[3],p=True)[0]),
-                     'RollIn':'{}.rotateZ'.format(cmds.listRelatives(rfl_main_grps[3],p=True)[0]),
-                     'PivotIn':'{}.rotateY'.format(cmds.listRelatives(rfl_main_grps[3],p=True)[0])
+                     'RollOut':'{}.rotateZ'.format(cmds.listRelatives(rfl_main_grps[2],p=True)[0]),
+                     'PivotOut':'{}.rotateY'.format(cmds.listRelatives(rfl_main_grps[2],p=True)[0]),
+                     'RollIn':'{}.rotateZ'.format(cmds.listRelatives(rfl_main_grps[1],p=True)[0]),
+                     'PivotIn':'{}.rotateY'.format(cmds.listRelatives(rfl_main_grps[1],p=True)[0])
                      }
 
+        mt.line_attr(input = ik_attrs_shape, name = 'RFL', lines = 10)
         for attr in rfl_attrs:
-            print (attr)
-            print (rfl_attrs[attr])
+            rfl_temp_attr = mt.new_attr(input= ik_attrs_shape, name = attr, min = -100 , max = 100, default = 0)
+            cmds.connectAttr(rfl_temp_attr, rfl_attrs[attr])
+        mt.line_attr(input = ik_attrs_shape, name = 'FootRoll', lines = 10)
 
+        #Foot Roll
 
         '''
         #create bind Joints for the skin -------------------------

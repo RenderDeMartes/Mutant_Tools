@@ -98,9 +98,18 @@ class Tools_class:
 	
 	#----------------------------------------------------------------------------------------------------------------			
 	def	root_grp(self, input = '', custom = False, custom_name = 'customName', autoRoot = False, replace_nc = False):
-		'''
-		create offset/root groups for desire transforms
-		'''
+		"""This create groups
+
+		Args:
+			input:
+			custom: bool: specify if new grp
+			custom_name: string: name of custom group (needs)
+			autoRoot:
+			replace_nc:
+
+		Returns: list with string of new groups
+
+		"""
 
 		#Check input
 		if input != '':
@@ -176,9 +185,25 @@ class Tools_class:
 	#----------------------------------------------------------------------------------------------------------------
 	
 	def assign_color(self, input = '', color = 'lightBlue'):
-		'''
-		assing color to desire transform
-		'''
+		"""	assing color to desire transform
+
+		colors = {  'red':       13,
+					'blue':       6,
+					'white':     16,
+					'purple':     9,
+					'green':     14,
+					'lightBlue': 18,
+					'yellow':    17,
+					'grey':      1 }
+
+		Args:
+			input:
+			color: string of name (dont accept intergers)
+
+		Returns: None
+
+		"""
+
 		
 		if input != '':
 			self.input = [input]

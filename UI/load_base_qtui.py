@@ -35,7 +35,7 @@ class UI_CLASS(MayaQWidgetDockableMixin , QtWidgets.QMainWindow):
 		self.create_connections()
 		self.create_menus()
 
-        OpenMaya.MGlobal.displayInfo('www.renderdemartes.com')
+		OpenMaya.MGlobal.displayInfo('www.renderdemartes.com')
 
 	def init_ui(self):
 		
