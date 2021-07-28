@@ -12,7 +12,7 @@ mt = main_mutant.Mutant()
 
 #---------------------------------------------
 
-TAB_FOLDER = '08_Other'
+TAB_FOLDER = '06_Props'
 PYBLOCK_NAME = 'exec_single_fk'
 
 #Read name conventions as nc[''] and setup as seup['']
@@ -29,9 +29,9 @@ with open(CURVE_FILE) as curve_file:
 #setup File
 SETUP_FILE = (PATH+'/rig_setup.json')
 with open(SETUP_FILE) as setup_file:
-	setup = json.load(setup_file)	
+	setup = json.load(setup_file)
 
-MODULE_FILE = (os.path.dirname(__file__) +'/02_Single_FK.json')
+MODULE_FILE = (os.path.dirname(__file__) +'/01_Single_FK.json')
 with open(MODULE_FILE) as module_file:
 	module = json.load(module_file)
 
@@ -68,7 +68,7 @@ def build_single_fk_block():
     loc_guide = cmds.listRelatives(block, c=True)[0]
     print(loc_guide)
 
-    ctrl = mt.curve(input = loc_guide, type = cmds.getAttr('{}.CtrlType'.format(config), asString=True), rename = True, custom_name = False, name = '', 
+    ctrl = mt.curve(input = loc_guide, type = cmds.getAttr('{}.CtrlType'.format(config), asString=True), rename = True, custom_name = False, name = '',
                                        size = cmds.getAttr('{}.CtrlSize'.format(config)))
     mt.assign_color(input = ctrl, color = cmds.getAttr('{}.CtrlColor'.format(config), asString = True))
 
@@ -79,24 +79,24 @@ def build_single_fk_block():
     except:pass
 
     #create gimbal ctrl under main
-    if cmds.getAttr('{}.Gimbal'.format(config)) == True : 
-        gimbal_ctrl = mt.curve(input = loc_guide, type = cmds.getAttr('{}.CtrlType'.format(config), asString=True), rename = False, custom_name = True, 
-                                                  name = ctrl.replace(nc['ctrl'], nc['gimbal_ctrl']), 
-                                                  size = cmds.getAttr('{}.CtrlSize'.format(config)) * 0.8 )        
+    if cmds.getAttr('{}.Gimbal'.format(config)) == True :
+        gimbal_ctrl = mt.curve(input = loc_guide, type = cmds.getAttr('{}.CtrlType'.format(config), asString=True), rename = False, custom_name = True,
+                                                  name = ctrl.replace(nc['ctrl'], nc['gimbal_ctrl']),
+                                                  size = cmds.getAttr('{}.CtrlSize'.format(config)) * 0.8 )
         mt.assign_color(input = gimbal_ctrl, color = cmds.getAttr('{}.CtrlColor'.format(config), asString = True))
 
         cmds.parent(gimbal_ctrl, ctrl)
-        
+
         #gimbal vis attrs
         show_gimbal_attr = mt.new_enum(input= ctrl, name = 'Gimbal', enums = 'Hide:Show')
         cmds.connectAttr(show_gimbal_attr, '{}.v'.format(cmds.listRelatives(gimbal_ctrl, shapes= True)[0]))
 
     #create joint and joint steps if True
-    if cmds.getAttr('{}.CreateJoint'.format(config)) == True : 
+    if cmds.getAttr('{}.CreateJoint'.format(config)) == True :
         cmds.select(cl=True)
         jnt = cmds.joint(n = str(loc_guide).replace(nc['locator'], nc['joint']))
         cmds.delete(cmds.parentConstraint(loc_guide,jnt , mo=False ))
-        
+
         #cmds.delete(loc_guide)
 
         try:cmds.parent(jnt, cmds.getAttr('{}.SetJointParent'.format(config)))
