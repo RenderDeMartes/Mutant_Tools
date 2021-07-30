@@ -27,7 +27,9 @@
 
             "Blends_string":"Clavicle_Ctrl,Spine_05_Ctrl,COG_Ctrl,GLobal,Ctrl,Root_Ctrl",
 
-            "SetGameParent_string": ""
+            "SetGameParent_string": "",
+
+            "Help_string" : "Possible parent: L_Elbow_Twist_3_Jnt\n"
 
             }
 

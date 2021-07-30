@@ -975,10 +975,18 @@ TextEditor--TextEditorWidget &gt; QWidget {
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_7">
         <item>
-         <widget class="QLineEdit" name="attr_name_7"/>
+         <widget class="QLineEdit" name="attr_name_7">
+          <property name="text">
+           <string>Help_string</string>
+          </property>
+         </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="attr_settings_7"/>
+         <widget class="QLineEdit" name="attr_settings_7">
+          <property name="text">
+           <string>Possible parent: *_Jnt </string>
+          </property>
+         </widget>
         </item>
        </layout>
       </item>

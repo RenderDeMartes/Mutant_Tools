@@ -41,6 +41,7 @@
    "distance":"_Distance",
    "condition":"_Condition",
    "blend":"_Blend",
+   "plus_minus_average" : "PMA",
    "connected":"_Connected",
    "skin_cluster": "_Skin",
    "expression": "_Expression"

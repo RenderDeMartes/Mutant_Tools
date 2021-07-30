@@ -238,7 +238,6 @@ def build_foot_block():
             if parent_fk.startswith(nc['left']) and side_guide.startswith(nc['right']):
                 parent_fk = parent_fk.replace(nc['left'], nc['right'])
 
-        cmds.parentConstraint(parent_fk, fk_joints[0], mo=True)
 
         #IK
         # create ik handle
@@ -259,13 +258,6 @@ def build_foot_block():
         cmds.parent(ankle_ikSpline[0], rfl_main_grps[7])
         cmds.parent(ball_ikSpline[0], rfl_main_grps[6])
 
-        if main_ik == 'new_locator':
-            cmds.parent(cmds.spaceLocator(n = ik_joints[0].replace(nc['joint'],'_Parent_Here')), rfl_main_grps[5])
-        else:
-            if main_ik.startswith(nc['left']) and side_guide.startswith(nc['right']):
-                cmds.parent(main_ik.replace(nc['left'], nc['right']), rfl_main_grps[5])
-            else:
-                cmds.parent(main_ik, rfl_main_grps[5])
 
         #create share controller in case we dont have a switch attr to put it in there
         shared_ik_loc = cmds.spaceLocator(n = ik_joints[1].replace(nc['joint'], '_Share'+nc['locator']))[0]
@@ -285,12 +277,17 @@ def build_foot_block():
         share_grp = mt.root_grp()[0]
         mt.match(share_grp, rfl_main_grps[7], r=True,t=True)
 
+        '''
+
         mt.root_grp(fk_joints[1])
         cmds.connectAttr('{}.translate'.format(share_ctrl), '{}.translate'.format(fk_joints[1]))
         cmds.connectAttr('{}.rotate'.format(share_ctrl), '{}.rotate'.format( fk_joints[1]))
         cmds.connectAttr('{}.translate'.format(share_ctrl), '{}.translate'.format(shared_ik_loc))
         cmds.connectAttr('{}.rotate'.format(share_ctrl), '{}.rotate'.format(shared_ik_loc))
 
+        '''
+
+        #parent rfl groups to ik parent
         parent_ik = block_parent_ik
         if parent_ik == 'new_locator':
             parent_ik = cmds.spaceLocator(n = '{}_ParentIK{}'.format(fk_joints[0], nc['locator']))[0]
@@ -298,8 +295,10 @@ def build_foot_block():
             if parent_ik.startswith(nc['left']) and side_guide.startswith(nc['right']):
                 parent_ik = parent_ik.replace(nc['left'], nc['right'])
 
-        cmds.parentConstraint(parent_ik, ik_joints[0], mo=True)
-
+        #cmds.parentConstraint(parent_ik, rfl_main_grps[0], mo=True)
+        p = cmds.listRelatives(rfl_main_grps[2], p=True)[0]
+        pp = cmds.listRelatives(p, p=True)[0]
+        ppp = cmds.listRelatives(pp, p=True)[0]
 
         #add ik fk ctrl shape
         if ikfk_switch_attr == 'new_attr':
@@ -316,14 +315,17 @@ def build_foot_block():
         mt.switch_constraints(this=ik_joints[2], that=fk_joints[2], main=main_joints[2], attr=switch_attr)
 
         #switch ik fk in the shared ctrl
-        mt.switch_constraints(this=parent_ik, that=parent_fk, main=share_grp, attr=switch_attr)
+        #mt.switch_constraints(this=parent_ik, that=parent_fk, main=share_grp, attr=switch_attr)
+
 
         #IK RFL Attrs
-        if rfl_attr == 'shared_ctrl':
-            ik_attrs_shape = share_ctrl
+        if rfl_attr == 'new_locator':
+            ik_attrs_shape = cmds.spaceLocator(n = side_guide + '_FootAttrs' + nc['locators'])
         else:
             if rfl_attr.startswith(nc['left']) and side_guide.startswith(nc['right']):
                 ik_attrs_shape = rfl_attr.replace(nc['left'], nc['right'])
+            else:
+                ik_attrs_shape = rfl_attr
 
         # ['L_Foot_Heel_RFL_Grp' 0 , 'L_Foot_In_RFL_Grp' 1 , 'L_Foot_Out_RFL_Grp' 2 , 'L_Foot_BallFloor_RFL_Grp' 3,
         # 'L_Foot_HeelMid_RFL_Grp' 4 , 'L_Foot_Ankle_RFL_Grp' 5 , 'L_Foot_Toes_RFL_Grp' 6 , 'L_Foot_Ball_RFL_Grp' 7 ]
@@ -345,9 +347,50 @@ def build_foot_block():
         for attr in rfl_attrs:
             rfl_temp_attr = mt.new_attr(input= ik_attrs_shape, name = attr, min = -100 , max = 100, default = 0)
             cmds.connectAttr(rfl_temp_attr, rfl_attrs[attr])
-        mt.line_attr(input = ik_attrs_shape, name = 'FootRoll', lines = 10)
 
         #Foot Roll
+        mt.line_attr(input = ik_attrs_shape, name = 'FootRoll', lines = 10)
+        break_limit_attr = mt.new_attr(input=ik_attrs_shape, name='BreakRoll', min=-0, max=180, default=45)
+        extend_attr = mt.new_attr(input=ik_attrs_shape, name='ExtendRoll', min=-0, max=180, default=90)
+        foot_roll_attr = mt.new_attr(input=ik_attrs_shape, name='FootRoll', min=-180, max=180, default=0)
+
+        #Ball
+        roll_contidion_node = cmds.shadingNode('condition', asUtility=True, n=side_guide + '_Ball_Limit' + nc['condition'])
+        cmds.setAttr(str(roll_contidion_node) + ".operation", 3) #grather equal than
+        cmds.connectAttr(break_limit_attr, str(roll_contidion_node) + '.firstTerm')
+        cmds.connectAttr(foot_roll_attr, str(roll_contidion_node) + '.secondTerm')
+        cmds.connectAttr(foot_roll_attr, str(roll_contidion_node) + '.colorIfTrue.colorIfTrueR')
+        cmds.connectAttr(break_limit_attr, str(roll_contidion_node) + '.colorIfFalse.colorIfFalseR')
+
+        ball_group_attr = '{}.rotateZ'.format(cmds.listRelatives(cmds.listRelatives(rfl_main_grps[7],p=True)[0], p=True)[0])
+
+        #reverse ball
+        mt.connect_md_node(in_x1=str(roll_contidion_node) + '.outColor.outColorR', in_x2=-1.0, out_x=ball_group_attr, mode='mult', name='', force=True)
+
+        #Heel
+        toes_contidion_node = cmds.shadingNode('condition', asUtility=True, n=side_guide + '_Toes_Limit' + nc['condition'])
+        cmds.setAttr(str(toes_contidion_node) + ".operation", 3) #grather equal than
+        cmds.connectAttr(break_limit_attr, str(toes_contidion_node) + '.firstTerm')
+        cmds.connectAttr(foot_roll_attr, str(toes_contidion_node) + '.secondTerm')
+
+        cmds.setAttr(str(toes_contidion_node) + '.colorIfTrue.colorIfTrueR', 0)
+
+        toes_substract_node = cmds.shadingNode('plusMinusAverage', asUtility=True, n=side_guide + '_Toes_Substract' + nc['plus_minus_average'])
+        cmds.setAttr(str(toes_substract_node) + ".operation", 2) #substract
+        cmds.setAttr(str(toes_contidion_node) + '.colorIfTrue.colorIfTrueR', 0)
+
+        cmds.connectAttr(toes_substract_node + '.output1D', str(toes_contidion_node) + '.colorIfFalse.colorIfFalseR')
+        cmds.connectAttr(break_limit_attr, str(toes_substract_node) + '.input1D[1]')
+        cmds.connectAttr(foot_roll_attr, str(toes_substract_node) + '.input1D[0]')
+
+        cmds.connectAttr(str(toes_contidion_node) + '.outColor.outColorR',
+         '{}.rotateX'.format(cmds.listRelatives(cmds.listRelatives(rfl_main_grps[6],p=True)[0], p=True)[0]))
+
+        #heel back
+
+
+        #roll reverse
+
 
         '''
         #create bind Joints for the skin -------------------------
@@ -421,12 +464,31 @@ def build_foot_block():
 
         '''  
 
+        #parents at the end
+
+        if main_ik == 'new_locator':
+            cmds.parent(cmds.spaceLocator(n = ik_joints[0].replace(nc['joint'],'_Here')), rfl_main_grps[5])
+        else:
+            if main_ik.startswith(nc['left']) and side_guide.startswith(nc['right']):
+                pc_ik = cmds.listRelatives(main_ik.replace(nc['left'], nc['right']),c=True)
+                cmds.delete(pc_ik)
+                cmds.parent(main_ik.replace(nc['left'], nc['right']), rfl_main_grps[5])
+            else:
+                pc_ik = cmds.listRelatives(main_ik, c=True)[0]
+                cmds.delete(pc_ik)
+                cmds.parent(main_ik, rfl_main_grps[5])
+
+        cmds.parentConstraint(parent_ik.replace(nc['ctrl'], nc['joint']), ik_joints[0], mo=True)
+        cmds.parentConstraint(parent_ik, ppp, mo =True)
+        cmds.parentConstraint(parent_fk, fk_joints[0], mo=True)
+
+
     #clean a bit
     clean_rig_grp = cmds.group(em=True, n = '{}{}'.format(block.replace(nc['module'],'_Rig'), nc['group']))
 
-    
 
-    # build complete ----------------------------------------------------    
+
+    # build complete ----------------------------------------------------
     print ('Build {} Success'.format(block))
 
 

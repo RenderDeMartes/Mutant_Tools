@@ -3,23 +3,8 @@ version: 1.0.0
 date: 21/04/2020
 
 #----------------
-content: 
 
-self.check_input() #print input infomation
-self.input_unit() #convert input list in a string
-
-root_grp(input = '', repalce_np = False) #Create a group over the input		
-assign_color(input = '', color = '') #asign color to the input
-replace_name(input = '', custom = False, custom_name = 'customName', autoRoot = True, replace_nc = False) #Change names with or without Hierarchy
-hide_attr(input = '',t= False, r = False, s = False, v = False, show = False) #Hide attrs in channel box o show them all
-curve(type = 'cube', rename = True, custom_name = False, name = '',  size = 1) #based on curves.json file
-match(this = '', that = '' ,t = True, r = True, s = True)
-switch(this = '', that = '', main = '', attr = '')#create a switch with a parent contraint 
-new_attr(input= '', name = 'switch', min = 0 , max = 1, default = 0) # create a new float attr with min, max and feault value
-
-NEEDS A UPDATE :)
-#----------------
-how to: 
+how to:
 	
 import Mutant_Tools
 import Mutant_Tools.Utils
@@ -81,10 +66,17 @@ class Tools_class:
 	#----------------------------------------------------------------------------------------------------------------			
 
 	def check_input(self, func = '', print_input = False):
-		'''
-		if input is empty uses selection instead, i used to use this but stop becouse is not usefull... sorry :)
-		'''
-		
+		"""	if input is empty uses selection instead, i used to use this but stop becouse is not usefull... sorry :)
+
+
+		Args:
+			func: string: name of the function
+			print_input: bool
+
+		Returns: None
+
+		"""
+
 		if self.input == '':
 						
 			self.input = cmds.ls(sl = True)
@@ -94,18 +86,19 @@ class Tools_class:
 		else:
 			if (print_input):
 				print ('{} input is argument: {}'.format(func, self.input))
-	
+
+		return None
 	
 	#----------------------------------------------------------------------------------------------------------------			
 	def	root_grp(self, input = '', custom = False, custom_name = 'customName', autoRoot = False, replace_nc = False):
 		"""This create groups
 
 		Args:
-			input:
-			custom: bool: specify if new grp
-			custom_name: string: name of custom group (needs)
-			autoRoot:
-			replace_nc:
+			input: if not specify it will use selection else specify string
+			custom: bool: specify if new grp have a custom name
+			custom_name: string: name of custom group (needs custom to be True)
+			autoRoot: bool: will create 2 groups intead of 1: Root Grp and Auto Grp
+			replace_nc:bool: will try to replace the name space to be the groups one.
 
 		Returns: list with string of new groups
 
@@ -167,10 +160,18 @@ class Tools_class:
 	#----------------------------------------------------------------------------------------------------------------		
 	
 	def replace_name(self, input = '', search = '', replace = '', hi = False):
-		'''
-		replaces names of obj or obj hierarchy
-		'''
-			
+		""" will replace names in selection. Works nice to change names i hierarchys
+
+		Args:
+			input: if not specify it will use selection else specify string
+			search: string to search
+			replace: string to replace with
+			hi: bool: true if do the change to all the hierarchy.
+
+		Returns: list with new names
+
+		"""
+
 		if hi ==True:
 
 			mel.eval( 'searchReplaceNames {} {} "hierarchy"'.format(search, replace))
@@ -187,24 +188,23 @@ class Tools_class:
 	def assign_color(self, input = '', color = 'lightBlue'):
 		"""	assing color to desire transform
 
-		colors = {  'red':       13,
-					'blue':       6,
-					'white':     16,
-					'purple':     9,
-					'green':     14,
-					'lightBlue': 18,
-					'yellow':    17,
-					'grey':      1 }
+		available_colors = {    'red':       13,
+								'blue':       6,
+								'white':     16,
+								'purple':     9,
+								'green':     14,
+								'lightBlue': 18,
+								'yellow':    17,
+								'grey':       1  }
 
 		Args:
-			input:
+			input: if not specify it will use selection else specify string
 			color: string of name (dont accept intergers)
 
 		Returns: None
 
 		"""
 
-		
 		if input != '':
 			self.input = [input]
 			
@@ -230,9 +230,20 @@ class Tools_class:
 			
 	#----------------------------------------------------------------------------------------------------------------					
 	def hide_attr(self, input = '', t= False, r = False, s = False, v = False, rotate_order = False, show = False):
-		'''
-		hide translate, rotate, scale and visivility from attrs channel box
-		'''
+		"""
+
+		Args:
+			input: if not specify it will use selection else specify string
+			t: bool hide translate
+			r: bool hide rotate
+			s: bool hide scale
+			v: bool hide visibility
+			rotate_order: bool hide rotate order
+			show: bool show all
+
+		Returns: None
+
+		"""
 
 		if input != '':
 			self.input = [input]
@@ -288,6 +299,19 @@ class Tools_class:
 	#----------------------------------------------------------------------------------------------------------------					
 
 	def curve(self,input = '', type = 'cube', rename = True, custom_name = False, name = '', size = 1):
+		"""
+
+		Args:
+			input: if not specify it will use selection else specify string
+			type:
+			rename:
+			custom_name:
+			name:
+			size:
+
+		Returns:
+
+		"""
 		'''
 		create curves shapes based on the curve json file
 		'''
@@ -332,6 +356,18 @@ class Tools_class:
 	#----------------------------------------------------------------------------------------------------------------
 
 	def match(self, this = '', that = '' ,t = True, r = True, s = True):
+		"""
+
+		Args:
+			this:
+			that:
+			t:
+			r:
+			s:
+
+		Returns:
+
+		"""
 		'''
 		match desire transforms
 		'''
@@ -344,6 +380,17 @@ class Tools_class:
 
 	#----------------------------------------------------------------------------------------------------------------
 	def switch_constraints(self, this = '', that = '', main = '', attr = ''):
+		"""
+
+		Args:
+			this:
+			that:
+			main:
+			attr:
+
+		Returns:
+
+		"""
 		'''
 		create a switch between 3 joints chains and it used a parent constraint instead of blend colors
 		'''
@@ -372,6 +419,17 @@ class Tools_class:
 
 	#----------------------------------------------------------------------------------------------------------------
 	def switch_blend_colors(self, this = '', that = '', main = '', attr = ''):
+		"""
+
+		Args:
+			this:
+			that:
+			main:
+			attr:
+
+		Returns:
+
+		"""
 		'''
 		create a swhitch between 3 joints chains and it used a blend colors instead of parent constraints
 		'''
@@ -400,6 +458,18 @@ class Tools_class:
 
 	#----------------------------------------------------------------------------------------------------------------
 	def new_attr(self, input= '', name = 'switch', min = 0 , max = 1, default = 0):
+		"""
+
+		Args:
+			input: if not specify it will use selection else specify string
+			name:
+			min:
+			max:
+			default:
+
+		Returns:
+
+		"""
 		'''
 		create a double attr default is 0 to 1 and deafault value as 0
 		'''
@@ -412,6 +482,18 @@ class Tools_class:
 
 	#----------------------------------------------------------------------------------------------------------------
 	def new_attr_interger(self, input= '', name = 'switch', min = 0 , max = 1, default = 0):
+		"""
+
+		Args:
+			input: if not specify it will use selection else specify string
+			name:
+			min:
+			max:
+			default:
+
+		Returns:
+
+		"""
 		'''
 		create a int attr default is 0 to 1 and deafault value as 0
 		'''
@@ -425,6 +507,16 @@ class Tools_class:
 	#----------------------------------------------------------------------------------------------------------------
 	
 	def new_enum(self, input= '', name = 'switch', enums = 'Hide:Show'):
+		"""
+
+		Args:
+			input: if not specify it will use selection else specify string
+			name:
+			enums:
+
+		Returns:
+
+		"""
 		'''
 		create an enum attr in the attr lists for the input, default is going to be Hide and Show
 		'''
@@ -438,6 +530,16 @@ class Tools_class:
 	#----------------------------------------------------------------------------------------------------------------
 	
 	def new_boolean(self, input= '', name = 'bool', dv = 'True'):
+		"""
+
+		Args:
+			input: if not specify it will use selection else specify string
+			name:
+			dv:
+
+		Returns:
+
+		"""
 		'''
 		create an boolean attr in the attr lists for the input, default is going to be Hide and Show
 		'''
@@ -453,6 +555,16 @@ class Tools_class:
 	#----------------------------------------------------------------------------------------------------------------
 
 	def line_attr(self, input = '', name = 'name', lines = 10):
+		"""
+
+		Args:
+			input: if not specify it will use selection else specify string
+			name:
+			lines:
+
+		Returns:
+
+		"""
 		'''
 		create this attr in the attr lists __________
 		'''
@@ -469,6 +581,16 @@ class Tools_class:
 	#----------------------------------------------------------------------------------------------------------------
 
 	def string_attr(self, input = '', name = 'name', string = 'string'):
+		"""
+
+		Args:
+			input: if not specify it will use selection else specify string
+			name:
+			string:
+
+		Returns:
+
+		"""
 		'''
 		create a string attr in selected node
 		'''
@@ -479,6 +601,15 @@ class Tools_class:
 	#----------------------------------------------------------------------------------------------------------------
 
 	def connect_rotate_order(self, input = '', object = 'controller'):
+		"""
+
+		Args:
+			input: if not specify it will use selection else specify string
+			object:
+
+		Returns:
+
+		"""
 		'''
 		create a rotate order attr and connects it to the desire ogject
 		'''
@@ -513,6 +644,17 @@ class Tools_class:
 	#----------------------------------------------------------------------------------------------------------------
 
 	def duplicate_change_names(self, input = '', hi = True, search='_Jnt', replace ='_dup'):
+		"""
+
+		Args:
+			input: if not specify it will use selection else specify string
+			hi:
+			search:
+			replace:
+
+		Returns:
+
+		"""
 		'''
 		duplicate any herachy with no duplicated names but with clean ones
 		'''
@@ -558,6 +700,17 @@ class Tools_class:
 	#----------------------------------------------------------------------------------------------------------------
 
 	def bounding_cube(self, input = '', size = 1, name = '', axis = setup['twist_axis']):
+		"""
+
+		Args:
+			input: if not specify it will use selection else specify string
+			size:
+			name:
+			axis:
+
+		Returns:
+
+		"""
 		'''
 		create a ctrl cube with coverage for the full limb, so its like a bounding box in lenght
 		'''
@@ -623,6 +776,16 @@ class Tools_class:
 
 	#----------------------------------------------------------------------------------------------------------------
 	def shape_with_attr(self, input = '', obj_name = 'Switch', attr_name = 'Switch'):
+		"""
+
+		Args:
+			input: if not specify it will use selection else specify string
+			obj_name:
+			attr_name:
+
+		Returns:
+
+		"""
 		'''
 		create a shape with an attr to put inside all the ctrls, 
 		if the initial shape doesnt exists it create it, else it just put it inside
@@ -683,7 +846,17 @@ class Tools_class:
 
 
 	#----------------------------------------------------------------------------------------------------------------				
-	def text_curves(self, name_text = 'Name', font = 'Arial', color = setup['main_color']):   
+	def text_curves(self, name_text = 'Name', font = 'Arial', color = setup['main_color']):
+		"""
+
+		Args:
+			name_text:
+			font:
+			color:
+
+		Returns:
+
+		"""
 
 		#BASED ON OLD ONE in RDM Tools V1 (Sorry for the spanish i just copy paste it)
 
@@ -757,6 +930,17 @@ class Tools_class:
 	#----------------------------------------------------------------------------------------------------------------		
 
 	def swap_connections(self, old_node = '', new_node= 'new_node_here', inputs= 'False', outputd='False'):
+		"""
+
+		Args:
+			old_node:
+			new_node:
+			inputs:
+			outputd:
+
+		Returns:
+
+		"""
 
 		'''
 		#this tool will try to swap all the output or input onenctios to the node
@@ -773,18 +957,36 @@ class Tools_class:
 	#----------------------------------------------------------------------------------------------------------------		
 
 	def curve_between(self, start, end):
+		"""
+		
+		Args:
+			start: 
+			end: 
+
+		Returns:
+
+		"""
 		#create a simple linear curve between 2 joints 
 	   
-	   pos_a = cmds.xform(start, q=True,t=True, ws=True)
-	   pos_b = cmds.xform(end, q=True,t=True, ws=True) 
+		pos_a = cmds.xform(start, q=True,t=True, ws=True)
+		pos_b = cmds.xform(end, q=True,t=True, ws=True) 
 	   
-	   crv = cmds.curve(d=1, p=[pos_a,pos_b], k=[0,1], n = '{}{}'.format(start, nc['curve']))
+		crv = cmds.curve(d=1, p=[pos_a,pos_b], k=[0,1], n = '{}{}'.format(start, nc['curve']))
 	   
-	   return crv
+		return crv
 
 	#----------------------------------------------------------------------------------------------------------------		
 	
 	def nurbs_between(self, start, end):
+		"""
+
+		Args:
+			start:
+			end:
+
+		Returns:
+
+		"""
 		#creates a nurbs plane between 2 transforms
 		
 		name = start.replace(nc['joint'], '') +'_'+ end.replace(nc['joint'], '')+ nc['nurb']  
@@ -802,6 +1004,16 @@ class Tools_class:
 	#----------------------------------------------------------------------------------------------------------------		
 
 	def nurbs_between_trio(self, start, mid, end):
+		"""
+
+		Args:
+			start:
+			mid:
+			end:
+
+		Returns:
+
+		"""
 		#creates a nurbs plane between 3 transforms
 
 		name = start.replace(nc['joint'], '') +'_'+ end.replace(nc['joint'], '')+ nc['nurb']  
@@ -820,6 +1032,16 @@ class Tools_class:
 	#----------------------------------------------------------------------------------------------------------------		
 
 	def create_ik_spline_twist(self, start, end, curve):
+		"""
+
+		Args:
+			start:
+			end:
+			curve:
+
+		Returns:
+
+		"""
 		#create ik spline based on 2 joints and one curve
 
 		# ik spline solver
@@ -840,6 +1062,19 @@ class Tools_class:
 	#----------------------------------------------------------------------------------------------------------------		
 
 	def connect_md_node(self, in_x1 = '', in_x2 = 1.0, out_x = '', mode = 'mult', name = '', force = False):
+		"""
+
+		Args:
+			in_x1:
+			in_x2:
+			out_x:
+			mode:
+			name:
+			force:
+
+		Returns:
+
+		"""
 		'''
 		this wil create a md node for you to connect something in the input 1x, to output 1x and a value
 		mode = mult or devide
@@ -892,6 +1127,15 @@ class Tools_class:
 	#----------------------------------------------------------------------------------------------------------------
 
 	def trasform_on_sel(self, transform='', name='Temp'):
+		"""
+
+		Args:
+			transform:
+			name:
+
+		Returns:
+
+		"""
 		'''
 		position a transform node in desire selection, if there is no trasnform it will create a joint for you
 		'''
@@ -910,6 +1154,15 @@ class Tools_class:
 
 	#----------------------------------------------------------------------------------------------------------------
 	def connect_with_line(self, start='', end=''):
+		"""
+
+		Args:
+			start:
+			end:
+
+		Returns:
+
+		"""
 		'''
 		create a line in between 2 transforms (start and end)
 		'''
@@ -947,6 +1200,15 @@ class Tools_class:
 
 	#----------------------------------------------------------------------------------------------------------------
 	def lock_node(self, input = '', unlock=False):
+		"""
+
+		Args:
+			input: if not specify it will use selection else specify string
+			unlock:
+
+		Returns:
+
+		"""
 		'''
 		this will lock and unlock (with the attr True) any input node
 		'''			
@@ -963,6 +1225,16 @@ class Tools_class:
 	#----------------------------------------------------------------------------------------------------------------
 
 	def replace_connection_with_doublelinear(self, input = '', attr = '', name = 'DoubleLinear'):
+		"""
+
+		Args:
+			input: if not specify it will use selection else specify string
+			attr:
+			name:
+
+		Returns:
+
+		"""
 
 		double_linear = cmds.shadingNode('addDoubleLinear', asUtility=True, name = name)
 		connection_to_replace = cmds.listConnections('{}.{}'.format(input,attr), p=True)[0]
@@ -975,6 +1247,16 @@ class Tools_class:
 	#----------------------------------------------------------------------------------------------------------------
 
 	def write_json(self, path, json_file, data):
+		"""
+
+		Args:
+			path:
+			json_file:
+			data:
+
+		Returns:
+
+		"""
 
 		write_json = path + json_file
 
@@ -985,6 +1267,15 @@ class Tools_class:
 	#----------------------------------------------------------------------------------------------------------------
 
 	def read_json(self, path, json_file):
+		"""
+
+		Args:
+			path:
+			json_file:
+
+		Returns:
+
+		"""
 
 		json_data = path + json_file
 
@@ -994,11 +1285,6 @@ class Tools_class:
 		return data
 
 	#----------------------------------------------------------------------------------------------------------------
-
-
-	#Sliders
-	#skinning pero puede ser una clase nueva: bind skin, transfer skin, select from, copy, add, remove, remove unused, copy weight, paste weight, Mirror, joints edit on, joints edit off, import y export
-	#show/hide by type
 
 
 #tool = Tools_class()

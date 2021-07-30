@@ -18,6 +18,8 @@
         "Blends_string": "COG_Ctrl,GLobal_Ctrl,Root_Ctrl,Spine_04_Ctrl",
         "CtrlType_enum": "hexagon:sphere:cube:square:octagon:pringle:feet:hand:circleY:circleX:circleZ:3dArrow:2dArrow:mover:2dArrow:root:cog",
         "CtrlSize_float": "4",
-        "SetGameParent_string": ""
+        "SetGameParent_string": "",
+
+        "Help_string" : "Possible parent: L_Pelvis_Jnt\n"
     }
 }

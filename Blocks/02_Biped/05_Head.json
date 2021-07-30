@@ -21,6 +21,8 @@
         "CtrlSize_float": "4",
         "CtrlColor_enum": "yellow:lightBlue:blue:white:purple:green:red:grey",
         "HeadBlends_string": "COG_Ctrl,GLobal_Ctrl,Root_Ctrl",
-        "SetGameParent_string": ""
+        "SetGameParent_string": "",
+
+        "Help_string" : "Possible parent: Head_Jnt\n"
     }
 }

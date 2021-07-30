@@ -21,7 +21,9 @@
         "Gimbal_bool": "True",
         
         "CreateJoint_bool": "True",
-        "SetJointParent_Hierarchy_string": "Miscellaneous_Grp"
+        "SetJointParent_Hierarchy_string": "Miscellaneous_Grp",
+
+        "Help_string" : "Possible parent: Bone_Jnt\n"
         
     }
 }

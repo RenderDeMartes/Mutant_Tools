@@ -21,7 +21,8 @@
         "CtrlType_enum": "square:sphere:cube:octagon:hexagon:pringle:feet:hand:circleY:circleX:circleZ:3dArrow:2dArrow:mover:2dArrow:root:cog",
         "CtrlSize_float": "4",
 
-        "SetGameParent_string" : ""
+        "SetGameParent_string" : "",
 
+        "Help_string" : "Possible parent: R_Clavicle_Jnt\n"
     }
 }
