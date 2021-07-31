@@ -230,7 +230,7 @@ class Tools_class:
 			
 	#----------------------------------------------------------------------------------------------------------------					
 	def hide_attr(self, input = '', t= False, r = False, s = False, v = False, rotate_order = False, show = False):
-		"""
+		"""Will hide selected attrs or display them all if show
 
 		Args:
 			input: if not specify it will use selection else specify string
@@ -299,22 +299,19 @@ class Tools_class:
 	#----------------------------------------------------------------------------------------------------------------					
 
 	def curve(self,input = '', type = 'cube', rename = True, custom_name = False, name = '', size = 1):
-		"""
+		"""Will create a curve on position of selected input. (see curves.json in config for more details of avilable shapes)
 
 		Args:
 			input: if not specify it will use selection else specify string
-			type:
-			rename:
-			custom_name:
-			name:
-			size:
+			type: string name of shape
+			rename: bool to replace namespaces at the end
+			custom_name: true if want to assigne new name, false if want the same as selection
+			name: string custom name
+			size: int  size
 
-		Returns:
+		Returns: string ctrl
 
 		"""
-		'''
-		create curves shapes based on the curve json file
-		'''
 
 		try:sel = cmds.ls(sl = True)[0]
 		except: sel = 'RdM'
@@ -356,21 +353,19 @@ class Tools_class:
 	#----------------------------------------------------------------------------------------------------------------
 
 	def match(self, this = '', that = '' ,t = True, r = True, s = True):
-		"""
+		""" Match 2 transforms with the desire transform, rotate or scale
 
 		Args:
-			this:
-			that:
-			t:
-			r:
-			s:
+			this: string item to move
+			that: string item with desire position
+			t: bool match translate
+			r: bool match rotate
+			s: bool match scale
 
-		Returns:
+		Returns: None
 
 		"""
-		'''
-		match desire transforms
-		'''
+
 		if (t):
 			cmds.delete(cmds.pointConstraint(that, this, mo =False))
 		if (r):
@@ -378,22 +373,22 @@ class Tools_class:
 		if (s):
 			cmds.delete(cmds.scaleConstraint(that, this, mo =False))
 
+		return None
+
 	#----------------------------------------------------------------------------------------------------------------
 	def switch_constraints(self, this = '', that = '', main = '', attr = ''):
-		"""
+		"""Create a switch between 3 chains (for ikfk setups) There is a blend colors alternative to this one.
 
 		Args:
-			this:
-			that:
-			main:
-			attr:
+			this:string ik joint(can be any transform)
+			that:string fk joint(can be any transform)
+			main:ik main joint that swtich between
+			attr: string what to use as a switch parent
 
-		Returns:
+		Returns: None
 
 		"""
-		'''
-		create a switch between 3 joints chains and it used a parent constraint instead of blend colors
-		'''
+
 
 		#create shortest parentContraint
 		contraint = cmds.parentConstraint(this,that, main, mo =True)[0]
@@ -419,20 +414,16 @@ class Tools_class:
 
 	#----------------------------------------------------------------------------------------------------------------
 	def switch_blend_colors(self, this = '', that = '', main = '', attr = ''):
-		"""
+		"""Create a switch between 3 chains (for ikfk setups) There is a constraint alternative to this one.
 
 		Args:
-			this:
-			that:
-			main:
-			attr:
+			this:string ik joint(can be any transform)
+			that:string fk joint(can be any transform)
+			main:ik main joint that swtich between
+			attr: string what to use as a switch parent
 
-		Returns:
-
+		Returns: None
 		"""
-		'''
-		create a swhitch between 3 joints chains and it used a blend colors instead of parent constraints
-		'''
 
 		attrs = ['translate', 'rotate', 'scale']
 
@@ -458,22 +449,19 @@ class Tools_class:
 
 	#----------------------------------------------------------------------------------------------------------------
 	def new_attr(self, input= '', name = 'switch', min = 0 , max = 1, default = 0):
-		"""
+		"""Will create new double attr on transform
 
 		Args:
 			input: if not specify it will use selection else specify string
-			name:
-			min:
-			max:
-			default:
+			name: string name of new attr
+			min: interger min (need it)
+			max: interget max (need it)
+			default: interger deafult value
 
-		Returns:
+		Returns: string attr name
 
 		"""
-		'''
-		create a double attr default is 0 to 1 and deafault value as 0
-		'''
-	
+
 		#add new attr as float
 		cmds.addAttr(input, ln = name, at = 'double', min = min, max = max, dv = default)
 		cmds.setAttr('{}.{}'.format(input, name), e = True, keyable = True)
@@ -482,21 +470,18 @@ class Tools_class:
 
 	#----------------------------------------------------------------------------------------------------------------
 	def new_attr_interger(self, input= '', name = 'switch', min = 0 , max = 1, default = 0):
-		"""
+		"""Will create new long attr on transform
 
 		Args:
 			input: if not specify it will use selection else specify string
-			name:
-			min:
-			max:
-			default:
+			name: string name of new attr
+			min: interger min (need it)
+			max: interget max (need it)
+			default: interger deafult value
 
-		Returns:
+		Returns: string attr name
 
 		"""
-		'''
-		create a int attr default is 0 to 1 and deafault value as 0
-		'''
 	
 		#add new attr as float
 		cmds.addAttr(input, ln = name, at = 'long', min = min, max = max, dv = default)
@@ -507,19 +492,15 @@ class Tools_class:
 	#----------------------------------------------------------------------------------------------------------------
 	
 	def new_enum(self, input= '', name = 'switch', enums = 'Hide:Show'):
-		"""
+		"""Will create new enum attr on transform
 
 		Args:
 			input: if not specify it will use selection else specify string
-			name:
-			enums:
+			name: string attr name
+			enums: strings separated by :
 
-		Returns:
-
+		Returns: string attr name
 		"""
-		'''
-		create an enum attr in the attr lists for the input, default is going to be Hide and Show
-		'''
 		
 		#add new attr as float
 		cmds.addAttr(input, ln = name, at = 'enum', en = enums)
@@ -530,20 +511,17 @@ class Tools_class:
 	#----------------------------------------------------------------------------------------------------------------
 	
 	def new_boolean(self, input= '', name = 'bool', dv = 'True'):
-		"""
+		"""Will create new boolean attr on transform
 
 		Args:
 			input: if not specify it will use selection else specify string
-			name:
-			dv:
+			name: string attr name
+			dv: bool default value
 
-		Returns:
+		Returns: string attr name
 
 		"""
-		'''
-		create an boolean attr in the attr lists for the input, default is going to be Hide and Show
-		'''
-		
+
 		#add new attr as float
 		cmds.addAttr(input, ln = name, at = 'bool')
 		cmds.setAttr('{}.{}'.format(input, name), e = True, channelBox = True)
@@ -552,22 +530,19 @@ class Tools_class:
 		print (dv)
 
 		return '{}.{}'.format(input, name)
+
 	#----------------------------------------------------------------------------------------------------------------
 
 	def line_attr(self, input = '', name = 'name', lines = 10):
-		"""
+		""" Will create a line Attr ---------------[NAME]
 
 		Args:
 			input: if not specify it will use selection else specify string
-			name:
-			lines:
+			name:Attrs name
+			lines: int amount of lines, iff amount exists will -1 until possible
 
-		Returns:
-
+		Returns: String Attr name
 		"""
-		'''
-		create this attr in the attr lists __________
-		'''
 
 		for num in reversed(range(lines)):
 			try:
@@ -581,38 +556,35 @@ class Tools_class:
 	#----------------------------------------------------------------------------------------------------------------
 
 	def string_attr(self, input = '', name = 'name', string = 'string'):
-		"""
+		""" Will create a string attr. Usefull to store information
 
 		Args:
 			input: if not specify it will use selection else specify string
-			name:
-			string:
+			name: string name
+			string: string value
 
-		Returns:
+		Returns: string attr name
 
 		"""
-		'''
-		create a string attr in selected node
-		'''
+
 		cmds.addAttr(input, ln=name, dt="string")
 		cmds.setAttr('{}.{}'.format(input,name), string, type="string")
 
 		return '{}.{}'.format(input,name)
+
 	#----------------------------------------------------------------------------------------------------------------
 
 	def connect_rotate_order(self, input = '', object = 'controller'):
-		"""
+		"""Will connect inputs RO to attr in controller object
 
 		Args:
 			input: if not specify it will use selection else specify string
-			object:
+			object: String where to put the attr
 
-		Returns:
+		Returns: string attr
 
 		"""
-		'''
-		create a rotate order attr and connects it to the desire ogject
-		'''
+
 
 		if input != '':
 			self.input = [input]
@@ -644,30 +616,18 @@ class Tools_class:
 	#----------------------------------------------------------------------------------------------------------------
 
 	def duplicate_change_names(self, input = '', hi = True, search='_Jnt', replace ='_dup'):
-		"""
+		""" duplicate any hierarchy with no duplicated names but with clean ones
+
 
 		Args:
 			input: if not specify it will use selection else specify string
-			hi:
-			search:
-			replace:
+			hi: bool if do it in all the hierarchy
+			search: string to seacrh
+			replace: string to replace
 
-		Returns:
+		Returns: string duplicated[0] transform
 
 		"""
-		'''
-		duplicate any herachy with no duplicated names but with clean ones
-		'''
-		'''
-		#this doesnt work
-		if input != '':
-			self.input = [input]
-			
-		else:	
-			self.input = input
-
-		self.check_input('duplicate_change_names')	
-		'''
 		
 		if input == '':
 			self.input = cmds.ls(sl=True)
@@ -700,20 +660,18 @@ class Tools_class:
 	#----------------------------------------------------------------------------------------------------------------
 
 	def bounding_cube(self, input = '', size = 1, name = '', axis = setup['twist_axis']):
-		"""
+		"""	create a ctrl cube with coverage for the full limb, so its like a bounding box in lenght
+
 
 		Args:
 			input: if not specify it will use selection else specify string
-			size:
-			name:
-			axis:
+			size: ctrl size
+			name: string name of cube
+			axis: X Y o Z for the aim axis. By default will read the setup file
 
-		Returns:
+		Returns: string ctrl
 
 		"""
-		'''
-		create a ctrl cube with coverage for the full limb, so its like a bounding box in lenght
-		'''
 
 		#turn off soft selection
 		cmds.softSelect(e=True, softSelectEnabled = False)
@@ -776,22 +734,16 @@ class Tools_class:
 
 	#----------------------------------------------------------------------------------------------------------------
 	def shape_with_attr(self, input = '', obj_name = 'Switch', attr_name = 'Switch'):
-		"""
+		"""create a shape with an attr to put inside all the input ransform (to have a ik fk switch on all the ctrls)
 
 		Args:
 			input: if not specify it will use selection else specify string
-			obj_name:
-			attr_name:
+			obj_name: string transform name to put the shape in
+			attr_name: string attr name
 
-		Returns:
+		Returns: string attr
 
 		"""
-		'''
-		create a shape with an attr to put inside all the ctrls, 
-		if the initial shape doesnt exists it create it, else it just put it inside
-		input = a list
-		
-		'''
 
 		#get correct input as list
 		if input != '':
@@ -847,14 +799,14 @@ class Tools_class:
 
 	#----------------------------------------------------------------------------------------------------------------				
 	def text_curves(self, name_text = 'Name', font = 'Arial', color = setup['main_color']):
-		"""
+		"""Create text curves
 
 		Args:
-			name_text:
-			font:
-			color:
+			name_text: string text to curve
+			font:string desire font
+			color: string color
 
-		Returns:
+		Returns: string curve
 
 		"""
 
@@ -930,7 +882,7 @@ class Tools_class:
 	#----------------------------------------------------------------------------------------------------------------		
 
 	def swap_connections(self, old_node = '', new_node= 'new_node_here', inputs= 'False', outputd='False'):
-		"""
+		""" Nothing Yet sorry.
 
 		Args:
 			old_node:
@@ -957,13 +909,13 @@ class Tools_class:
 	#----------------------------------------------------------------------------------------------------------------		
 
 	def curve_between(self, start, end):
-		"""
+		""" Will create a 1d curve between to transforms
 		
 		Args:
-			start: 
-			end: 
+			start: string transform 1
+			end: string transform 2
 
-		Returns:
+		Returns: curve
 
 		"""
 		#create a simple linear curve between 2 joints 
@@ -978,13 +930,13 @@ class Tools_class:
 	#----------------------------------------------------------------------------------------------------------------		
 	
 	def nurbs_between(self, start, end):
-		"""
+		""" Will create a nurbs plane between 2 transforms
 
 		Args:
-			start:
-			end:
+			start: string start transform
+			end: string end transform
 
-		Returns:
+		Returns: nurbs plane
 
 		"""
 		#creates a nurbs plane between 2 transforms
@@ -1004,16 +956,17 @@ class Tools_class:
 	#----------------------------------------------------------------------------------------------------------------		
 
 	def nurbs_between_trio(self, start, mid, end):
-		"""
+		def nurbs_between(self, start, end):
+			""" Will create a nurbs plane between 2 transforms
 
-		Args:
-			start:
-			mid:
-			end:
+			Args:
+				start: string start transform
+				mid: string mid transform
+				end: string end transform
 
-		Returns:
+			Returns: nurbs plane
 
-		"""
+			"""
 		#creates a nurbs plane between 3 transforms
 
 		name = start.replace(nc['joint'], '') +'_'+ end.replace(nc['joint'], '')+ nc['nurb']  
@@ -1032,17 +985,16 @@ class Tools_class:
 	#----------------------------------------------------------------------------------------------------------------		
 
 	def create_ik_spline_twist(self, start, end, curve):
-		"""
+		"""create ik spline based on 2 joints and one curve
 
 		Args:
-			start:
-			end:
-			curve:
+			start:string first joint
+			end: string last joint
+			curve: string curve (can use curve between to create it)
 
-		Returns:
+		Returns: {'ikHandle': ikSpline, 'effector': effector_spline, 'curve': spline_curve}
 
 		"""
-		#create ik spline based on 2 joints and one curve
 
 		# ik spline solver
 		ikSpline = cmds.ikHandle(sj=start,
@@ -1062,23 +1014,21 @@ class Tools_class:
 	#----------------------------------------------------------------------------------------------------------------		
 
 	def connect_md_node(self, in_x1 = '', in_x2 = 1.0, out_x = '', mode = 'mult', name = '', force = False):
-		"""
+		"""	this wil create a md node for you to connect something in the input 1x, to output 1x and a value
+
 
 		Args:
-			in_x1:
-			in_x2:
-			out_x:
-			mode:
-			name:
-			force:
+			in_x1: string attr to connect to input 1 or int value
+			in_x2: string attr to connect to input 1 or int value
+			out_x: atrr to connect the multiply devide output
+			mode: string mult or devide
+			name: name of node
+			force: force the connection if needed. False by default so we can debug easy
 
-		Returns:
+		Returns: string node name
 
 		"""
-		'''
-		this wil create a md node for you to connect something in the input 1x, to output 1x and a value
-		mode = mult or devide
-		'''
+
 		if name == '':
 			try:
 				name = in_x1.split('.')[0]
@@ -1127,18 +1077,16 @@ class Tools_class:
 	#----------------------------------------------------------------------------------------------------------------
 
 	def trasform_on_sel(self, transform='', name='Temp'):
-		"""
+		"""	position a transform node in desire selection, if there is no trasnform it will create a joint for you (Not sure why we needed this one)
 
 		Args:
-			transform:
-			name:
+			transform: where to put the new transform
+			name: string name
 
-		Returns:
+		Returns: None
 
 		"""
-		'''
-		position a transform node in desire selection, if there is no trasnform it will create a joint for you
-		'''
+
 		
 		cluster = cmds.cluster(n='temp'+nc['cluster'])
 		print (cluster)
@@ -1154,18 +1102,16 @@ class Tools_class:
 
 	#----------------------------------------------------------------------------------------------------------------
 	def connect_with_line(self, start='', end=''):
-		"""
+		""" Create a non selectable curve between to objects (Pole Vectors Lines)
 
 		Args:
-			start:
-			end:
+			start: string start transform
+			end: string end transform
 
 		Returns:
 
 		"""
-		'''
-		create a line in between 2 transforms (start and end)
-		'''
+
 		if start=='':
 			sel = cmds.ls(sl=True)
 			start = sel[0]
@@ -1204,14 +1150,12 @@ class Tools_class:
 
 		Args:
 			input: if not specify it will use selection else specify string
-			unlock:
+			unlock: bool: True Unlocks and False locks
 
 		Returns:
 
 		"""
-		'''
-		this will lock and unlock (with the attr True) any input node
-		'''			
+
 		if input == '':
 			input = cmds.ls(sl=True)
 		
@@ -1225,14 +1169,14 @@ class Tools_class:
 	#----------------------------------------------------------------------------------------------------------------
 
 	def replace_connection_with_doublelinear(self, input = '', attr = '', name = 'DoubleLinear'):
-		"""
+		""" Add a double linear between 2 nodes
 
 		Args:
 			input: if not specify it will use selection else specify string
-			attr:
-			name:
+			attr: attr to connect the double linear result
+			name: string node name
 
-		Returns:
+		Returns: string node
 
 		"""
 
@@ -1247,14 +1191,14 @@ class Tools_class:
 	#----------------------------------------------------------------------------------------------------------------
 
 	def write_json(self, path, json_file, data):
-		"""
+		""" Will write json file with data
 
 		Args:
-			path:
-			json_file:
-			data:
+			path: path to put the json file in (rembember to use \\ to define the folders)
+			json_file: json file name
+			data: dictionary to sabe
 
-		Returns:
+		Returns: string json file full path
 
 		"""
 
@@ -1267,13 +1211,13 @@ class Tools_class:
 	#----------------------------------------------------------------------------------------------------------------
 
 	def read_json(self, path, json_file):
-		"""
+		""" will read json file
 
 		Args:
-			path:
-			json_file:
+			path: path to where the json file is (rembember to use \\ to define the folders)
+			json_file: json file name
 
-		Returns:
+		Returns: dictionary with data
 
 		"""
 
