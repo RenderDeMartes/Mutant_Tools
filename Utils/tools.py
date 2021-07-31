@@ -23,8 +23,8 @@ maya mel
 maya.cmds
 
 #----------------
-licence: https://www.eulatemplate.com/live.php?token=ySe25XC0bKARQymXaGQGR8i4gvXMJgVS
-author:  Esteban Rodriguez <info@renderdemartes.com>
+licence: https://www.eulatemplate.com/live.php?token=FGISW7ApRfgywum6murbBmLcusKONzkv
+author:  Esteban Rodriguez <info@mutanttools.com>
 
 '''
 import os

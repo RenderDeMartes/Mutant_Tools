@@ -37,8 +37,8 @@ OpenMaya
 tools.Tools_Class
 
 #----------------
-licence: https://www.eulatemplate.com/live.php?token=ySe25XC0bKARQymXaGQGR8i4gvXMJgVS
-author:  Esteban Rodriguez <info@renderdemartes.com>
+licence: https://www.eulatemplate.com/live.php?token=FGISW7ApRfgywum6murbBmLcusKONzkv
+author:  Esteban Rodriguez <info@mutanttools.com>
 
 '''
 import math
@@ -485,12 +485,11 @@ class Kinematics_class(tools.Tools_class):
 		#add the line at the end
 		ik_system.append(line[0])		
 
+		#['L_Wrist_Ik_Ctrl', 'L_Wrist_Ik_PoleVector_Ctrl', 'L_Shoulder_Ik_Ctrl', 'L_Wrist_Ik_IKrp',
+		#'L_Wrist_Ik_PoleVector_Ctrl_L_Elbow_Ik_Jnt_Connected_Crv']
 		return ik_system
-		'''
-		['L_Wrist_Ik_Ctrl', 'L_Wrist_Ik_PoleVector_Ctrl', 'L_Shoulder_Ik_Ctrl', 'L_Wrist_Ik_IKrp', 
-		'L_Wrist_Ik_PoleVector_Ctrl_L_Elbow_Ik_Jnt_Connected_Crv']
 
-		'''
+
 	#----------------------------------------------------------------------------------------------------------------
 
 	def joints_middle(self, start = '', end = '', axis = setup['twist_axis'], amount = 4, name = 'Twist'):

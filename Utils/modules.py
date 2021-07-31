@@ -28,8 +28,8 @@ kinematics.Kinematics_class
 
 
 #----------------
-licence: https://www.eulatemplate.com/live.php?token=ySe25XC0bKARQymXaGQGR8i4gvXMJgVS
-author:  Esteban Rodriguez <info@renderdemartes.com>
+licence: https://www.eulatemplate.com/live.php?token=FGISW7ApRfgywum6murbBmLcusKONzkv
+author:  Esteban Rodriguez <info@mutanttools.com>
 
 '''
 
@@ -236,7 +236,7 @@ class Modules_class(kinematics.Kinematics_class):
 				cmds.confirmDialog( title='Error', 
 									message='Error "{}": Block name already exists.'.format(
 										cmds.promptDialog(query=True, text=True).replace(',','_')+nc['module']),
-									button=["Oh! ok!"])
+									button=["Oh! ok!"])+
 
 			if check_split == True:
 				if cmds.objExists(cmds.promptDialog(query=True, text=True).split(',')[0]+nc['module']):
