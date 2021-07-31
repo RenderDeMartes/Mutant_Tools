@@ -2,7 +2,7 @@
 
 Discord server: https://discord.gg/R8ThuGH3
 
-licence: https://www.eulatemplate.com/live.php?token=FGISW7ApRfgywum6murbBmLcusKONzkv
+licence: https://www.eulatemplate.com/live.php?token=FGISW7ApRfgywum6murbBmLcusKONzkv 
 author:  Esteban Rodriguez <info@mutanttools.com>
 
 Documentation: 
