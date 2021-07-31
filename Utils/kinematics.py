@@ -81,9 +81,20 @@ with open(SETUP_FILE) as setup_file:
 class Kinematics_class(tools.Tools_class):
 	
 	def fk_chain(self, input = '', size = 1, color = setup['main_color'], curve_type = setup['fk_ctrl'], scale = True, twist_axis = setup['twist_axis']) :
-		'''
-		create a FK Chain with selected joints, settings can be change in the setup json file
-		'''
+		"""	Create a FK Chain with selected joints, settings can be change in the setup json file
+
+		Args:
+			input: if not specify it will use selection else specify string (Recommended using select and not the input names)
+			size: int ctrl size
+			color: string color of controlls
+			curve_type: string curve tye based on config curves
+			scale: bool add scale constraint
+			twist_axis: aim axis of the joints for creating as bounding cubes
+
+		Returns: list fk_controllers
+
+		"""
+
 
 		#Check input
 		if input != '':
@@ -135,27 +146,18 @@ class Kinematics_class(tools.Tools_class):
 
 #----------------------------------------------------------------------------------------------------------------
 
-	def invert_fk_chain(self, size = 1, color = setup['main_color'], curve_type = setup['fk_ctrl'], scale = True, twist_axis = setup['twist_axis'], switch = ''):
-
-		#I HAVE NO FUCKING IDEA HOW TO DO THIS!
-
-		fk_ctrls =  self.fk_chain(size = size, color = color, curve_type = curve_type, scale = scale, twist_axis = twist_axis)
-		print (fk_ctrls)
-
-		#forward chain
-		for ctrl in fk_ctrls:
-			try:
-				parent_constraint = cmds.parentConstraint(ctrl, cmds.listRelatives(ctrl, c=True), mo=True)[0]
-				cmds.setAttr('{}.interpType'.format(parent_constraint), 2)
-			except:
-				pass
-
-		#backwards chain
-		
-
-#----------------------------------------------------------------------------------------------------------------
-
 	def pole_vector_placement(self, bone_one = '', bone_two = '', bone_three = '',back_distance = 1):
+		"""
+
+		Args:
+			bone_one:
+			bone_two:
+			bone_three:
+			back_distance:
+
+		Returns:
+
+		"""
 		'''
 		finds correct position of the pole vector for the ik and create a locator for it
 		'''
@@ -223,7 +225,20 @@ class Kinematics_class(tools.Tools_class):
 #----------------------------------------------------------------------------------------------------------------
 
 	def streatchy_ik(self, ik = '', ik_ctrl= '', top_ctrl = '', pv_ctrl = '', attrs_location = '', name = '', axis = 'Y'):
-		
+		"""
+
+		Args:
+			ik:
+			ik_ctrl:
+			top_ctrl:
+			pv_ctrl:
+			attrs_location:
+			name:
+			axis:
+
+		Returns:
+
+		"""
 		'''
 		create a ik stretchy system for the simple ik chain (only 3 joints allowed)
 		'''
@@ -379,6 +394,22 @@ class Kinematics_class(tools.Tools_class):
 	#----------------------------------------------------------------------------------------------------------------
 
 	def simple_ik_chain(self, start = '', end = '', size = 1, color = setup['main_color'], ik_curve = setup['ik_ctrl'], pv_curve = setup['pv_ctrl'], pv = True, top_curve = setup['top_ik_ctrl'], mirror_behavior = True):
+		"""
+
+		Args:
+			start:
+			end:
+			size:
+			color:
+			ik_curve:
+			pv_curve:
+			pv:
+			top_curve:
+			mirror_behavior:
+
+		Returns:
+
+		"""
 		'''
 		create a ik chain for desire joints
 		'''
@@ -493,6 +524,18 @@ class Kinematics_class(tools.Tools_class):
 	#----------------------------------------------------------------------------------------------------------------
 
 	def joints_middle(self, start = '', end = '', axis = setup['twist_axis'], amount = 4, name = 'Twist'):
+		"""
+
+		Args:
+			start:
+			end:
+			axis:
+			amount:
+			name:
+
+		Returns:
+
+		"""
 		'''
 		create joints in between a joint chain
 		'''
@@ -533,7 +576,18 @@ class Kinematics_class(tools.Tools_class):
 
 #----------------------------------------------------------------------------------------------------------------
 	def joints_middle_no_chain(self, start = '', end='', axis = setup['twist_axis'], amount = 3, name = 'Mid'):
+		"""
 
+		Args:
+			start:
+			end:
+			axis:
+			amount:
+			name:
+
+		Returns:
+
+		"""
 		'''
 		this will create joints in the middle of 2 selected objects but with out a Hy
 		'''
@@ -563,6 +617,18 @@ class Kinematics_class(tools.Tools_class):
 #----------------------------------------------------------------------------------------------------------------
 
 	def twist(self, start = '', end = '', axis = setup['twist_axis'], amount = 4, mode = 'down'):
+		"""
+
+		Args:
+			start:
+			end:
+			axis:
+			amount:
+			mode:
+
+		Returns:
+
+		"""
 		'''
 		OLD
 		old way of creating twist for limbs, i use this one on RdM Tools v2, recommend to use the advance one
@@ -628,6 +694,17 @@ class Kinematics_class(tools.Tools_class):
 #----------------------------------------------------------------------------------------------------------------
 
 	def twist_rotate_info(self, start = '', end = '', axis = setup['twist_axis'], driver = False):
+		"""
+
+		Args:
+			start:
+			end:
+			axis:
+			driver:
+
+		Returns:
+
+		"""
 		'''
 		create a system to correctly read the twist information for the desire joint, 
 		it can be used from top to buttom or buttom to top
@@ -677,8 +754,8 @@ class Kinematics_class(tools.Tools_class):
 		cmds.setAttr('{}.poleVectorZ'.format(ik), 0)
 		cmds.pointConstraint(end, ik, mo=False)
 
-		cmds.orientConstraint(start, loc, mo=True)[0]
-		cmds.pointConstraint(start, loc, mo=True)[0]
+		cmds.orientConstraint(start, loc, mo=True)
+		cmds.pointConstraint(start, loc, mo=True)
 		
 		#cmds.setAttr(twist_root + '.ro', 3)
 		# Offset Grps.
@@ -695,6 +772,20 @@ class Kinematics_class(tools.Tools_class):
 #----------------------------------------------------------------------------------------------------------------
 
 	def advance_twist(self, start = '', end = '', axis = setup['twist_axis'], amount = 4, mode = 'up', driver = '', inverse =False):
+		"""
+
+		Args:
+			start:
+			end:
+			axis:
+			amount:
+			mode:
+			driver:
+			inverse:
+
+		Returns:
+
+		"""
 		'''
 		create twist system for the chain, 
 		this one can only be used by selecting from top to buttom joints but you can change the mode to up or down for desire effect
@@ -750,6 +841,20 @@ class Kinematics_class(tools.Tools_class):
 #----------------------------------------------------------------------------------------------------------------
 
 	def simple_fk_ik(self, start = '', mid = '', end = '', size = 1, color = setup['main_color'], mode = setup['ik_fk_method'], twist_axis = setup['twist_axis']):
+		"""
+
+		Args:
+			start:
+			mid:
+			end:
+			size:
+			color:
+			mode:
+			twist_axis:
+
+		Returns:
+
+		"""
 		'''
 		create a ik fk chain with a switch for 3 joints
 		'''
@@ -870,7 +975,21 @@ class Kinematics_class(tools.Tools_class):
 	#----------------------------------------------------------------------------------------------------------------
 
 	def twist_fk_ik(self, start = '', mid = '', end = '', size = 1, color = setup['main_color'], mode = setup['ik_fk_method'], twist_axis = setup['twist_axis'], twist_amount = 6):
-		
+		"""
+
+		Args:
+			start:
+			mid:
+			end:
+			size:
+			color:
+			mode:
+			twist_axis:
+			twist_amount:
+
+		Returns:
+
+		"""
 		'''
 		create a ik fk chain with a switch for 3 joints, includes the twist information so is a full limb module
 		'''
@@ -925,6 +1044,19 @@ class Kinematics_class(tools.Tools_class):
 	#----------------------------------------------------------------------------------------------------------------
 
 	def base_spline(self, start = '', end = '', size = 1, name = 'Spine', twist_axis = setup['twist_axis'], amount = 5):
+		"""
+
+		Args:
+			start:
+			end:
+			size:
+			name:
+			twist_axis:
+			amount:
+
+		Returns:
+
+		"""
 
 		'''
 		select start and end and create a ik fk spline like for a charatcer spine
@@ -1020,6 +1152,15 @@ class Kinematics_class(tools.Tools_class):
 	#----------------------------------------------------------------------------------------------------------------
 
 	def mirror_group(self, input = '', world = True):
+		"""
+
+		Args:
+			input: if not specify it will use selection else specify string
+			world:
+
+		Returns:
+
+		"""
 
 		if input == '':
 			input = cmds.ls(sl=True)[0]
@@ -1042,6 +1183,19 @@ class Kinematics_class(tools.Tools_class):
 #----------------------------------------------------------------------------------------------------------------
 
 	def basic_ribbon(self, start = '', end = '', divisions = 5, name = 'Ribbon', ctrl_type = 'circleY',size = 1):
+		"""
+
+		Args:
+			start:
+			end:
+			divisions:
+			name:
+			ctrl_type:
+			size:
+
+		Returns:
+
+		"""
 		#this will create a plane between 2 objects and then create a ribbon rig for you
 
 		if start ==  '':
@@ -1114,7 +1268,19 @@ class Kinematics_class(tools.Tools_class):
 #----------------------------------------------------------------------------------------------------------------
 
 	def ribbon_between(self, start = '', end = '', divisions = 5, name = 'Ribbon', ctrl_type = 'circleY', size = 1):
-		
+		"""
+
+		Args:
+			start:
+			end:
+			divisions:
+			name:
+			ctrl_type:
+			size:
+
+		Returns:
+
+		"""
 		if start ==  '':
 			start = cmds.ls(sl=True)[0]
 			end = cmds.ls(sl=True)[1]
@@ -1149,7 +1315,6 @@ class Kinematics_class(tools.Tools_class):
 		cmds.skinPercent(skin, '{}.cv[0:1][1]'.format(ctrl_surface), transformValue=[(end, 1)])
 		cmds.skinPercent(skin, '{}.cv[0:1][0]'.format(ctrl_surface), transformValue=[(start, 1)])
 
-
 		cmds.group(basic_ribbon['surface'], ctrl_surface , n = name + nc['nurb'] + nc['group'])
 
 		return {'surface':[basic_ribbon['surface'],ctrl_surface], 
@@ -1161,4 +1326,4 @@ class Kinematics_class(tools.Tools_class):
 				'ctrl_fol_grp': ctrl_fol_grp}
 
 
-#--------------------------------
+	#----------------------------------------------------------------------------------------------------------------

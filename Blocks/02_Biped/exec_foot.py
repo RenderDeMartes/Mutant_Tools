@@ -145,14 +145,6 @@ def build_foot_block():
     #build ------------------------------------------------------
     for side_guide in to_build:
 
-        #use this locator in case parent is set to new locator
-        if cmds.getAttr('{}.SetParent'.format(config)) == 'new_locator':
-            block_parent = cmds.spaceLocator( n = '{}'.format(str(side_guide).replace(nc['joint'],'_Parent' + nc['locator'])))
-        else:
-            block_parent = cmds.getAttr('{}.SetParent'.format(config))
-            if side_guide.startswith(nc['right']):
-                block_parent = block_parent.replace(nc['left'],nc['right'])
-
         #smart select the colors
         if str(side_guide).startswith(nc['left']):
             color = setup['left_color']
@@ -320,7 +312,7 @@ def build_foot_block():
 
         #IK RFL Attrs
         if rfl_attr == 'new_locator':
-            ik_attrs_shape = cmds.spaceLocator(n = side_guide + '_FootAttrs' + nc['locators'])
+            ik_attrs_shape = cmds.spaceLocator(n = side_guide + '_FootAttrs' + nc['locator'])[0]
         else:
             if rfl_attr.startswith(nc['left']) and side_guide.startswith(nc['right']):
                 ik_attrs_shape = rfl_attr.replace(nc['left'], nc['right'])
@@ -362,12 +354,26 @@ def build_foot_block():
         cmds.connectAttr(foot_roll_attr, str(roll_contidion_node) + '.colorIfTrue.colorIfTrueR')
         cmds.connectAttr(break_limit_attr, str(roll_contidion_node) + '.colorIfFalse.colorIfFalseR')
 
-        ball_group_attr = '{}.rotateZ'.format(cmds.listRelatives(cmds.listRelatives(rfl_main_grps[7],p=True)[0], p=True)[0])
+
+        #ball negative turn off
+        rollneg_contidion_node = cmds.shadingNode('condition', asUtility=True, n=side_guide + '_BallNegative_Limit' + nc['condition'])
+        cmds.setAttr(str(rollneg_contidion_node) + ".operation", 2) #grather than
+        cmds.setAttr(str(rollneg_contidion_node) + '.secondTerm', 0)
+        cmds.setAttr(str(rollneg_contidion_node) + '.outColor.outColorR', 0)
 
         #reverse ball
-        mt.connect_md_node(in_x1=str(roll_contidion_node) + '.outColor.outColorR', in_x2=-1.0, out_x=ball_group_attr, mode='mult', name='', force=True)
+        ball_group_attr = '{}.rotateZ'.format(cmds.listRelatives(cmds.listRelatives(rfl_main_grps[7],p=True)[0], p=True)[0])
+        mt.connect_md_node(in_x1=str(roll_contidion_node) + '.outColor.outColorR',
+                           in_x2=-1.0,
+                           out_x=rollneg_contidion_node + '.colorIfTrue.colorIfTrueR'
+                           ,mode='mult', name='', force=True)
 
-        #Heel
+        cmds.connectAttr(rollneg_contidion_node+'.outColor.outColorR', ball_group_attr)
+        cmds.connectAttr(roll_contidion_node+'.outColor.outColorR', rollneg_contidion_node+'.firstTerm')
+
+        #L_Foot_Ball_RFL_Grp_Auto_Grp_Offset_Grp
+
+        #toes
         toes_contidion_node = cmds.shadingNode('condition', asUtility=True, n=side_guide + '_Toes_Limit' + nc['condition'])
         cmds.setAttr(str(toes_contidion_node) + ".operation", 3) #grather equal than
         cmds.connectAttr(break_limit_attr, str(toes_contidion_node) + '.firstTerm')
@@ -387,12 +393,42 @@ def build_foot_block():
          '{}.rotateX'.format(cmds.listRelatives(cmds.listRelatives(rfl_main_grps[6],p=True)[0], p=True)[0]))
 
         #heel back
+        #Heel
+        back_heel_contidion_node = cmds.shadingNode('condition', asUtility=True, n=side_guide + '_Toes_Limit' + nc['condition'])
+        cmds.setAttr(str(back_heel_contidion_node) + ".operation", 5) #less equal than
 
+        cmds.setAttr(str(back_heel_contidion_node) + '.firstTerm', 0)
+        cmds.connectAttr(foot_roll_attr, str(back_heel_contidion_node) + '.secondTerm')
+        cmds.setAttr(str(back_heel_contidion_node) + '.colorIfTrue.colorIfTrueR', 0)
+        cmds.connectAttr(foot_roll_attr ,str(back_heel_contidion_node) + '.colorIfFalse.colorIfFalseR')
+
+        cmds.connectAttr(str(back_heel_contidion_node) + '.outColor.outColorR',
+         '{}.rotateX'.format(cmds.listRelatives(cmds.listRelatives(rfl_main_grps[0],p=True)[0], p=True)[0]))
 
         #roll reverse
+        roll_reverse_contidion_node = cmds.shadingNode('condition', asUtility=True, n=side_guide + '_Toes_Limit' + nc['condition'])
+        cmds.setAttr(str(roll_reverse_contidion_node) + ".operation", 3) #grather equal than
+
+        cmds.connectAttr('{}.rotateX'.format(cmds.listRelatives(cmds.listRelatives(rfl_main_grps[6],p=True)[0], p=True)[0]),
+                         str(roll_reverse_contidion_node) + '.firstTerm')
+
+        toes_substract_node = cmds.shadingNode('plusMinusAverage', asUtility=True,
+                                               n=side_guide + '_Toes_Substract' + nc['plus_minus_average'])
+        cmds.setAttr(str(toes_substract_node) + ".operation", 2)  # substract
+        cmds.connectAttr(break_limit_attr, str(toes_substract_node) + '.input1D[1]')
+        cmds.connectAttr(extend_attr, str(toes_substract_node) + '.input1D[0]')
+
+        cmds.connectAttr(toes_substract_node+'.output1D', str(roll_reverse_contidion_node) + '.secondTerm')
+
+        cmds.connectAttr(toes_substract_node+'.output1D', str(roll_reverse_contidion_node) + '.colorIfTrue.colorIfTrueR')
+        cmds.connectAttr('{}.rotateX'.format(cmds.listRelatives(cmds.listRelatives(rfl_main_grps[6],p=True)[0], p=True)[0]),
+                        str(roll_reverse_contidion_node) + '.colorIfFalse.colorIfFalseR')
 
 
-        '''
+        cmds.connectAttr(roll_reverse_contidion_node + '.outColor.outColorR',
+                         '{}.rotateZ'.format(rfl_main_grps[7]))
+
+
         #create bind Joints for the skin -------------------------
         ankle_bind_joint = cmds.duplicate(main_joints[0], po=True, n = main_joints[0].replace(nc['joint'], nc['joint_bind']))[0]
         cmds.parentConstraint(main_joints[0], ankle_bind_joint, mo = False)
@@ -408,6 +444,7 @@ def build_foot_block():
 
         #flip right rig  to right side -------------------------
 
+        '''
         #check if the mirror attrs to Only_Right or mirror to True
         if cmds.getAttr('{}.Mirror'.format(config), asString = True) == 'Right_Only':
             miror_ctrl_grp = mt.mirror_group(cmds.listRelatives(auto_grp, p=True)[0], world = True)
@@ -430,8 +467,8 @@ def build_foot_block():
 
         else: #only left side
             cmds.parentConstraint(block_parent, for_parent , mo = True)
-        '''
 
+        '''
         #blends
         '''
         blends_grp = mt.root_grp(input = '', custom = True, custom_name = 'Blends', autoRoot = False, replace_nc = False)[0]

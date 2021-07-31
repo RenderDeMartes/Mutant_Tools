@@ -7,10 +7,15 @@ Import successfully import exec_foot
 {'bind_joints': 'Bind_Joints', 'bind_geo': 'Bind_Geo', 'misc': 'Miscellaneous', 'template': 'Template'}
 BaseA Created Successfully
 L_Foot_Ankle_Jnt
-# Traceback (most recent call last):
-# #   File "C:/Users/rodri/OneDrive/Documents/maya/2022/scripts\Mutant_Tools\UI\load_autoRigger.py", line 648, in buid_autorigger
-    exec(buid_command)
-#   File "<string>", line 1, in <module>
-# #   File "C:/Users/rodri/OneDrive/Documents/maya/2022/scripts\Mutant_Tools\Blocks//02_Biped\exec_foot.py", line 124, in build_foot_block
-    block_parent_ik = cmds.getAttr('{}.SetIKParent_string'.format(config), asString=True)
-# ValueError: No object matches name: L_Foot_Config.SetIKParent_string
+['L_Foot_Ankle_Jnt', 'L_Foot_Heel_Jnt', 'L_Foot_Toes_Jnt', 'L_Foot_In_Jnt', 'L_Foot_Out_Jnt', 'L_Foot_BallFloor_Jnt', 'L_Foot_Ball_Jnt', 'L_Foot_HeelMid_Jnt']
+# Warning: Object, 'L_Foot_Ankle_Jnt', skipped. It is already a child of the parent, 'world'. # 
+['L_Foot_Heel_RFL_Grp', 'L_Foot_In_RFL_Grp', 'L_Foot_Out_RFL_Grp', 'L_Foot_BallFloor_RFL_Grp', 'L_Foot_HeelMid_RFL_Grp', 'L_Foot_Ankle_RFL_Grp', 'L_Foot_Toes_RFL_Grp', 'L_Foot_Ball_RFL_Grp']
+// Replaced 3 names.
+// Replaced 3 names.
+['L_Foot_Ankle_Ik_Jnt', 'L_Foot_Ball_Ik_Jnt', 'L_Foot_Toes_Ik_Jnt']
+['L_Foot_Ankle_Fk_Jnt', 'L_Foot_Ball_Fk_Jnt', 'L_Foot_Toes_Fk_Jnt']
+adding loc to ['L_Foot_Ankle_Share_Ctrl']
+# Warning: Name '_________' of new attribute clashes with an existing attribute of node 'L_Foot_Ankle_Jnt_FootAttrs_Loc'. # 
+# Warning: Object, 'L_Foot_Ankle_Bnd', skipped. It is already a child of the parent, 'world'. # 
+Build L_Foot_Block Success
+Build successfully exec_foot.build_foot_block()
