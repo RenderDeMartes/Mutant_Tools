@@ -448,7 +448,7 @@ L_Hand_Palm_Jnt:INNER CUP
 // Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
 // Error: searchReplaceNames _Jnt  "selected"; // 
 // Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
-[48.21928279342015, 96.75979696827157, -2.2677979358974167]
+[48.21928279342014, 96.75979696827156, -2.2677979358974087]
 L_Hand_Palm_Jnt: OUTTER CUP
 // Error: searchReplaceNames _Ctrl  "selected"; // 
 // Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
@@ -589,7 +589,7 @@ R_Hand_Palm_Jnt:INNER CUP
 // Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
 // Error: searchReplaceNames _Jnt  "selected"; // 
 // Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
-[48.21928279342015, 96.75979696827157, -2.2677979358974167]
+[48.21928279342014, 96.75979696827156, -2.2677979358974087]
 R_Hand_Palm_Jnt: OUTTER CUP
 // Error: searchReplaceNames _Ctrl  "selected"; // 
 // Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 

@@ -38,6 +38,7 @@ from PySide2 import QtGui,QtCore
 from PySide2 import QtUiTools
 from PySide2 import QtWidgets
 from PySide2.QtWidgets import *
+from maya.app.general.mayaMixin import MayaQWidgetDockableMixin
 
 import maya.OpenMayaUI as omui
 from functools import partial
@@ -97,7 +98,7 @@ def maya_main_window(dockable=True):
     return wrapInstance(int(main_window_ptr), QtWidgets.QWidget)
 
 
-class name(QtWidgets.QMainWindow):
+class name(MayaQWidgetDockableMixin, QtWidgets.QMainWindow):
     
     def __init__(self, parent=maya_main_window()):
         super(name, self).__init__(parent)

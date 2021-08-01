@@ -17,7 +17,7 @@ imp.reload(load_autoRigger)
 try:AutoRigger.close()
 except:pass
 AutoRigger = load_autoRigger.AutoRigger()
-AutoRigger.show()
+AutoRigger.show(dockable = True)
 
 #----------------
 dependencies:
@@ -38,6 +38,7 @@ from PySide2 import QtGui,QtCore
 from PySide2 import QtUiTools
 from PySide2 import QtWidgets
 from PySide2.QtWidgets import *
+from maya.app.general.mayaMixin import MayaQWidgetDockableMixin
 
 import maya.OpenMayaUI as omui
 from functools import partial
@@ -55,6 +56,8 @@ import json
 from Mutant_Tools.UI import load_codeReader
 imp.reload(load_codeReader)
 
+from Mutant_Tools.UI import load_autoRiggerMenu
+imp.reload(load_autoRiggerMenu)
 
 #-------------------------------------------------------------------
 
@@ -73,7 +76,6 @@ with open(CURVE_FILE) as curve_file:
 SETUP_FILE = (PATH+'/rig_setup.json')
 with open(SETUP_FILE) as setup_file:
 	setup = json.load(setup_file)
-
 
 #-------------------------------------------------------------------
 
@@ -130,13 +132,13 @@ def add_sys_folders_remove_compiled():
 #-------------------------------------------------------------------
 
 
-def maya_main_window(dockable=True):
+def maya_main_window():
 
 	main_window_ptr = omui.MQtUtil.mainWindow()
 	return wrapInstance(int(main_window_ptr), QtWidgets.QWidget)
 
 
-class AutoRigger(QtWidgets.QMainWindow):
+class AutoRigger(MayaQWidgetDockableMixin, QtWidgets.QMainWindow):
 
 	def __init__(self, parent=maya_main_window()):
 		super(AutoRigger, self).__init__(parent)
@@ -173,32 +175,8 @@ class AutoRigger(QtWidgets.QMainWindow):
 	#-------------------------------------------------------------------
 	def create_menus(self):
 
-		#create menu bar
-		self.menuBar = QtWidgets.QMenuBar()  # requires parent
-
-		#Blocks Menu
-		self.fileMenu = QtWidgets.QMenu(self)
-		self.fileMenu.setTitle("File")
-		self.fileMenu.addAction("Load Positions")
-		self.fileMenu.addAction("Save Positions")
-		self.menuBar.addMenu(self.fileMenu)
-
-		#Block Menu
-		self.blockMenu = QtWidgets.QMenu(self)
-		self.blockMenu.setTitle("Block")
-		self.blockMenu.addAction("Create Block")
-		self.menuBar.addMenu(self.blockMenu)
-
-		#Tutorial Menu
-		self.tutorialMenu = QtWidgets.QMenu(self)
-		self.tutorialMenu.setTitle("Tutorial")
-		self.tutorialMenu.addAction("Step by Step")
-		self.tutorialMenu.addAction("Documentation")
-		self.menuBar.addMenu(self.tutorialMenu)
-
-
-		#add menu bar to layout
-		self.ui.menuLayout.addWidget(self.menuBar)
+		self.menu = load_autoRiggerMenu.AutoRiggerMenu()
+		self.ui.menuLayout.addWidget(self.menu)
 
 	def create_layout(self):
 		self.create_block_buttons()
@@ -623,9 +601,10 @@ class AutoRigger(QtWidgets.QMainWindow):
 
 			#log
 			mt.Mutant_logger(mode = 'create')
-
+			print ('------------------------------------------------------------------------------------')
 			print ('------------------------------------------------------------------------------------')
 			print ('Building: {}'.format(block))
+			print ('------------------------------------------------------------------------------------')
 			print ('------------------------------------------------------------------------------------')
 
 			self.ui.bar_label.setText('Building: {}'.format(block))
@@ -658,7 +637,7 @@ class AutoRigger(QtWidgets.QMainWindow):
 				return
 
 			#succes message
-			self.ui.bar_label.setText('Succesfull build: {}'.format(block))
+			self.ui.bar_label.setText('{}'.format(block))
 			self.ui.bar_label.setToolTip('Succesfull build: {}'.format(block))
 			self.ui.progressBar.setValue((num + 1))
 

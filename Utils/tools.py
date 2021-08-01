@@ -1132,6 +1132,8 @@ class Tools_class:
 		cmds.parentConstraint(end, cluster_end)
 
 		#clean and hide cv and clusters
+		cmds.setAttr("{}.inheritsTransform".format(cv), 0)
+
 		cmds.setAttr("{}.overrideEnabled".format(cv), 1)
 		cmds.setAttr("{}.overrideDisplayType".format(cv), 2)
 
