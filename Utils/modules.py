@@ -220,7 +220,8 @@ class Modules_class(kinematics.Kinematics_class):
 			
 #----------------------------------------------------------------------------------------------------------------
 
-	def ask_name(self, text = '', ask_for = 'Name', check_split = False):
+	def ask_name(self, text = '', ask_for = 'Name', check_split = False, popup=True):
+
 		ask_name = cmds.promptDialog(
 						title='Name Block',
 						message=ask_for,

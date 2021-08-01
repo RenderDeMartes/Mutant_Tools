@@ -417,77 +417,63 @@ def build_foot_block():
                          '{}.rotateZ'.format(rfl_main_grps[7]))
 
 
+        # clean a bit
+        clean_rig_grp = cmds.group(em=True, n='{}'.format(side_guide.replace(nc['joint'], nc['group'])))
+        cmds.parent(all_joints[0],clean_rig_grp)
+        cmds.parent(rfl_main_grps[2] +'_Root_Grp',clean_rig_grp)
+        cmds.parent(ik_joints[0],clean_rig_grp)
+        cmds.parent(fk_joints[0],clean_rig_grp)
+        cmds.parent(shared_toes_jnt ,clean_rig_grp)
+
+        clean_ctrl_grp = share_grp
+
+        #flip right rig  to right side -------------------------
+
+        #check if the mirror attrs to Only_Right or mirror to True
+        if cmds.getAttr('{}.Mirror'.format(config), asString = True) == 'Right_Only':
+            miror_grp = mt.mirror_group(clean_rig_grp, world = True)
+            clean_rig_grp = miror_grp
+
+        elif cmds.getAttr('{}.Mirror'.format(config), asString = True) == 'True':
+            if str(side_guide).startswith(nc['right']) :
+                miror_grp = mt.mirror_group(clean_rig_grp, world=True)
+                clean_rig_grp = miror_grp
+
+            else:
+                pass
+
+        else: #only left side
+            pass
+
+
         #create bind Joints for the skin -------------------------
-        ankle_bind_joint = cmds.duplicate(main_joints[0], po=True, n = main_joints[0].replace(nc['joint'], nc['joint_bind']))[0]
+        cmds.select(cl=True)
+        ankle_bind_joint = cmds.joint(n = main_joints[0].replace(nc['joint'], nc['joint_bind']))
         cmds.parentConstraint(main_joints[0], ankle_bind_joint, mo = False)
+        cmds.scaleConstraint(main_joints[0], ankle_bind_joint, mo = True)
         try: cmds.parent(ankle_bind_joint, w=True)
         except:pass
         cmds.setAttr('{}.radius'.format(ankle_bind_joint), 1.5)
 
-        ball_bind_joint = cmds.duplicate(shared_toes_jnt, po=True, n = shared_toes_jnt.replace(nc['joint'], nc['joint_bind']))[0]
+        ball_bind_joint = cmds.joint(n = shared_toes_jnt.replace(nc['joint'], nc['joint_bind']))
         cmds.parentConstraint(shared_toes_jnt, ball_bind_joint, mo = False)
-        cmds.parent(ball_bind_joint, ankle_bind_joint)
+        cmds.scaleConstraint(shared_toes_jnt, ball_bind_joint, mo = True)
         cmds.setAttr('{}.radius'.format(ball_bind_joint), 1.5)
 
-
-        #flip right rig  to right side -------------------------
-
-        '''
-        #check if the mirror attrs to Only_Right or mirror to True
-        if cmds.getAttr('{}.Mirror'.format(config), asString = True) == 'Right_Only':
-            miror_ctrl_grp = mt.mirror_group(cmds.listRelatives(auto_grp, p=True)[0], world = True)
-            miror_jnt_grp = mt.mirror_group(new_guide, world = True)
-            cmds.parentConstraint(block_parent, miror_ctrl_grp , mo = True)
-            clean_rig_grp = miror_jnt_grp
-            clean_ctrl_grp = miror_ctrl_grp
-
-        elif cmds.getAttr('{}.Mirror'.format(config), asString = True) == 'True':
-            if str(side_guide).startswith(nc['right']) :
-                miror_ctrl_grp = mt.mirror_group(cmds.listRelatives(auto_grp, p=True)[0], world = True)
-                miror_jnt_grp = mt.mirror_group(side_guide, world = True)
-                cmds.parentConstraint(block_parent, miror_ctrl_grp , mo = True)
-                clean_rig_grp = miror_jnt_grp
-                clean_ctrl_grp = miror_ctrl_grp
-            else:
-                cmds.parentConstraint(block_parent, for_parent , mo = True)
-                clean_rig_grp = side_guide
-                clean_ctrl_grp = for_parent
-
-        else: #only left side
-            cmds.parentConstraint(block_parent, for_parent , mo = True)
-
-        '''
-        #blends
-        '''
-        blends_grp = mt.root_grp(input = '', custom = True, custom_name = 'Blends', autoRoot = False, replace_nc = False)[0]
-        blends_grp = blends_grp.replace('_AutoFK','')
-        bends = cmds.getAttr('{}.Blends'.format(config).split(':'))
-        for blend in bends:
-            ''
-            #cmds.orientConstraint()
-        '''
-
         #Finish -------------------------------------------
-        '''
+
         #game parents for bind joints
         game_parent = cmds.getAttr('{}.SetGameParent'.format(config))
         if side_guide.startswith(nc['right']):
             game_parent = game_parent.replace(nc['left'],nc['right'])
 
         if cmds.objExists(game_parent):
-            cmds.parent(bind_joint, game_parent)
+            cmds.parent(ankle_bind_joint, game_parent)
         else:
             bind_jnt_grp = '{}{}'.format(setup['rig_groups']['bind_joints'], nc['group'])
             if cmds.objExists(bind_jnt_grp):
-                cmds.parent(bind_joint, bind_jnt_grp)
+                cmds.parent(ankle_bind_joint, bind_jnt_grp)
 
-        #clean ctrls
-        cmds.parent(clean_ctrl_grp, 'Rig_Ctrl_Grp')
-
-        #parent rig
-        cmds.parent(clean_rig_grp, '{}{}'.format(setup['rig_groups']['misc'], nc['group']))
-
-        '''  
 
         #parents at the end
 
@@ -495,7 +481,7 @@ def build_foot_block():
             cmds.parent(cmds.spaceLocator(n = ik_joints[0].replace(nc['joint'],'_Here')), rfl_main_grps[5])
         else:
             if main_ik.startswith(nc['left']) and side_guide.startswith(nc['right']):
-                pc_ik = cmds.listRelatives(main_ik.replace(nc['left'], nc['right']),c=True)
+                pc_ik = cmds.listRelatives(main_ik.replace(nc['left'], nc['right']),c=True)[0]
                 cmds.delete(pc_ik)
                 cmds.parent(main_ik.replace(nc['left'], nc['right']), rfl_main_grps[5])
             else:
@@ -507,9 +493,11 @@ def build_foot_block():
         cmds.parentConstraint(parent_ik, ppp, mo =True)
         cmds.parentConstraint(parent_fk, fk_joints[0], mo=True)
 
+        #clean ctrls
+        cmds.parent(clean_ctrl_grp, 'Rig_Ctrl_Grp')
 
-    #clean a bit
-    clean_rig_grp = cmds.group(em=True, n = '{}{}'.format(block.replace(nc['module'],'_Rig'), nc['group']))
+        #parent rig
+        cmds.parent(clean_rig_grp, '{}{}'.format(setup['rig_groups']['misc'], nc['group']))
 
 
     # build complete ----------------------------------------------------

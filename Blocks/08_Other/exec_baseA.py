@@ -37,16 +37,16 @@ with open(MODULE_FILE) as module_file:
 def create_BaseA(name = 'BaseA'):
 
     name = mt.ask_name(text = name)
-    if cmds.objExists('{}{}'.format(name,nc['module'])):
+    if cmds.objExists('{}{}'.format(name, nc['module'])):
         cmds.warning('Name already exists.')
-        return ''
+        return None
 
     # only one base at a time sorry
-    if cmds.objExists('BaseA{}'.format(nc['module'])):
+    if cmds.objExists('{}{}'.format(name, nc['module'])):
         cmds.warning('Build already have a base, we can only have 1 base at a time')
         return ''
 
-    base = mt.create_block(name = 'BaseA', icon = 'BaseA',  attrs = module['attrs'], build_command = module['build_command'], import_command = module['import'])
+    base = mt.create_block(name = name, icon = 'BaseA',  attrs = module['attrs'], build_command = module['build_command'], import_command = module['import'])
     base = base[1]
     base = base[0]
 
