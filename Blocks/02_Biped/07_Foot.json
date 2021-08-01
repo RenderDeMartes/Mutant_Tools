@@ -26,6 +26,6 @@
         "CtrlSize_float": "1",
         "SetGameParent_string": "",
 
-        "Help_string" : "Possible parent: L_Foot_Toes_Jnt\n"
+        "Help_string" : "Possible parent: L_Foot_BallToes_Jnt\n"
     }
 }

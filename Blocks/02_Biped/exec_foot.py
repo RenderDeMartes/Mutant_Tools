@@ -252,32 +252,20 @@ def build_foot_block():
 
 
         #create share controller in case we dont have a switch attr to put it in there
-        shared_ik_loc = cmds.spaceLocator(n = ik_joints[1].replace(nc['joint'], '_Share'+nc['locator']))[0]
-        shared_loc_grp = mt.root_grp()[0]
-        mt.match(shared_loc_grp, rfl_main_grps[7], r=True,t=True)
-
-        cmds.parent(shared_loc_grp, rfl_main_grps[6])
-        cmds.parent(ball_ikSpline[0],shared_ik_loc)
-
         share_ctrl = mt.curve(input= '',
                               type='circleX',
                               rename=True,
                               custom_name=True,
                               name=side_guide.replace(nc['joint'], '_Share'+nc['ctrl']),
                               size=size)
-        mt.hide_attr(s=True)
         share_grp = mt.root_grp()[0]
-        mt.match(share_grp, rfl_main_grps[7], r=True,t=True)
+        mt.match(share_grp, all_joints[6], r=True,t=True)
+        cmds.parentConstraint(all_joints[6], share_grp)
 
-        '''
-
-        mt.root_grp(fk_joints[1])
-        cmds.connectAttr('{}.translate'.format(share_ctrl), '{}.translate'.format(fk_joints[1]))
-        cmds.connectAttr('{}.rotate'.format(share_ctrl), '{}.rotate'.format( fk_joints[1]))
-        cmds.connectAttr('{}.translate'.format(share_ctrl), '{}.translate'.format(shared_ik_loc))
-        cmds.connectAttr('{}.rotate'.format(share_ctrl), '{}.rotate'.format(shared_ik_loc))
-
-        '''
+        #new toes joint
+        cmds.select(cl=True)
+        shared_toes_jnt = cmds.joint( n = all_joints[6].replace('_Ball', '_BallToes'))
+        cmds.parentConstraint(share_ctrl, shared_toes_jnt, mo=False)
 
         #parent rfl groups to ik parent
         parent_ik = block_parent_ik
@@ -436,8 +424,8 @@ def build_foot_block():
         except:pass
         cmds.setAttr('{}.radius'.format(ankle_bind_joint), 1.5)
 
-        ball_bind_joint = cmds.duplicate(main_joints[2], po=True, n = main_joints[2].replace(nc['joint'], nc['joint_bind']))[0]
-        cmds.parentConstraint(main_joints[2], ball_bind_joint, mo = False)
+        ball_bind_joint = cmds.duplicate(shared_toes_jnt, po=True, n = shared_toes_jnt.replace(nc['joint'], nc['joint_bind']))[0]
+        cmds.parentConstraint(shared_toes_jnt, ball_bind_joint, mo = False)
         cmds.parent(ball_bind_joint, ankle_bind_joint)
         cmds.setAttr('{}.radius'.format(ball_bind_joint), 1.5)
 
@@ -522,7 +510,6 @@ def build_foot_block():
 
     #clean a bit
     clean_rig_grp = cmds.group(em=True, n = '{}{}'.format(block.replace(nc['module'],'_Rig'), nc['group']))
-
 
 
     # build complete ----------------------------------------------------
