@@ -290,8 +290,8 @@ def build_hand_block():
                 print(pivot)
                 cmds.move(pivot[0],pivot[1],pivot[2], "{}.scalePivot".format(inner_cup_group),"{}.rotatePivot".format(inner_cup_group), absolute=True)
 
-                cmds.connectAttr(inner_cup_attr , '{}.rotateX'.format(inner_cup_group))
-                cmds.connectAttr(inner_cup_attr , '{}.rotateX'.format(inner_cup))
+                cmds.connectAttr(inner_cup_attr , '{}.rotateY'.format(inner_cup_group))
+                cmds.connectAttr(inner_cup_attr , '{}.rotateY'.format(inner_cup))
                 cmds.parentConstraint(ctrls_grp,inner_cup, mo=True)
 
 
@@ -310,8 +310,8 @@ def build_hand_block():
             outter_cup_group = cmds.group(n = '{}Outter{}'.format(side_guide.replace('Palm'+nc['joint'], ''),nc['group']), em=True)
             outter_offset = mt.root_grp(replace_nc=True)[0]
             cmds.delete(cmds.parentConstraint(outter_cup,outter_offset, mo=False))
-            cmds.connectAttr(outter_cup_attr , '{}.rotateX'.format(outter_cup_group))
-            cmds.connectAttr(outter_cup_attr , '{}.rotateX'.format(outter_cup))
+            cmds.connectAttr(outter_cup_attr , '{}.rotateY'.format(outter_cup_group))
+            cmds.connectAttr(outter_cup_attr , '{}.rotateY'.format(outter_cup))
             cmds.parentConstraint(ctrls_grp,outter_cup, mo=True)
 
             pinky = side_guide.replace('Palm'+nc['joint'],'Pinky_00'+nc['ctrl'])

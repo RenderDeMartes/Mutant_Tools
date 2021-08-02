@@ -35,7 +35,6 @@ author:  Esteban Rodriguez <info@mutanttools.com>
 
 '''
 
-version = '0.01'
 
 #loading screen so it looks nicer
 import time
@@ -77,12 +76,19 @@ except:
 	imp.reload(Mutant_Tools.Utils.kinematics)
 	from Mutant_Tools.Utils import modules
 	imp.reload(Mutant_Tools.Utils.modules)
-#----------------
+
+#---------------------------------------------------
+PATH = os.path.dirname(__file__)
+PATH = PATH.replace('\\Utils', '//Config')
+#---------------------------------------------------
+
 
 class Mutant(modules.Modules_class):
 
 	def __init__ (self):
-		
+
+		version = self.get_local_version()
+
 		if cmds.objExists('Mutant_Tools'):
 			print ('Mutant node created on:{} with version {}'.format(cmds.getAttr('Mutant_Tools.Date'),cmds.getAttr('Mutant_Tools.Version')))
 
@@ -95,9 +101,9 @@ class Mutant(modules.Modules_class):
 
 		OpenMaya.MGlobal.displayInfo('Mutant_Tools {}'.format(version))
 
-		#self.check_update()
+	#---------------------------------------------------
 
-	def check_update(self):
+	def get_online_version(self):
 
 		version_line = ''
 		url = 'https://mutanttools.com/current_version/'
@@ -108,20 +114,25 @@ class Mutant(modules.Modules_class):
 			if 'Version' in str(line):
 				version_line = str(line)
 
-		current_version = version_line.replace("b'<p>Version=", '')
-		current_version = current_version.replace("</p>\\n'", '')
+		online_version = version_line.replace("b'<p>Version=", '')
+		online_version = online_version.replace("</p>\\n'", '')
 
-		if current_version == []:
-			pass
-		elif current_version == '':
-			pass
+		if online_version == []:
+			return None
+		elif online_version == '':
+			return None
 		else:
-			if current_version == version:
-				pass
-			else:
-				OpenMaya.MGlobal.displayInfo('Mutant_Tools: There is a new version available: Installed: {}, Available: {}'.format(version, current_version))
+			return online_version
 
-		return current_version
+	# ---------------------------------------------------
+
+	def get_local_version(self):
+
+		print(PATH)
+		local_version = self.read_json(path = PATH, json_file = 'version.json')
+		return local_version['version']
+
+	# ---------------------------------------------------
 
 '''
 cmds.progressWindow(edit=True, progress=3, status='Enjoy :)')

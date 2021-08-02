@@ -1166,7 +1166,8 @@ class Kinematics_class(tools.Tools_class):
 			input = cmds.ls(sl=True)[0]
 
 		mirror_grp =cmds.group(em=True, n = '{}Mirror{}'.format(input,nc['group']))
-		cmds.delete(cmds.parentConstraint(input, mirror_grp))
+		if world == False:
+			cmds.delete(cmds.parentConstraint(input, mirror_grp))
 		cmds.parent(input, mirror_grp)
 		
 		if world == True:

@@ -1,5 +1,7 @@
 ------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
 Building: Base_Block
+------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------
 Import successfully import exec_baseA 
 {'geometry': 'Geo', 'control': 'Ctrl', 'rig': 'Rig'}
@@ -9,14 +11,18 @@ Import successfully import exec_baseA
 BaseA Created Successfully
 Build successfully exec_baseA.build_baseA_block()
 ------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
 Building: COG_Block
+------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------
 Import successfully import exec_single_fk
 COG_Loc
 Build of single_fk was succesfull
 Build successfully exec_single_fk.build_single_fk_block()
 ------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
 Building: Spine_Block
+------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------
 Import successfully import exec_spine
 # Warning: History will be off for the command since Keep Originals is off and a selected item has no history. # 
@@ -48,7 +54,9 @@ Spine_OffOnVolume_Blend2.outputR
 Build Spine_Block Success
 Build successfully exec_spine.build_spine_block()
 ------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
 Building: L_Clavicle_Block
+------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------
 Import successfully import exec_clavicle
 L_Clavicle_Jnt
@@ -61,7 +69,9 @@ L_Clavicle_Jnt
 Build L_Clavicle_Block Success
 Build successfully exec_clavicle.build_clavicle_block()
 ------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
 Building: L_Pelvis_Block
+------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------
 Import successfully import exec_pelvis
 L_Pelvis_Jnt
@@ -74,7 +84,9 @@ L_Pelvis_Jnt
 Build L_Pelvis_Block Success
 Build successfully exec_pelvis.build_pelvis_block()
 ------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
 Building: L_Shoulder_Block
+------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------
 Import successfully import exec_limb
 L_Shoulder_Jnt
@@ -207,7 +219,9 @@ R_Elbow_Twist_2_Bnd
 R_Elbow_Twist_3_Bnd
 Build successfully exec_limb.build_limb_block()
 ------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
 Building: L_Hip_Block
+------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------
 Import successfully import exec_limb
 L_Hip_Jnt
@@ -340,7 +354,9 @@ R_Knee_Twist_2_Bnd
 R_Knee_Twist_3_Bnd
 Build successfully exec_limb.build_limb_block()
 ------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
 Building: Neck_Head_Block
+------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------
 Import successfully import exec_head
 // Replaced 1 names.
@@ -352,7 +368,9 @@ Neck_3_Bnd
 Build Neck_Head_Block Success
 Build successfully exec_head.build_head_block()
 ------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
 Building: L_Hand_Block
+------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------
 Import successfully import exec_hand
 L_Hand
@@ -448,7 +466,7 @@ L_Hand_Palm_Jnt:INNER CUP
 // Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
 // Error: searchReplaceNames _Jnt  "selected"; // 
 // Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
-[48.21928279342014, 96.75979696827156, -2.2677979358974087]
+[48.219282793420135, 96.75979696827159, -2.267797935897415]
 L_Hand_Palm_Jnt: OUTTER CUP
 // Error: searchReplaceNames _Ctrl  "selected"; // 
 // Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
@@ -589,7 +607,7 @@ R_Hand_Palm_Jnt:INNER CUP
 // Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
 // Error: searchReplaceNames _Jnt  "selected"; // 
 // Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
-[48.21928279342014, 96.75979696827156, -2.2677979358974087]
+[48.219282793420135, 96.75979696827159, -2.267797935897416]
 R_Hand_Palm_Jnt: OUTTER CUP
 // Error: searchReplaceNames _Ctrl  "selected"; // 
 // Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
@@ -644,7 +662,9 @@ Index_01
 Build L_Hand_Block Success
 Build successfully exec_hand.build_hand_block()
 ------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
 Building: L_Foot_Block
+------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------
 Import successfully import exec_foot
 L_Foot_Ankle_Jnt

@@ -76,13 +76,17 @@ with open(CURVE_FILE) as curve_file:
 SETUP_FILE = (PATH+'/rig_setup.json')
 with open(SETUP_FILE) as setup_file:
 	setup = json.load(setup_file)
+#version File
+VERSION_FILE = (PATH+'/version.json')
+with open(VERSION_FILE) as version_file:
+	version = json.load(version_file)
 
 #-------------------------------------------------------------------
 
 #QT WIndow!
 PATH = os.path.dirname(__file__)
 
-Title = 'Mutant // Autor_Rigger'
+Title = 'Mutant // Auto_Rigger'
 Folder = PATH.replace('\\UI', '')
 UI_File = 'autoRigger.ui'
 IconsPath =  Folder + '/Icons/'
@@ -189,7 +193,8 @@ class AutoRigger(MayaQWidgetDockableMixin, QtWidgets.QMainWindow):
 			except:
 				print ('Mutant_Build Grp is empty')
 
-		self.ui.layout().setContentsMargins(3, 3, 3, 3)
+		try:self.ui.layout().setContentsMargins(3, 3, 3, 3)
+		except:pass
 		self.ui.progressBar.setValue(0)
 		self.ui.bar_label.setText('Mutant')
 
@@ -266,7 +271,7 @@ class AutoRigger(MayaQWidgetDockableMixin, QtWidgets.QMainWindow):
 				with open(real_path, "r") as block_info:
 					block = json.load(block_info)
 					#reaload with json files info if dev mode is on, off loads faster
-					if setup['dev_mode'] == 'On':
+					if version['dev_mode'] == 'On':
 						exec(block['import'])
 						exec(block['imp.reload'])
 						print ('reloading {}'.format(block_file))
@@ -632,7 +637,7 @@ class AutoRigger(MayaQWidgetDockableMixin, QtWidgets.QMainWindow):
 				mt.Mutant_logger(mode='stop')
 				self.view_log(block = block)
 				cmds.undoInfo(closeChunk=True)
-				if setup['dev_mode'] != 'On':
+				if version['dev_mode'] != 'On':
 					cmds.undo()
 				return
 

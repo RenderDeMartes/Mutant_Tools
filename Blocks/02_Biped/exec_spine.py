@@ -426,7 +426,9 @@ def build_spine_block():
     clean_rig_grp = cmds.group(em=True, n = '{}{}'.format(block.replace(nc['module'],'_Rig'), nc['group']))
     cmds.parent(clean_joint_grp, ik_grp, clean_rig_grp)
     cmds.parent(base_fk_offset,clean_ctrl_grp)
+    cmds.parent(base_offset,clean_ctrl_grp)
 
+    cmds.parentConstraint(block_parent, clean_ctrl_grp, mo=True)
 
     cmds.parent(clean_ctrl_grp, setup['base_groups']['control'] + nc['group'])
     cmds.parent(clean_rig_grp, '{}{}'.format(setup['rig_groups']['misc'], nc['group']))

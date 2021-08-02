@@ -88,7 +88,6 @@ imp.reload(Mutant_Tools.Utils.main_mutant)
 
 mt = main_mutant.Mutant()
 
-
 # -------------------------------------------------------------------
 
 def maya_main_window():
@@ -102,7 +101,7 @@ class AutoRiggerMenu(MayaQWidgetDockableMixin, QtWidgets.QDialog):
 
 		self.setWindowTitle(Title)
 		self.setFixedHeight(20)
-		#self.resize(500,50)
+
 		self.init_ui()
 		self.create_layout()
 		self.create_connections()
@@ -144,13 +143,19 @@ class AutoRiggerMenu(MayaQWidgetDockableMixin, QtWidgets.QDialog):
 		self.tutorialMenu.addAction("Documentation")
 		self.menuBar.addMenu(self.tutorialMenu)
 
+		#Donate
+		self.donateMenu = QtWidgets.QMenu(self)
+		self.donateMenu.setTitle("Donate")
+		self.donateMenu.addAction("Paypal")
+		self.donateMenu.addAction("Crypto")
+		self.menuBar.addMenu(self.donateMenu)
+
 		#add menu bar to layout
-		self.ui.menuLayout.addWidget(self.menuBar)
+		self.ui.menuLayout.insertWidget(0, self.menuBar)
 
 	def create_connections(self):
 		''
 
-		# self.ui.buttonName.clicked.connect(self.create_layout)
 
 	# -------------------------------------------------------------------
 

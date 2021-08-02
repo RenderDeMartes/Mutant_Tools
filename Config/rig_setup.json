@@ -42,8 +42,6 @@
    "secondaryAxisOrient" : "zup", 
 
    "stretch_default":"1",
-   "volume_preservation":"0.5",
-
-   "dev_mode":"On"
+   "volume_preservation":"0.5"
 
 }

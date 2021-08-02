@@ -4,6 +4,10 @@ from Mutant_Tools.Utils import main_mutant
 import imp
 imp.reload(Mutant_Tools.Utils.main_mutant)
 mt = main_mutant.Mutant()
+
+online = mt.get_online_version()
+local = mt.get_local_version()
+
 #mt.create_block()
 #cmds.reorder( 'Mutant_Block6', r=-1 )
 #mt.move_outliner(input = 'Mutant_Block3', up =True)

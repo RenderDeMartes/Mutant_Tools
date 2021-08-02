@@ -1223,7 +1223,8 @@ class Tools_class:
 
 		"""
 
-		json_data = path + json_file
+		json_data = path + '\\' + json_file
+		json_data.replace('/','\\')
 
 		with open(json_data) as f:
 			data = json.load(f)
