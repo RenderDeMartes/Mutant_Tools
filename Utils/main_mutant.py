@@ -48,6 +48,7 @@ cmds.progressWindow(edit=True, progress=1, status='Hello!'.format(version))
 time.sleep(1)
 cmds.progressWindow(edit=True, progress=2, status='Loading RdM Tools V{}'.format(version))
 '''
+
 import maya.mel
 #import pymel.core as pm
 from maya import OpenMaya
@@ -56,7 +57,6 @@ import os
 import imp
 import json
 import math
-
 
 try: 
 	import tools

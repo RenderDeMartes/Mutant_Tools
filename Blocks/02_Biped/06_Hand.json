@@ -17,8 +17,6 @@
         "CtrlSize_float": "4",
         "CtrlType_enum": "bounding_cube:circleY:circleX:circleY:pin_cube",
 
-        "CurlAxis_enum": "Y:X:Z",
-      
         "Mirror_enum": "True:False:Right_Only",
   
         "Blends_string": "Wrist,Shoulder,Root_Ctrl",

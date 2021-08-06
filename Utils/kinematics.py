@@ -147,20 +147,18 @@ class Kinematics_class(tools.Tools_class):
 #----------------------------------------------------------------------------------------------------------------
 
 	def pole_vector_placement(self, bone_one = '', bone_two = '', bone_three = '',back_distance = 1):
-		"""
+		"""Get the perfect Polevector position
 
 		Args:
-			bone_one:
-			bone_two:
-			bone_three:
-			back_distance:
+			bone_one: string first joint in chain
+			bone_two: string second joint in chain
+			bone_three: string third joint in chain
+			back_distance: distance to move it backwards so its better for animators
 
-		Returns:
+		Returns: string of temp locator
 
 		"""
-		'''
-		finds correct position of the pole vector for the ik and create a locator for it
-		'''
+
 
 		#Thanks to >>> https://vimeo.com/66015036
 		if bone_one == '':
@@ -225,23 +223,21 @@ class Kinematics_class(tools.Tools_class):
 #----------------------------------------------------------------------------------------------------------------
 
 	def streatchy_ik(self, ik = '', ik_ctrl= '', top_ctrl = '', pv_ctrl = '', attrs_location = '', name = '', axis = 'Y'):
-		"""
+		"""Generate all the nodes necessary to create a iK stretching system
 
 		Args:
-			ik:
-			ik_ctrl:
-			top_ctrl:
-			pv_ctrl:
-			attrs_location:
-			name:
-			axis:
+			ik:string name of the IK on the limb
+			ik_ctrl: string name of the IK Ctrl
+			top_ctrl: string name of the Top IK Ctrl
+			pv_ctrl: string name of the PV Ctrl
+			attrs_location: String where to put the attrs
+			name: string name of the system
+			axis: string name of the twist axis so it can get correct lengths
 
-		Returns:
+		Returns: ik_grp, normalize_loc, start_loc, end_loc, pv_loc, distance, top_distance, ik_distance
 
 		"""
-		'''
-		create a ik stretchy system for the simple ik chain (only 3 joints allowed)
-		'''
+
 
 		if ik == '':
 			ik = cmds.ls(sl=True)
@@ -394,25 +390,22 @@ class Kinematics_class(tools.Tools_class):
 	#----------------------------------------------------------------------------------------------------------------
 
 	def simple_ik_chain(self, start = '', end = '', size = 1, color = setup['main_color'], ik_curve = setup['ik_ctrl'], pv_curve = setup['pv_ctrl'], pv = True, top_curve = setup['top_ik_ctrl'], mirror_behavior = True):
-		"""
+		"""This creates a simple IK chain between two joints with ctrls
 
 		Args:
-			start:
-			end:
-			size:
-			color:
-			ik_curve:
-			pv_curve:
-			pv:
-			top_curve:
-			mirror_behavior:
+			start: string name of first joint
+			end: string name of last joint
+			size: string size of the controller
+			color: string name of the color
+			ik_curve: string type of controller based on curves.json
+			pv_curve: string type of controller based on curves.json
+			pv: bool true if pole vector
+			top_curve: string type of controller based on curves.json
+			mirror_behavior: bool true if right side
 
-		Returns:
+		Returns: ik_system
 
 		"""
-		'''
-		create a ik chain for desire joints
-		'''
 
 		if start == '':
 			start = cmds.ls(sl =True)[0]
@@ -958,6 +951,14 @@ class Kinematics_class(tools.Tools_class):
 		reverse_node = cmds.shadingNode('reverse', asUtility = True)
 		cmds.connectAttr(switch_attr, '{}.input.inputX'.format(reverse_node))
 		cmds.connectAttr('{}.output.outputX'.format(reverse_node), '{}.visibility'.format(return_groups[3]))
+		cmds.connectAttr('{}.output.outputX'.format(reverse_node),
+		                 '{}.visibility'.format(cmds.listRelatives(ik_system[0], p=True)[0]), f=True)
+		cmds.connectAttr('{}.output.outputX'.format(reverse_node),
+		                 '{}.visibility'.format(cmds.listRelatives(ik_system[1], p=True)[0]), f=True)
+		cmds.connectAttr('{}.output.outputX'.format(reverse_node),
+		                 '{}.visibility'.format(ik_system[4]), f=True)
+		cmds.connectAttr('{}.output.outputX'.format(reverse_node),
+		                 '{}.visibility'.format(cmds.listRelatives(ik_system[2], p=True)[0]), f=True)
 
 		#create rotate order and line
 		for main in main_joints:

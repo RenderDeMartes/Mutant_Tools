@@ -415,3 +415,22 @@ class Modules_class(kinematics.Kinematics_class):
 			return log_file
 
 
+#----------------------------------------------------------------------------------------------------------------
+
+	def update_icons(self):
+
+		PATH = os.path.dirname(__file__)
+		PATH = PATH.replace('\\Utils', '//Icons//') #change this path depending of the folder
+		#print (PATH)
+
+		if not cmds.objExists('Mutant_Build'):
+			return
+
+		blocks = cmds.listRelatives('Mutant_Build', c=True)
+		for block in blocks:
+			current_icon = cmds.getAttr('{}.iconName'.format(block), asString = True).split('/')[-1]
+			cmds.setAttr('{}.iconName'.format(block), PATH + current_icon, type="string")
+			print (current_icon)
+
+
+#----------------------------------------------------------------------------------------------------------------

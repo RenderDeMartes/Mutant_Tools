@@ -143,7 +143,7 @@ def build_clavicle_block():
         if cmds.getAttr('{}.Mirror'.format(config), asString = True) == 'Right_Only':
             miror_ctrl_grp = mt.mirror_group(cmds.listRelatives(auto_grp, p=True)[0], world = True)
             miror_jnt_grp = mt.mirror_group(new_guide, world = True)
-            cmds.parentConstraint(block_parent, miror_ctrl_grp , mo = True)     
+            cmds.parentConstraint(block_parent, auto_grp , mo = True)
             clean_rig_grp = miror_jnt_grp
             clean_ctrl_grp = miror_ctrl_grp
 
@@ -151,7 +151,7 @@ def build_clavicle_block():
             if str(side_guide).startswith(nc['right']) :
                 miror_ctrl_grp = mt.mirror_group(cmds.listRelatives(auto_grp, p=True)[0], world = True)
                 miror_jnt_grp = mt.mirror_group(side_guide, world = True)
-                cmds.parentConstraint(block_parent, miror_ctrl_grp , mo = True) 
+                cmds.parentConstraint(block_parent, auto_grp , mo = True)
                 clean_rig_grp = miror_jnt_grp
                 clean_ctrl_grp = miror_ctrl_grp
 

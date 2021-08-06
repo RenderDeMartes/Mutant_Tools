@@ -132,7 +132,7 @@ def build_hand_block():
     print (name)
 
     #orient the joints
-    mt.orient_joint(input = guide)
+    #mt.orient_joint(input = guide)
     new_guide = mt.duplicate_and_remove_guides(guide)
     print (new_guide)
     to_build = [new_guide]
@@ -141,8 +141,7 @@ def build_hand_block():
     ctrl_type = cmds.getAttr('{}.CtrlType'.format(config), asString = True)
     attrs_ctrl = cmds.getAttr('{}.SetAttrsCtrl'.format(config), asString = True)
     attrs_parent = cmds.getAttr('{}.SetCtrlAttrsParent'.format(config), asString = True)
-    curls_axis = cmds.getAttr('{}.CurlAxis'.format(config), asString = True)
-
+    curls_axis = 'Z'
 
     #use this group for later cleaning, just assign them when you create the top on hierarchy
     clean_rig_grp = ''
@@ -156,7 +155,7 @@ def build_hand_block():
         cmds.makeIdentity(miror_grp, a=True, t=True, r=True, s=True)
         cmds.parent(new_guide, w = True)
         cmds.delete(miror_grp)
-        mt.orient_joint(input = new_guide)
+        #mt.orient_joint(input = new_guide)
 
     elif cmds.getAttr('{}.Mirror'.format(config), asString = True) == 'True':
         right_guide = mt.duplicate_change_names(input = new_guide, hi = True, search=nc['left'], replace =nc['right'])[0]
@@ -168,6 +167,11 @@ def build_hand_block():
     for side_guide in to_build:
         cmds.select(side_guide)
 
+        #orient Joints becouse the thumbs sucks
+        #hardcoded becouse fuck it
+        cmds.select('*Thumb_01*')
+        cmds.hide(guide)
+        #cmds.joint(e=True, oj='yxz', ch=True, secondaryAxisOrient='{}'.format(setup['secondaryAxisOrient']))
 
         #smart select the colors
         if str(side_guide).startswith(nc['left']):
@@ -175,9 +179,9 @@ def build_hand_block():
         elif str(side_guide).startswith(nc['right']):
             color = setup['right_color']       
         else:
-            color = setup['main_color']  
+            color = setup['main_color']
 
-        #ctrl list for the clean up       
+        #ctrl list for the clean up
         main_ctrl_grps = []
 
         #create hand Ctrl if there is no ctrl for the Attrs
@@ -187,21 +191,23 @@ def build_hand_block():
                                             custom_name = True, 
                                             name = side_guide.replace(nc['joint'],nc['ctrl']), 
                                             size = ctrl_size)
+
             mt.assign_color(ctrl_with_attrs, color)
             cmds.move(0,0,0)
             cmds.rotate(0,0,0)
-            cmds.pointConstraint(side_guide, ctrl_with_attrs, mo=False)
-            mt.hide_attr(t=True, r=True, s=True, rotate_order=True)
+            mt.match(ctrl_with_attrs, side_guide, t=True, r=False)
             hand_grp = mt.root_grp()
-            cmds.parentConstraint(attrs_parent, hand_grp, mo=True)
+            #cmds.move(0,2 * ctrl_size,0, ctrl_with_attrs, r=True)
+            mt.hide_attr(input = ctrl_with_attrs, t=True, r=True, s=True, rotate_order=True)
+            cmds.parentConstraint(side_guide, hand_grp, mo=True)
 
         else:
             ctrl_with_attrs = attrs_ctrl
-      
+
         #create ctrl attrs
         mt.line_attr(input = ctrl_with_attrs, name = 'Fingers', lines = 10)
 
-        #--------------------------------   
+        #--------------------------------
 
         #use this locator in case parent is set to new locator
         if cmds.getAttr('{}.SetParent'.format(config)) == 'new_locator':
@@ -209,7 +215,7 @@ def build_hand_block():
         else:
             block_parent = cmds.getAttr('{}.SetParent'.format(config))
             if side_guide.startswith(nc['right']):
-                block_parent = block_parent.replace(nc['left'],nc['right'])  
+                block_parent = block_parent.replace(nc['left'],nc['right'])
 
         #main funcion -------------------------------------------
         cmds.select(side_guide)
@@ -220,7 +226,7 @@ def build_hand_block():
         for finger in reversed(['Pinky_00','Ring_00','Middle_00','Index_00','Thumb_00']):
             if cmds.objExists(side_guide.replace('Palm',finger)):
                 fingers_zero.append(side_guide.replace('Palm',finger))
-
+                #mt.orient_joint(input=fingers_zero)
                 #create curl attrs
                 mt.new_attr(input= ctrl_with_attrs, 
                             name = finger.replace('_00','') + 'Curl', 
@@ -236,7 +242,7 @@ def build_hand_block():
 
         #create bind joints for later
         bind_joints = mt.duplicate_change_names(input = side_guide, hi = True, search=nc['joint'], replace =nc['joint_bind'])
-        
+
         #create main fk chains
         for finger in fingers_zero:
             cmds.select(finger)
@@ -247,9 +253,8 @@ def build_hand_block():
             #add to select for the fk chain in order
             for i in range:
                 cmds.select(cmds.listRelatives(cmds.ls(sl=True)[-1], c=True), add=True)
-
+            sel = cmds.ls(sl=True)
             #create fk chain
-             
             fk_ctrls = mt.fk_chain(input = '', size = ctrl_size, color = color, curve_type = ctrl_type, scale = True, twist_axis = setup['twist_axis'])
             print(fk_ctrls)
             main_ctrl_grps.append(cmds.listRelatives(fk_ctrls[0], p=True)[0])
@@ -259,6 +264,9 @@ def build_hand_block():
                 #connect to attr
                 finger_name = finger.split('_')[2] 
                 cmds.connectAttr('{}.{}Curl'.format(ctrl_with_attrs, finger_name),'{}.rotate{}'.format(curl_grp,curls_axis), f=True)
+
+            #parent to end joint
+            cmds.parentConstraint(fk_ctrls[-1], cmds.listRelatives(sel[-1], c=True)[0], mo=True)
 
         #main ctrl grp
         ctrls_grp = cmds.group(main_ctrl_grps, n = '{}{}'.format(side_guide.replace(nc['joint'],nc['ctrl']), nc['group']))
@@ -310,9 +318,9 @@ def build_hand_block():
             outter_cup_group = cmds.group(n = '{}Outter{}'.format(side_guide.replace('Palm'+nc['joint'], ''),nc['group']), em=True)
             outter_offset = mt.root_grp(replace_nc=True)[0]
             cmds.delete(cmds.parentConstraint(outter_cup,outter_offset, mo=False))
-            cmds.connectAttr(outter_cup_attr , '{}.rotateY'.format(outter_cup_group))
-            cmds.connectAttr(outter_cup_attr , '{}.rotateY'.format(outter_cup))
-            cmds.parentConstraint(ctrls_grp,outter_cup, mo=True)
+            cmds.connectAttr(outter_cup_attr , '{}.rotateX'.format(outter_cup_group))
+            cmds.connectAttr(outter_cup_attr , '{}.rotateX'.format(outter_cup))
+            #cmds.parentConstraint(ctrls_grp,outter_cup, mo=True)
 
             pinky = side_guide.replace('Palm'+nc['joint'],'Pinky_00'+nc['ctrl'])
             print (pinky)
@@ -346,7 +354,7 @@ def build_hand_block():
                 elif finger == 'Index_01':
                     mult = -0.5
 
-                mt.connect_md_node(in_x1 = spread_attr, in_x2 = mult, out_x = '{}.rotateZ'.format(spread_grp), mode = 'mult', name = 'Spread', force = False)
+                mt.connect_md_node(in_x1 = spread_attr, in_x2 = mult, out_x = '{}.rotateY'.format(spread_grp), mode = 'mult', name = 'Spread', force = False)
 
         #relax stuff
         relax_attr = mt.new_attr(input= ctrl_with_attrs, 
@@ -371,7 +379,6 @@ def build_hand_block():
 
                 mt.connect_md_node(in_x1 = relax_attr, in_x2 = mult, out_x = '{}.rotate{}'.format(relax_grp, curls_axis), mode = 'mult', name = 'Relax', force = False)
 
-
         #thumb relax
         thumb_ctrl = side_guide.replace('Palm'+nc['joint'],'Thumb_00' + nc['ctrl'])
         if cmds.objExists(thumb_ctrl):
@@ -382,7 +389,7 @@ def build_hand_block():
                                 default = 0)
             thumb_relax_grp = mt.root_grp(input = thumb_ctrl, custom = True, custom_name = '_Relax', autoRoot = False, replace_nc = True)[0]
             thumb_mult = 1
-            mt.connect_md_node(in_x1 = thumb_relax_atrr, in_x2 = thumb_mult, out_x = '{}.rotate{}'.format(thumb_relax_grp, curls_axis), mode = 'mult', name = 'Relax', force = False)
+            mt.connect_md_node(in_x1 = thumb_relax_atrr, in_x2 = thumb_mult, out_x = '{}.rotateZ'.format(thumb_relax_grp), mode = 'mult', name = 'Relax', force = False)
         
 
         #create bind Joints for the skin ------------------------- 
@@ -408,6 +415,7 @@ def build_hand_block():
 
         elif cmds.getAttr('{}.Mirror'.format(config), asString = True) == 'True':
             if str(side_guide).startswith(nc['right']) :
+
                 miror_ctrl_grp = mt.mirror_group(ctrls_grp, world = True)
                 miror_jnt_grp = mt.mirror_group(side_guide, world = True)
                 cmds.parentConstraint(block_parent, miror_ctrl_grp , mo = True)     

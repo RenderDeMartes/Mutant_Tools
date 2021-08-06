@@ -164,6 +164,8 @@ class AutoRigger(MayaQWidgetDockableMixin, QtWidgets.QMainWindow):
 		self.current_block = None
 		self.current_block_folder = None
 
+		#update icons
+		mt.update_icons()
 
 	def init_ui(self):
 
@@ -383,12 +385,10 @@ class AutoRigger(MayaQWidgetDockableMixin, QtWidgets.QMainWindow):
 		except:
 			edit_button.setText(pack_name)
 
-		#delete button
-		#delete_button = QtWidgets.QPushButton('✖')
+
 		delete_button = QtWidgets.QPushButton()
 		delete_button.setFixedSize(15,15)
 		delete_button.setIcon(QtGui.QIcon(IconsPath + 'delete.png'))
-		#delete_button.setIcon(QtGui.QIcon(IconsPath + 'Delete.png'))
 		delete_button.setToolTip('Delete: {}'.format(pack_name))
 
 		h_layout = QtWidgets.QHBoxLayout()
@@ -415,9 +415,9 @@ class AutoRigger(MayaQWidgetDockableMixin, QtWidgets.QMainWindow):
 	#-------------------------------------------------------------------
 	def create_properties_layout(self, block):
 		#'Create All Properties Stuff'
-		self.create_layout()
+		#self.create_layout()
 
-		# this will clear the propieties layout so we can recreate stuff
+		# this will clear the proprieties layout so we can recreate stuff
 		for i in reversed(range(self.ui.properties_layout.count())):
 			self.ui.properties_layout.itemAt(i).widget().setParent(None)
 
@@ -618,8 +618,10 @@ class AutoRigger(MayaQWidgetDockableMixin, QtWidgets.QMainWindow):
 			#building
 			cmds.select(block)
 			config = cmds.listConnections(block)[1]
+			precode = cmds.getAttr('{}.precode'.format(config))
 			import_command = cmds.getAttr('{}.Import_Command'.format(config))
 			buid_command = cmds.getAttr('{}.Build_Command'.format(config))
+			postcode = cmds.getAttr('{}.postcode'.format(config))
 
 			self.ui.bar_label.setText(buid_command)
 			self.ui.bar_label.setToolTip(buid_command)
@@ -628,9 +630,37 @@ class AutoRigger(MayaQWidgetDockableMixin, QtWidgets.QMainWindow):
 			print ('Import successfully {}'.format(import_command))
 			#if error in build show log and stop log writing
 			try:
+				# ----------------------
+				# Precode---------------
+				# ----------------------
+				cmds.select(block)
+				print('Precode {}'.format(block))
+				if precode:
+					try:
+						exec(precode)
+					except:
+						mel.eval(precode)
+
+				# ----------------------
+				# BUILD-----------------
+				# ----------------------
+				cmds.select(block)
 				#Build the blocks
 				exec(buid_command)
-				print ('Build successfully {}'.format(buid_command))
+				print('Build successfully {}'.format(buid_command))
+
+				# ----------------------
+				# Postcode--------------
+				# ----------------------
+				cmds.select(block)
+				print('Postcode {}'.format(block))
+				if postcode:
+					try:
+						exec(postcode)
+					except:
+						mel.eval(postcode)
+
+			#Errors
 			except Exception:
 				import traceback
 				traceback.print_exc()
@@ -645,6 +675,8 @@ class AutoRigger(MayaQWidgetDockableMixin, QtWidgets.QMainWindow):
 			self.ui.bar_label.setText('{}'.format(block))
 			self.ui.bar_label.setToolTip('Succesfull build: {}'.format(block))
 			self.ui.progressBar.setValue((num + 1))
+
+
 
 			#log
 			mt.Mutant_logger(mode = 'stop')

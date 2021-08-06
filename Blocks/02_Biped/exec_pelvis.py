@@ -143,22 +143,21 @@ def build_pelvis_block():
         cmds.setAttr('{}.radius'.format(bind_joint), 1.5)   
 
         #blends groups
-        blends_grp = mt.root_grp(input = fk_chain[0], custom = True, custom_name = '_Blends', autoRoot = False, replace_nc = False)[0]
 
         #flip right rig  to right side ------------------------- 
         #check if the mirror attrs to Only_Right or mirror to True
         if cmds.getAttr('{}.Mirror'.format(config), asString = True) == 'Right_Only':
-            miror_ctrl_grp = mt.mirror_group(cmds.listRelatives(blends_grp, p=True)[0], world = True)
+            miror_ctrl_grp = mt.mirror_group(cmds.listRelatives(fk_chain[0], p=True)[0], world = True)
             miror_jnt_grp = mt.mirror_group(new_guide, world = True)
-            cmds.parentConstraint(block_parent, miror_ctrl_grp , mo = True)     
+            cmds.parentConstraint(block_parent, fk_chain[0] , mo = True)
             clean_rig_grp = miror_jnt_grp
             clean_ctrl_grp = miror_ctrl_grp
 
         elif cmds.getAttr('{}.Mirror'.format(config), asString = True) == 'True':
             if str(side_guide).startswith(nc['right']) :
-                miror_ctrl_grp = mt.mirror_group(cmds.listRelatives(blends_grp, p=True)[0], world = True)
+                miror_ctrl_grp = mt.mirror_group(cmds.listRelatives(fk_chain[0], p=True)[0], world = True)
                 miror_jnt_grp = mt.mirror_group(side_guide, world = True)
-                cmds.parentConstraint(block_parent, miror_ctrl_grp , mo = True) 
+                cmds.parentConstraint(block_parent, fk_chain[0] , mo = True)
                 clean_rig_grp = miror_jnt_grp
                 clean_ctrl_grp = miror_ctrl_grp
             else:
@@ -172,10 +171,7 @@ def build_pelvis_block():
             clean_ctrl_grp = for_parent   
 
         #blends
-        bends = cmds.getAttr('{}.Blends'.format(config).split(':'))
-        for blend in bends:
-            ''
-            #cmds.orientConstraint()
+
         
 
         #Clean -------------------------------------------
