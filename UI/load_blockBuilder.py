@@ -30,7 +30,7 @@ JSON FILES
 Main Mutant
 
 #----------------
-licence: https://www.eulatemplate.com/live.php?token=ySe25XC0bKARQymXaGQGR8i4gvXMJgVS
+licence: https://www.eulatemplate.com/live.php?token=FGISW7ApRfgywum6murbBmLcusKONzkv
 author:  Esteban Rodriguez <info@renderdemartes.com>
 
 '''
@@ -90,8 +90,8 @@ IconsPath =  Folder + '//Icons//'
 
 import Mutant_Tools
 import Mutant_Tools.Utils
-from Mutant_Tools.Utils import main_mutant
-imp.reload(Mutant_Tools.Utils.main_mutant)
+from Mutant_Tools.Utils.Rigging import main_mutant
+imp.reload(Mutant_Tools.Utils.Rigging.main_mutant)
 
 mt = main_mutant.Mutant()
 
