@@ -7,9 +7,9 @@ date: 21/04/2020
 how to: 
 	
 import Mutant_Tools
-import Mutant_Tools.Utils
-from Mutant_Tools.Utils import modules
-imp.reload(Mutant_Tools.Utils.modules)
+import Mutant_Tools.Utils.Rigging
+from Mutant_Tools.Utils.Rigging import modules
+imp.reload(Mutant_Tools.Utils.Rigging.modules)
 
 modules = modules.RdM()
 modules.FUNC(ARGUMENTS)
@@ -49,18 +49,18 @@ try:
 	imp.reload(kinematics)
 except:
 	import Mutant_Tools
-	import Mutant_Tools.Utils
-	from Mutant_Tools.Utils import tools
-	imp.reload(Mutant_Tools.Utils.tools)
-	from Mutant_Tools.Utils import kinematics
-	imp.reload(Mutant_Tools.Utils.kinematics)
+	import Mutant_Tools.Utils.Rigging
+	from Mutant_Tools.Utils.Rigging import tools
+	imp.reload(Mutant_Tools.Utils.Rigging.tools)
+	from Mutant_Tools.Utils.Rigging import kinematics
+	imp.reload(Mutant_Tools.Utils.Rigging.kinematics)
 
 
 #----------------------------------------------------------------------------------------------------------------
 
 #Read name conventions as nc[''] and setup as seup['']
 PATH = os.path.dirname(__file__)
-PATH = PATH.replace('\\Utils', '//Config')
+PATH = PATH.replace('\\Utils\\Rigging', '//Config')
 
 JSON_FILE = (PATH +'/name_conventions.json')
 with open(JSON_FILE) as json_file:
@@ -82,7 +82,7 @@ class Modules_class(kinematics.Kinematics_class):
 	def create_block(self, name = 'Mutant', icon = 'Limb', attrs = {'attrs':'something'}, build_command = 'print("Test")', import_command = 'print("Test2")'):
 
 		PATH = os.path.dirname(__file__)
-		PATH = PATH.replace('\\Utils', '//Icons//') #change this path depending of the folder
+		PATH = PATH.replace('\\Utils\\Rigging', '//Icons//') #change this path depending of the folder
 		#print (PATH)
 		icon = PATH + icon + '.png'
 
@@ -414,13 +414,12 @@ class Modules_class(kinematics.Kinematics_class):
 		else:
 			return log_file
 
-
 #----------------------------------------------------------------------------------------------------------------
 
 	def update_icons(self):
 
 		PATH = os.path.dirname(__file__)
-		PATH = PATH.replace('\\Utils', '//Icons//') #change this path depending of the folder
+		PATH = PATH.replace('\\Utils\\Rigging', '//Icons//') #change this path depending of the folder
 		#print (PATH)
 
 		if not cmds.objExists('Mutant_Build'):

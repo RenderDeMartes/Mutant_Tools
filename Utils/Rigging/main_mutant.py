@@ -7,9 +7,9 @@ date: 21/04/2020
 how to: 
 	
 import Mutant_Tools
-import Mutant_Tools.Utils
-from Mutant_Tools.Utils import main_mutant
-imp.reload(Mutant_Tools.Utils.main_mutant)
+import Mutant_Tools.Utils.Rigging
+from Mutant_Tools.Utils.Rigging import main_mutant
+imp.reload(Mutant_Tools.Utils.Rigging.main_mutant)
 
 Mutant = main_mutant.Mutant()
 Mutant.FUNC(ARGUMENTS)
@@ -69,17 +69,17 @@ try:
 	imp.reload(blocks)
 except:
 	import Mutant_Tools
-	import Mutant_Tools.Utils
-	from Mutant_Tools.Utils import tools
-	imp.reload(Mutant_Tools.Utils.tools)
-	from Mutant_Tools.Utils import kinematics
-	imp.reload(Mutant_Tools.Utils.kinematics)
-	from Mutant_Tools.Utils import modules
-	imp.reload(Mutant_Tools.Utils.modules)
+	import Mutant_Tools.Utils.Rigging
+	from Mutant_Tools.Utils.Rigging import tools
+	imp.reload(Mutant_Tools.Utils.Rigging.tools)
+	from Mutant_Tools.Utils.Rigging import kinematics
+	imp.reload(Mutant_Tools.Utils.Rigging.kinematics)
+	from Mutant_Tools.Utils.Rigging import modules
+	imp.reload(Mutant_Tools.Utils.Rigging.modules)
 
 #---------------------------------------------------
 PATH = os.path.dirname(__file__)
-PATH = PATH.replace('\\Utils', '//Config')
+PATH = PATH.replace('\\Utils\\Rigging', '//Config')
 #---------------------------------------------------
 
 

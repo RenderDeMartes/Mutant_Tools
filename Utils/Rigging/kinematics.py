@@ -17,9 +17,9 @@ NEEDS A UPDATE :)
 how to: 
 	
 import Mutant_Tools
-import Mutant_Tools.Utils
-from Mutant_Tools.Utils import kinematics
-imp.reload(Mutant_Tools.Utils.kinematics)
+import Mutant_Tools.Utils.Rigging
+from Mutant_Tools.Utils.Rigging import kinematics
+imp.reload(Mutant_Tools.Utils.Rigging.kinematics)
 
 kin = kinematics.Kinematics_class()
 kin.FUNC_NAME(argument = '')
@@ -58,15 +58,15 @@ try:
 
 except:
 	import Mutant_Tools
-	import Mutant_Tools.Utils
-	from Mutant_Tools.Utils import tools
-	imp.reload(Mutant_Tools.Utils.tools)
+	import Mutant_Tools.Utils.Rigging
+	from Mutant_Tools.Utils.Rigging import tools
+	imp.reload(Mutant_Tools.Utils.Rigging.tools)
 
 #----------------------------------------------------------------------------------------------------------------
 
 #Read name conventions as nc[''] and setup as seup['']
 PATH = os.path.dirname(__file__)
-PATH = PATH.replace('\\Utils', '//Config')
+PATH = PATH.replace('\\Utils\\Rigging', '//Config')
 
 JSON_FILE = (PATH+'/name_conventions.json')
 with open(JSON_FILE) as json_file:

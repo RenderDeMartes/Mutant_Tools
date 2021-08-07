@@ -94,9 +94,9 @@ IconsPath =  Folder + '/Icons/'
 #-------------------------------------------------------------------
 
 import Mutant_Tools
-import Mutant_Tools.Utils
-from Mutant_Tools.Utils import main_mutant
-imp.reload(Mutant_Tools.Utils.main_mutant)
+import Mutant_Tools.Utils.Rigging
+from Mutant_Tools.Utils.Rigging import main_mutant
+imp.reload(Mutant_Tools.Utils.Rigging.main_mutant)
 
 mt = main_mutant.Mutant()
 
@@ -140,7 +140,6 @@ def maya_main_window():
 
 	main_window_ptr = omui.MQtUtil.mainWindow()
 	return wrapInstance(int(main_window_ptr), QtWidgets.QWidget)
-
 
 class AutoRigger(MayaQWidgetDockableMixin, QtWidgets.QMainWindow):
 

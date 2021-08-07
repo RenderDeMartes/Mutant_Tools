@@ -7,9 +7,9 @@ date: 21/04/2020
 how to:
 	
 import Mutant_Tools
-import Mutant_Tools.Utils
-from Mutant_Tools.Utils import tools
-imp.reload(Mutant_Tools.Utils.tools)
+import Mutant_Tools.Utils.Rigging
+from Mutant_Tools.Utils.Rigging import tools
+imp.reload(Mutant_Tools.Utils.Rigging.tools)
 
 tool = tools.Tools_class()
 tool.FUNC_NAME(argument = '')
@@ -40,7 +40,7 @@ from maya import cmds
 
 #Read name conventions as nc[''] and setup as seup['']
 PATH = os.path.dirname(__file__)
-PATH = PATH.replace('\\Utils', '//Config')
+PATH = PATH.replace('\\Utils\\Rigging', '//Config')
 
 JSON_FILE = (PATH + '/name_conventions.json')
 with open(JSON_FILE) as json_file:

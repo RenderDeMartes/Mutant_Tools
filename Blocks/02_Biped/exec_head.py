@@ -6,9 +6,9 @@ import imp
 import os
 
 import Mutant_Tools
-import Mutant_Tools.Utils
-from Mutant_Tools.Utils import main_mutant
-imp.reload(Mutant_Tools.Utils.main_mutant)
+import Mutant_Tools.Utils.Rigging
+from Mutant_Tools.Utils.Rigging import main_mutant
+imp.reload(Mutant_Tools.Utils.Rigging.main_mutant)
 
 mt = main_mutant.Mutant()
 
