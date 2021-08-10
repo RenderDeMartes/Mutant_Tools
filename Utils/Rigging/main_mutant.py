@@ -87,6 +87,7 @@ class Mutant(modules.Modules_class):
 
 	def __init__ (self):
 
+
 		version = self.get_local_version()
 
 		if cmds.objExists('Mutant_Tools'):

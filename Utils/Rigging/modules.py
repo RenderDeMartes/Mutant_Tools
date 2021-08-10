@@ -401,6 +401,14 @@ class Modules_class(kinematics.Kinematics_class):
 #----------------------------------------------------------------------------------------------------------------
 
 	def Mutant_logger(self, mode = 'create'):
+		"""
+
+		Args:
+			mode:
+
+		Returns:
+
+		"""
 
 		log_file = PATH.replace('/Config', '/log.txt')
 
