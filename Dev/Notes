@@ -1,0 +1,9 @@
+-------------Limb: Notes-----------------
+
+L_Shoulder_Twist_3_Jnt_Twist__Grp
+L_Shoulder_Jnt_L_Elbow_Jnt_Twist_Grp
+
+
+---------------Limb: Listo--------------------
+hay que pegar el normaqlize en el divide para que el elbow loc funcione otra vez. ahorita solo esta en input X
+meter jj ik fk en un grupo con scale constraint del base ayuda

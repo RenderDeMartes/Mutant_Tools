@@ -58,7 +58,7 @@ import subprocess
 
 #Read name conventions as nc[''] and setup as seup['']
 PATH = os.path.dirname(__file__)
-PATH = PATH.replace('\\UI', '//Config') #change this path depending of the folder
+PATH = PATH.replace('\\UI\\CodeReader', '//Config') #change this path depending of the folder
 
 JSON_FILE = (PATH + '/name_conventions.json')
 with open(JSON_FILE) as json_file:
@@ -72,6 +72,8 @@ SETUP_FILE = (PATH+'/rig_setup.json')
 with open(SETUP_FILE) as setup_file:
 	setup = json.load(setup_file)
 
+#-------------------------------------------------------------------
+
 
 #-------------------------------------------------------------------
 
@@ -79,7 +81,7 @@ with open(SETUP_FILE) as setup_file:
 PATH = os.path.dirname(__file__)
 
 Title = 'Code Reader'
-Folder = PATH.replace('\\UI', '') #where the qt designer file is
+Folder = PATH.replace('\\UI\\CodeReader', '') #where the qt designer file is
 UI_File = 'codeReader.ui'
 IconsPath =  Folder + '/Icons/' #icons path
 
@@ -115,7 +117,7 @@ class Code_Reader(QtWidgets.QMainWindow):
 
 	def init_ui(self):
 
-		UIPath  = Folder + '/UI/'
+		UIPath  = Folder + '/UI/CodeReader/'
 		f = QtCore.QFile(UIPath + UI_File)
 		f.open(QtCore.QFile.ReadOnly)
 

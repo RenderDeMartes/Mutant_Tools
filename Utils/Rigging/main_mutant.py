@@ -50,7 +50,6 @@ cmds.progressWindow(edit=True, progress=2, status='Loading RdM Tools V{}'.format
 '''
 
 import maya.mel
-#import pymel.core as pm
 from maya import OpenMaya
 
 import os
@@ -106,7 +105,7 @@ class Mutant(modules.Modules_class):
 
 	def get_online_version(self):
 
-		version_line = ''
+		version_line = str()
 		url = 'https://mutanttools.com/current_version/'
 		oURL = urllib.request.urlopen(url)
 

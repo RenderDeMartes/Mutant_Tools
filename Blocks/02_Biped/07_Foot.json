@@ -14,8 +14,8 @@
 
     "attrs": {
 
-        "SetIKParent_string": "new_locator",
-        "SetFKParent_string": "new_locator",
+        "SetIKCtrl_string": "new_locator",
+        "SetFKCtrl_string": "new_locator",
 
         "Mirror_enum": "True:False:Right_Only",
 

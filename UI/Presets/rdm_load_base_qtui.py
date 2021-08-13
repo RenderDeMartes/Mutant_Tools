@@ -21,7 +21,7 @@ def maya_main_window():
 	
 	main_window_ptr = omui.MQtUtil.mainWindow()
 	return wrapInstance(int(main_window_ptr), QtWidgets.QWidget)
-		
+
 class UI_CLASS(MayaQWidgetDockableMixin , QtWidgets.QMainWindow):
 	
 	def __init__(self, parent=maya_main_window()):

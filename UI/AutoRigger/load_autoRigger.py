@@ -11,7 +11,7 @@ This will create a UI for the autorriger tool. Is dinamically created based on t
 how to:
 import imp
 import Mutant_Tools
-from Mutant_Tools.UI import load_autoRigger
+from Mutant_Tools.UI.AutoRigger import load_autoRigger
 imp.reload(load_autoRigger)
 
 try:AutoRigger.close()
@@ -53,17 +53,17 @@ import sys
 import json
 
 
-from Mutant_Tools.UI import load_codeReader
+from Mutant_Tools.UI.CodeReader import load_codeReader
 imp.reload(load_codeReader)
 
-from Mutant_Tools.UI import load_autoRiggerMenu
+from Mutant_Tools.UI.AutoRigger import load_autoRiggerMenu
 imp.reload(load_autoRiggerMenu)
 
 #-------------------------------------------------------------------
 
 #Read name conventions as nc[''] and setup as seup['']
 PATH = os.path.dirname(__file__)
-PATH = PATH.replace('\\UI', '//Config') #change this path depending of the folder
+PATH = PATH.replace('\\UI\\AutoRigger', '//Config') #change this path depending of the folder
 
 JSON_FILE = (PATH + '/name_conventions.json')
 with open(JSON_FILE) as json_file:
@@ -87,7 +87,7 @@ with open(VERSION_FILE) as version_file:
 PATH = os.path.dirname(__file__)
 
 Title = 'Mutant // Auto_Rigger'
-Folder = PATH.replace('\\UI', '')
+Folder = PATH.replace('\\UI\\AutoRigger', '')
 UI_File = 'autoRigger.ui'
 IconsPath =  Folder + '/Icons/'
 
@@ -105,9 +105,7 @@ def add_sys_folders_remove_compiled():
 	#get all the paths for the blocks in the sys path
 	file_path = (str(__file__))
 	for folder in os.listdir(Folder + '/Blocks'):
-		print (folder)
-		blocks_path = file_path.replace('UI\\load_autoRigger.py','Blocks//{}'.format(folder))
-		print (blocks_path)
+		blocks_path = Folder + '/Blocks//{}'.format(folder)
 		if blocks_path not in sys.path:
 			sys.path.append(blocks_path)
 
@@ -127,12 +125,11 @@ def add_sys_folders_remove_compiled():
 	path = Folder
 	for path, subdirs, files in os.walk(path):
 		for name in files:
-			#print('Search: ' + os.path.join(path, name))
 			if '.pyc' in str(name):
 				print (name + ': Have been deleted')
 				os.remove(os.path.join(path, name))
 
-
+	print ('Cache removed')
 #-------------------------------------------------------------------
 
 
@@ -168,7 +165,7 @@ class AutoRigger(MayaQWidgetDockableMixin, QtWidgets.QMainWindow):
 
 	def init_ui(self):
 
-		UIPath  = Folder + '/UI/'
+		UIPath  = Folder + '/UI/Autorigger/'
 		f = QtCore.QFile(UIPath + UI_File)
 		f.open(QtCore.QFile.ReadOnly)
 
@@ -591,6 +588,7 @@ class AutoRigger(MayaQWidgetDockableMixin, QtWidgets.QMainWindow):
 
 		#log
 		try:
+			cmds.scriptEditorInfo(ch=True)
 			mt.Mutant_logger(mode = 'clear')
 			mt.Mutant_logger(mode = 'stop')
 		except:

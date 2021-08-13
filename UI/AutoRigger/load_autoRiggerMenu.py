@@ -55,7 +55,7 @@ import json
 
 # Read name conventions as nc[''] and setup as seup['']
 PATH = os.path.dirname(__file__)
-PATH = PATH.replace('\\UI', '//Config')  # change this path depending of the folder
+PATH = PATH.replace('\\UI\\AutoRigger', '//Config')  # change this path depending of the folder
 
 JSON_FILE = (PATH + '/name_conventions.json')
 with open(JSON_FILE) as json_file:
@@ -75,7 +75,7 @@ with open(SETUP_FILE) as setup_file:
 PATH = os.path.dirname(__file__)
 
 Title = 'Menu'
-Folder = PATH.replace('\\UI', '')  # where the qt designer file is
+Folder = PATH.replace('\\UI\\AutoRigger', '')  # where the qt designer file is
 UI_File = 'autoRiggerMenu.ui'
 IconsPath = Folder + '/Icons/'  # icons path
 
@@ -98,7 +98,7 @@ class AutoRiggerMenu(MayaQWidgetDockableMixin, QtWidgets.QDialog):
 		self.create_connections()
 
 	def init_ui(self):
-		UIPath = Folder + '/UI/'
+		UIPath = Folder + '/UI/AutoRigger/'
 		f = QtCore.QFile(UIPath + UI_File)
 		f.open(QtCore.QFile.ReadOnly)
 

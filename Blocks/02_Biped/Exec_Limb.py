@@ -19,7 +19,7 @@ PYBLOCK_NAME = 'exec_head'
 
 #Read name conventions as nc[''] and setup as seup['']
 PATH = os.path.dirname(__file__)
-PATH = PATH.replace('\Blocks//{}'.format(TAB_FOLDER), '//Config') #change this path depending of the folder
+PATH = PATH.replace('/Blocks//{}'.format(TAB_FOLDER), '//Config') #change this path depending of the folder
 
 JSON_FILE = (PATH + '/name_conventions.json')
 with open(JSON_FILE) as json_file:
@@ -168,13 +168,13 @@ def build_limb_block():
         limb_c = cmds.ls(sl=True)[2]
 
         ikfk = mt.twist_fk_ik(start = '', mid = '', end = '', size = ctrl_size, color = color, twist_amount = twist_amount)
-
         #ikfk = mt.simple_fk_ik(start = '', mid = '', end = '', size = ctrl_size, color = color)
 
         print ('----------------IK FK------------------')
 
         #clean a bit
         print (ikfk['ik_fk'])
+        cmds.connectAttr('Global_Ctrl.scale', '{}.scale'.format(ikfk['ik_fk'][4][5][1]))
 
         #ikfk['ik_fk'[#]]
         #[0] ['L_Shoulder_Jnt', 'L_Elbow_Jnt', 'L_Wrist_Jnt'],
@@ -251,11 +251,6 @@ def build_limb_block():
                 cmds.parentConstraint(block_parent, ikfk['ik_fk'][5][0] , mo = True)
                 cmds.parentConstraint(block_parent, cmds.listRelatives(ikfk['ik_fk'][4][2], p=True) , mo = True)
 
-
-        #FIXES FOR RIGHT SIDE:
-
-
-
         #blends
         '''
         blends_grp = mt.root_grp(input = '', custom = True, custom_name = 'Blends', autoRoot = False, replace_nc = False)[0]
@@ -291,8 +286,7 @@ def build_limb_block():
             print (bind_joint)
 
             bind_joints.append(bind_joint)
-            cmds.setAttr('{}.radius'.format(bind_joint),2)
-
+            cmds.setAttr('{}.radius'.format(bind_joint), 2)
 
         #Finish -------------------------------------------
 
@@ -320,3 +314,9 @@ def build_limb_block():
         #connected
         cmds.parent(ikfk['ik_fk'][4][4], clean_ctrl_grp)
 
+        #stretchy fixes to make it scalable
+        main_jnt_grp = cmds.group(em=True, n = side_guide + '_Main' + nc['group'])
+        cmds.parent(main_jnt_grp, cmds.listRelatives(ikfk['ik_fk'][0][0],p=True))
+        cmds.parent(ikfk['ik_fk'][0][0], ikfk['ik_fk'][1][0], ikfk['ik_fk'][2][0], main_jnt_grp)
+
+        cmds.scaleConstraint('Global_Ctrl', main_jnt_grp)

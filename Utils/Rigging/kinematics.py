@@ -302,7 +302,6 @@ class Kinematics_class(tools.Tools_class):
 			total_distance = total_distance * -1  
 			
 		# New Attributes
-		
 		#Attr mult Stretchy
 		print (attrs_location)
 
@@ -332,6 +331,10 @@ class Kinematics_class(tools.Tools_class):
 		#normalize stretch
 		normalize_loc = cmds.spaceLocator(n = name + '_NormalScale' + nc['locator'])[0]
 		normal_md = self.connect_md_node( in_x1 = str(distance)+'.distance', in_x2 = str(normalize_loc) + '.scaleX', out_x = md0 + '.input1X', mode = 'divide', name = '{}_Normalize'.format(distance), force = True)
+		#normalize pole vector lock
+		cmds.connectAttr(str(normalize_loc) + '.scaleX', normal_md + '.input2Y')
+		cmds.connectAttr(str(normalize_loc) + '.scaleX', normal_md + '.input2Z')
+
 		cmds.connectAttr(normal_md + '.outputX', md3 + '.input1X', f=True)
 
 		#manual change the sacles mult

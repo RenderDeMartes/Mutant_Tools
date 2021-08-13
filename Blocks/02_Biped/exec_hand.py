@@ -17,7 +17,7 @@ PYBLOCK_NAME = 'exec_hand'
 
 #Read name conventions as nc[''] and setup as seup['']
 PATH = os.path.dirname(__file__)
-PATH = PATH.replace('\Blocks//{}'.format(TAB_FOLDER), '//Config') #change this path depending of the folder
+PATH = PATH.replace('/Blocks//{}'.format(TAB_FOLDER), '//Config') #change this path depending of the folder
 
 JSON_FILE = (PATH + '/name_conventions.json')
 with open(JSON_FILE) as json_file:
@@ -390,11 +390,10 @@ def build_hand_block():
             thumb_relax_grp = mt.root_grp(input = thumb_ctrl, custom = True, custom_name = '_Relax', autoRoot = False, replace_nc = True)[0]
             thumb_mult = 1
             mt.connect_md_node(in_x1 = thumb_relax_atrr, in_x2 = thumb_mult, out_x = '{}.rotateZ'.format(thumb_relax_grp), mode = 'mult', name = 'Relax', force = False)
-        
 
         #create bind Joints for the skin ------------------------- 
         print(bind_joints) #created on top
-  
+
 
         for jnt in cmds.listRelatives(bind_joints[0], ad=True):
             cmds.parentConstraint(jnt.replace(nc['joint_bind'],nc['joint']),jnt)
@@ -409,7 +408,7 @@ def build_hand_block():
         if cmds.getAttr('{}.Mirror'.format(config), asString = True) == 'Right_Only':
             miror_ctrl_grp = mt.mirror_group(ctrls_grp, world = True)
             miror_jnt_grp = mt.mirror_group(side_guide, world = True)
-            cmds.parentConstraint(block_parent, miror_ctrl_grp , mo = True)     
+            cmds.parentConstraint(block_parent, ctrls_grp , mo = True)
             clean_rig_grp = miror_jnt_grp
             clean_ctrl_grp = miror_ctrl_grp
 
@@ -418,7 +417,7 @@ def build_hand_block():
 
                 miror_ctrl_grp = mt.mirror_group(ctrls_grp, world = True)
                 miror_jnt_grp = mt.mirror_group(side_guide, world = True)
-                cmds.parentConstraint(block_parent, miror_ctrl_grp , mo = True)     
+                cmds.parentConstraint(block_parent, ctrls_grp , mo = True)
                 clean_rig_grp = miror_jnt_grp
                 clean_ctrl_grp = miror_ctrl_grp
             else:

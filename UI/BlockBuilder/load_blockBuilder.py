@@ -3,7 +3,7 @@ version: 1.0.0
 date: 21/04/2020
 
 #----------------
-content: 
+content:
 
 This will create a UI for the autorriger tool. Is dinamically created based on the .json files inside the folders
 
@@ -12,7 +12,7 @@ how to:
 
 import imp
 import Mutant_Tools
-from Mutant_Tools.UI import load_blockBuilder
+from Mutant_Tools.UI.BlockBuilder import load_blockBuilder
 import imp
 imp.reload(load_blockBuilder)
 
@@ -22,7 +22,7 @@ BlockBuilder = load_blockBuilder.BlockBuilder()
 BlockBuilder.show()
 
 #----------------
-dependencies:   
+dependencies:
 
 QT FILE
 ICONS
@@ -60,7 +60,7 @@ from collections import OrderedDict
 
 #Read name conventions as nc[''] and setup as seup['']
 PATH = os.path.dirname(__file__)
-PATH = PATH.replace('\\UI', '//Config') #change this path depending of the folder
+PATH = PATH.replace('\\UI\\BlockBuilder', '//Config') #change this path depending of the folder
 
 JSON_FILE = (PATH + '/name_conventions.json')
 with open(JSON_FILE) as json_file:
@@ -72,18 +72,19 @@ with open(CURVE_FILE) as curve_file:
 #setup File
 SETUP_FILE = (PATH+'/rig_setup.json')
 with open(SETUP_FILE) as setup_file:
-	setup = json.load(setup_file)	
+	setup = json.load(setup_file)
+
 
 
 #-------------------------------------------------------------------
 
 #QT WIndow!
 PATH = os.path.dirname(__file__)
-OTHERS_PATH = PATH.replace('\\UI', '//Others') #get presets path to read files
-BLOCKS_PATH = PATH.replace('\\UI', '//Blocks') #get Blocks paths to write files
+OTHERS_PATH = PATH.replace('\\UI\\BlockBuilder', '//Others') #get presets path to read files
+BLOCKS_PATH = PATH.replace('\\UI\\BlockBuilder', '//Blocks') #get Blocks paths to write files
 
 Title = 'Mutant // Block Builder'
-Folder = PATH.replace('\\UI', '') 
+Folder = PATH.replace('\\UI\\BlockBuilder', '')
 UI_File = 'blockBuilder.ui'
 IconsPath =  Folder + '//Icons//'
 #-------------------------------------------------------------------
@@ -92,50 +93,41 @@ import Mutant_Tools
 import Mutant_Tools.Utils
 from Mutant_Tools.Utils.Rigging import main_mutant
 imp.reload(Mutant_Tools.Utils.Rigging.main_mutant)
-
 mt = main_mutant.Mutant()
 
+import Mutant_Tools.UI
+from Mutant_Tools.UI import QtMutantWindow
+imp.reload(QtMutantWindow)
+Qt_Mutant = QtMutantWindow.Qt_Mutant()
 
 #-------------------------------------------------------------------
 
 
 def maya_main_window(dockable=True):
-	
+
 	main_window_ptr = omui.MQtUtil.mainWindow()
 	return wrapInstance(int(main_window_ptr), QtWidgets.QWidget)
 
 
-class BlockBuilder(QtWidgets.QMainWindow):
-	
-	def __init__(self, parent=maya_main_window()):
-		super(BlockBuilder, self).__init__(parent)
+class BlockBuilder(QtMutantWindow.Qt_Mutant):
+
+	def __init__(self):
+		super(BlockBuilder, self).__init__()
 
 		self.setWindowTitle(Title)
-		self.resize(468,580)
 
-		self.init_ui()
+		self.designer_loader_child(path = Folder + '/UI/BlockBuilder/', ui_file = UI_File)
+		self.set_title('Block Builder')
+
 		self.create_layout()
 		self.create_connections()
 
-	def init_ui(self):
-		
-		UIPath  = Folder + '/UI/'
-		f = QtCore.QFile(UIPath + UI_File)
-		f.open(QtCore.QFile.ReadOnly)
-
-		loader = QtUiTools.QUiLoader()
-		self.ui = loader.load(f, parentWidget=self)
-
-		f.close()
 	#-------------------------------------------------------------------
 
 	def create_layout(self):
-
-		self.ui.layout().setContentsMargins(3, 3, 3, 3)          
-
-	def create_connections(self):
-		
 		''
+		
+	def create_connections(self):
 		self.ui.create_button.clicked.connect(self.create_block)
 
 	#-------------------------------------------------------------------
@@ -145,7 +137,7 @@ class BlockBuilder(QtWidgets.QMainWindow):
 		self.close()
 
 	def create_config(self):
-		
+
 		#grab the main info
 		name = self.ui.name_line.text()
 		description = self.ui.description_line.text()
@@ -179,10 +171,10 @@ class BlockBuilder(QtWidgets.QMainWindow):
 		block_data['Enable'] =       'True'
 
 		block_data['python_file'] =  'exec_{}.py'.format(name.lower())
-		block_data['import'] =       'import exec_{}'.format(name.lower())        
-		block_data['imp.reload'] =   'imp.reload(exec_{})'.format(name.lower())        
-		block_data['exec_command'] = 'exec_{}.create_{}_block()'.format(name.lower(), name.lower())      
-		block_data['build_command'] ='exec_{}.build_{}_block()'.format(name.lower(), name.lower()) 
+		block_data['import'] =       'import exec_{}'.format(name.lower())
+		block_data['imp.reload'] =   'imp.reload(exec_{})'.format(name.lower())
+		block_data['exec_command'] = 'exec_{}.create_{}_block()'.format(name.lower(), name.lower())
+		block_data['build_command'] ='exec_{}.build_{}_block()'.format(name.lower(), name.lower())
 
 		attrs_data = OrderedDict()
 		attrs_data[self.ui.attr_name_1.text()] = self.ui.attr_settings_1.text()
@@ -195,7 +187,7 @@ class BlockBuilder(QtWidgets.QMainWindow):
 		attrs_data[self.ui.attr_name_8.text()] = self.ui.attr_settings_8.text()
 		attrs_data[self.ui.attr_name_9.text()] = self.ui.attr_settings_9.text()
 		attrs_data[self.ui.attr_name_10.text()] = self.ui.attr_settings_10.text()
-	   
+
 		try:attrs_data.pop('') #remove empty keys if the line edit werent used
 		except:pass
 
@@ -204,21 +196,21 @@ class BlockBuilder(QtWidgets.QMainWindow):
 		#find next number for the json file
 		all_blocks = glob.glob('{}//{}//*json'.format(BLOCKS_PATH, tab))
 		pprint.pprint(all_blocks)
-		
+
 		last_block = all_blocks[-1]
 		last_num = last_block.split('\\')[-1].split('_')[0]
 		print (last_num)
 		new_num = '0' + str(int(last_num[1]) + 1)
-		
-		
+
+
 		#write json file
 		with open('{}//{}//{}_{}.json'.format(BLOCKS_PATH, tab, new_num, name), 'w') as new_config:
 			json.dump(block_data, new_config, indent=4, sort_keys = False)
-		
+
 		pprint.pprint(block_data)
 
 		#open exec python file and change it to fit new one
-		
+
 		if self.ui.simple_block.isChecked():
 			base_python_preset = OTHERS_PATH + '//exec_block.py'
 		else:
@@ -226,7 +218,7 @@ class BlockBuilder(QtWidgets.QMainWindow):
 
 		with open(base_python_preset) as exec_block:
 			exec_code = exec_block.read()
-		
+
 		new_exec_code = exec_code.replace("TAB_FOLDER = 'TAB'", "TAB_FOLDER = '{}'".format(tab))
 		new_exec_code = new_exec_code.replace("PYBLOCK_NAME = 'exec_NAME'", "PYBLOCK_NAME = 'exec_{}'".format(name.lower()))
 		new_exec_code = new_exec_code.replace("create_NAME_block(name = 'NAME')", "create_{}_block(name = '{}')".format(name.lower(),name))
@@ -240,7 +232,7 @@ class BlockBuilder(QtWidgets.QMainWindow):
 		print (new_exec_code)
 
 		#write .py file
-	   
+
 		with open('{}//{}//exec_{}.py'.format(BLOCKS_PATH, tab, name.lower()), 'w') as new_py:
 				new_py.write(new_exec_code)
 
