@@ -1,17 +1,14 @@
 '''
 version: 1.0.0
-date: 21/04/2020
 
 #----------------
 content: 
-
-This will create a UI for the autorriger tool. Is dinamically created based on the .json files inside the folders
 
 #----------------
 how to: 
 
 import Mutant_Tools
-from Mutant_Tools.UI import load_codeReader
+from Mutant_Tools.UI.CodeReader import load_codeReader
 import imp
 imp.reload(load_codeReader)
 
@@ -74,6 +71,11 @@ with open(SETUP_FILE) as setup_file:
 
 #-------------------------------------------------------------------
 
+import Mutant_Tools.UI
+from Mutant_Tools.UI import QtMutantWindow
+
+imp.reload(QtMutantWindow)
+Qt_Mutant = QtMutantWindow.Qt_Mutant()
 
 #-------------------------------------------------------------------
 
@@ -88,21 +90,18 @@ IconsPath =  Folder + '/Icons/' #icons path
 #-------------------------------------------------------------------
 
 
-def maya_main_window(dockable=True):
 
-	main_window_ptr = omui.MQtUtil.mainWindow()
-	return wrapInstance(int(main_window_ptr), QtWidgets.QWidget)
+class Code_Reader(QtMutantWindow.Qt_Mutant):
 
-
-class Code_Reader(QtWidgets.QMainWindow):
-
-	def __init__(self, parent=maya_main_window(), mode = 'view', code = '', config_attr = ''):
-		super(Code_Reader, self).__init__(parent)
+	def __init__(self, mode = 'view', code = '', config_attr = '', *args, **kwargs):
+		super(Code_Reader, self).__init__()
 
 		#self.setWindowTitle(Title)
 		self.resize(680,475)
 
-		self.init_ui()
+		self.designer_loader_child(path=Folder + '/UI/CodeReader/', ui_file=UI_File)
+		self.set_title('Code Reader')
+
 		self.create_layout()
 		self.create_connections()
 
@@ -113,24 +112,7 @@ class Code_Reader(QtWidgets.QMainWindow):
 		self.modify_ui_based_on_mode()
 		self.code_path = 'local'
 
-		#self.move_top_right()
-
-	def init_ui(self):
-
-		UIPath  = Folder + '/UI/CodeReader/'
-		f = QtCore.QFile(UIPath + UI_File)
-		f.open(QtCore.QFile.ReadOnly)
-
-		loader = QtUiTools.QUiLoader()
-		self.ui = loader.load(f, parentWidget=self)
-
-		f.close()
 	#-------------------------------------------------------------------
-
-	def move_top_right(self):
-
-		top_right = QApplication.desktop().availableGeometry().topRight()
-		self.move(top_right)
 
 	def create_layout(self):
 
@@ -140,6 +122,8 @@ class Code_Reader(QtWidgets.QMainWindow):
 
 		self.ui.close_btn.clicked.connect(self.close)
 		self.ui.sizeSlider.valueChanged.connect(lambda: self.change_font_size(self.ui.sizeSlider.value()))
+		#self.ui.code_text.textChanged.connect(self.slider_changed)
+		self.ui.down_button.clicked.connect(self.slider_changed)
 
 	#-------------------------------------------------------------------
 
@@ -152,6 +136,10 @@ class Code_Reader(QtWidgets.QMainWindow):
 			self.ui.code_text.setPlainText(self.previous_code)
 		else:
 			self.ui.code_text.setPlainText(self.previous_code)
+
+		self.ui.code_text.verticalScrollBar().maximum()
+	def slider_changed(self):
+		self.ui.code_text.verticalScrollBar().setValue(self.ui.code_text.verticalScrollBar().maximum())
 
 	@property
 	def get_code (self):
@@ -169,6 +157,7 @@ class Code_Reader(QtWidgets.QMainWindow):
 		else:
 			self.ui.path_ui.setParent(None)
 			self.ui.explorer.setParent(None)
+
 
 	# CLOSE EVENTS _________________________________
 	def closeEvent(self, event):

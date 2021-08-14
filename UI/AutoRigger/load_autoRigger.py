@@ -52,12 +52,15 @@ import imp
 import sys
 import json
 
+from Mutant_Tools.UI.AutoRigger import load_autoRiggerMenu
+imp.reload(load_autoRiggerMenu)
 
 from Mutant_Tools.UI.CodeReader import load_codeReader
 imp.reload(load_codeReader)
 
-from Mutant_Tools.UI.AutoRigger import load_autoRiggerMenu
-imp.reload(load_autoRiggerMenu)
+import Mutant_Tools.UI
+from Mutant_Tools.UI import QtMutantWindow
+imp.reload(QtMutantWindow)
 
 #-------------------------------------------------------------------
 
@@ -86,7 +89,7 @@ with open(VERSION_FILE) as version_file:
 #QT WIndow!
 PATH = os.path.dirname(__file__)
 
-Title = 'Mutant // Auto_Rigger'
+Title = 'Auto_Rigger'
 Folder = PATH.replace('\\UI\\AutoRigger', '')
 UI_File = 'autoRigger.ui'
 IconsPath =  Folder + '/Icons/'
@@ -99,6 +102,7 @@ from Mutant_Tools.Utils.Rigging import main_mutant
 imp.reload(Mutant_Tools.Utils.Rigging.main_mutant)
 
 mt = main_mutant.Mutant()
+
 
 #-------------------------------------------------------------------
 def add_sys_folders_remove_compiled():
@@ -133,24 +137,22 @@ def add_sys_folders_remove_compiled():
 #-------------------------------------------------------------------
 
 
-def maya_main_window():
+class AutoRigger(QtMutantWindow.Qt_Mutant):
 
-	main_window_ptr = omui.MQtUtil.mainWindow()
-	return wrapInstance(int(main_window_ptr), QtWidgets.QWidget)
-
-class AutoRigger(MayaQWidgetDockableMixin, QtWidgets.QMainWindow):
-
-	def __init__(self, parent=maya_main_window()):
-		super(AutoRigger, self).__init__(parent)
+	def __init__(self):
+		super(AutoRigger, self).__init__()
 
 		#UI Init
 		self.setWindowTitle(Title)
-		self.resize(505, 552)
+		self.set_title(Title)
+
+		self.resize(605, 652)
 
 		#load blocks folders to sys and remove all the compiled info in BLOCKS and UI Folder
 		add_sys_folders_remove_compiled()
 
-		self.init_ui()
+		self.designer_loader_child(path=Folder + '/UI/AutoRigger/', ui_file=UI_File)
+
 		self.create_menus()
 		self.create_layout()
 		self.create_connections()
@@ -162,17 +164,6 @@ class AutoRigger(MayaQWidgetDockableMixin, QtWidgets.QMainWindow):
 
 		#update icons
 		mt.update_icons()
-
-	def init_ui(self):
-
-		UIPath  = Folder + '/UI/Autorigger/'
-		f = QtCore.QFile(UIPath + UI_File)
-		f.open(QtCore.QFile.ReadOnly)
-
-		loader = QtUiTools.QUiLoader()
-		self.ui = loader.load(f, parentWidget=self)
-
-		f.close()
 
 	#-------------------------------------------------------------------
 	def create_menus(self):
@@ -672,8 +663,6 @@ class AutoRigger(MayaQWidgetDockableMixin, QtWidgets.QMainWindow):
 			self.ui.bar_label.setText('{}'.format(block))
 			self.ui.bar_label.setToolTip('Succesfull build: {}'.format(block))
 			self.ui.progressBar.setValue((num + 1))
-
-
 
 			#log
 			mt.Mutant_logger(mode = 'stop')

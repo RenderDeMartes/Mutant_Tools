@@ -1,11 +1,8 @@
 '''
 version: 1.0.0
-date: 21/04/2020
 
 #----------------
 content:
-
-This will create a UI for the autorriger tool. Is dinamically created based on the .json files inside the folders
 
 #----------------
 how to:
