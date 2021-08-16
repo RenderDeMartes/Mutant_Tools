@@ -1,7 +1,5 @@
--Belly Mid
--Ribbons del limb
--main rig window as widget
--arreglar los normalize
--game joints fallan cuando se emparentan al centro
+- Belly Mid
+- Ribbons del limb
 - documentacion de cada nodo mejor
-- cambiar todos los UI a mutant qt
+- scale de la cabeza
+- scale de los pies

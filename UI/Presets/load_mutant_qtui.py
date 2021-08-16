@@ -52,7 +52,6 @@ import json
 import glob
 import pprint
 
-from collections import OrderedDict
 
 # -------------------------------------------------------------------
 

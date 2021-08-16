@@ -1203,12 +1203,15 @@ class Tools_class:
 		Returns: string json file full path
 
 		"""
+		if not path.endswith('\\'):
+			path = path +'\\'
 
 		write_json = path + json_file
 
 		with open(write_json, 'w', encoding='utf-8') as f:
-			json.dump(data, f, ensure_ascii=False, indent=4)
+			json.dump(data, f, ensure_ascii=False, indent=4, sort_keys = False)
 
+		print(write_json)
 		return write_json
 	#----------------------------------------------------------------------------------------------------------------
 
@@ -1222,8 +1225,9 @@ class Tools_class:
 		Returns: dictionary with data
 
 		"""
-
-		json_data = path + '\\' + json_file
+		if not path.endswith('\\'):
+			path = path +'\\'
+		json_data = path + json_file
 		json_data.replace('/','\\')
 
 		with open(json_data) as f:

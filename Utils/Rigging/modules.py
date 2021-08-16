@@ -41,6 +41,7 @@ from maya import OpenMaya
 import os
 import imp
 import json
+from collections import OrderedDict
 
 try: 
 	import tools
@@ -77,7 +78,7 @@ class Modules_class(kinematics.Kinematics_class):
 	def __init__ (self):
 		''
 
-#----------------------------------------------------------------------------------------------------------------
+	#----------------------------------------------------------------------------------------------------------------
 
 	def create_block(self, name = 'Mutant', icon = 'Limb', attrs = {'attrs':'something'}, build_command = 'print("Test")', import_command = 'print("Test2")'):
 
@@ -125,7 +126,7 @@ class Modules_class(kinematics.Kinematics_class):
 		#-----------------------------------------------------------------------------------------
 
 		return block,config
-#----------------------------------------------------------------------------------------------------------------
+	#----------------------------------------------------------------------------------------------------------------
 
 	def move_outliner(self, input = '', up = False, down = False):
 		
@@ -158,7 +159,7 @@ class Modules_class(kinematics.Kinematics_class):
 				cmds.reorder( input, r= 1 )
 
 
-#----------------------------------------------------------------------------------------------------------------
+	#----------------------------------------------------------------------------------------------------------------
 
 	def create_joint_guide(self, name = 'Guide'):
 		
@@ -200,7 +201,7 @@ class Modules_class(kinematics.Kinematics_class):
 		cmds.select(joint)
 
 		return joint
-#----------------------------------------------------------------------------------------------------------------
+	#----------------------------------------------------------------------------------------------------------------
 
 	def orient_joint(self, input = ''):
 	
@@ -218,7 +219,7 @@ class Modules_class(kinematics.Kinematics_class):
 		except:
 			print ('Error while orienting joints, sorry')
 			
-#----------------------------------------------------------------------------------------------------------------
+	#----------------------------------------------------------------------------------------------------------------
 
 	def ask_name(self, text = '', ask_for = 'Name', check_split = False, popup=True):
 
@@ -252,7 +253,7 @@ class Modules_class(kinematics.Kinematics_class):
 			cmds.error('We need a name :)')
 			
 
-#----------------------------------------------------------------------------------------------------------------
+	#----------------------------------------------------------------------------------------------------------------
 
 	def dual_ask_name(self, textA = 'Name 1', text_B = 'Name 2', command = ''):
 
@@ -294,7 +295,7 @@ class Modules_class(kinematics.Kinematics_class):
 
 		#names = dual_ask()
 
-#----------------------------------------------------------------------------------------------------------------
+	#----------------------------------------------------------------------------------------------------------------
 
 	def duplicate_and_remove_guides(self, input = ''):
 		'this will ducplicate the top chain joint and change the _Guide for _Jnt and rename all the chils plus parent to the world'
@@ -325,7 +326,7 @@ class Modules_class(kinematics.Kinematics_class):
 
 		return clean_joints[0]
 
-#----------------------------------------------------------------------------------------------------------------
+	#----------------------------------------------------------------------------------------------------------------
 
 	def build_baseA(self, name='Asset_Name', size = 1):
 		'''
@@ -381,7 +382,7 @@ class Modules_class(kinematics.Kinematics_class):
 
 		return(global_ctrl, mover_ctrl, gimbal_ctrl)
 
-#----------------------------------------------------------------------------------------------------------------
+	#----------------------------------------------------------------------------------------------------------------
 
 	def check_is_there_is_base(self, base = 'BaseA'):
 
@@ -398,7 +399,7 @@ class Modules_class(kinematics.Kinematics_class):
 
 		cmds.select(sel)#return to previews selection after the build
 
-#----------------------------------------------------------------------------------------------------------------
+	#----------------------------------------------------------------------------------------------------------------
 
 	def Mutant_logger(self, mode = 'create'):
 		"""
@@ -422,7 +423,7 @@ class Modules_class(kinematics.Kinematics_class):
 		else:
 			return log_file
 
-#----------------------------------------------------------------------------------------------------------------
+	#----------------------------------------------------------------------------------------------------------------
 
 	def update_icons(self):
 
@@ -440,4 +441,90 @@ class Modules_class(kinematics.Kinematics_class):
 			print (current_icon)
 
 
-#----------------------------------------------------------------------------------------------------------------
+	#----------------------------------------------------------------------------------------------------------------
+
+	def save_preset(self, path = None, name = 'Mutant_Preset.json'):
+
+		build_bloc = 'Mutant_Build'
+		if not cmds.objExists(build_bloc):
+			return
+
+		if name.endswith('.json') == False:
+			name = name + '.json'
+
+		if path == None:
+			path = os.path.dirname(__file__).replace('\\Utils\\Rigging', '\\UI\\AutoRigger\\Presets')
+
+		block_preset = OrderedDict()
+
+		#Attrs
+		blocks = cmds.listRelatives(build_bloc, c=True)
+		for block in blocks:
+			config = cmds.listConnections(block)[1]
+			print (block, config)
+			block_info = {}
+			attrs_data = OrderedDict()
+
+			attrs = cmds.listAttr(config, ud=True)
+			attrs_data['config'] = config
+			for attr in attrs:
+				#individual per atrr
+				attr_data = {}
+				attr_data['name'] = attr
+				attr_data['value'] = cmds.getAttr(config + '.' + attr)
+				attr_data['type'] = cmds.getAttr(config + '.' + attr, type=True)
+				#add to attrs dic
+				attrs_data[attr] = attr_data
+
+			#------------------------------------------------------------
+			#Guide
+			guides_data = OrderedDict()
+			guides = cmds.listRelatives(block, ad=True)
+			if guides:#if not guides send null
+				for guide in guides:
+					#avoid shapes in guides
+					if 'Shape' in guide:
+						continue
+					guide_data = {}
+					guide_data['name'] = guide
+					guide_data['matrix'] = cmds.xform(guide, q=True, m=True)
+					guide_data['parent'] = cmds.listRelatives(guide, p=True)[0]
+					guides_data[guide] = guide_data
+			else:
+				guides_data = {}
+			#------------------------------------------------------------
+
+			#complete dictionary
+			block_info['attrs'] = attrs_data
+			block_info['guide'] = guides_data
+			block_preset[block] = block_info
+
+			import pprint
+			pprint.pprint(block_preset)
+
+			#publish
+			self.write_json(path = path,
+			                json_file = name,
+			                data = block_preset)
+
+	# ----------------------------------------------------------------------------------------------------------------
+
+	def load_preset(self, path = None, name = 'Mutant_Preset.json'):
+
+		build_bloc = 'Mutant_Build'
+		if not cmds.objExists(build_bloc):
+			cmds.group(em=True, n = build_bloc)
+
+		if name.endswith('.json') == False:
+			name = name + '.json'
+
+		if path == None:
+			path = os.path.dirname(__file__).replace('\\Utils\\Rigging', '\\UI\\AutoRigger\\Presets')
+
+		data = self.read_json(path=path,
+		                      json_file=name)
+
+		import pprint
+		pprint.pprint(data)
+
+

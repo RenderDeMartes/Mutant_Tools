@@ -73,9 +73,10 @@ class Helpers(object):
 		"""
 
 		write_json = path + json_file
-
+		if not path.endswith('\\'):
+			path = path +'\\'
 		with open(write_json, 'w', encoding='utf-8') as f:
-			json.dump(data, f, ensure_ascii=False, indent=4)
+			json.dump(data, f, ensure_ascii=False, indent=4, t_keys = False)
 
 		return write_json
 
@@ -91,8 +92,10 @@ class Helpers(object):
 		Returns: dictionary with data
 
 		"""
+		if not path.endswith('\\'):
+			path = path +'\\'
 
-		json_data = path + '\\' + json_file
+		json_data = path + json_file
 		json_data.replace('/', '\\')
 
 		with open(json_data) as f:

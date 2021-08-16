@@ -5,7 +5,7 @@ import imp
 imp.reload(Mutant_Tools.Utils.Rigging.main_mutant)
 mt = main_mutant.Mutant()
 
-mt.update_icons()
+mt.load_preset(name = 'Biped_180')
 #mt.create_block()
 #cmds.reorder( 'Mutant_Block6', r=-1 )
 #mt.move_outliner(input = 'Mutant_Block3', up =True)

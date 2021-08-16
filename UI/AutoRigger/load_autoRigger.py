@@ -51,6 +51,7 @@ import os
 import imp
 import sys
 import json
+from collections import OrderedDict
 
 from Mutant_Tools.UI.AutoRigger import load_autoRiggerMenu
 imp.reload(load_autoRiggerMenu)
@@ -212,7 +213,7 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		self.ui.prebuild.clicked.connect(lambda : self.edit_prebuild_code(self.current_block))
 		self.ui.current_code.clicked.connect(lambda : self.view_build_code(self.current_block))
 		self.ui.postbuild.clicked.connect(lambda : self.edit_postbuild_code(self.current_block))
-		self.ui.log.clicked.connect(lambda : self.view_log(self.current_block))
+		self.ui.log.clicked.connect(lambda : self.view_log())
 
 	#-------------------------------------------------------------------
 	def create_block_buttons(self):
@@ -636,7 +637,6 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 				#Build the blocks
 				exec(buid_command)
 				print('Build successfully {}'.format(buid_command))
-
 				# ----------------------
 				# Postcode--------------
 				# ----------------------
@@ -653,7 +653,7 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 				import traceback
 				traceback.print_exc()
 				mt.Mutant_logger(mode='stop')
-				self.view_log(block = block)
+				self.view_log()
 				cmds.undoInfo(closeChunk=True)
 				if version['dev_mode'] != 'On':
 					cmds.undo()
@@ -674,6 +674,7 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 				return
 
 		#all success message
+		print('Mutant Build Complete')
 		self.ui.bar_label.setText('Mutant Build Complete')
 		self.ui.bar_label.setToolTip('Mutant Build Complete')
 
@@ -768,7 +769,7 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		codeUI.show()
 	#-------------------------------------------------------------------
 
-	def view_log(self, block):
+	def view_log(self):
 
 		log_file = mt.Mutant_logger(mode = 'log')
 		with open(log_file) as log_data:

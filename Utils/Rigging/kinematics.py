@@ -832,6 +832,8 @@ class Kinematics_class(tools.Tools_class):
 			cmds.parentConstraint(driver, driven_grp, mo=True)
 			cmds.parent(twist_joints[0], driven_grp)
 
+		cmds.setAttr('{}.inheritsTransform'.format(crv), 0)
+
 		return {'twist_grp':twist_grp,'no_twist_grp': twist_reader['twist_grp'], 'joints':twist_joints, 'curve':crv}
 
 #----------------------------------------------------------------------------------------------------------------

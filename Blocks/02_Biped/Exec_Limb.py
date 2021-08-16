@@ -320,3 +320,7 @@ def build_limb_block():
         cmds.parent(ikfk['ik_fk'][0][0], ikfk['ik_fk'][1][0], ikfk['ik_fk'][2][0], main_jnt_grp)
 
         cmds.scaleConstraint('Global_Ctrl', main_jnt_grp)
+
+        #twist fixes for scale
+        cmds.parent(ikfk['lower_twist']['twist_grp'],main_jnt_grp)
+        cmds.parent(ikfk['upper_twist']['twist_grp'],main_jnt_grp)

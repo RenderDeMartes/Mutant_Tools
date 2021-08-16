@@ -175,6 +175,7 @@ class Qt_Mutant(QtWidgets.QMainWindow):
 		Returns:
 
 		"""
+		#avoid move when scaling the windown
 		self.scale = True
 
 

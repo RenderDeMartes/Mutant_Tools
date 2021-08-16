@@ -1,9 +1,10 @@
--------------Limb: Notes-----------------
+no hay bind joints en espina
+el rig ctrl group no controla la escala de los ctrl de la espina
+normalize malo (seguro es conectar el scale con el scale del normalize)
+ctrl mid no tiene el maintain on center
 
-L_Shoulder_Twist_3_Jnt_Twist__Grp
-L_Shoulder_Jnt_L_Elbow_Jnt_Twist_Grp
-
-
----------------Limb: Listo--------------------
-hay que pegar el normaqlize en el divide para que el elbow loc funcione otra vez. ahorita solo esta en input X
-meter jj ik fk en un grupo con scale constraint del base ayuda
+#--------------------Twist
+quitar parent del locator
+el jnt parent al offset del lcoator
+el jnt connect x to locator rotate
+rotate order del ctrl esta en default en yzx

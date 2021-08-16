@@ -105,8 +105,11 @@ def build_single_fk_block():
         #parent to ctlr or tr gimbal
         if cmds.objExists(gimbal_ctrl):
             cmds.parentConstraint(gimbal_ctrl, jnt)
+            cmds.scaleConstraint(gimbal_ctrl, jnt)
+
         else:
             cmds.parentConstraint(ctrl, jnt)
+            cmds.scaleConstraint(ctrl, jnt)
 
 
     #clean if COG

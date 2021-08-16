@@ -131,6 +131,7 @@ def build_spine_block():
     spline_curve =  ikSpline[2]
     spline_curve = cmds.rename(spline_curve, name + nc['curve'])
     spline_curve = cmds.rebuildCurve(spline_curve, ch =  True,  rpo = True, rt = False, end =True, kr = False, kcp = False, kep = True , kt =False, s = cv_divisions, d = 3, tol = 0.01)[0]
+    cmds.setAttr('{}.inheritsTransform'.format(spline_curve),0)
 
     effector_spline = cmds.rename(ikSpline[1],
                                   name + nc['effector'])
@@ -422,6 +423,40 @@ def build_spine_block():
                                                    ).replace(' ', '')
                                  )
 
+    #bind joints
+    bind_joints = []
+    for jnt in spine_joints:
+        try:
+            cmds.select(bind_joint)
+        except:
+            pass
+        bind_joint = cmds.joint(n=jnt.replace(nc['joint'], nc['joint_bind']))
+        cmds.delete(cmds.parentConstraint(jnt, bind_joint, mo=False))
+        cmds.delete(cmds.scaleConstraint(jnt, bind_joint, mo=False))
+        cmds.makeIdentity(a=True, t=True, s=True, r=True)
+        cmds.pointConstraint(jnt, bind_joint, mo=False)
+        cmds.orientConstraint(jnt, bind_joint, mo=False)
+        cmds.scaleConstraint(jnt, bind_joint, mo=True)
+
+        # clean bind joints and radius to 1.5
+        print(bind_joint)
+
+        bind_joints.append(bind_joint)
+        cmds.setAttr('{}.radius'.format(bind_joint), 2)
+
+    cmds.parent(bind_joints[-1], bind_joints[0])
+
+    #game parents for bind joints
+    game_parent = cmds.getAttr('{}.SetGameParent'.format(config))
+    if cmds.objExists(game_parent):
+        cmds.parent(bind_joints[0], game_parent)
+
+    else:
+        bind_jnt_grp = '{}{}'.format(setup['rig_groups']['bind_joints'], nc['group'])
+        if cmds.objExists(bind_jnt_grp):
+            cmds.parent(bind_joints[0], bind_jnt_grp)
+
+
     #clean a bit
     clean_rig_grp = cmds.group(em=True, n = '{}{}'.format(block.replace(nc['module'],'_Rig'), nc['group']))
     cmds.parent(clean_joint_grp, ik_grp, clean_rig_grp)
@@ -432,6 +467,12 @@ def build_spine_block():
 
     cmds.parent(clean_ctrl_grp, setup['base_groups']['control'] + nc['group'])
     cmds.parent(clean_rig_grp, '{}{}'.format(setup['rig_groups']['misc'], nc['group']))
+
+    #stretchy fixes
+    cmds.connectAttr('Global_Ctrl.scale', normalize_loc+'.scale')
+    cmds.scaleConstraint('Rig_Ctrl_Grp', clean_rig_grp, mo=True)
+    cmds.scaleConstraint('Rig_Ctrl_Grp', clean_ctrl_grp, mo=True)
+
 
     print ('Build {} Success'.format(block))
 
