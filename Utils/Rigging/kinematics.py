@@ -750,13 +750,17 @@ class Kinematics_class(tools.Tools_class):
 		cmds.setAttr('{}.poleVectorZ'.format(ik), 0)
 		cmds.pointConstraint(end, ik, mo=False)
 
-		cmds.orientConstraint(start, loc, mo=True)
-		cmds.pointConstraint(start, loc, mo=True)
-		
 		#cmds.setAttr(twist_root + '.ro', 3)
 		# Offset Grps.
 		offset_grp = self.root_grp(twist_root, replace_nc=True)[0]
+		cmds.pointConstraint(start, loc, mo=True)
+		cmds.parentConstraint(start, offset_grp, mo=False)
+
 		print (offset_grp)
+		#option A
+		cmds.connectAttr('{}.rotate{}'.format(start, axis), '{}.rotate{}'.format(loc, axis))
+		#option B
+		#cmds.orientConstraint(start, loc, mo=True)
 
 		cmds.parent(loc, offset_grp)
 

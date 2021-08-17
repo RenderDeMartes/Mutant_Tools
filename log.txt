@@ -33,7 +33,7 @@ creating ik Chain for : L_Shoulder_Jnt
 // Error: searchReplaceNames _Jnt  "selected"; // 
 // Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
 IK = ['L_Wrist_Ik_Ctrl', 'L_Wrist_Ik_PoleVector_Ctrl', 'L_Shoulder_Ik_Ctrl', 'L_Wrist_Ik_IKrp', 'L_Wrist_Ik_PoleVector_Ctrl_L_Elbow_Ik_Jnt_Connected_Crv']
-10.049875621120893
+10.049875621120899
 ['L_Shoulder_Fk_Ctrl_Offset_Grp', 'L_Wrist_Ik_Ctrl_Offset_Grp', 'L_Shoulder_Ik_Ctrl_Offset_Grp', 'L_Shoulder_Ik_Jnt_Ctrl_Grp']
 __________
 adding loc to ['L_Shoulder_Fk_Ctrl']
@@ -96,7 +96,7 @@ creating ik Chain for : R_Shoulder_Jnt
 // Error: searchReplaceNames _Jnt  "selected"; // 
 // Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
 IK = ['R_Wrist_Ik_Ctrl', 'R_Wrist_Ik_PoleVector_Ctrl', 'R_Shoulder_Ik_Ctrl', 'R_Wrist_Ik_IKrp', 'R_Wrist_Ik_PoleVector_Ctrl_R_Elbow_Ik_Jnt_Connected_Crv']
-10.049865571245272
+10.049875621120893
 ['R_Shoulder_Fk_Ctrl_Offset_Grp', 'R_Wrist_Ik_Ctrl_Offset_Grp', 'R_Shoulder_Ik_Ctrl_Offset_Grp', 'R_Wrist_Ik_Ctrl_Offset_Grp__Mirror_Grp']
 __________
 adding loc to ['R_Shoulder_Fk_Ctrl']
