@@ -190,6 +190,9 @@ def build_head_block():
 
     cmds.parent(ribbon['ctrl_fol_grp'],clean_rig_grp)
 
+    #scale
+    cmds.scaleConstraint('Rig_Ctrl_Grp', cmds.listRelatives(neck_blends_grp, p=True), mo=True)
+    cmds.scaleConstraint('Rig_Ctrl_Grp', cmds.listRelatives(ribbon['ctrl_joints'][0], p=True), mo=True)
 
     #done
     print ('Build {} Success'.format(block))
@@ -197,7 +200,3 @@ def build_head_block():
 
 #build_head_block()
 
-'''
-Neck_Ctrl_Grp parent hi to fk_chain[0]
-
-'''
