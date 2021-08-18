@@ -233,6 +233,9 @@ def build_spine_block():
     #parent end
     cmds.orientConstraint(chest_ctrl,'{}_End{}'.format(name, nc['joint']), mo=True)
 
+    #belly_ctrl = mid
+    belly_parent = cmds.parentConstraint(base_ctrl, chest_ctrl, belly_offset,mo=True)[0]
+
 
     #Twist Joints
     cmds.select(ctrl_joints[0])
@@ -258,6 +261,10 @@ def build_spine_block():
     cmds.addAttr(spine_attrs, e=1, dv=0.5)
     cmds.setAttr(spine_attrs, 0.5)
 
+    cmds.connectAttr(spine_attrs, str(belly_parent) + '.Spine_Chest_CtrlW1') #Spine_Chest_CtrlW1
+    rev_mid = cmds.shadingNode('reverse', asUtility=True)
+    cmds.connectAttr(spine_attrs, rev_mid + '.input.inputX.')
+    cmds.connectAttr(rev_mid + '.output.outputX', str(belly_parent) + '.Spine_Base_CtrlW0')
 
     #add AttrsStretchyMult
     mt.line_attr(input= spine_attrs.split('.')[0],name = 'SnS')
