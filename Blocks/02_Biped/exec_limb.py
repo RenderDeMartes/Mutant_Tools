@@ -176,7 +176,7 @@ def build_limb_block():
         print (ikfk['ik_fk'])
         cmds.connectAttr('Global_Ctrl.scale', '{}.scale'.format(ikfk['ik_fk'][4][5][1]))
 
-        #ikfk['ik_fk'][#]
+        #ikfk['ik_fk'[#]]
         #[0] ['L_Shoulder_Jnt', 'L_Elbow_Jnt', 'L_Wrist_Jnt'],
         #[1] ['L_Shoulder_Ik_Jnt', 'L_Elbow_Ik_Jnt', 'L_Wrist_Ik_Jnt'],
         #[2] ['L_Shoulder_Fk_Jnt', 'L_Elbow_Fk_Jnt', 'L_Wrist_Fk_Jnt'],
@@ -324,5 +324,3 @@ def build_limb_block():
         #twist fixes for scale
         cmds.parent(ikfk['lower_twist']['twist_grp'],main_jnt_grp)
         cmds.parent(ikfk['upper_twist']['twist_grp'],main_jnt_grp)
-
-        cmds.setAttr('{}.RotateOrder'.format(ikfk['ik_fk'][4][0]), 1)
