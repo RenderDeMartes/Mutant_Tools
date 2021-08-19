@@ -428,7 +428,7 @@ class Kinematics_class(tools.Tools_class):
 
 		ik_system.append(ctrl)
 		self.match(ctrl, end)
-		cmds.rotate(0,0,0, a=True)
+		#cmds.rotate(0,0,0, a=True)
 		cmds.delete(cmds.orientConstraint(end, ctrl,mo=False, skip = setup['twist_axis'].lower()))
 
 		IK_grp = self.root_grp(replace_nc = True)
