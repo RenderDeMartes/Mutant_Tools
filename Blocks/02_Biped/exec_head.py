@@ -168,7 +168,15 @@ def build_head_block():
         
         bind_joints.append(bind_joint)
 
-    #parent to game 
+    cmds.select(cl=True)
+    head_bind_joint = cmds.joint(n = head_joint.replace(nc['joint'], nc['joint_bind']))
+    cmds.parentConstraint(head_joint, head_bind_joint, mo=False)
+    cmds.scaleConstraint(head_joint, head_bind_joint)
+    cmds.parent(head_bind_joint, bind_joints[-1])
+    bind_joints.append(head_bind_joint)
+    cmds.setAttr('{}.radius'.format(head_bind_joint), 1.5)
+
+    #parent to game
     if cmds.objExists(game_parent):
         cmds.parent(bind_joints[0], game_parent)
     else: 
