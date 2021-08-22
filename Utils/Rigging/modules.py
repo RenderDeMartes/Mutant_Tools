@@ -438,7 +438,6 @@ class Modules_class(kinematics.Kinematics_class):
 		for block in blocks:
 			current_icon = cmds.getAttr('{}.iconName'.format(block), asString = True).split('/')[-1]
 			cmds.setAttr('{}.iconName'.format(block), PATH + current_icon, type="string")
-			print (current_icon)
 
 
 	#----------------------------------------------------------------------------------------------------------------
