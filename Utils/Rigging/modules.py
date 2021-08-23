@@ -435,10 +435,11 @@ class Modules_class(kinematics.Kinematics_class):
 			return
 
 		blocks = cmds.listRelatives('Mutant_Build', c=True)
-		for block in blocks:
-			current_icon = cmds.getAttr('{}.iconName'.format(block), asString = True).split('/')[-1]
-			cmds.setAttr('{}.iconName'.format(block), PATH + current_icon, type="string")
-			print (current_icon)
+		if blocks:
+			for block in blocks:
+				current_icon = cmds.getAttr('{}.iconName'.format(block), asString = True).split('/')[-1]
+				cmds.setAttr('{}.iconName'.format(block), PATH + current_icon, type="string")
+				print (current_icon)
 
 
 	#----------------------------------------------------------------------------------------------------------------
