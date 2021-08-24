@@ -186,7 +186,6 @@ def build_limb_block():
         print (ikfk['upper_twist'])
         print (ikfk['lower_twist'])
 
-
         clean_rig_grp = cmds.group(em=True, n = side_guide.replace(nc['joint'],'_Rig'+ nc['group']))
         clean_ctrl_grp = cmds.group(em=True, n = side_guide.replace(nc['joint'],nc['ctrl']) + nc['group'])
 
@@ -228,11 +227,13 @@ def build_limb_block():
 
                 cmds.parentConstraint(block_parent, ikfk['ik_fk'][5][0] , mo = True)
                 cmds.parentConstraint(block_parent, cmds.listRelatives(ikfk['ik_fk'][4][2], p=True) , mo = True)
+                cmds.orientConstraint(block_parent, ikfk['upper_twist']['no_rotate'] , mo = True)
 
                 clean_ctrl_grp = clean_ctrl_grp
             else:
                 cmds.parentConstraint(block_parent, ikfk['ik_fk'][5][0] , mo = True)
                 cmds.parentConstraint(block_parent, cmds.listRelatives(ikfk['ik_fk'][4][2], p=True) , mo = True)
+                cmds.orientConstraint(block_parent, ikfk['upper_twist']['no_rotate'] , mo = True)
 
                 clean_ctrl_grp = clean_ctrl_grp
 
@@ -240,6 +241,7 @@ def build_limb_block():
 
                 cmds.parentConstraint(block_parent, ikfk['ik_fk'][5][0] , mo = True)
                 cmds.parentConstraint(block_parent, cmds.listRelatives(ikfk['ik_fk'][4][2], p=True) , mo = True)
+                cmds.orientConstraint(block_parent, ikfk['upper_twist']['no_rotate'] , mo = True)
 
         #blends
         '''
