@@ -217,7 +217,6 @@ def build_limb_block():
         if cmds.getAttr('{}.Mirror'.format(config), asString = True) == 'Right_Only':
 
             #mirror_ctrl_grp = mt.mirror_group(clean_ctrl_grp, world = True)
-
             cmds.parentConstraint(block_parent, ikfk['ik_fk'][5][0] , mo = True)
             cmds.parentConstraint(block_parent, cmds.listRelatives(ikfk['ik_fk'][4][2], p=True) , mo = True)
 
