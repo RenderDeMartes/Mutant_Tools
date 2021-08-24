@@ -785,6 +785,9 @@ class Kinematics_class(tools.Tools_class):
 		'''
 		create twist system for the chain, 
 		this one can only be used by selecting from top to buttom joints but you can change the mode to up or down for desire effect
+		
+		OLD
+		old way of creating twist for limbs, i use this one on RdM Tools v2, recommend to use the spline twist
 		'''
 
 		if start == '':
@@ -836,7 +839,86 @@ class Kinematics_class(tools.Tools_class):
 
 		return {'twist_grp':twist_grp,'no_twist_grp': twist_reader['twist_grp'], 'joints':twist_joints, 'curve':crv}
 
-#----------------------------------------------------------------------------------------------------------------
+	# ----------------------------------------------------------------------------------------------------------------
+
+	def spline_twist(self, start = '', end = '', axis = setup['twist_axis'], amount = 4, mode = 'up'):
+
+
+		if start == '':
+			start = cmds.ls(sl=True)[0]
+		if end == '':
+			end = cmds.ls(sl=True)[-1]
+
+		# Create twist grps
+		# create jnts in the middle
+		twist_joints = self.joints_middle(start=start, end=end, axis=axis, amount=amount)
+
+		# twist setup
+		cmds.select(d=True)
+		twist_start = cmds.joint(n=start.replace(nc['joint'],'') + '_Twist{}'.format(nc['joint_ctrl']), ch = False)
+		cmds.select(d=True)
+		twist_end = cmds.joint(n=end.replace(nc['joint'],'') + '_Twist{}'.format(nc['joint_ctrl']), ch = False)
+
+		# position in chain
+		cmds.delete(cmds.parentConstraint(start,twist_start , mo=False))
+		cmds.delete(cmds.parentConstraint(end, twist_end, mo=False))
+
+		cmds.makeIdentity(twist_start,a=True, t=True, r=True, s=True)
+		cmds.makeIdentity(twist_end,a=True, t=True, r=True, s=True)
+		cmds.parentConstraint(start, twist_start, mo=False)
+		cmds.parentConstraint(end, twist_end, mo=False)
+
+		#create spline
+		ikSpline = cmds.ikHandle(sj=twist_joints[0],
+		                         ee=twist_joints[-1],
+		                         sol='ikSplineSolver',
+		                         n=twist_start.replace(nc['joint_ctrl'],nc['ik_spline']),
+		                         ccv=True,
+		                         pcv=False)
+
+		spline_curve = ikSpline[2]
+		spline_curve = cmds.rename(spline_curve, twist_start + nc['curve'])
+		spline_curve = cmds.rebuildCurve(spline_curve, ch =  True,  rpo = True, rt = False, end =True, kr = False, kcp = False, kep = True , kt =False, s = 0, d = 1, tol = 0.01)[0]
+		cmds.setAttr('{}.inheritsTransform'.format(spline_curve), 0)
+
+		effector_spline = cmds.rename(ikSpline[1],
+		                              start + nc['effector'])
+		ikSpline = ikSpline[0]
+
+		if mode == 'up':
+			#no rotate joint
+			cmds.select(d=True)
+			no_rot_jnt = cmds.joint(n=end.replace(nc['joint'],'') + '_NoRotate{}'.format(nc['joint_ctrl']), ch=False)
+			cmds.delete(cmds.parentConstraint(start, no_rot_jnt, mo=False))
+			cmds.makeIdentity(no_rot_jnt, a=True, t=True, r=True, s=True)
+			cmds.pointConstraint(start, no_rot_jnt, mo=False)
+			cmds.skinCluster(no_rot_jnt, twist_end, spline_curve, tsb=True)
+
+		else:
+			cmds.skinCluster(twist_start, twist_end,spline_curve, tsb=True)
+
+		# Enable twist
+		cmds.setAttr("{}.dTwistControlEnable".format(ikSpline), 1)
+		cmds.setAttr("{}.dWorldUpType".format(ikSpline), 4)
+		cmds.connectAttr("{}.worldMatrix[0]".format(twist_start), "{}.dWorldUpMatrix".format(ikSpline), f=True)
+		cmds.connectAttr("{}.worldMatrix[0]".format(twist_end), "{}.dWorldUpMatrixEnd".format(ikSpline), f=True)
+
+		twist_grp = cmds.group(twist_start, twist_end, twist_joints[0], ikSpline, spline_curve, n = '{}{}'.format(twist_start.replace(nc['joint_ctrl'], ''),nc['group']))
+
+		cmds.setAttr("{}.dWorldUpAxis".format(ikSpline), 4)
+		cmds.setAttr("{}.dWorldUpVectorY".format(ikSpline), 0)
+		cmds.setAttr("{}.dWorldUpVectorEndY".format(ikSpline), 0)
+		cmds.setAttr( "{}.dWorldUpVectorZ".format(ikSpline), -1)
+		cmds.setAttr( "{}.dWorldUpVectorEndZ".format(ikSpline), -1)
+
+		if mode == 'up':
+			cmds.parent(no_rot_jnt, twist_grp)
+			return {'twist_grp': twist_grp, 'joints': twist_joints, 'curve': spline_curve,'ik_spline': ikSpline ,'no_rotate': no_rot_jnt}
+
+		else:
+			return {'twist_grp':twist_grp, 'joints':twist_joints, 'curve':spline_curve, 'ik_spline': ikSpline}
+
+	#----------------------------------------------------------------------------------------------------------------
 
 	def simple_fk_ik(self, start = '', mid = '', end = '', size = 1, color = setup['main_color'], mode = setup['ik_fk_method'], twist_axis = setup['twist_axis']):
 		"""
@@ -974,7 +1056,6 @@ class Kinematics_class(tools.Tools_class):
 		ik_system.append(ik_stretch)
 
 
-
 		print (main_joints, ik_joints, fk_joints, fk_system, ik_system, return_groups)
 		return main_joints, ik_joints, fk_joints, fk_system, ik_system, return_groups
 
@@ -1011,17 +1092,11 @@ class Kinematics_class(tools.Tools_class):
 		else:
 			right_inverse = False
 
-		upper_twist = self.advance_twist(main_joints[0],main_joints[1],mode = 'up', axis = twist_axis, driver = start, amount =twist_amount)
-		lower_twist = self.advance_twist(main_joints[1],main_joints[2],mode = 'down', axis = twist_axis, driver = upper_twist['joints'][-1],amount =twist_amount, inverse = right_inverse)
-		
+		upper_twist= self.spline_twist(start=main_joints[0], end=main_joints[1], axis=setup['twist_axis'], amount=twist_amount, mode='up')
+		lower_twist= self.spline_twist(start=main_joints[1], end=main_joints[2], axis=setup['twist_axis'], amount=twist_amount, mode='down')
+
 		print (upper_twist)
-
-		#skin cluster to curve and parent constraint to No twist Offset Grp
-		cmds.skinCluster(main_joints[0], upper_twist['curve'], tsb=True)
-		cmds.skinCluster(main_joints[1], lower_twist['curve'], tsb=True)
-
-		cmds.parentConstraint(main_joints[0],upper_twist['no_twist_grp'] ,mo=True)
-		cmds.parentConstraint(main_joints[1],lower_twist['no_twist_grp'] ,mo=True)
+		print (lower_twist)
 
 		#connect scale to twist joints
 		for jnt in upper_twist['joints']:
@@ -1039,13 +1114,6 @@ class Kinematics_class(tools.Tools_class):
         #[4] ['L_Wrist_Ik_Ctrl', 'L_Wrist_Ik_PoleVector_Ctrl', 'L_Shoulder_Ik_Ctrl', 'L_Wrist_Ik_IKrp', 'L_Wrist_Ik_PoleVector_Ctrl_L_Elbow_Ik_Jnt_Connected_Crv', ('L_Wrist_Ik_IKrp_Stretchy_Grp', 'L_Wrist_Ik_IKrp_NormalScale_Loc', ['L_Wrist_Ik_Jnt_Stretchy_Loc'], ['L_Shoulder_Ik_Jnt_Stretchy_Loc'], ['L_Elbow_Ik_Jnt_Stretchy_Loc'], 'L_Shoulder_Ik_Jnt_L_Wrist_Ik_Jnt_Distance_Shape', 'L_Elbow_Ik_Jnt_L_Wrist_Ik_Jnt_Distance_Shape', 'L_Shoulder_Ik_Jnt_L_Elbow_Ik_Jnt_Distance_Shape')], ['L_Shoulder_Fk_Ctrl_Offset_Grp', 'L_Wrist_Ik_Ctrl_Offset_Grp', 'L_Shoulder_Ik_Ctrl_Offset_Grp', 'L_Shoulder_Ik_Jnt_Ctrl_Grp'])
         #[5] ['L_Shoulder_Fk_Ctrl_Offset_Grp', 'L_Wrist_Ik_Ctrl_Offset_Grp', 'L_Shoulder_Ik_Ctrl_Offset_Grp', 'L_Shoulder_Ik_Jnt_Ctrl_Grp'])
 
-		#twist stuff
-        #ikfk['upper_twist']
-        #ikfk['lower_twist']
-        #ikfk['lower_twist']['twist_grp'] = 'R_Shoulder_Jnt_R_Elbow_Jnt_Twist_Grp'
-        #ikfk['lower_twist']['no_twist_grp'] = 'R_Shoulder_Jnt_NoTwist_Grp'
-        #ikfk['lower_twist']['joints'] = '['R_Shoulder_Jnt_Twist_0_Jnt', 'R_Shoulder_Jnt_Twist_1_Jnt', 'R_Shoulder_Jnt_Twist_2_Jnt', 'R_Shoulder_Jnt_Twist_3_Jnt']'
-        #ikfk['lower_twist']['curve'] = 'R_Shoulder_Jnt_Crv'
 
 	#----------------------------------------------------------------------------------------------------------------
 
