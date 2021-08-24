@@ -900,7 +900,11 @@ class Kinematics_class(tools.Tools_class):
 		# Enable twist
 		cmds.setAttr("{}.dTwistControlEnable".format(ikSpline), 1)
 		cmds.setAttr("{}.dWorldUpType".format(ikSpline), 4)
-		cmds.connectAttr("{}.worldMatrix[0]".format(twist_start), "{}.dWorldUpMatrix".format(ikSpline), f=True)
+		if mode == 'up':
+			cmds.connectAttr("{}.worldMatrix[0]".format(no_rot_jnt), "{}.dWorldUpMatrix".format(ikSpline), f=True)
+		else:
+			cmds.connectAttr("{}.worldMatrix[0]".format(twist_start), "{}.dWorldUpMatrix".format(ikSpline), f=True)
+
 		cmds.connectAttr("{}.worldMatrix[0]".format(twist_end), "{}.dWorldUpMatrixEnd".format(ikSpline), f=True)
 
 		twist_grp = cmds.group(twist_start, twist_end, twist_joints[0], ikSpline, spline_curve, n = '{}{}'.format(twist_start.replace(nc['joint_ctrl'], ''),nc['group']))
