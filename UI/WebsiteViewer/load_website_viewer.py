@@ -123,7 +123,7 @@ class WebsiteViewerUI(QtMutantWindow.Qt_Mutant):
 		self.resize(500,600)
 
 		self.designer_loader_child(path=Folder + '/UI/WebsiteViewer/', ui_file=UI_File)
-		self.set_title('Block Builder')
+		self.set_title('Website Viewer')
 
 		self.create_layout()
 		self.create_connections()
