@@ -102,6 +102,9 @@ def build_spine_block():
     cmds.setAttr('{}_End{}.jointOrientX'.format(name, nc['joint']), 0)
     cmds.setAttr('{}_End{}.jointOrientY'.format(name, nc['joint']), 0)
     cmds.setAttr('{}_End{}.jointOrientZ'.format(name, nc['joint']), 0)
+    cmds.setAttr('{}_Inv{}.jointOrientX'.format(name, nc['joint']), 0)
+    cmds.setAttr('{}_Inv{}.jointOrientY'.format(name, nc['joint']), 0)
+    cmds.setAttr('{}_Inv{}.jointOrientZ'.format(name, nc['joint']), 0)
 
 
     #use this locator in case parent is set to new locator
@@ -157,8 +160,7 @@ def build_spine_block():
         ctrl_joints.append(ctrl_jnt)
 
     cmds.skinCluster(ctrl_joints[:-1], spline_curve, tsb=True)
-
-    cmds.parent(ctrl_joints, spine_joints[0], clean_joint_grp)
+    cmds.parent(ctrl_joints, spine_joints[0],spine_joints[-1], clean_joint_grp)
 
     #create controllers
     spine_ctrls = []
@@ -174,6 +176,7 @@ def build_spine_block():
     mt.match(base_offset,ctrl_joints[0], t=True, r=False)
     cmds.parentConstraint(base_ctrl, ctrl_joints[0], mo=True)
     cmds.parentConstraint(base_ctrl, spine_joints[-1], mo=True)
+    cmds.scaleConstraint(base_ctrl, spine_joints[-1], mo=True)
     spine_ctrls.append(base_ctrl)
     cmds.select(cl=True)
 
@@ -479,7 +482,6 @@ def build_spine_block():
     cmds.connectAttr('Global_Ctrl.scale', normalize_loc+'.scale')
     cmds.scaleConstraint('Rig_Ctrl_Grp', clean_rig_grp, mo=True)
     cmds.scaleConstraint('Rig_Ctrl_Grp', clean_ctrl_grp, mo=True)
-
 
     print ('Build {} Success'.format(block))
 
