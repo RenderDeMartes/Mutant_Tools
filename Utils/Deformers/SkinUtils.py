@@ -1,0 +1,105 @@
+'''
+version: 1.0.0
+date: 21/04/2020
+
+#----------------
+
+how to:
+
+import Mutant_Tools
+import Mutant_Tools.Utils.Deformers
+from Mutant_Tools.Utils.Deformers import SkinUtils
+imp.reload(Mutant_Tools.Utils.Deformers.SkinUtils)
+
+skin = SkinUtils.Skinning()
+skin.FUNC_NAME(argument = '')
+
+#----------------
+dependencies:
+
+NG
+
+#----------------
+licence: https://www.eulatemplate.com/live.php?token=FGISW7ApRfgywum6murbBmLcusKONzkv
+author:  Esteban Rodriguez <info@mutanttools.com>
+
+'''
+
+import os
+import json
+from maya import cmds
+
+#Read name conventions as nc[''] and setup as seup['']
+PATH = os.path.dirname(__file__)
+PATH = PATH.replace('\\Utils\\Deformers', '//Config')
+
+JSON_FILE = (PATH + '/name_conventions.json')
+with open(JSON_FILE) as json_file:
+	nc = json.load(json_file)
+
+#----------------------------------------------------------
+
+class Skinning(object):
+
+    def __init__(self):
+
+        self.bind_joints = cmds.ls('*{}'.format(nc['joint_bind']))
+        self.skin_nodes = cmds.ls('*{}'.format(nc['skin_cluster']))
+
+    # ----------------------------------------------------------
+    def update_properties(self):
+        self.bind_joints = cmds.ls('*{}'.format(nc['joint_bind']))
+        self.skin_nodes = cmds.ls('*{}'.format(nc['skin_cluster']))
+
+    # ----------------------------------------------------------
+
+    def bind_to_bnd(self, geo=None):
+
+        if geo is None:
+            geo = cmds.ls(sl=True)
+
+        self.update_properties()
+        skin = self.bind_skin(joints=self.bind_joints, geo=geo)
+        return skin
+
+    # ----------------------------------------------------------
+
+    def deformable_dual_quaternion(self, skin = None):
+        if skin == None:
+            skin = cmds.ls(sl=True)
+
+        try:
+            cmds.setAttr('{}.skinningMethod'.format(skin), 1)
+            cmds.setAttr('{}.dqsSupportNonRigid'.format(skin), 1)
+        except:
+            cmds.warning('No skin selected.')
+
+    # ----------------------------------------------------------
+
+    def get_skins(self):
+        return cmds.ls(typ='skinCluster')
+
+    # ----------------------------------------------------------
+
+    def rename_skin_clusters(self, input):
+        return cmds.rename(input, input + nc['skin_cluster'])
+
+    #----------------------------------------------------------
+
+    def bind_skin(self, joints=None, geo=None):
+
+        if joints == None:
+            joints = self.bind_joints
+        if geo == None:
+            geo = cmds.ls(sl=True)
+
+        cmds.select(joints,geo)
+        skin = cmds.skinCluster(toSelectedBones=True)[0]
+        skin=cmds.rename(skin, '{}{}'.format(geo, nc['skin_cluster']))
+        self.deformable_dual_quaternion(skin=skin)
+
+        return skin
+
+    #----------------------------------------------------------
+
+
