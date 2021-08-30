@@ -17,8 +17,6 @@ skin.FUNC_NAME(argument = '')
 #----------------
 dependencies:
 
-NG
-
 #----------------
 licence: https://www.eulatemplate.com/live.php?token=FGISW7ApRfgywum6murbBmLcusKONzkv
 author:  Esteban Rodriguez <info@mutanttools.com>
