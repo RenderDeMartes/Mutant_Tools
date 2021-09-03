@@ -121,19 +121,13 @@ def build_clavicle_block():
         cmds.select(side_guide)
         fk_chain = mt.fk_chain(input = '', 
                     size = cmds.getAttr('{}.CtrlSize'.format(config)), 
-                    color = color, 
+                    color = color,
                     curve_type = cmds.getAttr('{}.CtrlType'.format(config), asString = True))
 
         for_parent = cmds.listRelatives(fk_chain[0], p=True)
         mt.hide_attr(fk_chain[0], s=True)
         print (fk_chain)
             
-        #create bind Joints for the skin
-        bind_joint = cmds.duplicate(side_guide, po=True, n = side_guide.replace(nc['joint'], nc['joint_bind']))[0] 
-        cmds.parentConstraint(side_guide, bind_joint, mo = False)
-        try: cmds.parent(bind_joint, w=True)
-        except:pass
-        cmds.setAttr('{}.radius'.format(bind_joint), 1.5)
 
         #auto clav group for later when limb is build
         auto_grp = mt.root_grp(input = fk_chain[0], custom = True, custom_name = '_AutoFK', autoRoot = False, replace_nc = False)[0]
@@ -164,13 +158,18 @@ def build_clavicle_block():
             clean_rig_grp = side_guide
             clean_ctrl_grp = for_parent
 
-        #blends
-        blends_grp = mt.root_grp(input = auto_grp, custom = True, custom_name = '_Blends', autoRoot = False, replace_nc = False)[0]
-        blends_grp = cmds.rename(blends_grp , blends_grp.replace('_AutoFK_Grp',''))
-        bends = cmds.getAttr('{}.Blends'.format(config).split(':'))
-        for blend in bends:
-            ''
-            #cmds.orientConstraint()
+        #create bind Joints for the skin
+        cmds.select(cl=True)
+        bind_joint = cmds.joint(n = side_guide.replace(nc['joint'], nc['joint_bind']))
+        cmds.makeIdentity(bind_joint, a=True, t=True, r=True, s=True)
+        cmds.parentConstraint(side_guide, bind_joint, mo = False)
+        cmds.scaleConstraint(side_guide, bind_joint, mo = True)
+        cmds.setAttr('{}.segmentScaleCompensate'.format(bind_joint), 0)
+
+        try: cmds.parent(bind_joint, w=True)
+        except:pass
+        cmds.setAttr('{}.radius'.format(bind_joint), 1.5)
+
 
         #Clean ----------------------------
 
@@ -189,15 +188,13 @@ def build_clavicle_block():
         #clean ctrls
         cmds.parent(clean_ctrl_grp, 'Rig_Ctrl_Grp')
 
+
         #clean rig
         cmds.parent(clean_rig_grp, '{}{}'.format(setup['rig_groups']['misc'], nc['group']))
-        
-        #clean the attrs in the blends and auto grps
-        cmds.rotate(0,0,0, blends_grp)
-        cmds.scale(1,1,1, blends_grp)
-        cmds.rotate(0,0,0, auto_grp)
-        cmds.scale(1,1,1, auto_grp)
-        
+
+        #scale
+        cmds.scaleConstraint('Global_Ctrl', clean_rig_grp, mo=True)
+
     print ('Build {} Success'.format(block))
 
     

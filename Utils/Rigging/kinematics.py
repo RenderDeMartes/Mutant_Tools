@@ -428,7 +428,9 @@ class Kinematics_class(tools.Tools_class):
 
 		ik_system.append(ctrl)
 		self.match(ctrl, end)
-		#cmds.rotate(0,0,0, a=True)
+		cmds.rotate(0,0,0, a=True)
+
+		#delete this below if want to maintain XYZ as axis
 		cmds.delete(cmds.orientConstraint(end, ctrl,mo=False, skip = setup['twist_axis'].lower()))
 
 		IK_grp = self.root_grp(replace_nc = True)
@@ -478,7 +480,7 @@ class Kinematics_class(tools.Tools_class):
 		top_ctrl = self.curve(type = top_curve, rename = False, custom_name = True, name = '{}{}'.format(start.replace(nc['joint'], ''), nc ['ctrl']), size = size*0.5)
 		self.match(top_ctrl, start, r=False)
 		top_grp = self.root_grp(replace_nc = True)
-		
+
 		self.hide_attr(top_ctrl,r = True,  s = True, v = True)
 		ik_system.append(top_ctrl)
 

@@ -109,7 +109,12 @@ def build_foot_block():
     guide = cmds.listRelatives(block, c=True)[0]
 
     #orient the joints
-    mt.orient_joint(input = guide)
+    #mt.orient_joint(input = guide)
+    for jnt in cmds.listRelatives(guide, ad=True):
+        try:
+            cmds.makeIdentity(apply=True, t=True, r=True, s=True ,n=False, pn=1)
+        except:
+            pass
     new_guide = mt.duplicate_and_remove_guides(guide)
     print (new_guide)
     to_build = [new_guide]
@@ -256,8 +261,9 @@ def build_foot_block():
                               type='circleX',
                               rename=True,
                               custom_name=True,
-                              name=side_guide.replace(nc['joint'], '_Share'+nc['ctrl']),
+                              name=side_guide.replace(nc['joint'], '_Toes'+nc['ctrl']),
                               size=size)
+        mt.assign_color(color=color)
         share_grp = mt.root_grp()[0]
         mt.match(share_grp, all_joints[6], r=True,t=True)
         cmds.parentConstraint(all_joints[6], share_grp)
@@ -454,11 +460,15 @@ def build_foot_block():
         try: cmds.parent(ankle_bind_joint, w=True)
         except:pass
         cmds.setAttr('{}.radius'.format(ankle_bind_joint), 1.5)
+        cmds.setAttr('{}.segmentScaleCompensate'.format(ankle_bind_joint), 0)
+        cmds.setAttr('{}.inheritsTransform'.format(ankle_bind_joint), 0)
 
         ball_bind_joint = cmds.joint(n = shared_toes_jnt.replace(nc['joint'], nc['joint_bind']))
         cmds.parentConstraint(shared_toes_jnt, ball_bind_joint, mo = False)
         cmds.scaleConstraint(shared_toes_jnt, ball_bind_joint, mo = True)
         cmds.setAttr('{}.radius'.format(ball_bind_joint), 1.5)
+        cmds.setAttr('{}.segmentScaleCompensate'.format(ball_bind_joint), 0)
+        cmds.setAttr('{}.inheritsTransform'.format(ball_bind_joint), 0)
 
         #Finish -------------------------------------------
 
@@ -498,6 +508,10 @@ def build_foot_block():
 
         #parent rig
         cmds.parent(clean_rig_grp, '{}{}'.format(setup['rig_groups']['misc'], nc['group']))
+
+        #scale
+        cmds.scaleConstraint('Global_Ctrl', clean_rig_grp, mo=True)
+        cmds.scaleConstraint('Global_Ctrl', clean_ctrl_grp, mo=True)
 
 
     # build complete ----------------------------------------------------

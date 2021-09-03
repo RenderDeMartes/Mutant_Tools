@@ -159,7 +159,6 @@ def build_spine_block():
         cmds.delete(cmds.parentConstraint(jnt, ctrl_jnt, mo=False))    
         ctrl_joints.append(ctrl_jnt)
 
-
     cmds.skinCluster(ctrl_joints[:-1], spline_curve, tsb=True)
     cmds.parent(ctrl_joints, spine_joints[0],spine_joints[-1], clean_joint_grp)
 
@@ -447,8 +446,6 @@ def build_spine_block():
         cmds.makeIdentity(a=True, t=True, s=True, r=True)
         cmds.parentConstraint(jnt, bind_joint, mo=False)
         cmds.scaleConstraint(jnt, bind_joint, mo=True)
-        cmds.setAttr('{}.segmentScaleCompensate'.format(bind_joint), 0)
-        cmds.setAttr('{}.inheritsTransform'.format(bind_joint), 0)
 
         # clean bind joints and radius to 1.5
         print(bind_joint)
@@ -482,8 +479,8 @@ def build_spine_block():
 
     #stretchy fixes
     cmds.connectAttr('Global_Ctrl.scale', normalize_loc+'.scale')
-    cmds.scaleConstraint('Global_Ctrl', clean_rig_grp, mo=True)
-    cmds.scaleConstraint('Global_Ctrl', clean_ctrl_grp, mo=True)
+    cmds.scaleConstraint('Rig_Ctrl_Grp', clean_rig_grp, mo=True)
+    cmds.scaleConstraint('Rig_Ctrl_Grp', clean_ctrl_grp, mo=True)
 
     print ('Build {} Success'.format(block))
 

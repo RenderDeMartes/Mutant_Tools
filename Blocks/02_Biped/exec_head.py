@@ -157,6 +157,7 @@ def build_head_block():
         cmds.delete(cmds.pickWalk(bind_joint, d='down'))#clean th dirty constraint
         cmds.parentConstraint(jnt, bind_joint)
         cmds.scaleConstraint(jnt, bind_joint)
+        cmds.setAttr('{}.segmentScaleCompensate'.format(bind_joint), 0)
 
         #clean bind joints and radius to 1.5
         cmds.setAttr('{}.radius'.format(bind_joint), 1.5)
@@ -201,6 +202,7 @@ def build_head_block():
     #scale
     cmds.scaleConstraint('Rig_Ctrl_Grp', cmds.listRelatives(neck_blends_grp, p=True), mo=True)
     cmds.scaleConstraint('Rig_Ctrl_Grp', cmds.listRelatives(ribbon['ctrl_joints'][0], p=True), mo=True)
+    cmds.setAttr('{}.segmentScaleCompensate'.format(head_joint), 0)
 
     #done
     print ('Build {} Success'.format(block))
