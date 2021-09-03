@@ -194,11 +194,13 @@ class BlockBuilder(QtMutantWindow.Qt_Mutant):
 		all_blocks = glob.glob('{}//{}//*json'.format(BLOCKS_PATH, tab))
 		pprint.pprint(all_blocks)
 
-		last_block = all_blocks[-1]
-		last_num = last_block.split('\\')[-1].split('_')[0]
-		print (last_num)
-		new_num = '0' + str(int(last_num[1]) + 1)
-
+		if all_blocks:
+			last_block = all_blocks[-1]
+			last_num = last_block.split('\\')[-1].split('_')[0]
+			print (last_num)
+			new_num = '0' + str(int(last_num[1]) + 1)
+		else:
+			new_num=0
 
 		#write json file
 		with open('{}//{}//{}_{}.json'.format(BLOCKS_PATH, tab, new_num, name), 'w') as new_config:

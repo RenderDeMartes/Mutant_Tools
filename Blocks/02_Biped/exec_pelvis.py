@@ -171,6 +171,7 @@ def build_pelvis_block():
         cmds.parentConstraint(side_guide, bind_joint, mo = False)
         cmds.scaleConstraint(side_guide, bind_joint, mo = True)
         cmds.setAttr('{}.segmentScaleCompensate'.format(bind_joint), 0)
+        cmds.setAttr('{}.inheritsTransform'.format(bind_joint), 0)
 
         try: cmds.parent(bind_joint, w=True)
         except:pass

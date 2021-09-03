@@ -18,7 +18,6 @@
 
             "CtrlSize_float": "4",
             "TwistAmount_float": "4",
-            "Ribbon_bool": "True",
 
             "IkCtrlType_enum": "cube:sphere",
             "PVCtrlType_enum": "sphere:cube",
