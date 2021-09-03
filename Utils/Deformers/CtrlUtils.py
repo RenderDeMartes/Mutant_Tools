@@ -237,7 +237,6 @@ class Ctrls(object):
     def save_all(self, path):
         #ctrls.save_all('C:\\Users\\PC\\Desktop\\ctrls.json')
 
-
         all_ctrls = {}
         cmds.select('*{}'.format(nc['ctrl']))
         for ctrl in cmds.ls(sl=True):
@@ -256,6 +255,7 @@ class Ctrls(object):
             try:
                 shape_data = data[ctrl]
                 self.setShape(ctrl, shape_data)
+                self.reparent_locators(ctrl)
             except:
                 print ('Error with: {}'.format(ctrl))
 
@@ -275,11 +275,12 @@ class Ctrls(object):
         if ctrl ==None:
             ctrl = cmds.ls(sl=True)[0]
 
-        shapes = cmds.listRelatives(ctrl, c=1, s=1)
-
+        shapes = cmds.listRelatives(ctrl, s=1)
 
         for shape in shapes:
             if cmds.nodeType(shape) != 'locator':
                 cmds.reorder(shape, f=True)
+            if cmds.nodeType(shape) == 'locator':
+                cmds.reorder(shape, b=True)
 
     #---------------------------------------------------------------------------

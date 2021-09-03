@@ -170,7 +170,7 @@ def build_hand_block():
         #orient Joints becouse the thumbs sucks
         #hardcoded becouse fuck it
         cmds.select('*Thumb_01*')
-        cmds.hide(guide)
+        #cmds.hide(guide)
         #cmds.joint(e=True, oj='yxz', ch=True, secondaryAxisOrient='{}'.format(setup['secondaryAxisOrient']))
 
         #smart select the colors
@@ -398,9 +398,16 @@ def build_hand_block():
         for jnt in cmds.listRelatives(bind_joints[0], ad=True):
             cmds.parentConstraint(jnt.replace(nc['joint_bind'],nc['joint']),jnt)
             cmds.scaleConstraint(jnt.replace(nc['joint_bind'],nc['joint']),jnt)
-    
+            cmds.setAttr('{}.segmentScaleCompensate'.format(jnt), 0)
+            cmds.setAttr('{}.segmentScaleCompensate'.format(jnt.replace(nc['joint_bind'],nc['joint'])), 0)
+            cmds.setAttr('{}.inheritsTransform'.format(jnt.replace(nc['joint_bind'],nc['joint'])), 0)
+
         cmds.parentConstraint(side_guide,bind_joints[0])
         cmds.scaleConstraint(side_guide,bind_joints[0])  
+        cmds.scaleConstraint('Global_Ctrl',side_guide)
+
+        cmds.setAttr('{}.segmentScaleCompensate'.format(bind_joints[0]), 0)
+        cmds.setAttr('{}.inheritsTransform'.format(bind_joints[0]), 0)
 
         #flip right rig  to right side ------------------------- 
         
@@ -428,16 +435,6 @@ def build_hand_block():
         else: #only left side
             cmds.parentConstraint(block_parent, ctrls_grp , mo = True) 
         
-
-        #blends
-        '''
-        blends_grp = mt.root_grp(input = '', custom = True, custom_name = 'Blends', autoRoot = False, replace_nc = False)[0]
-        blends_grp = blends_grp.replace('_AutoFK','')
-        bends = cmds.getAttr('{}.Blends'.format(config).split(':'))
-        for blend in bends:
-            ''
-            #cmds.orientConstraint()
-        '''
 
         #Finish -------------------------------------------
         

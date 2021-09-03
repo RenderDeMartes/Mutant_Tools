@@ -135,12 +135,6 @@ def build_pelvis_block():
         mt.hide_attr(fk_chain[0], s=True)
         print (fk_chain)
             
-        #create bind Joints for the skin
-        bind_joint = cmds.duplicate(side_guide, po=True, n = side_guide.replace(nc['joint'], nc['joint_bind']))[0] 
-        cmds.parentConstraint(side_guide, bind_joint, mo = False)
-        try: cmds.parent(bind_joint, w=True)
-        except:pass
-        cmds.setAttr('{}.radius'.format(bind_joint), 1.5)   
 
         #blends groups
 
@@ -170,9 +164,17 @@ def build_pelvis_block():
             clean_rig_grp = side_guide
             clean_ctrl_grp = for_parent   
 
-        #blends
+        #create bind Joints for the skin
+        cmds.select(cl=True)
+        bind_joint = cmds.joint(n = side_guide.replace(nc['joint'], nc['joint_bind']))
+        cmds.makeIdentity(bind_joint, a=True, t=True, r=True, s=True)
+        cmds.parentConstraint(side_guide, bind_joint, mo = False)
+        cmds.scaleConstraint(side_guide, bind_joint, mo = True)
+        cmds.setAttr('{}.segmentScaleCompensate'.format(bind_joint), 0)
 
-        
+        try: cmds.parent(bind_joint, w=True)
+        except:pass
+        cmds.setAttr('{}.radius'.format(bind_joint), 1.5)
 
         #Clean -------------------------------------------
         #game parents for bind joints

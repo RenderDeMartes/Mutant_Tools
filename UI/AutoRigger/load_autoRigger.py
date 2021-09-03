@@ -157,7 +157,8 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		self.create_menus()
 		self.create_layout()
 		self.create_connections()
-		OpenMaya.MGlobal.displayInfo('♥')
+		try:OpenMaya.MGlobal.displayInfo('♥')
+		except:pass
 
 		#Data init
 		self.current_block = None

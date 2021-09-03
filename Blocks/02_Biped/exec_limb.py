@@ -200,6 +200,9 @@ def build_limb_block():
         cmds.parent(ikfk['ik_fk'][4][5][0], clean_rig_grp)
         cmds.parent(cmds.listRelatives(ikfk['ik_fk'][4][3], p=True), clean_rig_grp)
 
+        cmds.scaleConstraint('Rig_Ctrl_Grp' , ikfk['upper_twist']['twist_grp'] ,mo=True)
+        cmds.scaleConstraint('Rig_Ctrl_Grp' , ikfk['lower_twist']['twist_grp'] ,mo=True)
+
         #side stuff giving errors
         if side_guide.startswith(nc['right']):
             cmds.parent(ikfk['ik_fk'][5][0], clean_ctrl_grp)
@@ -270,9 +273,14 @@ def build_limb_block():
             cmds.delete(cmds.parentConstraint(jnt, bind_joint, mo=False))
             cmds.delete(cmds.scaleConstraint(jnt, bind_joint, mo=False))
             cmds.makeIdentity(a=True,t=True,s=True,r=True)
-            cmds.pointConstraint(jnt, bind_joint, mo=False)
-            cmds.orientConstraint(jnt, bind_joint, mo=False)
+            cmds.parentConstraint(jnt, bind_joint, mo=False)
             cmds.scaleConstraint(jnt, bind_joint, mo=True)
+            cmds.setAttr('{}.segmentScaleCompensate'.format(bind_joint), 0)
+            cmds.setAttr('{}.inheritsTransform'.format(bind_joint), 0)
+
+            #cmds.connectAttr('{}.scaleX'.format(jnt),'{}.scaleX'.format(bind_joint) )
+            #cmds.connectAttr('{}.scaleY'.format(jnt),'{}.scaleY'.format(bind_joint) )
+            #cmds.connectAttr('{}.scaleZ'.format(jnt),'{}.scaleX'.format(bind_joint) )
 
             #clean bind joints and radius to 1.5
             print (bind_joint)

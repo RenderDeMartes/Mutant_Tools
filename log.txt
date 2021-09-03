@@ -683,3 +683,15 @@ L_Foot_Ankle_Jnt
 Build L_Foot_Block Success
 Build successfully exec_foot.build_foot_block()
 Postcode L_Foot_Block
+------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
+Building: Load_Block
+------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
+Import successfully import exec_code
+Precode Load_Block
+Error with: L_Foot_Ankle_Toes_Ctrl
+Error with: R_Foot_Ankle_Toes_Ctrl
+Build Load_Block Success
+Build successfully exec_code.build_code_block()
+Postcode Load_Block

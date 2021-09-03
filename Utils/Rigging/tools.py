@@ -654,6 +654,17 @@ class Tools_class:
 			if '{}'.format(name)[-1] == str(1):
 				cmds.rename('{}'.format(name),'{}'.format(name[:-1]) )
 				return_list[-1][0] = '{}'.format(name[:-1])
+		'''
+		for jnt in cmds.listRelatives(return_list[-1], ad=True):
+			try:
+				if cmds.nodeType(jnt) == 'joint':
+					parent = cmds.listRelatives(jnt, p=True)
+					if parent:
+						cmds.parent(jnt, w=True)
+						cmds.parent(jnt, parent[0])
+			except:
+				pass
+		'''
 
 		#return list
 		return return_list[-1]
