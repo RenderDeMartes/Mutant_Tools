@@ -1,7 +1,7 @@
 {
     "Name": "Root",
     "Description": "Create root joint at 0,0,0",
-    "Icon": "Bone.png",
+    "Icon": "Root.png",
     "Enable": "True",
     "python_file": "exec_root.py",
     "import": "import exec_root",
