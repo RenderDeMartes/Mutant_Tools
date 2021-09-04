@@ -1,3 +1,34 @@
+'''
+version: 1.0.0
+date: 21/04/2020
+
+#----------------
+content:
+
+This will create a UI for the autorriger tool. Is dinamically created based on the .json files inside the folders
+
+#----------------
+how to:
+import Mutant_Tools.UI
+from Mutant_Tools.UI import QtMutantWindow
+imp.reload(QtMutantWindow)
+mtui = QtMutantWindow.Qt_Mutant
+mtui.show()
+
+#----------------
+dependencies:
+
+QT FILE
+ICONS
+JSON FILES
+Main Mutant
+
+#----------------
+licence: https://www.eulatemplate.com/live.php?token=FGISW7ApRfgywum6murbBmLcusKONzkv
+author:  Esteban Rodriguez <info@renderdemartes.com>
+
+'''
+
 import os
 from maya import cmds
 from maya import mel
@@ -10,6 +41,10 @@ from shiboken2 import wrapInstance
 
 from maya.app.general.mayaMixin import MayaQWidgetDockableMixin
 import maya.OpenMayaUI as omui
+
+import imp
+import Mutant_Tools.UI.CustomWidgets.expandableWidget as expandableWidget
+imp.reload(expandableWidget)
 
 #--------------------------------------------------------------------------------
 PATH = os.path.dirname(__file__)
@@ -95,7 +130,7 @@ class Qt_Mutant(QtWidgets.QMainWindow):
 
 	def set_stylesheet(self, widget):
 		css = self.read_stylesheet(path = os.path.dirname(__file__) + '\\Stylesheets',
-		                                            stylesheet = 'DraculaEdited.qss')
+													stylesheet = 'DraculaEdited.qss')
 
 		widget.setStyleSheet(css)
 
@@ -138,7 +173,11 @@ class Qt_Mutant(QtWidgets.QMainWindow):
 
 	# ------------------------------------------------
 	def mouseDoubleClickEvent(self, event):
-		self.check_size()
+		#scale with double click
+		#self.check_size()
+		pass
+
+	# ------------------------------------------------
 
 	def mouseMoveEvent(self, event):
 		"""Move Frameless Ui with it
@@ -165,6 +204,7 @@ class Qt_Mutant(QtWidgets.QMainWindow):
 			self.oldPos = event.globalPos()
 		elif event.buttons() == QtCore.Qt.RightButton:
 			"Right click drag"
+	# ------------------------------------------------
 
 	def resizeEvent(self, event):
 		"""
@@ -224,7 +264,7 @@ class Qt_Mutant(QtWidgets.QMainWindow):
 		try:
 			floatingLayout = cmds.paneLayout(configuration='single', width=300, height=400)
 			cmds.dockControl('myToolDock', area='left', allowedArea=allowedAreas,
-			                 content=floatingLayout, label='Mutant_Tols')
+							 content=floatingLayout, label='Mutant_Tols')
 			cmds.control('MainMutantWindow', e=True, p=floatingLayout)
 		except:
 			pass
@@ -247,7 +287,7 @@ class Qt_Mutant(QtWidgets.QMainWindow):
 		try:
 			floatingLayout = cmds.paneLayout(configuration='single', width=300, height=400)
 			cmds.dockControl('myToolDock', area='right', allowedArea=allowedAreas,
-			                 content=floatingLayout, label='Mutant_Tols')
+							 content=floatingLayout, label='Mutant_Tols')
 			cmds.control('MainMutantWindow', e=True, p=floatingLayout)
 		except:
 			pass
@@ -258,3 +298,21 @@ class Qt_Mutant(QtWidgets.QMainWindow):
 
 	# ------------------------------------------------
 
+	def colapsable_widget(self, layout=None, title='Expandable'):
+		if layout==None:
+			layout=self.master_ui.mutant_Layout
+
+		exp = expandableWidget.expandableWidget(parent=layout, title=title)
+
+		return exp
+
+	# ------------------------------------------------
+
+	def create_separator(self):
+		separator = QtWidgets.QLabel()
+		separator.setStyleSheet("border : 5px solid grey; ")
+		separator.setFixedHeight(1)
+
+		return separator
+
+	# ------------------------------------------------

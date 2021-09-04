@@ -347,12 +347,15 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		self.create_layout()
 
 	#-------------------------------------------------------------------
-	def create_side_button(self, pack_name = 'Mutant_Block', index = 0):
+	def create_side_button(self, pack_name = 'Mutant_Block', index = 0, parent=None):
 
 		#This will create all the side buttons when the up buttons are clicked
 
+		if parent == None:
+			parent = self.ui.side_layout
+
 		side_hbox = QGroupBox()
-		self.ui.side_layout.addWidget(side_hbox)
+		parent.addWidget(side_hbox)
 
 		#up down buttons
 		#up_button = QtWidgets.QPushButton('↑')
