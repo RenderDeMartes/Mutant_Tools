@@ -6,10 +6,11 @@ date: 21/04/2020
 
 how to:
 
+import imp
 import Mutant_Tools
-import Mutant_Tools.Utils.Deformers
-from Mutant_Tools.Utils.Deformers import CtrlUtils
-imp.reload(Mutant_Tools.Utils.Deformers.CtrlUtils)
+import Mutant_Tools.Utils.IO
+from Mutant_Tools.Utils.IO import CtrlUtils
+imp.reload(Mutant_Tools.Utils.IO.CtrlUtils)
 
 ctrls = CtrlUtils.Ctrls()
 ctrls.FUNC_NAME(argument = '')
@@ -30,11 +31,16 @@ import json
 from maya import cmds as cmds
 from maya import OpenMaya as om
 
+import Mutant_Tools
+from Mutant_Tools.Utils.Helpers import helpers
+imp.reload(Mutant_Tools.Utils.Helpers.helpers)
+mh = helpers.Helpers()
+
 # ---------------------------------------------------------------------------
 
 #Read name conventions as nc[''] and setup as seup['']
 PATH = os.path.dirname(__file__)
-PATH = PATH.replace('\\Utils\\Deformers', '//Config')
+PATH = PATH.replace('\\Utils\\IO', '//Config')
 
 JSON_FILE = (PATH + '/name_conventions.json')
 with open(JSON_FILE) as json_file:

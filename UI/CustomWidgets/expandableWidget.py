@@ -1,3 +1,40 @@
+'''
+version: 1.0.0
+date: 21/04/2020
+
+#----------------
+content:
+
+#----------------
+how to:
+
+import Mutant_Tools.UI
+from Mutant_Tools.UI import QtMutantWindow
+imp.reload(QtMutantWindow)
+import Mutant_Tools.UI.CustomWidgets.expandableWidget as expandableWidget
+imp.reload(expandableWidget)
+try:
+    mtui.close()
+except:
+    pass
+mtui = QtMutantWindow.Qt_Mutant()
+mtui.show()
+
+exp = mtui.colapsable_widget()
+
+#----------------
+dependencies:
+
+
+#----------------
+licence: https://www.eulatemplate.com/live.php?token=FGISW7ApRfgywum6murbBmLcusKONzkv
+author:  Esteban Rodriguez <info@renderdemartes.com>
+
+'''
+
+
+
+
 import os
 from maya import cmds
 from maya import mel

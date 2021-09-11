@@ -1,5 +1,4 @@
 from maya import cmds
-from maya import mel
 import json
 import imp
 import os
@@ -13,8 +12,8 @@ mt = main_mutant.Mutant()
 
 #---------------------------------------------
 
-TAB_FOLDER = '08_Other'
-PYBLOCK_NAME = 'exec_code'
+TAB_FOLDER = '01_Presets'
+PYBLOCK_NAME = 'exec_biped180'
 
 #Read name conventions as nc[''] and setup as seup['']
 PATH = os.path.dirname(__file__)
@@ -32,13 +31,13 @@ SETUP_FILE = (PATH+'/rig_setup.json')
 with open(SETUP_FILE) as setup_file:
 	setup = json.load(setup_file)	
 
-MODULE_FILE = (os.path.dirname(__file__) +'/03_Code.json')
+MODULE_FILE = (os.path.dirname(__file__) +'/0_Biped180.json')
 with open(MODULE_FILE) as module_file:
 	module = json.load(module_file)
 
 #---------------------------------------------
 
-def create_code_block(name = 'Code'):
+def create_biped180_block(name = 'Biped180'):
 
     #name checks and block creation
     name = mt.ask_name(text = module['Name'])
@@ -46,42 +45,57 @@ def create_code_block(name = 'Code'):
         cmds.warning('Name already exists.')
         return ''
 
-    block = mt.create_block(name = name, icon = 'Code',  attrs = module['attrs'], build_command = module['build_command'], import_command = module['import'])
+    block = mt.create_block(name = name, icon = 'Biped',  attrs = module['attrs'], build_command = module['build_command'], import_command = module['import'])
     config = block[1]
     block = block[0]
-
-    loc = cmds.spaceLocator(n = name + nc['locator'])
-    cmds.parent(loc,block)
-
+      
     #cmds.getAttr('{}.AttrName'.format(config)) #get attrs from config
     #cmds.getAttr('{}.AttrName'.format(config), asString = True) #for enums
     #joint_one = mt.create_joint_guide(name = name) #guide base with shapes
 
+    cmds.select(block)
+
     print('{} Created Successfully'.format(name))
 
-#create_code_block()
+#create_biped180_block()
 
 #-------------------------
 
-def build_code_block():
+def build_biped180_block():
 
-    #mt.check_is_there_is_base()
+    mt.check_is_there_is_base()
 
     block = cmds.ls(sl=True)
     config = cmds.listConnections(block)[1]
     block = block[0]
+    guide = cmds.listRelatives(block, c=True)[0]
 
+    #groups for later cleaning
+    clean_rig_grp = ''
+    clean_ctrl_grp = ''
+    
     #cmds.getAttr('{}.AttrName'.format(config))
-    pl = cmds.getAttr('{}.Exec'.format(config), asString = True)
-    code = cmds.getAttr('{}.Code'.format(config), asString = True)
+    #cmds.getAttr('{}.AttrName'.format(config), asString = True)
 
-    if pl != 'Python':
-       mel.eval(code)
+    #orient the joints
+    mt.orient_joint(input = guide)
+    new_guide = mt.duplicate_and_remove_guides(guide)
+    print (new_guide)
+    to_build = [new_guide]
+
+    #use this locator in case parent is set to new locator
+    if cmds.getAttr('{}.SetParent'.format(config)) == 'new_locator':
+        block_parent = cmds.spaceLocator( n = '{}'.format(str(block).replace(nc['module'],'_Parent' + nc['locator'])))
     else:
-        exec(code)
+        block_parent = cmds.getAttr('{}.SetParent'.format(config))
+
+
+    #clean a bit
+    clean_rig_grp = cmds.group(em=True, n = '{}{}'.format(block.replace(nc['module'],'_Rig'), nc['group']))
+
 
     print ('Build {} Success'.format(block))
 
 
 
-#build_code_block()
+#build_biped180_block()

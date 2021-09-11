@@ -1,0 +1,12 @@
+{
+    "Name": "Biped180",
+    "Description": "Will import the preset for biped 1.80m",
+    "Icon": "Biped.png",
+    "Enable": "True",
+    "python_file": "exec_biped180.py",
+    "import": "import exec_biped180",
+    "imp.reload": "imp.reload(exec_biped180)",
+    "exec_command": "exec_biped180.create_biped180_block()",
+    "build_command": "exec_biped180.build_biped180_block()",
+    "attrs": {}
+}

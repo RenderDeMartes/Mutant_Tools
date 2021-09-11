@@ -12,7 +12,7 @@ how to:
 import Mutant_Tools.UI
 from Mutant_Tools.UI import QtMutantWindow
 imp.reload(QtMutantWindow)
-mtui = QtMutantWindow.Qt_Mutant
+mtui = QtMutantWindow.Qt_Mutant()
 mtui.show()
 
 #----------------
@@ -80,7 +80,6 @@ class Qt_Mutant(QtWidgets.QMainWindow):
 
 		self.connect_buttons()
 
-
 	def connect_buttons(self):
 		self.master_ui.close_button.clicked.connect(self.close)
 		self.master_ui.max_button.clicked.connect(self.check_size)
@@ -88,7 +87,6 @@ class Qt_Mutant(QtWidgets.QMainWindow):
 	# ------------------------------------------------
 
 	def designer_loader(self, path, ui_file):
-
 		f = QtCore.QFile(path + ui_file)
 		f.open(QtCore.QFile.ReadOnly)
 
@@ -98,7 +96,6 @@ class Qt_Mutant(QtWidgets.QMainWindow):
 		f.close()
 
 	def designer_loader_child(self, path, ui_file):
-
 		f = QtCore.QFile(path + ui_file)
 		f.open(QtCore.QFile.ReadOnly)
 
@@ -118,7 +115,6 @@ class Qt_Mutant(QtWidgets.QMainWindow):
 	def set_title(self, text = 'Mutant'):
 		self.master_ui.child_title_label.setText(text)
 
-
 	# ------------------------------------------------
 
 	def read_stylesheet(self, path , stylesheet):
@@ -130,7 +126,7 @@ class Qt_Mutant(QtWidgets.QMainWindow):
 
 	def set_stylesheet(self, widget):
 		css = self.read_stylesheet(path = os.path.dirname(__file__) + '\\Stylesheets',
-													stylesheet = 'DraculaEdited.qss')
+													stylesheet = 'FramelessMutant.css')
 
 		widget.setStyleSheet(css)
 
@@ -174,8 +170,8 @@ class Qt_Mutant(QtWidgets.QMainWindow):
 	# ------------------------------------------------
 	def mouseDoubleClickEvent(self, event):
 		#scale with double click
-		#self.check_size()
-		pass
+		if event.button() == QtCore.Qt.RightButton:
+			self.check_size()
 
 	# ------------------------------------------------
 

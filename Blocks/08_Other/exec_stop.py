@@ -31,7 +31,7 @@ SETUP_FILE = (PATH+'/rig_setup.json')
 with open(SETUP_FILE) as setup_file:
 	setup = json.load(setup_file)	
 
-MODULE_FILE = (os.path.dirname(__file__) +'/05_Stop.json')
+MODULE_FILE = (os.path.dirname(__file__) +'/04_Stop.json')
 with open(MODULE_FILE) as module_file:
 	module = json.load(module_file)
 

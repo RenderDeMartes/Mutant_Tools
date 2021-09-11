@@ -41,7 +41,7 @@ from PySide2.QtWidgets import *
 from PySide2.QtGui import *
 from PySide2.QtCore import *
 from PySide2.QtUiTools import *
-from PySide2.QtWebEngineWidgets import QWebEngineView
+from PySide2.QtWebEngineWidgets import *
 from PySide2.QtCore import QUrl
 
 
@@ -114,7 +114,7 @@ def maya_main_window():
 
 class WebsiteViewerUI(QtMutantWindow.Qt_Mutant):
 
-	def __init__(self, website = 'www.mutanttools.com'):
+	def __init__(self, website = 'http://mutanttools.com/'):
 		super(WebsiteViewerUI, self).__init__()
 
 		self.website = website
