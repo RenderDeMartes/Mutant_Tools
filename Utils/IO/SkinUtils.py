@@ -5,11 +5,11 @@ date: 21/04/2020
 #----------------
 
 how to:
-
+import imp
 import Mutant_Tools
-import Mutant_Tools.Utils.Deformers
-from Mutant_Tools.Utils.Deformers import SkinUtils
-imp.reload(Mutant_Tools.Utils.Deformers.SkinUtils)
+import Mutant_Tools.Utils.IO
+from Mutant_Tools.Utils.IO import SkinUtils
+imp.reload(Mutant_Tools.Utils.IO.SkinUtils)
 
 skin = SkinUtils.Skinning()
 skin.FUNC_NAME(argument = '')
@@ -29,7 +29,7 @@ from maya import cmds
 
 #Read name conventions as nc[''] and setup as seup['']
 PATH = os.path.dirname(__file__)
-PATH = PATH.replace('\\Utils\\Deformers', '//Config')
+PATH = PATH.replace('\\Utils\\IO', '//Config')
 
 JSON_FILE = (PATH + '/name_conventions.json')
 with open(JSON_FILE) as json_file:

@@ -24,6 +24,7 @@ author:  Esteban Rodriguez <info@mutanttools.com>
 
 '''
 
+from maya import cmds
 
 class Helpers(object):
 
@@ -33,10 +34,10 @@ class Helpers(object):
 	# ----------------------------------------------------------------------------------------------------------------
 
 	def capture_viewport(self, image_name=None,
-						 path= None,
-						 width=1920,
-						 height=1080,
-						 ornaments=False):
+							   path= None,
+							   width=1920,
+							   height=1080,
+							   ornaments=False):
 		"""
 
 		Args:
@@ -158,3 +159,27 @@ class Helpers(object):
 
 	# ----------------------------------------------------------------------------------------------------------------
 
+	def read_setup_file(self):
+		''
+
+	def write_setup_file(self, old_data):
+		''
+
+	def get_inbetween_text(self, start, finish):
+		''
+
+	# ----------------------------------------------------------------------------------------------------------------
+
+	def export_window(self, extension = ".ma"):
+		basicFilter = '*' + extension
+		dialog = cmds.fileDialog2(fileFilter=basicFilter, fileMode=0, caption="Save As")
+		return dialog
+
+	# ----------------------------------------------------------------------------------------------------------------
+
+	def import_window(self, extension = ".ma"):
+		basicFilter = '*' + extension
+		dialog = cmds.fileDialog2(fileFilter=basicFilter, fileMode=1, caption="Open")
+		return dialog
+
+	# ----------------------------------------------------------------------------------------------------------------

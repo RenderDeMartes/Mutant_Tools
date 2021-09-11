@@ -5,11 +5,11 @@ date: 21/04/2020
 #----------------
 
 how to:
-
+import imp
 import Mutant_Tools
-import Mutant_Tools.Utils.Deformers
-from Mutant_Tools.Utils.Deformers import NgSkinUtils
-imp.reload(Mutant_Tools.Utils.Deformers.NgSkinUtils)
+import Mutant_Tools.Utils.IO
+from Mutant_Tools.Utils.IO import NgSkinUtils
+imp.reload(Mutant_Tools.Utils.IO.NgSkinUtils)
 
 ngmt = NgSkinUtils.NG_Mutant()
 ngmt.FUNC_NAME(argument = '')
@@ -34,14 +34,14 @@ from maya import cmds
 import imp
 
 import Mutant_Tools
-import Mutant_Tools.Utils.Deformers
-from Mutant_Tools.Utils.Deformers import SkinUtils
-imp.reload(Mutant_Tools.Utils.Deformers.SkinUtils)
+import Mutant_Tools.Utils.IO
+from Mutant_Tools.Utils.IO import SkinUtils
+imp.reload(Mutant_Tools.Utils.IO.SkinUtils)
 skin = SkinUtils.Skinning()
 
 #Read name conventions as nc[''] and setup as seup['']
 PATH = os.path.dirname(__file__)
-PATH = PATH.replace('\\Utils\\Deformers', '//Config')
+PATH = PATH.replace('\\Utils\\IO', '//Config')
 
 JSON_FILE = (PATH + '/name_conventions.json')
 with open(JSON_FILE) as json_file:
@@ -69,7 +69,8 @@ except Exception:
 class NG_Mutant(object):
 
     def __init__(self):
-        ''
+
+        self.ng_skin = None
 
     #----------------------------------------------------------------------
 
@@ -88,3 +89,5 @@ class NG_Mutant(object):
 
     def delete_all_nodes(self):
         cmds.delete(cmds.ls(type='ngst2SkinLayerData'))
+
+

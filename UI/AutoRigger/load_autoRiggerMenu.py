@@ -51,6 +51,19 @@ import imp
 import sys
 import json
 
+from urllib.request import Request, urlopen
+
+import Mutant_Tools
+from Mutant_Tools.UI.WebsiteViewer import load_website_viewer
+
+import Mutant_Tools.UI
+from Mutant_Tools.UI import QtMutantWindow
+imp.reload(QtMutantWindow)
+
+from Mutant_Tools.Utils.Helpers import helpers
+imp.reload(Mutant_Tools.Utils.Helpers.helpers)
+mh = helpers.Helpers()
+
 # -------------------------------------------------------------------
 
 # Read name conventions as nc[''] and setup as seup['']
@@ -90,6 +103,9 @@ class AutoRiggerMenu(MayaQWidgetDockableMixin, QtWidgets.QDialog):
 	def __init__(self, parent=maya_main_window()):
 		super(AutoRiggerMenu, self).__init__(parent)
 
+		self.open_viewer=True
+		self.cWebsiteViewer = load_website_viewer.WebsiteViewerUI()
+
 		self.setWindowTitle(Title)
 		self.setFixedHeight(20)
 
@@ -114,41 +130,141 @@ class AutoRiggerMenu(MayaQWidgetDockableMixin, QtWidgets.QDialog):
 		#create menu bar
 		self.menuBar = QtWidgets.QMenuBar()  # requires parent
 
-		#Blocks Menu
+		# -------------------------------------------------------------------
+
+		#File Menu
+
 		self.fileMenu = QtWidgets.QMenu(self)
 		self.fileMenu.setTitle("File")
-		self.fileMenu.addAction("Load Positions")
-		self.fileMenu.addAction("Save Positions")
+
+		self.save_guide = self.fileMenu.addAction("Save Guide")
+		self.load_guide = self.fileMenu.addAction("Load Guide")
+		self.fileMenu.addSeparator()
+
+		self.download_ng = self.fileMenu.addAction("Download NgSkinToolsV2")
+		self.save_skin = self.fileMenu.addAction("Save Skin")
+		self.load_skin = self.fileMenu.addAction("Load Skin")
+		self.fileMenu.addSeparator()
+
+		self.save_ctrls = self.fileMenu.addAction("Save Ctrls")
+		self.load_ctrls = self.fileMenu.addAction("Load Ctrls")
+		self.mirror_ctrls = self.fileMenu.addAction("Mirror Ctrls")
+		self.fileMenu.addSeparator()
+
 		self.menuBar.addMenu(self.fileMenu)
 
-		#Block Menu
-		self.blockMenu = QtWidgets.QMenu(self)
-		self.blockMenu.setTitle("Block")
-		self.blockMenu.addAction("Create Block")
-		self.menuBar.addMenu(self.blockMenu)
+		# -------------------------------------------------------------------
 
-		#Tutorial Menu
-		self.tutorialMenu = QtWidgets.QMenu(self)
-		self.tutorialMenu.setTitle("Tutorial")
-		self.tutorialMenu.addAction("Step by Step")
-		self.tutorialMenu.addAction("Documentation")
+		#Help Menu
+		self.tutorialMenu = QtWidgets.QMenu()
+		self.tutorialMenu.setTitle("Help")
+
+		self.discord = self.main_page = self.tutorialMenu.addAction("Join Discord")
+		self.report_bug = self.main_page = self.tutorialMenu.addAction("Report Bug")
+		self.request_feature = self.main_page = self.tutorialMenu.addAction("Request Feature")
+
+		self.tutorialMenu.addSeparator()
+
+		self.riggers = self.tutorialMenu.addAction("Riggers")
+		self.developers = self.tutorialMenu.addAction("Developers")
+		self.tutorialMenu.addSeparator()
+
+		self.main_page = self.tutorialMenu.addAction("Main Page")
 		self.menuBar.addMenu(self.tutorialMenu)
+		self.tutorialMenu.addSeparator()
+
+		self.open_in_maya = self.tutorialMenu.addAction('Use Website Viewer')
+		self.open_in_maya.setCheckable(True)
+		self.open_in_maya.setChecked(True)
+
+		# -------------------------------------------------------------------
 
 		#Donate
 		self.donateMenu = QtWidgets.QMenu(self)
 		self.donateMenu.setTitle("Donate")
-		self.donateMenu.addAction("Paypal")
-		self.donateMenu.addAction("Crypto")
+		self.paypal = self.donateMenu.addAction("Paypal")
+		self.crypto = self.donateMenu.addAction("Crypto")
 		self.menuBar.addMenu(self.donateMenu)
 
 		#add menu bar to layout
 		self.ui.menuLayout.insertWidget(0, self.menuBar)
 
-	def create_connections(self):
-		''
+	# -------------------------------------------------------------------
 
+	def create_connections(self):
+		#FILE MENU
+
+		#HELP MENU
+		self.discord.triggered.connect(lambda: self.cWebsiteViewer.open_link('https://discord.gg/pqGeYhUcAW'))
+		self.report_bug.triggered.connect(lambda: self.send_bugs())
+		self.request_feature.triggered.connect(lambda: self.send_requests())
+
+		self.riggers.triggered.connect(lambda: self.open_website('https://mutanttools.com/riggers/'))
+		self.developers.triggered.connect(lambda: self.open_website('https://mutanttools.com/mt_commands/'))
+		self.main_page.triggered.connect(lambda: self.open_website('https://mutanttools.com/'))
+
+		#DONATE MENU
+		self.paypal.triggered.connect(lambda: self.open_website('https://www.paypal.com/paypalme/renderdemartes'))
+		self.crypto.triggered.connect(lambda: self.open_website('https://mutanttools.com/donate/'))
 
 	# -------------------------------------------------------------------
+
+	def open_website(self, website = 'http://mutanttools.com/'):
+
+		self.get_web_viewer_state()
+
+		cWebsiteViewer = load_website_viewer.WebsiteViewerUI(website = website)
+
+		if self.open_viewer == True:
+			cWebsiteViewer.show()
+		else:
+			cWebsiteViewer.open_link(website)
+
+	# -------------------------------------------------------------------
+
+	def get_web_viewer_state(self):
+		if self.open_in_maya.isChecked():
+			self.open_viewer = True
+		else:
+			self.open_viewer = False
+
+	# -------------------------------------------------------------------
+
+	def send_webhook_message(self, webhook, message):
+
+		# Provide the webhook URL that Discord generated
+
+
+		# Post the message to the slack webhook
+		message = {"content": message}
+		req = Request(webhook, json.dumps(message).encode('utf-8'))
+
+		# specifying headers for the request, discord appears to block the  default urllib user-agent
+		req.add_header('Content-Type', 'application/json')
+		req.add_header('User-Agent', 'Mozilla/5.0 (X11; U; Linux i686) Gecko/20071127 Firefox/2.0.0.11')
+
+		response = urlopen(req)
+		response.read()
+
+		try:OpenMaya.MGlobal.displayInfo('Message Sent')
+		except:pass
+
+	# -------------------------------------------------------------------
+
+	def send_bugs(self):
+		from Mutant_Tools.Utils.Helpers import discord
+		imp.reload(discord)
+		discord.send_bugs()
+
+	# -------------------------------------------------------------------
+
+	def send_requests(self):
+		from Mutant_Tools.Utils.Helpers import discord
+		imp.reload(discord)
+		discord.send_requests()
+
+	# -------------------------------------------------------------------
+
 
 	# CLOSE EVENTS _________________________________
 	def closeEvent(self, event):

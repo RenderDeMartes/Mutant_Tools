@@ -1,5 +1,12 @@
 import os
+import imp
+
 import maya.cmds as cmds
+
+import Mutant_Tools
+import Mutant_Tools.Utils
+from Mutant_Tools.Utils import mt_menu
+imp.reload(Mutant_Tools.Utils.mt_menu)
 
 #---------------------------------------------------------------------
 
@@ -22,5 +29,10 @@ def onMayaDroppedPythonFile(obj):
             print('Duplicate not removed.')
 
     #---------------------------------------------------------------------
-    
+
+    mt_menu.put_in_userSetup()
+    mt_menu.create_mutant_menu()
+
+    #---------------------------------------------------------------------
+
     
