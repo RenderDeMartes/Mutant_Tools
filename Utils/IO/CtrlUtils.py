@@ -27,6 +27,7 @@ author:  Esteban Rodriguez <info@mutanttools.com>
 '''
 
 import os
+import imp
 import json
 from maya import cmds as cmds
 from maya import OpenMaya as om
@@ -240,9 +241,12 @@ class Ctrls(object):
         cmds.select(crv)
 
     #---------------------------------------------------------------------------
-    def save_all(self, path):
+    def save_all(self):
         #ctrls.save_all('C:\\Users\\PC\\Desktop\\ctrls.json')
-
+        path = mh.import_window(extension = ".json")
+        if not path:
+            return
+        path = path[0]
         all_ctrls = {}
         cmds.select('*{}'.format(nc['ctrl']))
         for ctrl in cmds.ls(sl=True):
@@ -252,9 +256,13 @@ class Ctrls(object):
         self.saveData(path=path, data=all_ctrls)
 
     #---------------------------------------------------------------------------
-    def load_all(self, path):
+    def load_all(self):
         #ctrls.load_all('C:\\Users\\PC\\Desktop\\ctrls.json')
 
+        path = mh.import_window(extension = ".json")
+        if not path:
+            return
+        path = path[0]
         data = self.loadData(path)
         cmds.select('*{}'.format(nc['ctrl']))
         for ctrl in cmds.ls(sl=True):
@@ -290,3 +298,6 @@ class Ctrls(object):
                 cmds.reorder(shape, b=True)
 
     #---------------------------------------------------------------------------
+
+    def smart_assign_colors(self):
+        ''

@@ -183,3 +183,7 @@ class Helpers(object):
 		return dialog
 
 	# ----------------------------------------------------------------------------------------------------------------
+
+	def folder_window(self):
+		dialog = cmds.fileDialog2(dialogStyle=1, fileMode=3, caption="Open")
+		return dialog[0]

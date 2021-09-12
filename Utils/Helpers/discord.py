@@ -1,4 +1,27 @@
+from urllib.request import Request, urlopen
+import maya.OpenMayaUI as omui
 from maya import cmds
+import maya.OpenMaya as OpenMaya
+import json
+
+def send_webhook_message(webhook, message):
+    # Provide the webhook URL that Discord generated
+
+    # Post the message to the slack webhook
+    message = {"content": message}
+    req = Request(webhook, json.dumps(message).encode('utf-8'))
+
+    # specifying headers for the request, discord appears to block the  default urllib user-agent
+    req.add_header('Content-Type', 'application/json')
+    req.add_header('User-Agent', 'Mozilla/5.0 (X11; U; Linux i686) Gecko/20071127 Firefox/2.0.0.11')
+
+    response = urlopen(req)
+    response.read()
+
+    try:
+        OpenMaya.MGlobal.displayInfo('Message Sent')
+    except:
+        pass
 
 # -------------------------------------------------------------------
 
@@ -14,7 +37,7 @@ def send_bugs():
 
     if ask == 'Send':
         message = '!bug ' + cmds.promptDialog(query=True, text=True)
-        self.send_webhook_message(webhook=webhook, message=message)
+        send_webhook_message(webhook=webhook, message=message)
 
 
 # -------------------------------------------------------------------
@@ -31,6 +54,6 @@ def send_requests():
 
     if ask == 'Send':
         message = '!request ' + cmds.promptDialog(query=True, text=True)
-        self.send_webhook_message(webhook=webhook, message=message)
+        send_webhook_message(webhook=webhook, message=message)
 
 # -------------------------------------------------------------------

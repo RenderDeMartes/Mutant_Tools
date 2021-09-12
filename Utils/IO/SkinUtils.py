@@ -25,7 +25,13 @@ author:  Esteban Rodriguez <info@mutanttools.com>
 
 import os
 import json
+import imp
 from maya import cmds
+import Mutant_Tools
+
+from Mutant_Tools.Utils.Helpers import helpers
+imp.reload(Mutant_Tools.Utils.Helpers.helpers)
+mh = helpers.Helpers()
 
 #Read name conventions as nc[''] and setup as seup['']
 PATH = os.path.dirname(__file__)

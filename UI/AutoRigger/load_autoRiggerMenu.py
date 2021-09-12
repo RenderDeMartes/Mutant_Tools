@@ -40,6 +40,7 @@ from PySide2 import QtWidgets
 from PySide2.QtWidgets import *
 from maya.app.general.mayaMixin import MayaQWidgetDockableMixin
 
+import maya.OpenMaya as OpenMaya
 import maya.OpenMayaUI as omui
 from functools import partial
 # import pymel.core as pm
@@ -63,6 +64,22 @@ imp.reload(QtMutantWindow)
 from Mutant_Tools.Utils.Helpers import helpers
 imp.reload(Mutant_Tools.Utils.Helpers.helpers)
 mh = helpers.Helpers()
+
+from Mutant_Tools.Utils.IO import SkinUtils
+imp.reload(Mutant_Tools.Utils.IO.SkinUtils)
+skin = SkinUtils.Skinning()
+
+from Mutant_Tools.Utils.IO import NgSkinUtils
+imp.reload(Mutant_Tools.Utils.IO.NgSkinUtils)
+ngmt = NgSkinUtils.NG_Mutant()
+
+from Mutant_Tools.Utils.IO import CtrlUtils
+imp.reload(Mutant_Tools.Utils.IO.CtrlUtils)
+ctrls = CtrlUtils.Ctrls()
+
+from Mutant_Tools.Utils.IO import Guides
+imp.reload(Mutant_Tools.Utils.IO.Guides)
+guides = Guides.Guides()
 
 # -------------------------------------------------------------------
 
@@ -193,6 +210,15 @@ class AutoRiggerMenu(MayaQWidgetDockableMixin, QtWidgets.QDialog):
 
 	def create_connections(self):
 		#FILE MENU
+		self.save_guide.triggered.connect(lambda: guides.export_ma_guide())
+		self.load_guide.triggered.connect(lambda: guides.import_ma_guide())
+
+		self.save_skin.triggered.connect(lambda: ngmt.export_all_skins())
+		self.load_skin.triggered.connect(lambda: ngmt.import_all_skins())
+
+		self.save_ctrls.triggered.connect(lambda: ctrls.save_all())
+		self.load_ctrls.triggered.connect(lambda: ctrls.load_all())
+		self.mirror_ctrls.triggered.connect(lambda: ctrls.mirror_all())
 
 		#HELP MENU
 		self.discord.triggered.connect(lambda: self.cWebsiteViewer.open_link('https://discord.gg/pqGeYhUcAW'))
