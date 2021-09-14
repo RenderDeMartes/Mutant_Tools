@@ -11,7 +11,6 @@ how to:
 import imp
 import Mutant_Tools
 from Mutant_Tools.UI.FolderName import load_pyname
-import imp
 imp.reload(load_pyname)
 
 try:cMutantUI.close()
@@ -55,9 +54,21 @@ import pprint
 
 # -------------------------------------------------------------------
 
+# QT WIndow!
+FOLDER_NAME = 'folder_name_here'
+PATH = os.path.dirname(__file__)
+BLOCKS_PATH = PATH.replace('\\UI\\{}'.format(FOLDER_NAME), '//Blocks')  # get Blocks paths to write files
+
+Title = 'Mutant || Mutant'
+Folder = PATH.replace('\\UI\\{}'.format(FOLDER_NAME), '')
+UI_File = 'FILE_NAME_HERE.ui'
+IconsPath = Folder + '//Icons//'
+
+# -------------------------------------------------------------------
+
 # Read name conventions as nc[''] and setup as seup['']
 PATH = os.path.dirname(__file__)
-PATH = PATH.replace('\\UI\\FolderName', '//Config')  # change this path depending of the folder
+PATH = PATH.replace('\\UI\\{}'.format(FOLDER_NAME), '//Config')  # change this path depending of the folder
 
 JSON_FILE = (PATH + '/name_conventions.json')
 with open(JSON_FILE) as json_file:
@@ -71,17 +82,6 @@ SETUP_FILE = (PATH + '/rig_setup.json')
 with open(SETUP_FILE) as setup_file:
 	setup = json.load(setup_file)
 
-# -------------------------------------------------------------------
-
-# QT WIndow!
-PATH = os.path.dirname(__file__)
-OTHERS_PATH = PATH.replace('\\UI\\FolderName', '//Others')  # get presets path to read files
-BLOCKS_PATH = PATH.replace('\\UI\\FolderName', '//Blocks')  # get Blocks paths to write files
-
-Title = 'Mutant || Mutant'
-Folder = PATH.replace('\\UI\\FolderName', '')
-UI_File = 'blockBuilder.ui'
-IconsPath = Folder + '//Icons//'
 # -------------------------------------------------------------------
 
 import Mutant_Tools
@@ -112,8 +112,8 @@ class MutantUI(QtMutantWindow.Qt_Mutant):
 
 		self.setWindowTitle(Title)
 
-		self.designer_loader_child(path=Folder + '/UI/FolderName/', ui_file=UI_File)
-		self.set_title('Block Builder')
+		self.designer_loader_child(path=Folder + '/UI/{}/'.format(FOLDER_NAME), ui_file=UI_File)
+		self.set_title(Title)
 
 		self.create_layout()
 		self.create_connections()
