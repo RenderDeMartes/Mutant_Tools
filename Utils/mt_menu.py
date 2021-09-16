@@ -65,6 +65,18 @@ def open_rig_builder(*args):
     AutoRigger = load_autoRigger.AutoRigger()
     AutoRigger.show()
 
+
+def load_guide_placement(self):
+    from Mutant_Tools.UI.GuidePlacements import load_guide_placements
+    imp.reload(load_guide_placements)
+
+    try:
+        cGuidePlacements.close()
+    except:
+        pass
+    cGuidePlacements = load_guide_placements.GuidePlacements()
+    cGuidePlacements.show()
+
 def open_block_builder(*args):
     import imp
     import Mutant_Tools
@@ -172,6 +184,7 @@ def create_mutant_menu(*args):
 
             "Auto Rigger" :{
                             "Open Autorigger": open_rig_builder,
+                            "Guide Placement" : load_guide_placement,
                             "Tutorial": rigging_tutorial,
                             "View Log": view_log,
                             "Help": riggers_help
