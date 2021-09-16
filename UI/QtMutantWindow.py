@@ -294,16 +294,6 @@ class Qt_Mutant(QtWidgets.QMainWindow):
 
 	# ------------------------------------------------
 
-	def colapsable_widget(self, layout=None, title='Expandable'):
-		if layout==None:
-			layout=self.master_ui.mutant_Layout
-
-		exp = expandableWidget.expandableWidget(parent=layout, title=title)
-
-		return exp
-
-	# ------------------------------------------------
-
 	def create_separator(self):
 		separator = QtWidgets.QLabel()
 		separator.setStyleSheet("border : 5px solid grey; ")

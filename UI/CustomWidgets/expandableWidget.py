@@ -61,6 +61,7 @@ class expandableWidget(QtWidgets.QDialog):
 
         self.parent = parent
         self.title = title
+        self.layout = ''
 
         self.create_widget()
         self.create_connections()
@@ -80,16 +81,18 @@ class expandableWidget(QtWidgets.QDialog):
         main_layout.addLayout(h_layout)
 
         self.open_button = QtWidgets.QPushButton()
-        self.label_button = QtWidgets.QPushButton(self.title)
+        self.label = QtWidgets.QLabel(self.title)
 
         self.open_button.setFixedSize(15,15)
-        self.label_button.setStyleSheet("QPushButton{\n    border-style: none;\n    border-width: 0;\n}")
+        self.open_button.setIconSize(QtCore.QSize(10,10))
+        self.open_button.setIcon(QtGui.QIcon(ICONS_FOLDER + 'DDown.png'))
+        #self.label_button.setStyleSheet("QPushButton{\n    border-style: none;\n    border-width: 0;\n}")
 
         h_layout.addWidget(self.open_button)
-        h_layout.addWidget(self.label_button)
+        h_layout.addWidget(self.label)
 
         separator = self.create_separator()
-        h_layout.addWidget(separator)
+        #h_layout.addWidget(separator)
 
         #Botom Part
         v_layout = QtWidgets.QVBoxLayout()
@@ -104,13 +107,7 @@ class expandableWidget(QtWidgets.QDialog):
 
         v_layout.addWidget(self.frame)
 
-        #test button
-        test_button1 = QtWidgets.QPushButton('TEST')
-        test_button2 = QtWidgets.QPushButton('TEST2')
-
-        frame_layout.addWidget(test_button1)
-        frame_layout.addWidget(test_button2)
-
+        self.layout = frame_layout
         return frame_layout
 
     #-----------------------------------------------------------------------------------------------------------------
@@ -125,8 +122,8 @@ class expandableWidget(QtWidgets.QDialog):
     #-----------------------------------------------------------------------------------------------------------------
 
     def create_connections(self):
-        self.open_button.clicked.connect(self.toggle_state)
-        self.label_button.clicked.connect(self.toggle_state)
+        self.open_button.clicked.connect(lambda: self.toggle_state())
+        #self.label_button.clicked.connect(self.toggle_state)
 
     def toggle_state(self):
         if self.frame.isVisible():
@@ -138,7 +135,6 @@ class expandableWidget(QtWidgets.QDialog):
     def collapse(self):
         self.frame.hide()
         self.change_button_icon()
-
 
     def expand(self):
         self.frame.show()
