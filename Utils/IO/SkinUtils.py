@@ -97,10 +97,12 @@ class Skinning(object):
         if geo == None:
             geo = cmds.ls(sl=True)
 
-        cmds.select(joints,geo)
-        skin = cmds.skinCluster(toSelectedBones=True)[0]
-        skin=cmds.rename(skin, '{}{}'.format(geo, nc['skin_cluster']))
-        self.deformable_dual_quaternion(skin=skin)
+        for transform in geo:
+            if cmds.nodeType(transform) == 'transform':
+                cmds.select(joints,transform)
+                skin = cmds.skinCluster(toSelectedBones=True)[0]
+                skin=cmds.rename(skin, '{}{}'.format(transform, nc['skin_cluster']))
+                self.deformable_dual_quaternion(skin=skin)
 
         return skin
 

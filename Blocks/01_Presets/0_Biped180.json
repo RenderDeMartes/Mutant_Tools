@@ -1,7 +1,7 @@
 {
     "Name": "Biped180",
     "Description": "Will import the preset for biped 1.80m",
-    "Icon": "Biped.png",
+    "Icon": "Human.png",
     "Enable": "True",
     "python_file": "exec_biped180.py",
     "import": "import exec_biped180",

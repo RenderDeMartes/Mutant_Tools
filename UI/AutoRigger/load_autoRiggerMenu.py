@@ -156,14 +156,16 @@ class AutoRiggerMenu(MayaQWidgetDockableMixin, QtWidgets.QDialog):
 
 		self.save_guide = self.fileMenu.addAction("Save Guide")
 		self.load_guide = self.fileMenu.addAction("Load Guide")
+		self.place_guide = self.fileMenu.addAction("Guide Placement")
 		self.fileMenu.addSeparator()
 
+		self.bind_selected = self.fileMenu.addAction("Bind Selected Geo")
 		self.download_ng = self.fileMenu.addAction("Download NgSkinToolsV2")
 		self.save_skin = self.fileMenu.addAction("Save Skin")
 		self.load_skin = self.fileMenu.addAction("Load Skin")
 		self.fileMenu.addSeparator()
 
-		self.save_ctrls = self.fileMenu.addAction("Save Ctrls")
+		self.save_ctrls = self.fileMenu.addAction(" Save Ctrls")
 		self.load_ctrls = self.fileMenu.addAction("Load Ctrls")
 		self.mirror_ctrls = self.fileMenu.addAction("Mirror Ctrls")
 		self.fileMenu.addSeparator()
@@ -212,7 +214,9 @@ class AutoRiggerMenu(MayaQWidgetDockableMixin, QtWidgets.QDialog):
 		#FILE MENU
 		self.save_guide.triggered.connect(lambda: guides.export_ma_guide())
 		self.load_guide.triggered.connect(lambda: guides.import_ma_guide())
+		self.place_guide.triggered.connect(lambda: self.load_guide_placement())
 
+		self.bind_selected.triggered.connect(lambda: skin.bind_to_bnd())
 		self.save_skin.triggered.connect(lambda: ngmt.export_all_skins())
 		self.load_skin.triggered.connect(lambda: ngmt.import_all_skins())
 
@@ -288,6 +292,16 @@ class AutoRiggerMenu(MayaQWidgetDockableMixin, QtWidgets.QDialog):
 		from Mutant_Tools.Utils.Helpers import discord
 		imp.reload(discord)
 		discord.send_requests()
+
+	# -------------------------------------------------------------------
+	def load_guide_placement(self):
+		from Mutant_Tools.UI.GuidePlacements import load_guide_placements
+		imp.reload(load_guide_placements)
+
+		try:cGuidePlacements.close()
+		except:pass
+		cGuidePlacements = load_guide_placements.GuidePlacements()
+		cGuidePlacements.show()
 
 	# -------------------------------------------------------------------
 
