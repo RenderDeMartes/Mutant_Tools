@@ -17,7 +17,7 @@ imp.reload(load_autoRigger)
 try:AutoRigger.close()
 except:pass
 AutoRigger = load_autoRigger.AutoRigger()
-AutoRigger.show(dockable = True)
+AutoRigger.show()
 
 #----------------
 dependencies:
@@ -63,6 +63,9 @@ import Mutant_Tools.UI
 from Mutant_Tools.UI import QtMutantWindow
 imp.reload(QtMutantWindow)
 
+import Mutant_Tools.UI.CustomWidgets.expandableWidget as expandableWidget
+imp.reload(expandableWidget)
+
 #-------------------------------------------------------------------
 
 #Read name conventions as nc[''] and setup as seup['']
@@ -104,6 +107,8 @@ imp.reload(Mutant_Tools.Utils.Rigging.main_mutant)
 
 mt = main_mutant.Mutant()
 
+import Mutant_Tools.UI.CustomWidgets.expandableWidget as expandableWidget
+imp.reload(expandableWidget)
 
 #-------------------------------------------------------------------
 def add_sys_folders_remove_compiled():
@@ -177,12 +182,7 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		self.create_block_buttons()
 		self.delete_side_buttons()
 
-		if cmds.objExists('Mutant_Build'):
-			try:
-				for num, child in enumerate(cmds.listRelatives('Mutant_Build', c=True)):
-					self.create_side_button(pack_name = child, index = num)
-			except:
-				print ('Mutant_Build Grp is empty')
+		self.create_all_side_buttons()
 
 		try:self.ui.layout().setContentsMargins(3, 3, 3, 3)
 		except:pass
@@ -209,12 +209,13 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 	def create_connections(self):
 
 		self.ui.reload_ui.clicked.connect(self.reload_ui)
-		self.ui.build_btn.clicked.connect(self.buid_autorigger)
+		self.ui.build_btn.clicked.connect(self.build_autorigger)
 
 		self.ui.prebuild.clicked.connect(lambda : self.edit_prebuild_code(self.current_block))
 		self.ui.current_code.clicked.connect(lambda : self.view_build_code(self.current_block))
 		self.ui.postbuild.clicked.connect(lambda : self.edit_postbuild_code(self.current_block))
 		self.ui.log.clicked.connect(lambda : self.view_log())
+
 
 	#-------------------------------------------------------------------
 	def create_block_buttons(self):
@@ -347,15 +348,33 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		self.create_layout()
 
 	#-------------------------------------------------------------------
-	def create_side_button(self, pack_name = 'Mutant_Block', index = 0, parent=None):
+
+	def create_all_side_buttons(self):
+		if cmds.objExists('Mutant_Build'):
+			for num, child in enumerate(cmds.listRelatives('Mutant_Build', c=True)):
+				if not child.endswith(nc['module']):
+					colapsable_box = expandableWidget.expandableWidget(parent=self.ui.side_layout, title=child.replace('_Build', ''))
+					print(colapsable_box.layout)
+					grand_childs = cmds.listRelatives(child, c=True)
+					#if not childs in group pass else parent sde button to group
+					if grand_childs is None:
+						continue
+					else:
+						for grand_child in grand_childs:
+							self.create_side_button(pack_name=grand_child, index=num, block_parent=colapsable_box.layout)
+				else:
+					self.create_side_button(pack_name=child, index=num, block_parent=None)
+
+	#-------------------------------------------------------------------
+	def create_side_button(self, pack_name = 'Mutant_Block', index = 0, block_parent = None):
 
 		#This will create all the side buttons when the up buttons are clicked
 
-		if parent == None:
-			parent = self.ui.side_layout
+		if block_parent == None:
+			block_parent = self.ui.side_layout
 
 		side_hbox = QGroupBox()
-		parent.addWidget(side_hbox)
+		block_parent.addWidget(side_hbox)
 
 		#up down buttons
 		#up_button = QtWidgets.QPushButton('↑')
@@ -576,7 +595,22 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		cmds.setAttr(attr, comboBox.currentIndex())
 
 	#-------------------------------------------------------------------
-	def buid_autorigger(self):
+
+	def get_blocks_to_build(self):
+		to_build = []
+		blocks = cmds.listRelatives('Mutant_Build', c=True)
+		for child in blocks:
+			if not child.endswith(nc['module']):
+				grand_childs = cmds.listRelatives(child, c=True)
+				for grand_child in grand_childs:
+					to_build.append(grand_child)
+			else:
+				to_build.append(child)
+
+		return to_build
+
+	#-------------------------------------------------------------------
+	def build_autorigger(self):
 
 		self.ui.bar_label.setText('Starting the Build')
 
@@ -591,7 +625,7 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 			pass
 
 		#build
-		blocks = cmds.listRelatives('Mutant_Build', c=True)
+		blocks = self.get_blocks_to_build()
 		progress_max = len(blocks)
 		self.ui.progressBar.setMaximum(progress_max)
 		#select each block and run the build command and make progress bar move
