@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>470</width>
-    <height>576</height>
+    <width>516</width>
+    <height>562</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -160,34 +160,10 @@
            </property>
           </widget>
          </item>
-         <item row="0" column="1">
-          <widget class="QRadioButton" name="biped_radio">
-           <property name="text">
-            <string>Biped</string>
-           </property>
-           <property name="checked">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="3">
-          <widget class="QRadioButton" name="animals_radio">
-           <property name="text">
-            <string>Animals</string>
-           </property>
-          </widget>
-         </item>
          <item row="0" column="5">
           <widget class="QRadioButton" name="props_radio">
            <property name="text">
             <string>Props</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="0">
-          <widget class="QRadioButton" name="presets_radio">
-           <property name="text">
-            <string>Presets</string>
            </property>
           </widget>
          </item>
@@ -198,17 +174,48 @@
            </property>
           </widget>
          </item>
-         <item row="0" column="7">
+         <item row="0" column="6">
+          <widget class="QRadioButton" name="games_radio">
+           <property name="text">
+            <string>Games</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QRadioButton" name="presets_radio">
+           <property name="text">
+            <string>Presets</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QRadioButton" name="biped_radio">
+           <property name="text">
+            <string>Biped</string>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="8">
           <widget class="QRadioButton" name="other_radio">
            <property name="text">
             <string>Other</string>
            </property>
           </widget>
          </item>
-         <item row="0" column="6">
-          <widget class="QRadioButton" name="games_radio">
+         <item row="0" column="3">
+          <widget class="QRadioButton" name="animals_radio">
            <property name="text">
-            <string>Games</string>
+            <string>Animals</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="7">
+          <widget class="QRadioButton" name="data_radio">
+           <property name="text">
+            <string>Data</string>
            </property>
           </widget>
          </item>

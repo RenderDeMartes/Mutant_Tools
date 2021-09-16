@@ -154,8 +154,10 @@ class BlockBuilder(QtMutantWindow.Qt_Mutant):
 			tab = '06_Props'
 		elif self.ui.games_radio.isChecked():
 			tab = '07_Games'
+		elif self.ui.data_radio.isChecked():
+			tab = '08_Data'
 		else :
-			tab = '08_Other'
+			tab = '09_Other'
 
 
 		#create the config dic with ordered dict so it can mantain the order we desire

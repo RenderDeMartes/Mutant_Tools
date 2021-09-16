@@ -165,7 +165,7 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		try:OpenMaya.MGlobal.displayInfo('♥')
 		except:pass
 
-		#Data init
+		#08_Data init
 		self.current_block = None
 		self.current_block_folder = None
 
@@ -235,6 +235,8 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 			self.ui.props_layout.itemAt(i).widget().setParent(None)
 		for i in reversed(range(self.ui.games_layout.count())):
 			self.ui.games_layout.itemAt(i).widget().setParent(None)
+		for i in reversed(range(self.ui.data_layout.count())):
+			self.ui.data_layout.itemAt(i).widget().setParent(None)
 		for i in reversed(range(self.ui.other_layout.count())):
 			self.ui.other_layout.itemAt(i).widget().setParent(None)
 
@@ -300,6 +302,8 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 					self.ui.props_layout.addWidget(button)
 				elif block_folder == '07_Games':
 					self.ui.games_layout.addWidget(button)
+				elif block_folder == '08_Data':
+					self.ui.data_layout.addWidget(button)
 				else:
 					self.ui.other_layout.addWidget(button)
 

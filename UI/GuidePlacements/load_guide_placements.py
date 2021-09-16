@@ -227,7 +227,7 @@ class GuidePlacements(QtMutantWindow.Qt_Mutant):
 		clean_sel = self.clean_selection(sel)
 		if sel:
 			if line_edit.text():
-				result = cmds.confirmDialog( title='Replace?', message='Replace Data?', button=['Yes','No'], defaultButton='Yes', cancelButton='No', dismissString='No' )
+				result = cmds.confirmDialog( title='Replace?', message='Replace 08_Data?', button=['Yes','No'], defaultButton='Yes', cancelButton='No', dismissString='No' )
 				if result != 'Yes':
 					return None
 			line_edit.setText(clean_sel)
