@@ -70,7 +70,6 @@ IconsPath = Folder + '//Icons//'
 # Read name conventions as nc[''] and setup as seup['']
 PATH = os.path.dirname(__file__)
 PATH = PATH.replace('\\UI\\{}'.format(FOLDER_NAME), '//Config')  # change this path depending of the folder
-print(PATH)
 
 JSON_FILE = (PATH + '/name_conventions.json')
 with open(JSON_FILE) as json_file:
@@ -170,7 +169,9 @@ class GuidePlacements(QtMutantWindow.Qt_Mutant):
 		self.guideMenu.addSeparator()
 
 		self.load_biped = self.guideMenu.addAction("Load Biped")
+		self.load_biped.triggered.connect(lambda: self.load_biped_data())
 		self.load_biped_wrap = self.guideMenu.addAction("Load Wrap3 Biped")
+		self.load_biped_wrap.triggered.connect(lambda: self.load_biped_wrap_data())
 		self.guideMenu.addSeparator()
 
 		self.menuBar.addMenu(self.guideMenu)
@@ -192,19 +193,30 @@ class GuidePlacements(QtMutantWindow.Qt_Mutant):
 
 		guide_edit = QLineEdit()
 		guide_edit.setText(guide_text)
-		guide_button = QPushButton('<<')
+		guide_button = QPushButton()
+		guide_button.setIcon(QtGui.QIcon(IconsPath + 'DLeft.png'))
 		guide_button.clicked.connect(partial(self.selection_to_line_edit, guide_edit))
+		sel_guide_button = QPushButton()
+		sel_guide_button.setIcon(QtGui.QIcon(IconsPath + 'Cursor.png'))
+		sel_guide_button.clicked.connect(partial(self.select_text, guide_edit))
 
 		main_layout.addWidget(guide_edit)
 		main_layout.addWidget(guide_button)
+		main_layout.addWidget(sel_guide_button)
 
 		position_edit = QLineEdit()
 		position_edit.setText(position_text)
-		position_button = QPushButton('<<')
+		position_button = QPushButton()
+		position_button.setIcon(QtGui.QIcon(IconsPath + 'DLeft.png'))
 		position_button.clicked.connect(partial(self.selection_to_line_edit, position_edit))
+		sel_position_button = QPushButton()
+		sel_position_button.setIcon(QtGui.QIcon(IconsPath + 'Cursor.png'))
+		sel_position_button.clicked.connect(partial(self.select_text, position_edit))
 
 		main_layout.addWidget(position_edit)
 		main_layout.addWidget(position_button)
+		main_layout.addWidget(sel_position_button)
+
 
 		self.place_widgets.append([guide_edit, position_edit])
 
@@ -214,7 +226,18 @@ class GuidePlacements(QtMutantWindow.Qt_Mutant):
 		sel=cmds.ls(sl=True)
 		clean_sel = self.clean_selection(sel)
 		if sel:
+			if line_edit.text():
+				result = cmds.confirmDialog( title='Replace?', message='Replace Data?', button=['Yes','No'], defaultButton='Yes', cancelButton='No', dismissString='No' )
+				if result != 'Yes':
+					return None
 			line_edit.setText(clean_sel)
+
+	def select_text(self, line_edit):
+		objs = line_edit.text()
+		if objs:
+			cmds.select(cl=True)
+			for i in objs.split(','):
+				cmds.select(i, add=True)
 
 	# -------------------------------------------------------------------
 
@@ -269,7 +292,8 @@ class GuidePlacements(QtMutantWindow.Qt_Mutant):
 
 		start_edit = QLineEdit()
 		start_edit.setText(start_text)
-		start_button = QPushButton('<<')
+		start_button = QPushButton()
+		start_button.setIcon(QtGui.QIcon(IconsPath + 'DLeft.png'))
 		start_button.clicked.connect(partial(self.selection_to_line_edit, start_edit))
 
 		main_layout.addWidget(start_edit)
@@ -277,7 +301,8 @@ class GuidePlacements(QtMutantWindow.Qt_Mutant):
 
 		mid_edit = QLineEdit()
 		mid_edit.setText(mid_text)
-		mid_button = QPushButton('<<')
+		mid_button = QPushButton()
+		mid_button.setIcon(QtGui.QIcon(IconsPath + 'DLeft.png'))
 		mid_button.clicked.connect(partial(self.selection_to_line_edit, mid_edit))
 
 		main_layout.addWidget(mid_edit)
@@ -285,7 +310,8 @@ class GuidePlacements(QtMutantWindow.Qt_Mutant):
 
 		end_edit = QLineEdit()
 		end_edit.setText(end_text)
-		end_button = QPushButton('<<')
+		end_button = QPushButton()
+		end_button.setIcon(QtGui.QIcon(IconsPath + 'DLeft.png'))
 		end_button.clicked.connect(partial(self.selection_to_line_edit, end_edit))
 
 		main_layout.addWidget(end_edit)
@@ -413,6 +439,11 @@ class GuidePlacements(QtMutantWindow.Qt_Mutant):
 		if not read_path:
 			return False
 
+		for i in reversed(range(self.ui.place_layout.count())):
+			self.ui.place_layout.itemAt(i).widget().setParent(None)
+		for i in reversed(range(self.ui.ref_layout.count())):
+			self.ui.ref_layout.itemAt(i).widget().setParent(None)
+
 		data = mh.read_json(path = read_path, json_file = '')
 		guides = data['guides']
 		refs = data['refs']
@@ -442,6 +473,13 @@ class GuidePlacements(QtMutantWindow.Qt_Mutant):
 		pprint.pprint(data)
 
 	# -------------------------------------------------------------------
+	def load_biped_wrap_data(self):
+		json_file = os.path.dirname(__file__) + '\\Guides\\BipedWrap.json'
+		self.load_preset(path = json_file)
+
+	def load_biped_data(self):
+		json_file = os.path.dirname(__file__) + '\\Guides\\Biped.json'
+		self.load_preset(path=json_file)
 
 
 # -------------------------------------------------------------------
