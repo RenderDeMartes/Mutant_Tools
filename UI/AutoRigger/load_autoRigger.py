@@ -411,6 +411,8 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		h_layout.addLayout(v_layout)
 		h_layout.addWidget(edit_button)
 
+		h_layout.addStretch()
+
 		side_hbox.setLayout(h_layout)
 		up_button.clicked.connect(partial (mt.move_outliner, pack_name, True, False))
 		down_button.clicked.connect(partial (mt.move_outliner, pack_name, False, True))
