@@ -125,7 +125,7 @@ class NG_Mutant(object):
     def import_all_skins(self, keep_nodes=False):
         if not cmds.objExists('Bind_Geo_Grp'):
             return False
-        geos = cmds.listRelatives('Bind_Geo_Grp')
+        geos = cmds.listRelatives('Bind_Geo_Grp', ad=True)
         if not geos:
             cmds.error('There is no geo in Bind_Geo_Grp')
             return False
