@@ -14,16 +14,6 @@ Build successfully exec_baseA.build_baseA_block()
 Postcode BaseA_Block
 ------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------
-Building: BS_Bind_Block
-------------------------------------------------------------------------------------
-------------------------------------------------------------------------------------
-Import successfully import exec_bs_bind
-Precode BS_Bind_Block
-# Warning: there is no group called  # 
-Build successfully exec_bs_bind.build_bs_bind_block()
-Postcode BS_Bind_Block
-------------------------------------------------------------------------------------
-------------------------------------------------------------------------------------
 Building: Root_Block
 ------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------
@@ -132,7 +122,7 @@ creating ik Chain for : L_Shoulder_Jnt
 // Error: searchReplaceNames _Jnt  "selected"; // 
 // Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
 IK = ['L_Wrist_Ik_Ctrl', 'L_Wrist_Ik_PoleVector_Ctrl', 'L_Shoulder_Ik_Ctrl', 'L_Wrist_Ik_IKrp', 'L_Wrist_Ik_PoleVector_Ctrl_L_Elbow_Ik_Jnt_Connected_Crv']
-28.57213715105034
+58.58765922655056
 ['L_Shoulder_Fk_Ctrl_Offset_Grp', 'L_Wrist_Ik_Ctrl_Offset_Grp', 'L_Shoulder_Ik_Ctrl_Offset_Grp', 'L_Shoulder_Ik_Jnt_Ctrl_Grp']
 __________
 adding loc to ['L_Shoulder_Fk_Ctrl']
@@ -187,7 +177,7 @@ creating ik Chain for : R_Shoulder_Jnt
 // Error: searchReplaceNames _Jnt  "selected"; // 
 // Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
 IK = ['R_Wrist_Ik_Ctrl', 'R_Wrist_Ik_PoleVector_Ctrl', 'R_Shoulder_Ik_Ctrl', 'R_Wrist_Ik_IKrp', 'R_Wrist_Ik_PoleVector_Ctrl_R_Elbow_Ik_Jnt_Connected_Crv']
-28.57259450697472
+58.58812681542229
 ['R_Shoulder_Fk_Ctrl_Offset_Grp', 'R_Wrist_Ik_Ctrl_Offset_Grp', 'R_Shoulder_Ik_Ctrl_Offset_Grp', 'R_Wrist_Ik_Ctrl_Offset_Grp__Mirror_Grp']
 __________
 adding loc to ['R_Shoulder_Fk_Ctrl']
@@ -270,7 +260,7 @@ creating ik Chain for : L_Hip_Jnt
 // Error: searchReplaceNames _Jnt  "selected"; // 
 // Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
 IK = ['L_Ankle_Ik_Ctrl', 'L_Ankle_Ik_PoleVector_Ctrl', 'L_Hip_Ik_Ctrl', 'L_Ankle_Ik_IKrp', 'L_Ankle_Ik_PoleVector_Ctrl_L_Knee_Ik_Jnt_Connected_Crv']
-41.44643354357138
+93.6909284540289
 ['L_Hip_Fk_Ctrl_Offset_Grp', 'L_Ankle_Ik_Ctrl_Offset_Grp', 'L_Hip_Ik_Ctrl_Offset_Grp', 'L_Hip_Ik_Jnt_Ctrl_Grp']
 __________
 adding loc to ['L_Hip_Fk_Ctrl']
@@ -325,7 +315,7 @@ creating ik Chain for : R_Hip_Jnt
 // Error: searchReplaceNames _Jnt  "selected"; // 
 // Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
 IK = ['R_Ankle_Ik_Ctrl', 'R_Ankle_Ik_PoleVector_Ctrl', 'R_Hip_Ik_Ctrl', 'R_Ankle_Ik_IKrp', 'R_Ankle_Ik_PoleVector_Ctrl_R_Knee_Ik_Jnt_Connected_Crv']
-41.446498134232016
+93.69032974381138
 ['R_Hip_Fk_Ctrl_Offset_Grp', 'R_Ankle_Ik_Ctrl_Offset_Grp', 'R_Hip_Ik_Ctrl_Offset_Grp', 'R_Ankle_Ik_Ctrl_Offset_Grp__Mirror_Grp']
 __________
 adding loc to ['R_Hip_Fk_Ctrl']
@@ -469,14 +459,14 @@ L_Hand_Palm_Jnt
 // Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
 // Error: searchReplaceNames _Jnt  "selected"; // 
 // Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
-[50.013061458861095, 99.03655319439548, -5.383376846661715]
+[109.6439850234551, 217.0953561437317, -12.954536567790264]
 # Warning: Name '_________' of new attribute clashes with an existing attribute of node 'L_Hand_Palm_Ctrl'. # 
 L_Hand_Palm_Jnt:INNER CUP
 // Error: searchReplaceNames _Ctrl  "selected"; // 
 // Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
 // Error: searchReplaceNames _Jnt  "selected"; // 
 // Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
-[48.21928279342006, 96.75979696827146, -2.267797935897424]
+[107.61479747709882, 209.97370709196122, -5.6654390472876965]
 L_Hand_Palm_Jnt: OUTTER CUP
 // Error: searchReplaceNames _Ctrl  "selected"; // 
 // Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
@@ -610,14 +600,14 @@ Index_01
 // Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
 // Error: searchReplaceNames _Jnt  "selected"; // 
 // Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
-[50.013061458861095, 99.03655319439548, -5.383376846661715]
+[109.6439850234551, 217.0953561437317, -12.954536567790264]
 # Warning: Name '_________' of new attribute clashes with an existing attribute of node 'R_Hand_Palm_Ctrl'. # 
 R_Hand_Palm_Jnt:INNER CUP
 // Error: searchReplaceNames _Ctrl  "selected"; // 
 // Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
 // Error: searchReplaceNames _Jnt  "selected"; // 
 // Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
-[48.21928279342006, 96.75979696827146, -2.267797935897424]
+[107.61479747709882, 209.97370709196122, -5.6654390472876965]
 R_Hand_Palm_Jnt: OUTTER CUP
 // Error: searchReplaceNames _Ctrl  "selected"; // 
 // Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
@@ -703,32 +693,3 @@ L_Foot_Ankle_Jnt
 Build L_Foot_Block Success
 Build successfully exec_foot.build_foot_block()
 Postcode L_Foot_Block
-------------------------------------------------------------------------------------
-------------------------------------------------------------------------------------
-Building: Load_Skin_Block
-------------------------------------------------------------------------------------
-------------------------------------------------------------------------------------
-Import successfully import exec_load_skin
-Precode Load_Skin_Block
-Getting skin data from:  
-Build successfully exec_load_skin.build_load_skin_block()
-Postcode Load_Skin_Block
-------------------------------------------------------------------------------------
-------------------------------------------------------------------------------------
-Building: Load_Ctrls_Block
-------------------------------------------------------------------------------------
-------------------------------------------------------------------------------------
-Import successfully import exec_load_ctrls
-Precode Load_Ctrls_Block
-Build successfully exec_load_ctrls.build_load_ctrls_block()
-Postcode Load_Ctrls_Block
-------------------------------------------------------------------------------------
-------------------------------------------------------------------------------------
-Building: Code_Block
-------------------------------------------------------------------------------------
-------------------------------------------------------------------------------------
-Import successfully import exec_code
-Precode Code_Block
-Build Code_Block Success
-Build successfully exec_code.build_code_block()
-Postcode Code_Block

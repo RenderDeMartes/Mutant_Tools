@@ -259,7 +259,7 @@ class Ctrls(object):
     def load_all(self, path=None):
         #ctrls.load_all('C:\\Users\\PC\\Desktop\\ctrls.json')
         if path is None:
-            path = mh.import_window(extension = ".json", path = None)
+            path = mh.import_window(extension = ".json")
         if not path:
             return False
 
