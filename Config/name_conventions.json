@@ -20,6 +20,8 @@
    "fk": "_Fk_Jnt",
 
    "geo":		"_Geo",
+   "bind_geo": "_Bind_Geo",
+
    "group":		"_Grp",
    "locator":  "_Loc",
    "cluster":  "_Cls",

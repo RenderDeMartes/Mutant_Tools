@@ -313,14 +313,14 @@
         <item>
          <widget class="QLineEdit" name="attr_name_5">
           <property name="text">
-           <string>Blends_string</string>
+           <string>SetGameParent_string</string>
           </property>
          </widget>
         </item>
         <item>
          <widget class="QLineEdit" name="attr_settings_5">
           <property name="text">
-           <string>COG_Ctrl,GLobal_Ctrl,Root_Ctrl</string>
+           <string/>
           </property>
          </widget>
         </item>
@@ -331,12 +331,16 @@
         <item>
          <widget class="QLineEdit" name="attr_name_6">
           <property name="text">
-           <string>SetGameParent_string</string>
+           <string>Help_string</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="attr_settings_6"/>
+         <widget class="QLineEdit" name="attr_settings_6">
+          <property name="text">
+           <string>Possible parent: *_Jnt </string>
+          </property>
+         </widget>
         </item>
        </layout>
       </item>
@@ -345,14 +349,14 @@
         <item>
          <widget class="QLineEdit" name="attr_name_7">
           <property name="text">
-           <string>Help_string</string>
+           <string/>
           </property>
          </widget>
         </item>
         <item>
          <widget class="QLineEdit" name="attr_settings_7">
           <property name="text">
-           <string>Possible parent: *_Jnt </string>
+           <string/>
           </property>
          </widget>
         </item>

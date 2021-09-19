@@ -66,6 +66,10 @@ imp.reload(QtMutantWindow)
 import Mutant_Tools.UI.CustomWidgets.expandableWidget as expandableWidget
 imp.reload(expandableWidget)
 
+from Mutant_Tools.Utils.Helpers import helpers
+imp.reload(Mutant_Tools.Utils.Helpers.helpers)
+mh = helpers.Helpers()
+
 #-------------------------------------------------------------------
 
 #Read name conventions as nc[''] and setup as seup['']
@@ -125,10 +129,10 @@ def add_sys_folders_remove_compiled():
 		for name in files:
 			#print('Search: ' + os.path.join(path, name))
 			if '.pyc' in str(name):
-				print (name + ': Have been deleted')
+				#print (name + ': Have been deleted')
 				os.remove(os.path.join(path, name))
 			if '__pycache__' in str(name):
-				print (name + ': Have been deleted')
+				#print (name + ': Have been deleted')
 				os.remove(os.path.join(path, name))
 
 	# also remove pyc from UIs folder
@@ -136,10 +140,10 @@ def add_sys_folders_remove_compiled():
 	for path, subdirs, files in os.walk(path):
 		for name in files:
 			if '.pyc' in str(name):
-				print (name + ': Have been deleted')
+				#print (name + ': Have been deleted')
 				os.remove(os.path.join(path, name))
 
-	print ('Cache removed')
+	print ('Cache removed...')
 #-------------------------------------------------------------------
 
 
@@ -177,6 +181,9 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 
 		self.menu = load_autoRiggerMenu.AutoRiggerMenu()
 		self.ui.menuLayout.addWidget(self.menu)
+		self.search_button = QPushButton()
+		#self.search_button.setFixedSize(20,20)
+		#self.ui.menuLayout.addWidget(self.search_button)
 
 	def create_layout(self):
 		self.create_block_buttons()
@@ -239,7 +246,6 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 			self.ui.data_layout.itemAt(i).widget().setParent(None)
 		for i in reversed(range(self.ui.other_layout.count())):
 			self.ui.other_layout.itemAt(i).widget().setParent(None)
-
 		#'create all the buttons in the tabs blocks'
 		#print ('Relaod UI')
 		#print (Folder)
@@ -268,7 +274,7 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 					if version['dev_mode'] == 'On':
 						exec(block['import'])
 						exec(block['imp.reload'])
-						print ('reloading {}'.format(block_file))
+						#print ('reloading {}'.format(block_file))
 
 				#create button
 				block_name = str(block_file).split('_')[1].replace('.json', '')
@@ -358,7 +364,6 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 			for num, child in enumerate(cmds.listRelatives('Mutant_Build', c=True)):
 				if not child.endswith(nc['module']):
 					colapsable_box = expandableWidget.expandableWidget(parent=self.ui.side_layout, title=child.replace('_Build', ''))
-					print(colapsable_box.layout)
 					grand_childs = cmds.listRelatives(child, c=True)
 					#if not childs in group pass else parent sde button to group
 					if grand_childs is None:
@@ -508,7 +513,19 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 					set_button.clicked.connect(partial(self.lineEdit_get_selection,line_edit, edit_attr))
 					h_layout.addWidget(set_button)
 
-				if attr == 'Code':  # if code  in name it will create a larger box
+				if 'File' in attr:
+					file_button = QtWidgets.QPushButton('Browse')
+					file_button.setFixedSize(80,35)
+					file_button.clicked.connect(partial(self.lineEdit_get_file,line_edit, edit_attr))
+					h_layout.addWidget(file_button)
+
+				if 'Path' in attr:
+					file_button = QtWidgets.QPushButton('Browse')
+					file_button.setFixedSize(80,35)
+					file_button.clicked.connect(partial(self.lineEdit_get_path,line_edit, edit_attr))
+					h_layout.addWidget(file_button)
+
+				if attr == 'Code':  # if code in name it will create a larger box
 					line_edit.setParent(None)
 					plainText_edit = QtWidgets.QPlainTextEdit(cmds.getAttr('{}.{}'.format(config, attr)))
 					plainText_edit.textChanged.connect(partial(self.lineEdit_update_attr,plainText_edit, edit_attr))
@@ -589,6 +606,16 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 
 		field.setText(nice_selection)
 		cmds.setAttr(attr, nice_selection, type = 'string')
+
+	def lineEdit_get_file(self, field, attr, *args):
+		path = mh.import_window(extension=".json")
+		field.setText(path)
+		cmds.setAttr(attr, path, type='string')
+
+	def lineEdit_get_path(self, field, attr, *args):
+		path = mh.folder_window()
+		field.setText(path)
+		cmds.setAttr(attr, path, type='string')
 
 	def slider_update_attr(self, label, slider,attr, *args):
 		cmds.setAttr(attr, slider.value())

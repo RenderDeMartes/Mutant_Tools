@@ -10,6 +10,10 @@ imp.reload(Mutant_Tools.Utils.Rigging.main_mutant)
 
 mt = main_mutant.Mutant()
 
+from Mutant_Tools.Utils.IO import Guides
+imp.reload(Mutant_Tools.Utils.IO.Guides)
+guides = Guides.Guides()
+
 #---------------------------------------------
 
 TAB_FOLDER = '01_Presets'
@@ -39,63 +43,24 @@ with open(MODULE_FILE) as module_file:
 
 def create_biped180_block(name = 'Biped180'):
 
-    #name checks and block creation
-    name = mt.ask_name(text = module['Name'])
-    if cmds.objExists('{}{}'.format(name,nc['module'])):
-        cmds.warning('Name already exists.')
-        return ''
+    if cmds.objExists('Mutant_Build'):
+        cmds.confirmDialog(title='Ups, Sorry!',
+                           message='We already have a build group in the scene, please rename it and reparent it later.',
+                           button=['Ok'],
+                           defaultButton='Ok',
+                           cancelButton='Ok',
+                           dismissString='Ok')
+        return
 
-    block = mt.create_block(name = name, icon = 'Biped',  attrs = module['attrs'], build_command = module['build_command'], import_command = module['import'])
-    config = block[1]
-    block = block[0]
-      
-    #cmds.getAttr('{}.AttrName'.format(config)) #get attrs from config
-    #cmds.getAttr('{}.AttrName'.format(config), asString = True) #for enums
-    #joint_one = mt.create_joint_guide(name = name) #guide base with shapes
+    filepath = os.path.dirname(__file__).replace('Blocks//{}'.format(TAB_FOLDER), 'Utils//IO//Guide_Data//Biped180.ma')
+    print('Loading: {}...'.format(filepath))
 
-    cmds.select(block)
+    cmds.file(filepath, i=True, type="mayaAscii")
+    print(filepath)
 
-    print('{} Created Successfully'.format(name))
+    print('Created Successfully')
 
 #create_biped180_block()
 
 #-------------------------
 
-def build_biped180_block():
-
-    mt.check_is_there_is_base()
-
-    block = cmds.ls(sl=True)
-    config = cmds.listConnections(block)[1]
-    block = block[0]
-    guide = cmds.listRelatives(block, c=True)[0]
-
-    #groups for later cleaning
-    clean_rig_grp = ''
-    clean_ctrl_grp = ''
-    
-    #cmds.getAttr('{}.AttrName'.format(config))
-    #cmds.getAttr('{}.AttrName'.format(config), asString = True)
-
-    #orient the joints
-    mt.orient_joint(input = guide)
-    new_guide = mt.duplicate_and_remove_guides(guide)
-    print (new_guide)
-    to_build = [new_guide]
-
-    #use this locator in case parent is set to new locator
-    if cmds.getAttr('{}.SetParent'.format(config)) == 'new_locator':
-        block_parent = cmds.spaceLocator( n = '{}'.format(str(block).replace(nc['module'],'_Parent' + nc['locator'])))
-    else:
-        block_parent = cmds.getAttr('{}.SetParent'.format(config))
-
-
-    #clean a bit
-    clean_rig_grp = cmds.group(em=True, n = '{}{}'.format(block.replace(nc['module'],'_Rig'), nc['group']))
-
-
-    print ('Build {} Success'.format(block))
-
-
-
-#build_biped180_block()

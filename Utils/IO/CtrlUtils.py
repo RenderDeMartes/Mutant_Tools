@@ -256,12 +256,13 @@ class Ctrls(object):
         self.saveData(path=path, data=all_ctrls)
 
     #---------------------------------------------------------------------------
-    def load_all(self):
+    def load_all(self, path=None):
         #ctrls.load_all('C:\\Users\\PC\\Desktop\\ctrls.json')
-
-        path = mh.import_window(extension = ".json")
+        if path is None:
+            path = mh.import_window(extension = ".json", path = None)
         if not path:
-            return
+            return False
+
         path = path[0]
         data = self.loadData(path)
         cmds.select('*{}'.format(nc['ctrl']))

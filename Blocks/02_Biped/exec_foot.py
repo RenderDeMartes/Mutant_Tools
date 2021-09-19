@@ -126,8 +126,8 @@ def build_foot_block():
     #get attrs
     ikfk_switch_attr = cmds.getAttr('{}.SwitchIKFKAttr'.format(config), asString=True)
     rfl_attr = cmds.getAttr('{}.IkAttrsPosition'.format(config), asString=True)
-    block_parent_ik = cmds.getAttr('{}.SetIKParent'.format(config), asString=True)
-    block_parent_fk = cmds.getAttr('{}.SetFKParent'.format(config), asString=True)
+    block_parent_ik = cmds.getAttr('{}.SetIKCtrl'.format(config), asString=True)
+    block_parent_fk = cmds.getAttr('{}.SetFKCtrl'.format(config), asString=True)
     main_ik = cmds.getAttr('{}.IKLeg'.format(config), asString=True)
     size = cmds.getAttr('{}.CtrlSize'.format(config), asString=True)
 

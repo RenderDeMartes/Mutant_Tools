@@ -12,8 +12,8 @@ mt = main_mutant.Mutant()
 
 #---------------------------------------------
 
-TAB_FOLDER = '07_Games'
-PYBLOCK_NAME = 'exec_root'
+TAB_FOLDER = '09_Other'
+PYBLOCK_NAME = 'exec_bs_bind'
 
 #Read name conventions as nc[''] and setup as seup['']
 PATH = os.path.dirname(__file__)
@@ -31,13 +31,13 @@ SETUP_FILE = (PATH+'/rig_setup.json')
 with open(SETUP_FILE) as setup_file:
 	setup = json.load(setup_file)	
 
-MODULE_FILE = (os.path.dirname(__file__) +'/01_Root.json')
+MODULE_FILE = (os.path.dirname(__file__) +'/06_BS_Bind.json')
 with open(MODULE_FILE) as module_file:
 	module = json.load(module_file)
 
 #---------------------------------------------
 
-def create_root_block(name = 'Root'):
+def create_bs_bind_block(name = 'BS_Bind'):
 
     #name checks and block creation
     name = mt.ask_name(text = module['Name'])
@@ -45,7 +45,7 @@ def create_root_block(name = 'Root'):
         cmds.warning('Name already exists.')
         return ''
 
-    block = mt.create_block(name = name, icon = 'Root',  attrs = module['attrs'], build_command = module['build_command'], import_command = module['import'])
+    block = mt.create_block(name = name, icon = 'Blendshape',  attrs = module['attrs'], build_command = module['build_command'], import_command = module['import'])
     config = block[1]
     block = block[0]
       
@@ -57,41 +57,29 @@ def create_root_block(name = 'Root'):
 
     print('{} Created Successfully'.format(name))
 
-#create_root_block()
+#create_bs_bind_block()
 
 #-------------------------
 
-def build_root_block():
-
-    mt.check_is_there_is_base()
+def build_bs_bind_block():
 
     block = cmds.ls(sl=True)
     config = cmds.listConnections(block)[1]
     block = block[0]
 
-    #groups for later cleaning
-    clean_rig_grp = ''
-    clean_ctrl_grp = ''
-    
     #cmds.getAttr('{}.AttrName'.format(config))
-    #cmds.getAttr('{}.AttrName'.format(config), asString = True)
+    geo_grp = cmds.getAttr('{}.SetGeoGrp'.format(config), asString = True)
 
-    #orient the joints
+    if not cmds.objExists(geo_grp):
+        cmds.warning('there is no group called {}'.format(geo_grp))
+        return False
 
-    #use this locator in case parent is set to new locator
-    if cmds.getAttr('{}.SetParent'.format(config)) == 'new_locator':
-        block_parent = cmds.spaceLocator( n = '{}'.format(str(block).replace(nc['module'],'_Parent' + nc['locator'])))
-    else:
-        block_parent = cmds.getAttr('{}.SetParent'.format(config))
-
-    cmds.select(cl=True)
-    root = cmds.joint(n=block.replace(nc['module'], ''))
-    cmds.parent(root, block_parent)
-    cmds.setAttr('{}.segmentScaleCompensate'.format(root), 0)
-    cmds.setAttr('{}.inheritsTransform'.format(root), 0)
+    new_geo = mt.duplicate_change_names(input = geo_grp, hi = True, search=nc['geo'], replace =nc['bind_geo'])[0]
+    cmds.select(new_geo, geo_grp)
+    bs=cmds.blendShape(n='BS_{}_Render'.format(new_geo), w=[(0, 1)])
 
     print ('Build {} Success'.format(block))
 
 
 
-#build_root_block()
+#build_bs_bind_block()
