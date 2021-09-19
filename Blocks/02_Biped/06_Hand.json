@@ -19,7 +19,6 @@
 
         "Mirror_enum": "True:False:Right_Only",
   
-        "Blends_string": "Wrist,Shoulder,Root_Ctrl",
         "SetGameParent_string": "",
 
         "Help_string" : "Possible parent: L_Hand_Thumb_03_Jnt, L_Hand_Index_04_Jnt\n"

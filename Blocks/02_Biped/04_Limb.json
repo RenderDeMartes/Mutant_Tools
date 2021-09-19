@@ -24,7 +24,6 @@
             "IkTopCtrlType_enum": "pin_cube:cube:sphere:circleY:circleX:circleY",
             "FKCtrlType_enum": "bounding_cube:circleY:circleX:circleY:pin_cube",
 
-            "Blends_string":"Clavicle_Ctrl,Spine_05_Ctrl,COG_Ctrl,GLobal,Ctrl,Root_Ctrl",
 
             "SetGameParent_string": "",
 

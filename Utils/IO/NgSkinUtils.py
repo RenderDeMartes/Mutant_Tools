@@ -122,14 +122,17 @@ class NG_Mutant(object):
 
     # ----------------------------------------------------------------------------------------------------------------
 
-    def import_all_skins(self, keep_nodes=False):
+    def import_all_skins(self, keep_nodes=False, path=None):
         if not cmds.objExists('Bind_Geo_Grp'):
             return False
         geos = cmds.listRelatives('Bind_Geo_Grp', ad=True)
         if not geos:
             cmds.error('There is no geo in Bind_Geo_Grp')
             return False
-        path = mh.folder_window()
+        if path is None:
+            path = mh.folder_window()
+        if not path:
+            return False
         for geo in geos:
             try:
                 try:

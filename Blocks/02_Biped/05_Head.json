@@ -12,7 +12,6 @@
     "exec_command": "exec_head.create_head_block()",
     "build_command": "exec_head.build_head_block()",
 
-
     "attrs": {
         "SetParent_string": "new_locator",
         "HeadCtrlType_enum": "octagon:hexagon:square:sphere:cube:pringle:feet:hand:circleY:circleX:circleZ:3dArrow:2dArrow:mover:2dArrow:root:cog",
@@ -20,7 +19,6 @@
         "SecundaryRibbon_float": "3",
         "CtrlSize_float": "4",
         "CtrlColor_enum": "yellow:lightBlue:blue:white:purple:green:red:grey",
-        "HeadBlends_string": "COG_Ctrl,GLobal_Ctrl,Root_Ctrl",
         "SetGameParent_string": "",
 
         "Help_string" : "Possible parent: Head_Jnt\n"

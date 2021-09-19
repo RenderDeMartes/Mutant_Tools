@@ -1,17 +1,27 @@
 ------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------
-Building: Base_Block
+Building: BaseA_Block
 ------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------
 Import successfully import exec_baseA 
-Precode Base_Block
+Precode BaseA_Block
 {'geometry': 'Geo', 'control': 'Ctrl', 'rig': 'Rig'}
 {}
 {'bind_joints': 'Bind_Joints', 'bind_geo': 'Bind_Geo', 'misc': 'Miscellaneous', 'template': 'Template'}
 ('Global_Ctrl', 'Mover_Ctrl', 'Mover_Gimbal_Ctrl')
 BaseA Created Successfully
 Build successfully exec_baseA.build_baseA_block()
-Postcode Base_Block
+Postcode BaseA_Block
+------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
+Building: BS_Bind_Block
+------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
+Import successfully import exec_bs_bind
+Precode BS_Bind_Block
+# Warning: there is no group called  # 
+Build successfully exec_bs_bind.build_bs_bind_block()
+Postcode BS_Bind_Block
 ------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------
 Building: Root_Block
@@ -122,7 +132,7 @@ creating ik Chain for : L_Shoulder_Jnt
 // Error: searchReplaceNames _Jnt  "selected"; // 
 // Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
 IK = ['L_Wrist_Ik_Ctrl', 'L_Wrist_Ik_PoleVector_Ctrl', 'L_Shoulder_Ik_Ctrl', 'L_Wrist_Ik_IKrp', 'L_Wrist_Ik_PoleVector_Ctrl_L_Elbow_Ik_Jnt_Connected_Crv']
-28.5721371510504
+28.57213715105034
 ['L_Shoulder_Fk_Ctrl_Offset_Grp', 'L_Wrist_Ik_Ctrl_Offset_Grp', 'L_Shoulder_Ik_Ctrl_Offset_Grp', 'L_Shoulder_Ik_Jnt_Ctrl_Grp']
 __________
 adding loc to ['L_Shoulder_Fk_Ctrl']
@@ -177,7 +187,7 @@ creating ik Chain for : R_Shoulder_Jnt
 // Error: searchReplaceNames _Jnt  "selected"; // 
 // Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
 IK = ['R_Wrist_Ik_Ctrl', 'R_Wrist_Ik_PoleVector_Ctrl', 'R_Shoulder_Ik_Ctrl', 'R_Wrist_Ik_IKrp', 'R_Wrist_Ik_PoleVector_Ctrl_R_Elbow_Ik_Jnt_Connected_Crv']
-28.572594506974685
+28.57259450697472
 ['R_Shoulder_Fk_Ctrl_Offset_Grp', 'R_Wrist_Ik_Ctrl_Offset_Grp', 'R_Shoulder_Ik_Ctrl_Offset_Grp', 'R_Wrist_Ik_Ctrl_Offset_Grp__Mirror_Grp']
 __________
 adding loc to ['R_Shoulder_Fk_Ctrl']
@@ -260,7 +270,7 @@ creating ik Chain for : L_Hip_Jnt
 // Error: searchReplaceNames _Jnt  "selected"; // 
 // Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
 IK = ['L_Ankle_Ik_Ctrl', 'L_Ankle_Ik_PoleVector_Ctrl', 'L_Hip_Ik_Ctrl', 'L_Ankle_Ik_IKrp', 'L_Ankle_Ik_PoleVector_Ctrl_L_Knee_Ik_Jnt_Connected_Crv']
-41.44643354357137
+41.44643354357138
 ['L_Hip_Fk_Ctrl_Offset_Grp', 'L_Ankle_Ik_Ctrl_Offset_Grp', 'L_Hip_Ik_Ctrl_Offset_Grp', 'L_Hip_Ik_Jnt_Ctrl_Grp']
 __________
 adding loc to ['L_Hip_Fk_Ctrl']
@@ -315,7 +325,7 @@ creating ik Chain for : R_Hip_Jnt
 // Error: searchReplaceNames _Jnt  "selected"; // 
 // Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
 IK = ['R_Ankle_Ik_Ctrl', 'R_Ankle_Ik_PoleVector_Ctrl', 'R_Hip_Ik_Ctrl', 'R_Ankle_Ik_IKrp', 'R_Ankle_Ik_PoleVector_Ctrl_R_Knee_Ik_Jnt_Connected_Crv']
-41.44649813423202
+41.446498134232016
 ['R_Hip_Fk_Ctrl_Offset_Grp', 'R_Ankle_Ik_Ctrl_Offset_Grp', 'R_Hip_Ik_Ctrl_Offset_Grp', 'R_Ankle_Ik_Ctrl_Offset_Grp__Mirror_Grp']
 __________
 adding loc to ['R_Hip_Fk_Ctrl']
@@ -466,7 +476,7 @@ L_Hand_Palm_Jnt:INNER CUP
 // Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
 // Error: searchReplaceNames _Jnt  "selected"; // 
 // Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
-[48.21928279342007, 96.75979696827147, -2.267797935897423]
+[48.21928279342006, 96.75979696827146, -2.267797935897424]
 L_Hand_Palm_Jnt: OUTTER CUP
 // Error: searchReplaceNames _Ctrl  "selected"; // 
 // Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
@@ -517,7 +527,7 @@ Index_01
 // Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
 // Error: searchReplaceNames _Jnt  "selected"; // 
 // Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
-['L_Hand_Palm_Bnd', 'L_Hand_Index_00_Bnd', 'L_Hand_Index_01_Bnd', 'L_Hand_Index_02_Bnd', 'L_Hand_Index_03_Bnd', 'L_Hand_Index_04_Bnd', 'L_Hand_Middle_00_Bnd', 'L_Hand_Middle_01_Bnd', 'L_Hand_Middle_02_Bnd', 'L_Hand_Middle_03_Bnd', 'L_Hand_Middle_04_Bnd', 'L_Hand_OutterCup_Bnd', 'L_Hand_Pinky_00_Bnd', 'L_Hand_Pinky_01_Bnd', 'L_Hand_Pinky_02_Bnd', 'L_Hand_Pinky_03_Bnd', 'L_Hand_Pinky_04_Bnd', 'L_Hand_Ring_00_Bnd', 'L_Hand_Ring_01_Bnd', 'L_Hand_Ring_02_Bnd', 'L_Hand_Ring_03_Bnd', 'L_Hand_Ring_04_Bnd', 'L_Hand_InnerCup_Bnd', 'L_Hand_Thumb_00_Bnd', 'L_Hand_Thumb_01_Bnd', 'L_Hand_Thumb_02_Bnd', 'L_Hand_Thumb_03_Bnd']
+['L_Hand_Palm_Bnd', 'L_Hand_Index_00_Bnd', 'L_Hand_Index_01_Bnd', 'L_Hand_Index_02_Bnd', 'L_Hand_Index_03_Bnd', 'L_Hand_Index_04_Bnd', 'L_Hand_Middle_00_Bnd', 'L_Hand_Middle_01_Bnd', 'L_Hand_Middle_02_Bnd', 'L_Hand_Middle_03_Bnd', 'L_Hand_Middle_04_Bnd', 'L_Hand_InnerCup_Bnd', 'L_Hand_Thumb_00_Bnd', 'L_Hand_Thumb_01_Bnd', 'L_Hand_Thumb_02_Bnd', 'L_Hand_Thumb_03_Bnd', 'L_Hand_OutterCup_Bnd', 'L_Hand_Pinky_00_Bnd', 'L_Hand_Pinky_01_Bnd', 'L_Hand_Pinky_02_Bnd', 'L_Hand_Pinky_03_Bnd', 'L_Hand_Pinky_04_Bnd', 'L_Hand_Ring_00_Bnd', 'L_Hand_Ring_01_Bnd', 'L_Hand_Ring_02_Bnd', 'L_Hand_Ring_03_Bnd', 'L_Hand_Ring_04_Bnd']
 ['R_Hand_Thumb_00_Jnt', 'R_Hand_Index_00_Jnt', 'R_Hand_Middle_00_Jnt', 'R_Hand_Ring_00_Jnt', 'R_Hand_Pinky_00_Jnt']
 // Replaced 27 names.
 ['R_Hand_Thumb_01_Jnt']
@@ -607,7 +617,7 @@ R_Hand_Palm_Jnt:INNER CUP
 // Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
 // Error: searchReplaceNames _Jnt  "selected"; // 
 // Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
-[48.21928279342007, 96.75979696827147, -2.267797935897423]
+[48.21928279342006, 96.75979696827146, -2.267797935897424]
 R_Hand_Palm_Jnt: OUTTER CUP
 // Error: searchReplaceNames _Ctrl  "selected"; // 
 // Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
@@ -658,7 +668,7 @@ Index_01
 // Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
 // Error: searchReplaceNames _Jnt  "selected"; // 
 // Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
-['R_Hand_Palm_Bnd', 'R_Hand_Index_00_Bnd', 'R_Hand_Index_01_Bnd', 'R_Hand_Index_02_Bnd', 'R_Hand_Index_03_Bnd', 'R_Hand_Index_04_Bnd', 'R_Hand_Middle_00_Bnd', 'R_Hand_Middle_01_Bnd', 'R_Hand_Middle_02_Bnd', 'R_Hand_Middle_03_Bnd', 'R_Hand_Middle_04_Bnd', 'R_Hand_OutterCup_Bnd', 'R_Hand_Pinky_00_Bnd', 'R_Hand_Pinky_01_Bnd', 'R_Hand_Pinky_02_Bnd', 'R_Hand_Pinky_03_Bnd', 'R_Hand_Pinky_04_Bnd', 'R_Hand_Ring_00_Bnd', 'R_Hand_Ring_01_Bnd', 'R_Hand_Ring_02_Bnd', 'R_Hand_Ring_03_Bnd', 'R_Hand_Ring_04_Bnd', 'R_Hand_InnerCup_Bnd', 'R_Hand_Thumb_00_Bnd', 'R_Hand_Thumb_01_Bnd', 'R_Hand_Thumb_02_Bnd', 'R_Hand_Thumb_03_Bnd']
+['R_Hand_Palm_Bnd', 'R_Hand_Index_00_Bnd', 'R_Hand_Index_01_Bnd', 'R_Hand_Index_02_Bnd', 'R_Hand_Index_03_Bnd', 'R_Hand_Index_04_Bnd', 'R_Hand_Middle_00_Bnd', 'R_Hand_Middle_01_Bnd', 'R_Hand_Middle_02_Bnd', 'R_Hand_Middle_03_Bnd', 'R_Hand_Middle_04_Bnd', 'R_Hand_InnerCup_Bnd', 'R_Hand_Thumb_00_Bnd', 'R_Hand_Thumb_01_Bnd', 'R_Hand_Thumb_02_Bnd', 'R_Hand_Thumb_03_Bnd', 'R_Hand_OutterCup_Bnd', 'R_Hand_Pinky_00_Bnd', 'R_Hand_Pinky_01_Bnd', 'R_Hand_Pinky_02_Bnd', 'R_Hand_Pinky_03_Bnd', 'R_Hand_Pinky_04_Bnd', 'R_Hand_Ring_00_Bnd', 'R_Hand_Ring_01_Bnd', 'R_Hand_Ring_02_Bnd', 'R_Hand_Ring_03_Bnd', 'R_Hand_Ring_04_Bnd']
 Build L_Hand_Block Success
 Build successfully exec_hand.build_hand_block()
 Postcode L_Hand_Block
@@ -695,21 +705,30 @@ Build successfully exec_foot.build_foot_block()
 Postcode L_Foot_Block
 ------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------
-Building: Load_Block
+Building: Load_Skin_Block
+------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
+Import successfully import exec_load_skin
+Precode Load_Skin_Block
+Getting skin data from:  
+Build successfully exec_load_skin.build_load_skin_block()
+Postcode Load_Skin_Block
+------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
+Building: Load_Ctrls_Block
+------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
+Import successfully import exec_load_ctrls
+Precode Load_Ctrls_Block
+Build successfully exec_load_ctrls.build_load_ctrls_block()
+Postcode Load_Ctrls_Block
+------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
+Building: Code_Block
 ------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------
 Import successfully import exec_code
-Precode Load_Block
-# Traceback (most recent call last):
-# #   File "C:/Users/PC/Documents/maya/2022/scripts\Mutant_Tools\UI\AutoRigger\load_autoRigger.py", line 682, in build_autorigger
-    exec(buid_command)
-#   File "<string>", line 1, in <module>
-# #   File "C:/Users/PC/Documents/maya/2022/scripts\Mutant_Tools/Blocks//09_Other\exec_code.py", line 81, in build_code_block
-    exec(code)
-#   File "<string>", line 15, in <module>
-# #   File "C:/Users/PC/Documents/maya/2022/scripts\Mutant_Tools\Utils\IO\SkinUtils.py", line 66, in bind_to_bnd
-    skin = self.bind_skin(joints=self.bind_joints, geo=geo)
-# #   File "C:/Users/PC/Documents/maya/2022/scripts\Mutant_Tools\Utils\IO\SkinUtils.py", line 101, in bind_skin
-    if cmds.nodeType(transform) == 'transform':
-# # RuntimeError: No object matches name: B
-
+Precode Code_Block
+Build Code_Block Success
+Build successfully exec_code.build_code_block()
+Postcode Code_Block
