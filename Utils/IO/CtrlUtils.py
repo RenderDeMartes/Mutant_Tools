@@ -243,7 +243,7 @@ class Ctrls(object):
     #---------------------------------------------------------------------------
     def save_all(self):
         #ctrls.save_all('C:\\Users\\PC\\Desktop\\ctrls.json')
-        path = mh.import_window(extension = ".json")
+        path = mh.export_window(extension = ".json")
         if not path:
             return
         path = path[0]

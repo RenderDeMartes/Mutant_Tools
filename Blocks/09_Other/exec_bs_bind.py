@@ -75,8 +75,11 @@ def build_bs_bind_block():
         return False
 
     new_geo = mt.duplicate_change_names(input = geo_grp, hi = True, search=nc['geo'], replace =nc['bind_geo'])[0]
+    cmds.parent(new_geo, 'Bind_Geo_Grp')
+
     cmds.select(new_geo, geo_grp)
     bs=cmds.blendShape(n='BS_{}_Render'.format(new_geo), w=[(0, 1)])
+
 
     print ('Build {} Success'.format(block))
 
