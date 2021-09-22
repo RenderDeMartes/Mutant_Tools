@@ -101,6 +101,8 @@ class Mutant(modules.Modules_class):
 
 		OpenMaya.MGlobal.displayInfo('Mutant_Tools {}'.format(version))
 
+
+
 	#---------------------------------------------------
 
 	def get_online_version(self):
@@ -133,6 +135,17 @@ class Mutant(modules.Modules_class):
 		return local_version['version']
 
 	# ---------------------------------------------------
+
+	def compare_versions(self):
+		try:
+			print('Searching for updates..')
+			online = self.get_online_version()
+			offline = self.get_local_version()
+			if online != offline:
+				print('Update Available')
+				OpenMaya.MGlobal.displayWarning('New Version Available... Go to mutanttools.com to download it!')
+		except:
+			pass
 
 '''
 cmds.progressWindow(edit=True, progress=3, status='Enjoy :)')

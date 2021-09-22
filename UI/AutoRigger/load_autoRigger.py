@@ -176,6 +176,9 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		#update icons
 		mt.update_icons()
 
+		#find tools updates:
+		mt.compare_versions()
+
 	#-------------------------------------------------------------------
 	def create_menus(self):
 
