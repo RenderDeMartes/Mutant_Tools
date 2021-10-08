@@ -1,0 +1,18 @@
+{
+    "Name": "Jaw",
+    "Description": "Will create jaw rig",
+    "Icon": "Jaw.png",
+    "Enable": "True",
+    "python_file": "exec_jaw.py",
+    "import": "import exec_jaw",
+    "imp.reload": "imp.reload(exec_jaw)",
+    "exec_command": "exec_jaw.create_jaw_block()",
+    "build_command": "exec_jaw.build_jaw_block()",
+    "attrs": {
+        "SetParent_string": "new_locator",
+        "CtrlType_enum": "circleX:circleY:circleZ:square",
+        "CtrlSize_float": "4",
+        "SetGameParent_string": "",
+        "Help_string": "Possible parent: JawEnd_Jnt "
+    }
+}

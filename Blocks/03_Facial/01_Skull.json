@@ -1,0 +1,15 @@
+{
+    "Name": "Skull",
+    "Description": "Create base structure for head rig",
+    "Icon": "Skull.png",
+    "Enable": "True",
+    "python_file": "exec_skull.py",
+    "import": "import exec_skull",
+    "imp.reload": "imp.reload(exec_skull)",
+    "exec_command": "exec_skull.create_skull_block()",
+    "build_command": "exec_skull.build_skull_block()",
+    "attrs": {
+        "SetParent_string": "new_locator",
+        "Help_string": "Possible parent: UprHead_Jnt "
+    }
+}

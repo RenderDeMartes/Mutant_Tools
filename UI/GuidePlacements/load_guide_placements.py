@@ -120,7 +120,7 @@ class GuidePlacements(QtMutantWindow.Qt_Mutant):
 
 		self.create_layout()
 		self.create_connections()
-		self.resize(400,750)
+		self.resize(500,750)
 
 		self.place_widgets=[]
 		self.ik_ref_widgets=[]
@@ -183,7 +183,7 @@ class GuidePlacements(QtMutantWindow.Qt_Mutant):
 	# -------------------------------------------------------------------
 	#Guides
 
-	def create_place_guide_widget(self, guide_text = '', position_text=''):
+	def create_place_guide_widget(self, guide_text = '', position_text='', aim_text=''):
 
 		placement_box = QGroupBox()
 		self.ui.place_layout.addWidget(placement_box)
@@ -192,7 +192,10 @@ class GuidePlacements(QtMutantWindow.Qt_Mutant):
 		placement_box.setLayout(main_layout)
 
 		guide_edit = QLineEdit()
-		guide_edit.setText(guide_text)
+		if not guide_text:
+			guide_edit.setPlaceholderText('Guide')
+		else:
+			guide_edit.setText(guide_text)
 		guide_button = QPushButton()
 		guide_button.setIcon(QtGui.QIcon(IconsPath + 'DLeft.png'))
 		guide_button.clicked.connect(partial(self.selection_to_line_edit, guide_edit))
@@ -205,7 +208,10 @@ class GuidePlacements(QtMutantWindow.Qt_Mutant):
 		main_layout.addWidget(sel_guide_button)
 
 		position_edit = QLineEdit()
-		position_edit.setText(position_text)
+		if not position_text:
+			position_edit.setPlaceholderText('Position')
+		else:
+			position_edit.setText(position_text)
 		position_button = QPushButton()
 		position_button.setIcon(QtGui.QIcon(IconsPath + 'DLeft.png'))
 		position_button.clicked.connect(partial(self.selection_to_line_edit, position_edit))
@@ -217,8 +223,23 @@ class GuidePlacements(QtMutantWindow.Qt_Mutant):
 		main_layout.addWidget(position_button)
 		main_layout.addWidget(sel_position_button)
 
+		aim_edit = QLineEdit()
+		if not aim_text:
+			aim_edit.setPlaceholderText('Aim')
+		else:
+			aim_edit.setText(aim_text)
+		aim_button = QPushButton()
+		aim_button.setIcon(QtGui.QIcon(IconsPath + 'DLeft.png'))
+		aim_button.clicked.connect(partial(self.selection_to_line_edit, aim_edit))
+		sel_aim_button = QPushButton()
+		sel_aim_button.setIcon(QtGui.QIcon(IconsPath + 'Cursor.png'))
+		sel_aim_button.clicked.connect(partial(self.select_text, aim_edit))
 
-		self.place_widgets.append([guide_edit, position_edit])
+		main_layout.addWidget(aim_edit)
+		main_layout.addWidget(aim_button)
+		main_layout.addWidget(sel_aim_button)
+
+		self.place_widgets.append([guide_edit, position_edit, aim_edit])
 
 	# -------------------------------------------------------------------
 
@@ -227,7 +248,7 @@ class GuidePlacements(QtMutantWindow.Qt_Mutant):
 		clean_sel = self.clean_selection(sel)
 		if sel:
 			if line_edit.text():
-				result = cmds.confirmDialog( title='Replace?', message='Replace 08_Data?', button=['Yes','No'], defaultButton='Yes', cancelButton='No', dismissString='No' )
+				result = cmds.confirmDialog( title='Replace?', message='Replace {}?'.format(line_edit.text()), button=['Yes','No'], defaultButton='Yes', cancelButton='No', dismissString='No' )
 				if result != 'Yes':
 					return None
 			line_edit.setText(clean_sel)
@@ -256,24 +277,33 @@ class GuidePlacements(QtMutantWindow.Qt_Mutant):
 
 		cmds.undoInfo(openChunk=True)
 
-		parent_constraints = []
 		clusters = []
 		for guide_pairs in self.place_widgets:
 			guide = guide_pairs[0].text()
 			position = guide_pairs[1].text()
 			position = position.split(',')
-
+			aim = guide_pairs[2].text()
 			if guide and position:
-				print (guide, '>>>' ,position)
+				print (guide, '>>>' ,position, '>>>', aim)
+
+				if aim:
+					temp_loc = cmds.spaceLocator()
+					cmds.delete(cmds.parentConstraint(aim, temp_loc, mo=False))
 
 				cmds.select(position)
 				temp_cls = cmds.cluster()[1]
-				clusters.append(temp_cls)
-				temp_contraint = cmds.parentConstraint(temp_cls, guide, mo=False)[0]
-				parent_constraints.append(temp_contraint)
+				cmds.delete(cmds.parentConstraint(temp_cls, guide, mo=False))
+				cmds.delete(temp_cls)
 
-		if parent_constraints and clusters:
-			cmds.delete(parent_constraints, clusters)
+
+			aim_delete = []
+			if guide and aim:
+				cmds.select(aim)
+				temp_contraint2 = cmds.aimConstraint(temp_loc, guide, mo=False)[0]
+				cmds.delete(cmds.parentConstraint(temp_loc,aim, mo=False))
+
+				cmds.delete(temp_loc,temp_contraint2)
+
 
 		cmds.undoInfo(closeChunk=True)
 
