@@ -1,166 +1,328 @@
 {
     "guides": {
         "0": {
-            "COG_Loc": "Body_Geo.vtx[2032:2059], Body_Geo.vtx[7409:7410], Body_Geo.vtx[7509:7510], Body_Geo.vtx[7649:7650], Body_Geo.vtx[7753:7754], Body_Geo.vtx[7889], Body_Geo.vtx[7891], Body_Geo.vtx[7894], Body_Geo.vtx[7896], Body_Geo.vtx[7918:7923], Body_Geo.vtx[7925:7930], Body_Geo.vtx[8132], Body_Geo.vtx[8183], Body_Geo.vtx[8195], Body_Geo.vtx[8272], Body_Geo.vtx[9570], Body_Geo.vtx[14047]"
+            "COG_Loc": [
+                "Body_Geo.vtx[2032:2059], Body_Geo.vtx[7409:7410], Body_Geo.vtx[7509:7510], Body_Geo.vtx[7649:7650], Body_Geo.vtx[7753:7754], Body_Geo.vtx[7889], Body_Geo.vtx[7891], Body_Geo.vtx[7894], Body_Geo.vtx[7896], Body_Geo.vtx[7918:7923], Body_Geo.vtx[7925:7930], Body_Geo.vtx[8132], Body_Geo.vtx[8183], Body_Geo.vtx[8195], Body_Geo.vtx[8272], Body_Geo.vtx[9570], Body_Geo.vtx[14047]",
+                ""
+            ]
         },
         "1": {
-            "Spine_Base_Guide": "Body_Geo.vtx[177], Body_Geo.vtx[206], Body_Geo.vtx[211], Body_Geo.vtx[231:232], Body_Geo.vtx[267], Body_Geo.vtx[296], Body_Geo.vtx[324], Body_Geo.vtx[370], Body_Geo.vtx[389], Body_Geo.vtx[482:490], Body_Geo.vtx[647], Body_Geo.vtx[670], Body_Geo.vtx[718], Body_Geo.vtx[760], Body_Geo.vtx[960], Body_Geo.vtx[981], Body_Geo.vtx[1049], Body_Geo.vtx[1136], Body_Geo.vtx[1301], Body_Geo.vtx[6978], Body_Geo.vtx[6980], Body_Geo.vtx[7371:7372], Body_Geo.vtx[7413:7414], Body_Geo.vtx[7467], Body_Geo.vtx[7470], Body_Geo.vtx[7489:7490], Body_Geo.vtx[7505], Body_Geo.vtx[7557:7558], Body_Geo.vtx[7660:7664], Body_Geo.vtx[7703], Body_Geo.vtx[7716], Body_Geo.vtx[7719], Body_Geo.vtx[7768], Body_Geo.vtx[7798], Body_Geo.vtx[7805], Body_Geo.vtx[7852], Body_Geo.vtx[7872], Body_Geo.vtx[7890], Body_Geo.vtx[7892], Body_Geo.vtx[7915], Body_Geo.vtx[8172]"
+            "Spine_Base_Guide": [
+                "Body_Geo.vtx[177], Body_Geo.vtx[206], Body_Geo.vtx[211], Body_Geo.vtx[231:232], Body_Geo.vtx[267], Body_Geo.vtx[296], Body_Geo.vtx[324], Body_Geo.vtx[370], Body_Geo.vtx[389], Body_Geo.vtx[482:490], Body_Geo.vtx[647], Body_Geo.vtx[670], Body_Geo.vtx[718], Body_Geo.vtx[760], Body_Geo.vtx[960], Body_Geo.vtx[981], Body_Geo.vtx[1049], Body_Geo.vtx[1136], Body_Geo.vtx[1301], Body_Geo.vtx[6978], Body_Geo.vtx[6980], Body_Geo.vtx[7371:7372], Body_Geo.vtx[7413:7414], Body_Geo.vtx[7467], Body_Geo.vtx[7470], Body_Geo.vtx[7489:7490], Body_Geo.vtx[7505], Body_Geo.vtx[7557:7558], Body_Geo.vtx[7660:7664], Body_Geo.vtx[7703], Body_Geo.vtx[7716], Body_Geo.vtx[7719], Body_Geo.vtx[7768], Body_Geo.vtx[7798], Body_Geo.vtx[7805], Body_Geo.vtx[7852], Body_Geo.vtx[7872], Body_Geo.vtx[7890], Body_Geo.vtx[7892], Body_Geo.vtx[7915], Body_Geo.vtx[8172]",
+                ""
+            ]
         },
         "2": {
-            "Spine_Belly_Guide": "Body_Geo.vtx[218:219], Body_Geo.vtx[222:223], Body_Geo.vtx[265:266], Body_Geo.vtx[290:291], Body_Geo.vtx[359:360], Body_Geo.vtx[362:365], Body_Geo.vtx[369], Body_Geo.vtx[376:377], Body_Geo.vtx[391], Body_Geo.vtx[410], Body_Geo.vtx[414], Body_Geo.vtx[620], Body_Geo.vtx[663], Body_Geo.vtx[671], Body_Geo.vtx[717], Body_Geo.vtx[781], Body_Geo.vtx[959], Body_Geo.vtx[980], Body_Geo.vtx[1048], Body_Geo.vtx[1138], Body_Geo.vtx[1168], Body_Geo.vtx[7028], Body_Geo.vtx[7420], Body_Geo.vtx[7423], Body_Geo.vtx[7427:7428], Body_Geo.vtx[7471], Body_Geo.vtx[7474], Body_Geo.vtx[7501], Body_Geo.vtx[7504], Body_Geo.vtx[7611], Body_Geo.vtx[7613:7614], Body_Geo.vtx[7620:7623], Body_Geo.vtx[7631:7634], Body_Geo.vtx[7678:7679], Body_Geo.vtx[7706], Body_Geo.vtx[7720:7721], Body_Geo.vtx[7770], Body_Geo.vtx[7774], Body_Geo.vtx[7781], Body_Geo.vtx[8102:8103], Body_Geo.vtx[8142], Body_Geo.vtx[8169]"
+            "Spine_Belly_Guide": [
+                "Body_Geo.vtx[218:219], Body_Geo.vtx[222:223], Body_Geo.vtx[265:266], Body_Geo.vtx[290:291], Body_Geo.vtx[359:360], Body_Geo.vtx[362:365], Body_Geo.vtx[369], Body_Geo.vtx[376:377], Body_Geo.vtx[391], Body_Geo.vtx[410], Body_Geo.vtx[414], Body_Geo.vtx[620], Body_Geo.vtx[663], Body_Geo.vtx[671], Body_Geo.vtx[717], Body_Geo.vtx[781], Body_Geo.vtx[959], Body_Geo.vtx[980], Body_Geo.vtx[1048], Body_Geo.vtx[1138], Body_Geo.vtx[1168], Body_Geo.vtx[7028], Body_Geo.vtx[7420], Body_Geo.vtx[7423], Body_Geo.vtx[7427:7428], Body_Geo.vtx[7471], Body_Geo.vtx[7474], Body_Geo.vtx[7501], Body_Geo.vtx[7504], Body_Geo.vtx[7611], Body_Geo.vtx[7613:7614], Body_Geo.vtx[7620:7623], Body_Geo.vtx[7631:7634], Body_Geo.vtx[7678:7679], Body_Geo.vtx[7706], Body_Geo.vtx[7720:7721], Body_Geo.vtx[7770], Body_Geo.vtx[7774], Body_Geo.vtx[7781], Body_Geo.vtx[8102:8103], Body_Geo.vtx[8142], Body_Geo.vtx[8169]",
+                ""
+            ]
         },
         "3": {
-            "Spine_Chest_Guide": "Body_Geo.vtx[59], Body_Geo.vtx[63], Body_Geo.vtx[67:68], Body_Geo.vtx[87], Body_Geo.vtx[137:138], Body_Geo.vtx[636], Body_Geo.vtx[737:743], Body_Geo.vtx[745], Body_Geo.vtx[752], Body_Geo.vtx[755], Body_Geo.vtx[1120], Body_Geo.vtx[1125:1128], Body_Geo.vtx[1133], Body_Geo.vtx[1158], Body_Geo.vtx[7118:7119], Body_Geo.vtx[7125:7126], Body_Geo.vtx[7167:7168], Body_Geo.vtx[7183], Body_Geo.vtx[7203:7204], Body_Geo.vtx[7277:7278], Body_Geo.vtx[7314], Body_Geo.vtx[7321], Body_Geo.vtx[7794], Body_Geo.vtx[8124], Body_Geo.vtx[8187:8190], Body_Geo.vtx[8291], Body_Geo.vtx[8318:8319], Body_Geo.vtx[8321:8323], Body_Geo.vtx[8328], Body_Geo.vtx[14044]"
+            "Spine_Chest_Guide": [
+                "Body_Geo.vtx[59], Body_Geo.vtx[63], Body_Geo.vtx[67:68], Body_Geo.vtx[87], Body_Geo.vtx[137:138], Body_Geo.vtx[636], Body_Geo.vtx[737:743], Body_Geo.vtx[745], Body_Geo.vtx[752], Body_Geo.vtx[755], Body_Geo.vtx[1120], Body_Geo.vtx[1125:1128], Body_Geo.vtx[1133], Body_Geo.vtx[1158], Body_Geo.vtx[7118:7119], Body_Geo.vtx[7125:7126], Body_Geo.vtx[7167:7168], Body_Geo.vtx[7183], Body_Geo.vtx[7203:7204], Body_Geo.vtx[7277:7278], Body_Geo.vtx[7314], Body_Geo.vtx[7321], Body_Geo.vtx[7794], Body_Geo.vtx[8124], Body_Geo.vtx[8187:8190], Body_Geo.vtx[8291], Body_Geo.vtx[8318:8319], Body_Geo.vtx[8321:8323], Body_Geo.vtx[8328], Body_Geo.vtx[14044]",
+                ""
+            ]
         },
         "4": {
-            "Spine_End_Guide": "Body_Geo.vtx[7019], Body_Geo.vtx[9571]"
+            "Spine_End_Guide": [
+                "Body_Geo.vtx[7019], Body_Geo.vtx[9571]",
+                ""
+            ]
         },
         "5": {
-            "Spine_Inv_Guide": "Body_Geo.vtx[175:176], Body_Geo.vtx[178:184], Body_Geo.vtx[201:202], Body_Geo.vtx[258:260], Body_Geo.vtx[278:279], Body_Geo.vtx[297], Body_Geo.vtx[323], Body_Geo.vtx[385], Body_Geo.vtx[648], Body_Geo.vtx[668], Body_Geo.vtx[719], Body_Geo.vtx[775], Body_Geo.vtx[961], Body_Geo.vtx[995], Body_Geo.vtx[1038], Body_Geo.vtx[1152], Body_Geo.vtx[1300], Body_Geo.vtx[6977], Body_Geo.vtx[7356:7357], Body_Geo.vtx[7369:7370], Body_Geo.vtx[7373:7375], Body_Geo.vtx[7377:7378], Body_Geo.vtx[7396:7397], Body_Geo.vtx[7488], Body_Geo.vtx[7553:7554], Body_Geo.vtx[7665:7669], Body_Geo.vtx[7683], Body_Geo.vtx[7699], Body_Geo.vtx[7797], Body_Geo.vtx[7849], Body_Geo.vtx[7916:7917], Body_Geo.vtx[8129], Body_Geo.vtx[8171], Body_Geo.vtx[8268], Body_Geo.vtx[14043]"
+            "Spine_Inv_Guide": [
+                "Body_Geo.vtx[175:176], Body_Geo.vtx[178:184], Body_Geo.vtx[201:202], Body_Geo.vtx[258:260], Body_Geo.vtx[278:279], Body_Geo.vtx[297], Body_Geo.vtx[323], Body_Geo.vtx[385], Body_Geo.vtx[648], Body_Geo.vtx[668], Body_Geo.vtx[719], Body_Geo.vtx[775], Body_Geo.vtx[961], Body_Geo.vtx[995], Body_Geo.vtx[1038], Body_Geo.vtx[1152], Body_Geo.vtx[1300], Body_Geo.vtx[6977], Body_Geo.vtx[7356:7357], Body_Geo.vtx[7369:7370], Body_Geo.vtx[7373:7375], Body_Geo.vtx[7377:7378], Body_Geo.vtx[7396:7397], Body_Geo.vtx[7488], Body_Geo.vtx[7553:7554], Body_Geo.vtx[7665:7669], Body_Geo.vtx[7683], Body_Geo.vtx[7699], Body_Geo.vtx[7797], Body_Geo.vtx[7849], Body_Geo.vtx[7916:7917], Body_Geo.vtx[8129], Body_Geo.vtx[8171], Body_Geo.vtx[8268], Body_Geo.vtx[14043]",
+                ""
+            ]
         },
         "6": {
-            "L_Clavicle_Guide": "Body_Geo.vtx[93], Body_Geo.vtx[101]"
+            "L_Clavicle_Guide": [
+                "Body_Geo.vtx[93], Body_Geo.vtx[101]",
+                ""
+            ]
         },
         "7": {
-            "L_ClavicleEnd_Guide": "Body_Geo.vtx[533], Body_Geo.vtx[1210]"
+            "L_ClavicleEnd_Guide": [
+                "Body_Geo.vtx[533], Body_Geo.vtx[1210]",
+                ""
+            ]
         },
         "8": {
-            "L_Pelvis_Guide": "Body_Geo.vtx[956], Body_Geo.vtx[1298]"
+            "L_Pelvis_Guide": [
+                "Body_Geo.vtx[956], Body_Geo.vtx[1298]",
+                ""
+            ]
         },
         "9": {
-            "L_PelvisEnd_Guide": "Body_Geo.vtx[1140], Body_Geo.vtx[2062]"
+            "L_PelvisEnd_Guide": [
+                "Body_Geo.vtx[1140], Body_Geo.vtx[2062]",
+                ""
+            ]
         },
         "10": {
-            "L_Shoulder_Guide": "Body_Geo.vtx[141], Body_Geo.vtx[508], Body_Geo.vtx[516:517], Body_Geo.vtx[527], Body_Geo.vtx[530], Body_Geo.vtx[544], Body_Geo.vtx[558], Body_Geo.vtx[562], Body_Geo.vtx[576:577], Body_Geo.vtx[585:586], Body_Geo.vtx[599], Body_Geo.vtx[618], Body_Geo.vtx[688], Body_Geo.vtx[817], Body_Geo.vtx[916], Body_Geo.vtx[1107:1118], Body_Geo.vtx[1210]"
+            "L_Shoulder_Guide": [
+                "Body_Geo.vtx[141], Body_Geo.vtx[508], Body_Geo.vtx[516:517], Body_Geo.vtx[527], Body_Geo.vtx[530], Body_Geo.vtx[544], Body_Geo.vtx[558], Body_Geo.vtx[562], Body_Geo.vtx[576:577], Body_Geo.vtx[585:586], Body_Geo.vtx[599], Body_Geo.vtx[618], Body_Geo.vtx[688], Body_Geo.vtx[817], Body_Geo.vtx[916], Body_Geo.vtx[1107:1118], Body_Geo.vtx[1210]",
+                ""
+            ]
         },
         "11": {
-            "L_Elbow_Guide": "Body_Geo.vtx[2661], Body_Geo.vtx[2664], Body_Geo.vtx[2667:2668], Body_Geo.vtx[2670:2675], Body_Geo.vtx[2679:2680], Body_Geo.vtx[2682], Body_Geo.vtx[2686:2687], Body_Geo.vtx[2689], Body_Geo.vtx[2715:2716], Body_Geo.vtx[2723], Body_Geo.vtx[2726], Body_Geo.vtx[3036], Body_Geo.vtx[3068], Body_Geo.vtx[3089], Body_Geo.vtx[3195]"
+            "L_Elbow_Guide": [
+                "Body_Geo.vtx[2661], Body_Geo.vtx[2664], Body_Geo.vtx[2667:2668], Body_Geo.vtx[2670:2675], Body_Geo.vtx[2679:2680], Body_Geo.vtx[2682], Body_Geo.vtx[2686:2687], Body_Geo.vtx[2689], Body_Geo.vtx[2715:2716], Body_Geo.vtx[2723], Body_Geo.vtx[2726], Body_Geo.vtx[3036], Body_Geo.vtx[3068], Body_Geo.vtx[3089], Body_Geo.vtx[3195]",
+                ""
+            ]
         },
         "12": {
-            "L_Wrist_Guide": "Body_Geo.vtx[3021:3028], Body_Geo.vtx[3078], Body_Geo.vtx[3104], Body_Geo.vtx[3214:3215], Body_Geo.vtx[3217:3226], Body_Geo.vtx[3228], Body_Geo.vtx[3230]"
+            "L_Wrist_Guide": [
+                "Body_Geo.vtx[3021:3028], Body_Geo.vtx[3078], Body_Geo.vtx[3104], Body_Geo.vtx[3214:3215], Body_Geo.vtx[3217:3226], Body_Geo.vtx[3228], Body_Geo.vtx[3230]",
+                ""
+            ]
         },
         "13": {
-            "L_Hip_Guide": "Body_Geo.vtx[159:160], Body_Geo.vtx[163], Body_Geo.vtx[169], Body_Geo.vtx[193], Body_Geo.vtx[196], Body_Geo.vtx[281], Body_Geo.vtx[284], Body_Geo.vtx[298], Body_Geo.vtx[311], Body_Geo.vtx[643], Body_Geo.vtx[646], Body_Geo.vtx[714], Body_Geo.vtx[774], Body_Geo.vtx[943:945], Body_Geo.vtx[949:950], Body_Geo.vtx[969], Body_Geo.vtx[1046], Body_Geo.vtx[1073], Body_Geo.vtx[1145], Body_Geo.vtx[1250], Body_Geo.vtx[1281:1282], Body_Geo.vtx[1286], Body_Geo.vtx[1293], Body_Geo.vtx[1296:1299], Body_Geo.vtx[2078], Body_Geo.vtx[2087]"
+            "L_Hip_Guide": [
+                "Body_Geo.vtx[159:160], Body_Geo.vtx[163], Body_Geo.vtx[169], Body_Geo.vtx[193], Body_Geo.vtx[196], Body_Geo.vtx[281], Body_Geo.vtx[284], Body_Geo.vtx[298], Body_Geo.vtx[311], Body_Geo.vtx[643], Body_Geo.vtx[646], Body_Geo.vtx[714], Body_Geo.vtx[774], Body_Geo.vtx[943:945], Body_Geo.vtx[949:950], Body_Geo.vtx[969], Body_Geo.vtx[1046], Body_Geo.vtx[1073], Body_Geo.vtx[1145], Body_Geo.vtx[1250], Body_Geo.vtx[1281:1282], Body_Geo.vtx[1286], Body_Geo.vtx[1293], Body_Geo.vtx[1296:1299], Body_Geo.vtx[2078], Body_Geo.vtx[2087]",
+                ""
+            ]
         },
         "14": {
-            "L_Knee_Guide": "Body_Geo.vtx[1326], Body_Geo.vtx[1371], Body_Geo.vtx[1401:1402], Body_Geo.vtx[1405:1408], Body_Geo.vtx[1421], Body_Geo.vtx[1440], Body_Geo.vtx[1583], Body_Geo.vtx[1599], Body_Geo.vtx[1619], Body_Geo.vtx[1634], Body_Geo.vtx[1643], Body_Geo.vtx[1654], Body_Geo.vtx[1689], Body_Geo.vtx[1720], Body_Geo.vtx[1757], Body_Geo.vtx[1790], Body_Geo.vtx[1811], Body_Geo.vtx[1846], Body_Geo.vtx[1872], Body_Geo.vtx[1934], Body_Geo.vtx[1970]"
+            "L_Knee_Guide": [
+                "Body_Geo.vtx[1326], Body_Geo.vtx[1371], Body_Geo.vtx[1401:1402], Body_Geo.vtx[1405:1408], Body_Geo.vtx[1421], Body_Geo.vtx[1440], Body_Geo.vtx[1583], Body_Geo.vtx[1599], Body_Geo.vtx[1619], Body_Geo.vtx[1634], Body_Geo.vtx[1643], Body_Geo.vtx[1654], Body_Geo.vtx[1689], Body_Geo.vtx[1720], Body_Geo.vtx[1757], Body_Geo.vtx[1790], Body_Geo.vtx[1811], Body_Geo.vtx[1846], Body_Geo.vtx[1872], Body_Geo.vtx[1934], Body_Geo.vtx[1970]",
+                ""
+            ]
         },
         "15": {
-            "L_Ankle_Guide": "Body_Geo.vtx[2477:2500], Body_Geo.vtx[2511]"
+            "L_Ankle_Guide": [
+                "Body_Geo.vtx[2477:2500], Body_Geo.vtx[2511]",
+                ""
+            ]
         },
         "16": {
-            "Neck_Guide": "Body_Geo.e[5154], Body_Geo.e[5164], Body_Geo.e[5169], Body_Geo.e[5179], Body_Geo.e[5217], Body_Geo.e[5225], Body_Geo.e[5228], Body_Geo.e[5299], Body_Geo.e[5320], Body_Geo.e[5382], Body_Geo.e[5398], Body_Geo.e[5411], Body_Geo.e[5448], Body_Geo.e[5450], Body_Geo.e[5464], Body_Geo.e[5473], Body_Geo.e[5655], Body_Geo.e[5659], Body_Geo.e[5666], Body_Geo.e[5676], Body_Geo.e[14564], Body_Geo.e[19121], Body_Geo.e[19133], Body_Geo.e[19136], Body_Geo.e[19146], Body_Geo.e[19186], Body_Geo.e[19192], Body_Geo.e[19196], Body_Geo.e[19269], Body_Geo.e[19289], Body_Geo.e[19349], Body_Geo.e[19366], Body_Geo.e[19379], Body_Geo.e[19416], Body_Geo.e[19422], Body_Geo.e[19432], Body_Geo.e[19442], Body_Geo.e[19618], Body_Geo.e[19622], Body_Geo.e[19629], Body_Geo.e[19638], Body_Geo.e[28626]"
+            "Neck_Guide": [
+                "Body_Geo.e[5154], Body_Geo.e[5164], Body_Geo.e[5169], Body_Geo.e[5179], Body_Geo.e[5217], Body_Geo.e[5225], Body_Geo.e[5228], Body_Geo.e[5299], Body_Geo.e[5320], Body_Geo.e[5382], Body_Geo.e[5398], Body_Geo.e[5411], Body_Geo.e[5448], Body_Geo.e[5450], Body_Geo.e[5464], Body_Geo.e[5473], Body_Geo.e[5655], Body_Geo.e[5659], Body_Geo.e[5666], Body_Geo.e[5676], Body_Geo.e[14564], Body_Geo.e[19121], Body_Geo.e[19133], Body_Geo.e[19136], Body_Geo.e[19146], Body_Geo.e[19186], Body_Geo.e[19192], Body_Geo.e[19196], Body_Geo.e[19269], Body_Geo.e[19289], Body_Geo.e[19349], Body_Geo.e[19366], Body_Geo.e[19379], Body_Geo.e[19416], Body_Geo.e[19422], Body_Geo.e[19432], Body_Geo.e[19442], Body_Geo.e[19618], Body_Geo.e[19622], Body_Geo.e[19629], Body_Geo.e[19638], Body_Geo.e[28626]",
+                ""
+            ]
         },
         "17": {
-            "Head_Guide": "Body_Geo.vtx[16051], Body_Geo.vtx[18655]"
+            "Head_Guide": [
+                "Body_Geo.vtx[16051], Body_Geo.vtx[18655]",
+                ""
+            ]
         },
         "18": {
-            "HeadEnd_Guide": "Body_Geo.vtx[16541]"
+            "HeadEnd_Guide": [
+                "Body_Geo.vtx[16541]",
+                ""
+            ]
         },
         "19": {
-            "L_Foot_Ankle_Guide": "Body_Geo.vtx[2477:2500], Body_Geo.vtx[2511]"
+            "L_Foot_Ankle_Guide": [
+                "Body_Geo.vtx[2477:2500], Body_Geo.vtx[2511]",
+                ""
+            ]
         },
         "20": {
-            "L_Foot_Heel_Guide": "Body_Geo.vtx[5630]"
+            "L_Foot_Heel_Guide": [
+                "Body_Geo.vtx[5630]",
+                ""
+            ]
         },
         "21": {
-            "L_Foot_Ball_Guide": "Body_Geo.vtx[5979:6007], Body_Geo.vtx[6060]"
+            "L_Foot_Ball_Guide": [
+                "Body_Geo.vtx[5979:6007], Body_Geo.vtx[6060]",
+                ""
+            ]
         },
         "22": {
-            "L_Foot_BallFloor_Guide": "Body_Geo.vtx[6007]"
+            "L_Foot_BallFloor_Guide": [
+                "Body_Geo.vtx[6007]",
+                ""
+            ]
         },
         "23": {
-            "L_Foot_Out_Guide": "Body_Geo.vtx[5580]"
+            "L_Foot_Out_Guide": [
+                "Body_Geo.vtx[5580]",
+                ""
+            ]
         },
         "24": {
-            "L_Foot_In_Guide": "Body_Geo.vtx[5620]"
+            "L_Foot_In_Guide": [
+                "Body_Geo.vtx[5620]",
+                ""
+            ]
         },
         "25": {
-            "L_Foot_Toes_Guide": "Body_Geo.vtx[6615]"
+            "L_Foot_Toes_Guide": [
+                "Body_Geo.vtx[6615]",
+                ""
+            ]
         },
         "26": {
-            "L_Foot_HeelMid_Guide": "Body_Geo.vtx[5944]"
+            "L_Foot_HeelMid_Guide": [
+                "Body_Geo.vtx[5944]",
+                ""
+            ]
         },
         "27": {
-            "L_Hand_Palm_Guide": "Body_Geo.vtx[3209:3213], Body_Geo.vtx[3216], Body_Geo.vtx[3227], Body_Geo.vtx[3229], Body_Geo.vtx[3279:3294]"
+            "L_Hand_Palm_Guide": [
+                "Body_Geo.vtx[3209:3213], Body_Geo.vtx[3216], Body_Geo.vtx[3227], Body_Geo.vtx[3229], Body_Geo.vtx[3279:3294]",
+                ""
+            ]
         },
         "28": {
-            "L_Hand_OutterCup_Guide": "Body_Geo.vtx[3497], Body_Geo.vtx[3887]"
+            "L_Hand_OutterCup_Guide": [
+                "Body_Geo.vtx[3497], Body_Geo.vtx[3887]",
+                ""
+            ]
         },
         "29": {
-            "L_Hand_Pinky_00_Guide": "Body_Geo.vtx[3768], Body_Geo.vtx[4356]"
+            "L_Hand_Pinky_00_Guide": [
+                "Body_Geo.vtx[3768], Body_Geo.vtx[4356]",
+                ""
+            ]
         },
         "30": {
-            "L_Hand_Pinky_01_Guide": "Body_Geo.vtx[3452], Body_Geo.vtx[3810]"
+            "L_Hand_Pinky_01_Guide": [
+                "Body_Geo.vtx[3452], Body_Geo.vtx[3810]",
+                ""
+            ]
         },
         "31": {
-            "L_Hand_Pinky_02_Guide": "Body_Geo.vtx[4604:4617]"
+            "L_Hand_Pinky_02_Guide": [
+                "Body_Geo.vtx[4604:4617]",
+                ""
+            ]
         },
         "32": {
-            "L_Hand_Pinky_03_Guide": "Body_Geo.vtx[3516:3517], Body_Geo.vtx[5162], Body_Geo.vtx[5169:5170], Body_Geo.vtx[5173], Body_Geo.vtx[5175], Body_Geo.vtx[5177], Body_Geo.vtx[5180], Body_Geo.vtx[5182], Body_Geo.vtx[5184:5185], Body_Geo.vtx[5259:5260]"
+            "L_Hand_Pinky_03_Guide": [
+                "Body_Geo.vtx[3516:3517], Body_Geo.vtx[5162], Body_Geo.vtx[5169:5170], Body_Geo.vtx[5173], Body_Geo.vtx[5175], Body_Geo.vtx[5177], Body_Geo.vtx[5180], Body_Geo.vtx[5182], Body_Geo.vtx[5184:5185], Body_Geo.vtx[5259:5260]",
+                ""
+            ]
         },
         "33": {
-            "L_Hand_Pinky_04_Guide": "Body_Geo.vtx[5194]"
+            "L_Hand_Pinky_04_Guide": [
+                "Body_Geo.vtx[5194]",
+                ""
+            ]
         },
         "34": {
-            "L_Hand_Ring_00_Guide": "Body_Geo.vtx[3766], Body_Geo.vtx[4392]"
+            "L_Hand_Ring_00_Guide": [
+                "Body_Geo.vtx[3766], Body_Geo.vtx[4392]",
+                ""
+            ]
         },
         "35": {
-            "L_Hand_Ring_01_Guide": "Body_Geo.vtx[3445], Body_Geo.vtx[4292]"
+            "L_Hand_Ring_01_Guide": [
+                "Body_Geo.vtx[3445], Body_Geo.vtx[4292]",
+                ""
+            ]
         },
         "36": {
-            "L_Hand_Ring_02_Guide": "Body_Geo.vtx[3365:3366], Body_Geo.vtx[3377:3378], Body_Geo.vtx[3384], Body_Geo.vtx[3543], Body_Geo.vtx[3550:3551], Body_Geo.vtx[3649:3650], Body_Geo.vtx[3934:3935], Body_Geo.vtx[3939], Body_Geo.vtx[3942]"
+            "L_Hand_Ring_02_Guide": [
+                "Body_Geo.vtx[3365:3366], Body_Geo.vtx[3377:3378], Body_Geo.vtx[3384], Body_Geo.vtx[3543], Body_Geo.vtx[3550:3551], Body_Geo.vtx[3649:3650], Body_Geo.vtx[3934:3935], Body_Geo.vtx[3939], Body_Geo.vtx[3942]",
+                ""
+            ]
         },
         "37": {
-            "L_Hand_Ring_03_Guide": "Body_Geo.vtx[3514:3515], Body_Geo.vtx[3520], Body_Geo.vtx[4999], Body_Geo.vtx[5003:5004], Body_Geo.vtx[5007], Body_Geo.vtx[5009], Body_Geo.vtx[5011], Body_Geo.vtx[5016:5017], Body_Geo.vtx[5256:5258]"
+            "L_Hand_Ring_03_Guide": [
+                "Body_Geo.vtx[3514:3515], Body_Geo.vtx[3520], Body_Geo.vtx[4999], Body_Geo.vtx[5003:5004], Body_Geo.vtx[5007], Body_Geo.vtx[5009], Body_Geo.vtx[5011], Body_Geo.vtx[5016:5017], Body_Geo.vtx[5256:5258]",
+                ""
+            ]
         },
         "38": {
-            "L_Hand_Ring_04_Guide": "Body_Geo.vtx[5026]"
+            "L_Hand_Ring_04_Guide": [
+                "Body_Geo.vtx[5026]",
+                ""
+            ]
         },
         "39": {
-            "L_Hand_Middle_00_Guide": "Body_Geo.vtx[4306], Body_Geo.vtx[4524]"
+            "L_Hand_Middle_00_Guide": [
+                "Body_Geo.vtx[4306], Body_Geo.vtx[4524]",
+                ""
+            ]
         },
         "40": {
-            "L_Hand_Middle_01_Guide": "Body_Geo.vtx[3982], Body_Geo.vtx[4277]"
+            "L_Hand_Middle_01_Guide": [
+                "Body_Geo.vtx[3982], Body_Geo.vtx[4277]",
+                ""
+            ]
         },
         "41": {
-            "L_Hand_Middle_02_Guide": "Body_Geo.vtx[3410], Body_Geo.vtx[3413], Body_Geo.vtx[3415:3417], Body_Geo.vtx[3429], Body_Geo.vtx[3458:3459], Body_Geo.vtx[3470:3471], Body_Geo.vtx[3479], Body_Geo.vtx[3503], Body_Geo.vtx[3975], Body_Geo.vtx[4603]"
+            "L_Hand_Middle_02_Guide": [
+                "Body_Geo.vtx[3410], Body_Geo.vtx[3413], Body_Geo.vtx[3415:3417], Body_Geo.vtx[3429], Body_Geo.vtx[3458:3459], Body_Geo.vtx[3470:3471], Body_Geo.vtx[3479], Body_Geo.vtx[3503], Body_Geo.vtx[3975], Body_Geo.vtx[4603]",
+                ""
+            ]
         },
         "42": {
-            "L_Hand_Middle_03_Guide": "Body_Geo.vtx[3387:3388], Body_Geo.vtx[3391], Body_Geo.vtx[4427], Body_Geo.vtx[4575:4584]"
+            "L_Hand_Middle_03_Guide": [
+                "Body_Geo.vtx[3387:3388], Body_Geo.vtx[3391], Body_Geo.vtx[4427], Body_Geo.vtx[4575:4584]",
+                ""
+            ]
         },
         "43": {
-            "L_Hand_Middle_04_Guide": "Body_Geo.vtx[3392], Body_Geo.vtx[3948], Body_Geo.vtx[4832], Body_Geo.vtx[4836:4837], Body_Geo.vtx[4840], Body_Geo.vtx[4842], Body_Geo.vtx[4844], Body_Geo.vtx[4847], Body_Geo.vtx[4850:4851], Body_Geo.vtx[4855], Body_Geo.vtx[5253:5255]"
+            "L_Hand_Middle_04_Guide": [
+                "Body_Geo.vtx[3392], Body_Geo.vtx[3948], Body_Geo.vtx[4832], Body_Geo.vtx[4836:4837], Body_Geo.vtx[4840], Body_Geo.vtx[4842], Body_Geo.vtx[4844], Body_Geo.vtx[4847], Body_Geo.vtx[4850:4851], Body_Geo.vtx[4855], Body_Geo.vtx[5253:5255]",
+                ""
+            ]
         },
         "44": {
-            "L_Hand_Index_00_Guide": "Body_Geo.vtx[4302], Body_Geo.vtx[4371]"
+            "L_Hand_Index_00_Guide": [
+                "Body_Geo.vtx[4302], Body_Geo.vtx[4371]",
+                ""
+            ]
         },
         "45": {
-            "L_Hand_Index_01_Guide": "Body_Geo.vtx[4242], Body_Geo.vtx[4286]"
+            "L_Hand_Index_01_Guide": [
+                "Body_Geo.vtx[4242], Body_Geo.vtx[4286]",
+                ""
+            ]
         },
         "46": {
-            "L_Hand_Index_02_Guide": "Body_Geo.vtx[3402:3405], Body_Geo.vtx[3563], Body_Geo.vtx[3574:3575], Body_Geo.vtx[3584:3585], Body_Geo.vtx[3595], Body_Geo.vtx[3666:3668], Body_Geo.vtx[3670]"
+            "L_Hand_Index_02_Guide": [
+                "Body_Geo.vtx[3402:3405], Body_Geo.vtx[3563], Body_Geo.vtx[3574:3575], Body_Geo.vtx[3584:3585], Body_Geo.vtx[3595], Body_Geo.vtx[3666:3668], Body_Geo.vtx[3670]",
+                ""
+            ]
         },
         "47": {
-            "L_Hand_Index_03_Guide": "Body_Geo.vtx[3523:3524], Body_Geo.vtx[3566:3567], Body_Geo.vtx[3569:3570], Body_Geo.vtx[3580:3581], Body_Geo.vtx[3590], Body_Geo.vtx[3593], Body_Geo.vtx[3673], Body_Geo.vtx[3675:3676], Body_Geo.vtx[3679]"
+            "L_Hand_Index_03_Guide": [
+                "Body_Geo.vtx[3523:3524], Body_Geo.vtx[3566:3567], Body_Geo.vtx[3569:3570], Body_Geo.vtx[3580:3581], Body_Geo.vtx[3590], Body_Geo.vtx[3593], Body_Geo.vtx[3673], Body_Geo.vtx[3675:3676], Body_Geo.vtx[3679]",
+                ""
+            ]
         },
         "48": {
-            "L_Hand_Index_04_Guide": "Body_Geo.vtx[4474]"
+            "L_Hand_Index_04_Guide": [
+                "Body_Geo.vtx[4474]",
+                ""
+            ]
         },
         "49": {
-            "L_Hand_InnerCup_Guide": "Body_Geo.vtx[3874], Body_Geo.vtx[4395]"
+            "L_Hand_InnerCup_Guide": [
+                "Body_Geo.vtx[3874], Body_Geo.vtx[4395]",
+                ""
+            ]
         },
         "50": {
-            "L_Hand_Thumb_00_Guide": "Body_Geo.vtx[3751], Body_Geo.vtx[4049]"
+            "L_Hand_Thumb_00_Guide": [
+                "Body_Geo.vtx[3751], Body_Geo.vtx[4049]",
+                ""
+            ]
         },
         "51": {
-            "L_Hand_Thumb_01_Guide": "Body_Geo.vtx[3396:3397], Body_Geo.vtx[3627], Body_Geo.vtx[3630], Body_Geo.vtx[3686], Body_Geo.vtx[4033:4034], Body_Geo.vtx[4195:4200], Body_Geo.vtx[5439]"
+            "L_Hand_Thumb_01_Guide": [
+                "Body_Geo.vtx[3396:3397], Body_Geo.vtx[3627], Body_Geo.vtx[3630], Body_Geo.vtx[3686], Body_Geo.vtx[4033:4034], Body_Geo.vtx[4195:4200], Body_Geo.vtx[5439]",
+                ""
+            ]
         },
         "52": {
-            "L_Hand_Thumb_02_Guide": "Body_Geo.vtx[3713], Body_Geo.vtx[3716], Body_Geo.vtx[5341:5342], Body_Geo.vtx[5345], Body_Geo.vtx[5349], Body_Geo.vtx[5351], Body_Geo.vtx[5356], Body_Geo.vtx[5424:5427], Body_Geo.vtx[5429], Body_Geo.vtx[5446]"
+            "L_Hand_Thumb_02_Guide": [
+                "Body_Geo.vtx[3713], Body_Geo.vtx[3716], Body_Geo.vtx[5341:5342], Body_Geo.vtx[5345], Body_Geo.vtx[5349], Body_Geo.vtx[5351], Body_Geo.vtx[5356], Body_Geo.vtx[5424:5427], Body_Geo.vtx[5429], Body_Geo.vtx[5446]",
+                ""
+            ]
         },
         "53": {
-            "L_Hand_Thumb_03_Guide": "Body_Geo.vtx[5363]"
+            "L_Hand_Thumb_03_Guide": [
+                "Body_Geo.vtx[5363]",
+                ""
+            ]
         }
     },
     "refs": {

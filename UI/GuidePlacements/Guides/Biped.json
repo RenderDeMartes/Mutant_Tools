@@ -1,166 +1,328 @@
 {
     "guides": {
         "0": {
-            "COG_Loc": ""
+            "COG_Loc": [
+                "",
+                ""
+            ]
         },
         "1": {
-            "Spine_Base_Guide": ""
+            "Spine_Base_Guide": [
+                "",
+                ""
+            ]
         },
         "2": {
-            "Spine_Belly_Guide": ""
+            "Spine_Belly_Guide": [
+                "",
+                ""
+            ]
         },
         "3": {
-            "Spine_Chest_Guide": ""
+            "Spine_Chest_Guide": [
+                "",
+                ""
+            ]
         },
         "4": {
-            "Spine_End_Guide": ""
+            "Spine_End_Guide": [
+                "",
+                ""
+            ]
         },
         "5": {
-            "Spine_Inv_Guide": ""
+            "Spine_Inv_Guide": [
+                "",
+                ""
+            ]
         },
         "6": {
-            "L_Clavicle_Guide": ""
+            "L_Clavicle_Guide": [
+                "",
+                ""
+            ]
         },
         "7": {
-            "L_ClavicleEnd_Guide": ""
+            "L_ClavicleEnd_Guide": [
+                "",
+                ""
+            ]
         },
         "8": {
-            "L_Pelvis_Guide": ""
+            "L_Pelvis_Guide": [
+                "",
+                ""
+            ]
         },
         "9": {
-            "L_PelvisEnd_Guide": ""
+            "L_PelvisEnd_Guide": [
+                "",
+                ""
+            ]
         },
         "10": {
-            "L_Shoulder_Guide": ""
+            "L_Shoulder_Guide": [
+                "",
+                ""
+            ]
         },
         "11": {
-            "L_Elbow_Guide": ""
+            "L_Elbow_Guide": [
+                "",
+                ""
+            ]
         },
         "12": {
-            "L_Wrist_Guide": ""
+            "L_Wrist_Guide": [
+                "",
+                ""
+            ]
         },
         "13": {
-            "L_Hip_Guide": ""
+            "L_Hip_Guide": [
+                "",
+                ""
+            ]
         },
         "14": {
-            "L_Knee_Guide": ""
+            "L_Knee_Guide": [
+                "",
+                ""
+            ]
         },
         "15": {
-            "L_Ankle_Guide": ""
+            "L_Ankle_Guide": [
+                "",
+                ""
+            ]
         },
         "16": {
-            "Neck_Guide": ""
+            "Neck_Guide": [
+                "",
+                ""
+            ]
         },
         "17": {
-            "Head_Guide": ""
+            "Head_Guide": [
+                "",
+                ""
+            ]
         },
         "18": {
-            "HeadEnd_Guide": ""
+            "HeadEnd_Guide": [
+                "",
+                ""
+            ]
         },
         "19": {
-            "L_Foot_Ankle_Guide": ""
+            "L_Foot_Ankle_Guide": [
+                "",
+                ""
+            ]
         },
         "20": {
-            "L_Foot_Heel_Guide": ""
+            "L_Foot_Heel_Guide": [
+                "",
+                ""
+            ]
         },
         "21": {
-            "L_Foot_Ball_Guide": ""
+            "L_Foot_Ball_Guide": [
+                "",
+                ""
+            ]
         },
         "22": {
-            "L_Foot_BallFloor_Guide": ""
+            "L_Foot_BallFloor_Guide": [
+                "",
+                ""
+            ]
         },
         "23": {
-            "L_Foot_Out_Guide": ""
+            "L_Foot_Out_Guide": [
+                "",
+                ""
+            ]
         },
         "24": {
-            "L_Foot_In_Guide": ""
+            "L_Foot_In_Guide": [
+                "",
+                ""
+            ]
         },
         "25": {
-            "L_Foot_Toes_Guide": ""
+            "L_Foot_Toes_Guide": [
+                "",
+                ""
+            ]
         },
         "26": {
-            "L_Foot_HeelMid_Guide": ""
+            "L_Foot_HeelMid_Guide": [
+                "",
+                ""
+            ]
         },
         "27": {
-            "L_Hand_Palm_Guide": ""
+            "L_Hand_Palm_Guide": [
+                "",
+                ""
+            ]
         },
         "28": {
-            "L_Hand_OutterCup_Guide": ""
+            "L_Hand_OutterCup_Guide": [
+                "",
+                ""
+            ]
         },
         "29": {
-            "L_Hand_Pinky_00_Guide": ""
+            "L_Hand_Pinky_00_Guide": [
+                "",
+                ""
+            ]
         },
         "30": {
-            "L_Hand_Pinky_01_Guide": ""
+            "L_Hand_Pinky_01_Guide": [
+                "",
+                ""
+            ]
         },
         "31": {
-            "L_Hand_Pinky_02_Guide": ""
+            "L_Hand_Pinky_02_Guide": [
+                "",
+                ""
+            ]
         },
         "32": {
-            "L_Hand_Pinky_03_Guide": ""
+            "L_Hand_Pinky_03_Guide": [
+                "",
+                ""
+            ]
         },
         "33": {
-            "L_Hand_Pinky_04_Guide": ""
+            "L_Hand_Pinky_04_Guide": [
+                "",
+                ""
+            ]
         },
         "34": {
-            "L_Hand_Ring_00_Guide": ""
+            "L_Hand_Ring_00_Guide": [
+                "",
+                ""
+            ]
         },
         "35": {
-            "L_Hand_Ring_01_Guide": ""
+            "L_Hand_Ring_01_Guide": [
+                "",
+                ""
+            ]
         },
         "36": {
-            "L_Hand_Ring_02_Guide": ""
+            "L_Hand_Ring_02_Guide": [
+                "",
+                ""
+            ]
         },
         "37": {
-            "L_Hand_Ring_03_Guide": ""
+            "L_Hand_Ring_03_Guide": [
+                "",
+                ""
+            ]
         },
         "38": {
-            "L_Hand_Ring_04_Guide": ""
+            "L_Hand_Ring_04_Guide": [
+                "",
+                ""
+            ]
         },
         "39": {
-            "L_Hand_Middle_00_Guide": ""
+            "L_Hand_Middle_00_Guide": [
+                "",
+                ""
+            ]
         },
         "40": {
-            "L_Hand_Middle_01_Guide": ""
+            "L_Hand_Middle_01_Guide": [
+                "",
+                ""
+            ]
         },
         "41": {
-            "L_Hand_Middle_02_Guide": ""
+            "L_Hand_Middle_02_Guide": [
+                "",
+                ""
+            ]
         },
         "42": {
-            "L_Hand_Middle_03_Guide": ""
+            "L_Hand_Middle_03_Guide": [
+                "",
+                ""
+            ]
         },
         "43": {
-            "L_Hand_Middle_04_Guide": ""
+            "L_Hand_Middle_04_Guide": [
+                "",
+                ""
+            ]
         },
         "44": {
-            "L_Hand_Index_00_Guide": ""
+            "L_Hand_Index_00_Guide": [
+                "",
+                ""
+            ]
         },
         "45": {
-            "L_Hand_Index_01_Guide": ""
+            "L_Hand_Index_01_Guide": [
+                "",
+                ""
+            ]
         },
         "46": {
-            "L_Hand_Index_02_Guide": ""
+            "L_Hand_Index_02_Guide": [
+                "",
+                ""
+            ]
         },
         "47": {
-            "L_Hand_Index_03_Guide": ""
+            "L_Hand_Index_03_Guide": [
+                "",
+                ""
+            ]
         },
         "48": {
-            "L_Hand_Index_04_Guide": ""
+            "L_Hand_Index_04_Guide": [
+                "",
+                ""
+            ]
         },
         "49": {
-            "L_Hand_InnerCup_Guide": ""
+            "L_Hand_InnerCup_Guide": [
+                "",
+                ""
+            ]
         },
         "50": {
-            "L_Hand_Thumb_00_Guide": ""
+            "L_Hand_Thumb_00_Guide": [
+                "",
+                ""
+            ]
         },
         "51": {
-            "L_Hand_Thumb_01_Guide": ""
+            "L_Hand_Thumb_01_Guide": [
+                "",
+                ""
+            ]
         },
         "52": {
-            "L_Hand_Thumb_02_Guide": ""
+            "L_Hand_Thumb_02_Guide": [
+                "",
+                ""
+            ]
         },
         "53": {
-            "L_Hand_Thumb_03_Guide": ""
+            "L_Hand_Thumb_03_Guide": [
+                "",
+                ""
+            ]
         }
     },
     "refs": {

@@ -432,7 +432,8 @@ class GuidePlacements(QtMutantWindow.Qt_Mutant):
 		for num, guide_pairs in enumerate(self.place_widgets):
 			guide = guide_pairs[0].text()
 			position = guide_pairs[1].text()
-			guide_data[str(num)] = {guide : position}
+			aim = guide_pairs[2].text()
+			guide_data[str(num)] = {guide : [position, aim]}
 
 
 		ref_data={}
@@ -483,7 +484,8 @@ class GuidePlacements(QtMutantWindow.Qt_Mutant):
 		for num, guide in enumerate(guides):
 			guide_data = guides[str(num)]
 			for guide_name in guide_data:
-				self.create_place_guide_widget(guide_text=guide_name, position_text=guide_data[guide_name])
+				self.create_place_guide_widget(guide_text=guide_name, position_text=guide_data[guide_name][0], aim_text=guide_data[guide_name][1])
+
 		#Refs---------------------
 		for num, ref in enumerate(refs):
 			ref_data = refs[str(num)]
