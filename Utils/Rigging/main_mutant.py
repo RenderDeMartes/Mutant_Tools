@@ -102,7 +102,6 @@ class Mutant(modules.Modules_class):
 		OpenMaya.MGlobal.displayInfo('Mutant_Tools {}'.format(version))
 
 
-
 	#---------------------------------------------------
 
 	def get_online_version(self):

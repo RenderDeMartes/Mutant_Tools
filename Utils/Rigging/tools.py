@@ -57,7 +57,7 @@ with open(SETUP_FILE) as setup_file:
 #----------------------------------------------------------------------------------------------------------------
 #create base class for selection objects
 
-class Tools_class:
+class Tools_class(object):
 	
 	def __init__(self, input = ''):
 		
