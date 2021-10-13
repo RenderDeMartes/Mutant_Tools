@@ -239,6 +239,13 @@ class GuidePlacements(QtMutantWindow.Qt_Mutant):
 		main_layout.addWidget(aim_button)
 		main_layout.addWidget(sel_aim_button)
 
+		build_button = aim_button = QPushButton('Build')
+		for_build = []
+		for_build.append([guide_edit, position_edit, aim_edit])
+		build_button.clicked.connect(partial(self.place_guides, 'selection', for_build))
+		main_layout.addWidget(build_button)
+
+
 		self.place_widgets.append([guide_edit, position_edit, aim_edit])
 
 	# -------------------------------------------------------------------
@@ -269,16 +276,22 @@ class GuidePlacements(QtMutantWindow.Qt_Mutant):
 
 	# -------------------------------------------------------------------
 
-	def place_guides(self):
+	def place_guides(self, mode = 'all', selection = []):
 
+		print(mode)
 
 		if not self.place_widgets:
 			return False
 
 		cmds.undoInfo(openChunk=True)
 
+		if mode == 'all':
+			build = self.place_widgets
+		else:
+			build = selection
+
 		clusters = []
-		for guide_pairs in self.place_widgets:
+		for guide_pairs in build:
 			guide = guide_pairs[0].text()
 			position = guide_pairs[1].text()
 			position = position.split(',')

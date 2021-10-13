@@ -123,7 +123,7 @@ def open_website(website='http://mutanttools.com/', mode = 'view'):
 
 
 def rigging_tutorial(*args):
-    print('Not yet sorry :(')
+    open_website('https://mutanttools.com/riggers/')
 
 def riggers_help(*args):
     open_website('https://mutanttools.com/riggers/')
