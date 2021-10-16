@@ -434,12 +434,13 @@ class Modules_class(kinematics.Kinematics_class):
 		if not cmds.objExists('Mutant_Build'):
 			return
 
-		blocks = cmds.listRelatives('Mutant_Build', c=True)
+		blocks = cmds.listRelatives('Mutant_Build', ad=True)
 		if blocks:
 			for block in blocks:
-				current_icon = cmds.getAttr('{}.iconName'.format(block), asString = True).split('/')[-1]
-				cmds.setAttr('{}.iconName'.format(block), PATH + current_icon, type="string")
-				print (current_icon)
+				try:
+					current_icon = cmds.getAttr('{}.iconName'.format(block), asString = True).split('/')[-1]
+					cmds.setAttr('{}.iconName'.format(block), PATH + current_icon, type="string")
+				except:pass
 
 
 	#----------------------------------------------------------------------------------------------------------------
