@@ -305,7 +305,7 @@ class GuidePlacements(QtMutantWindow.Qt_Mutant):
 
 				cmds.select(position)
 				temp_cls = cmds.cluster()[1]
-				cmds.delete(cmds.parentConstraint(temp_cls, guide, mo=False))
+				cmds.delete(cmds.pointConstraint(temp_cls, guide, mo=False))
 				cmds.delete(temp_cls)
 
 
