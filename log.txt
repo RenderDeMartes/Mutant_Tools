@@ -132,7 +132,7 @@ creating ik Chain for : L_Shoulder_Jnt
 // Error: searchReplaceNames _Jnt  "selected"; // 
 // Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
 IK = ['L_Wrist_Ik_Ctrl', 'L_Wrist_Ik_PoleVector_Ctrl', 'L_Shoulder_Ik_Ctrl', 'L_Wrist_Ik_IKrp', 'L_Wrist_Ik_PoleVector_Ctrl_L_Elbow_Ik_Jnt_Connected_Crv']
-28.57213715105044
+22.894786972353486
 ['L_Shoulder_Fk_Ctrl_Offset_Grp', 'L_Wrist_Ik_Ctrl_Offset_Grp', 'L_Shoulder_Ik_Ctrl_Offset_Grp', 'L_Shoulder_Ik_Jnt_Ctrl_Grp']
 __________
 adding loc to ['L_Shoulder_Fk_Ctrl']
@@ -187,7 +187,7 @@ creating ik Chain for : R_Shoulder_Jnt
 // Error: searchReplaceNames _Jnt  "selected"; // 
 // Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
 IK = ['R_Wrist_Ik_Ctrl', 'R_Wrist_Ik_PoleVector_Ctrl', 'R_Shoulder_Ik_Ctrl', 'R_Wrist_Ik_IKrp', 'R_Wrist_Ik_PoleVector_Ctrl_R_Elbow_Ik_Jnt_Connected_Crv']
-28.57129128565943
+22.894913728483996
 ['R_Shoulder_Fk_Ctrl_Offset_Grp', 'R_Wrist_Ik_Ctrl_Offset_Grp', 'R_Shoulder_Ik_Ctrl_Offset_Grp', 'R_Wrist_Ik_Ctrl_Offset_Grp__Mirror_Grp']
 __________
 adding loc to ['R_Shoulder_Fk_Ctrl']
@@ -270,7 +270,7 @@ creating ik Chain for : L_Hip_Jnt
 // Error: searchReplaceNames _Jnt  "selected"; // 
 // Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
 IK = ['L_Ankle_Ik_Ctrl', 'L_Ankle_Ik_PoleVector_Ctrl', 'L_Hip_Ik_Ctrl', 'L_Ankle_Ik_IKrp', 'L_Ankle_Ik_PoleVector_Ctrl_L_Knee_Ik_Jnt_Connected_Crv']
-32.101138708112124
+37.25292644543665
 ['L_Hip_Fk_Ctrl_Offset_Grp', 'L_Ankle_Ik_Ctrl_Offset_Grp', 'L_Hip_Ik_Ctrl_Offset_Grp', 'L_Hip_Ik_Jnt_Ctrl_Grp']
 __________
 adding loc to ['L_Hip_Fk_Ctrl']
@@ -325,7 +325,7 @@ creating ik Chain for : R_Hip_Jnt
 // Error: searchReplaceNames _Jnt  "selected"; // 
 // Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
 IK = ['R_Ankle_Ik_Ctrl', 'R_Ankle_Ik_PoleVector_Ctrl', 'R_Hip_Ik_Ctrl', 'R_Ankle_Ik_IKrp', 'R_Ankle_Ik_PoleVector_Ctrl_R_Knee_Ik_Jnt_Connected_Crv']
-32.10109901997124
+37.25298168881788
 ['R_Hip_Fk_Ctrl_Offset_Grp', 'R_Ankle_Ik_Ctrl_Offset_Grp', 'R_Hip_Ik_Ctrl_Offset_Grp', 'R_Ankle_Ik_Ctrl_Offset_Grp__Mirror_Grp']
 __________
 adding loc to ['R_Hip_Fk_Ctrl']
@@ -369,6 +369,10 @@ Import successfully import exec_head
 Precode Neck_Head_Block
 // Replaced 1 names.
 Neck_1_Bnd
+// Replaced 1 names.
+Neck_2_Bnd
+// Replaced 1 names.
+Neck_3_Bnd
 Build Neck_Head_Block Success
 Build successfully exec_head.build_head_block()
 Postcode Neck_Head_Block
@@ -465,14 +469,14 @@ L_Hand_Palm_Jnt
 // Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
 // Error: searchReplaceNames _Jnt  "selected"; // 
 // Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
-[43.111900329589844, 93.10709381103516, 7.834272384643555]
+[40.04366111755371, 92.25446701049805, 9.378228425979614]
 # Warning: Name '_________' of new attribute clashes with an existing attribute of node 'L_Hand_Palm_Ctrl'. # 
 L_Hand_Palm_Jnt:INNER CUP
 // Error: searchReplaceNames _Ctrl  "selected"; // 
 // Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
 // Error: searchReplaceNames _Jnt  "selected"; // 
 // Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
-[40.63144839142111, 92.29089329519589, 11.194222929423006]
+[39.179948806762695, 91.27716064453125, 11.844958782196047]
 L_Hand_Palm_Jnt: OUTTER CUP
 // Error: searchReplaceNames _Ctrl  "selected"; // 
 // Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
@@ -606,14 +610,14 @@ Index_01
 // Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
 // Error: searchReplaceNames _Jnt  "selected"; // 
 // Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
-[43.111900329589844, 93.10709381103516, 7.834272384643555]
+[40.04366111755371, 92.25446701049805, 9.378228425979614]
 # Warning: Name '_________' of new attribute clashes with an existing attribute of node 'R_Hand_Palm_Ctrl'. # 
 R_Hand_Palm_Jnt:INNER CUP
 // Error: searchReplaceNames _Ctrl  "selected"; // 
 // Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
 // Error: searchReplaceNames _Jnt  "selected"; // 
 // Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
-[40.63144839142111, 92.29089329519589, 11.194222929423006]
+[39.179948806762695, 91.27716064453125, 11.844958782196047]
 R_Hand_Palm_Jnt: OUTTER CUP
 // Error: searchReplaceNames _Ctrl  "selected"; // 
 // Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 

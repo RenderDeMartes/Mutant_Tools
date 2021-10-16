@@ -227,7 +227,7 @@ def build_spine_block():
 
     mt.assign_color(color = 'lightBlue')
     base_fk_offset = mt.root_grp()
-    mt.match(base_fk_ctrl,ctrl_joints[0], t=True, r=False)
+    mt.match(base_fk_offset,ctrl_joints[0], t=True, r=False)
     spine_ctrls.append(base_fk_ctrl)
 
     cmds.parent(belly_fk_offset,base_fk_ctrl)
