@@ -261,7 +261,7 @@ def build_foot_block():
                               type='circleX',
                               rename=True,
                               custom_name=True,
-                              name=side_guide.replace(nc['joint'], '_Toes'+nc['ctrl']),
+                              name=side_guide.replace('_Ankle'+nc['joint'], '_Toes'+nc['ctrl']),
                               size=size)
         mt.assign_color(color=color)
         share_grp = mt.root_grp()[0]
