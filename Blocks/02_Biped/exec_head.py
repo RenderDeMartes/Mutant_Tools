@@ -145,7 +145,7 @@ def build_head_block():
     
     #blends#changed name to offset since blends are now a dif block
     neck_blends_grp = mt.root_grp(input = fk_chain[0], custom = True, custom_name = '_Offset', autoRoot = False, replace_nc = False)[0]
-    head_blends_grp = mt.root_grp(input = fk_chain[1], custom = True, custom_name = '_Offset', autoRoot = False, replace_nc = False)[0]
+    head_blends_grp = mt.root_grp(input = fk_chain[1], custom = True, custom_name = '_Root', autoRoot = False, replace_nc = False)[0]
 
 
     #bind joints
