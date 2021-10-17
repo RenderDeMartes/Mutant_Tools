@@ -68,7 +68,8 @@ def build_single_fk_block():
     loc_guide = cmds.listRelatives(block, c=True)[0]
     print(loc_guide)
 
-    ctrl = mt.curve(input = loc_guide, type = cmds.getAttr('{}.CtrlType'.format(config), asString=True), rename = True, custom_name = False, name = '',
+    ctrl = mt.curve(input = loc_guide, type = cmds.getAttr('{}.CtrlType'.format(config), asString=True), rename = True,
+                                       custom_name = True, name = loc_guide.replace(nc['locator'], nc['ctrl']),
                                        size = cmds.getAttr('{}.CtrlSize'.format(config)))
     mt.assign_color(input = ctrl, color = cmds.getAttr('{}.CtrlColor'.format(config), asString = True))
 
