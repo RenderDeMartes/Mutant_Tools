@@ -144,7 +144,7 @@ class Kinematics_class(tools.Tools_class):
 
 		return fk_controllers
 
-#----------------------------------------------------------------------------------------------------------------
+	#----------------------------------------------------------------------------------------------------------------
 
 	def pole_vector_placement(self, bone_one = '', bone_two = '', bone_three = '',back_distance = 1):
 		"""Get the perfect Polevector position
@@ -220,7 +220,7 @@ class Kinematics_class(tools.Tools_class):
 		
 		return loc
 
-#----------------------------------------------------------------------------------------------------------------
+	#----------------------------------------------------------------------------------------------------------------
 
 	def streatchy_ik(self, ik = '', ik_ctrl= '', top_ctrl = '', pv_ctrl = '', attrs_location = '', name = '', axis = 'Y'):
 		"""Generate all the nodes necessary to create a iK stretching system
@@ -572,7 +572,7 @@ class Kinematics_class(tools.Tools_class):
 	
 		return middle_joints
 
-#----------------------------------------------------------------------------------------------------------------
+	#----------------------------------------------------------------------------------------------------------------
 	def joints_middle_no_chain(self, start = '', end='', axis = setup['twist_axis'], amount = 3, name = 'Mid'):
 		"""
 
@@ -612,7 +612,7 @@ class Kinematics_class(tools.Tools_class):
 
 		#self.match(mid_joints[-1], end)
 
-#----------------------------------------------------------------------------------------------------------------
+	#----------------------------------------------------------------------------------------------------------------
 
 	def twist(self, start = '', end = '', axis = setup['twist_axis'], amount = 4, mode = 'down'):
 		"""
@@ -689,7 +689,7 @@ class Kinematics_class(tools.Tools_class):
 		
 		return return_joints
 
-#----------------------------------------------------------------------------------------------------------------
+	#----------------------------------------------------------------------------------------------------------------
 
 	def twist_rotate_info(self, start = '', end = '', axis = setup['twist_axis'], driver = False):
 		"""
@@ -767,7 +767,7 @@ class Kinematics_class(tools.Tools_class):
 		
 		return {'ik': ik, 'twist_grp': twist_grp, 'locator': loc, 'joint': twist_root, 'offset': offset_grp}		
 
-#----------------------------------------------------------------------------------------------------------------
+	#----------------------------------------------------------------------------------------------------------------
 
 	def advance_twist(self, start = '', end = '', axis = setup['twist_axis'], amount = 4, mode = 'up', driver = '', inverse =False):
 		"""
@@ -1261,7 +1261,7 @@ class Kinematics_class(tools.Tools_class):
 
 		return mirror_grp
 
-#----------------------------------------------------------------------------------------------------------------
+	#----------------------------------------------------------------------------------------------------------------
 
 	def basic_ribbon(self, start = '', end = '', divisions = 5, name = 'Ribbon', ctrl_type = 'circleY',size = 1):
 		"""
@@ -1346,7 +1346,7 @@ class Kinematics_class(tools.Tools_class):
 				'controllers_grp':main_ctrl_grp}
 
 	
-#----------------------------------------------------------------------------------------------------------------
+	#----------------------------------------------------------------------------------------------------------------
 
 	def ribbon_between(self, start = '', end = '', divisions = 5, name = 'Ribbon', ctrl_type = 'circleY', size = 1):
 		"""
@@ -1408,3 +1408,59 @@ class Kinematics_class(tools.Tools_class):
 
 
 	#----------------------------------------------------------------------------------------------------------------
+
+	def blend_between(self, ctrl = None, blends = '', attr_position = 'ctrl', attr_name = 'Blends'):
+		"""Create blends
+
+		Args:
+			ctrl: main ctrl name
+			blends: string of blends separated by comas ,
+			attr_position: where to put the attrs: default in same ctrl
+			attr_name: attrs name, default is blends
+
+		Returns:
+
+		"""
+		#inputs checks
+		if not ctrl:
+			cmds.error('No control assigned')
+
+		if not blends:
+			cmds.error('No blends assigned')
+
+		if attr_position == 'ctrl':
+			attr_position = ctrl
+
+		#create main blends group for locators
+		if not cmds.objExists('Blends' + nc['group']):
+			blends_grp = cmds.group(n='Blends' + nc['group'], em=True)
+		else:
+			blends_grp = 'Blends' + nc['group']
+
+		#get misc group and parent blends group in it
+		misc_grp = setup['rig_groups']['misc'] + nc['group']
+		if cmds.objExists(misc_grp):
+			try:cmds.parent(blends_grp, misc_grp)
+			except:pass
+
+		#create blends gtroup for blends over main ctrl
+		cmds.select(ctrl)
+		if not cmds.objExists(ctrl + '_Blend' + nc['group']):
+			blend_grp = self.root_grp(custom=True, custom_name='_Blend')
+		else:
+			blend_grp = ctrl + '_Blend' + nc['group']
+
+		#blends stuffs
+		blends = blends.split(',')
+		blend_groups = []
+		for blend in blends:
+			print(blend)
+			#creato locator in blends group for the parents
+			blend_loc = cmds.spaceLocator(n = blend.replace(nc['joint'],nc['locator']).replace(nc['ctrl'],nc['locator']))
+			self.match(blend_loc, blend)
+			cmds.parentConstraint(blend, blend_loc, mo=False)
+			cmds.parent(blend_loc, blends_grp)
+
+			cmds.select(ctrl)
+
+		cmds.select(ctrl)

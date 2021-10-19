@@ -80,6 +80,7 @@ def build_single_fk_block():
     except:pass
 
     #create gimbal ctrl under main
+    gimbal_ctrl=''
     if cmds.getAttr('{}.Gimbal'.format(config)) == True :
         gimbal_ctrl = mt.curve(input = loc_guide, type = cmds.getAttr('{}.CtrlType'.format(config), asString=True), rename = False, custom_name = True,
                                                   name = ctrl.replace(nc['ctrl'], nc['gimbal_ctrl']),
@@ -116,7 +117,8 @@ def build_single_fk_block():
     #clean if COG
     if 'COG' in str(ctrl):
         mt.hide_attr(input = ctrl, s=True)
-        mt.hide_attr(input = gimbal_ctrl, s=True)
+        if gimbal_ctrl:
+            mt.hide_attr(input = gimbal_ctrl, s=True)
 
     print ('Build of single_fk was succesfull')
 
