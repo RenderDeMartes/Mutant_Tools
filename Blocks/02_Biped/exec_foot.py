@@ -294,6 +294,10 @@ def build_foot_block():
         else:
             switch_attr = ikfk_switch_attr
 
+        if side_guide.startswith(nc['right']):
+            switch_attr = switch_attr.replace(nc['left'],nc['right'])
+
+
         main_joints = cmds.listRelatives(side_guide, c=True, ad=True)
         main_joints.insert(0,side_guide)
         mt.switch_constraints(this=ik_joints[0], that=fk_joints[0], main=main_joints[0], attr=switch_attr)

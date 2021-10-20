@@ -10,13 +10,13 @@ how to:
 
 import imp
 import Mutant_Tools
-from Mutant_Tools.UI.FolderName import load_pyname
-imp.reload(load_pyname)
+from Mutant_Tools.UI.RigTools import load_RigTools
+imp.reload(load_RigTools)
 
-try:cMutantUI.close()
+try:cRigToolsUI.close()
 except:pass
-cMutantUI = load_pyname.MutantUI()
-cMutantUI.show()
+cRigToolsUI = load_RigTools.RigTools_UI()
+cRigToolsUI.show()
 
 #----------------
 dependencies:
@@ -55,13 +55,13 @@ import pprint
 # -------------------------------------------------------------------
 
 # QT WIndow!
-FOLDER_NAME = 'folder_name_here'
+FOLDER_NAME = 'RigTools'
 PATH = os.path.dirname(__file__)
 BLOCKS_PATH = PATH.replace('\\UI\\{}'.format(FOLDER_NAME), '//Blocks')  # get Blocks paths to write files
 
-Title = 'Mutant || Mutant'
+Title = 'RigTools'
 Folder = PATH.replace('\\UI\\{}'.format(FOLDER_NAME), '')
-UI_File = 'FILE_NAME_HERE.ui'
+UI_File = 'RigTools.ui'
 IconsPath = Folder + '//Icons//'
 
 # -------------------------------------------------------------------
@@ -285,7 +285,7 @@ sculpting_tab = {
 separators_before = ['SetMeshSmoothTargetTool','ShapeEditor','ConvertToFrozen','ArtPaintSkinWeightsTool','ParentConstraint','SetKey']
 
 #----------------------------------------------------------------------------------------------------
-
+#icons missing: humanIK_CharCtrl.png
 def get_icons():
 	for item in cmds.resourceManager(nf='*png'):
 		cmds.resourceManager(
@@ -307,21 +307,19 @@ def get_icons():
 			print('error with:', icon)
 			pass
 
-
-#icons missing: humanIK_CharCtrl.png
-
 # -------------------------------------------------------------------
 
-
-class MutantUI(QtMutantWindow.Qt_Mutant):
+class RigTools_UI(QtMutantWindow.Qt_Mutant):
 
 	def __init__(self):
-		super(MutantUI, self).__init__()
+		super(RigTools_UI, self).__init__()
 
 		self.setWindowTitle(Title)
 
 		self.designer_loader_child(path=Folder + '/UI/{}/'.format(FOLDER_NAME), ui_file=UI_File)
 		self.set_title(Title)
+
+		self.resize(680,600)
 
 		self.create_layout()
 		self.create_connections()
@@ -334,7 +332,10 @@ class MutantUI(QtMutantWindow.Qt_Mutant):
 		Returns:
 
 		"""
-
+		self.ui.sculpt_frame.hide()
+		self.ui.rig_frame.hide()
+		self.populate_ui_shelf(rig_tab, self.ui.rig_shelf)
+		self.populate_ui_shelf(sculpting_tab, self.ui.sculpt_shelf)
 
 	def create_connections(self):
 		"""
@@ -343,7 +344,57 @@ class MutantUI(QtMutantWindow.Qt_Mutant):
 
 		"""
 
-		#self.ui.button.clicked.connect(self.create_block)
+		self.ui.hide_shelfs.clicked.connect(self.toggle_shelfs_vis)
+
+	def toggle_shelfs_vis(self):
+		if self.ui.sculpt_frame.isVisible():
+			self.ui.sculpt_frame.hide()
+			self.ui.rig_frame.hide()
+		else:
+			self.ui.sculpt_frame.show()
+			self.ui.rig_frame.show()
+
+	def populate_ui_shelf(self, dict_data, layout):
+		for num in dict_data:
+			button_data = dict_data[num]
+
+
+			code = button_data['code']
+			icon = button_data['icon']
+			tooltip = button_data['tooltip']
+			double_click = button_data['double_click']
+
+			if code in separators_before:
+				separator = self.create_vertical_separator()
+				layout.addWidget(separator)
+
+			button = QtWidgets.QPushButton()
+			button.setMinimumSize(30,30)
+			button.setIcon(QtGui.QIcon(IconsPath + 'MayaIcons//{}'.format(icon)))
+			button.setIconSize(QtCore.QSize(30,30))
+			button.setToolTip(tooltip)
+			#connect button
+			button.installEventFilter(self)
+			button.clicked.connect(partial(self.shelf_click, code))
+			button.setObjectName(double_click)
+
+			#add to layout
+			layout.addWidget(button)
+
+	#stole event filler and add right click as obj name
+	def eventFilter(self, obj, event):
+		if event.type() == QtCore.QEvent.MouseButtonPress:
+			if event.button() == QtCore.Qt.LeftButton:
+				pass
+			elif event.button() == QtCore.Qt.RightButton:
+				try:mel.eval(obj.objectName())
+				except:pass
+		return QtCore.QObject.event(obj, event)
+
+	def shelf_click(self, mel_code):
+		mel.eval(mel_code)
+
+
 
 	# -------------------------------------------------------------------
 
@@ -357,12 +408,12 @@ class MutantUI(QtMutantWindow.Qt_Mutant):
 if __name__ == "__main__":
 
 	try:
-		cMutantUI.close()  # pylint: disable=E0601
-		cMutantUI.deleteLater()
+		cRigToolsUI.close()  # pylint: disable=E0601
+		cRigToolsUI.deleteLater()
 	except:
 		pass
-	cMutantUI = MutantUI()
-	cMutantUI.show()
+	cRigToolsUI = RigTools_UI()
+	cRigToolsUI.show()
 
 # -------------------------------------------------------------------
 

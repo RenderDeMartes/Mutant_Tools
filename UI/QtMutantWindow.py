@@ -302,3 +302,10 @@ class Qt_Mutant(QtWidgets.QMainWindow):
 		return separator
 
 	# ------------------------------------------------
+
+	def create_vertical_separator(self):
+		separator = QtWidgets.QLabel()
+		separator.setStyleSheet("border : 5px solid grey; ")
+		separator.setFixedWidth(1)
+
+		return separator

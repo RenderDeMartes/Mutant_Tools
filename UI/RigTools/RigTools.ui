@@ -6,20 +6,44 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>605</width>
-    <height>665</height>
+    <width>602</width>
+    <height>536</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="2" column="0">
-    <widget class="QFrame" name="frame_2">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <item row="3" column="0">
+    <widget class="QFrame" name="sculpt_frame">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>0</height>
+      </size>
+     </property>
      <property name="maximumSize">
       <size>
        <width>16777215</width>
-       <height>50</height>
+       <height>100</height>
       </size>
      </property>
      <property name="frameShape">
@@ -29,8 +53,38 @@
       <enum>QFrame::Raised</enum>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_4">
+      <property name="sizeConstraint">
+       <enum>QLayout::SetMinimumSize</enum>
+      </property>
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
       <item>
        <widget class="QScrollArea" name="scrollArea_2">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>60</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>80</height>
+         </size>
+        </property>
+        <property name="verticalScrollBarPolicy">
+         <enum>Qt::ScrollBarAlwaysOff</enum>
+        </property>
         <property name="widgetResizable">
          <bool>true</bool>
         </property>
@@ -39,13 +93,26 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>565</width>
-           <height>28</height>
+           <width>598</width>
+           <height>69</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_4">
-          <item row="0" column="0">
-           <layout class="QHBoxLayout" name="horizontalLayout_3"/>
+          <item row="0" column="1">
+           <layout class="QHBoxLayout" name="sculpt_shelf"/>
+          </item>
+          <item row="0" column="2">
+           <spacer name="horizontalSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
           </item>
          </layout>
         </widget>
@@ -54,47 +121,7 @@
      </layout>
     </widget>
    </item>
-   <item row="0" column="0">
-    <widget class="QFrame" name="frame">
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>50</height>
-      </size>
-     </property>
-     <property name="frameShape">
-      <enum>QFrame::StyledPanel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Raised</enum>
-     </property>
-     <layout class="QHBoxLayout" name="horizontalLayout_2">
-      <item>
-       <widget class="QScrollArea" name="scrollArea">
-        <property name="widgetResizable">
-         <bool>true</bool>
-        </property>
-        <widget class="QWidget" name="scrollAreaWidgetContents">
-         <property name="geometry">
-          <rect>
-           <x>0</x>
-           <y>0</y>
-           <width>565</width>
-           <height>28</height>
-          </rect>
-         </property>
-         <layout class="QGridLayout" name="gridLayout_3">
-          <item row="0" column="0">
-           <layout class="QHBoxLayout" name="horizontalLayout"/>
-          </item>
-         </layout>
-        </widget>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item row="3" column="0">
+   <item row="4" column="0">
     <widget class="QGroupBox" name="grpbox">
      <property name="minimumSize">
       <size>
@@ -104,25 +131,1024 @@
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
       <item row="0" column="0">
-       <widget class="QScrollArea" name="scrollArea_3">
+       <widget class="QTabWidget" name="tabWidget">
+        <property name="currentIndex">
+         <number>1</number>
+        </property>
+        <widget class="QWidget" name="Rename">
+         <attribute name="title">
+          <string>Rename</string>
+         </attribute>
+         <layout class="QGridLayout" name="gridLayout_5">
+          <item row="0" column="0">
+           <widget class="QFrame" name="">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_8">
+             <item row="0" column="0">
+              <layout class="QHBoxLayout" name="horizontalLayout_28">
+               <item>
+                <widget class="QLineEdit" name="SearchLineEdit">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>30</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="placeholderText">
+                  <string>Search</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="ReplaceLineEdit">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>30</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="placeholderText">
+                  <string>Replace</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="ChangeNameBtn">
+                 <property name="minimumSize">
+                  <size>
+                   <width>70</width>
+                   <height>30</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>Name</string>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="../../../../../2020/scripts/RdMToolsV2/Resources/iconResources.qrc">
+                   <normaloff>:/icon/SearchReplace.png</normaloff>:/icon/SearchReplace.png</iconset>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="ChangeNameBtn2">
+                 <property name="minimumSize">
+                  <size>
+                   <width>80</width>
+                   <height>30</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string> Herarchy</string>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="../../../../../2020/scripts/RdMToolsV2/Resources/iconResources.qrc">
+                   <normaloff>:/icon/SearchReplace.png</normaloff>:/icon/SearchReplace.png</iconset>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item row="1" column="0">
+              <widget class="Line" name="line_4">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <layout class="QHBoxLayout" name="horizontalLayout_10">
+               <item>
+                <widget class="QComboBox" name="comboBox"/>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="lineEdit">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>30</height>
+                  </size>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="pushButton_3">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>30</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>Prefix</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item row="3" column="0">
+              <layout class="QHBoxLayout" name="horizontalLayout_24">
+               <item>
+                <widget class="QPushButton" name="RightPrefix">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>30</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>Right Side prefix</string>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="../../../../../2020/scripts/RdMToolsV2/Resources/iconResources.qrc">
+                   <normaloff>:/icon/RightArrow.png</normaloff>:/icon/RightArrow.png</iconset>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="LeftPrefix">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>30</height>
+                  </size>
+                 </property>
+                 <property name="layoutDirection">
+                  <enum>Qt::LeftToRight</enum>
+                 </property>
+                 <property name="autoFillBackground">
+                  <bool>false</bool>
+                 </property>
+                 <property name="text">
+                  <string>Left Side prefix</string>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="../../../../../2020/scripts/RdMToolsV2/Resources/iconResources.qrc">
+                   <normaloff>:/icon/LeftArrow.png</normaloff>:/icon/LeftArrow.png</iconset>
+                 </property>
+                 <property name="autoDefault">
+                  <bool>false</bool>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item row="4" column="0">
+              <widget class="Line" name="line_5">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="0">
+              <layout class="QHBoxLayout" name="horizontalLayout_27">
+               <item>
+                <widget class="QLineEdit" name="NewNameLineEdit">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>30</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="placeholderText">
+                  <string>Rename</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QCheckBox" name="RenameNumCheckBox">
+                 <property name="maximumSize">
+                  <size>
+                   <width>35</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>#</string>
+                 </property>
+                 <property name="checked">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="RenameBtn">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>30</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>150</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>Rename</string>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="../../../../../2020/scripts/RdMToolsV2/Resources/iconResources.qrc">
+                   <normaloff>:/icon/Rename.png</normaloff>:/icon/Rename.png</iconset>
+                 </property>
+                 <property name="iconSize">
+                  <size>
+                   <width>20</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item row="6" column="0">
+              <widget class="Line" name="line_6">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+              </widget>
+             </item>
+             <item row="7" column="0">
+              <layout class="QHBoxLayout" name="horizontalLayout_11">
+               <item>
+                <widget class="QComboBox" name="comboBox_2"/>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="lineEdit_2">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>30</height>
+                  </size>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="pushButton_4">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>30</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>Sufix</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item row="8" column="0">
+              <widget class="Line" name="line_7">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+              </widget>
+             </item>
+             <item row="9" column="0">
+              <layout class="QHBoxLayout" name="horizontalLayout_13">
+               <item>
+                <widget class="QComboBox" name="comboBox_3"/>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="lineEdit_3">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>30</height>
+                  </size>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="pushButton_5">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>30</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>PushButton</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="Tools">
+         <attribute name="title">
+          <string>Tools</string>
+         </attribute>
+         <layout class="QGridLayout" name="gridLayout_7">
+          <item row="0" column="0">
+           <layout class="QHBoxLayout" name="horizontalLayout_3">
+            <item>
+             <layout class="QVBoxLayout" name="verticalLayout">
+              <item>
+               <widget class="QGroupBox" name="groupBox_6">
+                <layout class="QHBoxLayout" name="horizontalLayout_58">
+                 <item>
+                  <widget class="QLabel" name="label_14">
+                   <property name="text">
+                    <string>Guides Size</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QSlider" name="JointSizeSlider_2">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="cursor">
+                    <cursorShape>PointingHandCursor</cursorShape>
+                   </property>
+                   <property name="focusPolicy">
+                    <enum>Qt::WheelFocus</enum>
+                   </property>
+                   <property name="minimum">
+                    <number>1</number>
+                   </property>
+                   <property name="maximum">
+                    <number>200</number>
+                   </property>
+                   <property name="value">
+                    <number>10</number>
+                   </property>
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_27">
+                   <property name="maximumSize">
+                    <size>
+                     <width>25</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>10</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item>
+               <widget class="Line" name="line">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QFrame" name="frame_5">
+                <layout class="QHBoxLayout" name="horizontalLayout_30">
+                 <item>
+                  <widget class="QLabel" name="label_13">
+                   <property name="text">
+                    <string>Joint Size</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QSlider" name="JointSizeSlider">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="cursor">
+                    <cursorShape>PointingHandCursor</cursorShape>
+                   </property>
+                   <property name="focusPolicy">
+                    <enum>Qt::WheelFocus</enum>
+                   </property>
+                   <property name="minimum">
+                    <number>1</number>
+                   </property>
+                   <property name="maximum">
+                    <number>200</number>
+                   </property>
+                   <property name="value">
+                    <number>10</number>
+                   </property>
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_24">
+                   <property name="maximumSize">
+                    <size>
+                     <width>25</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>10</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item>
+               <widget class="Line" name="line_21">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_12">
+                <item>
+                 <widget class="QPushButton" name="ShowAxisBtn">
+                  <property name="minimumSize">
+                   <size>
+                    <width>35</width>
+                    <height>35</height>
+                   </size>
+                  </property>
+                  <property name="text">
+                   <string>Show Axis</string>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="../../../../../2020/scripts/RdMToolsV2/Resources/iconResources.qrc">
+                    <normaloff>:/icon/Eye.png</normaloff>:/icon/Eye.png</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>20</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="HideAxisBtn">
+                  <property name="minimumSize">
+                   <size>
+                    <width>35</width>
+                    <height>35</height>
+                   </size>
+                  </property>
+                  <property name="text">
+                   <string>Hide Axis</string>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="../../../../../2020/scripts/RdMToolsV2/Resources/iconResources.qrc">
+                    <normaloff>:/icon/NoEye.png</normaloff>:/icon/NoEye.png</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>20</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_8">
+                <item>
+                 <widget class="QPushButton" name="ShowJntsBtn">
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>35</height>
+                   </size>
+                  </property>
+                  <property name="text">
+                   <string>Show joints</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="HideJointsBtn">
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>35</height>
+                   </size>
+                  </property>
+                  <property name="text">
+                   <string>Hide Joints</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <widget class="Line" name="line_8">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_9">
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <item>
+                 <widget class="QPushButton" name="pushButton">
+                  <property name="minimumSize">
+                   <size>
+                    <width>30</width>
+                    <height>30</height>
+                   </size>
+                  </property>
+                  <property name="text">
+                   <string>Lock Containers</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="pushButton_2">
+                  <property name="minimumSize">
+                   <size>
+                    <width>30</width>
+                    <height>30</height>
+                   </size>
+                  </property>
+                  <property name="text">
+                   <string>Open Containers</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <spacer name="verticalSpacer_2">
+                <property name="orientation">
+                 <enum>Qt::Vertical</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>20</width>
+                  <height>40</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="Line" name="line_3">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <layout class="QVBoxLayout" name="verticalLayout_2">
+              <item>
+               <layout class="QVBoxLayout" name="verticalLayout_9">
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_6">
+                  <item>
+                   <widget class="QPushButton" name="reload">
+                    <property name="maximumSize">
+                     <size>
+                      <width>30</width>
+                      <height>16777215</height>
+                     </size>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <family>Microsoft Yi Baiti</family>
+                      <pointsize>12</pointsize>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>⟳</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QCheckBox" name="HideTranslateCheckBox">
+                    <property name="maximumSize">
+                     <size>
+                      <width>46</width>
+                      <height>15</height>
+                     </size>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true"/>
+                    </property>
+                    <property name="text">
+                     <string>Trans</string>
+                    </property>
+                    <property name="checked">
+                     <bool>true</bool>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QCheckBox" name="HideRotateCheckBox">
+                    <property name="maximumSize">
+                     <size>
+                      <width>45</width>
+                      <height>15</height>
+                     </size>
+                    </property>
+                    <property name="text">
+                     <string>Rot</string>
+                    </property>
+                    <property name="checked">
+                     <bool>true</bool>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QCheckBox" name="HideScaleCheckBox">
+                    <property name="maximumSize">
+                     <size>
+                      <width>46</width>
+                      <height>15</height>
+                     </size>
+                    </property>
+                    <property name="text">
+                     <string>Scale</string>
+                    </property>
+                    <property name="checked">
+                     <bool>true</bool>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QCheckBox" name="HideVisibilityCheckBox">
+                    <property name="maximumSize">
+                     <size>
+                      <width>45</width>
+                      <height>15</height>
+                     </size>
+                    </property>
+                    <property name="text">
+                     <string>Vis</string>
+                    </property>
+                    <property name="checked">
+                     <bool>true</bool>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_7">
+                  <item>
+                   <widget class="QPushButton" name="HideBtn">
+                    <property name="text">
+                     <string>Hide All</string>
+                    </property>
+                    <property name="icon">
+                     <iconset resource="../../../../../2020/scripts/RdMToolsV2/Resources/iconResources.qrc">
+                      <normaloff>:/icon/Remove.png</normaloff>:/icon/Remove.png</iconset>
+                    </property>
+                    <property name="iconSize">
+                     <size>
+                      <width>20</width>
+                      <height>20</height>
+                     </size>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QPushButton" name="RevealBtn">
+                    <property name="text">
+                     <string>Reveal All</string>
+                    </property>
+                    <property name="icon">
+                     <iconset resource="../../../../../2020/scripts/RdMToolsV2/Resources/iconResources.qrc">
+                      <normaloff>:/icon/Add.png</normaloff>:/icon/Add.png</iconset>
+                    </property>
+                    <property name="iconSize">
+                     <size>
+                      <width>20</width>
+                      <height>20</height>
+                     </size>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <widget class="Line" name="line_19">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <layout class="QVBoxLayout" name="verticalLayout_22">
+                <item>
+                 <widget class="QPushButton" name="SimpleFKBtn">
+                  <property name="text">
+                   <string>Simple FK</string>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="../../../../../2020/scripts/RdMToolsV2/Resources/iconResources.qrc">
+                    <normaloff>:/icon/Chain.png</normaloff>:/icon/Chain.png</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>25</width>
+                    <height>25</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <widget class="Line" name="line_2">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <layout class="QVBoxLayout" name="verticalLayout_7">
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_5">
+                  <property name="spacing">
+                   <number>6</number>
+                  </property>
+                  <property name="sizeConstraint">
+                   <enum>QLayout::SetDefaultConstraint</enum>
+                  </property>
+                  <item>
+                   <widget class="QLineEdit" name="FollicleNewName">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="text">
+                     <string/>
+                    </property>
+                    <property name="placeholderText">
+                     <string>Select a Nurbs/Poly</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout">
+                  <property name="topMargin">
+                   <number>0</number>
+                  </property>
+                  <item>
+                   <widget class="QGroupBox" name="groupBox">
+                    <property name="title">
+                     <string/>
+                    </property>
+                    <layout class="QGridLayout" name="gridLayout_6">
+                     <item row="0" column="0">
+                      <widget class="QRadioButton" name="radioButton_2">
+                       <property name="text">
+                        <string>Fol</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="0" column="1">
+                      <widget class="QRadioButton" name="radioButton">
+                       <property name="text">
+                        <string>POP</string>
+                       </property>
+                       <property name="checked">
+                        <bool>true</bool>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QCheckBox" name="checkBox">
+                    <property name="text">
+                     <string>Joint</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="CreateFollicleBtn">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="text">
+                   <string>Add to geo</string>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="../../../../../2020/scripts/RdMToolsV2/Resources/iconResources.qrc">
+                    <normaloff>:/icon/Follicle.png</normaloff>:/icon/Follicle.png</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>25</width>
+                    <height>25</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <widget class="Line" name="line_38">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="verticalSpacer">
+                <property name="orientation">
+                 <enum>Qt::Vertical</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>20</width>
+                  <height>40</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="Ctrls">
+         <attribute name="title">
+          <string>Ctrls</string>
+         </attribute>
+        </widget>
+        <widget class="QWidget" name="Skin">
+         <attribute name="title">
+          <string>Skin</string>
+         </attribute>
+        </widget>
+        <widget class="QWidget" name="Donate">
+         <attribute name="title">
+          <string>Donate</string>
+         </attribute>
+        </widget>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QFrame" name="rig_frame">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>100</height>
+      </size>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <property name="sizeConstraint">
+       <enum>QLayout::SetMinimumSize</enum>
+      </property>
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QScrollArea" name="scrollArea">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>60</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>80</height>
+         </size>
+        </property>
+        <property name="verticalScrollBarPolicy">
+         <enum>Qt::ScrollBarAlwaysOff</enum>
+        </property>
         <property name="widgetResizable">
          <bool>true</bool>
         </property>
-        <widget class="QWidget" name="scrollAreaWidgetContents_6">
+        <widget class="QWidget" name="scrollAreaWidgetContents">
          <property name="geometry">
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>565</width>
-           <height>513</height>
+           <width>598</width>
+           <height>60</height>
           </rect>
          </property>
-         <layout class="QGridLayout" name="gridLayout_5">
-          <item row="0" column="0">
-           <layout class="QHBoxLayout" name="horizontalLayout_6"/>
+         <layout class="QGridLayout" name="gridLayout_3">
+          <item row="0" column="2">
+           <spacer name="horizontalSpacer_2">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
           </item>
           <item row="0" column="1">
-           <layout class="QHBoxLayout" name="horizontalLayout_5"/>
+           <layout class="QHBoxLayout" name="rig_shelf"/>
           </item>
          </layout>
         </widget>
@@ -131,8 +1157,50 @@
      </layout>
     </widget>
    </item>
+   <item row="0" column="0">
+    <widget class="QPushButton" name="hide_shelfs">
+     <property name="text">
+      <string>↓↓↓</string>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
- <resources/>
- <connections/>
+ <resources>
+  <include location="../../../../../2020/scripts/RdMToolsV2/Resources/iconResources.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>JointSizeSlider</sender>
+   <signal>sliderMoved(int)</signal>
+   <receiver>label_24</receiver>
+   <slot>setNum(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>173</x>
+     <y>291</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>284</x>
+     <y>297</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>JointSizeSlider_2</sender>
+   <signal>sliderMoved(int)</signal>
+   <receiver>label_27</receiver>
+   <slot>setNum(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>210</x>
+     <y>253</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>281</x>
+     <y>257</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>
