@@ -5,6 +5,8 @@
 
    "left":	"L_",
    "right":	"R_",
+   "up": "Up_",
+   "down": "Dn_",
 
    "offset":  "_Offset",
    "root":    "_Root",
@@ -15,6 +17,8 @@
    "joint_bind": "_Bnd",
    "joint_ctrl": "_JntCtrl",
    "joint_twist": "_JntTwist",
+   "no_joint": "_No_Jnt",
+   "base_joint": "_Base_Jnt",
 
    "ik": "_Ik_Jnt",
    "fk": "_Fk_Jnt",
@@ -46,6 +50,9 @@
    "plus_minus_average" : "PMA",
    "connected":"_Connected",
    "skin_cluster": "_Skin",
-   "expression": "_Expression"
+   "expression": "_Expression",
+   "unitConversion": "_UC",
+   "remap_value": "_RV",
+   "reverse": "_REV"
 
 }
