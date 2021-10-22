@@ -6,7 +6,7 @@
    "left":	"L_",
    "right":	"R_",
    "up": "Up_",
-   "down": "Dn_",
+   "down": "Dw_",
 
    "offset":  "_Offset",
    "root":    "_Root",
@@ -17,8 +17,8 @@
    "joint_bind": "_Bnd",
    "joint_ctrl": "_JntCtrl",
    "joint_twist": "_JntTwist",
-   "no_joint": "_No_Jnt",
-   "base_joint": "_Base_Jnt",
+   "no_joint": "_NoJnt",
+   "base_joint": "_BaseJnt",
 
    "ik": "_Ik_Jnt",
    "fk": "_Fk_Jnt",
@@ -36,6 +36,8 @@
 
    "follicle":	"_Fol",
    "nurb":		"_Nurb",
+   "point_on_poly":	"_PointOnPoly",
+
 
    "ik_rp" : "_IKrp",
    "ik_sc" : "_IKsc",
@@ -43,16 +45,16 @@
    "pole_vector" : "_PoleVector",
    "effector" :   "_Effector",
 
-   "multiplyDivide":"_MD",
+   "multiplyDivide":"_MultDiv",
    "distance":"_Distance",
    "condition":"_Condition",
    "blend":"_Blend",
-   "plus_minus_average" : "PMA",
+   "plus_minus_average" : "PlusMinAv",
    "connected":"_Connected",
    "skin_cluster": "_Skin",
    "expression": "_Expression",
-   "unitConversion": "_UC",
-   "remap_value": "_RV",
-   "reverse": "_REV"
+   "unitConversion": "_UnitConversion",
+   "remap_value": "_Remap",
+   "reverse": "_Reverse"
 
 }

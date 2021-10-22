@@ -88,7 +88,7 @@ def build_root_block():
     root = cmds.joint(n=block.replace(nc['module'], ''))
     cmds.parent(root, block_parent)
     cmds.setAttr('{}.segmentScaleCompensate'.format(root), 0)
-    cmds.setAttr('{}.inheritsTransform'.format(root), 0)
+    cmds.setAttr('{}.inheritsTransform'.format(root), 1)
 
     print ('Build {} Success'.format(block))
 

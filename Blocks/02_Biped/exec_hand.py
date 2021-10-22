@@ -400,14 +400,14 @@ def build_hand_block():
             cmds.scaleConstraint(jnt.replace(nc['joint_bind'],nc['joint']),jnt)
             cmds.setAttr('{}.segmentScaleCompensate'.format(jnt), 0)
             cmds.setAttr('{}.segmentScaleCompensate'.format(jnt.replace(nc['joint_bind'],nc['joint'])), 0)
-            cmds.setAttr('{}.inheritsTransform'.format(jnt), 0)
+            cmds.setAttr('{}.inheritsTransform'.format(jnt), 1)
 
         cmds.parentConstraint(side_guide,bind_joints[0])
         cmds.scaleConstraint(side_guide,bind_joints[0])  
         cmds.scaleConstraint('Global_Ctrl',side_guide)
 
         cmds.setAttr('{}.segmentScaleCompensate'.format(bind_joints[0]), 0)
-        cmds.setAttr('{}.inheritsTransform'.format(bind_joints[0]), 0)
+        cmds.setAttr('{}.inheritsTransform'.format(bind_joints[0]), 1)
 
         #flip right rig  to right side ------------------------- 
         

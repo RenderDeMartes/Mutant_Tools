@@ -448,7 +448,7 @@ def build_spine_block():
         cmds.parentConstraint(jnt, bind_joint, mo=False)
         cmds.scaleConstraint(jnt, bind_joint, mo=True)
         cmds.setAttr('{}.segmentScaleCompensate'.format(bind_joint), 0)
-        cmds.setAttr('{}.inheritsTransform'.format(bind_joint), 0)
+        cmds.setAttr('{}.inheritsTransform'.format(bind_joint), 1)
 
         # clean bind joints and radius to 1.5
         print(bind_joint)

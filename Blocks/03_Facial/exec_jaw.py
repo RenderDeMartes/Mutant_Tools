@@ -130,19 +130,19 @@ def build_jaw_block():
     cmds.xform(os=1, t=(0,0,0))
 
     # JAW CTL
-    jaw_ctl = mt.curve(input = name, type = ctrl_type, size = ctrl_size)
-    mt.assign_color(input = jaw_ctl, color = setup['center_color'])
+    jaw_ctrl = mt.curve(input = name, type = ctrl_type, size = ctrl_size)
+    mt.assign_color(input = jaw_ctrl, color = setup['center_color'])
     sdk = mt.root_grp(custom = True, custom_name = '_sdk')
-    sdk = cmds.rename(jaw_ctl + '_Sdk')
+    sdk = cmds.rename(jaw_ctrl + '_Sdk')
     grp = mt.root_grp(input=sdk)
-    grp = cmds.rename(jaw_ctl + '_Grp')
+    grp = cmds.rename(jaw_ctrl + '_Grp')
 
     # ATTRS JAW CTL
-    cmds.addAttr(jaw_ctl, ln='jawOpen', k=1, h=0)
-    cmds.addAttr(jaw_ctl, ln='chew', k=1, h=0, min=0, max=1)
-    cmds.addAttr(jaw_ctl, ln='chewHeight', k=1, h=0, min=-1, max=1)
-    cmds.addAttr(jaw_ctl, ln='L_Corner', k=1, h=0, min=-1, max=1)
-    cmds.addAttr(jaw_ctl, ln='R_Corner', k=1, h=0, min=-1, max=1)
+    cmds.addAttr(jaw_ctrl, ln='jawOpen', k=1, h=0)
+    cmds.addAttr(jaw_ctrl, ln='chew', k=1, h=0, min=0, max=1)
+    cmds.addAttr(jaw_ctrl, ln='chewHeight', k=1, h=0, min=-1, max=1)
+    cmds.addAttr(jaw_ctrl, ln='L_Corner', k=1, h=0, min=-1, max=1)
+    cmds.addAttr(jaw_ctrl, ln='R_Corner', k=1, h=0, min=-1, max=1)
 
     # ATTRS JAW SDK
     cmds.addAttr(sdk, ln='TY', k=1, h=0, dv= -.2)
@@ -150,7 +150,7 @@ def build_jaw_block():
     cmds.addAttr(sdk, ln='RX', k=1, h=0, dv= 25)
 
     # REHIERARCHY WITH JAW CTL
-    cmds.parent(base_joint, jaw_ctl)
+    cmds.parent(base_joint, jaw_ctrl)
     cmds.parent(no_jnt, grp)
     
     # CONSTRAINTS
@@ -173,15 +173,15 @@ def build_jaw_block():
     jaw_sdk = [md_open_jaw + '.input1X', md_open_jaw + '.input1Y', md_open_jaw + '.input1Z']
 
     for i in jaw_sdk:
-        cmds.setDrivenKeyframe(i, cd=jaw_ctl + '.jawOpen', itt='spline', ott='spline' )
+        cmds.setDrivenKeyframe(i, cd=jaw_ctrl + '.jawOpen', itt='spline', ott='spline' )
 
-    cmds.setAttr(jaw_ctl + '.jawOpen', 1)
+    cmds.setAttr(jaw_ctrl + '.jawOpen', 1)
     cmds.setAttr(md_open_jaw + '.input1.input1X', 1)
     cmds.setAttr(md_open_jaw + '.input1.input1Y', 1)
     cmds.setAttr(md_open_jaw + '.input1.input1Z', 1)
 
     for i in jaw_sdk:
-        cmds.setDrivenKeyframe(i, cd=jaw_ctl + '.jawOpen', itt='spline', ott='spline' )
+        cmds.setDrivenKeyframe(i, cd=jaw_ctrl + '.jawOpen', itt='spline', ott='spline' )
 
     cmds.selectKey(md_open_jaw, attribute='input1X')
     cmds.setInfinity( pri='linear', poi='linear' )
@@ -190,7 +190,7 @@ def build_jaw_block():
     cmds.selectKey(md_open_jaw, attribute='input1Z')
     cmds.setInfinity( pri='linear', poi='linear' )
 
-    cmds.setAttr(jaw_ctl + '.jawOpen', 0)
+    cmds.setAttr(jaw_ctrl + '.jawOpen', 0)
 
     # CONNECT TO DRIVEN KEYS TO SDK
     cmds.connectAttr(md_open_jaw + '.outputX', sdk + '.ty')
@@ -203,33 +203,33 @@ def build_jaw_block():
 
     # CONDITION NODE
     condition = cmds.shadingNode('condition', au=1, n=name + '_Open' + nc["condition"])
-    cmds.connectAttr(jaw_ctl + '.chew', condition + '.colorIfTrueR')
-    cmds.connectAttr(jaw_ctl + '.jawOpen', condition + '.firstTerm')
+    cmds.connectAttr(jaw_ctrl + '.chew', condition + '.colorIfTrueR')
+    cmds.connectAttr(jaw_ctrl + '.jawOpen', condition + '.firstTerm')
     cmds.setAttr(condition + '.operation', 3)
 
     # REMAP VALUES
-    attributesRemap = ['chewHeight', 'L_Corner', 'R_Corner']
+    attributes_remap = ['chewHeight', 'L_Corner', 'R_Corner']
 
-    for i in attributesRemap:
+    for i in attributes_remap:
         rv = cmds.shadingNode('remapValue', au=1, n=name + '_' + i + nc['remap_value'])
-        cmds.connectAttr(jaw_ctl + '.' + i, rv + '.inputValue')
+        cmds.connectAttr(jaw_ctrl + '.' + i, rv + '.inputValue')
         cmds.setAttr(rv + '.inputMin', -1)
 
     # BLEND COLORS
-    bsCorners = cmds.shadingNode('blendColors', au=1, n=name + '_LfRt' + nc['blend'])
-    cmds.connectAttr(condition + '.outColorR', bsCorners + '.blender')
-    cmds.connectAttr(name + '_chewHeight_RV.outValue', bsCorners + '.color1R')
-    cmds.connectAttr(name + '_chewHeight_RV.outValue', bsCorners + '.color1G')
-    cmds.connectAttr(name + '_L_Corner_RV.outValue', bsCorners + '.color2R')
-    cmds.connectAttr(name + '_R_Corner_RV.outValue', bsCorners + '.color2G')
+    bs_corners = cmds.shadingNode('blendColors', au=1, n=name + '_LfRt' + nc['blend'])
+    cmds.connectAttr(condition + '.outColorR', bs_corners + '.blender')
+    cmds.connectAttr(name + '_chewHeight{}.outValue'.format( nc['remap_value']), bs_corners + '.color1R')
+    cmds.connectAttr(name + '_chewHeight{}.outValue'.format( nc['remap_value']), bs_corners + '.color1G')
+    cmds.connectAttr(name + '_L_Corner{}.outValue'.format( nc['remap_value']), bs_corners + '.color2R')
+    cmds.connectAttr(name + '_R_Corner{}.outValue'.format( nc['remap_value']), bs_corners + '.color2G')
 
     bsCenter = cmds.shadingNode('blendColors', au=1, n=name + '_TpBt_' + nc['blend'])
     cmds.connectAttr(condition + '.outColorR', bsCenter + '.blender')
-    cmds.connectAttr(name + '_chewHeight_RV.outValue', bsCenter + '.color1R')
-    cmds.connectAttr(name + '_chewHeight_RV.outValue', bsCenter + '.color1G')
+    cmds.connectAttr(name + '_chewHeight{}.outValue'.format( nc['remap_value']), bsCenter + '.color1R')
+    cmds.connectAttr(name + '_chewHeight{}.outValue'.format( nc['remap_value']), bsCenter + '.color1G')
 
-    cmds.connectAttr(bsCorners + '.outputR', nc['left'] + jnts_name[0] + nc['base_joint'] + '_parentConstraint1.switch')
-    cmds.connectAttr(bsCorners + '.outputG', nc['right'] + jnts_name[0] + nc['base_joint'] + '_parentConstraint1.switch')
+    cmds.connectAttr(bs_corners + '.outputR', nc['left'] + jnts_name[0] + nc['base_joint'] + '_parentConstraint1.switch')
+    cmds.connectAttr(bs_corners + '.outputG', nc['right'] + jnts_name[0] + nc['base_joint'] + '_parentConstraint1.switch')
 
     cmds.connectAttr(bsCenter + '.outputR', nc['up'] + jnts_name[0] + nc['base_joint'] + '_parentConstraint1.switch')
     cmds.connectAttr(bsCenter + '.outputG', nc['down'] + jnts_name[0] + nc['base_joint'] + '_parentConstraint1.switch')

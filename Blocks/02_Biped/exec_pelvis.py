@@ -143,7 +143,7 @@ def build_pelvis_block():
         if cmds.getAttr('{}.Mirror'.format(config), asString = True) == 'Right_Only':
             miror_ctrl_grp = mt.mirror_group(cmds.listRelatives(fk_chain[0], p=True)[0], world = True)
             miror_jnt_grp = mt.mirror_group(new_guide, world = True)
-            cmds.parentConstraint(block_parent, fk_chain[0] , mo = True)
+            cmds.parentConstraint(block_parent, cmds.listRelatives(fk_chain[0],p=True)[0], mo = True)
             clean_rig_grp = miror_jnt_grp
             clean_ctrl_grp = miror_ctrl_grp
 
@@ -151,7 +151,7 @@ def build_pelvis_block():
             if str(side_guide).startswith(nc['right']) :
                 miror_ctrl_grp = mt.mirror_group(cmds.listRelatives(fk_chain[0], p=True)[0], world = True)
                 miror_jnt_grp = mt.mirror_group(side_guide, world = True)
-                cmds.parentConstraint(block_parent, fk_chain[0] , mo = True)
+                cmds.parentConstraint(block_parent, cmds.listRelatives(fk_chain[0],p=True)[0] , mo = True)
                 clean_rig_grp = miror_jnt_grp
                 clean_ctrl_grp = miror_ctrl_grp
             else:
@@ -171,7 +171,7 @@ def build_pelvis_block():
         cmds.parentConstraint(side_guide, bind_joint, mo = False)
         cmds.scaleConstraint(side_guide, bind_joint, mo = True)
         cmds.setAttr('{}.segmentScaleCompensate'.format(bind_joint), 0)
-        cmds.setAttr('{}.inheritsTransform'.format(bind_joint), 0)
+        cmds.setAttr('{}.inheritsTransform'.format(bind_joint), 1)
 
         try: cmds.parent(bind_joint, w=True)
         except:pass

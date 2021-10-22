@@ -465,14 +465,14 @@ def build_foot_block():
         except:pass
         cmds.setAttr('{}.radius'.format(ankle_bind_joint), 1.5)
         cmds.setAttr('{}.segmentScaleCompensate'.format(ankle_bind_joint), 0)
-        cmds.setAttr('{}.inheritsTransform'.format(ankle_bind_joint), 0)
+        cmds.setAttr('{}.inheritsTransform'.format(ankle_bind_joint), 1)
 
         ball_bind_joint = cmds.joint(n = shared_toes_jnt.replace(nc['joint'], nc['joint_bind']))
         cmds.parentConstraint(shared_toes_jnt, ball_bind_joint, mo = False)
         cmds.scaleConstraint(shared_toes_jnt, ball_bind_joint, mo = True)
         cmds.setAttr('{}.radius'.format(ball_bind_joint), 1.5)
         cmds.setAttr('{}.segmentScaleCompensate'.format(ball_bind_joint), 0)
-        cmds.setAttr('{}.inheritsTransform'.format(ball_bind_joint), 0)
+        cmds.setAttr('{}.inheritsTransform'.format(ball_bind_joint), 1)
 
         #Finish -------------------------------------------
 
