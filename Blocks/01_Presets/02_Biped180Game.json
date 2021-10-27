@@ -1,0 +1,12 @@
+{
+    "Name": "Biped180Game",
+    "Description": "Game preset. Same as Biped but without stretch and scale attrs. ",
+    "Icon": "HumanGame.png",
+    "Enable": "True",
+    "python_file": "exec_biped180game.py",
+    "import": "import exec_biped180game",
+    "imp.reload": "imp.reload(exec_biped180game)",
+    "exec_command": "exec_biped180game.create_biped180game_block()",
+    "build_command": "exec_biped180game.build_biped180game_block()",
+    "attrs": {}
+}

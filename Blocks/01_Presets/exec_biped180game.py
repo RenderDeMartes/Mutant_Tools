@@ -33,16 +33,16 @@ with open(CURVE_FILE) as curve_file:
 #setup File
 SETUP_FILE = (PATH+'/rig_setup.json')
 with open(SETUP_FILE) as setup_file:
-	setup = json.load(setup_file)	
+	setup = json.load(setup_file)
 
-MODULE_FILE = (os.path.dirname(__file__) +'/01_Biped180.json')
+MODULE_FILE = (os.path.dirname(__file__) +'/02_Biped180Game.json')
 with open(MODULE_FILE) as module_file:
 	module = json.load(module_file)
 
 #---------------------------------------------
 
-def create_biped180_block(name = 'Biped180'):
-
+def create_biped180game_block(name = 'Biped180Game'):
+    #C:\Users\PC\Documents\maya\2022\scripts\Mutant_Tools\Utils\IO\Guide_Data
     if cmds.objExists('Mutant_Build'):
         cmds.confirmDialog(title='Ups, Sorry!',
                            message='We already have a build group in the scene, please rename it and reparent it later.',
@@ -52,7 +52,7 @@ def create_biped180_block(name = 'Biped180'):
                            dismissString='Ok')
         return
 
-    filepath = os.path.dirname(__file__).replace('Blocks//{}'.format(TAB_FOLDER), 'Utils//IO//Guide_Data//Biped180.ma')
+    filepath = os.path.dirname(__file__).replace('Blocks//{}'.format(TAB_FOLDER), 'Utils//IO//Guide_Data//Biped180Game.ma')
     print('Loading: {}...'.format(filepath))
 
     cmds.file(filepath, i=True, type="mayaAscii")
@@ -60,7 +60,7 @@ def create_biped180_block(name = 'Biped180'):
 
     print('Created Successfully')
 
-#create_biped180_block()
+#build_biped180game_block()
 
 #-------------------------
 

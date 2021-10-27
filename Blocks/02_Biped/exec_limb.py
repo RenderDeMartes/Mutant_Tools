@@ -276,7 +276,7 @@ def build_limb_block():
             cmds.parentConstraint(jnt, bind_joint, mo=False)
             cmds.scaleConstraint(jnt, bind_joint, mo=True)
             cmds.setAttr('{}.segmentScaleCompensate'.format(bind_joint), 0)
-            cmds.setAttr('{}.inheritsTransform'.format(bind_joint), 1)
+            cmds.setAttr('{}.inheritsTransform'.format(bind_joint), 0)
 
             #cmds.connectAttr('{}.scaleX'.format(jnt),'{}.scaleX'.format(bind_joint) )
             #cmds.connectAttr('{}.scaleY'.format(jnt),'{}.scaleY'.format(bind_joint) )
