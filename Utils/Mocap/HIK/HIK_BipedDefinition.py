@@ -150,19 +150,3 @@ except:
 
 pm.mel.hikImportCustomRigMapping(pm.mel.hikGetCurrentCharacter())
 
-'''
-
-R IK FOOT :    0    90    90
-
-R Clav :    180    0    0    
-
-R Shoulder :    180    0    0 
-
-R Elbow :    180    0    0
-
-R Wrist :    180    0    180
-
-
-
-
-'''

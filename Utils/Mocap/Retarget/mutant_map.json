@@ -1,0 +1,36 @@
+{
+
+    "root": "Root",
+
+    "cog": "COG",
+    "spine_base": "Spine_Base_FK",
+    "spine_belly": "Spine_Belly_FK",
+    "spine_chest": "Spine_Chest",
+
+    "neck": "Neck",
+    "head": "Head",
+
+    "l_hip": "Hip_Fk",
+    "l_knee": "Knee_Fk",
+    "l_ankle": "Ankle_Fk",
+    "l_ball": "Foot_Toes",
+    "l_toes": "",
+
+    "r_hip": "Hip_Fk",
+    "r_knee": "Knee_Fk",
+    "r_ankle": "Ankle_Fk",
+    "r_ball": "Foot_Toes",
+    "r_toes": "",
+
+    "l_clavicle": "Clavicle",
+    "r_clavicle": "Clavicle",
+
+    "l_shoulder": "Shoulder_Fk",
+    "l_elbow": "Elbow_Fk",
+    "l_wrist": "Wrist_Fk",
+
+    "r_shoulder": "Shoulder_Fk",
+    "r_elbow": "Elbow_Fk",
+    "r_wrist": "Wrist_Fk"
+
+}

@@ -5,11 +5,11 @@ import imp
 imp.reload(Mutant_Tools.Utils.Rigging.main_mutant)
 mt = main_mutant.Mutant()
 
+mt.put_inside_rig_container(['network1'])
+
+cmds.container('Mutant_Rig', e=True, addNode='network1')
+
 #mt.load_preset(name = 'Biped_180')
-
-mt.spline_twist('L_Shoulder_Jnt','L_Elbow_Jnt', mode = 'up')
-mt.spline_twist('L_Elbow_Jnt','L_Wrist_Jnt', mode = 'down')
-
 #mt.create_block()
 #cmds.reorder( 'Mutant_Block6', r=-1 )
 #mt.move_outliner(input = 'Mutant_Block3', up =True)

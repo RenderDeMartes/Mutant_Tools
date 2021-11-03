@@ -40,7 +40,8 @@ from Mutant_Tools.Utils.Rigging import main_mutant
 imp.reload(Mutant_Tools.Utils.Rigging.main_mutant)
 
 mt = main_mutant.Mutant()
-
+try:mt.compare_versions()
+except:pass
 # -------------------------------------------------------------------------------------------
 
 PATH = os.path.dirname(__file__)

@@ -32,7 +32,7 @@
 
    "ctrl":		"_Ctrl",
    "gimbal_ctrl":  "_Gimbal_Ctrl",
-   "curve":		"_Crv",   
+   "curve":		"_Crv",
 
    "follicle":	"_Fol",
    "nurb":		"_Nurb",

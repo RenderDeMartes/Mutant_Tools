@@ -412,6 +412,8 @@ class Tools_class(object):
 		cmds.connectAttr('{}'.format(attr), '{}.inputX'.format(reverse2), f = True)
 		cmds.connectAttr('{}.outputX'.format(reverse2), '{}_parentConstraint1.{}W0'.format(main,this), f =True)
 
+		self.put_inside_rig_container([reverse, reverse2])
+
 	#----------------------------------------------------------------------------------------------------------------
 	def switch_blend_colors(self, this = '', that = '', main = '', attr = ''):
 		"""Create a switch between 3 chains (for ikfk setups) There is a constraint alternative to this one.
@@ -446,6 +448,8 @@ class Tools_class(object):
 			cmds.connectAttr('{}.output.outputR'.format(blend_node), '{}.{}.{}X'.format(main, a, a), f=1)
 			cmds.connectAttr('{}.output.outputG'.format(blend_node), '{}.{}.{}Y'.format(main, a, a), f=1)
 			cmds.connectAttr('{}.output.outputB'.format(blend_node), '{}.{}.{}Z'.format(main, a, a), f=1)
+
+			self.put_inside_rig_container([blend_node])
 
 	#----------------------------------------------------------------------------------------------------------------
 	def new_attr(self, input= '', name = 'switch', min = 0 , max = 1, default = 0):
@@ -1082,6 +1086,8 @@ class Tools_class(object):
 		else:
 			cmds.connectAttr('{}.output.outputX'.format(md_node), out_x)
 
+		self.put_inside_rig_container([md_node])
+
 		#return node
 		return md_node
 
@@ -1198,6 +1204,7 @@ class Tools_class(object):
 		print (connection_to_replace)
 		cmds.connectAttr('{}'.format(connection_to_replace), '{}.input1'.format(double_linear), f=True)
 		cmds.connectAttr('{}.output'.format(double_linear), '{}.{}'.format(input,attr), f=True)
+		self.put_inside_rig_container([double_linear])
 
 		return double_linear
 
@@ -1254,6 +1261,18 @@ class Tools_class(object):
 
 	#----------------------------------------------------------------------------------------------------------------
 
+	def put_inside_rig_container(self, inputs = []):
+		if not inputs:
+			return False
+
+		if not cmds.objExists('Mutant_Rig'):
+			mutant_rig = cmds.container(name='Mutant_Rig', type='dagContainer')
+		else:
+			mutant_rig = 'Mutant_Rig'
+
+
+		for input in inputs:
+			cmds.container('Mutant_Rig', e=True, addNode=input)
 
 
 

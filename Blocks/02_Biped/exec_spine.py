@@ -365,6 +365,8 @@ def build_spine_block():
         cmds.setAttr('{}.color2.color2R'.format(blendColors_volume), 1)
         cmds.connectAttr(preserve_volume, '{}.blender'.format(blendColors_volume), f=True)
 
+        mt.put_inside_rig_container([blendColors_volume])
+
     #offsetStretch
     double_linear_add = cmds.shadingNode('addDoubleLinear', asUtility=True, name = name + '_OffsetAdd')
     cmds.connectAttr('{}.output.outputX'.format(normalize_node), '{}.input1'.format(double_linear_add), f=True)
@@ -479,6 +481,8 @@ def build_spine_block():
 
     cmds.parent(clean_ctrl_grp, setup['base_groups']['control'] + nc['group'])
     cmds.parent(clean_rig_grp, '{}{}'.format(setup['rig_groups']['misc'], nc['group']))
+
+    mt.put_inside_rig_container([rev_mid, curve_info_node, blendColors, double_linear_add])
 
     #stretchy fixes
     cmds.connectAttr('Global_Ctrl.scale', normalize_loc+'.scale')

@@ -1,0 +1,36 @@
+{
+
+    "root": "",
+
+    "cog": "",
+    "spine_base": "",
+    "spine_belly": "",
+    "spine_chest": "",
+
+    "neck": "",
+    "head": "",
+
+    "l_hip": "",
+    "l_knee": "",
+    "l_ankle": "",
+    "l_ball": "",
+    "l_toes": "",
+
+    "r_hip": "",
+    "r_knee": "",
+    "r_ankle": "",
+    "r_ball": "",
+    "r_toes": "",
+
+    "l_clavicle": "",
+    "r_clavicle": "",
+
+    "l_shoulder": "",
+    "l_elbow": "",
+    "l_wrist": "",
+
+    "r_shoulder": "",
+    "r_elbow": "",
+    "r_wrist": ""
+
+}

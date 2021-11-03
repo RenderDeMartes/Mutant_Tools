@@ -141,8 +141,9 @@ class Mutant(modules.Modules_class):
 			online = self.get_online_version()
 			offline = self.get_local_version()
 			if online != offline:
-				print('Update Available')
+				print('Update Available', offline, online)
 				OpenMaya.MGlobal.displayWarning('New Version Available... Go to mutanttools.com to download it!')
+
 		except:
 			pass
 

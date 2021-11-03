@@ -177,7 +177,7 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		mt.update_icons()
 
 		#find tools updates:
-		#mt.compare_versions()
+		mt.compare_versions()
 
 	#-------------------------------------------------------------------
 	def create_menus(self):
@@ -650,6 +650,9 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 
 		self.ui.bar_label.setText('Starting the Build')
 
+		if not self.check_if_previous_build():
+			return False
+
 		cmds.undoInfo(openChunk=True)
 
 		#log
@@ -753,8 +756,37 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		self.ui.bar_label.setToolTip('Mutant Build Complete')
 
 		cmds.setAttr('Mutant_Build.v', 0)
+		if cmds.objExists('Mutant_Rig'):
+			cmds.parent('Mutant_Rig', 'Miscellaneous_Grp')
 
 		cmds.undoInfo(closeChunk=True)
+
+	#-------------------------------------------------------------------
+
+	def check_if_previous_build(self):
+
+		build_grp = 'Mutant_Tools_Grp'
+		if cmds.objExists(build_grp):
+			delete_comfirm = cmds.confirmDialog(
+				title='Delete current build?',
+				message='Are you sure you want to rebuild?',
+				button=['Rebuild', 'Cancel'],
+				defaultButton='Rebuild',
+				dismissString='Cancel',
+				cancelButton='Cancel')
+
+			if delete_comfirm == 'Rebuild':
+				cmds.delete(build_grp)
+
+				if cmds.objExists('Mutant_Rig'):
+					cmds.delete('Mutant_Rig')
+
+				return True
+			else:
+				return False
+
+		return True
+
 
 	#-------------------------------------------------------------------
 	def check_precode(self, block):

@@ -388,6 +388,8 @@ class Kinematics_class(tools.Tools_class):
 		ik_grp = cmds.group(top_distance, ik_distance, distance,start_loc, end_loc, pv_loc ,normalize_loc , n = '{}_Stretchy{}'.format(ik, nc['group']))
 		cmds.setAttr('{}.visibility'.format(ik_grp), 0)
 
+		self.put_inside_rig_container([contidion_node,upper_lock_blend,upper_lock_blend, lower_lock_blend,upper_volume_blend, lower_volume_blend])
+
 		return (ik_grp, normalize_loc, start_loc, end_loc, pv_loc, distance, top_distance, ik_distance)
 		
 	#----------------------------------------------------------------------------------------------------------------
@@ -686,7 +688,9 @@ class Kinematics_class(tools.Tools_class):
 		
 		for twist_joint in twist_joints:
 			cmds.connectAttr('{}.output.outputX'.format(mult_node), '{}.rotate{}'.format(twist_joint, axis))
-		
+
+		self.put_inside_rig_container([mult_node])
+
 		return return_joints
 
 	#----------------------------------------------------------------------------------------------------------------
@@ -1061,6 +1065,7 @@ class Kinematics_class(tools.Tools_class):
 		ik_stretch = self.streatchy_ik(ik = ik_system[3], ik_ctrl= ik_system[0], top_ctrl = ik_system[2], pv_ctrl = ik_system[1], attrs_location = '{}_Switch_Loc'.format(start), name = '', axis = twist_axis)
 		ik_system.append(ik_stretch)
 
+		self.put_inside_rig_container([reverse_node])
 
 		print (main_joints, ik_joints, fk_joints, fk_system, ik_system, return_groups)
 		return main_joints, ik_joints, fk_joints, fk_system, ik_system, return_groups
@@ -1464,3 +1469,48 @@ class Kinematics_class(tools.Tools_class):
 			cmds.select(ctrl)
 
 		cmds.select(ctrl)
+
+	def parent_matrix(self, this=None, that=None, translate=True, rotate=True, scale=True, offset=True):
+		# get data by selection if not assign
+		if this == None:
+			this = cmds.ls(sl=True)[0]
+		if that == None:
+			that = cmds.ls(sl=True)[1]
+
+		# get offset values before connecting everything:
+		if offset:
+			from maya.api.OpenMaya import MMatrix
+			offset = cmds.createNode('network', n=this + '_Offset')
+			this_matrix = MMatrix(cmds.xform(this, ws=True, q=True, m=True))
+			that_matrix = MMatrix(cmds.xform(that, ws=True, q=True, m=True))
+			result = this_matrix * that_matrix
+
+			cmds.addAttr(offset, ln='OffsetMatrix', at='matrix')
+			cmds.setAttr(offset + '.OffsetMatrix', result, type="matrix")
+
+		# create mult matrix to multiply the world matrix * the invert matrix so we got a new worl matrix for the target
+		decompose = cmds.createNode('decomposeMatrix', n=this + '_DecomposeMatrix')
+		mult_matrix = cmds.createNode('multMatrix', n=this + '_MultMatrix')
+
+		cmds.connectAttr('{}.worldMatrix'.format(this), '{}.matrixIn[0]'.format(mult_matrix))
+		cmds.connectAttr('{}.matrixSum'.format(mult_matrix), '{}.inputMatrix'.format(decompose))
+		cmds.connectAttr('{}.parentInverseMatrix'.format(that), '{}.matrixIn[1]'.format(mult_matrix))
+
+		# decide with one do we want to connect
+		if translate:
+			cmds.connectAttr('{}.outputTranslate'.format(decompose), '{}.translate'.format(that))
+		if rotate:
+			cmds.connectAttr('{}.outputRotate'.format(decompose), '{}.rotate'.format(that))
+		if scale:
+			cmds.connectAttr('{}.outputScale'.format(decompose), '{}.scale'.format(that))
+
+		# connect extra offset matrix to the main one
+		if offset:
+			# shift one connections down becouse mult order is important in matrix
+			cmds.connectAttr('{}.OffsetMatrix'.format(offset), '{}.matrixIn[0]'.format(mult_matrix), f=True)
+			cmds.connectAttr('{}.worldMatrix'.format(this), '{}.matrixIn[1]'.format(mult_matrix), f=True)
+			cmds.connectAttr('{}.parentInverseMatrix'.format(that), '{}.matrixIn[2]'.format(mult_matrix), f=True)
+
+		self.put_inside_rig_container([offset,decompose,mult_matrix])
+
+		return True

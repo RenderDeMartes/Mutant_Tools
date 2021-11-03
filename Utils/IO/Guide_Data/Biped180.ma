@@ -1,23 +1,23 @@
 //Maya ASCII 2022 scene
 //Name: Biped180.ma
-//Last modified: Sun, Sep 19, 2021 09:47:46 AM
+//Last modified: Wed, Nov 03, 2021 06:42:23 AM
 //Codeset: 1252
 requires maya "2022";
-requires "mtoa" "4.2.3";
+requires "mtoa" "4.2.4";
 currentUnit -l centimeter -a degree -t film;
 fileInfo "application" "maya";
 fileInfo "product" "Maya 2022";
 fileInfo "version" "2022";
-fileInfo "cutIdentifier" "202106180615-26a94e7f8c";
+fileInfo "cutIdentifier" "202108111415-612a77abf4";
 fileInfo "osv" "Windows 10 Home v2009 (Build: 19043)";
-fileInfo "UUID" "23B25FE0-4408-A6DF-9A8C-CE95C229CB85";
+fileInfo "UUID" "59C4FA38-4B58-A1F2-EA9B-6AA92C528F8D";
 createNode transform -n "Mutant_Build";
-	rename -uid "FB50CE65-4C5A-9C26-633C-849199D0E389";
+	rename -uid "AF90E3D1-4F27-90CF-2231-C89A1AEDBB96";
 createNode transform -n "Init" -p "Mutant_Build";
-	rename -uid "1BEF8E42-4178-9BA9-7924-82851694CF2C";
+	rename -uid "2FA1335E-4B2F-3023-7D7B-2B8847069D7B";
 	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 createNode dagContainer -n "BaseA_Block" -p "Init";
-	rename -uid "429D11C4-4B49-EB71-B79E-0D9AA7E93A8A";
+	rename -uid "84C9E8C3-4860-1FD5-0DD5-F5AC601B477E";
 	setAttr ".isc" yes;
 	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/BaseA.png";
 	setAttr ".ctor" -type "string" "PC";
@@ -33,7 +33,7 @@ createNode dagContainer -n "BaseA_Block" -p "Init";
 	setAttr -l on -k off ".sy";
 	setAttr -l on -k off ".sz";
 createNode dagContainer -n "BS_Bind_Block" -p "Init";
-	rename -uid "099795F2-4D4B-E2C1-664F-BE857550D2CD";
+	rename -uid "AF22E688-401E-81E8-7A06-D1B8716DAC97";
 	setAttr ".isc" yes;
 	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/Blendshape.png";
 	setAttr ".ctor" -type "string" "PC";
@@ -49,7 +49,7 @@ createNode dagContainer -n "BS_Bind_Block" -p "Init";
 	setAttr -l on -k off ".sy";
 	setAttr -l on -k off ".sz";
 createNode dagContainer -n "Root_Block" -p "Init";
-	rename -uid "EBF02898-4C77-A647-C0F9-CF8CAA124D16";
+	rename -uid "F1083E00-451D-5E2B-7CD9-4BAC2DACC5B3";
 	setAttr ".isc" yes;
 	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/Root.png";
 	setAttr ".ctor" -type "string" "PC";
@@ -65,10 +65,10 @@ createNode dagContainer -n "Root_Block" -p "Init";
 	setAttr -l on -k off ".sy";
 	setAttr -l on -k off ".sz";
 createNode transform -n "Body" -p "Mutant_Build";
-	rename -uid "89606DE6-4CA0-9A5A-F727-07936EDBA56A";
+	rename -uid "C1147530-4F75-9B34-1AA7-F4ABD21596F9";
 	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 createNode dagContainer -n "COG_Block" -p "Body";
-	rename -uid "AF179411-4C62-42E6-88EC-268D00D85E9F";
+	rename -uid "8B7249D5-4E2A-5A4C-1F02-D4899F0ED44F";
 	setAttr ".isc" yes;
 	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/Bone.png";
 	setAttr ".ctor" -type "string" "PC";
@@ -84,13 +84,15 @@ createNode dagContainer -n "COG_Block" -p "Body";
 	setAttr -l on -k off ".sy";
 	setAttr -l on -k off ".sz";
 createNode transform -n "COG_Loc" -p "COG_Block";
-	rename -uid "3CFA4AA9-494E-83E5-50A3-32A88F4E9906";
+	rename -uid "ABFA5BAD-4C3C-59F8-E0BC-C7B6B1D68CBE";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr ".t" -type "double3" 0 102.939620665719 -1.2239361791933199 ;
 createNode locator -n "COG_LocShape" -p "COG_Loc";
-	rename -uid "61303724-4B97-87E1-248E-1182BBA74D82";
+	rename -uid "A0BC3AE4-4522-D934-9D2D-44B9CD8F5D9A";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 createNode dagContainer -n "Spine_Block" -p "Body";
-	rename -uid "37B556FD-4E69-87A2-DD99-AF9CA421B058";
+	rename -uid "4D873BA8-489F-3B3F-04D1-DBAB45276380";
 	setAttr ".isc" yes;
 	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/Spine.png";
 	setAttr ".ctor" -type "string" "PC";
@@ -106,14 +108,16 @@ createNode dagContainer -n "Spine_Block" -p "Body";
 	setAttr -l on -k off ".sy";
 	setAttr -l on -k off ".sz";
 createNode joint -n "Spine_Base_Guide" -p "Spine_Block";
-	rename -uid "86F1490B-40F2-53A2-EA8A-9A80AEE57B7A";
+	rename -uid "50F218FC-45EF-03D7-1819-70952611F3CA";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".t" -type "double3" 2.384185791015625e-05 103.30745697021484 -1.4353818893432617 ;
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" 0 103.30745697021484 0 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "Spine_Base_Guide_CtrlShape" -p "Spine_Base_Guide";
-	rename -uid "740B779E-4F58-EC5F-C53B-169B6B922555";
+	rename -uid "2C228792-454F-585A-31D2-768423B8F904";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -134,7 +138,8 @@ createNode nurbsCurve -n "Spine_Base_Guide_CtrlShape" -p "Spine_Base_Guide";
 		1.3977299999999999e-05 -0.5 0.25
 		;
 createNode nurbsCurve -n "Spine_Base_Guide_Ctrl_CtrlShape" -p "Spine_Base_Guide";
-	rename -uid "593ECED4-4CB8-0269-B373-E4800A3EE536";
+	rename -uid "4AC38066-4C9C-E2A2-BF68-3391C0B6072E";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -250,7 +255,8 @@ createNode nurbsCurve -n "Spine_Base_Guide_Ctrl_CtrlShape" -p "Spine_Base_Guide"
 		-1.7708799999999999e-08 0 0.59421000000000002
 		;
 createNode nurbsCurve -n "Spine_Base_Guide_Ctrl_Ctrl_CtrlShape" -p "Spine_Base_Guide";
-	rename -uid "126B4426-4DF9-A619-1095-A2B13777F5C9";
+	rename -uid "2A66949A-4294-9D7D-0A87-CA8F5CAE9C8F";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -271,7 +277,8 @@ createNode nurbsCurve -n "Spine_Base_Guide_Ctrl_Ctrl_CtrlShape" -p "Spine_Base_G
 		-0.5 -0.25 -1.3977299999999999e-05
 		;
 createNode nurbsCurve -n "Spine_Base_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "Spine_Base_Guide";
-	rename -uid "9A35FD65-42E9-9EF7-03FF-A08B37D28EE9";
+	rename -uid "AC9D873C-4674-17A0-13DA-3FAD73DCFDD8";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -292,14 +299,16 @@ createNode nurbsCurve -n "Spine_Base_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "Spine_B
 		0.25 1.3977299999999999e-05 -0.5
 		;
 createNode joint -n "Spine_Belly_Guide" -p "Spine_Base_Guide";
-	rename -uid "38570DCC-4DF1-0C83-CEBC-3AB8B08DE495";
+	rename -uid "DCD073C6-4F41-CD3B-1FC9-7CBF512A5B9F";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".t" -type "double3" -0.0023946762084960938 11.501152038574219 0.33936500549316406 ;
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" 0 11.501152038574219 0 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "Spine_Belly_Guide_CtrlShape" -p "Spine_Belly_Guide";
-	rename -uid "8F92D7AA-46F5-70B9-A11B-CE9653A940D5";
+	rename -uid "D462020C-4908-3C68-9F5A-6288F299ED9A";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -320,7 +329,8 @@ createNode nurbsCurve -n "Spine_Belly_Guide_CtrlShape" -p "Spine_Belly_Guide";
 		1.3977299999999999e-05 -0.5 0.25
 		;
 createNode nurbsCurve -n "Spine_Belly_Guide_Ctrl_CtrlShape" -p "Spine_Belly_Guide";
-	rename -uid "0B6383D1-4726-111C-8D87-62BC48C43FEC";
+	rename -uid "F56412A8-422A-4E81-C630-888AB03626F7";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -436,7 +446,8 @@ createNode nurbsCurve -n "Spine_Belly_Guide_Ctrl_CtrlShape" -p "Spine_Belly_Guid
 		-1.7708799999999999e-08 0 0.59421000000000002
 		;
 createNode nurbsCurve -n "Spine_Belly_Guide_Ctrl_Ctrl_CtrlShape" -p "Spine_Belly_Guide";
-	rename -uid "9F7A9EA9-4D29-77EC-C3CD-ECB0C068E581";
+	rename -uid "3EEA9144-46E1-B5FB-79A2-38818E5B31A8";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -457,7 +468,8 @@ createNode nurbsCurve -n "Spine_Belly_Guide_Ctrl_Ctrl_CtrlShape" -p "Spine_Belly
 		-0.5 -0.25 -1.3977299999999999e-05
 		;
 createNode nurbsCurve -n "Spine_Belly_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "Spine_Belly_Guide";
-	rename -uid "34AF339C-4DE0-F125-6EC7-C7BAA601BAAD";
+	rename -uid "7C8D375F-4948-18DE-D580-24A06207483D";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -478,14 +490,16 @@ createNode nurbsCurve -n "Spine_Belly_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "Spine_
 		0.25 1.3977299999999999e-05 -0.5
 		;
 createNode joint -n "Spine_Chest_Guide" -p "Spine_Belly_Guide";
-	rename -uid "E82E1986-4F41-9F5B-5512-309F82E3AA02";
+	rename -uid "E27EB0E4-4188-428E-73A5-BA9FFE931CE5";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".t" -type "double3" 0.0030717849731445312 18.258720397949219 -4.2198023796081543 ;
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" 0 18.258720397949219 0 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "Spine_Chest_Guide_CtrlShape" -p "Spine_Chest_Guide";
-	rename -uid "E9AC794C-47EC-0B28-28DE-6F86F5A45E7D";
+	rename -uid "353F00D9-4C39-7BB3-C484-228C7CB14679";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -506,7 +520,8 @@ createNode nurbsCurve -n "Spine_Chest_Guide_CtrlShape" -p "Spine_Chest_Guide";
 		1.3977299999999999e-05 -0.5 0.25
 		;
 createNode nurbsCurve -n "Spine_Chest_Guide_Ctrl_CtrlShape" -p "Spine_Chest_Guide";
-	rename -uid "17829985-4FCA-12FD-5E89-C0A7CD9A4E94";
+	rename -uid "8E3115A4-4467-33D8-1C91-14ADCE6057D4";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -622,7 +637,8 @@ createNode nurbsCurve -n "Spine_Chest_Guide_Ctrl_CtrlShape" -p "Spine_Chest_Guid
 		-1.7708799999999999e-08 0 0.59421000000000002
 		;
 createNode nurbsCurve -n "Spine_Chest_Guide_Ctrl_Ctrl_CtrlShape" -p "Spine_Chest_Guide";
-	rename -uid "2504A27E-49B9-4BB3-0BBB-37A8CB6A4E1B";
+	rename -uid "EEE80394-4F43-06DC-0F15-C2B0E4FA7A9B";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -643,7 +659,8 @@ createNode nurbsCurve -n "Spine_Chest_Guide_Ctrl_Ctrl_CtrlShape" -p "Spine_Chest
 		-0.5 -0.25 -1.3977299999999999e-05
 		;
 createNode nurbsCurve -n "Spine_Chest_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "Spine_Chest_Guide";
-	rename -uid "71F42096-41C3-782E-D417-A89ED48DC176";
+	rename -uid "948729E6-490F-41FF-1726-E9955F09AC82";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -664,14 +681,16 @@ createNode nurbsCurve -n "Spine_Chest_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "Spine_
 		0.25 1.3977299999999999e-05 -0.5
 		;
 createNode joint -n "Spine_End_Guide" -p "Spine_Chest_Guide";
-	rename -uid "245B0215-42D1-2BF4-0A86-16A8FFBBB922";
+	rename -uid "524821B6-4380-BD20-E8CD-57B795E28CD6";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".t" -type "double3" -0.00072295062273042277 19.141754150390625 -1.1617844700813293 ;
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" 0 19.141754150390625 0 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "Spine_End_Guide_CtrlShape" -p "Spine_End_Guide";
-	rename -uid "CAEB98C6-4126-CACC-6DBD-2EB2F167FBBF";
+	rename -uid "90BE5515-4787-DD35-9DB4-F7844C617A62";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -692,7 +711,8 @@ createNode nurbsCurve -n "Spine_End_Guide_CtrlShape" -p "Spine_End_Guide";
 		1.3977299999999999e-05 -0.5 0.25
 		;
 createNode nurbsCurve -n "Spine_End_Guide_Ctrl_CtrlShape" -p "Spine_End_Guide";
-	rename -uid "A9C5E552-4B46-FACD-2D02-5BA07434CAD3";
+	rename -uid "5E044091-45C3-C086-A619-4E96CA5AFC90";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -808,7 +828,8 @@ createNode nurbsCurve -n "Spine_End_Guide_Ctrl_CtrlShape" -p "Spine_End_Guide";
 		-1.7708799999999999e-08 0 0.59421000000000002
 		;
 createNode nurbsCurve -n "Spine_End_Guide_Ctrl_Ctrl_CtrlShape" -p "Spine_End_Guide";
-	rename -uid "AD3AF82B-4B89-4FA9-B8B8-9587566EC8EC";
+	rename -uid "0A333E8F-49A7-27D4-F86E-A59E51AFAD74";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -829,7 +850,8 @@ createNode nurbsCurve -n "Spine_End_Guide_Ctrl_Ctrl_CtrlShape" -p "Spine_End_Gui
 		-0.5 -0.25 -1.3977299999999999e-05
 		;
 createNode nurbsCurve -n "Spine_End_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "Spine_End_Guide";
-	rename -uid "24B69AC2-451F-4EC4-898D-B2A25D0BC73B";
+	rename -uid "90D7AF47-4912-4CD7-925A-73AA0F6D309C";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -850,14 +872,16 @@ createNode nurbsCurve -n "Spine_End_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "Spine_En
 		0.25 1.3977299999999999e-05 -0.5
 		;
 createNode joint -n "Spine_Inv_Guide" -p "Spine_Base_Guide";
-	rename -uid "49FEDE88-45E2-A6C7-D6F2-83B5ECD81808";
+	rename -uid "35B085B2-4819-8529-F89B-118829FC1409";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".t" -type "double3" 0.00050258636474609375 -1.6435089111328125 -0.52157068252563477 ;
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" 0 -1.6435089111328125 0 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "Spine_Inv_Guide_CtrlShape" -p "Spine_Inv_Guide";
-	rename -uid "8DAF8B74-4CBD-7433-4BE4-D69F75320DCF";
+	rename -uid "BB510F53-4E54-D82E-4EE8-01B2394CD9B2";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -878,7 +902,8 @@ createNode nurbsCurve -n "Spine_Inv_Guide_CtrlShape" -p "Spine_Inv_Guide";
 		1.3977299999999999e-05 -0.5 0.25
 		;
 createNode nurbsCurve -n "Spine_Inv_Guide_Ctrl_CtrlShape" -p "Spine_Inv_Guide";
-	rename -uid "6C6A85C7-4268-4AD6-5DC9-8FA6DD7479B7";
+	rename -uid "9C69F303-4A00-ADE0-E98F-B4B72B85DF1F";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -994,7 +1019,8 @@ createNode nurbsCurve -n "Spine_Inv_Guide_Ctrl_CtrlShape" -p "Spine_Inv_Guide";
 		-1.7708799999999999e-08 0 0.59421000000000002
 		;
 createNode nurbsCurve -n "Spine_Inv_Guide_Ctrl_Ctrl_CtrlShape" -p "Spine_Inv_Guide";
-	rename -uid "AE740D24-4014-C7C7-9C58-81AB61D03797";
+	rename -uid "11F7F35D-4BDA-849A-DC75-7898AA263D47";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -1015,7 +1041,8 @@ createNode nurbsCurve -n "Spine_Inv_Guide_Ctrl_Ctrl_CtrlShape" -p "Spine_Inv_Gui
 		-0.5 -0.25 -1.3977299999999999e-05
 		;
 createNode nurbsCurve -n "Spine_Inv_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "Spine_Inv_Guide";
-	rename -uid "79572247-4EB4-940E-2CB4-F182ADFE5B9A";
+	rename -uid "0C1605F3-4A37-997B-F5E9-23B5EAB817A0";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -1036,7 +1063,7 @@ createNode nurbsCurve -n "Spine_Inv_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "Spine_In
 		0.25 1.3977299999999999e-05 -0.5
 		;
 createNode dagContainer -n "L_Clavicle_Block" -p "Body";
-	rename -uid "67E5F9EA-4343-02C3-AC84-E7B2151B0F93";
+	rename -uid "3E03F191-4C92-D0DC-741A-75AD4FB7A678";
 	setAttr ".isc" yes;
 	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/Clavicle.png";
 	setAttr ".ctor" -type "string" "PC";
@@ -1052,16 +1079,18 @@ createNode dagContainer -n "L_Clavicle_Block" -p "Body";
 	setAttr -l on -k off ".sy";
 	setAttr -l on -k off ".sz";
 createNode joint -n "L_Clavicle_Guide" -p "L_Clavicle_Block";
-	rename -uid "E7850513-451A-203A-ADF2-38B237B17076";
+	rename -uid "58054ECB-4563-8CCF-4976-D19F04112516";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".t" -type "double3" 3.1373954096109511 144.77654010631218 -6.2007982023341652 ;
-	setAttr ".r" -type "double3" 0 0 -12.341672051288144 ;
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" 3.1373954096109511 144.77654010631218 0 ;
+	setAttr ".r" -type "double3" 0 0 2 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 	setAttr ".jo" -type "double3" 90 0 0 ;
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_Clavicle_Guide_CtrlShape" -p "L_Clavicle_Guide";
-	rename -uid "271C5302-4D74-C7F5-475F-51A00F4AA210";
+	rename -uid "1ACC8764-4699-5BB4-4711-E1AEC2D10EB1";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -1082,7 +1111,8 @@ createNode nurbsCurve -n "L_Clavicle_Guide_CtrlShape" -p "L_Clavicle_Guide";
 		1.3977299999999999e-05 -0.5 0.25
 		;
 createNode nurbsCurve -n "L_Clavicle_Guide_Ctrl_CtrlShape" -p "L_Clavicle_Guide";
-	rename -uid "1B3AB959-45C1-39F5-2B7C-40A3B2C89A66";
+	rename -uid "E2C04B8E-4245-B83C-A20F-9EB89D8E2599";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -1198,7 +1228,8 @@ createNode nurbsCurve -n "L_Clavicle_Guide_Ctrl_CtrlShape" -p "L_Clavicle_Guide"
 		-1.7708799999999999e-08 0 0.59421000000000002
 		;
 createNode nurbsCurve -n "L_Clavicle_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Clavicle_Guide";
-	rename -uid "6B15C85B-4BD4-6CD2-64C7-628719FCE60F";
+	rename -uid "610F7B9E-4A1C-FA74-1863-F6AF803BB733";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -1219,7 +1250,8 @@ createNode nurbsCurve -n "L_Clavicle_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Clavicle_G
 		-0.5 -0.25 -1.3977299999999999e-05
 		;
 createNode nurbsCurve -n "L_Clavicle_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Clavicle_Guide";
-	rename -uid "B9A8294A-4BE3-379A-F957-5A989150D786";
+	rename -uid "12AC1467-4EAD-A413-1922-209A9D537838";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -1240,15 +1272,17 @@ createNode nurbsCurve -n "L_Clavicle_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Clavi
 		0.25 1.3977299999999999e-05 -0.5
 		;
 createNode joint -n "L_ClavicleEnd_Guide" -p "L_Clavicle_Guide";
-	rename -uid "3F5EC39B-474F-0B05-5B50-0C9586B7A1F3";
+	rename -uid "B38AE1B8-453C-3639-5AFE-B7A6A39C6108";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr ".t" -type "double3" 15.737788398495454 0 0 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 	setAttr ".jo" -type "double3" -90 0 0 ;
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_ClavicleEnd_Guide_CtrlShape" -p "L_ClavicleEnd_Guide";
-	rename -uid "43E7E1DF-4DE9-29D3-4CF9-DE910493F149";
+	rename -uid "23D73BD5-435A-B291-15E2-259BAB9B5A03";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -1269,7 +1303,8 @@ createNode nurbsCurve -n "L_ClavicleEnd_Guide_CtrlShape" -p "L_ClavicleEnd_Guide
 		1.3977299999999999e-05 -0.5 0.25
 		;
 createNode nurbsCurve -n "L_ClavicleEnd_Guide_Ctrl_CtrlShape" -p "L_ClavicleEnd_Guide";
-	rename -uid "1F4FBBC8-4B6D-9775-27EE-42BD0C3DB0C5";
+	rename -uid "0AF43EEA-4A0C-3D1C-C5AE-3A892DB0F54F";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -1385,7 +1420,8 @@ createNode nurbsCurve -n "L_ClavicleEnd_Guide_Ctrl_CtrlShape" -p "L_ClavicleEnd_
 		-1.7708799999999999e-08 0 0.59421000000000002
 		;
 createNode nurbsCurve -n "L_ClavicleEnd_Guide_Ctrl_Ctrl_CtrlShape" -p "L_ClavicleEnd_Guide";
-	rename -uid "5B4464D8-45D3-3460-2861-EFB20BF1EACE";
+	rename -uid "75F7F440-4A23-1EB9-AB63-92A068A6C11F";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -1406,7 +1442,8 @@ createNode nurbsCurve -n "L_ClavicleEnd_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Clavicl
 		-0.5 -0.25 -1.3977299999999999e-05
 		;
 createNode nurbsCurve -n "L_ClavicleEnd_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_ClavicleEnd_Guide";
-	rename -uid "648D81CC-485D-17DE-3A13-DAB310F19FD3";
+	rename -uid "B801533F-440E-12AE-2A2B-46BAB307F85E";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -1427,7 +1464,7 @@ createNode nurbsCurve -n "L_ClavicleEnd_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Cl
 		0.25 1.3977299999999999e-05 -0.5
 		;
 createNode dagContainer -n "L_Shoulder_Block" -p "Body";
-	rename -uid "81DB281C-4F60-01BE-EA49-84834A87A76A";
+	rename -uid "81D512EC-489B-9640-CC71-C3AE06C9C6D2";
 	setAttr ".isc" yes;
 	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/Limb.png";
 	setAttr ".ctor" -type "string" "PC";
@@ -1443,16 +1480,17 @@ createNode dagContainer -n "L_Shoulder_Block" -p "Body";
 	setAttr -l on -k off ".sy";
 	setAttr -l on -k off ".sz";
 createNode joint -n "L_Shoulder_Guide" -p "L_Shoulder_Block";
-	rename -uid "9536534A-44EE-CD01-908F-A3AF14869D78";
+	rename -uid "70E9E611-4351-1792-A592-958BEC490AC0";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".t" -type "double3" 19.270572824328703 144.61074041726792 -10.184079296918656 ;
-	setAttr ".r" -type "double3" 9.6127813788518193 -56.010868122141218 -11.590804964161842 ;
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" 19.270572824328703 144.61074041726792 0 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 	setAttr ".jo" -type "double3" 90 5.7105931374996421 -1.0388358160336684e-14 ;
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_Shoulder_Guide_CtrlShape" -p "L_Shoulder_Guide";
-	rename -uid "2CCD9517-4C1F-F2B6-5631-078E00985EB4";
+	rename -uid "5B0B2ED5-4C84-1EB7-AE51-BEABC22666EC";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -1473,7 +1511,8 @@ createNode nurbsCurve -n "L_Shoulder_Guide_CtrlShape" -p "L_Shoulder_Guide";
 		1.3977299999999999e-05 -0.5 0.25
 		;
 createNode nurbsCurve -n "L_Shoulder_Guide_Ctrl_CtrlShape" -p "L_Shoulder_Guide";
-	rename -uid "F4545E2B-4A97-EB97-8ACA-B8BD60D0DA5C";
+	rename -uid "C08EC454-4C25-8F63-3E7E-E683C87D1818";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -1589,7 +1628,8 @@ createNode nurbsCurve -n "L_Shoulder_Guide_Ctrl_CtrlShape" -p "L_Shoulder_Guide"
 		-1.7708799999999999e-08 0 0.59421000000000002
 		;
 createNode nurbsCurve -n "L_Shoulder_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Shoulder_Guide";
-	rename -uid "5BEEF9C1-4DAE-6BFA-ADEB-3489D4777727";
+	rename -uid "DD924FF3-4746-1485-FC62-F6B27380F924";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -1610,7 +1650,8 @@ createNode nurbsCurve -n "L_Shoulder_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Shoulder_G
 		-0.5 -0.25 -1.3977299999999999e-05
 		;
 createNode nurbsCurve -n "L_Shoulder_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Shoulder_Guide";
-	rename -uid "9FB20E55-4B0F-1412-472E-34B3DDB813E1";
+	rename -uid "E3BF53F2-4839-F836-B8CE-4AAE0D58934F";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -1631,17 +1672,18 @@ createNode nurbsCurve -n "L_Shoulder_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Shoul
 		0.25 1.3977299999999999e-05 -0.5
 		;
 createNode joint -n "L_Elbow_Guide" -p "L_Shoulder_Guide";
-	rename -uid "91174C3A-44E2-0BA8-4B05-A6B30395A7DC";
+	rename -uid "0D9B2DF2-448D-219F-7EE4-449CC435EE8A";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".t" -type "double3" 28.332410970088191 3.6934414846398553 -2.8421709430404007e-14 ;
-	setAttr ".r" -type "double3" 0 0 10.777310388124793 ;
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" 28.332410970088191 0 -2.8421709430404007e-14 ;
 	setAttr ".s" -type "double3" 0.99999999999999978 0.99999999999999967 0.99999999999999989 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 	setAttr ".jo" -type "double3" 0 0 11.421186274999258 ;
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_Elbow_Guide_CtrlShape" -p "L_Elbow_Guide";
-	rename -uid "9633E667-4B00-5414-549C-1B86D32D0914";
+	rename -uid "F28F739A-4756-DB8D-CA79-A78763DF1BBC";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -1662,7 +1704,8 @@ createNode nurbsCurve -n "L_Elbow_Guide_CtrlShape" -p "L_Elbow_Guide";
 		1.3977299999999999e-05 -0.5 0.25
 		;
 createNode nurbsCurve -n "L_Elbow_Guide_Ctrl_CtrlShape" -p "L_Elbow_Guide";
-	rename -uid "6684E88C-4ECE-BA06-6530-9E8C7DD21CF8";
+	rename -uid "CFAE77F6-423E-5741-34A0-F48149A96D28";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -1778,7 +1821,8 @@ createNode nurbsCurve -n "L_Elbow_Guide_Ctrl_CtrlShape" -p "L_Elbow_Guide";
 		-1.7708799999999999e-08 -4.9151793746204928e-25 0.59421000000000002
 		;
 createNode nurbsCurve -n "L_Elbow_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Elbow_Guide";
-	rename -uid "425C8913-4F7D-1640-957E-B2805AC693D4";
+	rename -uid "66A41F50-4452-5758-51BC-14A76418557E";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -1799,7 +1843,8 @@ createNode nurbsCurve -n "L_Elbow_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Elbow_Guide";
 		-0.5 -0.25 -1.3977299999999999e-05
 		;
 createNode nurbsCurve -n "L_Elbow_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Elbow_Guide";
-	rename -uid "6128AF21-484D-CF52-3682-EFA9D8EB09CA";
+	rename -uid "A678941A-4BC6-9CA0-78E8-47AECA7F3FD7";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -1820,15 +1865,17 @@ createNode nurbsCurve -n "L_Elbow_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Elbow_Gu
 		0.25 1.3977300000006938e-05 -0.5
 		;
 createNode joint -n "L_Wrist_Guide" -p "L_Elbow_Guide";
-	rename -uid "450A212C-454E-7B45-0F6B-EDA7E1F49228";
+	rename -uid "3F5D1EAC-4783-5BE9-57F7-FD9943E0A536";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr ".t" -type "double3" 27.072094143567597 -3.5527136788005009e-15 5.6843418860808015e-14 ;
 	setAttr ".s" -type "double3" 1 1 1.0000000000000004 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_Wrist_Guide_CtrlShape" -p "L_Wrist_Guide";
-	rename -uid "9B60475F-468E-5D49-4597-89BABD787AAA";
+	rename -uid "32CB7D4E-4759-7E42-780C-38AADF982368";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -1849,7 +1896,8 @@ createNode nurbsCurve -n "L_Wrist_Guide_CtrlShape" -p "L_Wrist_Guide";
 		1.3977299999999994e-05 -0.5 0.25000000000000006
 		;
 createNode nurbsCurve -n "L_Wrist_Guide_Ctrl_CtrlShape" -p "L_Wrist_Guide";
-	rename -uid "C63CDFF3-4E62-8189-2942-738F5033D244";
+	rename -uid "625DAC39-4384-C9D6-0AFB-3CA6957A76D9";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -1965,7 +2013,8 @@ createNode nurbsCurve -n "L_Wrist_Guide_Ctrl_CtrlShape" -p "L_Wrist_Guide";
 		-1.7708799999999992e-08 0 0.5942099999999999
 		;
 createNode nurbsCurve -n "L_Wrist_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Wrist_Guide";
-	rename -uid "872BCA8D-422E-19FE-AFEE-04AA47345853";
+	rename -uid "09EE61C4-43D0-A8D9-390E-CC804EA0EEB3";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -1986,7 +2035,8 @@ createNode nurbsCurve -n "L_Wrist_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Wrist_Guide";
 		-0.49999999999999983 -0.25 -1.3977299999882035e-05
 		;
 createNode nurbsCurve -n "L_Wrist_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Wrist_Guide";
-	rename -uid "840FEEF4-4FEE-561E-5BF4-778317918E5E";
+	rename -uid "F229D8DA-4F1B-CA1F-2242-D780FA70A4E3";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -2007,7 +2057,7 @@ createNode nurbsCurve -n "L_Wrist_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Wrist_Gu
 		0.24999999999999992 1.3977299999999999e-05 -0.49999999999999978
 		;
 createNode dagContainer -n "L_Pelvis_Block" -p "Body";
-	rename -uid "73A60386-4E85-E2A0-9049-83808103013E";
+	rename -uid "779A6345-4280-6D29-DACC-B6B2C21BB84F";
 	setAttr ".isc" yes;
 	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/Pelvis.png";
 	setAttr ".ctor" -type "string" "PC";
@@ -2023,16 +2073,18 @@ createNode dagContainer -n "L_Pelvis_Block" -p "Body";
 	setAttr -l on -k off ".sy";
 	setAttr -l on -k off ".sz";
 createNode joint -n "L_Pelvis_Guide" -p "L_Pelvis_Block";
-	rename -uid "0BF9EABD-43B6-346F-9741-D9A2F6312D75";
+	rename -uid "EC0FDCAF-4E73-D55F-B5FC-A6A784F99110";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".t" -type "double3" 5.6316672201019173 96.899503730860118 -2.0535083451754392 ;
-	setAttr ".r" -type "double3" 0 -53.984012416701937 0 ;
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" 1.3138671616212516 99.393107885858385 -2.0535083451754428 ;
+	setAttr ".r" -type "double3" 0 -36.895232927748744 0 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 	setAttr ".jo" -type "double3" 90 0 0 ;
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_Pelvis_Guide_CtrlShape" -p "L_Pelvis_Guide";
-	rename -uid "ADA1382C-4128-CAD2-4054-B881E454AF61";
+	rename -uid "0304A12C-4E71-365D-4C54-3CB08CCC4E06";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -2053,7 +2105,8 @@ createNode nurbsCurve -n "L_Pelvis_Guide_CtrlShape" -p "L_Pelvis_Guide";
 		1.3977299999999999e-05 -0.5 0.25
 		;
 createNode nurbsCurve -n "L_Pelvis_Guide_Ctrl_CtrlShape" -p "L_Pelvis_Guide";
-	rename -uid "BD800E71-4DE7-543B-1FF3-CEA0CC39166C";
+	rename -uid "2DB9EB2A-4F12-D7D1-D1C1-ABB5409414D7";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -2169,7 +2222,8 @@ createNode nurbsCurve -n "L_Pelvis_Guide_Ctrl_CtrlShape" -p "L_Pelvis_Guide";
 		-1.7708799999999999e-08 0 0.59421000000000002
 		;
 createNode nurbsCurve -n "L_Pelvis_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Pelvis_Guide";
-	rename -uid "E5944F53-4336-482C-F8D9-59A3492D70EB";
+	rename -uid "EF253A1E-4E6D-4AFE-EA0F-288737201F0C";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -2190,7 +2244,8 @@ createNode nurbsCurve -n "L_Pelvis_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Pelvis_Guide
 		-0.5 -0.25 -1.3977299999999999e-05
 		;
 createNode nurbsCurve -n "L_Pelvis_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Pelvis_Guide";
-	rename -uid "4319DB60-4F35-E3AC-BF5E-B1BB6B03DE53";
+	rename -uid "D5C84F33-4B45-977E-17D4-FEB21195796B";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -2211,15 +2266,17 @@ createNode nurbsCurve -n "L_Pelvis_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Pelvis_
 		0.25 1.3977299999999999e-05 -0.5
 		;
 createNode joint -n "L_PelvisEnd_Guide" -p "L_Pelvis_Guide";
-	rename -uid "A454B026-4828-6E00-4539-EEA90C5AF964";
+	rename -uid "2F562FAF-4851-534B-9E67-778D4AC77708";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr ".t" -type "double3" 6 0 0 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 	setAttr ".jo" -type "double3" -90 0 0 ;
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_PelvisEnd_Guide_CtrlShape" -p "L_PelvisEnd_Guide";
-	rename -uid "7CBBC15B-4EE7-59A0-FD6A-F48780FF0070";
+	rename -uid "232E25CB-4B4E-9ABD-BF55-52906334403D";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -2240,7 +2297,8 @@ createNode nurbsCurve -n "L_PelvisEnd_Guide_CtrlShape" -p "L_PelvisEnd_Guide";
 		1.3977299999999999e-05 -0.5 0.25
 		;
 createNode nurbsCurve -n "L_PelvisEnd_Guide_Ctrl_CtrlShape" -p "L_PelvisEnd_Guide";
-	rename -uid "2C351BAC-47B1-465C-E29B-D4A0648E3BEA";
+	rename -uid "C01F1937-49A0-3E93-0F7C-DDB70A8C05E1";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -2356,7 +2414,8 @@ createNode nurbsCurve -n "L_PelvisEnd_Guide_Ctrl_CtrlShape" -p "L_PelvisEnd_Guid
 		-1.7708799999999999e-08 0 0.59421000000000002
 		;
 createNode nurbsCurve -n "L_PelvisEnd_Guide_Ctrl_Ctrl_CtrlShape" -p "L_PelvisEnd_Guide";
-	rename -uid "779F2A1E-4854-A19F-E65B-B498D923A2F5";
+	rename -uid "019CF442-48AE-324E-2308-77AFFE5E1962";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -2377,7 +2436,8 @@ createNode nurbsCurve -n "L_PelvisEnd_Guide_Ctrl_Ctrl_CtrlShape" -p "L_PelvisEnd
 		-0.5 -0.25 -1.3977299999999999e-05
 		;
 createNode nurbsCurve -n "L_PelvisEnd_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_PelvisEnd_Guide";
-	rename -uid "B6F43367-4F00-537B-7F2E-B4AB0BFDC410";
+	rename -uid "0204457A-413C-A406-9CB0-A7B31B74A782";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -2398,7 +2458,7 @@ createNode nurbsCurve -n "L_PelvisEnd_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Pelv
 		0.25 1.3977299999999999e-05 -0.5
 		;
 createNode dagContainer -n "L_Hip_Block" -p "Body";
-	rename -uid "27EF76C2-4F13-D6A4-B324-BDAB4D2981E4";
+	rename -uid "1344BF4E-432A-E3B7-1BD1-309F00528AA7";
 	setAttr ".isc" yes;
 	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/Limb.png";
 	setAttr ".ctor" -type "string" "PC";
@@ -2414,16 +2474,18 @@ createNode dagContainer -n "L_Hip_Block" -p "Body";
 	setAttr -l on -k off ".sy";
 	setAttr -l on -k off ".sz";
 createNode joint -n "L_Hip_Guide" -p "L_Hip_Block";
-	rename -uid "BA5468D4-4816-6B41-399A-01BF4673483C";
+	rename -uid "25B11BF2-4ED2-967D-B96E-E698C2E5728B";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr ".t" -type "double3" 9.7739182922963526 92.024756645420609 -2.5893488777701945 ;
-	setAttr ".r" -type "double3" 119.23964715009853 -81.784067675683346 57.051880237636993 ;
+	setAttr ".r" -type "double3" 90 -90 90 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 	setAttr ".jo" -type "double3" 90 5.7105931374996421 -1.0388358160336684e-14 ;
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_Hip_Guide_CtrlShape" -p "L_Hip_Guide";
-	rename -uid "4D6CF7A1-4545-6B56-565A-76BC11AC52DE";
+	rename -uid "237C4B40-4458-0E93-47C7-BE964AA7758D";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -2444,7 +2506,8 @@ createNode nurbsCurve -n "L_Hip_Guide_CtrlShape" -p "L_Hip_Guide";
 		1.3977299999999999e-05 -0.5 0.25
 		;
 createNode nurbsCurve -n "L_Hip_Guide_Ctrl_CtrlShape" -p "L_Hip_Guide";
-	rename -uid "F94B3A8C-48ED-5511-C43D-F4B3440C7F15";
+	rename -uid "C9C9B7DC-41B5-FE1E-26B1-EB82C860FDF8";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -2560,7 +2623,8 @@ createNode nurbsCurve -n "L_Hip_Guide_Ctrl_CtrlShape" -p "L_Hip_Guide";
 		-1.7708799999999999e-08 0 0.59421000000000002
 		;
 createNode nurbsCurve -n "L_Hip_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hip_Guide";
-	rename -uid "13A53063-4490-864B-3E53-87B649B88B31";
+	rename -uid "06CE9A2F-428D-2444-5BFA-C09CB55AC380";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -2581,7 +2645,8 @@ createNode nurbsCurve -n "L_Hip_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hip_Guide";
 		-0.5 -0.25 -1.3977299999999999e-05
 		;
 createNode nurbsCurve -n "L_Hip_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Hip_Guide";
-	rename -uid "C3AF7200-4305-500F-C612-7C9774D7D1D3";
+	rename -uid "1280B233-481F-D61E-2A6D-919C865E781F";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -2602,17 +2667,18 @@ createNode nurbsCurve -n "L_Hip_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Hip_Guide"
 		0.25 1.3977299999999999e-05 -0.5
 		;
 createNode joint -n "L_Knee_Guide" -p "L_Hip_Guide";
-	rename -uid "C39ACD50-4459-A14A-1D5C-3B9D34A8F325";
+	rename -uid "C5F973D9-412D-F922-AA24-31AA6512ACAD";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".t" -type "double3" 40.968573169868201 6.2755769381653774 1.4210854715202004e-14 ;
-	setAttr ".r" -type "double3" 0 0 3.4838947111039493 ;
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" 40.968573169868201 0 1.4210854715202004e-14 ;
 	setAttr ".s" -type "double3" 0.99999999999999956 0.99999999999999978 0.99999999999999967 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 	setAttr ".jo" -type "double3" 0 0 11.421186274999258 ;
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_Knee_Guide_CtrlShape" -p "L_Knee_Guide";
-	rename -uid "0580B804-411D-E807-224D-E48703EFBE95";
+	rename -uid "A21CE667-492D-FD13-6970-87916B0A8C05";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -2633,7 +2699,8 @@ createNode nurbsCurve -n "L_Knee_Guide_CtrlShape" -p "L_Knee_Guide";
 		1.3977299999999999e-05 -0.5 0.25
 		;
 createNode nurbsCurve -n "L_Knee_Guide_Ctrl_CtrlShape" -p "L_Knee_Guide";
-	rename -uid "453CE260-46CC-46CC-EC97-4B8DA2F2177C";
+	rename -uid "E8548A5E-4347-7B27-9A99-2099160ED95F";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -2749,7 +2816,8 @@ createNode nurbsCurve -n "L_Knee_Guide_Ctrl_CtrlShape" -p "L_Knee_Guide";
 		-1.7708799999999999e-08 -4.9151793746204928e-25 0.59421000000000002
 		;
 createNode nurbsCurve -n "L_Knee_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Knee_Guide";
-	rename -uid "D610D004-4BEB-5624-1210-65870BE5A57C";
+	rename -uid "7DD1DAD3-4AA6-418A-D9D4-F48B59D8A285";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -2770,7 +2838,8 @@ createNode nurbsCurve -n "L_Knee_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Knee_Guide";
 		-0.5 -0.25 -1.3977299999999999e-05
 		;
 createNode nurbsCurve -n "L_Knee_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Knee_Guide";
-	rename -uid "8A415E0C-444B-170C-3F08-26A90F7AAAA7";
+	rename -uid "0EAEEEFA-48E3-0652-7BF9-CBA63DC2FF1E";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -2791,15 +2860,17 @@ createNode nurbsCurve -n "L_Knee_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Knee_Guid
 		0.25 1.3977300000006938e-05 -0.5
 		;
 createNode joint -n "L_Ankle_Guide" -p "L_Knee_Guide";
-	rename -uid "E8A7DF19-4ECC-CB86-16B3-BF94D3DF778F";
+	rename -uid "97E73144-4646-3A50-89D4-8E8EA49E69FF";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr ".t" -type "double3" 40.71186295258908 -1.0658141036401503e-14 2.1316282072803006e-14 ;
 	setAttr ".s" -type "double3" 1.0000000000000002 1.0000000000000002 1.0000000000000002 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_Ankle_Guide_CtrlShape" -p "L_Ankle_Guide";
-	rename -uid "EA2DE308-4208-0C6E-6D53-8D94F8262077";
+	rename -uid "F9EBD28F-435B-61EF-262A-03939D57C27A";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -2820,7 +2891,8 @@ createNode nurbsCurve -n "L_Ankle_Guide_CtrlShape" -p "L_Ankle_Guide";
 		1.3977299999999994e-05 -0.5 0.25000000000000006
 		;
 createNode nurbsCurve -n "L_Ankle_Guide_Ctrl_CtrlShape" -p "L_Ankle_Guide";
-	rename -uid "D2ABFB50-43AC-1B60-68E4-70B408C8DEC0";
+	rename -uid "6B31F752-4525-4D01-C404-8BA66643441C";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -2936,7 +3008,8 @@ createNode nurbsCurve -n "L_Ankle_Guide_Ctrl_CtrlShape" -p "L_Ankle_Guide";
 		-1.7708799999999992e-08 0 0.5942099999999999
 		;
 createNode nurbsCurve -n "L_Ankle_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Ankle_Guide";
-	rename -uid "1E08A59C-4F08-6191-9AA4-FCB5620F59F2";
+	rename -uid "D43979B5-4B7A-201D-B0B5-58B7E912EC55";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -2957,7 +3030,8 @@ createNode nurbsCurve -n "L_Ankle_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Ankle_Guide";
 		-0.49999999999999983 -0.25 -1.3977299999882035e-05
 		;
 createNode nurbsCurve -n "L_Ankle_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Ankle_Guide";
-	rename -uid "2044FFB6-4356-00F2-F3BC-85AD6EF82FDA";
+	rename -uid "0EA5B2E4-40AF-5A80-6AD6-E2864143127C";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -2978,7 +3052,7 @@ createNode nurbsCurve -n "L_Ankle_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Ankle_Gu
 		0.24999999999999992 1.3977299999999999e-05 -0.49999999999999978
 		;
 createNode dagContainer -n "Neck_Head_Block" -p "Body";
-	rename -uid "E8AA5D1A-4FB8-7978-6547-A7AC7B36D60E";
+	rename -uid "09975BCA-42C7-3B29-BCF0-C989990E71B8";
 	setAttr ".isc" yes;
 	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/HeadNeck.png";
 	setAttr ".ctor" -type "string" "PC";
@@ -2994,16 +3068,18 @@ createNode dagContainer -n "Neck_Head_Block" -p "Body";
 	setAttr -l on -k off ".sy";
 	setAttr -l on -k off ".sz";
 createNode joint -n "Neck_Guide" -p "Neck_Head_Block";
-	rename -uid "F976B707-4F10-06D9-DDDA-B0A2682D7CBB";
+	rename -uid "F888F82B-406A-88EF-FDB1-B193D6FBA185";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".t" -type "double3" 9.757401051118013e-14 151.46695237294998 -6.4053242047171004 ;
-	setAttr ".r" -type "double3" 3.751259317586503e-14 2.0338938220623838e-14 -3.8020758364199279 ;
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" 9.757401051118013e-14 151.46695237294998 0 ;
+	setAttr ".r" -type "double3" 3.751259317586503e-14 2.0338938220623838e-14 0 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 	setAttr ".jo" -type "double3" 89.999999999999986 -16.699244233993625 90 ;
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "Neck_Guide_CtrlShape" -p "Neck_Guide";
-	rename -uid "F5938033-44CF-E6AA-CBE0-04A607681A38";
+	rename -uid "207284B6-4DA9-583A-DF97-38BAD7FE363B";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -3024,7 +3100,8 @@ createNode nurbsCurve -n "Neck_Guide_CtrlShape" -p "Neck_Guide";
 		1.3977299999999999e-05 -0.5 0.25
 		;
 createNode nurbsCurve -n "Neck_Guide_Ctrl_CtrlShape" -p "Neck_Guide";
-	rename -uid "740EFF7D-48BC-8D09-CD62-E487A581212E";
+	rename -uid "12351685-4620-00E9-D6BF-B3B06630594C";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -3140,7 +3217,8 @@ createNode nurbsCurve -n "Neck_Guide_Ctrl_CtrlShape" -p "Neck_Guide";
 		-1.7708799999999999e-08 0 0.59421000000000002
 		;
 createNode nurbsCurve -n "Neck_Guide_Ctrl_Ctrl_CtrlShape" -p "Neck_Guide";
-	rename -uid "02074143-4D7C-A2DA-1288-F39B8BD1E775";
+	rename -uid "AFE290EA-45C6-ED04-7E28-6981E180A63B";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -3161,7 +3239,8 @@ createNode nurbsCurve -n "Neck_Guide_Ctrl_Ctrl_CtrlShape" -p "Neck_Guide";
 		-0.5 -0.25 -1.3977299999999999e-05
 		;
 createNode nurbsCurve -n "Neck_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "Neck_Guide";
-	rename -uid "D19077EE-429C-0450-B4B1-4C95A4370EA5";
+	rename -uid "3E825B74-434E-8A91-6B55-C28352512197";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -3182,17 +3261,18 @@ createNode nurbsCurve -n "Neck_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "Neck_Guide";
 		0.25 1.3977299999999999e-05 -0.5
 		;
 createNode joint -n "Head_Guide" -p "Neck_Guide";
-	rename -uid "05AFB692-4DBB-24C2-D2C2-D68B9D61AE8D";
+	rename -uid "BA9CFB74-4C9A-D73F-4386-9CB7E500BCF2";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr ".t" -type "double3" 15.411531990545143 7.1054273576010019e-15 -2.6783753750789153e-15 ;
-	setAttr ".r" -type "double3" 0 0 3.8020758364198608 ;
 	setAttr ".s" -type "double3" 0.99999999999999989 0.99999999999999989 1 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 	setAttr ".jo" -type "double3" -3.2676441657867152e-15 2.2263882770244605e-14 -16.699244233993618 ;
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "Head_Guide_CtrlShape" -p "Head_Guide";
-	rename -uid "4D0FED87-43D8-80C9-A865-BDACC9251566";
+	rename -uid "558291C0-4620-9C7C-051A-D5A1392FB034";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -3213,7 +3293,8 @@ createNode nurbsCurve -n "Head_Guide_CtrlShape" -p "Head_Guide";
 		1.3977299999999999e-05 -0.5 0.24999999999999978
 		;
 createNode nurbsCurve -n "Head_Guide_Ctrl_CtrlShape" -p "Head_Guide";
-	rename -uid "360F923B-4E37-0892-2B99-8DA2DB9EACD6";
+	rename -uid "BFE0B870-4B18-5C30-F9A0-E488F4394DE5";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -3329,7 +3410,8 @@ createNode nurbsCurve -n "Head_Guide_Ctrl_CtrlShape" -p "Head_Guide";
 		-1.7708799999999999e-08 0 0.59420999999999979
 		;
 createNode nurbsCurve -n "Head_Guide_Ctrl_Ctrl_CtrlShape" -p "Head_Guide";
-	rename -uid "8B0F7430-4F46-DCB3-77CC-2B92E3E857F6";
+	rename -uid "ECC935F0-4CE2-64CF-F88E-CB9DF4F8A79E";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -3350,7 +3432,8 @@ createNode nurbsCurve -n "Head_Guide_Ctrl_Ctrl_CtrlShape" -p "Head_Guide";
 		-0.5 -0.25 -1.3977300000222044e-05
 		;
 createNode nurbsCurve -n "Head_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "Head_Guide";
-	rename -uid "7586C2C5-490F-D7FA-91C2-38957A593543";
+	rename -uid "643321D3-41DA-1833-8667-D7AACF1106FD";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -3371,15 +3454,17 @@ createNode nurbsCurve -n "Head_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "Head_Guide";
 		0.25 1.3977299999999999e-05 -0.50000000000000022
 		;
 createNode joint -n "HeadEnd_Guide" -p "Head_Guide";
-	rename -uid "D1D1AF4B-4C50-E57E-6215-9185FD8097DC";
+	rename -uid "D8ADBB2D-4AD5-BC3C-3D5F-A296CDD02AF0";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr ".t" -type "double3" 11.906163452765782 -1.7319479184152442e-14 -3.4975291772077898e-15 ;
 	setAttr ".s" -type "double3" 1 1 1.0000000000000002 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "HeadEnd_Guide_CtrlShape" -p "HeadEnd_Guide";
-	rename -uid "255F36E5-42D8-0C7D-B8A7-E69888E66B4F";
+	rename -uid "8C83E375-40AD-11E5-20A8-72A99E04454A";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -3400,7 +3485,8 @@ createNode nurbsCurve -n "HeadEnd_Guide_CtrlShape" -p "HeadEnd_Guide";
 		1.3977299999999999e-05 -0.5 0.24999999999999978
 		;
 createNode nurbsCurve -n "HeadEnd_Guide_Ctrl_CtrlShape" -p "HeadEnd_Guide";
-	rename -uid "3150EB40-4107-0CE6-CB8F-D2879D24377A";
+	rename -uid "E5D77170-4CCB-7193-6461-E5BD1B9A3120";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -3516,7 +3602,8 @@ createNode nurbsCurve -n "HeadEnd_Guide_Ctrl_CtrlShape" -p "HeadEnd_Guide";
 		-1.7708799999999999e-08 0 0.59420999999999979
 		;
 createNode nurbsCurve -n "HeadEnd_Guide_Ctrl_Ctrl_CtrlShape" -p "HeadEnd_Guide";
-	rename -uid "EBF8B0AF-428F-9E26-6BB1-E09DF6AAF643";
+	rename -uid "1EA88A33-479A-FD5D-6767-01AA1C17EF01";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -3537,7 +3624,8 @@ createNode nurbsCurve -n "HeadEnd_Guide_Ctrl_Ctrl_CtrlShape" -p "HeadEnd_Guide";
 		-0.5 -0.25 -1.3977300000222044e-05
 		;
 createNode nurbsCurve -n "HeadEnd_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "HeadEnd_Guide";
-	rename -uid "23F7E2DB-4928-CF67-50E1-BAB5B1F9CA56";
+	rename -uid "D546551F-4D7D-E76A-0E57-0FA3C1CD4B75";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -3558,7 +3646,7 @@ createNode nurbsCurve -n "HeadEnd_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "HeadEnd_Gu
 		0.25 1.3977299999999999e-05 -0.50000000000000022
 		;
 createNode dagContainer -n "L_Hand_Block" -p "Body";
-	rename -uid "353E35EC-45D8-6A37-BE14-2F9C9A8661A5";
+	rename -uid "ADD26909-4FC8-039E-4D15-AF9C77B81855";
 	setAttr ".isc" yes;
 	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/Hand.png";
 	setAttr ".ctor" -type "string" "PC";
@@ -3574,15 +3662,17 @@ createNode dagContainer -n "L_Hand_Block" -p "Body";
 	setAttr -l on -k off ".sy";
 	setAttr -l on -k off ".sz";
 createNode joint -n "L_Hand_Palm_Guide" -p "L_Hand_Block";
-	rename -uid "1EDAE2F1-448D-23F5-245A-6A82AA44B10B";
+	rename -uid "D257B498-4B32-9AAF-009F-5396B8AA8889";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".t" -type "double3" 50.013061458861095 99.036553194395481 -5.3833768466617151 ;
-	setAttr ".r" -type "double3" 0.070790128245385331 -3.6895304119015351 -76.311508733881894 ;
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" 74.400115917595727 144.61074041726789 -0.12540621138355901 ;
+	setAttr ".r" -type "double3" -3.2296978985206062 -1.7860767493077019 -14.125248390423346 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_Hand_Palm_Guide_CtrlShape" -p "L_Hand_Palm_Guide";
-	rename -uid "79E10E58-4D43-914A-C43A-B98E6E68227B";
+	rename -uid "2F2CE88E-4A52-2119-D676-10B2429F3B03";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -3603,7 +3693,8 @@ createNode nurbsCurve -n "L_Hand_Palm_Guide_CtrlShape" -p "L_Hand_Palm_Guide";
 		1.3977299999999999e-05 -0.5 0.25
 		;
 createNode nurbsCurve -n "L_Hand_Palm_Guide_Ctrl_CtrlShape" -p "L_Hand_Palm_Guide";
-	rename -uid "3965DCDE-447E-C02E-C11B-459F8A700448";
+	rename -uid "5FABFE6F-4DF2-C651-F511-DEA4D085E002";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -3719,7 +3810,8 @@ createNode nurbsCurve -n "L_Hand_Palm_Guide_Ctrl_CtrlShape" -p "L_Hand_Palm_Guid
 		-1.7708799999999999e-08 0 0.59421000000000002
 		;
 createNode nurbsCurve -n "L_Hand_Palm_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Palm_Guide";
-	rename -uid "285FFE09-496B-4243-4822-EEAE44263E43";
+	rename -uid "1BE566D8-4FB1-A3B9-B4A9-BCA0E6EAB6F2";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -3740,7 +3832,8 @@ createNode nurbsCurve -n "L_Hand_Palm_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Palm
 		-0.5 -0.25 -1.3977299999999999e-05
 		;
 createNode nurbsCurve -n "L_Hand_Palm_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Palm_Guide";
-	rename -uid "4DEB4F71-44B3-4070-1998-AEB40CB466CB";
+	rename -uid "63A1D662-4992-EA2E-BD0B-C19DE63FB894";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -3761,15 +3854,17 @@ createNode nurbsCurve -n "L_Hand_Palm_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Hand
 		0.25 1.3977299999999999e-05 -0.5
 		;
 createNode joint -n "L_Hand_Index_00_Guide" -p "L_Hand_Palm_Guide";
-	rename -uid "260F930A-40D3-32BA-BB7D-E18A09F07029";
+	rename -uid "8FB4E911-450A-93FC-3425-988CA0EB9EAC";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".t" -type "double3" 5.420779637302644 -1.8596881460196784 3.4961066944540926 ;
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" 5.4207796373026413 -8.3821838359199224e-15 4.4895851073855146 ;
 	setAttr ".s" -type "double3" 0.99999999999999978 0.99999999999999989 0.99999999999999978 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_Hand_Index_00_Guide_CtrlShape" -p "L_Hand_Index_00_Guide";
-	rename -uid "142E3442-4906-AA91-A191-4492CF44DE8B";
+	rename -uid "3A86DCC1-41F6-48B9-4AE3-EBA39E69916F";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -3790,7 +3885,8 @@ createNode nurbsCurve -n "L_Hand_Index_00_Guide_CtrlShape" -p "L_Hand_Index_00_G
 		1.3977299999999999e-05 -0.5 0.25
 		;
 createNode nurbsCurve -n "L_Hand_Index_00_Guide_Ctrl_CtrlShape" -p "L_Hand_Index_00_Guide";
-	rename -uid "6BEEA5D2-45E9-C9E8-1B87-A88CF3B3C2E8";
+	rename -uid "2CC9EFED-46FF-13F8-0FC7-FEB8591965FD";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -3906,7 +4002,8 @@ createNode nurbsCurve -n "L_Hand_Index_00_Guide_Ctrl_CtrlShape" -p "L_Hand_Index
 		-1.7708799999999999e-08 0 0.59421000000000002
 		;
 createNode nurbsCurve -n "L_Hand_Index_00_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Index_00_Guide";
-	rename -uid "E986DB22-4C2D-9ACD-F3E9-51A279E21DE6";
+	rename -uid "F8F7215E-41B6-4E17-45FF-718AEA6FAE24";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -3927,7 +4024,8 @@ createNode nurbsCurve -n "L_Hand_Index_00_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_
 		-0.5 -0.25 -1.3977299999999999e-05
 		;
 createNode nurbsCurve -n "L_Hand_Index_00_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Index_00_Guide";
-	rename -uid "7CF9BF8B-430D-9414-6B44-42AD8F4CB136";
+	rename -uid "D6FC4210-4788-FDF2-F03A-6B9348A977FC";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -3948,14 +4046,16 @@ createNode nurbsCurve -n "L_Hand_Index_00_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_
 		0.25 1.3977299999999999e-05 -0.5
 		;
 createNode joint -n "L_Hand_Index_01_Guide" -p "L_Hand_Index_00_Guide";
-	rename -uid "43E91EE7-40B3-E9BC-6B9B-33B4C6B59E2E";
+	rename -uid "B690BEBC-417E-CDA8-D3F9-E48225B2B78F";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".t" -type "double3" 5.2619243724416691 1.5001477579675822 0.49714993740959601 ;
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" 5.2619243724416691 0 0 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_Hand_Index_01_Guide_CtrlShape" -p "L_Hand_Index_01_Guide";
-	rename -uid "47E43701-4131-5737-8411-2AAAF2217B8C";
+	rename -uid "E36180CB-4492-DCEB-CBAB-3CB9D9386E2D";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -3976,7 +4076,8 @@ createNode nurbsCurve -n "L_Hand_Index_01_Guide_CtrlShape" -p "L_Hand_Index_01_G
 		1.3977299999999999e-05 -0.5 0.25
 		;
 createNode nurbsCurve -n "L_Hand_Index_01_Guide_Ctrl_CtrlShape" -p "L_Hand_Index_01_Guide";
-	rename -uid "86FBFF0F-482D-D702-9C33-649CFE2AED37";
+	rename -uid "018C8352-4F0B-D124-9491-5B9038FDFA5A";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -4092,7 +4193,8 @@ createNode nurbsCurve -n "L_Hand_Index_01_Guide_Ctrl_CtrlShape" -p "L_Hand_Index
 		-1.7708799999999999e-08 0 0.59421000000000002
 		;
 createNode nurbsCurve -n "L_Hand_Index_01_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Index_01_Guide";
-	rename -uid "5F24664B-4C72-1779-C1CF-069B7F625013";
+	rename -uid "966C5129-458B-3D98-D569-01A78A67F135";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -4113,7 +4215,8 @@ createNode nurbsCurve -n "L_Hand_Index_01_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_
 		-0.5 -0.25 -1.3977299999999999e-05
 		;
 createNode nurbsCurve -n "L_Hand_Index_01_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Index_01_Guide";
-	rename -uid "E732CF09-41DE-76BA-F211-43AC6D45DEBE";
+	rename -uid "867B66C4-4AD6-75D6-22BF-35A2608F794A";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -4134,15 +4237,17 @@ createNode nurbsCurve -n "L_Hand_Index_01_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_
 		0.25 1.3977299999999999e-05 -0.5
 		;
 createNode joint -n "L_Hand_Index_02_Guide" -p "L_Hand_Index_01_Guide";
-	rename -uid "981CD14B-4918-8354-AA3D-64AD85A244CB";
+	rename -uid "D6E4D174-435D-2B3E-6B88-BF80DDC587CD";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".t" -type "double3" 4.3571290854628586 -0.37640757875745123 0.16795549391027365 ;
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" 4.3571290854628586 0 0 ;
 	setAttr ".s" -type "double3" 0.99999999999999978 1 0.99999999999999989 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_Hand_Index_02_Guide_CtrlShape" -p "L_Hand_Index_02_Guide";
-	rename -uid "54D38FFD-44E0-67B7-42EF-159787A1E704";
+	rename -uid "BEFA73D9-4947-103E-87DA-24AC4FDAEC60";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -4163,7 +4268,8 @@ createNode nurbsCurve -n "L_Hand_Index_02_Guide_CtrlShape" -p "L_Hand_Index_02_G
 		1.3977299999999999e-05 -0.5 0.25
 		;
 createNode nurbsCurve -n "L_Hand_Index_02_Guide_Ctrl_CtrlShape" -p "L_Hand_Index_02_Guide";
-	rename -uid "481469B3-47DD-3B5F-76DA-37A7392D7F0F";
+	rename -uid "6F014C12-44C1-077F-6D3F-90BF6CCA80FE";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -4279,7 +4385,8 @@ createNode nurbsCurve -n "L_Hand_Index_02_Guide_Ctrl_CtrlShape" -p "L_Hand_Index
 		-1.7708799999999999e-08 0 0.59421000000000002
 		;
 createNode nurbsCurve -n "L_Hand_Index_02_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Index_02_Guide";
-	rename -uid "04651B13-49FE-882E-1EEB-01B281816EB8";
+	rename -uid "90A3ED1A-4396-F5F0-E40D-839A705E72FB";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -4300,7 +4407,8 @@ createNode nurbsCurve -n "L_Hand_Index_02_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_
 		-0.5 -0.25 -1.3977299999999999e-05
 		;
 createNode nurbsCurve -n "L_Hand_Index_02_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Index_02_Guide";
-	rename -uid "97738FCB-47F3-AEDF-A4EF-35A6CB43B8F5";
+	rename -uid "22DC9E5A-4A04-566A-64A8-D982DA0151F9";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -4321,15 +4429,17 @@ createNode nurbsCurve -n "L_Hand_Index_02_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_
 		0.25 1.3977299999999999e-05 -0.5
 		;
 createNode joint -n "L_Hand_Index_03_Guide" -p "L_Hand_Index_02_Guide";
-	rename -uid "67FDA378-4531-2066-5307-379F05BF1B4B";
+	rename -uid "1A721B35-49C3-28A6-1361-EF8B6489C6B0";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".t" -type "double3" 2.8670475883311042 -1.1315298790559751 -0.096588194581678444 ;
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" 2.8670475883311042 0 0 ;
 	setAttr ".s" -type "double3" 0.99999999999999989 1.0000000000000002 1 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_Hand_Index_03_Guide_CtrlShape" -p "L_Hand_Index_03_Guide";
-	rename -uid "79814427-4BA2-BF43-AE95-4EAA1AD0FCAF";
+	rename -uid "9C9BAC18-4DCF-744E-5DEE-4ABCEFC2F9B7";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -4350,7 +4460,8 @@ createNode nurbsCurve -n "L_Hand_Index_03_Guide_CtrlShape" -p "L_Hand_Index_03_G
 		1.3977299999999999e-05 -0.5 0.25
 		;
 createNode nurbsCurve -n "L_Hand_Index_03_Guide_Ctrl_CtrlShape" -p "L_Hand_Index_03_Guide";
-	rename -uid "14092AAD-4710-8092-3D3C-97B1E996A5DA";
+	rename -uid "80E847E3-48DD-72EB-8FDE-D6B6C2C29042";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -4466,7 +4577,8 @@ createNode nurbsCurve -n "L_Hand_Index_03_Guide_Ctrl_CtrlShape" -p "L_Hand_Index
 		-1.7708799999999999e-08 0 0.59421000000000002
 		;
 createNode nurbsCurve -n "L_Hand_Index_03_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Index_03_Guide";
-	rename -uid "E3886592-454E-64FC-52C9-929D6A4C09AC";
+	rename -uid "661538A3-42BA-7A6C-1FF5-4C9FC4E01DB6";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -4487,7 +4599,8 @@ createNode nurbsCurve -n "L_Hand_Index_03_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_
 		-0.5 -0.25 -1.3977299999999999e-05
 		;
 createNode nurbsCurve -n "L_Hand_Index_03_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Index_03_Guide";
-	rename -uid "7657A95D-4310-939C-AAE8-9D8DDDD62AF5";
+	rename -uid "FCD27E6B-4CC0-4986-EFC8-C7926785172C";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -4508,15 +4621,17 @@ createNode nurbsCurve -n "L_Hand_Index_03_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_
 		0.25 1.3977299999999999e-05 -0.5
 		;
 createNode joint -n "L_Hand_Index_04_Guide" -p "L_Hand_Index_03_Guide";
-	rename -uid "A206FD3B-426D-C6F6-76DC-8281594A8CDF";
+	rename -uid "B8BE38AC-473E-4537-DFFD-A99D129FBA27";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".t" -type "double3" 2.5016366702287911 -1.0313940102580261 -0.067750636225996974 ;
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" 2.5016366702287911 0 0 ;
 	setAttr ".s" -type "double3" 0.99999999999999967 1.0000000000000002 0.99999999999999989 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_Hand_Index_04_Guide_CtrlShape" -p "L_Hand_Index_04_Guide";
-	rename -uid "D1617D6B-4807-2605-3380-84A21FA5190F";
+	rename -uid "97C93C98-4236-65CC-476C-C0A4DC63E5E2";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -4537,7 +4652,8 @@ createNode nurbsCurve -n "L_Hand_Index_04_Guide_CtrlShape" -p "L_Hand_Index_04_G
 		1.3977299999999999e-05 -0.5 0.25
 		;
 createNode nurbsCurve -n "L_Hand_Index_04_Guide_Ctrl_CtrlShape" -p "L_Hand_Index_04_Guide";
-	rename -uid "9B836CB1-4FD3-85A1-CCB8-6CAADFFA6F18";
+	rename -uid "ABD34FE5-490E-DB8F-51AA-4EAB18407D0E";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -4653,7 +4769,8 @@ createNode nurbsCurve -n "L_Hand_Index_04_Guide_Ctrl_CtrlShape" -p "L_Hand_Index
 		-1.7708799999999999e-08 0 0.59421000000000002
 		;
 createNode nurbsCurve -n "L_Hand_Index_04_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Index_04_Guide";
-	rename -uid "86B0FE69-42EC-9F12-3125-CEB49DC61D76";
+	rename -uid "CD58B555-4D1B-ED04-0836-2EB2863B646B";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -4674,7 +4791,8 @@ createNode nurbsCurve -n "L_Hand_Index_04_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_
 		-0.5 -0.25 -1.3977299999999999e-05
 		;
 createNode nurbsCurve -n "L_Hand_Index_04_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Index_04_Guide";
-	rename -uid "FBD2729F-4D0D-E604-7942-A49331E521E9";
+	rename -uid "32C11F1B-4848-5C1E-CB89-61823C15D1B6";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -4695,15 +4813,17 @@ createNode nurbsCurve -n "L_Hand_Index_04_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_
 		0.25 1.3977299999999999e-05 -0.5
 		;
 createNode joint -n "L_Hand_Middle_00_Guide" -p "L_Hand_Palm_Guide";
-	rename -uid "C7A6BCBE-4A82-A7F8-3787-13A66F731154";
+	rename -uid "99B6D49F-484C-D64D-1685-6082CFB0EF0F";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".t" -type "double3" 5.1569382548079687 -0.63753922508277583 0.77027431294111715 ;
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" 5.1569382548079687 0 0 ;
 	setAttr ".s" -type "double3" 0.99999999999999978 0.99999999999999989 0.99999999999999978 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_Hand_Middle_00_Guide_CtrlShape" -p "L_Hand_Middle_00_Guide";
-	rename -uid "AAA234F6-4F57-0862-D646-9285E9831828";
+	rename -uid "B13DF5D1-4F38-986F-4DF5-5CBBB0829806";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -4724,7 +4844,8 @@ createNode nurbsCurve -n "L_Hand_Middle_00_Guide_CtrlShape" -p "L_Hand_Middle_00
 		1.3977299999999999e-05 -0.5 0.25
 		;
 createNode nurbsCurve -n "L_Hand_Middle_00_Guide_Ctrl_CtrlShape" -p "L_Hand_Middle_00_Guide";
-	rename -uid "DC5E62E3-4F6C-7F7C-0FF2-99880FE1C955";
+	rename -uid "ADA53DCC-4A51-76F9-E281-55980D67C2C6";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -4840,7 +4961,8 @@ createNode nurbsCurve -n "L_Hand_Middle_00_Guide_Ctrl_CtrlShape" -p "L_Hand_Midd
 		-1.7708799999999999e-08 0 0.59421000000000002
 		;
 createNode nurbsCurve -n "L_Hand_Middle_00_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Middle_00_Guide";
-	rename -uid "B544BDCD-4D41-960A-94CD-DEB309F6BB80";
+	rename -uid "F5F61287-4E10-32CC-140C-1A9DA87CDEE8";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -4861,7 +4983,8 @@ createNode nurbsCurve -n "L_Hand_Middle_00_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand
 		-0.5 -0.25 -1.3977299999999999e-05
 		;
 createNode nurbsCurve -n "L_Hand_Middle_00_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Middle_00_Guide";
-	rename -uid "BF22C36C-4A7F-CD35-521C-E1BBEB2F75D5";
+	rename -uid "FB885CD8-422A-987A-B245-5E9419C1BE7A";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -4882,14 +5005,16 @@ createNode nurbsCurve -n "L_Hand_Middle_00_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L
 		0.25 1.3977299999999999e-05 -0.5
 		;
 createNode joint -n "L_Hand_Middle_01_Guide" -p "L_Hand_Middle_00_Guide";
-	rename -uid "928721D3-426D-5B3D-65DF-719BFE6779EE";
+	rename -uid "9C0BD729-4002-23EE-9CD9-72A1D5800027";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".t" -type "double3" 5.7622722329699485 0.89327264610389534 0.023935198277918013 ;
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" 5.7622722329699485 0 0 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_Hand_Middle_01_Guide_CtrlShape" -p "L_Hand_Middle_01_Guide";
-	rename -uid "047F4515-4C67-A1D4-21FC-C892D8D5AFB2";
+	rename -uid "1A6F7B0B-42DD-62E1-DCA3-198A9A9359F2";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -4910,7 +5035,8 @@ createNode nurbsCurve -n "L_Hand_Middle_01_Guide_CtrlShape" -p "L_Hand_Middle_01
 		1.3977299999999999e-05 -0.5 0.25
 		;
 createNode nurbsCurve -n "L_Hand_Middle_01_Guide_Ctrl_CtrlShape" -p "L_Hand_Middle_01_Guide";
-	rename -uid "4FC6784E-471C-390D-3C3F-4381FC89B3C9";
+	rename -uid "28434A8A-4FC9-E826-8B53-CBA9CE0409D9";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -5026,7 +5152,8 @@ createNode nurbsCurve -n "L_Hand_Middle_01_Guide_Ctrl_CtrlShape" -p "L_Hand_Midd
 		-1.7708799999999999e-08 0 0.59421000000000002
 		;
 createNode nurbsCurve -n "L_Hand_Middle_01_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Middle_01_Guide";
-	rename -uid "EABC8A38-44F9-9899-E70C-B4985C825888";
+	rename -uid "5F7CE92C-47C0-C9E4-5FEF-A9B2B61A3E16";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -5047,7 +5174,8 @@ createNode nurbsCurve -n "L_Hand_Middle_01_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand
 		-0.5 -0.25 -1.3977299999999999e-05
 		;
 createNode nurbsCurve -n "L_Hand_Middle_01_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Middle_01_Guide";
-	rename -uid "770E851D-4E25-8DCE-1CA6-779C0FD1C384";
+	rename -uid "5F03BF0C-432C-68B8-2E91-14A271521811";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -5068,15 +5196,17 @@ createNode nurbsCurve -n "L_Hand_Middle_01_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L
 		0.25 1.3977299999999999e-05 -0.5
 		;
 createNode joint -n "L_Hand_Middle_02_Guide" -p "L_Hand_Middle_01_Guide";
-	rename -uid "285FEF0F-4F49-94DA-3C05-CD90C2936681";
+	rename -uid "AC83C36E-46C5-C6AD-46D4-6893A2E58FD2";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".t" -type "double3" 4.3134752382977553 -0.52044859716981762 -0.17728050226750214 ;
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" 4.3134752382977553 0 0 ;
 	setAttr ".s" -type "double3" 0.99999999999999978 1 0.99999999999999989 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_Hand_Middle_02_Guide_CtrlShape" -p "L_Hand_Middle_02_Guide";
-	rename -uid "EEB9544B-402B-12D6-23A1-86B8A86715DB";
+	rename -uid "7EFBCA2C-4BC0-3652-FDDB-FAAC81B9B6DE";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -5097,7 +5227,8 @@ createNode nurbsCurve -n "L_Hand_Middle_02_Guide_CtrlShape" -p "L_Hand_Middle_02
 		1.3977299999999999e-05 -0.5 0.25
 		;
 createNode nurbsCurve -n "L_Hand_Middle_02_Guide_Ctrl_CtrlShape" -p "L_Hand_Middle_02_Guide";
-	rename -uid "B2F5EA69-4CCA-E5E8-E366-EC82BF797E74";
+	rename -uid "EB7334A0-4BD0-65BF-BA05-64A7CF7F7C52";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -5213,7 +5344,8 @@ createNode nurbsCurve -n "L_Hand_Middle_02_Guide_Ctrl_CtrlShape" -p "L_Hand_Midd
 		-1.7708799999999999e-08 0 0.59421000000000002
 		;
 createNode nurbsCurve -n "L_Hand_Middle_02_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Middle_02_Guide";
-	rename -uid "130CFBD3-4F56-97BC-9ACA-6D9FE528DFE2";
+	rename -uid "BB52BE79-48EA-81A2-3DBA-F589DEDA2AF0";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -5234,7 +5366,8 @@ createNode nurbsCurve -n "L_Hand_Middle_02_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand
 		-0.5 -0.25 -1.3977299999999999e-05
 		;
 createNode nurbsCurve -n "L_Hand_Middle_02_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Middle_02_Guide";
-	rename -uid "96BED48B-455E-D597-A345-7FA08481801E";
+	rename -uid "FBC88A97-423C-E169-8EEE-2DBBA8F38BE6";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -5255,15 +5388,17 @@ createNode nurbsCurve -n "L_Hand_Middle_02_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L
 		0.25 1.3977299999999999e-05 -0.5
 		;
 createNode joint -n "L_Hand_Middle_03_Guide" -p "L_Hand_Middle_02_Guide";
-	rename -uid "5FAAB345-459D-9C8E-FD2D-2B95B14BB170";
+	rename -uid "3BEED44A-4B23-B07C-9B12-6FB9B30B6640";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".t" -type "double3" 3.2363826810118468 -1.3418242890058281 -0.6568150140423944 ;
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" 3.2363826810118468 0 0 ;
 	setAttr ".s" -type "double3" 0.99999999999999989 1.0000000000000002 1 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_Hand_Middle_03_Guide_CtrlShape" -p "L_Hand_Middle_03_Guide";
-	rename -uid "C11018DE-46C9-B2A7-F616-0DA15254131A";
+	rename -uid "7663CA1E-4A4F-6B36-0A66-1082B4B72BA3";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -5284,7 +5419,8 @@ createNode nurbsCurve -n "L_Hand_Middle_03_Guide_CtrlShape" -p "L_Hand_Middle_03
 		1.3977299999999999e-05 -0.5 0.25
 		;
 createNode nurbsCurve -n "L_Hand_Middle_03_Guide_Ctrl_CtrlShape" -p "L_Hand_Middle_03_Guide";
-	rename -uid "1EECDC1A-4534-88D3-4419-1CA29F57536E";
+	rename -uid "64E97DD8-457D-8888-38C4-2CBF55CE0E5E";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -5400,7 +5536,8 @@ createNode nurbsCurve -n "L_Hand_Middle_03_Guide_Ctrl_CtrlShape" -p "L_Hand_Midd
 		-1.7708799999999999e-08 0 0.59421000000000002
 		;
 createNode nurbsCurve -n "L_Hand_Middle_03_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Middle_03_Guide";
-	rename -uid "EA1B9A13-4D86-3AAB-AEEA-5BAF7F904D27";
+	rename -uid "2D66848C-4FF0-0409-209C-789C0A0BE828";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -5421,7 +5558,8 @@ createNode nurbsCurve -n "L_Hand_Middle_03_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand
 		-0.5 -0.25 -1.3977299999999999e-05
 		;
 createNode nurbsCurve -n "L_Hand_Middle_03_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Middle_03_Guide";
-	rename -uid "C846EB15-4C74-DC73-1115-E1B68CE153F9";
+	rename -uid "9CFC31D9-45CB-9051-E210-8E9210214539";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -5442,15 +5580,17 @@ createNode nurbsCurve -n "L_Hand_Middle_03_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L
 		0.25 1.3977299999999999e-05 -0.5
 		;
 createNode joint -n "L_Hand_Middle_04_Guide" -p "L_Hand_Middle_03_Guide";
-	rename -uid "1AF44107-4FCD-1CDD-56B1-41BA44FF6D89";
+	rename -uid "6163519D-4BC2-4D8B-B6F1-6F984BFCCF3D";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".t" -type "double3" 2.5824731067075533 -1.2625847675240607 -0.29662182297662909 ;
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" 2.5824731067075533 0 0 ;
 	setAttr ".s" -type "double3" 0.99999999999999967 1.0000000000000002 0.99999999999999989 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_Hand_Middle_04_Guide_CtrlShape" -p "L_Hand_Middle_04_Guide";
-	rename -uid "6F1F64D8-4B1C-772A-7057-4D8367A8CD31";
+	rename -uid "EA5B00EF-4449-FF3A-DE0B-D0AD81F4FC39";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -5471,7 +5611,8 @@ createNode nurbsCurve -n "L_Hand_Middle_04_Guide_CtrlShape" -p "L_Hand_Middle_04
 		1.3977299999999999e-05 -0.5 0.25
 		;
 createNode nurbsCurve -n "L_Hand_Middle_04_Guide_Ctrl_CtrlShape" -p "L_Hand_Middle_04_Guide";
-	rename -uid "2DAC8D17-4D3F-BED0-A313-09BCFECF6D19";
+	rename -uid "C6F1D6C4-4780-CE70-C742-45B9E8CD714D";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -5587,7 +5728,8 @@ createNode nurbsCurve -n "L_Hand_Middle_04_Guide_Ctrl_CtrlShape" -p "L_Hand_Midd
 		-1.7708799999999999e-08 0 0.59421000000000002
 		;
 createNode nurbsCurve -n "L_Hand_Middle_04_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Middle_04_Guide";
-	rename -uid "116E5E6A-4F2F-E8D1-E836-40B50ECA9197";
+	rename -uid "FDD60797-4580-D3FA-D0CB-1BB095312C0D";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -5608,7 +5750,8 @@ createNode nurbsCurve -n "L_Hand_Middle_04_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand
 		-0.5 -0.25 -1.3977299999999999e-05
 		;
 createNode nurbsCurve -n "L_Hand_Middle_04_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Middle_04_Guide";
-	rename -uid "8D75F46E-4A1B-B14B-6F34-D0865C3628D6";
+	rename -uid "BFFC22BC-4795-290F-5905-E1B6A97E21FC";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -5629,16 +5772,18 @@ createNode nurbsCurve -n "L_Hand_Middle_04_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L
 		0.25 1.3977299999999999e-05 -0.5
 		;
 createNode joint -n "L_Hand_InnerCup_Guide" -p "L_Hand_Palm_Guide";
-	rename -uid "2BC0C847-4599-B3B3-417F-4890012DC278";
+	rename -uid "B959F6DF-4666-DAF9-D88E-9B8195880E8F";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".t" -type "double3" 1.9843860034070246 -2.2779067858220259 2.9969060091322999 ;
-	setAttr ".r" -type "double3" -10.50006375586433 8.791676076792772 -37.704757929595402 ;
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" 2.7838111350005597 1.0341577561524993 7.0525448414785528 ;
+	setAttr ".r" -type "double3" 0.70636812236663127 -73.874269947538451 -0.21267413073840291 ;
 	setAttr ".s" -type "double3" 0.99999999999999978 0.99999999999999989 0.99999999999999978 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_Hand_InnerCup_Guide_CtrlShape" -p "L_Hand_InnerCup_Guide";
-	rename -uid "3AEA66EC-4C09-AB43-C29B-93AB236F0FE6";
+	rename -uid "2D9E3177-46E8-B13D-271E-77ACA4BE424B";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -5659,7 +5804,8 @@ createNode nurbsCurve -n "L_Hand_InnerCup_Guide_CtrlShape" -p "L_Hand_InnerCup_G
 		1.3977299999999999e-05 -0.5 0.25
 		;
 createNode nurbsCurve -n "L_Hand_InnerCup_Guide_Ctrl_CtrlShape" -p "L_Hand_InnerCup_Guide";
-	rename -uid "E9BEDFF6-4CB9-C1BE-04BF-0E83644CB61E";
+	rename -uid "B68EEB7D-4E0D-BB30-0152-97B09C015E12";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -5775,7 +5921,8 @@ createNode nurbsCurve -n "L_Hand_InnerCup_Guide_Ctrl_CtrlShape" -p "L_Hand_Inner
 		-1.7708799999999999e-08 0 0.59421000000000002
 		;
 createNode nurbsCurve -n "L_Hand_InnerCup_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_InnerCup_Guide";
-	rename -uid "CE4BE179-4F85-7C06-7428-6F99DEF77254";
+	rename -uid "352F2286-44AA-C19B-66F2-7BBA0DD1626E";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -5796,7 +5943,8 @@ createNode nurbsCurve -n "L_Hand_InnerCup_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_
 		-0.5 -0.25 -1.3977299999999999e-05
 		;
 createNode nurbsCurve -n "L_Hand_InnerCup_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Hand_InnerCup_Guide";
-	rename -uid "4A7908D9-4CAD-B88F-9792-91B3AA7A1C53";
+	rename -uid "4E84EAD2-4956-8002-18BC-7B97EB8BF57F";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -5817,17 +5965,18 @@ createNode nurbsCurve -n "L_Hand_InnerCup_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_
 		0.25 1.3977299999999999e-05 -0.5
 		;
 createNode joint -n "L_Hand_Thumb_00_Guide" -p "L_Hand_InnerCup_Guide";
-	rename -uid "58F0D059-47B9-EEF6-C5BB-41AE544B13BB";
+	rename -uid "17D82B4E-472F-5D5A-940C-FB823D3F9355";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".t" -type "double3" 3.0714793453046383 0.79170238776240165 0.99636947216527183 ;
-	setAttr ".r" -type "double3" 119.79994984612249 -50.000000000000121 -4.9480647005852324e-15 ;
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" 3.0714793453046383 0 0 ;
 	setAttr ".s" -type "double3" 1 1.0000000000000002 1.0000000000000002 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 	setAttr ".jo" -type "double3" 0 25 0 ;
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_Hand_Thumb_00_Guide_CtrlShape" -p "L_Hand_Thumb_00_Guide";
-	rename -uid "A4E0F2CD-4C90-AE53-3620-6482BAC7150F";
+	rename -uid "60E8F13B-441E-6B5D-5C1C-54B46DB0AE4B";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -5848,7 +5997,8 @@ createNode nurbsCurve -n "L_Hand_Thumb_00_Guide_CtrlShape" -p "L_Hand_Thumb_00_G
 		1.3977299999999999e-05 -0.5 0.25
 		;
 createNode nurbsCurve -n "L_Hand_Thumb_00_Guide_Ctrl_CtrlShape" -p "L_Hand_Thumb_00_Guide";
-	rename -uid "343D404D-4D6E-E94C-78F7-9EA916447B6F";
+	rename -uid "230049BE-4CCA-2489-8ADB-9894CDFCEFCA";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -5964,7 +6114,8 @@ createNode nurbsCurve -n "L_Hand_Thumb_00_Guide_Ctrl_CtrlShape" -p "L_Hand_Thumb
 		-1.7708799999999999e-08 0 0.59421000000000002
 		;
 createNode nurbsCurve -n "L_Hand_Thumb_00_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Thumb_00_Guide";
-	rename -uid "F9641210-43AD-4C6C-84F6-A99FF21B41C9";
+	rename -uid "DEE76622-42A7-9210-5D10-25918B8B5632";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -5985,7 +6136,8 @@ createNode nurbsCurve -n "L_Hand_Thumb_00_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_
 		-0.5 -0.25 -1.3977299999999999e-05
 		;
 createNode nurbsCurve -n "L_Hand_Thumb_00_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Thumb_00_Guide";
-	rename -uid "C08A54DB-46D3-F19E-39A5-728A2B6EA2F8";
+	rename -uid "69566B61-427E-5429-9977-E99128944BAF";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -6006,15 +6158,17 @@ createNode nurbsCurve -n "L_Hand_Thumb_00_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_
 		0.25 1.3977299999999999e-05 -0.5
 		;
 createNode joint -n "L_Hand_Thumb_01_Guide" -p "L_Hand_Thumb_00_Guide";
-	rename -uid "53F5F174-431D-6A75-415F-E491449D951F";
+	rename -uid "C1D66D24-4AAC-C3ED-D4D4-7B92931C5116";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".t" -type "double3" 1.5602055675318383 1.0155875925360434 -0.17449783583966649 ;
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" 3.4667390526252517 -1.955380302121056e-14 3.7747582837255291e-15 ;
 	setAttr ".s" -type "double3" 0.99999999999999967 1 0.99999999999999989 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_Hand_Thumb_01_Guide_CtrlShape" -p "L_Hand_Thumb_01_Guide";
-	rename -uid "195F0E4B-4AB1-DFC8-A8E2-1F9606882B16";
+	rename -uid "104C1797-41F0-6DFA-69F7-EB956215E191";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -6035,7 +6189,8 @@ createNode nurbsCurve -n "L_Hand_Thumb_01_Guide_CtrlShape" -p "L_Hand_Thumb_01_G
 		1.3977299999999999e-05 -0.5 0.25
 		;
 createNode nurbsCurve -n "L_Hand_Thumb_01_Guide_Ctrl_CtrlShape" -p "L_Hand_Thumb_01_Guide";
-	rename -uid "5A230FD5-4DD2-6BBE-D619-9B9B7226D429";
+	rename -uid "D32EA995-4A47-AA6C-9DE4-E1ABFDCDC7AF";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -6151,7 +6306,8 @@ createNode nurbsCurve -n "L_Hand_Thumb_01_Guide_Ctrl_CtrlShape" -p "L_Hand_Thumb
 		-1.7708799999999999e-08 0 0.59421000000000002
 		;
 createNode nurbsCurve -n "L_Hand_Thumb_01_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Thumb_01_Guide";
-	rename -uid "52560049-4A70-0D7F-FDA4-16894D38CB4C";
+	rename -uid "6CC4369C-431F-14D5-B92C-B7B978D4E385";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -6172,7 +6328,8 @@ createNode nurbsCurve -n "L_Hand_Thumb_01_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_
 		-0.5 -0.25 -1.3977299999999999e-05
 		;
 createNode nurbsCurve -n "L_Hand_Thumb_01_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Thumb_01_Guide";
-	rename -uid "12E4A708-4A1A-65EB-D737-ECA7932E9F07";
+	rename -uid "587D6C2F-44F3-CC5C-8E65-FAB2DB516B2A";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -6193,16 +6350,17 @@ createNode nurbsCurve -n "L_Hand_Thumb_01_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_
 		0.25 1.3977299999999999e-05 -0.5
 		;
 createNode joint -n "L_Hand_Thumb_02_Guide" -p "L_Hand_Thumb_01_Guide";
-	rename -uid "46C9E47A-44B0-283E-D80C-EF887DDFF858";
+	rename -uid "F16DFABE-45C7-1F96-FD5B-D4AE3D9617BC";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".t" -type "double3" 3.6719857977815025 0.39882159340158907 0.10356362539567243 ;
-	setAttr ".r" -type "double3" -2.8055147065074824 0 0 ;
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" 3.6719857977815025 0 0 ;
 	setAttr ".s" -type "double3" 1 1.0000000000000004 1.0000000000000004 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_Hand_Thumb_02_Guide_CtrlShape" -p "L_Hand_Thumb_02_Guide";
-	rename -uid "BB0A3981-4E9B-BCB4-85FB-DEB71CF3222A";
+	rename -uid "D315E98E-4F9C-FE48-3188-14B3E6BE09F4";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -6223,7 +6381,8 @@ createNode nurbsCurve -n "L_Hand_Thumb_02_Guide_CtrlShape" -p "L_Hand_Thumb_02_G
 		1.3977299999999999e-05 -0.5 0.25
 		;
 createNode nurbsCurve -n "L_Hand_Thumb_02_Guide_Ctrl_CtrlShape" -p "L_Hand_Thumb_02_Guide";
-	rename -uid "CEC7F74E-40B9-E962-54D9-CEA0CF4DBD09";
+	rename -uid "01C8E483-4313-60BC-DEC1-C9884E3C125C";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -6339,7 +6498,8 @@ createNode nurbsCurve -n "L_Hand_Thumb_02_Guide_Ctrl_CtrlShape" -p "L_Hand_Thumb
 		-1.7708799999999999e-08 0 0.59421000000000002
 		;
 createNode nurbsCurve -n "L_Hand_Thumb_02_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Thumb_02_Guide";
-	rename -uid "554BB381-480C-4C54-7114-CD9B1E15E2D2";
+	rename -uid "09280D0E-4702-A0FF-599D-1BA2510D1CF4";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -6360,7 +6520,8 @@ createNode nurbsCurve -n "L_Hand_Thumb_02_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_
 		-0.5 -0.25 -1.3977299999999999e-05
 		;
 createNode nurbsCurve -n "L_Hand_Thumb_02_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Thumb_02_Guide";
-	rename -uid "4CEA0BAC-47E7-ADFD-C53E-8E955DD0C6E9";
+	rename -uid "9FB9C110-464B-002D-F8DE-6C81924EE4E9";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -6381,16 +6542,17 @@ createNode nurbsCurve -n "L_Hand_Thumb_02_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_
 		0.25 1.3977299999999999e-05 -0.5
 		;
 createNode joint -n "L_Hand_Thumb_03_Guide" -p "L_Hand_Thumb_02_Guide";
-	rename -uid "DC6E9051-4208-AF19-CBA9-66A0FAF6448C";
+	rename -uid "8CEE775E-494B-4F82-099A-04A2F3C41EDF";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".t" -type "double3" 3.7099374580738669 -0.70682796746013565 0.63369092533982041 ;
-	setAttr ".r" -type "double3" 0 -0.74391550733298029 0 ;
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" 3.7099374580738669 0 0 ;
 	setAttr ".s" -type "double3" 0.99999999999999944 0.99999999999999978 0.99999999999999956 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_Hand_Thumb_03_Guide_CtrlShape" -p "L_Hand_Thumb_03_Guide";
-	rename -uid "0796329A-4984-4F66-F870-C78FC453044D";
+	rename -uid "DAC6DC5C-4FA2-7F89-5A72-60A80D440751";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -6411,7 +6573,8 @@ createNode nurbsCurve -n "L_Hand_Thumb_03_Guide_CtrlShape" -p "L_Hand_Thumb_03_G
 		1.3977299999999999e-05 -0.5 0.25
 		;
 createNode nurbsCurve -n "L_Hand_Thumb_03_Guide_Ctrl_CtrlShape" -p "L_Hand_Thumb_03_Guide";
-	rename -uid "5D59703F-4705-C754-AA47-22B87A655E17";
+	rename -uid "E04064F9-4E4F-9CA3-EDC5-7CB01957E5D0";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -6527,7 +6690,8 @@ createNode nurbsCurve -n "L_Hand_Thumb_03_Guide_Ctrl_CtrlShape" -p "L_Hand_Thumb
 		-1.7708799999999999e-08 0 0.59421000000000002
 		;
 createNode nurbsCurve -n "L_Hand_Thumb_03_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Thumb_03_Guide";
-	rename -uid "4911890A-4F0F-3D57-16FE-9DB854F20403";
+	rename -uid "4AE81B9A-49E8-D424-AC0E-5AB09F25FF13";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -6548,7 +6712,8 @@ createNode nurbsCurve -n "L_Hand_Thumb_03_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_
 		-0.5 -0.25 -1.3977299999999999e-05
 		;
 createNode nurbsCurve -n "L_Hand_Thumb_03_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Thumb_03_Guide";
-	rename -uid "8C5C0F20-4CC8-10E0-26B3-639A47D4CB10";
+	rename -uid "EE291484-4AD5-C952-A2B0-BE845579B99F";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -6569,15 +6734,17 @@ createNode nurbsCurve -n "L_Hand_Thumb_03_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_
 		0.25 1.3977299999999999e-05 -0.5
 		;
 createNode joint -n "L_Hand_OutterCup_Guide" -p "L_Hand_Palm_Guide";
-	rename -uid "51856784-4EBF-C488-4D80-159A02723728";
+	rename -uid "D963A14E-47FF-E5ED-929E-85987D9114B6";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".t" -type "double3" 3.2196647829126874 0.012705614286360856 -3.5570401647633201 ;
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" 3.2196647829126777 1.3933298959045727e-14 -4.512555601290007 ;
 	setAttr ".s" -type "double3" 0.99999999999999978 0.99999999999999989 0.99999999999999978 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_Hand_OutterCup_Guide_CtrlShape" -p "L_Hand_OutterCup_Guide";
-	rename -uid "5565FF0C-4C05-D6FB-2529-5DBFFA6D9943";
+	rename -uid "99AC0B3B-4623-157D-2C5C-068BA2B002D1";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -6598,7 +6765,8 @@ createNode nurbsCurve -n "L_Hand_OutterCup_Guide_CtrlShape" -p "L_Hand_OutterCup
 		1.3977299999999999e-05 -0.5 0.25
 		;
 createNode nurbsCurve -n "L_Hand_OutterCup_Guide_Ctrl_CtrlShape" -p "L_Hand_OutterCup_Guide";
-	rename -uid "0AEAB6EE-46CB-0911-B233-86A438A6010A";
+	rename -uid "559FD437-4868-8027-BE34-2CB9CBEEAEA6";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -6714,7 +6882,8 @@ createNode nurbsCurve -n "L_Hand_OutterCup_Guide_Ctrl_CtrlShape" -p "L_Hand_Outt
 		-1.7708799999999999e-08 0 0.59421000000000002
 		;
 createNode nurbsCurve -n "L_Hand_OutterCup_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_OutterCup_Guide";
-	rename -uid "D7F30F54-4F87-0C94-E031-4BA250719731";
+	rename -uid "73F01370-4834-286E-265C-C0B17E7152BC";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -6735,7 +6904,8 @@ createNode nurbsCurve -n "L_Hand_OutterCup_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand
 		-0.5 -0.25 -1.3977299999999999e-05
 		;
 createNode nurbsCurve -n "L_Hand_OutterCup_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Hand_OutterCup_Guide";
-	rename -uid "0EEAC578-460C-4154-D58A-32BA0B78BEEA";
+	rename -uid "84ED4339-46E4-D2CE-1A85-D9948591C2EE";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -6756,15 +6926,16 @@ createNode nurbsCurve -n "L_Hand_OutterCup_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L
 		0.25 1.3977299999999999e-05 -0.5
 		;
 createNode joint -n "L_Hand_Pinky_00_Guide" -p "L_Hand_OutterCup_Guide";
-	rename -uid "EB720293-4FEF-278D-BE16-5B897988A6BC";
+	rename -uid "D9487609-4A32-3E76-48BE-7E843B175B75";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".t" -type "double3" 3.1479679570553856 0.67354673030968115 -1.1336144265628079 ;
-	setAttr ".r" -type "double3" 0.2123477970313766 11.368033131817404 -6.5619124447620969 ;
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" 2.4424623534474406 0.094624544929290233 -4.1258643476924384 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_Hand_Pinky_00_Guide_CtrlShape" -p "L_Hand_Pinky_00_Guide";
-	rename -uid "E546FB35-4393-2B03-A909-63AAABA8CA8B";
+	rename -uid "6D2D08F3-473D-CB2D-547A-77908EC4FBF4";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -6785,7 +6956,8 @@ createNode nurbsCurve -n "L_Hand_Pinky_00_Guide_CtrlShape" -p "L_Hand_Pinky_00_G
 		1.3977299999999999e-05 -0.5 0.25
 		;
 createNode nurbsCurve -n "L_Hand_Pinky_00_Guide_Ctrl_CtrlShape" -p "L_Hand_Pinky_00_Guide";
-	rename -uid "7D0DA741-48BC-0673-E328-6496B9291EE9";
+	rename -uid "93EC9867-4B18-9BC9-D667-229D423D0000";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -6901,7 +7073,8 @@ createNode nurbsCurve -n "L_Hand_Pinky_00_Guide_Ctrl_CtrlShape" -p "L_Hand_Pinky
 		-1.7708799999999999e-08 0 0.59421000000000002
 		;
 createNode nurbsCurve -n "L_Hand_Pinky_00_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Pinky_00_Guide";
-	rename -uid "007B180D-45EF-4BCA-FC78-D8BA6B75A147";
+	rename -uid "61301F51-4A44-45D3-EA98-1CB91F5862DC";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -6922,7 +7095,8 @@ createNode nurbsCurve -n "L_Hand_Pinky_00_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_
 		-0.5 -0.25 -1.3977299999999999e-05
 		;
 createNode nurbsCurve -n "L_Hand_Pinky_00_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Pinky_00_Guide";
-	rename -uid "662BF480-44FF-7188-EC15-BFA461BCE1A5";
+	rename -uid "86640A83-4CE0-A986-BA97-E7BA6D0972F7";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -6943,15 +7117,17 @@ createNode nurbsCurve -n "L_Hand_Pinky_00_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_
 		0.25 1.3977299999999999e-05 -0.5
 		;
 createNode joint -n "L_Hand_Pinky_01_Guide" -p "L_Hand_Pinky_00_Guide";
-	rename -uid "AEA60C0C-466D-8F8A-5ABC-01954AC66C2E";
+	rename -uid "714FEA92-43FF-EE80-6F24-7A825411B3C5";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".t" -type "double3" 3.7370009941973166 1.0076782433199512 0.12627122277453751 ;
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" 3.7370009941973166 0 0 ;
 	setAttr ".s" -type "double3" 0.99999999999999989 1 1.0000000000000002 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_Hand_Pinky_01_Guide_CtrlShape" -p "L_Hand_Pinky_01_Guide";
-	rename -uid "905080E9-4B38-DD0C-45E1-F4BFE4E39387";
+	rename -uid "A9893EE6-425F-C4B0-BC69-ABAD6DE3FB93";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -6972,7 +7148,8 @@ createNode nurbsCurve -n "L_Hand_Pinky_01_Guide_CtrlShape" -p "L_Hand_Pinky_01_G
 		1.3977299999999999e-05 -0.5 0.25
 		;
 createNode nurbsCurve -n "L_Hand_Pinky_01_Guide_Ctrl_CtrlShape" -p "L_Hand_Pinky_01_Guide";
-	rename -uid "865EA8E0-4DC4-529F-C6D9-F2AC92AF1080";
+	rename -uid "27A48E33-4BA0-0533-AFEF-249F01EDDF3F";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -7088,7 +7265,8 @@ createNode nurbsCurve -n "L_Hand_Pinky_01_Guide_Ctrl_CtrlShape" -p "L_Hand_Pinky
 		-1.7708799999999999e-08 0 0.59421000000000002
 		;
 createNode nurbsCurve -n "L_Hand_Pinky_01_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Pinky_01_Guide";
-	rename -uid "36A78A1C-4104-8D6B-656A-C9B577BDEE54";
+	rename -uid "F5303A4C-4B55-D202-E2BF-DDBDE98E6D8F";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -7109,7 +7287,8 @@ createNode nurbsCurve -n "L_Hand_Pinky_01_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_
 		-0.5 -0.25 -1.3977299999999999e-05
 		;
 createNode nurbsCurve -n "L_Hand_Pinky_01_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Pinky_01_Guide";
-	rename -uid "A7C8332A-434C-CFDD-8D17-F28DAA43E9A8";
+	rename -uid "92EA9D26-445B-3D8F-EDDC-2A851D1AF0F6";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -7130,15 +7309,17 @@ createNode nurbsCurve -n "L_Hand_Pinky_01_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_
 		0.25 1.3977299999999999e-05 -0.5
 		;
 createNode joint -n "L_Hand_Pinky_02_Guide" -p "L_Hand_Pinky_01_Guide";
-	rename -uid "DE5E31BF-43F2-3C41-8189-4BBB40622628";
+	rename -uid "60121333-48CD-C091-6040-61A07C191ECA";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".t" -type "double3" 3.7084871535240467 -0.31938532489773763 -0.054361316971895945 ;
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" 3.7084871535240467 0 0 ;
 	setAttr ".s" -type "double3" 0.99999999999999989 1 0.99999999999999989 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_Hand_Pinky_02_Guide_CtrlShape" -p "L_Hand_Pinky_02_Guide";
-	rename -uid "3F34E6A6-4D02-64E8-BCE3-B29A6892E935";
+	rename -uid "D4AD4A77-4A0A-C22C-71C7-A5A3F447159E";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -7159,7 +7340,8 @@ createNode nurbsCurve -n "L_Hand_Pinky_02_Guide_CtrlShape" -p "L_Hand_Pinky_02_G
 		1.3977299999999999e-05 -0.5 0.25
 		;
 createNode nurbsCurve -n "L_Hand_Pinky_02_Guide_Ctrl_CtrlShape" -p "L_Hand_Pinky_02_Guide";
-	rename -uid "6B284F16-4CBA-5575-F70C-799A20BD2B36";
+	rename -uid "36590F9D-4CAB-4EB2-2DB2-5DB2F03DF874";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -7275,7 +7457,8 @@ createNode nurbsCurve -n "L_Hand_Pinky_02_Guide_Ctrl_CtrlShape" -p "L_Hand_Pinky
 		-1.7708799999999999e-08 0 0.59421000000000002
 		;
 createNode nurbsCurve -n "L_Hand_Pinky_02_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Pinky_02_Guide";
-	rename -uid "C4635597-43BB-0C5E-DE08-FA8DDC1416DA";
+	rename -uid "20837144-462C-75E7-3F7C-4E8C36688174";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -7296,7 +7479,8 @@ createNode nurbsCurve -n "L_Hand_Pinky_02_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_
 		-0.5 -0.25 -1.3977299999999999e-05
 		;
 createNode nurbsCurve -n "L_Hand_Pinky_02_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Pinky_02_Guide";
-	rename -uid "E680E125-48EA-FEA1-58F0-7DA137F5E265";
+	rename -uid "4175B61B-495D-15BA-DFA6-FBB15727F059";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -7317,15 +7501,17 @@ createNode nurbsCurve -n "L_Hand_Pinky_02_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_
 		0.25 1.3977299999999999e-05 -0.5
 		;
 createNode joint -n "L_Hand_Pinky_03_Guide" -p "L_Hand_Pinky_02_Guide";
-	rename -uid "5BF612E9-4997-AC60-111E-40B689830735";
+	rename -uid "EDE5F209-4041-79CE-2286-96AE01071290";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".t" -type "double3" 2.575688351932385 -1.4844543156410452 -0.40550582998958973 ;
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" 2.575688351932385 0 0 ;
 	setAttr ".s" -type "double3" 0.99999999999999989 1 1.0000000000000002 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_Hand_Pinky_03_Guide_CtrlShape" -p "L_Hand_Pinky_03_Guide";
-	rename -uid "47C535F2-4C7B-B5AD-09DF-C6AEDBAECBBB";
+	rename -uid "C7FB588F-4B99-8696-DE5E-FFBEC356545D";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -7346,7 +7532,8 @@ createNode nurbsCurve -n "L_Hand_Pinky_03_Guide_CtrlShape" -p "L_Hand_Pinky_03_G
 		1.3977299999999999e-05 -0.5 0.25
 		;
 createNode nurbsCurve -n "L_Hand_Pinky_03_Guide_Ctrl_CtrlShape" -p "L_Hand_Pinky_03_Guide";
-	rename -uid "1583CCC2-4BA1-8065-460A-85A3946B755C";
+	rename -uid "A304AFCE-4F34-E387-6B7F-80A54D3A3E23";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -7462,7 +7649,8 @@ createNode nurbsCurve -n "L_Hand_Pinky_03_Guide_Ctrl_CtrlShape" -p "L_Hand_Pinky
 		-1.7708799999999999e-08 0 0.59421000000000002
 		;
 createNode nurbsCurve -n "L_Hand_Pinky_03_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Pinky_03_Guide";
-	rename -uid "983D1BF2-428B-A7ED-776A-1EB5754C0751";
+	rename -uid "BE122167-45E4-C1DD-6CC1-C7AFB706E36B";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -7483,7 +7671,8 @@ createNode nurbsCurve -n "L_Hand_Pinky_03_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_
 		-0.5 -0.25 -1.3977299999999999e-05
 		;
 createNode nurbsCurve -n "L_Hand_Pinky_03_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Pinky_03_Guide";
-	rename -uid "4B87B4E3-4205-352C-8440-1D987D276464";
+	rename -uid "A82C6C12-4928-D9B8-BF47-AC976E2535D2";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -7504,15 +7693,17 @@ createNode nurbsCurve -n "L_Hand_Pinky_03_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_
 		0.25 1.3977299999999999e-05 -0.5
 		;
 createNode joint -n "L_Hand_Pinky_04_Guide" -p "L_Hand_Pinky_03_Guide";
-	rename -uid "C863084D-4484-D8E6-8045-68BDB743BB1B";
+	rename -uid "F241EC35-410F-A9D3-9C7E-21B362FE3E51";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".t" -type "double3" 1.8119560095842502 -1.3544152905485021 -0.71050836757391167 ;
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" 1.8119560095842502 0 0 ;
 	setAttr ".s" -type "double3" 0.99999999999999978 0.99999999999999989 0.99999999999999967 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_Hand_Pinky_04_Guide_CtrlShape" -p "L_Hand_Pinky_04_Guide";
-	rename -uid "D8792CC3-42A1-83F7-6EDB-EAB3FB590486";
+	rename -uid "7598AA3E-4905-C784-6E71-2A8384B94594";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -7533,7 +7724,8 @@ createNode nurbsCurve -n "L_Hand_Pinky_04_Guide_CtrlShape" -p "L_Hand_Pinky_04_G
 		1.3977299999999999e-05 -0.5 0.25
 		;
 createNode nurbsCurve -n "L_Hand_Pinky_04_Guide_Ctrl_CtrlShape" -p "L_Hand_Pinky_04_Guide";
-	rename -uid "FE0F480B-4F83-7137-CC09-9FA56BFF271E";
+	rename -uid "7DBA8E7E-4A30-844C-8ED0-5C80B4C303E8";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -7649,7 +7841,8 @@ createNode nurbsCurve -n "L_Hand_Pinky_04_Guide_Ctrl_CtrlShape" -p "L_Hand_Pinky
 		-1.7708799999999999e-08 0 0.59421000000000002
 		;
 createNode nurbsCurve -n "L_Hand_Pinky_04_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Pinky_04_Guide";
-	rename -uid "71469DBE-476B-BC81-7263-4C81EDAF0AAD";
+	rename -uid "22BC78BF-4F29-6EC5-8488-13A83A51D0A1";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -7670,7 +7863,8 @@ createNode nurbsCurve -n "L_Hand_Pinky_04_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_
 		-0.5 -0.25 -1.3977299999999999e-05
 		;
 createNode nurbsCurve -n "L_Hand_Pinky_04_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Pinky_04_Guide";
-	rename -uid "1422F477-414A-E793-005E-DFB81181EE7D";
+	rename -uid "23F41886-4528-C786-7ACA-E286AACC7F09";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -7691,14 +7885,16 @@ createNode nurbsCurve -n "L_Hand_Pinky_04_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_
 		0.25 1.3977299999999999e-05 -0.5
 		;
 createNode joint -n "L_Hand_Ring_00_Guide" -p "L_Hand_OutterCup_Guide";
-	rename -uid "60FCC5CE-4E72-2B59-9998-B19311BADFBC";
+	rename -uid "CBC9D49E-425A-1533-51D8-779BF4DB88D5";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".t" -type "double3" 2.3115866980491973 0.00062790509402077532 1.3990486442642611 ;
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" 2.3115866980491973 0 0 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_Hand_Ring_00_Guide_CtrlShape" -p "L_Hand_Ring_00_Guide";
-	rename -uid "6AC9795C-425E-461E-E68E-F7ACEE9B846D";
+	rename -uid "D88655DD-41E0-EA19-01F3-85ADD8BAAD52";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -7719,7 +7915,8 @@ createNode nurbsCurve -n "L_Hand_Ring_00_Guide_CtrlShape" -p "L_Hand_Ring_00_Gui
 		1.3977299999999999e-05 -0.5 0.25
 		;
 createNode nurbsCurve -n "L_Hand_Ring_00_Guide_Ctrl_CtrlShape" -p "L_Hand_Ring_00_Guide";
-	rename -uid "47F988FE-401B-7637-5A80-FB8A6A614086";
+	rename -uid "4A7BC241-40AB-40A1-C95E-7B8AB9F79F82";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -7835,7 +8032,8 @@ createNode nurbsCurve -n "L_Hand_Ring_00_Guide_Ctrl_CtrlShape" -p "L_Hand_Ring_0
 		-1.7708799999999999e-08 0 0.59421000000000002
 		;
 createNode nurbsCurve -n "L_Hand_Ring_00_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Ring_00_Guide";
-	rename -uid "668D34E3-4ABC-A415-D4A5-6299029E5D1A";
+	rename -uid "58B66B3D-4300-91D2-3F23-AE90F5745CB8";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -7856,7 +8054,8 @@ createNode nurbsCurve -n "L_Hand_Ring_00_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_R
 		-0.5 -0.25 -1.3977299999999999e-05
 		;
 createNode nurbsCurve -n "L_Hand_Ring_00_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Ring_00_Guide";
-	rename -uid "2440C1C1-456B-0F95-013A-BD97D2C6CBCF";
+	rename -uid "77950186-42F8-7016-2F9B-A4977A78CAC7";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -7877,15 +8076,17 @@ createNode nurbsCurve -n "L_Hand_Ring_00_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_H
 		0.25 1.3977299999999999e-05 -0.5
 		;
 createNode joint -n "L_Hand_Ring_01_Guide" -p "L_Hand_Ring_00_Guide";
-	rename -uid "252DA4C4-444C-EF25-8101-29B5B4920081";
+	rename -uid "79AA4CFA-4D4F-27AC-1765-FABD4736E8AB";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".t" -type "double3" 5.1797389246824821 0.72626823269149554 -0.042410893807816041 ;
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" 5.1797389246824821 0 0 ;
 	setAttr ".s" -type "double3" 0.99999999999999978 1 0.99999999999999989 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_Hand_Ring_01_Guide_CtrlShape" -p "L_Hand_Ring_01_Guide";
-	rename -uid "6444B258-444B-7780-921D-5D81410F1392";
+	rename -uid "601DCC22-49D1-3AB0-09C5-AFB8069301F9";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -7906,7 +8107,8 @@ createNode nurbsCurve -n "L_Hand_Ring_01_Guide_CtrlShape" -p "L_Hand_Ring_01_Gui
 		1.3977299999999999e-05 -0.5 0.25
 		;
 createNode nurbsCurve -n "L_Hand_Ring_01_Guide_Ctrl_CtrlShape" -p "L_Hand_Ring_01_Guide";
-	rename -uid "03343AF7-4350-5314-0F2B-3481DE91517B";
+	rename -uid "E5512213-421D-92DA-8414-F2949171FDB5";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -8022,7 +8224,8 @@ createNode nurbsCurve -n "L_Hand_Ring_01_Guide_Ctrl_CtrlShape" -p "L_Hand_Ring_0
 		-1.7708799999999999e-08 0 0.59421000000000002
 		;
 createNode nurbsCurve -n "L_Hand_Ring_01_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Ring_01_Guide";
-	rename -uid "3AE8BDF7-4ACA-2760-1189-B2B48B7730EE";
+	rename -uid "3C3930EE-4126-0F28-5564-1BBA8CD29A44";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -8043,7 +8246,8 @@ createNode nurbsCurve -n "L_Hand_Ring_01_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_R
 		-0.5 -0.25 -1.3977299999999999e-05
 		;
 createNode nurbsCurve -n "L_Hand_Ring_01_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Ring_01_Guide";
-	rename -uid "53AC70BC-4DAA-0E03-996C-79B577098E00";
+	rename -uid "B8AD8F73-41CB-28CE-E80F-B7AC32BEBF41";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -8064,15 +8268,17 @@ createNode nurbsCurve -n "L_Hand_Ring_01_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_H
 		0.25 1.3977299999999999e-05 -0.5
 		;
 createNode joint -n "L_Hand_Ring_02_Guide" -p "L_Hand_Ring_01_Guide";
-	rename -uid "24BD3190-4F7C-E32A-5EAA-3A8C96092B0F";
+	rename -uid "8D601FE2-411C-5BFA-FE00-6AA37FF992FC";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".t" -type "double3" 4.5242599219012476 -0.8410458508256653 -0.63144234237509655 ;
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" 4.5242599219012476 0 0 ;
 	setAttr ".s" -type "double3" 0.99999999999999989 1.0000000000000002 1 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_Hand_Ring_02_Guide_CtrlShape" -p "L_Hand_Ring_02_Guide";
-	rename -uid "06818D12-4500-DD2E-21BC-0184CBAC2943";
+	rename -uid "666F6FE6-4291-154C-0EF3-58963800B2C4";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -8093,7 +8299,8 @@ createNode nurbsCurve -n "L_Hand_Ring_02_Guide_CtrlShape" -p "L_Hand_Ring_02_Gui
 		1.3977299999999999e-05 -0.5 0.25
 		;
 createNode nurbsCurve -n "L_Hand_Ring_02_Guide_Ctrl_CtrlShape" -p "L_Hand_Ring_02_Guide";
-	rename -uid "F826D44C-43BD-F30F-A307-83873D6059F4";
+	rename -uid "F35F2050-4FC9-E6A9-264F-57A490B7E9AB";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -8209,7 +8416,8 @@ createNode nurbsCurve -n "L_Hand_Ring_02_Guide_Ctrl_CtrlShape" -p "L_Hand_Ring_0
 		-1.7708799999999999e-08 0 0.59421000000000002
 		;
 createNode nurbsCurve -n "L_Hand_Ring_02_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Ring_02_Guide";
-	rename -uid "EBECB769-4373-C424-7099-49BC1B2B034D";
+	rename -uid "CF7C679B-4D8A-45AE-F17A-F896899706B8";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -8230,7 +8438,8 @@ createNode nurbsCurve -n "L_Hand_Ring_02_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_R
 		-0.5 -0.25 -1.3977299999999999e-05
 		;
 createNode nurbsCurve -n "L_Hand_Ring_02_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Ring_02_Guide";
-	rename -uid "BA034E3A-4685-3AFE-9A0A-BEA9C4BFD787";
+	rename -uid "1CF7255A-437B-A40B-976D-ADA178FA4BA6";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -8251,15 +8460,17 @@ createNode nurbsCurve -n "L_Hand_Ring_02_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_H
 		0.25 1.3977299999999999e-05 -0.5
 		;
 createNode joint -n "L_Hand_Ring_03_Guide" -p "L_Hand_Ring_02_Guide";
-	rename -uid "45BF1942-4E08-2225-C004-6BAFA628C5A0";
+	rename -uid "4F33716A-4202-86F2-EA62-74B77876EF9E";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".t" -type "double3" 2.2205878722001273 -1.1175454302259169 -0.59455137452418194 ;
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" 2.2205878722001273 0 0 ;
 	setAttr ".s" -type "double3" 0.99999999999999967 1.0000000000000002 0.99999999999999989 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_Hand_Ring_03_Guide_CtrlShape" -p "L_Hand_Ring_03_Guide";
-	rename -uid "F4168325-46F1-A919-8BF2-9DAD51301FEF";
+	rename -uid "AF5A220D-406A-31E0-7C5C-98AF0A65F58F";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -8280,7 +8491,8 @@ createNode nurbsCurve -n "L_Hand_Ring_03_Guide_CtrlShape" -p "L_Hand_Ring_03_Gui
 		1.3977299999999999e-05 -0.5 0.25
 		;
 createNode nurbsCurve -n "L_Hand_Ring_03_Guide_Ctrl_CtrlShape" -p "L_Hand_Ring_03_Guide";
-	rename -uid "8D0AC483-4991-ECD8-0F0B-41824A37A6AB";
+	rename -uid "0AA15C72-4AAC-D529-9285-A8A6434CEFF9";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -8396,7 +8608,8 @@ createNode nurbsCurve -n "L_Hand_Ring_03_Guide_Ctrl_CtrlShape" -p "L_Hand_Ring_0
 		-1.7708799999999999e-08 0 0.59421000000000002
 		;
 createNode nurbsCurve -n "L_Hand_Ring_03_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Ring_03_Guide";
-	rename -uid "A9D0D2E6-4678-B81C-4B59-6F808E0D35B7";
+	rename -uid "5D81AB7B-442C-F580-4FCE-7F987C12FDCD";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -8417,7 +8630,8 @@ createNode nurbsCurve -n "L_Hand_Ring_03_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_R
 		-0.5 -0.25 -1.3977299999999999e-05
 		;
 createNode nurbsCurve -n "L_Hand_Ring_03_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Ring_03_Guide";
-	rename -uid "CFF50976-458F-2C5D-398B-12AB42E640EC";
+	rename -uid "152DD59B-4BDC-87A5-31FC-BAA4D93C8F95";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -8438,15 +8652,17 @@ createNode nurbsCurve -n "L_Hand_Ring_03_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_H
 		0.25 1.3977299999999999e-05 -0.5
 		;
 createNode joint -n "L_Hand_Ring_04_Guide" -p "L_Hand_Ring_03_Guide";
-	rename -uid "17A210CB-4A96-24F1-32D5-7F949C55F353";
+	rename -uid "3604A41D-4D15-D604-A59F-6992F7903A3C";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".t" -type "double3" 2.4132154227059175 -1.3327883447203135 -0.6023444074785953 ;
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" 2.4132154227059175 0 0 ;
 	setAttr ".s" -type "double3" 0.99999999999999944 1 0.99999999999999978 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_Hand_Ring_04_Guide_CtrlShape" -p "L_Hand_Ring_04_Guide";
-	rename -uid "A54B3F99-4967-D395-79EB-938CEBFBFDED";
+	rename -uid "8B591AC4-49E0-94BE-721F-E6A97B764DAA";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -8467,7 +8683,8 @@ createNode nurbsCurve -n "L_Hand_Ring_04_Guide_CtrlShape" -p "L_Hand_Ring_04_Gui
 		1.3977299999999999e-05 -0.5 0.25
 		;
 createNode nurbsCurve -n "L_Hand_Ring_04_Guide_Ctrl_CtrlShape" -p "L_Hand_Ring_04_Guide";
-	rename -uid "9A00DE0E-4C4A-63E3-B1B6-4A9DC18CA44C";
+	rename -uid "8A65EB33-4A91-1F7B-DE13-1C967C7B601E";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -8583,7 +8800,8 @@ createNode nurbsCurve -n "L_Hand_Ring_04_Guide_Ctrl_CtrlShape" -p "L_Hand_Ring_0
 		-1.7708799999999999e-08 0 0.59421000000000002
 		;
 createNode nurbsCurve -n "L_Hand_Ring_04_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Ring_04_Guide";
-	rename -uid "A6E85B87-4728-A9EA-2D2A-53A5F6AFB908";
+	rename -uid "408FD45D-46E1-C572-91DB-AA8303171C60";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -8604,7 +8822,8 @@ createNode nurbsCurve -n "L_Hand_Ring_04_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_R
 		-0.5 -0.25 -1.3977299999999999e-05
 		;
 createNode nurbsCurve -n "L_Hand_Ring_04_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Ring_04_Guide";
-	rename -uid "B51B9114-4028-FDFD-89D9-E78DA63E6140";
+	rename -uid "481F085B-43B7-75F2-CE9A-B388A9D51887";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -8625,11 +8844,11 @@ createNode nurbsCurve -n "L_Hand_Ring_04_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_H
 		0.25 1.3977299999999999e-05 -0.5
 		;
 createNode dagContainer -n "L_Foot_Block" -p "Body";
-	rename -uid "D56AF478-401E-B867-A939-DEA7F32CC84C";
+	rename -uid "D5486978-48E9-96E5-D2E3-78B8D16241ED";
 	setAttr ".isc" yes;
 	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/Foot.png";
 	setAttr ".ctor" -type "string" "PC";
-	setAttr ".cdat" -type "string" "2021/09/18 08:41:06";
+	setAttr ".cdat" -type "string" "2021/11/03 06:39:13";
 	setAttr -l on -k off ".v";
 	setAttr -l on -k off ".tx";
 	setAttr -l on -k off ".ty";
@@ -8641,15 +8860,16 @@ createNode dagContainer -n "L_Foot_Block" -p "Body";
 	setAttr -l on -k off ".sy";
 	setAttr -l on -k off ".sz";
 createNode joint -n "L_Foot_Ankle_Guide" -p "L_Foot_Block";
-	rename -uid "E40117DC-4EAB-3C66-837C-6494DB5893D5";
+	rename -uid "33E83BC6-49FD-6D9A-220D-52ACF906E5E0";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".t" -type "double3" 14.2961040568303 10.450071852034483 -10.031905806490617 ;
-	setAttr ".r" -type "double3" 89.999999999999986 21.643802051505368 -94.881560668307316 ;
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" 8.9717436839685014 11.150496026975006 -10.611094961049055 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_Foot_Ankle_Guide_CtrlShape" -p "L_Foot_Ankle_Guide";
-	rename -uid "E6A382CE-4B3C-0EE8-5C74-3EAD10258DB2";
+	rename -uid "EED11AF1-487B-635D-2FD9-D29010D4DF43";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -8670,7 +8890,8 @@ createNode nurbsCurve -n "L_Foot_Ankle_Guide_CtrlShape" -p "L_Foot_Ankle_Guide";
 		1.3977299999999999e-05 -0.5 0.25
 		;
 createNode nurbsCurve -n "L_Foot_Ankle_Guide_Ctrl_CtrlShape" -p "L_Foot_Ankle_Guide";
-	rename -uid "3E45F9D0-42A6-D213-AF7B-8B92A921DF0B";
+	rename -uid "D9211B67-4BEF-5DE3-C3E0-0FBC2F93011A";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -8786,7 +9007,8 @@ createNode nurbsCurve -n "L_Foot_Ankle_Guide_Ctrl_CtrlShape" -p "L_Foot_Ankle_Gu
 		-1.7708799999999999e-08 0 0.59421000000000002
 		;
 createNode nurbsCurve -n "L_Foot_Ankle_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Foot_Ankle_Guide";
-	rename -uid "F74DE706-440C-704D-33B9-B4877A5BD3F7";
+	rename -uid "1D4A44AD-4619-B656-53F5-B6B3FFE1FF4E";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -8807,7 +9029,8 @@ createNode nurbsCurve -n "L_Foot_Ankle_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Foot_Ank
 		-0.5 -0.25 -1.3977299999999999e-05
 		;
 createNode nurbsCurve -n "L_Foot_Ankle_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Foot_Ankle_Guide";
-	rename -uid "72FA6EAC-4967-7433-9AA9-8AB9821197E4";
+	rename -uid "13E7AB5A-443B-5C67-B0B6-F1BEC06EA210";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -8828,16 +9051,16 @@ createNode nurbsCurve -n "L_Foot_Ankle_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Foo
 		0.25 1.3977299999999999e-05 -0.5
 		;
 createNode joint -n "L_Foot_Heel_Guide" -p "L_Foot_Ankle_Guide";
-	rename -uid "0A837428-4BA2-FA9B-5715-63B49D4B2D8E";
+	rename -uid "417DDD5A-4174-73DB-ECC7-73A25B60C1ED";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".t" -type "double3" 11.268521533797733 -5.3290705182007514e-15 -1.7763568394002505e-15 ;
-	setAttr ".r" -type "double3" -21.263056799222525 103.57104879238979 90.923366445147153 ;
-	setAttr ".s" -type "double3" 0.99999999999999989 0.99999999999999978 0.99999999999999978 ;
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" 0 -11.150496026975006 -0.5 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
-	setAttr -cb on ".Helper";
+	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_Foot_Heel_Guide_CtrlShape" -p "L_Foot_Heel_Guide";
-	rename -uid "B7C35ACA-4A9B-06B8-4A6A-86BAF8D5FA8A";
+	rename -uid "A33F47E4-46B3-8237-755A-B7B3CE03D575";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -8858,7 +9081,8 @@ createNode nurbsCurve -n "L_Foot_Heel_Guide_CtrlShape" -p "L_Foot_Heel_Guide";
 		1.3977299999999999e-05 -0.5 0.25
 		;
 createNode nurbsCurve -n "L_Foot_Heel_Guide_Ctrl_CtrlShape" -p "L_Foot_Heel_Guide";
-	rename -uid "9C7629F3-4A65-5DCB-28A0-D3BD0B9AEC49";
+	rename -uid "2793C71A-4DC5-4899-3E6D-4E8526DD2C4E";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -8974,7 +9198,8 @@ createNode nurbsCurve -n "L_Foot_Heel_Guide_Ctrl_CtrlShape" -p "L_Foot_Heel_Guid
 		-1.7708799999999999e-08 0 0.59421000000000002
 		;
 createNode nurbsCurve -n "L_Foot_Heel_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Foot_Heel_Guide";
-	rename -uid "C99C2B63-4625-00E4-5AD7-43BF68BC6D6C";
+	rename -uid "274E684B-4D23-2FC9-9DF6-5CBEC5BB647C";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -8995,7 +9220,8 @@ createNode nurbsCurve -n "L_Foot_Heel_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Foot_Heel
 		-0.5 -0.25 -1.3977299999999999e-05
 		;
 createNode nurbsCurve -n "L_Foot_Heel_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Foot_Heel_Guide";
-	rename -uid "965E8762-433E-163C-1AE2-CB8407536C7D";
+	rename -uid "01383B26-4198-77AC-46CC-71BF9ACAE186";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -9016,16 +9242,16 @@ createNode nurbsCurve -n "L_Foot_Heel_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Foot
 		0.25 1.3977299999999999e-05 -0.5
 		;
 createNode joint -n "L_Foot_Ball_Guide" -p "L_Foot_Ankle_Guide";
-	rename -uid "FF727168-4989-C681-2B28-2E9AA924627C";
+	rename -uid "EEEB4AC3-437F-2482-19CE-61B46689A5F0";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".t" -type "double3" 1.4661470149976639 15.068052865254424 -3.66518134188202 ;
-	setAttr ".r" -type "double3" -3.5011845397019861 12.431503580104284 96.696295764672755 ;
-	setAttr ".s" -type "double3" 0.99999999999999989 0.99999999999999978 0.99999999999999978 ;
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" 0 -7.6156961706878432 14.945911633618476 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
-	setAttr -cb on ".Helper";
+	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_Foot_Ball_Guide_CtrlShape" -p "L_Foot_Ball_Guide";
-	rename -uid "36AED511-495F-A7C5-5459-59B0A0D136E2";
+	rename -uid "C3DDC434-492D-0CBC-C73D-1AA8C9A88294";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -9046,7 +9272,8 @@ createNode nurbsCurve -n "L_Foot_Ball_Guide_CtrlShape" -p "L_Foot_Ball_Guide";
 		1.3977299999999999e-05 -0.5 0.25
 		;
 createNode nurbsCurve -n "L_Foot_Ball_Guide_Ctrl_CtrlShape" -p "L_Foot_Ball_Guide";
-	rename -uid "C612D1BE-4A80-924A-977C-558AD4F3FA22";
+	rename -uid "6DFFA9E9-4EAB-8899-6AE6-B3BDB8AD32A4";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -9162,7 +9389,8 @@ createNode nurbsCurve -n "L_Foot_Ball_Guide_Ctrl_CtrlShape" -p "L_Foot_Ball_Guid
 		-1.7708799999999999e-08 0 0.59421000000000002
 		;
 createNode nurbsCurve -n "L_Foot_Ball_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Foot_Ball_Guide";
-	rename -uid "E1D549C0-4C9D-B28E-1EDB-CD8AAFAFF3B5";
+	rename -uid "D5563BAD-4230-B4C3-A12D-8DA3A1913549";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -9183,7 +9411,8 @@ createNode nurbsCurve -n "L_Foot_Ball_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Foot_Ball
 		-0.5 -0.25 -1.3977299999999999e-05
 		;
 createNode nurbsCurve -n "L_Foot_Ball_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Foot_Ball_Guide";
-	rename -uid "FA5E0661-4054-3C59-7F63-60BBDEB5C0A9";
+	rename -uid "63BC5EB3-4620-98D3-4483-079FAC841FFB";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -9204,16 +9433,16 @@ createNode nurbsCurve -n "L_Foot_Ball_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Foot
 		0.25 1.3977299999999999e-05 -0.5
 		;
 createNode joint -n "L_Foot_Toes_Guide" -p "L_Foot_Ball_Guide";
-	rename -uid "FC0C4E9C-4DC1-5DB7-DEA5-7F8EC811840F";
+	rename -uid "CFE73D9C-451A-795B-CC32-2BB6D5B36462";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".t" -type "double3" 7.7533685405803467 1.0658141036401503e-14 -5.3290705182007514e-15 ;
-	setAttr ".r" -type "double3" 65.389715346288028 89.755719141014566 90.000000000017906 ;
-	setAttr ".s" -type "double3" 1 1.0000000000000002 1.0000000000000002 ;
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" 0 -3.5347998562871625 9.6651833274305794 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
-	setAttr -cb on ".Helper";
+	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_Foot_Toes_Guide_CtrlShape" -p "L_Foot_Toes_Guide";
-	rename -uid "E6643A9F-4B3A-DA1B-7657-668F960BF0FE";
+	rename -uid "0C000701-465A-C9A0-FDBE-4A9F50F5CBE2";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -9234,7 +9463,8 @@ createNode nurbsCurve -n "L_Foot_Toes_Guide_CtrlShape" -p "L_Foot_Toes_Guide";
 		1.3977299999999999e-05 -0.5 0.25
 		;
 createNode nurbsCurve -n "L_Foot_Toes_Guide_Ctrl_CtrlShape" -p "L_Foot_Toes_Guide";
-	rename -uid "D920CC35-404A-EAA6-1D75-8297E71584BF";
+	rename -uid "8868E7AE-4FF0-088B-0952-3B875BB2AE45";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -9350,7 +9580,8 @@ createNode nurbsCurve -n "L_Foot_Toes_Guide_Ctrl_CtrlShape" -p "L_Foot_Toes_Guid
 		-1.7708799999999999e-08 0 0.59421000000000002
 		;
 createNode nurbsCurve -n "L_Foot_Toes_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Foot_Toes_Guide";
-	rename -uid "C9006A9E-4284-CDCE-1CAE-BE9E1EE2AD55";
+	rename -uid "6947BB2B-4D59-599A-6EE9-5388FE255D72";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -9371,7 +9602,8 @@ createNode nurbsCurve -n "L_Foot_Toes_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Foot_Toes
 		-0.5 -0.25 -1.3977299999999999e-05
 		;
 createNode nurbsCurve -n "L_Foot_Toes_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Foot_Toes_Guide";
-	rename -uid "9DFD1AB6-477A-4B1B-E81E-6AAA296388DC";
+	rename -uid "8E8A7EC3-4CED-3288-819D-94A87D42A8DB";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -9392,16 +9624,16 @@ createNode nurbsCurve -n "L_Foot_Toes_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Foot
 		0.25 1.3977299999999999e-05 -0.5
 		;
 createNode joint -n "L_Foot_BallFloor_Guide" -p "L_Foot_Ball_Guide";
-	rename -uid "0E89465C-4C87-D275-39F8-2DA1C594B992";
+	rename -uid "09EF93F5-4BEF-6DA5-7BF1-52A68FC00798";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".t" -type "double3" 1.3446325948785205 -2.9355133457373714 -0.012515652509602404 ;
-	setAttr ".r" -type "double3" 24.610284653777249 -89.75571914101495 -90.00000000004178 ;
-	setAttr ".s" -type "double3" 1 1.0000000000000002 1.0000000000000002 ;
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" 0 -3.5347998562871625 0 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
-	setAttr -cb on ".Helper";
+	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_Foot_BallFloor_Guide_CtrlShape" -p "L_Foot_BallFloor_Guide";
-	rename -uid "7ACCE2A0-4366-C553-20EC-E39ADA00218C";
+	rename -uid "89CCC69F-430E-5176-647D-00B21AC5C91C";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -9422,7 +9654,8 @@ createNode nurbsCurve -n "L_Foot_BallFloor_Guide_CtrlShape" -p "L_Foot_BallFloor
 		1.3977299999999999e-05 -0.5 0.25
 		;
 createNode nurbsCurve -n "L_Foot_BallFloor_Guide_Ctrl_CtrlShape" -p "L_Foot_BallFloor_Guide";
-	rename -uid "A308F4E3-4E7C-8570-E182-ED90E3D7BA1D";
+	rename -uid "3BCB5359-4EF1-2428-6EF4-A3AA1ED85CBD";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -9538,7 +9771,8 @@ createNode nurbsCurve -n "L_Foot_BallFloor_Guide_Ctrl_CtrlShape" -p "L_Foot_Ball
 		-1.7708799999999999e-08 0 0.59421000000000002
 		;
 createNode nurbsCurve -n "L_Foot_BallFloor_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Foot_BallFloor_Guide";
-	rename -uid "68D3F4D6-47AC-8566-07E2-2A9DD159CC6D";
+	rename -uid "FAC5979F-4B0B-025B-65C2-55B73660C562";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -9559,7 +9793,8 @@ createNode nurbsCurve -n "L_Foot_BallFloor_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Foot
 		-0.5 -0.25 -1.3977299999999999e-05
 		;
 createNode nurbsCurve -n "L_Foot_BallFloor_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Foot_BallFloor_Guide";
-	rename -uid "BE23D6BF-499F-01E5-D52B-5DA743B98400";
+	rename -uid "ED40E0C0-4FAA-A590-B54A-A38E342B243F";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -9580,16 +9815,16 @@ createNode nurbsCurve -n "L_Foot_BallFloor_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L
 		0.25 1.3977299999999999e-05 -0.5
 		;
 createNode joint -n "L_Foot_In_Guide" -p "L_Foot_BallFloor_Guide";
-	rename -uid "CC11EEEE-4417-BC28-1114-22B88817958E";
+	rename -uid "78C8AF50-423F-7E72-A702-D3A0DC84459F";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".t" -type "double3" 5.0896853576849193 -1.7763568394002505e-15 2.2204460492503131e-15 ;
-	setAttr ".r" -type "double3" 89.999999999999872 0 180.00000000000003 ;
-	setAttr ".s" -type "double3" 0.99999999999999989 0.99999999999999944 0.99999999999999967 ;
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" -5.2514167963047012 0 0 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
-	setAttr -cb on ".Helper";
+	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_Foot_In_Guide_CtrlShape" -p "L_Foot_In_Guide";
-	rename -uid "B78A1235-4406-8DC1-F53F-20A338EDB986";
+	rename -uid "035AA457-4B0F-47F7-DD1B-D38D1D818FA7";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -9610,7 +9845,8 @@ createNode nurbsCurve -n "L_Foot_In_Guide_CtrlShape" -p "L_Foot_In_Guide";
 		1.3977299999999999e-05 -0.5 0.25
 		;
 createNode nurbsCurve -n "L_Foot_In_Guide_Ctrl_CtrlShape" -p "L_Foot_In_Guide";
-	rename -uid "C349D519-4590-5917-C5AE-6992DB606BED";
+	rename -uid "9E50CDE4-40CA-B7E2-AB07-A39260DD3962";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -9726,7 +9962,8 @@ createNode nurbsCurve -n "L_Foot_In_Guide_Ctrl_CtrlShape" -p "L_Foot_In_Guide";
 		-1.7708799999999999e-08 0 0.59421000000000002
 		;
 createNode nurbsCurve -n "L_Foot_In_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Foot_In_Guide";
-	rename -uid "931DFF26-47F1-A131-5390-9FB315C438DF";
+	rename -uid "2F4464A6-4E0D-E326-CBF0-52A2470C156D";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -9747,7 +9984,8 @@ createNode nurbsCurve -n "L_Foot_In_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Foot_In_Gui
 		-0.5 -0.25 -1.3977299999999999e-05
 		;
 createNode nurbsCurve -n "L_Foot_In_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Foot_In_Guide";
-	rename -uid "DC361449-4D33-15D5-7ABA-FF8A4DBAE276";
+	rename -uid "219B9E53-4176-0944-9E07-629295279244";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -9768,16 +10006,16 @@ createNode nurbsCurve -n "L_Foot_In_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Foot_I
 		0.25 1.3977299999999999e-05 -0.5
 		;
 createNode joint -n "L_Foot_Out_Guide" -p "L_Foot_BallFloor_Guide";
-	rename -uid "00007889-452B-575A-7F4A-2FB1761F5380";
+	rename -uid "C887088A-405D-2BCF-EED9-8A96CB95DA3C";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".t" -type "double3" -5.8347410472195449 -1.7763568394002505e-15 8.2489570729649131e-14 ;
-	setAttr ".r" -type "double3" 89.999999999999872 0 180.00000000000003 ;
-	setAttr ".s" -type "double3" 0.99999999999999989 0.99999999999999944 0.99999999999999967 ;
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" 3.7022607404881249 0 0 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
-	setAttr -cb on ".Helper";
+	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_Foot_Out_Guide_CtrlShape" -p "L_Foot_Out_Guide";
-	rename -uid "40856E08-4622-E7D0-597C-EAA372721D30";
+	rename -uid "0DB021A9-4157-49DF-4D11-DC86B85EB63C";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -9798,7 +10036,8 @@ createNode nurbsCurve -n "L_Foot_Out_Guide_CtrlShape" -p "L_Foot_Out_Guide";
 		1.3977299999999999e-05 -0.5 0.25
 		;
 createNode nurbsCurve -n "L_Foot_Out_Guide_Ctrl_CtrlShape" -p "L_Foot_Out_Guide";
-	rename -uid "95245B1B-4B9E-391E-1D6B-0393A9075F7B";
+	rename -uid "EBCC3B2D-4DA9-5C0E-A3BB-E7964950B947";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -9914,7 +10153,8 @@ createNode nurbsCurve -n "L_Foot_Out_Guide_Ctrl_CtrlShape" -p "L_Foot_Out_Guide"
 		-1.7708799999999999e-08 0 0.59421000000000002
 		;
 createNode nurbsCurve -n "L_Foot_Out_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Foot_Out_Guide";
-	rename -uid "F9A36E1E-40F6-51EB-584B-8AAA89F5DF0C";
+	rename -uid "3F68F19B-4F10-4C01-90FC-828A45DE3D45";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -9935,7 +10175,8 @@ createNode nurbsCurve -n "L_Foot_Out_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Foot_Out_G
 		-0.5 -0.25 -1.3977299999999999e-05
 		;
 createNode nurbsCurve -n "L_Foot_Out_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Foot_Out_Guide";
-	rename -uid "9D2DE3F3-4D64-BBC9-3400-49B77DF80459";
+	rename -uid "AA00EC00-48E9-6F55-AC43-498D064A9D20";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -9956,16 +10197,16 @@ createNode nurbsCurve -n "L_Foot_Out_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Foot_
 		0.25 1.3977299999999999e-05 -0.5
 		;
 createNode joint -n "L_Foot_HeelMid_Guide" -p "L_Foot_Ankle_Guide";
-	rename -uid "6EA889AE-4BA1-C5D0-551B-30AC7F8FBF3E";
+	rename -uid "8DD40305-4557-A5CD-23F5-D4BE9117051E";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".t" -type "double3" 7.7689485178809958 8.3961435888719755 -1.8270501910159496 ;
-	setAttr ".r" -type "double3" -20.55956979353714 104.02318603899845 91.647748561218691 ;
-	setAttr ".s" -type "double3" 0.99999999999999989 0.99999999999999978 0.99999999999999978 ;
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" 0 -1.5 0 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
-	setAttr -cb on ".Helper";
+	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_Foot_HeelMid_Guide_CtrlShape" -p "L_Foot_HeelMid_Guide";
-	rename -uid "A63EAE58-40D0-90D1-278F-4B96B23F230E";
+	rename -uid "4D40B351-47DA-4F75-797E-408AE70EB1B5";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -9986,7 +10227,8 @@ createNode nurbsCurve -n "L_Foot_HeelMid_Guide_CtrlShape" -p "L_Foot_HeelMid_Gui
 		1.3977299999999999e-05 -0.5 0.25
 		;
 createNode nurbsCurve -n "L_Foot_HeelMid_Guide_Ctrl_CtrlShape" -p "L_Foot_HeelMid_Guide";
-	rename -uid "7CD72EF6-4320-1675-3DED-0693360BC81C";
+	rename -uid "790BB221-41F0-D84B-50FB-57A710638151";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -10102,7 +10344,8 @@ createNode nurbsCurve -n "L_Foot_HeelMid_Guide_Ctrl_CtrlShape" -p "L_Foot_HeelMi
 		-1.7708799999999999e-08 0 0.59421000000000002
 		;
 createNode nurbsCurve -n "L_Foot_HeelMid_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Foot_HeelMid_Guide";
-	rename -uid "D8C67DA5-48B2-97AE-D8C4-759261632A13";
+	rename -uid "832D97AE-4541-DE6E-DD09-7BACC66FC0A7";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -10123,7 +10366,8 @@ createNode nurbsCurve -n "L_Foot_HeelMid_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Foot_H
 		-0.5 -0.25 -1.3977299999999999e-05
 		;
 createNode nurbsCurve -n "L_Foot_HeelMid_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Foot_HeelMid_Guide";
-	rename -uid "B98C7772-4610-18D9-6C3C-AFA125D2D00F";
+	rename -uid "E9D73B6C-4A99-8CF1-B4F9-D4967B8E6022";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -10144,10 +10388,10 @@ createNode nurbsCurve -n "L_Foot_HeelMid_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_F
 		0.25 1.3977299999999999e-05 -0.5
 		;
 createNode transform -n "Data" -p "Mutant_Build";
-	rename -uid "FA7DB940-416C-3F61-9773-73B177722621";
+	rename -uid "40B5CAC3-4F85-E8E6-7C8F-54AE43E39F05";
 	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 createNode dagContainer -n "Load_Skin_Block" -p "Data";
-	rename -uid "C978080A-47B4-0DC2-6F52-6799B8279574";
+	rename -uid "6096AD72-4DA3-A3CE-26FD-FEA9D84BAE72";
 	setAttr ".isc" yes;
 	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/Skin.png";
 	setAttr ".ctor" -type "string" "PC";
@@ -10163,7 +10407,7 @@ createNode dagContainer -n "Load_Skin_Block" -p "Data";
 	setAttr -l on -k off ".sy";
 	setAttr -l on -k off ".sz";
 createNode dagContainer -n "Load_Ctrls_Block" -p "Data";
-	rename -uid "324FFF1F-4968-7A74-52D1-078FAA273ABE";
+	rename -uid "D8308BB0-4F93-79EF-B972-41A89ED6C419";
 	setAttr ".isc" yes;
 	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/Controller.png";
 	setAttr ".ctor" -type "string" "PC";
@@ -10179,9 +10423,10 @@ createNode dagContainer -n "Load_Ctrls_Block" -p "Data";
 	setAttr -l on -k off ".sy";
 	setAttr -l on -k off ".sz";
 createNode transform -n "Extras" -p "Mutant_Build";
-	rename -uid "937FC0D4-4DB5-E39F-059B-C1BA4E335FFD";
+	rename -uid "D91E703E-4ECB-D887-010B-38BD9DFF99FF";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 createNode dagContainer -n "Code_Block" -p "Extras";
-	rename -uid "C20577D7-42BF-5685-266D-DFB308064775";
+	rename -uid "4D54AD0A-45AA-CDDC-DA20-31BB5AEFA104";
 	setAttr ".isc" yes;
 	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/Code.png";
 	setAttr ".ctor" -type "string" "PC";
@@ -10197,15 +10442,17 @@ createNode dagContainer -n "Code_Block" -p "Extras";
 	setAttr -l on -k off ".sy";
 	setAttr -l on -k off ".sz";
 createNode transform -n "Code_Loc" -p "Code_Block";
-	rename -uid "AF0DD7D9-427A-18C2-AC68-1798B9EBD224";
+	rename -uid "7A0CC755-43B2-CB86-666E-02A2D600CB2D";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 createNode locator -n "Code_LocShape" -p "Code_Loc";
-	rename -uid "F90C4AC4-4DA5-2AE2-D1D4-CAB9401480A7";
+	rename -uid "CAE5DE35-44ED-56D5-6549-E9BAD0ED4CBE";
+	setAttr ".icn" -type "string" "C:/Users/PC/Documents/maya/2022/scripts/Mutant_Tools/Icons/";
 	setAttr -k off ".v";
 createNode hyperLayout -n "hyperLayout13";
-	rename -uid "327C27F9-4EBF-9354-C8D6-DBB3539F5226";
+	rename -uid "B07B72B5-4229-5EBF-C7BF-B1B61D144A56";
 	setAttr ".ihi" 0;
 createNode network -n "BaseA_Config";
-	rename -uid "7DA67304-4B8C-8385-CC0E-04BD839BCC9D";
+	rename -uid "28212587-4FF0-2657-BB5A-6C87939BF791";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
@@ -10222,10 +10469,10 @@ createNode network -n "BaseA_Config";
 	setAttr -cb on ".CtrlColor";
 	setAttr ".postcode" -type "string" "";
 createNode hyperLayout -n "hyperLayout27";
-	rename -uid "9D2CE999-464E-7D85-D2C4-A3973EAE0A2C";
+	rename -uid "D7CAD438-400A-473F-D1C6-028FCF2008A8";
 	setAttr ".ihi" 0;
 createNode network -n "BS_Bind_Config";
-	rename -uid "E152D62A-4156-105A-D972-4DB0D356289C";
+	rename -uid "69CDAA47-4206-F45E-DBAE-DDB740471B39";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
@@ -10239,10 +10486,10 @@ createNode network -n "BS_Bind_Config";
 	setAttr ".Help" -type "string" "Duplicate and blendshape render geo to have a clean version.";
 	setAttr ".postcode" -type "string" "";
 createNode hyperLayout -n "hyperLayout14";
-	rename -uid "9252BA3E-4A86-A6A2-CD61-37A2E575B5A1";
+	rename -uid "75F84F49-4811-7719-88B7-C9A025AE4067";
 	setAttr ".ihi" 0;
 createNode network -n "Root_Config";
-	rename -uid "042FC625-4CDD-CA9E-EA13-139B3AEB957C";
+	rename -uid "222AD812-4452-4042-8198-719121FFCDB3";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
@@ -10254,11 +10501,11 @@ createNode network -n "Root_Config";
 	setAttr ".SetParent" -type "string" "Bind_Joints_Grp";
 	setAttr ".postcode" -type "string" "";
 createNode hyperLayout -n "hyperLayout15";
-	rename -uid "1C701CEE-498A-9B62-C7BD-FB8DDD280622";
+	rename -uid "8F7BA4D1-4C10-C03E-19E2-949330DF83CB";
 	setAttr ".ihi" 0;
 	setAttr -s 2 ".hyp";
 createNode network -n "COG_Config";
-	rename -uid "28F66361-484F-20DE-37DA-758B00F4986C";
+	rename -uid "48615379-480E-731A-3675-A4A4A0FB9CFF";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
@@ -10286,11 +10533,11 @@ createNode network -n "COG_Config";
 	setAttr ".Help" -type "string" "Possible parent: Bone_Jnt\n";
 	setAttr ".postcode" -type "string" "";
 createNode hyperLayout -n "hyperLayout16";
-	rename -uid "E8ABCE8F-4615-87CF-8B21-04943D00523D";
+	rename -uid "BD39454C-4E7B-74E1-6FB2-0296BF9D3616";
 	setAttr ".ihi" 0;
 	setAttr -s 25 ".hyp";
 createNode network -n "Spine_Config";
-	rename -uid "05711755-489D-E0A2-3003-6F9C3765577D";
+	rename -uid "3CB10ADA-49D1-012F-3E8F-CC9FE950B6ED";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
@@ -10308,11 +10555,11 @@ createNode network -n "Spine_Config";
 	setAttr ".Help" -type "string" "Possible parent: Spine_End_Jnt or Spine_Inv_Jnt\n ";
 	setAttr ".postcode" -type "string" "";
 createNode hyperLayout -n "hyperLayout17";
-	rename -uid "69BEAFFE-4D0D-FEA8-24DC-1081965616D3";
+	rename -uid "CA35C81E-4E22-BAB2-CB38-A9886127A506";
 	setAttr ".ihi" 0;
 	setAttr -s 10 ".hyp";
 createNode network -n "L_Clavicle_Config";
-	rename -uid "0135E093-48FA-0BA9-BB25-C6B0D7A91F97";
+	rename -uid "D8FD11B7-46C1-6A28-335E-B294F66CE037";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
@@ -10336,11 +10583,11 @@ createNode network -n "L_Clavicle_Config";
 	setAttr ".Help" -type "string" "Possible parent: R_Clavicle_Jnt\n";
 	setAttr ".postcode" -type "string" "";
 createNode hyperLayout -n "hyperLayout18";
-	rename -uid "E03732E5-4A53-FC40-7CCE-E8BDE80AA787";
+	rename -uid "8392F2DE-4ADC-AA53-628C-43B80FD594F4";
 	setAttr ".ihi" 0;
 	setAttr -s 15 ".hyp";
 createNode network -n "L_Shoulder_Config";
-	rename -uid "DBBD48D9-4F68-6D0F-DD3D-7DA63751A231";
+	rename -uid "E4B25DAE-40C4-3E20-FA52-05BB8F1E4F4D";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
@@ -10375,11 +10622,11 @@ createNode network -n "L_Shoulder_Config";
 	setAttr ".Help" -type "string" "Possible parent: L_Wrist_Jnt\n";
 	setAttr ".postcode" -type "string" "";
 createNode hyperLayout -n "hyperLayout19";
-	rename -uid "9371F13E-49CC-FDE6-C3DE-0589C50B2C95";
+	rename -uid "034444A1-45FB-4B3F-B6B6-0DA3F9C8637C";
 	setAttr ".ihi" 0;
 	setAttr -s 10 ".hyp";
 createNode network -n "L_Pelvis_Config";
-	rename -uid "A39B4BE7-4B8C-D6EC-6B6E-298E6C90B10D";
+	rename -uid "7968A1D4-46A3-029A-C811-F29C08385BB6";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
@@ -10403,11 +10650,11 @@ createNode network -n "L_Pelvis_Config";
 	setAttr ".Help" -type "string" "Possible parent: L_Pelvis_Jnt\n";
 	setAttr ".postcode" -type "string" "";
 createNode hyperLayout -n "hyperLayout20";
-	rename -uid "8B5BCAF8-43D6-B28F-0AF7-C59DE65CE0F2";
+	rename -uid "BC0130C1-49A6-6B06-922A-CF8B765D372B";
 	setAttr ".ihi" 0;
 	setAttr -s 15 ".hyp";
 createNode network -n "L_Hip_Config";
-	rename -uid "19ECA80A-4C45-2082-96EA-0F9E652CCC27";
+	rename -uid "86C306E9-43C9-1527-0975-7D8A53CAEB78";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
@@ -10442,11 +10689,11 @@ createNode network -n "L_Hip_Config";
 	setAttr ".Help" -type "string" "Possible parent: L_Wrist_Jnt\n";
 	setAttr ".postcode" -type "string" "";
 createNode hyperLayout -n "hyperLayout21";
-	rename -uid "EC48B0EB-4A6A-686D-7107-63A1C7002E9D";
+	rename -uid "102FAA93-4FEC-1813-383E-C1A6BFBF4441";
 	setAttr ".ihi" 0;
 	setAttr -s 15 ".hyp";
 createNode network -n "Neck_Head_Config";
-	rename -uid "06CDD6BF-45A9-1A93-A6AD-CCAF9314C025";
+	rename -uid "35D879ED-4C0D-4E0D-FF9D-A1BBEBED7643";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
@@ -10475,11 +10722,11 @@ createNode network -n "Neck_Head_Config";
 	setAttr ".Help" -type "string" "Possible parent: Head_Jnt\n";
 	setAttr ".postcode" -type "string" "";
 createNode hyperLayout -n "hyperLayout22";
-	rename -uid "FF6226D7-46AF-2687-5F3D-92AF87210C3F";
+	rename -uid "6E306B74-4DAB-F6B3-CA7B-DBA9B37FB020";
 	setAttr ".ihi" 0;
 	setAttr -s 135 ".hyp";
 createNode network -n "L_Hand_Config";
-	rename -uid "2689182A-4F06-030A-B1C8-77987FCBE0ED";
+	rename -uid "09BFC5B3-4F54-133B-4C24-BABF64C84A5A";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
@@ -10506,12 +10753,12 @@ createNode network -n "L_Hand_Config";
 	setAttr ".SetGameParent" -type "string" "L_Elbow_Twist_3_Bnd";
 	setAttr ".Help" -type "string" "Possible parent: L_Hand_Thumb_03_Jnt, L_Hand_Index_04_Jnt\n";
 	setAttr ".postcode" -type "string" "";
-createNode hyperLayout -n "hyperLayout23";
-	rename -uid "3C5B66F6-4C19-9C3A-E2F5-D4836CEEB71D";
+createNode hyperLayout -n "hyperLayout28";
+	rename -uid "1A01D84D-4FD0-9528-18E4-C9A60412BB62";
 	setAttr ".ihi" 0;
 	setAttr -s 40 ".hyp";
 createNode network -n "L_Foot_Config";
-	rename -uid "3A7A3150-4B1C-F0AF-2F69-8894BFB67174";
+	rename -uid "CF261D25-41B4-2048-2982-D482D5032BEB";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
@@ -10540,10 +10787,10 @@ createNode network -n "L_Foot_Config";
 	setAttr ".Help" -type "string" "Possible parent: L_Foot_BallToes_Jnt\n";
 	setAttr ".postcode" -type "string" "";
 createNode hyperLayout -n "hyperLayout24";
-	rename -uid "020056B8-4FAA-607F-5D0C-B5830B09217B";
+	rename -uid "279FC294-4BBE-3561-B7EF-D1B06C4C95E6";
 	setAttr ".ihi" 0;
 createNode network -n "Load_Skin_Config";
-	rename -uid "2CF99CD7-4BDD-F0F0-AFF7-E6B4749B444D";
+	rename -uid "A44320D7-45E5-4F6C-FEDF-9E8C7C2B237F";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
@@ -10557,10 +10804,10 @@ createNode network -n "Load_Skin_Config";
 	setAttr ".Help" -type "string" "Load Skin Cluster Data from Folder, you need nNgSkin tools installed for it to work.";
 	setAttr ".postcode" -type "string" "";
 createNode hyperLayout -n "hyperLayout25";
-	rename -uid "AA4B5071-4726-F744-796D-939C72451512";
+	rename -uid "824D022A-4AC9-D2C4-389F-F395B079360F";
 	setAttr ".ihi" 0;
 createNode network -n "Load_Ctrls_Config";
-	rename -uid "2702BBA8-4937-29FD-9526-F58BD27737EE";
+	rename -uid "C9F85C8A-4B75-3B4F-10BE-81A84939D058";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
@@ -10574,11 +10821,11 @@ createNode network -n "Load_Ctrls_Config";
 	setAttr ".Help" -type "string" "Load Ctrls Data from File";
 	setAttr ".postcode" -type "string" "";
 createNode hyperLayout -n "hyperLayout26";
-	rename -uid "EAC08C9C-456F-1C96-2F6C-3891EEB7552A";
+	rename -uid "9F964505-4189-1297-2803-A19EB0EB5AA1";
 	setAttr ".ihi" 0;
 	setAttr -s 2 ".hyp";
 createNode network -n "Code_Config";
-	rename -uid "98E9B522-4F03-8438-622B-2F89BE2A5515";
+	rename -uid "54989CED-4CEB-1994-9526-4E966331800E";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
@@ -10628,6 +10875,8 @@ select -ne :defaultColorMgtGlobals;
 select -ne :hardwareRenderGlobals;
 	setAttr ".ctrs" 256;
 	setAttr ".btrs" 512;
+select -ne :ikSystem;
+	setAttr -s 4 ".sol";
 connectAttr "hyperLayout13.msg" "BaseA_Block.hl";
 connectAttr "BaseA_Config.nds" "BaseA_Block.nds";
 connectAttr "hyperLayout27.msg" "BS_Bind_Block.hl";
@@ -10967,7 +11216,7 @@ connectAttr "L_Hand_Ring_04_Guide.Helper" "L_Hand_Ring_04_Guide_Ctrl_Ctrl_CtrlSh
 		;
 connectAttr "L_Hand_Ring_04_Guide.Helper" "L_Hand_Ring_04_Guide_Ctrl_Ctrl_Ctrl_CtrlShape.v"
 		;
-connectAttr "hyperLayout23.msg" "L_Foot_Block.hl";
+connectAttr "hyperLayout28.msg" "L_Foot_Block.hl";
 connectAttr "L_Foot_Config.nds" "L_Foot_Block.nds";
 connectAttr "L_Foot_Ankle_Guide.Helper" "L_Foot_Ankle_Guide_CtrlShape.v";
 connectAttr "L_Foot_Ankle_Guide.Helper" "L_Foot_Ankle_Guide_Ctrl_CtrlShape.v";
@@ -11363,63 +11612,63 @@ connectAttr "L_Hand_Ring_04_Guide_Ctrl_Ctrl_CtrlShape.msg" "hyperLayout22.hyp[13
 		;
 connectAttr "L_Hand_Ring_04_Guide_Ctrl_Ctrl_Ctrl_CtrlShape.msg" "hyperLayout22.hyp[134].dn"
 		;
-connectAttr "L_Foot_Ankle_Guide.msg" "hyperLayout23.hyp[0].dn";
-connectAttr "L_Foot_Ankle_Guide_CtrlShape.msg" "hyperLayout23.hyp[1].dn";
-connectAttr "L_Foot_Ankle_Guide_Ctrl_CtrlShape.msg" "hyperLayout23.hyp[2].dn";
-connectAttr "L_Foot_Ankle_Guide_Ctrl_Ctrl_CtrlShape.msg" "hyperLayout23.hyp[3].dn"
+connectAttr "L_Foot_Ankle_Guide.msg" "hyperLayout28.hyp[0].dn";
+connectAttr "L_Foot_Ankle_Guide_CtrlShape.msg" "hyperLayout28.hyp[1].dn";
+connectAttr "L_Foot_Ankle_Guide_Ctrl_CtrlShape.msg" "hyperLayout28.hyp[2].dn";
+connectAttr "L_Foot_Ankle_Guide_Ctrl_Ctrl_CtrlShape.msg" "hyperLayout28.hyp[3].dn"
 		;
-connectAttr "L_Foot_Ankle_Guide_Ctrl_Ctrl_Ctrl_CtrlShape.msg" "hyperLayout23.hyp[4].dn"
+connectAttr "L_Foot_Ankle_Guide_Ctrl_Ctrl_Ctrl_CtrlShape.msg" "hyperLayout28.hyp[4].dn"
 		;
-connectAttr "L_Foot_Heel_Guide.msg" "hyperLayout23.hyp[5].dn";
-connectAttr "L_Foot_Heel_Guide_CtrlShape.msg" "hyperLayout23.hyp[6].dn";
-connectAttr "L_Foot_Heel_Guide_Ctrl_CtrlShape.msg" "hyperLayout23.hyp[7].dn";
-connectAttr "L_Foot_Heel_Guide_Ctrl_Ctrl_CtrlShape.msg" "hyperLayout23.hyp[8].dn"
+connectAttr "L_Foot_Heel_Guide.msg" "hyperLayout28.hyp[5].dn";
+connectAttr "L_Foot_Heel_Guide_CtrlShape.msg" "hyperLayout28.hyp[6].dn";
+connectAttr "L_Foot_Heel_Guide_Ctrl_CtrlShape.msg" "hyperLayout28.hyp[7].dn";
+connectAttr "L_Foot_Heel_Guide_Ctrl_Ctrl_CtrlShape.msg" "hyperLayout28.hyp[8].dn"
 		;
-connectAttr "L_Foot_Heel_Guide_Ctrl_Ctrl_Ctrl_CtrlShape.msg" "hyperLayout23.hyp[9].dn"
+connectAttr "L_Foot_Heel_Guide_Ctrl_Ctrl_Ctrl_CtrlShape.msg" "hyperLayout28.hyp[9].dn"
 		;
-connectAttr "L_Foot_Ball_Guide.msg" "hyperLayout23.hyp[10].dn";
-connectAttr "L_Foot_Ball_Guide_CtrlShape.msg" "hyperLayout23.hyp[11].dn";
-connectAttr "L_Foot_Ball_Guide_Ctrl_CtrlShape.msg" "hyperLayout23.hyp[12].dn";
-connectAttr "L_Foot_Ball_Guide_Ctrl_Ctrl_CtrlShape.msg" "hyperLayout23.hyp[13].dn"
+connectAttr "L_Foot_Ball_Guide.msg" "hyperLayout28.hyp[10].dn";
+connectAttr "L_Foot_Ball_Guide_CtrlShape.msg" "hyperLayout28.hyp[11].dn";
+connectAttr "L_Foot_Ball_Guide_Ctrl_CtrlShape.msg" "hyperLayout28.hyp[12].dn";
+connectAttr "L_Foot_Ball_Guide_Ctrl_Ctrl_CtrlShape.msg" "hyperLayout28.hyp[13].dn"
 		;
-connectAttr "L_Foot_Ball_Guide_Ctrl_Ctrl_Ctrl_CtrlShape.msg" "hyperLayout23.hyp[14].dn"
+connectAttr "L_Foot_Ball_Guide_Ctrl_Ctrl_Ctrl_CtrlShape.msg" "hyperLayout28.hyp[14].dn"
 		;
-connectAttr "L_Foot_Toes_Guide.msg" "hyperLayout23.hyp[15].dn";
-connectAttr "L_Foot_Toes_Guide_CtrlShape.msg" "hyperLayout23.hyp[16].dn";
-connectAttr "L_Foot_Toes_Guide_Ctrl_CtrlShape.msg" "hyperLayout23.hyp[17].dn";
-connectAttr "L_Foot_Toes_Guide_Ctrl_Ctrl_CtrlShape.msg" "hyperLayout23.hyp[18].dn"
+connectAttr "L_Foot_Toes_Guide.msg" "hyperLayout28.hyp[15].dn";
+connectAttr "L_Foot_Toes_Guide_CtrlShape.msg" "hyperLayout28.hyp[16].dn";
+connectAttr "L_Foot_Toes_Guide_Ctrl_CtrlShape.msg" "hyperLayout28.hyp[17].dn";
+connectAttr "L_Foot_Toes_Guide_Ctrl_Ctrl_CtrlShape.msg" "hyperLayout28.hyp[18].dn"
 		;
-connectAttr "L_Foot_Toes_Guide_Ctrl_Ctrl_Ctrl_CtrlShape.msg" "hyperLayout23.hyp[19].dn"
+connectAttr "L_Foot_Toes_Guide_Ctrl_Ctrl_Ctrl_CtrlShape.msg" "hyperLayout28.hyp[19].dn"
 		;
-connectAttr "L_Foot_BallFloor_Guide.msg" "hyperLayout23.hyp[20].dn";
-connectAttr "L_Foot_BallFloor_Guide_CtrlShape.msg" "hyperLayout23.hyp[21].dn";
-connectAttr "L_Foot_BallFloor_Guide_Ctrl_CtrlShape.msg" "hyperLayout23.hyp[22].dn"
+connectAttr "L_Foot_BallFloor_Guide.msg" "hyperLayout28.hyp[20].dn";
+connectAttr "L_Foot_BallFloor_Guide_CtrlShape.msg" "hyperLayout28.hyp[21].dn";
+connectAttr "L_Foot_BallFloor_Guide_Ctrl_CtrlShape.msg" "hyperLayout28.hyp[22].dn"
 		;
-connectAttr "L_Foot_BallFloor_Guide_Ctrl_Ctrl_CtrlShape.msg" "hyperLayout23.hyp[23].dn"
+connectAttr "L_Foot_BallFloor_Guide_Ctrl_Ctrl_CtrlShape.msg" "hyperLayout28.hyp[23].dn"
 		;
-connectAttr "L_Foot_BallFloor_Guide_Ctrl_Ctrl_Ctrl_CtrlShape.msg" "hyperLayout23.hyp[24].dn"
+connectAttr "L_Foot_BallFloor_Guide_Ctrl_Ctrl_Ctrl_CtrlShape.msg" "hyperLayout28.hyp[24].dn"
 		;
-connectAttr "L_Foot_In_Guide.msg" "hyperLayout23.hyp[25].dn";
-connectAttr "L_Foot_In_Guide_CtrlShape.msg" "hyperLayout23.hyp[26].dn";
-connectAttr "L_Foot_In_Guide_Ctrl_CtrlShape.msg" "hyperLayout23.hyp[27].dn";
-connectAttr "L_Foot_In_Guide_Ctrl_Ctrl_CtrlShape.msg" "hyperLayout23.hyp[28].dn"
+connectAttr "L_Foot_In_Guide.msg" "hyperLayout28.hyp[25].dn";
+connectAttr "L_Foot_In_Guide_CtrlShape.msg" "hyperLayout28.hyp[26].dn";
+connectAttr "L_Foot_In_Guide_Ctrl_CtrlShape.msg" "hyperLayout28.hyp[27].dn";
+connectAttr "L_Foot_In_Guide_Ctrl_Ctrl_CtrlShape.msg" "hyperLayout28.hyp[28].dn"
 		;
-connectAttr "L_Foot_In_Guide_Ctrl_Ctrl_Ctrl_CtrlShape.msg" "hyperLayout23.hyp[29].dn"
+connectAttr "L_Foot_In_Guide_Ctrl_Ctrl_Ctrl_CtrlShape.msg" "hyperLayout28.hyp[29].dn"
 		;
-connectAttr "L_Foot_Out_Guide.msg" "hyperLayout23.hyp[30].dn";
-connectAttr "L_Foot_Out_Guide_CtrlShape.msg" "hyperLayout23.hyp[31].dn";
-connectAttr "L_Foot_Out_Guide_Ctrl_CtrlShape.msg" "hyperLayout23.hyp[32].dn";
-connectAttr "L_Foot_Out_Guide_Ctrl_Ctrl_CtrlShape.msg" "hyperLayout23.hyp[33].dn"
+connectAttr "L_Foot_Out_Guide.msg" "hyperLayout28.hyp[30].dn";
+connectAttr "L_Foot_Out_Guide_CtrlShape.msg" "hyperLayout28.hyp[31].dn";
+connectAttr "L_Foot_Out_Guide_Ctrl_CtrlShape.msg" "hyperLayout28.hyp[32].dn";
+connectAttr "L_Foot_Out_Guide_Ctrl_Ctrl_CtrlShape.msg" "hyperLayout28.hyp[33].dn"
 		;
-connectAttr "L_Foot_Out_Guide_Ctrl_Ctrl_Ctrl_CtrlShape.msg" "hyperLayout23.hyp[34].dn"
+connectAttr "L_Foot_Out_Guide_Ctrl_Ctrl_Ctrl_CtrlShape.msg" "hyperLayout28.hyp[34].dn"
 		;
-connectAttr "L_Foot_HeelMid_Guide.msg" "hyperLayout23.hyp[35].dn";
-connectAttr "L_Foot_HeelMid_Guide_CtrlShape.msg" "hyperLayout23.hyp[36].dn";
-connectAttr "L_Foot_HeelMid_Guide_Ctrl_CtrlShape.msg" "hyperLayout23.hyp[37].dn"
+connectAttr "L_Foot_HeelMid_Guide.msg" "hyperLayout28.hyp[35].dn";
+connectAttr "L_Foot_HeelMid_Guide_CtrlShape.msg" "hyperLayout28.hyp[36].dn";
+connectAttr "L_Foot_HeelMid_Guide_Ctrl_CtrlShape.msg" "hyperLayout28.hyp[37].dn"
 		;
-connectAttr "L_Foot_HeelMid_Guide_Ctrl_Ctrl_CtrlShape.msg" "hyperLayout23.hyp[38].dn"
+connectAttr "L_Foot_HeelMid_Guide_Ctrl_Ctrl_CtrlShape.msg" "hyperLayout28.hyp[38].dn"
 		;
-connectAttr "L_Foot_HeelMid_Guide_Ctrl_Ctrl_Ctrl_CtrlShape.msg" "hyperLayout23.hyp[39].dn"
+connectAttr "L_Foot_HeelMid_Guide_Ctrl_Ctrl_Ctrl_CtrlShape.msg" "hyperLayout28.hyp[39].dn"
 		;
 connectAttr "Code_Loc.msg" "hyperLayout26.hyp[0].dn";
 connectAttr "Code_LocShape.msg" "hyperLayout26.hyp[1].dn";
