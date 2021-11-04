@@ -346,6 +346,7 @@ def build_spine_block():
         volume_nodes.append(spine_volume_md)
         cmds.connectAttr(spine_volume_md + '.output.outputX', jnt + '.scaleZ' )
 
+        mt.put_inside_rig_container([spine_squash_md,spine_volume_md])
         #connectExtra
 
     #turn off on stretch offset and volume
@@ -488,6 +489,9 @@ def build_spine_block():
     cmds.connectAttr('Global_Ctrl.scale', normalize_loc+'.scale')
     cmds.scaleConstraint('Global_Ctrl', clean_rig_grp, mo=True)
     cmds.scaleConstraint('Global_Ctrl', clean_ctrl_grp, mo=True)
+
+    mt.put_inside_rig_container(
+        [normalize_node, stretchy_divide, squash_inv_node, squash_dive_node, breath_exp])
 
     print ('Build {} Success'.format(block))
 

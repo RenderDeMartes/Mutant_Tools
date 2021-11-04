@@ -517,6 +517,8 @@ def build_foot_block():
         cmds.scaleConstraint('Global_Ctrl', clean_rig_grp, mo=True)
         cmds.scaleConstraint('Global_Ctrl', clean_ctrl_grp, mo=True)
 
+        #put everything in the asset container
+        mt.put_inside_rig_container([toes_contidion_node, roll_contidion_node, roll_reverse_contidion_node, rollneg_contidion_node, toes_substract_node, back_heel_contidion_node])
 
     # build complete ----------------------------------------------------
     print ('Build {} Success'.format(block))
