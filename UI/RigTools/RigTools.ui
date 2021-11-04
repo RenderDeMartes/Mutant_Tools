@@ -133,7 +133,7 @@
       <item row="0" column="0">
        <widget class="QTabWidget" name="tabWidget">
         <property name="currentIndex">
-         <number>1</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="Rename">
          <attribute name="title">
@@ -141,7 +141,7 @@
          </attribute>
          <layout class="QGridLayout" name="gridLayout_5">
           <item row="0" column="0">
-           <widget class="QFrame" name="">
+           <widget class="QFrame" name="frame">
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -219,19 +219,6 @@
                </item>
               </layout>
              </item>
-             <item row="1" column="0">
-              <widget class="Line" name="line_4">
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-              </widget>
-             </item>
              <item row="2" column="0">
               <layout class="QHBoxLayout" name="horizontalLayout_10">
                <item>
@@ -262,54 +249,20 @@
                </item>
               </layout>
              </item>
-             <item row="3" column="0">
-              <layout class="QHBoxLayout" name="horizontalLayout_24">
-               <item>
-                <widget class="QPushButton" name="RightPrefix">
-                 <property name="minimumSize">
-                  <size>
-                   <width>0</width>
-                   <height>30</height>
-                  </size>
-                 </property>
-                 <property name="text">
-                  <string>Right Side prefix</string>
-                 </property>
-                 <property name="icon">
-                  <iconset resource="../../../../../2020/scripts/RdMToolsV2/Resources/iconResources.qrc">
-                   <normaloff>:/icon/RightArrow.png</normaloff>:/icon/RightArrow.png</iconset>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QPushButton" name="LeftPrefix">
-                 <property name="minimumSize">
-                  <size>
-                   <width>0</width>
-                   <height>30</height>
-                  </size>
-                 </property>
-                 <property name="layoutDirection">
-                  <enum>Qt::LeftToRight</enum>
-                 </property>
-                 <property name="autoFillBackground">
-                  <bool>false</bool>
-                 </property>
-                 <property name="text">
-                  <string>Left Side prefix</string>
-                 </property>
-                 <property name="icon">
-                  <iconset resource="../../../../../2020/scripts/RdMToolsV2/Resources/iconResources.qrc">
-                   <normaloff>:/icon/LeftArrow.png</normaloff>:/icon/LeftArrow.png</iconset>
-                 </property>
-                 <property name="autoDefault">
-                  <bool>false</bool>
-                 </property>
-                </widget>
-               </item>
-              </layout>
+             <item row="1" column="0">
+              <widget class="Line" name="line_4">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+              </widget>
              </item>
-             <item row="4" column="0">
+             <item row="3" column="0">
               <widget class="Line" name="line_5">
                <property name="minimumSize">
                 <size>
@@ -323,6 +276,32 @@
               </widget>
              </item>
              <item row="5" column="0">
+              <widget class="Line" name="line_6">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+              </widget>
+             </item>
+             <item row="7" column="0">
+              <widget class="Line" name="line_7">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="0">
               <layout class="QHBoxLayout" name="horizontalLayout_27">
                <item>
                 <widget class="QLineEdit" name="NewNameLineEdit">
@@ -394,19 +373,6 @@
               </layout>
              </item>
              <item row="6" column="0">
-              <widget class="Line" name="line_6">
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-              </widget>
-             </item>
-             <item row="7" column="0">
               <layout class="QHBoxLayout" name="horizontalLayout_11">
                <item>
                 <widget class="QComboBox" name="comboBox_2"/>
@@ -431,49 +397,6 @@
                  </property>
                  <property name="text">
                   <string>Sufix</string>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item row="8" column="0">
-              <widget class="Line" name="line_7">
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-              </widget>
-             </item>
-             <item row="9" column="0">
-              <layout class="QHBoxLayout" name="horizontalLayout_13">
-               <item>
-                <widget class="QComboBox" name="comboBox_3"/>
-               </item>
-               <item>
-                <widget class="QLineEdit" name="lineEdit_3">
-                 <property name="minimumSize">
-                  <size>
-                   <width>0</width>
-                   <height>30</height>
-                  </size>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QPushButton" name="pushButton_5">
-                 <property name="minimumSize">
-                  <size>
-                   <width>0</width>
-                   <height>30</height>
-                  </size>
-                 </property>
-                 <property name="text">
-                  <string>PushButton</string>
                  </property>
                 </widget>
                </item>

@@ -32,6 +32,7 @@ import os
 import json
 from maya import cmds
 import imp
+import glob
 
 import Mutant_Tools
 import Mutant_Tools.Utils.IO
@@ -123,17 +124,18 @@ class NG_Mutant(object):
     # ----------------------------------------------------------------------------------------------------------------
 
     def import_all_skins(self, keep_nodes=False, path=None):
-        if not cmds.objExists('Bind_Geo_Grp'):
-            return False
-        geos = cmds.listRelatives('Bind_Geo_Grp', ad=True)
-        if not geos:
-            cmds.error('There is no geo in Bind_Geo_Grp')
-            return False
+
         if path is None:
             path = mh.folder_window()
         if not path:
             return False
+
+        geos = glob.glob(path+'\\*')
+
         for geo in geos:
+            geo = geo.replace('.json','')
+            geo = geo.replace(path+'\\','')
+
             try:
                 try:
                     skin_utils.bind_to_bnd(geo=geo)
@@ -153,12 +155,7 @@ class NG_Mutant(object):
     def export_all_skins(self):
         self.initialize_all_skins()
 
-        if not cmds.objExists('Bind_Geo_Grp'):
-            return False
-        geos = cmds.listRelatives('Bind_Geo_Grp')
-        if not geos:
-            cmds.error('There is no geo in Bind_Geo_Grp')
-            return False
+        geos = skin_utils.get_all_geo_with_skin()
 
         path = mh.folder_window()
         if not path:

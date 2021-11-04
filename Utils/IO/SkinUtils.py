@@ -84,6 +84,20 @@ class Skinning(object):
         return cmds.ls(typ='skinCluster')
 
     # ----------------------------------------------------------
+    def get_all_geo_with_skin(self):
+
+        skinned_geos = []
+        skins = self.get_skins()
+        shapes = set(sum([cmds.skinCluster(c, q=1, g=1) for c in skins], []))
+        for s in shapes:
+            if cmds.nodeType(s) == 'mesh':
+                transform_node = cmds.listRelatives(s, p=True)
+                if transform_node:
+                    skinned_geos.append(transform_node[0])
+
+        return skinned_geos
+
+    # ----------------------------------------------------------
 
     def rename_skin_clusters(self, input):
         return cmds.rename(input, input + nc['skin_cluster'])

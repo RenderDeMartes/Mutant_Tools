@@ -217,8 +217,8 @@ class AutoRiggerMenu(MayaQWidgetDockableMixin, QtWidgets.QDialog):
 		self.place_guide.triggered.connect(lambda: self.load_guide_placement())
 
 		self.bind_selected.triggered.connect(lambda: skin.bind_to_bnd())
-		self.save_skin.triggered.connect(lambda: ngmt.export_all_skins())
-		self.load_skin.triggered.connect(lambda: ngmt.import_all_skins())
+		self.save_skin.triggered.connect(self.save_skins)
+		self.load_skin.triggered.connect(self.load_skins)
 
 		self.save_ctrls.triggered.connect(lambda: ctrls.save_all())
 		self.load_ctrls.triggered.connect(lambda: ctrls.load_all())
@@ -236,6 +236,25 @@ class AutoRiggerMenu(MayaQWidgetDockableMixin, QtWidgets.QDialog):
 		#DONATE MENU
 		self.paypal.triggered.connect(lambda: self.open_website('https://www.paypal.com/paypalme/renderdemartes'))
 		self.crypto.triggered.connect(lambda: self.open_website('https://mutanttools.com/donate/'))
+
+	# -------------------------------------------------------------------
+	def save_skins(self):
+		try:
+			ngmt.export_all_skins()
+		except:
+			import ngSkinTools2
+			ngSkinTools2.open_ui()
+
+			ngmt.export_all_skins()
+
+	def load_skins(self):
+		try:
+			ngmt.import_all_skins()
+		except:
+			import ngSkinTools2
+			ngSkinTools2.open_ui()
+
+			ngmt.import_all_skins()
 
 	# -------------------------------------------------------------------
 
