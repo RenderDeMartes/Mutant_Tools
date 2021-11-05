@@ -146,7 +146,6 @@ def add_sys_folders_remove_compiled():
 	print ('Cache removed...')
 #-------------------------------------------------------------------
 
-
 class AutoRigger(QtMutantWindow.Qt_Mutant):
 
 	def __init__(self):
@@ -178,6 +177,19 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 
 		#find tools updates:
 		mt.compare_versions()
+
+		#load script job
+		self.mutant_sj = cmds.scriptJob(event=["SelectionChanged", self.mutant_script_job])
+
+	#-------------------------------------------------------------------
+
+	def mutant_script_job(self):
+		try:
+			sel = cmds.ls(sl=True)[-1]
+			if str(sel).endswith('_Block'):
+				self.create_properties_layout(block = cmds.ls(sl=True)[0])
+		except:
+			pass
 
 	#-------------------------------------------------------------------
 	def create_menus(self):
@@ -897,10 +909,11 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 	# CLOSE EVENTS _________________________________
 	def closeEvent(self, event):
 
-		#delete the script job created for the realding of the UI
+		#delete the script job created for the loading of the UI
 		try:
-			cmds.scriptJob(kill=Mutant_sj)
+			cmds.scriptJob(kill=self.mutant_sj)
 			print ('ScripJob deleted')
+			#cmds.scriptJob(ka=1)
 		except:
 			pass
 
@@ -919,20 +932,3 @@ if __name__ == "__main__":
 
 #-------------------------------------------------------------------
 
-
-'''
-#create script Job for laoding the UI
-def Mutant_script_job():
-	try:
-		sel = cmds.ls(sl=True)[-1]
-		if str(sel).endswith('_Block'):
-			self.create_layout()
-	except:pass
-Mutant_sj = cmds.scriptJob(event=["SelectionChanged", Mutant_script_job])
-	   
-
-#cmds.scriptJob(kill=Mutant_sj)
-#cmds.scriptJob(ka=1)
-
-
-'''
