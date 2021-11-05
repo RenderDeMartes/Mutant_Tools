@@ -137,10 +137,7 @@ class NG_Mutant(object):
             geo = geo.replace(path+'\\','')
 
             try:
-                try:
-                    skin_utils.bind_to_bnd(geo=geo)
-                except:
-                    pass
+                skin_utils.bind_to_bnd(geo=geo)
                 self.load_skin_selected(path, geo)
                 print('imported success:: {}'.format(geo))
             except:
@@ -168,12 +165,64 @@ class NG_Mutant(object):
             except:
                 print('Error With:: {}'.format(geo))
 
-        #self.delete_all_nodes()
+        self.delete_all_nodes()
 
     # ----------------------------------------------------------------------------------------------------------------
 
     def initialize_all_skins(self):
         for skin_cluster in skin_utils.get_skins():
             init_layers(skin_cluster)
+
+    # ----------------------------------------------------------------------------------------------------------------
+
+    def export_selected_skin(self):
+        self.initialize_all_skins()
+
+        geos = cmds.ls(sl=True)
+
+        path = mh.folder_window()
+        if not path:
+            return
+        print(path)
+        for geo in geos:
+            try:
+                self.save_skin_selected(path, geo)
+                print('Exported success:: {}'.format(geo))
+            except:
+                print('Error With:: {}'.format(geo))
+
+
+        self.delete_all_nodes()
+
+    # ----------------------------------------------------------------------------------------------------------------
+
+    def import_selected_skins(self, keep_nodes=False, path=None):
+
+        if path is None:
+            path = mh.folder_window()
+        if not path:
+            return False
+
+        geos = glob.glob(path+'\\*')
+        selected_geos = []
+        selectiopn = cmds.ls(sl=True)
+        for g in selection:
+            if g in geos:
+                selected_geos.append(g)
+
+        for geo in selected_geos:
+            geo = geo.replace('.json','')
+            geo = geo.replace(path+'\\','')
+
+            try:
+                skin_utils.bind_to_bnd(geo=geo)
+                self.load_skin_selected(path, geo)
+                print('imported success:: {}'.format(geo))
+            except:
+                print('Error With:: {}'.format(geo))
+
+        if keep_nodes == False:
+            print('Deleted all NgSkin nodes')
+            self.delete_all_nodes()
 
     # ----------------------------------------------------------------------------------------------------------------

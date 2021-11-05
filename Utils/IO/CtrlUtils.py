@@ -260,10 +260,10 @@ class Ctrls(object):
         #ctrls.load_all('C:\\Users\\PC\\Desktop\\ctrls.json')
         if path is None:
             path = mh.import_window(extension = ".json")
+            path = path[0]
         if not path:
             return False
 
-        path = path[0]
         data = self.loadData(path)
         cmds.select('*{}'.format(nc['ctrl']))
         for ctrl in cmds.ls(sl=True):

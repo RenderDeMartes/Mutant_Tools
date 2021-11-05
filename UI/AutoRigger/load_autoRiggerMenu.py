@@ -161,8 +161,10 @@ class AutoRiggerMenu(MayaQWidgetDockableMixin, QtWidgets.QDialog):
 
 		self.bind_selected = self.fileMenu.addAction("Bind Selected Geo")
 		self.download_ng = self.fileMenu.addAction("Download NgSkinToolsV2")
-		self.save_skin = self.fileMenu.addAction("Save Skin")
-		self.load_skin = self.fileMenu.addAction("Load Skin")
+		self.save_skin = self.fileMenu.addAction("Save All Skins")
+		self.load_skin = self.fileMenu.addAction("Load All Skins")
+		self.save_sel_skin = self.fileMenu.addAction("Save Selected Skins")
+		self.load_sel_skin = self.fileMenu.addAction("Load Selected Skins")
 		self.fileMenu.addSeparator()
 
 		self.save_ctrls = self.fileMenu.addAction(" Save Ctrls")
@@ -219,6 +221,8 @@ class AutoRiggerMenu(MayaQWidgetDockableMixin, QtWidgets.QDialog):
 		self.bind_selected.triggered.connect(lambda: skin.bind_to_bnd())
 		self.save_skin.triggered.connect(self.save_skins)
 		self.load_skin.triggered.connect(self.load_skins)
+		self.save_sel_skin.triggered.connect(self.save_sel_skins)
+		self.load_sel_skin.triggered.connect(self.load_sel_skins)
 
 		self.save_ctrls.triggered.connect(lambda: ctrls.save_all())
 		self.load_ctrls.triggered.connect(lambda: ctrls.load_all())
@@ -244,7 +248,6 @@ class AutoRiggerMenu(MayaQWidgetDockableMixin, QtWidgets.QDialog):
 		except:
 			import ngSkinTools2
 			ngSkinTools2.open_ui()
-
 			ngmt.export_all_skins()
 
 	def load_skins(self):
@@ -253,8 +256,23 @@ class AutoRiggerMenu(MayaQWidgetDockableMixin, QtWidgets.QDialog):
 		except:
 			import ngSkinTools2
 			ngSkinTools2.open_ui()
-
 			ngmt.import_all_skins()
+
+	def save_sel_skins(self):
+		try:
+			ngmt.export_selected_skin()
+		except:
+			import ngSkinTools2
+			ngSkinTools2.open_ui()
+			ngmt.export_selected_skin()
+
+	def load_sel_skins(self):
+		try:
+			ngmt.import_selected_skins()
+		except:
+			import ngSkinTools2
+			ngSkinTools2.open_ui()
+			ngmt.import_selected_skins()
 
 	# -------------------------------------------------------------------
 

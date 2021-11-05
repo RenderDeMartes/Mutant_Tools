@@ -76,7 +76,7 @@ def build_load_skin_block():
     try:
         ngmt.import_all_skins(path=path)
     except:
-        import ngSkinTools2;
+        import ngSkinTools2
         ngSkinTools2.open_ui()
         ngmt.import_all_skins(path=path)
 

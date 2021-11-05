@@ -28,6 +28,7 @@ import json
 import imp
 from maya import cmds
 import Mutant_Tools
+import maya.mel as mel
 
 from Mutant_Tools.Utils.Helpers import helpers
 imp.reload(Mutant_Tools.Utils.Helpers.helpers)
@@ -63,6 +64,8 @@ class Skinning(object):
             geo = cmds.ls(sl=True)
 
         self.update_properties()
+        try: mel.eval('doDetachSkin "2" { "1","1" };')
+        except: pass
         skin = self.bind_skin(joints=self.bind_joints, geo=geo)
         return skin
 
@@ -110,6 +113,9 @@ class Skinning(object):
             joints = self.bind_joints
         if geo == None:
             geo = cmds.ls(sl=True)
+
+        if  not type(geo) == 'list':
+            geo = [geo]
 
         for transform in geo:
             if cmds.nodeType(transform) == 'transform':

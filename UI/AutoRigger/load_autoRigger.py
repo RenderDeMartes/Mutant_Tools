@@ -611,7 +611,7 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		cmds.setAttr(attr, nice_selection, type = 'string')
 
 	def lineEdit_get_file(self, field, attr, *args):
-		path = mh.import_window(extension=".json")
+		path = mh.import_window(extension=".json")[0]
 		field.setText(path)
 		cmds.setAttr(attr, path, type='string')
 
