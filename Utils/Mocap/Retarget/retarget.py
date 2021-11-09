@@ -8,18 +8,24 @@ how to:
 
 import Mutant_Tools
 import imp
-import Mutant_Tools.Utils.Mocap
-from Mutant_Tools.Utils.Mocap import retarget
-imp.reload(Mutant_Tools.Utils.Mocap.retarget)
-#get Mocap data
-cRetarget = retarget.Retarget()
-cRetarget.set_timeline(0,150)
-cRetarget.mocap_provider = retarget.radical_map
-mocap_data = cRetarget.get_mocap_data()
-#Apply mocap
-cRetarget.offset_map=retarget.radical_offset_map.json
-cRetarget.apply_mocap_data()
+import Mutant_Tools.Utils.Mocap.Retarget
+from Mutant_Tools.Utils.Mocap.Retarget import retarget
+imp.reload(Mutant_Tools.Utils.Mocap.Retarget.retarget)
 
+cRetarget = retarget.Retarget()
+
+#get Mocap data
+cRetarget.set_timeline(0,25)
+cRetarget.set_fps(30)
+cRetarget.set_for_mixamo()
+mocap_data = cRetarget.get_mocap_data()
+cRetarget.save_mocap_data_to_file()
+
+#Apply mocap
+cRetarget.set_for_mixamo()
+#cRetarget.load_mocap_data_from_file()
+cRetarget.mocap_data = mocap_data
+cRetarget.apply_mocap_data()
 
 #----------------
 dependencies:
@@ -41,11 +47,15 @@ import json
 
 from  maya import mel
 from maya import cmds
+import Mutant_Tools
+from Mutant_Tools.Utils.Helpers import helpers
+imp.reload(Mutant_Tools.Utils.Helpers.helpers)
+mh = helpers.Helpers()
 
 #-----------------------------------------------------------------------------------------------
 
 PATH = os.path.dirname(__file__)
-PATH = PATH.replace("\\Utils\\Mocap", "//Config")
+PATH = PATH.replace("\\Utils\\Mocap\\Retarget", "//Config")
 
 JSON_FILE = (PATH + "/name_conventions.json")
 with open(JSON_FILE) as json_file:
@@ -57,18 +67,30 @@ class Retarget(object):
 
     def __init__(self):
 
-        self.mocap_provider = None  # Rokoko, Mizamo, Radical, Etc
         self.range = [0, 120]
         self.fps = 30
 
         self.cog_mult = 1
 
-        self.mocap_data = {}
-        self.rig_map = mutant_map
-        self.offset_map = None
+        self.rig_map = self.set_mutant_rig_map() #Mutant Map
+
+        self.mocap_provider_map = None  # Rokoko Map, Mizamo Map, Radical Map, Etc
+        self.mocap_data = {} #collected data top retarget
+        self.offset_map = None # Rokoko Offset Map, Mizamo Offset Map, Radical Offset Map, Etc
 
     #----------------------------------------------------------------------------
 
+    def set_mutant_rig_map(self):
+
+        json_data = os.path.dirname(__file__).replace('Retarget', 'MocapFiles\\mutant_map.json')
+        with open(json_data) as f:
+            data = json.load(f)
+
+        self.rig_map = data
+
+        return data
+
+    #----------------------------------------------------------------------------
 
     def set_timeline(self, min, max):
         cmds.playbackOptions(min= min , max= max, ps=1)
@@ -81,13 +103,83 @@ class Retarget(object):
 
     #----------------------------------------------------------------------------
 
+    def read_mocap_map(self, file_path = None):
+        """ will read json file with mocap data
+
+        Args:
+            file_path: path to where the json file is (rembember to use \\ to define the folders)
+
+        Returns: dictionary with data
+
+        """
+        if file_path is None:
+            path = mh.import_window(extension = ".json")
+            path = path[0]
+
+        if not file_path:
+            return False
+
+        json_data = file_path
+        json_data.replace('/', '\\')
+
+        with open(json_data) as f:
+            data = json.load(f)
+
+        self.mocap_provider_map = data
+
+        return data
+
+    #----------------------------------------------------------------------------
+
+    def read_offset_map(self, file_path = None):
+        """ will read json file with mocap data
+
+        Args:
+            file_path: path to where the json file is (rembember to use \\ to define the folders)
+
+        Returns: dictionary with data
+
+        """
+        if file_path is None:
+            path = mh.import_window(extension = ".json")
+            path = path[0]
+
+        if not file_path:
+            return False
+
+        json_data = file_path
+        json_data.replace('/', '\\')
+
+        with open(json_data) as f:
+            data = json.load(f)
+
+        self.offset_map = data
+
+        return data
+
+    #----------------------------------------------------------------------------
+
+    def set_for_mixamo(self):
+        self.read_mocap_map(os.path.dirname(__file__).replace('Retarget', 'MocapFiles\\Mixamo\\mixamo_map.json'))
+        self.read_offset_map(os.path.dirname(__file__).replace('Retarget', 'MocapFiles\\Mixamo\\mixamo_offset_map.json'))
+
+    def set_for_radical(self):
+        self.read_mocap_map(os.path.dirname(__file__).replace('Retarget', 'MocapFiles\\Radical\\radical_map.json'))
+        self.read_offset_map(os.path.dirname(__file__).replace('Retarget', 'MocapFiles\\Radical\\radical_offset_map.json'))
+
+    def set_for_rokoko(self):
+        self.read_mocap_map(os.path.dirname(__file__).replace('Retarget', 'MocapFiles\\Rokoko\\rokoko_map.json'))
+        self.read_offset_map(os.path.dirname(__file__).replace('Retarget', 'MocapFiles\\Rokoko\\rokoko_offset_map.json'))
+
+    #----------------------------------------------------------------------------
+
     def get_mocap_data(self, provider = None):
 
         if provider is None:
-            provider = self.mocap_provider
+            provider = self.mocap_provider_map
 
         if not provider:
-            cmds.error("We need to set provider as in attrs or as in self.mocap_provider")
+            cmds.error("We need to set provider as in attrs or as in self.mocap_provider_map")
 
         mocap_data = {}
         for frame in range(self.range[0], self.range[1]+1):
@@ -119,8 +211,37 @@ class Retarget(object):
 
     #----------------------------------------------------------------------------
 
+    def save_mocap_data_to_file(self, mocap_data = None):
+
+        if mocap_data is None:
+            mocap_data = self.mocap_data
+
+        path = mh.export_window(extension=".json")
+        if not path:
+            return
+        path = path[0]
+        mh.write_json(path, json_file = '', data = mocap_data)
+
+    #----------------------------------------------------------------------------
+
     def set_ctrls_to_fk(self):
-        "TO DO LATER OR MAYBE NEVER DID"
+        try:
+            cmds.setAttr("L_Ankle_Fk_Ctrl|L_Hip_Jnt_Switch_Loc.Switch_IK_FK", 1)
+            cmds.setAttr("R_Ankle_Fk_Ctrl|R_Hip_Jnt_Switch_Loc.Switch_IK_FK", 1)
+            cmds.setAttr("L_Wrist_Fk_Ctrl|L_Shoulder_Jnt_Switch_Loc.Switch_IK_FK", 1)
+            cmds.setAttr("R_Wrist_Fk_Ctrl|R_Shoulder_Jnt_Switch_Loc.Switch_IK_FK", 1)
+        except:
+            print('We didnt manage to switch all the ctrls to FK, please do it manually.')
+
+    #----------------------------------------------------------------------------
+
+    def load_mocap_data_from_file(self, path = None):
+        if path == None:
+            read_path = mh.import_window(extension=".json")[0]
+        else:
+            read_path = path
+
+        self.mocap_data= mh.read_json(path = read_path, json_file='')
 
     #----------------------------------------------------------------------------
 
@@ -128,9 +249,11 @@ class Retarget(object):
 
         if not self.mocap_data:
             cmds.error("We need mocap data to work dude!!!")
-        
+
+        self.set_ctrls_to_fk()
         self.set_fps()
         self.set_timeline(self.range[0], self.range[1])
+
         rig_map = self.rig_map
         offset_map = self.offset_map
 
@@ -180,3 +303,7 @@ class Retarget(object):
                     cmds.setKeyframe()
 
         cmds.currentTime(self.range[0])
+
+    #----------------------------------------------------------------------------
+
+

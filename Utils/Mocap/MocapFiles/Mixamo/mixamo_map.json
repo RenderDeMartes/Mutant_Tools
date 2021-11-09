@@ -1,0 +1,36 @@
+{
+
+    "root": "group",
+
+    "cog": "Hips",
+    "spine_base": "Spine",
+    "spine_belly": "Spine1",
+    "spine_chest": "Spine2",
+
+    "neck": "Neck",
+    "head": "Head",
+
+    "l_hip": "LeftUpLeg",
+    "l_knee": "LeftLeg",
+    "l_ankle": "LeftFoot",
+    "l_ball": "LeftToeBase",
+    "l_toes": "LeftToe_End",
+
+    "r_hip": "RightUpLeg",
+    "r_knee": "RightLeg",
+    "r_ankle": "RightFoot",
+    "r_ball": "RightToeBase",
+    "r_toes": "RightToe_End",
+
+    "l_clavicle": "LeftShoulder",
+    "r_clavicle": "RightShoulder",
+
+    "l_shoulder": "LeftArm",
+    "l_elbow": "LeftForeArm",
+    "l_wrist": "LeftHand",
+
+    "r_shoulder": "RightArm",
+    "r_elbow": "RightForeArm",
+    "r_wrist": "RightHand"
+
+}
