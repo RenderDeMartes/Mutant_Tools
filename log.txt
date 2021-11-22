@@ -72,10 +72,10 @@ Breathing...
 # Warning: Name '________' of new attribute clashes with an existing attribute of node 'Spine_Attrs_Loc'. # 
 # Warning: Name '_______' of new attribute clashes with an existing attribute of node 'Spine_Attrs_Loc'. # 
 # Warning: Name '______' of new attribute clashes with an existing attribute of node 'Spine_Attrs_Loc'. # 
-Spine_Belly_Jnt_SquashExtra_MultDiv2.outputX
-Spine_OffOnVolume_Blend4.outputR
-Spine_Chest_Jnt_SquashExtra_MultDiv2.outputX
-Spine_OffOnVolume_Blend5.outputR
+Spine_Belly_Jnt_SquashExtra_MultDiv.outputX
+Spine_OffOnVolume_Blend1.outputR
+Spine_Chest_Jnt_SquashExtra_MultDiv.outputX
+Spine_OffOnVolume_Blend2.outputR
 Spine_Base_Bnd
 Spine_Belly_Bnd
 Spine_Chest_Bnd
@@ -132,7 +132,7 @@ creating ik Chain for : L_Shoulder_Jnt
 // Error: searchReplaceNames _Jnt  "selected"; // 
 // Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
 IK = ['L_Wrist_Ik_Ctrl', 'L_Wrist_Ik_PoleVector_Ctrl', 'L_Shoulder_Ik_Ctrl', 'L_Wrist_Ik_IKrp', 'L_Wrist_Ik_PoleVector_Ctrl_L_Elbow_Ik_Jnt_Connected_Crv']
-22.752471637909448
+28.332410970088215
 ['L_Shoulder_Fk_Ctrl_Offset_Grp', 'L_Wrist_Ik_Ctrl_Offset_Grp', 'L_Shoulder_Ik_Ctrl_Offset_Grp', 'L_Shoulder_Ik_Jnt_Ctrl_Grp']
 __________
 adding loc to ['L_Shoulder_Fk_Ctrl']
@@ -145,7 +145,7 @@ adding loc to ['L_Wrist_Ik_PoleVector_Ctrl_L_Elbow_Ik_Jnt_Connected_Crv']
 L_Shoulder_Jnt_Switch_Loc.Switch_IK_FK
 L_Shoulder_Jnt_Switch_Loc
 # Warning: Name '_________' of new attribute clashes with an existing attribute of node 'L_Shoulder_Jnt_Switch_Loc'. # 
-L_Shoulder_Ik_Jnt_L_Wrist_Ik_Jnt_Distance_Shape_MultDiv1 L_Elbow_Ik_Jnt_NewScale_MultDiv1 L_Shoulder_Ik_Jnt_NewScale_MultDiv1 L_Wrist_Ik_IKrp_TotalDistance_MultDiv1
+L_Shoulder_Ik_Jnt_L_Wrist_Ik_Jnt_Distance_Shape_MultDiv L_Elbow_Ik_Jnt_NewScale_MultDiv L_Shoulder_Ik_Jnt_NewScale_MultDiv L_Wrist_Ik_IKrp_TotalDistance_MultDiv
 ['L_Shoulder_Jnt', 'L_Elbow_Jnt', 'L_Wrist_Jnt'] ['L_Shoulder_Ik_Jnt', 'L_Elbow_Ik_Jnt', 'L_Wrist_Ik_Jnt'] ['L_Shoulder_Fk_Jnt', 'L_Elbow_Fk_Jnt', 'L_Wrist_Fk_Jnt'] ['L_Shoulder_Fk_Ctrl', 'L_Elbow_Fk_Ctrl', 'L_Wrist_Fk_Ctrl'] ['L_Wrist_Ik_Ctrl', 'L_Wrist_Ik_PoleVector_Ctrl', 'L_Shoulder_Ik_Ctrl', 'L_Wrist_Ik_IKrp', 'L_Wrist_Ik_PoleVector_Ctrl_L_Elbow_Ik_Jnt_Connected_Crv', ('L_Wrist_Ik_IKrp_Stretchy_Grp', 'L_Wrist_Ik_IKrp_NormalScale_Loc', ['L_Wrist_Ik_Jnt_Stretchy_Loc'], ['L_Shoulder_Ik_Jnt_Stretchy_Loc'], ['L_Elbow_Ik_Jnt_Stretchy_Loc'], 'L_Shoulder_Ik_Jnt_L_Wrist_Ik_Jnt_Distance_Shape', 'L_Elbow_Ik_Jnt_L_Wrist_Ik_Jnt_Distance_Shape', 'L_Shoulder_Ik_Jnt_L_Elbow_Ik_Jnt_Distance_Shape')] ['L_Shoulder_Fk_Ctrl_Offset_Grp', 'L_Wrist_Ik_Ctrl_Offset_Grp', 'L_Shoulder_Ik_Ctrl_Offset_Grp', 'L_Shoulder_Ik_Jnt_Ctrl_Grp']
 # Warning: Object, 'L_Shoulder_Twist_0_Jnt', skipped. It is already a child of the parent, 'world'. # 
 # Warning: History will be off for the command since Keep Originals is off and a selected item has no history. # 
@@ -187,7 +187,7 @@ creating ik Chain for : R_Shoulder_Jnt
 // Error: searchReplaceNames _Jnt  "selected"; // 
 // Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
 IK = ['R_Wrist_Ik_Ctrl', 'R_Wrist_Ik_PoleVector_Ctrl', 'R_Shoulder_Ik_Ctrl', 'R_Wrist_Ik_IKrp', 'R_Wrist_Ik_PoleVector_Ctrl_R_Elbow_Ik_Jnt_Connected_Crv']
-22.752640512013087
+28.332408353551592
 ['R_Shoulder_Fk_Ctrl_Offset_Grp', 'R_Wrist_Ik_Ctrl_Offset_Grp', 'R_Shoulder_Ik_Ctrl_Offset_Grp', 'R_Wrist_Ik_Ctrl_Offset_Grp__Mirror_Grp']
 __________
 adding loc to ['R_Shoulder_Fk_Ctrl']
@@ -200,7 +200,7 @@ adding loc to ['R_Wrist_Ik_PoleVector_Ctrl_R_Elbow_Ik_Jnt_Connected_Crv']
 R_Shoulder_Jnt_Switch_Loc.Switch_IK_FK
 R_Shoulder_Jnt_Switch_Loc
 # Warning: Name '_________' of new attribute clashes with an existing attribute of node 'R_Shoulder_Jnt_Switch_Loc'. # 
-R_Shoulder_Ik_Jnt_R_Wrist_Ik_Jnt_Distance_Shape_MultDiv1 R_Elbow_Ik_Jnt_NewScale_MultDiv1 R_Shoulder_Ik_Jnt_NewScale_MultDiv1 R_Wrist_Ik_IKrp_TotalDistance_MultDiv1
+R_Shoulder_Ik_Jnt_R_Wrist_Ik_Jnt_Distance_Shape_MultDiv R_Elbow_Ik_Jnt_NewScale_MultDiv R_Shoulder_Ik_Jnt_NewScale_MultDiv R_Wrist_Ik_IKrp_TotalDistance_MultDiv
 ['R_Shoulder_Jnt', 'R_Elbow_Jnt', 'R_Wrist_Jnt'] ['R_Shoulder_Ik_Jnt', 'R_Elbow_Ik_Jnt', 'R_Wrist_Ik_Jnt'] ['R_Shoulder_Fk_Jnt', 'R_Elbow_Fk_Jnt', 'R_Wrist_Fk_Jnt'] ['R_Shoulder_Fk_Ctrl', 'R_Elbow_Fk_Ctrl', 'R_Wrist_Fk_Ctrl'] ['R_Wrist_Ik_Ctrl', 'R_Wrist_Ik_PoleVector_Ctrl', 'R_Shoulder_Ik_Ctrl', 'R_Wrist_Ik_IKrp', 'R_Wrist_Ik_PoleVector_Ctrl_R_Elbow_Ik_Jnt_Connected_Crv', ('R_Wrist_Ik_IKrp_Stretchy_Grp', 'R_Wrist_Ik_IKrp_NormalScale_Loc', ['R_Wrist_Ik_Jnt_Stretchy_Loc'], ['R_Shoulder_Ik_Jnt_Stretchy_Loc'], ['R_Elbow_Ik_Jnt_Stretchy_Loc'], 'R_Shoulder_Ik_Jnt_R_Wrist_Ik_Jnt_Distance_Shape', 'R_Elbow_Ik_Jnt_R_Wrist_Ik_Jnt_Distance_Shape', 'R_Shoulder_Ik_Jnt_R_Elbow_Ik_Jnt_Distance_Shape')] ['R_Shoulder_Fk_Ctrl_Offset_Grp', 'R_Wrist_Ik_Ctrl_Offset_Grp', 'R_Shoulder_Ik_Ctrl_Offset_Grp', 'R_Wrist_Ik_Ctrl_Offset_Grp__Mirror_Grp']
 # Warning: Object, 'R_Shoulder_Twist_0_Jnt', skipped. It is already a child of the parent, 'world'. # 
 # Warning: History will be off for the command since Keep Originals is off and a selected item has no history. # 
@@ -270,7 +270,7 @@ creating ik Chain for : L_Hip_Jnt
 // Error: searchReplaceNames _Jnt  "selected"; // 
 // Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
 IK = ['L_Ankle_Ik_Ctrl', 'L_Ankle_Ik_PoleVector_Ctrl', 'L_Hip_Ik_Ctrl', 'L_Ankle_Ik_IKrp', 'L_Ankle_Ik_PoleVector_Ctrl_L_Knee_Ik_Jnt_Connected_Crv']
-30.15325060069098
+40.96857316986821
 ['L_Hip_Fk_Ctrl_Offset_Grp', 'L_Ankle_Ik_Ctrl_Offset_Grp', 'L_Hip_Ik_Ctrl_Offset_Grp', 'L_Hip_Ik_Jnt_Ctrl_Grp']
 __________
 adding loc to ['L_Hip_Fk_Ctrl']
@@ -283,7 +283,7 @@ adding loc to ['L_Ankle_Ik_PoleVector_Ctrl_L_Knee_Ik_Jnt_Connected_Crv']
 L_Hip_Jnt_Switch_Loc.Switch_IK_FK
 L_Hip_Jnt_Switch_Loc
 # Warning: Name '_________' of new attribute clashes with an existing attribute of node 'L_Hip_Jnt_Switch_Loc'. # 
-L_Hip_Ik_Jnt_L_Ankle_Ik_Jnt_Distance_Shape_MultDiv1 L_Knee_Ik_Jnt_NewScale_MultDiv1 L_Hip_Ik_Jnt_NewScale_MultDiv1 L_Ankle_Ik_IKrp_TotalDistance_MultDiv1
+L_Hip_Ik_Jnt_L_Ankle_Ik_Jnt_Distance_Shape_MultDiv L_Knee_Ik_Jnt_NewScale_MultDiv L_Hip_Ik_Jnt_NewScale_MultDiv L_Ankle_Ik_IKrp_TotalDistance_MultDiv
 ['L_Hip_Jnt', 'L_Knee_Jnt', 'L_Ankle_Jnt'] ['L_Hip_Ik_Jnt', 'L_Knee_Ik_Jnt', 'L_Ankle_Ik_Jnt'] ['L_Hip_Fk_Jnt', 'L_Knee_Fk_Jnt', 'L_Ankle_Fk_Jnt'] ['L_Hip_Fk_Ctrl', 'L_Knee_Fk_Ctrl', 'L_Ankle_Fk_Ctrl'] ['L_Ankle_Ik_Ctrl', 'L_Ankle_Ik_PoleVector_Ctrl', 'L_Hip_Ik_Ctrl', 'L_Ankle_Ik_IKrp', 'L_Ankle_Ik_PoleVector_Ctrl_L_Knee_Ik_Jnt_Connected_Crv', ('L_Ankle_Ik_IKrp_Stretchy_Grp', 'L_Ankle_Ik_IKrp_NormalScale_Loc', ['L_Ankle_Ik_Jnt_Stretchy_Loc'], ['L_Hip_Ik_Jnt_Stretchy_Loc'], ['L_Knee_Ik_Jnt_Stretchy_Loc'], 'L_Hip_Ik_Jnt_L_Ankle_Ik_Jnt_Distance_Shape', 'L_Knee_Ik_Jnt_L_Ankle_Ik_Jnt_Distance_Shape', 'L_Hip_Ik_Jnt_L_Knee_Ik_Jnt_Distance_Shape')] ['L_Hip_Fk_Ctrl_Offset_Grp', 'L_Ankle_Ik_Ctrl_Offset_Grp', 'L_Hip_Ik_Ctrl_Offset_Grp', 'L_Hip_Ik_Jnt_Ctrl_Grp']
 # Warning: Object, 'L_Hip_Twist_0_Jnt', skipped. It is already a child of the parent, 'world'. # 
 # Warning: History will be off for the command since Keep Originals is off and a selected item has no history. # 
@@ -325,7 +325,7 @@ creating ik Chain for : R_Hip_Jnt
 // Error: searchReplaceNames _Jnt  "selected"; // 
 // Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
 IK = ['R_Ankle_Ik_Ctrl', 'R_Ankle_Ik_PoleVector_Ctrl', 'R_Hip_Ik_Ctrl', 'R_Ankle_Ik_IKrp', 'R_Ankle_Ik_PoleVector_Ctrl_R_Knee_Ik_Jnt_Connected_Crv']
-30.153246274489263
+40.968600000000016
 ['R_Hip_Fk_Ctrl_Offset_Grp', 'R_Ankle_Ik_Ctrl_Offset_Grp', 'R_Hip_Ik_Ctrl_Offset_Grp', 'R_Ankle_Ik_Ctrl_Offset_Grp__Mirror_Grp']
 __________
 adding loc to ['R_Hip_Fk_Ctrl']
@@ -338,7 +338,7 @@ adding loc to ['R_Ankle_Ik_PoleVector_Ctrl_R_Knee_Ik_Jnt_Connected_Crv']
 R_Hip_Jnt_Switch_Loc.Switch_IK_FK
 R_Hip_Jnt_Switch_Loc
 # Warning: Name '_________' of new attribute clashes with an existing attribute of node 'R_Hip_Jnt_Switch_Loc'. # 
-R_Hip_Ik_Jnt_R_Ankle_Ik_Jnt_Distance_Shape_MultDiv1 R_Knee_Ik_Jnt_NewScale_MultDiv1 R_Hip_Ik_Jnt_NewScale_MultDiv1 R_Ankle_Ik_IKrp_TotalDistance_MultDiv1
+R_Hip_Ik_Jnt_R_Ankle_Ik_Jnt_Distance_Shape_MultDiv R_Knee_Ik_Jnt_NewScale_MultDiv R_Hip_Ik_Jnt_NewScale_MultDiv R_Ankle_Ik_IKrp_TotalDistance_MultDiv
 ['R_Hip_Jnt', 'R_Knee_Jnt', 'R_Ankle_Jnt'] ['R_Hip_Ik_Jnt', 'R_Knee_Ik_Jnt', 'R_Ankle_Ik_Jnt'] ['R_Hip_Fk_Jnt', 'R_Knee_Fk_Jnt', 'R_Ankle_Fk_Jnt'] ['R_Hip_Fk_Ctrl', 'R_Knee_Fk_Ctrl', 'R_Ankle_Fk_Ctrl'] ['R_Ankle_Ik_Ctrl', 'R_Ankle_Ik_PoleVector_Ctrl', 'R_Hip_Ik_Ctrl', 'R_Ankle_Ik_IKrp', 'R_Ankle_Ik_PoleVector_Ctrl_R_Knee_Ik_Jnt_Connected_Crv', ('R_Ankle_Ik_IKrp_Stretchy_Grp', 'R_Ankle_Ik_IKrp_NormalScale_Loc', ['R_Ankle_Ik_Jnt_Stretchy_Loc'], ['R_Hip_Ik_Jnt_Stretchy_Loc'], ['R_Knee_Ik_Jnt_Stretchy_Loc'], 'R_Hip_Ik_Jnt_R_Ankle_Ik_Jnt_Distance_Shape', 'R_Knee_Ik_Jnt_R_Ankle_Ik_Jnt_Distance_Shape', 'R_Hip_Ik_Jnt_R_Knee_Ik_Jnt_Distance_Shape')] ['R_Hip_Fk_Ctrl_Offset_Grp', 'R_Ankle_Ik_Ctrl_Offset_Grp', 'R_Hip_Ik_Ctrl_Offset_Grp', 'R_Ankle_Ik_Ctrl_Offset_Grp__Mirror_Grp']
 # Warning: Object, 'R_Hip_Twist_0_Jnt', skipped. It is already a child of the parent, 'world'. # 
 # Warning: History will be off for the command since Keep Originals is off and a selected item has no history. # 
@@ -385,10 +385,10 @@ Import successfully import exec_hand
 Precode L_Hand_Block
 L_Hand
 L_Hand_Palm_Jnt
-// Replaced 22 names.
+// Replaced 27 names.
 ['L_Hand_Palm_Jnt', 'R_Hand_Palm_Jnt']
-['L_Hand_Thumb_00_Jnt', 'L_Hand_Index_00_Jnt', 'L_Hand_Middle_00_Jnt', 'L_Hand_Pinky_00_Jnt']
-// Replaced 22 names.
+['L_Hand_Thumb_00_Jnt', 'L_Hand_Index_00_Jnt', 'L_Hand_Middle_00_Jnt', 'L_Hand_Ring_00_Jnt', 'L_Hand_Pinky_00_Jnt']
+// Replaced 27 names.
 ['L_Hand_Thumb_01_Jnt']
 ['L_Hand_Thumb_02_Jnt']
 ['L_Hand_Thumb_03_Jnt']
@@ -435,6 +435,23 @@ L_Hand_Palm_Jnt
 // Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
 // Error: searchReplaceNames _Jnt  "selected"; // 
 // Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
+['L_Hand_Ring_01_Jnt']
+['L_Hand_Ring_02_Jnt']
+['L_Hand_Ring_03_Jnt']
+['L_Hand_Ring_04_Jnt']
+['L_Hand_Ring_00_Ctrl', 'L_Hand_Ring_01_Ctrl', 'L_Hand_Ring_02_Ctrl', 'L_Hand_Ring_03_Ctrl']
+// Error: searchReplaceNames _Ctrl  "selected"; // 
+// Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
+// Error: searchReplaceNames _Jnt  "selected"; // 
+// Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
+// Error: searchReplaceNames _Ctrl  "selected"; // 
+// Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
+// Error: searchReplaceNames _Jnt  "selected"; // 
+// Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
+// Error: searchReplaceNames _Ctrl  "selected"; // 
+// Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
+// Error: searchReplaceNames _Jnt  "selected"; // 
+// Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
 ['L_Hand_Pinky_01_Jnt']
 ['L_Hand_Pinky_02_Jnt']
 ['L_Hand_Pinky_03_Jnt']
@@ -452,14 +469,14 @@ L_Hand_Palm_Jnt
 // Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
 // Error: searchReplaceNames _Jnt  "selected"; // 
 // Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
-[63.4581531483189, 79.37769092182606, -3.959846707169151]
+[74.40011591759573, 144.6107404172679, -0.125406211383559]
 # Warning: Name '_________' of new attribute clashes with an existing attribute of node 'L_Hand_Palm_Ctrl'. # 
 L_Hand_Palm_Jnt:INNER CUP
 // Error: searchReplaceNames _Ctrl  "selected"; // 
 // Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
 // Error: searchReplaceNames _Jnt  "selected"; // 
 // Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
-[63.65862410803127, 76.29539880091019, 0.42131553269686295]
+[77.23632233735164, 145.37143439772024, 6.94104645269536]
 L_Hand_Palm_Jnt: OUTTER CUP
 // Error: searchReplaceNames _Ctrl  "selected"; // 
 // Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
@@ -472,6 +489,10 @@ Pinky_01
 // Error: searchReplaceNames _Jnt  "selected"; // 
 // Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
 Ring_01
+// Error: searchReplaceNames _Ctrl  "selected"; // 
+// Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
+// Error: searchReplaceNames _Jnt  "selected"; // 
+// Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
 Middle_01
 // Error: searchReplaceNames _Ctrl  "selected"; // 
 // Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
@@ -488,6 +509,10 @@ Pinky_01
 // Error: searchReplaceNames _Jnt  "selected"; // 
 // Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
 Ring_01
+// Error: searchReplaceNames _Ctrl  "selected"; // 
+// Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
+// Error: searchReplaceNames _Jnt  "selected"; // 
+// Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
 Middle_01
 // Error: searchReplaceNames _Ctrl  "selected"; // 
 // Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
@@ -502,9 +527,9 @@ Index_01
 // Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
 // Error: searchReplaceNames _Jnt  "selected"; // 
 // Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
-['L_Hand_Palm_Bnd', 'L_Hand_Index_00_Bnd', 'L_Hand_Index_01_Bnd', 'L_Hand_Index_02_Bnd', 'L_Hand_Index_03_Bnd', 'L_Hand_Index_04_Bnd', 'L_Hand_Middle_00_Bnd', 'L_Hand_Middle_01_Bnd', 'L_Hand_Middle_02_Bnd', 'L_Hand_Middle_03_Bnd', 'L_Hand_Middle_04_Bnd', 'L_Hand_InnerCup_Bnd', 'L_Hand_Thumb_00_Bnd', 'L_Hand_Thumb_01_Bnd', 'L_Hand_Thumb_02_Bnd', 'L_Hand_Thumb_03_Bnd', 'L_Hand_OutterCup_Bnd', 'L_Hand_Pinky_00_Bnd', 'L_Hand_Pinky_01_Bnd', 'L_Hand_Pinky_02_Bnd', 'L_Hand_Pinky_03_Bnd', 'L_Hand_Pinky_04_Bnd']
-['R_Hand_Thumb_00_Jnt', 'R_Hand_Index_00_Jnt', 'R_Hand_Middle_00_Jnt', 'R_Hand_Pinky_00_Jnt']
-// Replaced 22 names.
+['L_Hand_Palm_Bnd', 'L_Hand_Index_00_Bnd', 'L_Hand_Index_01_Bnd', 'L_Hand_Index_02_Bnd', 'L_Hand_Index_03_Bnd', 'L_Hand_Index_04_Bnd', 'L_Hand_Middle_00_Bnd', 'L_Hand_Middle_01_Bnd', 'L_Hand_Middle_02_Bnd', 'L_Hand_Middle_03_Bnd', 'L_Hand_Middle_04_Bnd', 'L_Hand_InnerCup_Bnd', 'L_Hand_Thumb_00_Bnd', 'L_Hand_Thumb_01_Bnd', 'L_Hand_Thumb_02_Bnd', 'L_Hand_Thumb_03_Bnd', 'L_Hand_OutterCup_Bnd', 'L_Hand_Pinky_00_Bnd', 'L_Hand_Pinky_01_Bnd', 'L_Hand_Pinky_02_Bnd', 'L_Hand_Pinky_03_Bnd', 'L_Hand_Pinky_04_Bnd', 'L_Hand_Ring_00_Bnd', 'L_Hand_Ring_01_Bnd', 'L_Hand_Ring_02_Bnd', 'L_Hand_Ring_03_Bnd', 'L_Hand_Ring_04_Bnd']
+['R_Hand_Thumb_00_Jnt', 'R_Hand_Index_00_Jnt', 'R_Hand_Middle_00_Jnt', 'R_Hand_Ring_00_Jnt', 'R_Hand_Pinky_00_Jnt']
+// Replaced 27 names.
 ['R_Hand_Thumb_01_Jnt']
 ['R_Hand_Thumb_02_Jnt']
 ['R_Hand_Thumb_03_Jnt']
@@ -551,6 +576,23 @@ Index_01
 // Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
 // Error: searchReplaceNames _Jnt  "selected"; // 
 // Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
+['R_Hand_Ring_01_Jnt']
+['R_Hand_Ring_02_Jnt']
+['R_Hand_Ring_03_Jnt']
+['R_Hand_Ring_04_Jnt']
+['R_Hand_Ring_00_Ctrl', 'R_Hand_Ring_01_Ctrl', 'R_Hand_Ring_02_Ctrl', 'R_Hand_Ring_03_Ctrl']
+// Error: searchReplaceNames _Ctrl  "selected"; // 
+// Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
+// Error: searchReplaceNames _Jnt  "selected"; // 
+// Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
+// Error: searchReplaceNames _Ctrl  "selected"; // 
+// Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
+// Error: searchReplaceNames _Jnt  "selected"; // 
+// Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
+// Error: searchReplaceNames _Ctrl  "selected"; // 
+// Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
+// Error: searchReplaceNames _Jnt  "selected"; // 
+// Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
 ['R_Hand_Pinky_01_Jnt']
 ['R_Hand_Pinky_02_Jnt']
 ['R_Hand_Pinky_03_Jnt']
@@ -568,14 +610,14 @@ Index_01
 // Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
 // Error: searchReplaceNames _Jnt  "selected"; // 
 // Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
-[63.4581531483189, 79.37769092182606, -3.959846707169151]
+[74.40011591759573, 144.6107404172679, -0.125406211383559]
 # Warning: Name '_________' of new attribute clashes with an existing attribute of node 'R_Hand_Palm_Ctrl'. # 
 R_Hand_Palm_Jnt:INNER CUP
 // Error: searchReplaceNames _Ctrl  "selected"; // 
 // Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
 // Error: searchReplaceNames _Jnt  "selected"; // 
 // Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
-[63.65862410803127, 76.29539880091019, 0.42131553269686295]
+[77.23632233735164, 145.37143439772024, 6.94104645269536]
 R_Hand_Palm_Jnt: OUTTER CUP
 // Error: searchReplaceNames _Ctrl  "selected"; // 
 // Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
@@ -588,6 +630,10 @@ Pinky_01
 // Error: searchReplaceNames _Jnt  "selected"; // 
 // Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
 Ring_01
+// Error: searchReplaceNames _Ctrl  "selected"; // 
+// Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
+// Error: searchReplaceNames _Jnt  "selected"; // 
+// Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
 Middle_01
 // Error: searchReplaceNames _Ctrl  "selected"; // 
 // Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
@@ -604,6 +650,10 @@ Pinky_01
 // Error: searchReplaceNames _Jnt  "selected"; // 
 // Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
 Ring_01
+// Error: searchReplaceNames _Ctrl  "selected"; // 
+// Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
+// Error: searchReplaceNames _Jnt  "selected"; // 
+// Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
 Middle_01
 // Error: searchReplaceNames _Ctrl  "selected"; // 
 // Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
@@ -618,7 +668,7 @@ Index_01
 // Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
 // Error: searchReplaceNames _Jnt  "selected"; // 
 // Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
-['R_Hand_Palm_Bnd', 'R_Hand_Index_00_Bnd', 'R_Hand_Index_01_Bnd', 'R_Hand_Index_02_Bnd', 'R_Hand_Index_03_Bnd', 'R_Hand_Index_04_Bnd', 'R_Hand_Middle_00_Bnd', 'R_Hand_Middle_01_Bnd', 'R_Hand_Middle_02_Bnd', 'R_Hand_Middle_03_Bnd', 'R_Hand_Middle_04_Bnd', 'R_Hand_InnerCup_Bnd', 'R_Hand_Thumb_00_Bnd', 'R_Hand_Thumb_01_Bnd', 'R_Hand_Thumb_02_Bnd', 'R_Hand_Thumb_03_Bnd', 'R_Hand_OutterCup_Bnd', 'R_Hand_Pinky_00_Bnd', 'R_Hand_Pinky_01_Bnd', 'R_Hand_Pinky_02_Bnd', 'R_Hand_Pinky_03_Bnd', 'R_Hand_Pinky_04_Bnd']
+['R_Hand_Palm_Bnd', 'R_Hand_Index_00_Bnd', 'R_Hand_Index_01_Bnd', 'R_Hand_Index_02_Bnd', 'R_Hand_Index_03_Bnd', 'R_Hand_Index_04_Bnd', 'R_Hand_Middle_00_Bnd', 'R_Hand_Middle_01_Bnd', 'R_Hand_Middle_02_Bnd', 'R_Hand_Middle_03_Bnd', 'R_Hand_Middle_04_Bnd', 'R_Hand_InnerCup_Bnd', 'R_Hand_Thumb_00_Bnd', 'R_Hand_Thumb_01_Bnd', 'R_Hand_Thumb_02_Bnd', 'R_Hand_Thumb_03_Bnd', 'R_Hand_OutterCup_Bnd', 'R_Hand_Pinky_00_Bnd', 'R_Hand_Pinky_01_Bnd', 'R_Hand_Pinky_02_Bnd', 'R_Hand_Pinky_03_Bnd', 'R_Hand_Pinky_04_Bnd', 'R_Hand_Ring_00_Bnd', 'R_Hand_Ring_01_Bnd', 'R_Hand_Ring_02_Bnd', 'R_Hand_Ring_03_Bnd', 'R_Hand_Ring_04_Bnd']
 Build L_Hand_Block Success
 Build successfully exec_hand.build_hand_block()
 Postcode L_Hand_Block

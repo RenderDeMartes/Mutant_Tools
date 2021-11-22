@@ -31,5 +31,5 @@
 
     "r_shoulder": {"offset":[0,0,0], "connection":["X","Z","Y"], "mult":[1,1,1]},
     "r_elbow": {"offset":[0,0,0], "connection":["X","Z","Y"], "mult":[1,1,1]},
-    "r_wrist": {"offset":[0,0,0], "connection":["X","Y","Z"], "mult":[1,1,1]}
+    "r_wrist": {"offset":[0,0,0], "connection":["X","Y","Z"], "mult":[1,1,-1]}
 }
