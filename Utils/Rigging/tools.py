@@ -90,7 +90,7 @@ class Tools_class(object):
 		return None
 	
 	#----------------------------------------------------------------------------------------------------------------			
-	def	root_grp(self, input = '', custom = False, custom_name = 'customName', autoRoot = False, replace_nc = False):
+	def root_grp(self, input = '', custom = False, custom_name = 'customName', autoRoot = False, replace_nc = False):
 		"""This create groups
 
 		Args:
@@ -109,10 +109,10 @@ class Tools_class(object):
 			self.input = [input]
 			
 		else:	
-			self.input = input	
-		
-		self.check_input('root_grp')			
-				
+			self.input = input
+
+		self.check_input('root_grp')
+
 		#Group to have something to work after the command
 		groups = []
 		
@@ -299,7 +299,8 @@ class Tools_class(object):
 	#----------------------------------------------------------------------------------------------------------------					
 
 	def curve(self,input = '', type = 'cube', rename = True, custom_name = False, name = '', size = 1):
-		"""Will create a curve on position of selected input. (see curves.json in config for more details of avilable shapes)
+		"""For Controllers this is legacy, use mt.controller// Will create a curve on position of selected input.
+		(see curves.json in config for more details of avilable shapes)
 
 		Args:
 			input: if not specify it will use selection else specify string
@@ -349,6 +350,93 @@ class Tools_class(object):
 		
 		#return last ctrl created
 		return ctrl	
+
+	#----------------------------------------------------------------------------------------------------------------
+	def controller(self, input='', name='', shape='cube', color = setup['main_color'], size = 1, gimbal=True, world=True):
+		""" Create controller in input
+
+		Args:
+			input: string name of input if None creates on world
+			name: string desire name, if None uses input
+			shape: string desire shape (see curves.json in config for more details of avilable shapes)
+			color: string desire color
+			size: int desire size
+			gimbal: bool creates gimbal ctrl under main ctrl
+			world: bool creates world control oriented to the world
+
+		Returns: {'ctrl':ctrl,
+				'root':root,
+				'world':world,
+				'gimbal':gimbal}
+
+		"""
+
+		if not input:
+			input = 'Mt'
+
+		if not name:
+			cmds.warning('No name in mt.controller(), using input')
+			name = input
+
+		ctrl = mel.eval(curve_data[shape])
+
+		try:self.match(ctrl, input)
+		except:pass
+
+		ctrl = cmds.rename(ctrl, '{}{}'.format(name, nc['ctrl']))
+		root = self.root_grp()
+		controllers = [ctrl]
+
+		#Add gimbal sub controller
+		if world:
+			world = mel.eval(curve_data[shape])
+			world = cmds.rename(world, '{}{}'.format(name, nc['world_ctrl']))
+			controllers.append(world)
+			world_root = self.root_grp()
+			show_world_attr = self.new_enum(input=ctrl, name='World', enums='Hide:Show')
+			cmds.connectAttr(show_world_attr, '{}.v'.format(cmds.listRelatives(world, shapes=True)[0]))
+			self.match(world_root, ctrl, r=False)
+			cmds.parent(root, world)
+
+
+		if gimbal:
+			gimbal = mel.eval(curve_data[shape])
+			gimbal = cmds.rename(gimbal, '{}{}'.format(name, nc['gimbal_ctrl']))
+			controllers.append(gimbal)
+			show_gimbal_attr = self.new_enum(input=ctrl, name='Gimbal', enums='Hide:Show')
+			cmds.connectAttr(show_gimbal_attr, '{}.v'.format(cmds.listRelatives(gimbal, shapes=True)[0]))
+			self.match(gimbal, ctrl)
+			cmds.parent(gimbal, ctrl)
+
+
+		# make it pretty and clean
+		for c in controllers:
+			cmds.select(c)
+			if size:
+				curve_cvs = cmds.ls(cmds.ls(sl=True)[0] + ".cv[0:]", fl=True)
+				cmds.scale(size, size, size, curve_cvs)
+			self.assign_color(color=color)
+			self.connect_rotate_order(input=c, object=c)
+			cmds.setAttr('{}.lineWidth'.format(cmds.listRelatives(c, shapes=True)[0]), int(setup['line_width']))
+			try:
+				self.hide_attr(input=c, v=True)
+			except:
+				pass
+
+		#change gimbal and world ctrl size
+		if world:
+			cmds.select(world)
+			curve_cvs = cmds.ls(cmds.ls(sl=True)[0] + ".cv[0:]", fl=True)
+			cmds.scale(size*1.25, size*1.25, size*1.25, curve_cvs)
+		if gimbal:
+			cmds.select(gimbal)
+			curve_cvs = cmds.ls(cmds.ls(sl=True)[0] + ".cv[0:]", fl=True)
+			cmds.scale(size*0.75, size*0.75, size*0.75, curve_cvs)
+
+		return {'ctrl':ctrl,
+				'root':root,
+				'world':world,
+				'gimbal':gimbal}
 
 	#----------------------------------------------------------------------------------------------------------------
 
