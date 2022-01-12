@@ -167,7 +167,7 @@ class AutoRiggerMenu(MayaQWidgetDockableMixin, QtWidgets.QDialog):
 		self.load_sel_skin = self.fileMenu.addAction("Load Selected Skins")
 		self.fileMenu.addSeparator()
 
-		self.save_ctrls = self.fileMenu.addAction(" Save Ctrls")
+		self.save_ctrls = self.fileMenu.addAction("Save Ctrls")
 		self.load_ctrls = self.fileMenu.addAction("Load Ctrls")
 		self.mirror_ctrls = self.fileMenu.addAction("Mirror Ctrls")
 		self.fileMenu.addSeparator()
