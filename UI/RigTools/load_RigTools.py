@@ -96,7 +96,10 @@ from Mutant_Tools.UI import QtMutantWindow
 imp.reload(QtMutantWindow)
 Qt_Mutant = QtMutantWindow.Qt_Mutant()
 
-
+import Mutant_Tools.Utils.Helpers
+from Mutant_Tools.Utils.Helpers import helpers
+imp.reload(Mutant_Tools.Utils.Helpers.helpers)
+mh = helpers.Helpers()
 
 # -------------------------------------------------------------------
 
@@ -337,6 +340,7 @@ class RigTools_UI(QtMutantWindow.Qt_Mutant):
 		self.populate_ui_shelf(rig_tab, self.ui.rig_shelf)
 		self.populate_ui_shelf(sculpting_tab, self.ui.sculpt_shelf)
 
+
 	def create_connections(self):
 		"""
 
@@ -345,8 +349,29 @@ class RigTools_UI(QtMutantWindow.Qt_Mutant):
 		"""
 
 		self.ui.hide_shelfs.clicked.connect(self.toggle_shelfs_vis)
+		self.ui.smallerGuideBtn.clicked.connect(lambda: self.resize_guides(0.75))
+		self.ui.biggerGuideBtn.clicked.connect(lambda: self.resize_guides(1.25))
+		self.ui.JointSizeSlider.valueChanged.connect(lambda: cmds.jointDisplayScale(self.ui.JointSizeSlider.value() * 0.04))
+
+		self.ui.HideAxisBtn.clicked.connect(lambda: self.toggle_axis(False))
+		self.ui.ShowAxisBtn.clicked.connect(lambda: self.toggle_axis(True))
+		self.ui.lockContainerBtn.clicked.connect(lambda: self.toogle_contrainers(True))
+		self.ui.unlockContainerBtn.clicked.connect(lambda: self.toogle_contrainers(False))
+
+		self.ui.HideBtn.clicked.connect(self.hide_attrs)
+		self.ui.RevealBtn.clicked.connect(self.show_attrs)
+
+		self.ui.SimpleFKBtn.clicked.connect(lambda: mt.fk_chain(size = self.ui.SimpleFKSizeSlider.value(),
+																color = self.ui.SimpleFKColorBox.currentText(),
+																curve_type = self.ui.SimpleFKShapeBox.currentText()))
+
 
 	def toggle_shelfs_vis(self):
+		""" Show or hide fake rigging and sculting shelfs
+
+		Returns:
+
+		"""
 		if self.ui.sculpt_frame.isVisible():
 			self.ui.sculpt_frame.hide()
 			self.ui.rig_frame.hide()
@@ -355,6 +380,15 @@ class RigTools_UI(QtMutantWindow.Qt_Mutant):
 			self.ui.rig_frame.show()
 
 	def populate_ui_shelf(self, dict_data, layout):
+		""" Populate shelfs that mimic riging and sculting of native maya
+
+		Args:
+			dict_data: dict data with icons, functions and names to put as butons
+			layout: where to put the shelf in the qt ui from designer
+
+		Returns: None
+
+		"""
 		for num in dict_data:
 			button_data = dict_data[num]
 
@@ -394,9 +428,102 @@ class RigTools_UI(QtMutantWindow.Qt_Mutant):
 	def shelf_click(self, mel_code):
 		mel.eval(mel_code)
 
+	def resize_guides(self, size):
+		""" Make guides bigger or smaller
+
+		Args:
+			size: amount to mult the guides to
+
+		Returns: None
+
+		"""
+
+		guides= cmds.ls('*{}'.format(nc['guide']))
+
+		for g in guides:
+			cmds.select('{}_Ctrl_CtrlShape.cv[0:101]'.format(g),
+						'{}_Ctrl_Ctrl_Ctrl_CtrlShape.cv[0:9]'.format(g),
+						'{}_Ctrl_Ctrl_CtrlShape.cv[0:9]'.format(g),
+						'{}_CtrlShape.cv[0:9]'.format(g))
+
+			cmds.scale(size,size,size, r=True)
+
+		cmds.select(cl=True)
+
+
+	def toggle_axis(self, vis = True):
+		""" Show or hide joints axis
+
+		Args:
+			vis: bool show or hide
+
+		Returns: None
+
+		"""
+		#if no joints are selected, do it for all the joints in the scene
+		if len(cmds.ls(sl=1, type="joint")) == 0:
+			jointList = cmds.ls(type="joint")
+		else:
+			jointList = cmds.ls(sl=1, type="joint")
+
+		#set the displayLocalAxis attribute to what the user specifies
+		for jnt in jointList:
+			cmds.setAttr(jnt + ".displayLocalAxis", vis)
+
+	# -------------------------------------------------------------------
+
+	def toogle_contrainers(self, lock=True):
+		"""Remove nodes from rig container and add them back based on settings file
+
+		Args:
+			lock: bool
+
+		Returns: None
+
+		"""
+		settings = mh.read_json(os.path.dirname(__file__) + '\\', 'RigTools.settings')
+
+		if lock == True:
+			container_data = settings['Mutant_Rig_Nodes']
+			for node in container_data:
+				if cmds.objExists(node):
+					try:cmds.container('Mutant_Rig', edit=True, addNode=node)
+					except:pass
+
+		else:
+			if not cmds.objExists('Mutant_Rig'):
+				cmds.warning('No Mutant_Rig_Container in scene')
+				return
+			nodes = cmds.container('Mutant_Rig', query=True, nodeList=True)
+			for node in nodes:
+				cmds.container('Mutant_Rig', edit=True, removeNode=node)
+
+			settings['Mutant_Rig_Nodes'] = nodes
+			mh.write_json(os.path.dirname(__file__) + '\\', 'RigTools.settings', settings)
+
+	# -------------------------------------------------------------------
+
+	def hide_attrs(self):
+		from Mutant_Tools.UI.RigTools.rdm2 import ShowHideAttr
+		imp.reload(ShowHideAttr)
+		ShowHideAttr.hideSelection(hideT=self.ui.HideTranslateCheckBox.isChecked(),
+					  hideR=self.ui.HideRotateCheckBox.isChecked(),
+					  hideS=self.ui.HideScaleCheckBox.isChecked(),
+					  hideV=self.ui.HideVisibilityCheckBox.isChecked())
+
+	def show_attrs(self):
+		from Mutant_Tools.UI.RigTools.rdm2 import ShowHideAttr
+		imp.reload(ShowHideAttr)
+		ShowHideAttr.showAll()
+
+	# -------------------------------------------------------------------
+
 
 
 	# -------------------------------------------------------------------
+	# -------------------------------------------------------------------
+	# -------------------------------------------------------------------
+
 
 	# CLOSE EVENTS _________________________________
 	def closeEvent(self, event):
