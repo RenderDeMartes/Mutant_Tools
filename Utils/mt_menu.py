@@ -163,6 +163,21 @@ def contact(*args):
 def download_latest(*args):
     open_website('https://mutanttools.com/#download', 'open')
 
+def open_rig_tools(*args):
+    import imp
+    import Mutant_Tools
+    from Mutant_Tools.UI.RigTools import load_RigTools
+    imp.reload(load_RigTools)
+
+    try:
+        cRigToolsUI.close()
+    except:
+        pass
+    cRigToolsUI = load_RigTools.RigTools_UI()
+    cRigToolsUI.show()
+
+def tools_tutorial(*args):
+    open_website('https://mutanttools.com/')
 # -------------------------------------------------------------------------------------------
 
 def create_mutant_menu(*args):
@@ -190,7 +205,10 @@ def create_mutant_menu(*args):
                             "View Log": view_log,
                             "Help": riggers_help
                              },
-
+            "Rigging Tools":{
+                            "Rig Tools": open_rig_tools,
+                            "Tutorial" : tools_tutorial
+                            },
 
             "Developers" :{
                             "Block Builder": open_block_builder,
