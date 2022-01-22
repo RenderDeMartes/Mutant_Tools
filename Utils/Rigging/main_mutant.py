@@ -11,7 +11,7 @@ import Mutant_Tools.Utils.Rigging
 from Mutant_Tools.Utils.Rigging import main_mutant
 imp.reload(Mutant_Tools.Utils.Rigging.main_mutant)
 
-Mutant = main_mutant.Mutant()
+mt = main_mutant.Mutant()
 Mutant.FUNC(ARGUMENTS)
 
 #----------------
@@ -136,6 +136,13 @@ class Mutant(modules.Modules_class):
 	# ---------------------------------------------------
 
 	def compare_versions(self):
+
+		#if dev dont look for versions
+		version_data = self.read_json(path = PATH, json_file = 'version.json')
+
+		if version_data['dev_mode']:
+			print('Mutant is not searching for updates...')
+			return
 		try:
 			print('Searching for updates..')
 			online = self.get_online_version()
