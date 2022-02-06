@@ -3,6 +3,7 @@ import maya.OpenMayaUI as omui
 from maya import cmds
 import maya.OpenMaya as OpenMaya
 import json
+from pathlib import Path
 
 def send_webhook_message(webhook, message):
     # Provide the webhook URL that Discord generated

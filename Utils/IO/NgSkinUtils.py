@@ -33,6 +33,7 @@ import json
 from maya import cmds
 import imp
 import glob
+from pathlib import Path
 
 import Mutant_Tools
 import Mutant_Tools.Utils.IO
@@ -46,7 +47,8 @@ mh = helpers.Helpers()
 
 #Read name conventions as nc[''] and setup as seup['']
 PATH = os.path.dirname(__file__)
-PATH = PATH.replace('\\Utils\\IO', '//Config')
+PATH = Path(PATH)
+PATH = os.path.join(*PATH.parts[:-2], 'Config')
 
 JSON_FILE = (PATH + '/name_conventions.json')
 with open(JSON_FILE) as json_file:

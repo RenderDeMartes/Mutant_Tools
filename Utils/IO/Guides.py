@@ -29,6 +29,8 @@ author:  Esteban Rodriguez <info@mutanttools.com>
 import os
 import json
 import imp
+from pathlib import Path
+
 from maya import cmds as cmds
 from maya import OpenMaya as om
 
@@ -42,7 +44,8 @@ mh = helpers.Helpers()
 
 #Read name conventions as nc[''] and setup as seup['']
 PATH = os.path.dirname(__file__)
-PATH = PATH.replace('\\Utils\\IO', '//Config')
+PATH = Path(PATH)
+PATH = os.path.join(*PATH.parts[:-2], 'Config')
 
 JSON_FILE = (PATH + '/name_conventions.json')
 with open(JSON_FILE) as json_file:

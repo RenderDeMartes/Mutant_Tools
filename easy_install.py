@@ -15,7 +15,7 @@ def onMayaDroppedPythonFile(obj):
     print('Installing Mutant Tools')
 
     current_folder = os.path.dirname(__file__)
-    scripts_folder = cmds.internalVar(usd=True) + '//Mutant_Tools'
+    scripts_folder = os.path.join(cmds.internalVar(usd=True), 'Mutant_Tools')
 
     if current_folder is not scripts_folder:
         print ('from {} : to {}.'.format(current_folder, scripts_folder))

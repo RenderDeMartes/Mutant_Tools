@@ -26,6 +26,7 @@ author:  Esteban Rodriguez <info@mutanttools.com>
 
 from maya import cmds
 import json
+from pathlib import Path
 
 class Helpers(object):
 
@@ -74,9 +75,8 @@ class Helpers(object):
 
 		"""
 
-		write_json = path + json_file
-		if not path.endswith('\\'):
-			path = path +'\\'
+		write_json = os.path.join(path, json_file)
+
 		with open(write_json, 'w', encoding='utf-8') as f:
 			json.dump(data, f, ensure_ascii=False, indent=4)
 
@@ -95,8 +95,7 @@ class Helpers(object):
 
 		"""
 
-		json_data = path + json_file
-		json_data.replace('/', '\\')
+		json_data = os.path.join(path, json_file)
 
 		with open(json_data) as f:
 			data = json.load(f)

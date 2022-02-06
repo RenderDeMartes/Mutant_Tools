@@ -52,6 +52,7 @@ import imp
 import sys
 import json
 from collections import OrderedDict
+from pathlib import Path
 
 from Mutant_Tools.UI.AutoRigger import load_autoRiggerMenu
 imp.reload(load_autoRiggerMenu)
@@ -74,33 +75,32 @@ mh = helpers.Helpers()
 
 #Read name conventions as nc[''] and setup as seup['']
 PATH = os.path.dirname(__file__)
-PATH = PATH.replace('\\UI\\AutoRigger', '//Config') #change this path depending of the folder
+PATH = Path(PATH)
+FOLDER = os.path.join(*PATH.parts[:-2], 'Config')
 
-JSON_FILE = (PATH + '/name_conventions.json')
+JSON_FILE = os.path.join(PATH, 'name_conventions.json')
 with open(JSON_FILE) as json_file:
 	nc = json.load(json_file)
 #Read curve shapes info
-CURVE_FILE = (PATH + '/curves.json')
+CURVE_FILE = os.path.join(PATH, 'curves.json')
 with open(CURVE_FILE) as curve_file:
 	curve_data = json.load(curve_file)
 #setup File
-SETUP_FILE = (PATH+'/rig_setup.json')
+SETUP_FILE = os.path.join(PATH, 'rig_setup.json')
 with open(SETUP_FILE) as setup_file:
 	setup = json.load(setup_file)
-#version File
-VERSION_FILE = (PATH+'/version.json')
-with open(VERSION_FILE) as version_file:
-	version = json.load(version_file)
 
 #-------------------------------------------------------------------
 
 #QT WIndow!
 PATH = os.path.dirname(__file__)
 
-Title = 'Auto_Rigger'
-Folder = PATH.replace('\\UI\\AutoRigger', '')
+PATH = os.path.dirname(__file__)
+PATH = Path(PATH)
+FOLDER = os.path.join(*PATH.parts[:-2])
 UI_File = 'autoRigger.ui'
-IconsPath =  Folder + '/Icons/'
+IconsPath =  os.path.join(Folder, 'Icons')
+
 
 #-------------------------------------------------------------------
 

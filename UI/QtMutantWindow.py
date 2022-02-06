@@ -28,10 +28,11 @@ licence: https://www.eulatemplate.com/live.php?token=FGISW7ApRfgywum6murbBmLcusK
 author:  Esteban Rodriguez <info@renderdemartes.com>
 
 '''
-
+import sys
 import os
 from maya import cmds
 from maya import mel
+from pathlib import Path
 
 from PySide2 import QtUiTools
 from PySide2 import QtWidgets
@@ -48,8 +49,9 @@ imp.reload(expandableWidget)
 
 #--------------------------------------------------------------------------------
 PATH = os.path.dirname(__file__)
-FOLDER = PATH.replace('\\UI', '')
-ICONS_FOLDER = FOLDER + '//Icons//'
+PATH = Path(PATH)
+FOLDER = os.path.join(*PATH.parts[:-1], 'Config')
+ICONS_FOLDER = os.path.join(FOLDER,'Icons')
 
 #--------------------------------------------------------------------------------
 
@@ -69,7 +71,7 @@ class Qt_Mutant(QtWidgets.QMainWindow):
 		self.setWindowTitle('Mutant Tools')
 		self.current_size_mode = 'small'
 
-		self.designer_loader(path = PATH, ui_file = '/QtMutantWindow.ui')
+		self.designer_loader(path = PATH, ui_file = 'QtMutantWindow.ui')
 
 		self.add_size_grip(layout = self.master_ui.size_grip_layout)
 		self.make_frameless()
@@ -80,6 +82,8 @@ class Qt_Mutant(QtWidgets.QMainWindow):
 
 		self.connect_buttons()
 
+
+
 	def connect_buttons(self):
 		self.master_ui.close_button.clicked.connect(self.close)
 		self.master_ui.max_button.clicked.connect(self.check_size)
@@ -87,7 +91,9 @@ class Qt_Mutant(QtWidgets.QMainWindow):
 	# ------------------------------------------------
 
 	def designer_loader(self, path, ui_file):
-		f = QtCore.QFile(path + ui_file)
+
+		ui_file = os.path.join(path, ui_file)
+		f = QtCore.QFile(ui_file)
 		f.open(QtCore.QFile.ReadOnly)
 
 		loader = QtUiTools.QUiLoader()
@@ -96,7 +102,8 @@ class Qt_Mutant(QtWidgets.QMainWindow):
 		f.close()
 
 	def designer_loader_child(self, path, ui_file):
-		f = QtCore.QFile(path + ui_file)
+		ui_file = os.path.join(path, ui_file)
+		f = QtCore.QFile(ui_file)
 		f.open(QtCore.QFile.ReadOnly)
 
 		loader = QtUiTools.QUiLoader()
@@ -118,15 +125,16 @@ class Qt_Mutant(QtWidgets.QMainWindow):
 	# ------------------------------------------------
 
 	def read_stylesheet(self, path , stylesheet):
-		css_file = path + '/' + stylesheet
+		css_file = os.path.join(path, stylesheet)
 		with open(css_file) as f:
 			css = f.read()
 
 		return css
 
 	def set_stylesheet(self, widget):
-		css = self.read_stylesheet(path = os.path.dirname(__file__) + '\\Stylesheets',
-													stylesheet = 'FramelessMutant.css')
+
+		file_path = os.path.join(os.path.dirname(__file__), 'Stylesheets')
+		css = self.read_stylesheet(path =file_path, stylesheet = 'FramelessMutant.css')
 
 		widget.setStyleSheet(css)
 
@@ -141,6 +149,10 @@ class Qt_Mutant(QtWidgets.QMainWindow):
 		self.oldPos = self.pos()
 		self.setWindowFlags(QtCore.Qt.Window | QtCore.Qt.FramelessWindowHint | QtCore.Qt.CustomizeWindowHint)
 		#https://python-forum.io/thread-25568.html
+
+		#make mac os compatible
+		if not hasattr(sys, 'getwindowsversion'):
+			self.setWindowFlags(self.windowFlags() ^ QtCore.Qt.WindowStaysOnTopHint)
 
 	# ------------------------------------------------
 

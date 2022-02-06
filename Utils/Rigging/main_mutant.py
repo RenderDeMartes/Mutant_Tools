@@ -56,6 +56,7 @@ import os
 import imp
 import json
 import math
+from pathlib import Path
 
 try: 
 	import tools
@@ -78,8 +79,9 @@ except:
 
 #---------------------------------------------------
 PATH = os.path.dirname(__file__)
-PATH = PATH.replace('\\Utils\\Rigging', '//Config')
-#---------------------------------------------------
+#Make Mac Compatible
+PATH = Path(PATH)
+PATH = os.path.join(*PATH.parts[:-2], 'Config')
 
 
 class Mutant(modules.Modules_class):

@@ -30,17 +30,19 @@ author:  Esteban Rodriguez <info@mutanttools.com>
 import os
 import imp
 import json
+from pathlib import Path
 
 from  maya import mel
 from maya import cmds
-#import pymel.core as pm
 
 
 #----------------------------------------------------------------------------------------------------------------
 
 #Read name conventions as nc[''] and setup as seup['']
 PATH = os.path.dirname(__file__)
-PATH = PATH.replace('\\Utils\\Rigging', '//Config')
+PATH = Path(PATH)
+PATH = os.path.join(*PATH.parts[:-2], 'Config')
+
 
 JSON_FILE = (PATH + '/name_conventions.json')
 with open(JSON_FILE) as json_file:
@@ -60,7 +62,7 @@ with open(SETUP_FILE) as setup_file:
 class Tools_class(object):
 	
 	def __init__(self, input = ''):
-		
+
 		self.input = input
 
 	#----------------------------------------------------------------------------------------------------------------			
@@ -1309,16 +1311,14 @@ class Tools_class(object):
 		Returns: string json file full path
 
 		"""
-		if not path.endswith('\\'):
-			path = path +'\\'
-
-		write_json = path + json_file
+		write_json = os.path.join(path, json_file)
 
 		with open(write_json, 'w', encoding='utf-8') as f:
 			json.dump(data, f, ensure_ascii=False, indent=4, sort_keys = False)
 
 		print(write_json)
 		return write_json
+
 	#----------------------------------------------------------------------------------------------------------------
 
 	def read_json(self, path, json_file):
@@ -1331,10 +1331,8 @@ class Tools_class(object):
 		Returns: dictionary with data
 
 		"""
-		if not path.endswith('\\'):
-			path = path +'\\'
-		json_data = path + json_file
-		json_data.replace('/','\\')
+
+		json_data = os.path.join(path, json_file)
 
 		with open(json_data) as f:
 			data = json.load(f)

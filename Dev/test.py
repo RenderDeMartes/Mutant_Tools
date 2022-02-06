@@ -5,7 +5,7 @@ import imp
 imp.reload(Mutant_Tools.Utils.Rigging.main_mutant)
 mt = main_mutant.Mutant()
 
-mt.controller(input='joint1', name = '')
+#mt.controller(input='joint1', name = '')
 
 #mt.load_preset(name = 'Biped_180')
 #mt.create_block()

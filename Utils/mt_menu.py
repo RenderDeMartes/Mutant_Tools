@@ -12,7 +12,7 @@ import Mutant_Tools.Utils
 from Mutant_Tools.Utils import mt_menu
 imp.reload(Mutant_Tools.Utils.mt_menu)
 mt_menu.create_mutant_menu()
-
+mt_menu.put_in_userSetup()
 
 #----------------
 dependencies:
@@ -45,8 +45,8 @@ except:pass
 # -------------------------------------------------------------------------------------------
 
 PATH = os.path.dirname(__file__)
-ICONS_PATH = PATH.replace('\\Utils', '//Icons//')
-
+PATH = Path(PATH)
+ICONS_PATH = os.path.join(*PATH.parts[:-1], 'Icons')
 # -------------------------------------------------------------------------------------------
 
 def help(*args):
@@ -109,7 +109,8 @@ def view_log(*args):
 
     codeUI = load_codeReader.Code_Reader(mode='view', code=log, config_attr='')
     codeUI.ui.code_text.verticalScrollBar().setValue(codeUI.ui.code_text.verticalScrollBar().maximum())
-    codeUI.set_path_label(code_path=PATH.replace('\\Utils', '/log.txt'))
+    code_path = os.path.join(*PATH.parts[:-1], 'log.txt')
+    codeUI.set_path_label(code_path=code_path)
     codeUI.show()
 
 
@@ -299,13 +300,15 @@ except:
 """
 
     #read data
-    user_setup_path = '{}\\userSetup.py'.format(PATH.replace('\\Mutant_Tools\\Utils', ''))
+    PATH = os.path.dirname(__file__)
+    PATH = Path(os.path.dirname(__file__))
+    user_setup_path = os.path.join(*PATH.parts[:-2], 'userSetup.py')
 
     if os.path.isfile(user_setup_path):
         userSetup = open(user_setup_path, "r")
         print('userSetup Exists')
     else:
-        userSetup = Path('{}\\userSetup.py'.format(PATH.replace('\\Mutant_Tools\\Utils', '')))
+        userSetup = Path(user_setup_path)
         userSetup.touch(exist_ok=True)
         userSetup = open(userSetup, "r")
         print('userSetup Created')

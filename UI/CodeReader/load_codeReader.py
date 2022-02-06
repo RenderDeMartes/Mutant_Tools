@@ -50,22 +50,24 @@ import imp
 import sys
 import json
 import subprocess
+from pathlib import Path
 
 #-------------------------------------------------------------------
 
 #Read name conventions as nc[''] and setup as seup['']
 PATH = os.path.dirname(__file__)
-PATH = PATH.replace('\\UI\\CodeReader', '//Config') #change this path depending of the folder
+PATH = Path(PATH)
+FOLDER = os.path.join(*PATH.parts[:-2], 'Config')
 
-JSON_FILE = (PATH + '/name_conventions.json')
+JSON_FILE = os.path.join(PATH, 'name_conventions.json')
 with open(JSON_FILE) as json_file:
 	nc = json.load(json_file)
 #Read curve shapes info
-CURVE_FILE = (PATH + '/curves.json')
+CURVE_FILE = os.path.join(PATH, 'curves.json')
 with open(CURVE_FILE) as curve_file:
 	curve_data = json.load(curve_file)
 #setup File
-SETUP_FILE = (PATH+'/rig_setup.json')
+SETUP_FILE = os.path.join(PATH, 'rig_setup.json')
 with open(SETUP_FILE) as setup_file:
 	setup = json.load(setup_file)
 

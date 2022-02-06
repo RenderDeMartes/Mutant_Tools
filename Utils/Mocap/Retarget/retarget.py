@@ -44,6 +44,7 @@ author:  Esteban Rodriguez <info@mutanttools.com>
 import os
 import imp
 import json
+from pathlib import Path
 
 from  maya import mel
 from maya import cmds
@@ -55,7 +56,8 @@ mh = helpers.Helpers()
 #-----------------------------------------------------------------------------------------------
 
 PATH = os.path.dirname(__file__)
-PATH = PATH.replace("\\Utils\\Mocap\\Retarget", "//Config")
+PATH = Path(PATH)
+PATH = os.path.join(*PATH.parts[:-3], 'Config')
 
 JSON_FILE = (PATH + "/name_conventions.json")
 with open(JSON_FILE) as json_file:
@@ -82,7 +84,9 @@ class Retarget(object):
 
     def set_mutant_rig_map(self):
 
-        json_data = os.path.dirname(__file__).replace('Retarget', 'MocapFiles\\mutant_map.json')
+        PATH = Path(os.path.dirname(__file__))
+        json_data = os.path.join(*PATH.parts[:-1], 'MocapFiles', 'mutant_map.json')
+
         with open(json_data) as f:
             data = json.load(f)
 
@@ -119,8 +123,7 @@ class Retarget(object):
         if not file_path:
             return False
 
-        json_data = file_path
-        json_data.replace('/', '\\')
+        json_data = os.path.join(file_path)
 
         with open(json_data) as f:
             data = json.load(f)
@@ -148,7 +151,7 @@ class Retarget(object):
             return False
 
         json_data = file_path
-        json_data.replace('/', '\\')
+        json_data = os.path.join(json_data)
 
         with open(json_data) as f:
             data = json.load(f)

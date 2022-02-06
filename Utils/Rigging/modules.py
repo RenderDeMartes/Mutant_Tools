@@ -42,6 +42,7 @@ import os
 import imp
 import json
 from collections import OrderedDict
+from pathlib import Path
 
 try: 
 	import tools
@@ -61,7 +62,8 @@ except:
 
 #Read name conventions as nc[''] and setup as seup['']
 PATH = os.path.dirname(__file__)
-PATH = PATH.replace('\\Utils\\Rigging', '//Config')
+PATH = Path(PATH)
+PATH = os.path.join(*PATH.parts[:-2], 'Config')
 
 JSON_FILE = (PATH +'/name_conventions.json')
 with open(JSON_FILE) as json_file:

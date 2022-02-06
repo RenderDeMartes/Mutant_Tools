@@ -47,11 +47,13 @@ from shiboken2 import wrapInstance
 
 from maya.app.general.mayaMixin import MayaQWidgetDockableMixin
 import maya.OpenMayaUI as omui
+from pathlib import Path
 
 #--------------------------------------------------------------------------------
 PATH = os.path.dirname(__file__)
-FOLDER = PATH.replace('\\UI\\CustomWidgets', '')
-ICONS_FOLDER = FOLDER + '//Icons//'
+PATH = Path(PATH)
+FOLDER = os.path.join(*PATH.parts[:-2])
+ICONS_FOLDER = os.path.join(FOLDER, 'Icons')
 
 #------------------------------------------------------------------------------
 
