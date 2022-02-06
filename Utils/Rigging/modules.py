@@ -430,8 +430,8 @@ class Modules_class(kinematics.Kinematics_class):
 	def update_icons(self):
 
 		PATH = os.path.dirname(__file__)
-		PATH = PATH.replace('\\Utils\\Rigging', '//Icons//') #change this path depending of the folder
-		#print (PATH)
+		PATH = Path(PATH)
+		FOLDER = os.path.join(*PATH.parts[:-2], 'Icons')
 
 		if not cmds.objExists('Mutant_Build'):
 			return
@@ -440,8 +440,11 @@ class Modules_class(kinematics.Kinematics_class):
 		if blocks:
 			for block in blocks:
 				try:
-					current_icon = cmds.getAttr('{}.iconName'.format(block), asString = True).split('/')[-1]
-					cmds.setAttr('{}.iconName'.format(block), PATH + current_icon, type="string")
+					current_icon = cmds.getAttr('{}.iconName'.format(block), asString = True)
+					current_icon = Path(current_icon)
+					icon = os.path.join(*current_icon.parts[-1:])
+					print(icon)
+					cmds.setAttr('{}.iconName'.format(block), os.path.join(FOLDER, icon), type="string")
 				except:pass
 
 

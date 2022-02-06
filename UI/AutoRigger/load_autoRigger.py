@@ -43,7 +43,6 @@ from maya.app.general.mayaMixin import MayaQWidgetDockableMixin
 import maya.OpenMayaUI as omui
 from functools import partial
 from maya import OpenMaya
-#import pymel.core as pm
 import maya.cmds as cmds
 import maya.mel as mel
 
@@ -78,18 +77,21 @@ PATH = os.path.dirname(__file__)
 PATH = Path(PATH)
 FOLDER = os.path.join(*PATH.parts[:-2], 'Config')
 
-JSON_FILE = os.path.join(PATH, 'name_conventions.json')
+JSON_FILE = os.path.join(FOLDER, 'name_conventions.json')
 with open(JSON_FILE) as json_file:
 	nc = json.load(json_file)
 #Read curve shapes info
-CURVE_FILE = os.path.join(PATH, 'curves.json')
+CURVE_FILE = os.path.join(FOLDER, 'curves.json')
 with open(CURVE_FILE) as curve_file:
 	curve_data = json.load(curve_file)
 #setup File
-SETUP_FILE = os.path.join(PATH, 'rig_setup.json')
+SETUP_FILE = os.path.join(FOLDER, 'rig_setup.json')
 with open(SETUP_FILE) as setup_file:
 	setup = json.load(setup_file)
-
+#Version File
+VERSION_FILE = os.path.join(FOLDER, 'version.json')
+with open(VERSION_FILE) as version_file:
+	version = json.load(version_file)
 #-------------------------------------------------------------------
 
 #QT WIndow!
@@ -99,7 +101,8 @@ PATH = os.path.dirname(__file__)
 PATH = Path(PATH)
 FOLDER = os.path.join(*PATH.parts[:-2])
 UI_File = 'autoRigger.ui'
-IconsPath =  os.path.join(Folder, 'Icons')
+IconsPath =  os.path.join(FOLDER, 'Icons')
+Title = 'AutoRigger'
 
 
 #-------------------------------------------------------------------
@@ -118,13 +121,13 @@ imp.reload(expandableWidget)
 def add_sys_folders_remove_compiled():
 	#get all the paths for the blocks in the sys path
 	file_path = (str(__file__))
-	for folder in os.listdir(Folder + '/Blocks'):
-		blocks_path = Folder + '/Blocks//{}'.format(folder)
+	for folder in os.listdir(os.path.join(FOLDER , 'Blocks')):
+		blocks_path = os.path.join(FOLDER, 'Blocks', folder)
 		if blocks_path not in sys.path:
 			sys.path.append(blocks_path)
 
 	#Delete all pyc in the block folders so we dont need the imp.reload in the codes:
-	path = Folder + '//Blocks'
+	path = os.path.join(FOLDER, 'Blocks')
 	for path, subdirs, files in os.walk(path):
 		for name in files:
 			#print('Search: ' + os.path.join(path, name))
@@ -136,7 +139,7 @@ def add_sys_folders_remove_compiled():
 				os.remove(os.path.join(path, name))
 
 	# also remove pyc from UIs folder
-	path = Folder
+	path = FOLDER
 	for path, subdirs, files in os.walk(path):
 		for name in files:
 			if '.pyc' in str(name):
@@ -160,7 +163,7 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		#load blocks folders to sys and remove all the compiled info in BLOCKS and UI Folder
 		add_sys_folders_remove_compiled()
 
-		self.designer_loader_child(path=Folder + '/UI/AutoRigger/', ui_file=UI_File)
+		self.designer_loader_child(path=os.path.join(FOLDER,'UI','AutoRigger'), ui_file=UI_File)
 
 		self.create_menus()
 		self.create_layout()
@@ -212,11 +215,11 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		self.ui.bar_label.setText('Mutant')
 
 		#set Manual Icons
-		self.ui.prebuild.setIcon(QtGui.QIcon(IconsPath + 'PRECODE.png'))
-		self.ui.current_code.setIcon(QtGui.QIcon(IconsPath + 'CODE.png'))
-		self.ui.postbuild.setIcon(QtGui.QIcon(IconsPath + 'POSTCODE.png'))
-		self.ui.reload_ui.setIcon(QtGui.QIcon(IconsPath + 'RELOAD.png'))
-		self.ui.log.setIcon(QtGui.QIcon(IconsPath + 'LOG.png'))
+		self.ui.prebuild.setIcon(QtGui.QIcon(os.path.join(IconsPath ,'PRECODE.png')))
+		self.ui.current_code.setIcon(QtGui.QIcon(os.path.join(IconsPath ,'CODE.png')))
+		self.ui.postbuild.setIcon(QtGui.QIcon(os.path.join(IconsPath ,'POSTCODE.png')))
+		self.ui.reload_ui.setIcon(QtGui.QIcon(os.path.join(IconsPath ,'RELOAD.png')))
+		self.ui.log.setIcon(QtGui.QIcon(os.path.join(IconsPath ,'LOG.png')))
 
 
 	def reload_ui(self):
@@ -264,14 +267,14 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		#'create all the buttons in the tabs blocks'
 		#print ('Relaod UI')
 		#print (Folder)
-		blocks_folders = os.listdir(Folder + '\\Blocks')
+		blocks_folders = os.listdir(os.path.join(FOLDER, 'Blocks'))
 		#blocks_folders = ['01_Presets', '02_Biped']
 		#print ('Block Folders : ' + str(blocks_folders))
 
 		for block_folder in blocks_folders:
 
 			clean_folder_name = block_folder.split('_')[1]
-			files = os.listdir(Folder + '/Blocks/' + block_folder )
+			files = os.listdir(os.path.join(FOLDER, 'Blocks', block_folder))
 
 			for block_file in files:
 				#print(block_file)
@@ -280,7 +283,7 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 					#print ('skiped' + block_file)
 					continue
 				#read the json file with block information
-				real_path =  Folder + '/Blocks/' + block_folder + '/' + block_file
+				real_path =  os.path.join(FOLDER, 'Blocks', block_folder,  block_file)
 				#print (real_path)
 
 				with open(real_path, "r") as block_info:
@@ -298,7 +301,7 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 				button.clicked.connect(self.create_layout)
 				button.setToolTip(block['Description'])
 				try:
-					button.setIcon(QtGui.QIcon(IconsPath + block['Icon']))
+					button.setIcon(QtGui.QIcon(os.path.join(IconsPath ,block['Icon'])))
 					button.setIconSize((QtCore.QSize(35, 35)))
 					button.setStyleSheet("text-align:right;")
 					#button.setText(block_name)
@@ -403,10 +406,10 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		#up down buttons
 		#up_button = QtWidgets.QPushButton('↑')
 		up_button = QtWidgets.QPushButton()
-		up_button.setIcon(QtGui.QIcon(IconsPath + 'Up.png'))
+		up_button.setIcon(QtGui.QIcon(os.path.join(IconsPath ,'Up.png')))
 		#down_button = QtWidgets.QPushButton('↓')
 		down_button = QtWidgets.QPushButton()
-		down_button.setIcon(QtGui.QIcon(IconsPath + 'Down.png'))
+		down_button.setIcon(QtGui.QIcon(os.path.join(IconsPath ,'Down.png')))
 		up_button.setFixedSize(15,20)
 		down_button.setFixedSize(15,20)
 
@@ -423,7 +426,7 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 
 		delete_button = QtWidgets.QPushButton()
 		delete_button.setFixedSize(15,15)
-		delete_button.setIcon(QtGui.QIcon(IconsPath + 'delete.png'))
+		delete_button.setIcon(QtGui.QIcon(os.path.join(IconsPath ,'Delete.png')))
 		delete_button.setToolTip('Delete: {}'.format(pack_name))
 
 		h_layout = QtWidgets.QHBoxLayout()
@@ -807,9 +810,9 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 
 		# Precode and Postcode attrs Code
 		if cmds.getAttr('{}.precode'.format(config)) != '':
-			self.ui.prebuild.setIcon(QtGui.QIcon(IconsPath + 'PRECODE_ON.png'))
+			self.ui.prebuild.setIcon(QtGui.QIcon(os.path.join(IconsPath ,'PRECODE_ON.png')))
 		else:
-			self.ui.prebuild.setIcon(QtGui.QIcon(IconsPath + 'PRECODE.png'))
+			self.ui.prebuild.setIcon(QtGui.QIcon(os.path.join(IconsPath ,'PRECODE.png')))
 
 	#-------------------------------------------------------------------
 	def check_postcode(self, block):
@@ -818,9 +821,9 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 
 		# Precode and Postcode attrs Code
 		if cmds.getAttr('{}.postcode'.format(config)) != '':
-			self.ui.postbuild.setIcon(QtGui.QIcon(IconsPath + 'POSTCODE_ON.png'))
+			self.ui.postbuild.setIcon(QtGui.QIcon(os.path.join(IconsPath ,'POSTCODE_ON.png')))
 		else:
-			self.ui.postbuild.setIcon(QtGui.QIcon(IconsPath + 'POSTCODE.png'))
+			self.ui.postbuild.setIcon(QtGui.QIcon(os.path.join(IconsPath ,'PODTCODE.png')))
 
 	#-------------------------------------------------------------------
 

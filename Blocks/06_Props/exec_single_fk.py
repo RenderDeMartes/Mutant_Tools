@@ -2,6 +2,7 @@ from maya import cmds
 import json
 import imp
 import os
+from pathlib import Path
 
 import Mutant_Tools
 import Mutant_Tools.Utils.Rigging
@@ -15,9 +16,10 @@ mt = main_mutant.Mutant()
 TAB_FOLDER = '06_Props'
 PYBLOCK_NAME = 'exec_single_fk'
 
-#Read name conventions as nc[''] and setup as seup['']
+#Read name conventions as nc[''] and setup as setup['']
 PATH = os.path.dirname(__file__)
-PATH = PATH.replace('/Blocks//{}'.format(TAB_FOLDER), '//Config') #change this path depending of the folder
+PATH = Path(PATH)
+PATH = os.path.join(*PATH.parts[:-2], 'Config')
 
 JSON_FILE = (PATH + '/name_conventions.json')
 with open(JSON_FILE) as json_file:
@@ -31,9 +33,10 @@ SETUP_FILE = (PATH+'/rig_setup.json')
 with open(SETUP_FILE) as setup_file:
 	setup = json.load(setup_file)
 
-MODULE_FILE = (os.path.dirname(__file__) +'/01_Single_FK.json')
+MODULE_FILE = os.path.join(os.path.dirname(__file__),'01_Single_FK.json')
 with open(MODULE_FILE) as module_file:
 	module = json.load(module_file)
+
 
 #---------------------------------------------
 

@@ -59,15 +59,15 @@ PATH = os.path.dirname(__file__)
 PATH = Path(PATH)
 FOLDER = os.path.join(*PATH.parts[:-2], 'Config')
 
-JSON_FILE = os.path.join(PATH, 'name_conventions.json')
+JSON_FILE = os.path.join(FOLDER, 'name_conventions.json')
 with open(JSON_FILE) as json_file:
 	nc = json.load(json_file)
 #Read curve shapes info
-CURVE_FILE = os.path.join(PATH, 'curves.json')
+CURVE_FILE = os.path.join(FOLDER, 'curves.json')
 with open(CURVE_FILE) as curve_file:
 	curve_data = json.load(curve_file)
 #setup File
-SETUP_FILE = os.path.join(PATH, 'rig_setup.json')
+SETUP_FILE = os.path.join(FOLDER, 'rig_setup.json')
 with open(SETUP_FILE) as setup_file:
 	setup = json.load(setup_file)
 
@@ -83,12 +83,11 @@ Qt_Mutant = QtMutantWindow.Qt_Mutant()
 
 #QT WIndow!
 PATH = os.path.dirname(__file__)
-
-Title = 'Code Reader'
-Folder = PATH.replace('\\UI\\CodeReader', '') #where the qt designer file is
+PATH = Path(PATH)
+FOLDER = os.path.join(*PATH.parts[:-2])
 UI_File = 'codeReader.ui'
-IconsPath =  Folder + '/Icons/' #icons path
-
+IconsPath =  os.path.join(FOLDER, 'Icons')
+Title = 'Code Reader'
 #-------------------------------------------------------------------
 
 
@@ -101,8 +100,8 @@ class Code_Reader(QtMutantWindow.Qt_Mutant):
 		#self.setWindowTitle(Title)
 		self.resize(680,475)
 
-		self.designer_loader_child(path=Folder + '/UI/CodeReader/', ui_file=UI_File)
-		self.set_title('Code Reader')
+		self.designer_loader_child(path=os.path.join(FOLDER, 'UI','CodeReader'), ui_file=UI_File)
+		self.set_title('Title')
 
 		self.create_layout()
 		self.create_connections()

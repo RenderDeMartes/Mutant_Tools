@@ -46,12 +46,13 @@ PATH = os.path.dirname(__file__)
 PATH = Path(PATH)
 PATH = os.path.join(*PATH.parts[:-2], 'Config')
 
-JSON_FILE = (PATH + '/name_conventions.json')
+JSON_FILE = os.path.join(PATH, "name_conventions.json")
 with open(JSON_FILE) as json_file:
 	nc = json.load(json_file)
-SETUP_FILE = (PATH +'/rig_setup.json')
+SETUP_FILE = os.path.join(PATH,'rig_setup.json')
 with open(SETUP_FILE) as setup_file:
-	setup = json.load(setup_file)
+    setup = json.load(setup_file)
+
 
 # ---------------------------------------------------------------------------
 

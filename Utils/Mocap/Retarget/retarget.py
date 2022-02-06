@@ -59,7 +59,7 @@ PATH = os.path.dirname(__file__)
 PATH = Path(PATH)
 PATH = os.path.join(*PATH.parts[:-3], 'Config')
 
-JSON_FILE = (PATH + "/name_conventions.json")
+JSON_FILE = (os.path.join(PATH, "name_conventions.json"))
 with open(JSON_FILE) as json_file:
 	nc = json.load(json_file)
 

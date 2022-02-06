@@ -2,6 +2,7 @@ from maya import cmds
 import json
 import imp
 import os
+from pathlib import Path
 
 import Mutant_Tools
 import Mutant_Tools.Utils.Rigging
@@ -19,9 +20,10 @@ guides = Guides.Guides()
 TAB_FOLDER = '01_Presets'
 PYBLOCK_NAME = 'exec_biped180'
 
-#Read name conventions as nc[''] and setup as seup['']
+#Read name conventions as nc[''] and setup as setup['']
 PATH = os.path.dirname(__file__)
-PATH = PATH.replace('/Blocks//{}'.format(TAB_FOLDER), '//Config') #change this path depending of the folder
+PATH = Path(PATH)
+PATH = os.path.join(*PATH.parts[:-2], 'Config')
 
 JSON_FILE = (PATH + '/name_conventions.json')
 with open(JSON_FILE) as json_file:
@@ -35,7 +37,7 @@ SETUP_FILE = (PATH+'/rig_setup.json')
 with open(SETUP_FILE) as setup_file:
 	setup = json.load(setup_file)
 
-MODULE_FILE = (os.path.dirname(__file__) +'/02_Biped180Game.json')
+MODULE_FILE = os.path.join(os.path.dirname(__file__),'02_Biped180Game.json')
 with open(MODULE_FILE) as module_file:
 	module = json.load(module_file)
 
@@ -52,7 +54,9 @@ def create_biped180game_block(name = 'Biped180Game'):
                            dismissString='Ok')
         return
 
-    filepath = os.path.dirname(__file__).replace('Blocks//{}'.format(TAB_FOLDER), 'Utils//IO//Guide_Data//Biped180Game.ma')
+    PATH = os.path.dirname(__file__)
+    PATH = Path(PATH)
+    filepath = os.path.join(*PATH.parts[:-2], 'Utils','IO','Guide_Data','Biped180Game.ma')
     print('Loading: {}...'.format(filepath))
 
     cmds.file(filepath, i=True, type="mayaAscii")

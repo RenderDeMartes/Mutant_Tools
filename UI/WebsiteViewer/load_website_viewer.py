@@ -59,36 +59,15 @@ import glob
 import pprint
 from pathlib import Path
 
-
 # -------------------------------------------------------------------
 
-# Read name conventions as nc[''] and setup as seup['']
+#QT WIndow!
 PATH = os.path.dirname(__file__)
-PATH = PATH.replace('\\UI\\WebsiteViewer', '//Config')  # change this path depending of the folder
-
-JSON_FILE = (PATH + '/name_conventions.json')
-with open(JSON_FILE) as json_file:
-	nc = json.load(json_file)
-# Read curve shapes info
-CURVE_FILE = (PATH + '/curves.json')
-with open(CURVE_FILE) as curve_file:
-	curve_data = json.load(curve_file)
-# setup File
-SETUP_FILE = (PATH + '/rig_setup.json')
-with open(SETUP_FILE) as setup_file:
-	setup = json.load(setup_file)
-
-# -------------------------------------------------------------------
-
-# QT WIndow!
-PATH = os.path.dirname(__file__)
-OTHERS_PATH = PATH.replace('\\UI\\WebsiteViewer', '//Others')  # get presets path to read files
-BLOCKS_PATH = PATH.replace('\\UI\\WebsiteViewer', '//Blocks')  # get Blocks paths to write files
-
-Title = 'Mutant || WebsiteViewer'
-Folder = PATH.replace('\\UI\\WebsiteViewer', '')
+PATH = Path(PATH)
+FOLDER = os.path.join(*PATH.parts[:-2])
 UI_File = 'WebsiteViewer.ui'
-IconsPath = Folder + '//Icons//'
+IconsPath =  os.path.join(FOLDER, 'Icons')
+Title = 'WebsiteViewer'
 
 # -------------------------------------------------------------------
 
@@ -123,7 +102,7 @@ class WebsiteViewerUI(QtMutantWindow.Qt_Mutant):
 		self.setWindowTitle(Title)
 		self.resize(500,600)
 
-		self.designer_loader_child(path=Folder + '/UI/WebsiteViewer/', ui_file=UI_File)
+		self.designer_loader_child(path=os.path.join(FOLDER, 'UI', 'WebsiteViewer'), ui_file=UI_File)
 		self.set_title('Website Viewer')
 
 		self.create_layout()

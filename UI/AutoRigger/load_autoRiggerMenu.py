@@ -46,6 +46,7 @@ from functools import partial
 # import pymel.core as pm
 import maya.cmds as cmds
 import maya.mel as mel
+from pathlib import Path
 
 import os
 import imp
@@ -83,31 +84,32 @@ guides = Guides.Guides()
 
 # -------------------------------------------------------------------
 
-# Read name conventions as nc[''] and setup as seup['']
+#Read name conventions as nc[''] and setup as setup['']
 PATH = os.path.dirname(__file__)
-PATH = PATH.replace('\\UI\\AutoRigger', '//Config')  # change this path depending of the folder
+PATH = Path(PATH)
+FOLDER = os.path.join(*PATH.parts[:-2], 'Config')
 
-JSON_FILE = (PATH + '/name_conventions.json')
+JSON_FILE = os.path.join(FOLDER, 'name_conventions.json')
 with open(JSON_FILE) as json_file:
 	nc = json.load(json_file)
-# Read curve shapes info
-CURVE_FILE = (PATH + '/curves.json')
+#Read curve shapes info
+CURVE_FILE = os.path.join(FOLDER, 'curves.json')
 with open(CURVE_FILE) as curve_file:
 	curve_data = json.load(curve_file)
-# setup File
-SETUP_FILE = (PATH + '/rig_setup.json')
+#setup File
+SETUP_FILE = os.path.join(FOLDER, 'rig_setup.json')
 with open(SETUP_FILE) as setup_file:
 	setup = json.load(setup_file)
 
 # -------------------------------------------------------------------
 
-# QT WIndow!
+#QT WIndow!
 PATH = os.path.dirname(__file__)
-
+PATH = Path(PATH)
+FOLDER = os.path.join(*PATH.parts[:-2])
+IconsPath =  os.path.join(FOLDER, 'Icons')
 Title = 'Menu'
-Folder = PATH.replace('\\UI\\AutoRigger', '')  # where the qt designer file is
 UI_File = 'autoRiggerMenu.ui'
-IconsPath = Folder + '/Icons/'  # icons path
 
 # -------------------------------------------------------------------
 
@@ -131,8 +133,8 @@ class AutoRiggerMenu(MayaQWidgetDockableMixin, QtWidgets.QDialog):
 		self.create_connections()
 
 	def init_ui(self):
-		UIPath = Folder + '/UI/AutoRigger/'
-		f = QtCore.QFile(UIPath + UI_File)
+		UIPath = os.path.join(FOLDER,'UI','AutoRigger')
+		f = QtCore.QFile(os.path.join(UIPath, UI_File))
 		f.open(QtCore.QFile.ReadOnly)
 
 		loader = QtUiTools.QUiLoader()

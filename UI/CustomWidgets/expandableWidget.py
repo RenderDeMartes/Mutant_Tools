@@ -87,7 +87,7 @@ class expandableWidget(QtWidgets.QDialog):
 
         self.open_button.setFixedSize(15,15)
         self.open_button.setIconSize(QtCore.QSize(10,10))
-        self.open_button.setIcon(QtGui.QIcon(ICONS_FOLDER + 'DDown.png'))
+        self.open_button.setIcon(QtGui.QIcon(os.path.join(ICONS_FOLDER,'DDown.png')))
         #self.label_button.setStyleSheet("QPushButton{\n    border-style: none;\n    border-width: 0;\n}")
 
         h_layout.addWidget(self.open_button)
