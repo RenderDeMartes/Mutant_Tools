@@ -42,37 +42,44 @@ from shiboken2 import wrapInstance
 
 from maya.app.general.mayaMixin import MayaQWidgetDockableMixin
 import maya.OpenMayaUI as omui
-
 import imp
-import Mutant_Tools.UI.CustomWidgets.expandableWidget as expandableWidget
-imp.reload(expandableWidget)
+
 
 #--------------------------------------------------------------------------------
 PATH = os.path.dirname(__file__)
 PATH = Path(PATH)
-FOLDER = os.path.join(*PATH.parts[:-1], 'Config')
+PATH_PARTS = PATH.parts[:-1]
+FOLDER=''
+for p in PATH_PARTS:
+	FOLDER = os.path.join(FOLDER, p)
+PATH = os.path.join(FOLDER, 'UI')
 ICONS_FOLDER = os.path.join(FOLDER,'Icons')
 
 #--------------------------------------------------------------------------------
 
+python_version = sys.version[0]
 def get_maya_main_window():
 	main_window_ptr = omui.MQtUtil.mainWindow()
-	return wrapInstance(int(main_window_ptr), QtWidgets.QWidget)
+	if python_version is not '3':
+		return wrapInstance(long(main_window_ptr), QtWidgets.QWidget)
+	else:
+		return wrapInstance(int(main_window_ptr), QtWidgets.QWidget)
 
 #--------------------------------------------------------------------------------
 
 class Qt_Mutant(QtWidgets.QMainWindow):
 
 	# ------------------------------------------------
-	def __init__(self, parent=get_maya_main_window(), *args, **kwargs):
-		super().__init__(parent)
+	def __init__(self, parent=get_maya_main_window()):
+		super(Qt_Mutant, self).__init__(parent)
+		#super().__init__(parent)
 
 		self.setObjectName('MainMutantWindow')
 		self.setWindowTitle('Mutant Tools')
 		self.current_size_mode = 'small'
-
+		
 		self.designer_loader(path = PATH, ui_file = 'QtMutantWindow.ui')
-
+		
 		self.add_size_grip(layout = self.master_ui.size_grip_layout)
 		self.make_frameless()
 		self.set_margins()

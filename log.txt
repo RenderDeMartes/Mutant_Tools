@@ -86,6 +86,61 @@ Build successfully exec_spine.build_spine_block()
 Postcode Spine_Block
 ------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------
+Building: Code_Block
+------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
+Import successfully import exec_code
+Precode Code_Block
+Build Code_Block Success
+Build successfully exec_code.build_code_block()
+Postcode Code_Block
+------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
+Building: Spine_Block
+------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
+Import successfully import exec_spine
+Precode Spine_Block
+{'geometry': 'Geo', 'control': 'Ctrl', 'rig': 'Rig'}
+{}
+{'bind_joints': 'Bind_Joints', 'bind_geo': 'Bind_Geo', 'misc': 'Miscellaneous', 'template': 'Template'}
+BaseA Created Successfully
+# Warning: History will be off for the command since Keep Originals is off and a selected item has no history. # 
+Spine Joints:
+Spine_Base_Jnt
+Spine_Belly_Jnt
+Spine_Chest_Jnt
+Spine_End_Jnt
+adding loc to ['Spine_Base_Ctrl']
+adding loc to ['Spine_Chest_Ctrl']
+adding loc to ['Spine_Belly_Ctrl']
+adding loc to ['Spine_Belly_FK_Ctrl']
+adding loc to ['Spine_Base_FK_Ctrl']
+# Warning: Name '_________' of new attribute clashes with an existing attribute of node 'Spine_Attrs_Loc'. # 
+# Warning: Name '_________' of new attribute clashes with an existing attribute of node 'Spine_Attrs_Loc'. # 
+# Warning: Name '________' of new attribute clashes with an existing attribute of node 'Spine_Attrs_Loc'. # 
+# Warning: Name '_________' of new attribute clashes with an existing attribute of node 'Spine_Attrs_Loc'. # 
+# Warning: Name '________' of new attribute clashes with an existing attribute of node 'Spine_Attrs_Loc'. # 
+# Warning: Name '_______' of new attribute clashes with an existing attribute of node 'Spine_Attrs_Loc'. # 
+Breathing...
+# Warning: Name '_________' of new attribute clashes with an existing attribute of node 'Spine_Attrs_Loc'. # 
+# Warning: Name '________' of new attribute clashes with an existing attribute of node 'Spine_Attrs_Loc'. # 
+# Warning: Name '_______' of new attribute clashes with an existing attribute of node 'Spine_Attrs_Loc'. # 
+# Warning: Name '______' of new attribute clashes with an existing attribute of node 'Spine_Attrs_Loc'. # 
+Spine_Belly_Jnt_SquashExtra_MultDiv.outputX
+Spine_OffOnVolume_Blend1.outputR
+Spine_Chest_Jnt_SquashExtra_MultDiv.outputX
+Spine_OffOnVolume_Blend2.outputR
+Spine_Base_Bnd
+Spine_Belly_Bnd
+Spine_Chest_Bnd
+Spine_End_Bnd
+Spine_Inv_Bnd
+Build Spine_Block Success
+Build successfully exec_spine.build_spine_block()
+Postcode Spine_Block
+------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
 Building: L_Clavicle_Block
 ------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------

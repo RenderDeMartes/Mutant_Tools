@@ -64,9 +64,12 @@ from pathlib import Path
 #QT WIndow!
 PATH = os.path.dirname(__file__)
 PATH = Path(PATH)
-FOLDER = os.path.join(*PATH.parts[:-2])
+PATH_PARTS = PATH.parts[:-2]
+FOLDER=''
+for f in PATH_PARTS:
+	FOLDER = os.path.join(FOLDER, f)
 UI_File = 'WebsiteViewer.ui'
-IconsPath =  os.path.join(FOLDER, 'Icons')
+IconsPath = os.path.join(FOLDER, 'Icons')
 Title = 'WebsiteViewer'
 
 # -------------------------------------------------------------------
