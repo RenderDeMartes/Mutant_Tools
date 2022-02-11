@@ -44,9 +44,14 @@ try:mt.compare_versions()
 except:pass
 # -------------------------------------------------------------------------------------------
 
+#Read name conventions as nc[''] and setup as seup['']
 PATH = os.path.dirname(__file__)
 PATH = Path(PATH)
-ICONS_PATH = os.path.join(*PATH.parts[:-1], 'Icons')
+PATH_PARTS = PATH.parts[:-1]
+FOLDER=''
+for f in PATH_PARTS:
+	FOLDER = os.path.join(FOLDER, f)
+ICONS_PATH = os.path.join(FOLDER, 'Icons')
 # -------------------------------------------------------------------------------------------
 
 def help(*args):
@@ -301,8 +306,12 @@ except:
 
     #read data
     PATH = os.path.dirname(__file__)
-    PATH = Path(os.path.dirname(__file__))
-    user_setup_path = os.path.join(*PATH.parts[:-2], 'userSetup.py')
+    PATH = Path(PATH)
+    PATH_PARTS = PATH.parts[:-2]
+    FOLDER = ''
+    for f in PATH_PARTS:
+        FOLDER = os.path.join(FOLDER, f)
+    user_setup_path = os.path.join(FOLDER, 'userSetup.py')
 
     if os.path.isfile(user_setup_path):
         userSetup = open(user_setup_path, "r")

@@ -68,12 +68,16 @@ except:
 #Read name conventions as nc[''] and setup as seup['']
 PATH = os.path.dirname(__file__)
 PATH = Path(PATH)
-PATH = os.path.join(*PATH.parts[:-2], 'Config')
+PATH_PARTS = PATH.parts[:-2]
+FOLDER=''
+for f in PATH_PARTS:
+	FOLDER = os.path.join(FOLDER, f)
 
-JSON_FILE = (PATH+'/name_conventions.json')
+JSON_FILE = os.path.join(FOLDER, 'config', 'name_conventions.json')
 with open(JSON_FILE) as json_file:
 	nc = json.load(json_file)
-SETUP_FILE = (PATH+'/rig_setup.json')
+#setup File
+SETUP_FILE = os.path.join(FOLDER, 'config', 'rig_setup.json')
 with open(SETUP_FILE) as setup_file:
 	setup = json.load(setup_file)
 

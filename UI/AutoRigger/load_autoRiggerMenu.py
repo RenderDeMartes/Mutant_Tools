@@ -57,6 +57,7 @@ from urllib.request import Request, urlopen
 
 import Mutant_Tools
 from Mutant_Tools.UI.WebsiteViewer import load_website_viewer
+imp.reload(load_website_viewer)
 viewer = load_website_viewer.WebsiteViewerUI()
 
 from Mutant_Tools.Utils.Helpers import helpers
