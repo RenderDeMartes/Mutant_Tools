@@ -52,7 +52,10 @@ from pathlib import Path
 #--------------------------------------------------------------------------------
 PATH = os.path.dirname(__file__)
 PATH = Path(PATH)
-FOLDER = os.path.join(*PATH.parts[:-2])
+PATH_PARTS = PATH.parts[:-2]
+FOLDER=''
+for f in PATH_PARTS:
+	FOLDER = os.path.join(FOLDER, f)
 ICONS_FOLDER = os.path.join(FOLDER, 'Icons')
 
 #------------------------------------------------------------------------------

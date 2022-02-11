@@ -75,31 +75,35 @@ mh = helpers.Helpers()
 #Read name conventions as nc[''] and setup as seup['']
 PATH = os.path.dirname(__file__)
 PATH = Path(PATH)
-FOLDER = os.path.join(*PATH.parts[:-2], 'Config')
+PATH_PARTS = PATH.parts[:-2]
+FOLDER=''
+for f in PATH_PARTS:
+	FOLDER = os.path.join(FOLDER, f)
 
-JSON_FILE = os.path.join(FOLDER, 'name_conventions.json')
+JSON_FILE = os.path.join(FOLDER, 'config', 'name_conventions.json')
 with open(JSON_FILE) as json_file:
 	nc = json.load(json_file)
 #Read curve shapes info
-CURVE_FILE = os.path.join(FOLDER, 'curves.json')
+CURVE_FILE = os.path.join(FOLDER, 'config', 'curves.json')
 with open(CURVE_FILE) as curve_file:
 	curve_data = json.load(curve_file)
 #setup File
-SETUP_FILE = os.path.join(FOLDER, 'rig_setup.json')
+SETUP_FILE = os.path.join(FOLDER, 'config', 'rig_setup.json')
 with open(SETUP_FILE) as setup_file:
 	setup = json.load(setup_file)
 #Version File
-VERSION_FILE = os.path.join(FOLDER, 'version.json')
+VERSION_FILE = os.path.join(FOLDER, 'config', 'version.json')
 with open(VERSION_FILE) as version_file:
 	version = json.load(version_file)
 #-------------------------------------------------------------------
 
 #QT WIndow!
 PATH = os.path.dirname(__file__)
-
-PATH = os.path.dirname(__file__)
 PATH = Path(PATH)
-FOLDER = os.path.join(*PATH.parts[:-2])
+PATH_PARTS = PATH.parts[:-2]
+FOLDER=''
+for f in PATH_PARTS:
+	FOLDER = os.path.join(FOLDER, f)
 UI_File = 'autoRigger.ui'
 IconsPath =  os.path.join(FOLDER, 'Icons')
 Title = 'AutoRigger'
@@ -168,7 +172,7 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		self.create_menus()
 		self.create_layout()
 		self.create_connections()
-		try:OpenMaya.MGlobal.displayInfo('♥')
+		try:OpenMaya.MGlobal.displayInfo('<3')
 		except:pass
 
 		#08_Data init
@@ -224,7 +228,7 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 
 	def reload_ui(self):
 		self.create_layout()
-		OpenMaya.MGlobal.displayInfo('♥')
+		OpenMaya.MGlobal.displayInfo('<3')
 
 		#rest propierties layout too
 		for i in reversed(range(self.ui.properties_layout.count())):
@@ -404,10 +408,8 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		block_parent.addWidget(side_hbox)
 
 		#up down buttons
-		#up_button = QtWidgets.QPushButton('↑')
 		up_button = QtWidgets.QPushButton()
 		up_button.setIcon(QtGui.QIcon(os.path.join(IconsPath ,'Up.png')))
-		#down_button = QtWidgets.QPushButton('↓')
 		down_button = QtWidgets.QPushButton()
 		down_button.setIcon(QtGui.QIcon(os.path.join(IconsPath ,'Down.png')))
 		up_button.setFixedSize(15,20)

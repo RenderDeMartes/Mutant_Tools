@@ -11,7 +11,7 @@ This will create a UI for the autorriger menu tool.
 how to:
 
 import Mutant_Tools
-from Mutant_Tools.UI import load_autoRiggerMenu
+from Mutant_Tools.UI.AutoRigger import load_autoRiggerMenu
 imp.reload(load_autoRiggerMenu)
 
 try:AutoRiggerMenu.close()
@@ -57,10 +57,7 @@ from urllib.request import Request, urlopen
 
 import Mutant_Tools
 from Mutant_Tools.UI.WebsiteViewer import load_website_viewer
-
-import Mutant_Tools.UI
-from Mutant_Tools.UI import QtMutantWindow
-imp.reload(QtMutantWindow)
+viewer = load_website_viewer.WebsiteViewerUI()
 
 from Mutant_Tools.Utils.Helpers import helpers
 imp.reload(Mutant_Tools.Utils.Helpers.helpers)
@@ -106,10 +103,18 @@ with open(SETUP_FILE) as setup_file:
 #QT WIndow!
 PATH = os.path.dirname(__file__)
 PATH = Path(PATH)
-FOLDER = os.path.join(*PATH.parts[:-2])
-IconsPath =  os.path.join(FOLDER, 'Icons')
+PATH_PARTS = PATH.parts[:-2]
+FOLDER=''
+for p in PATH_PARTS:
+	FOLDER = os.path.join(FOLDER, p)
+PATH = os.path.join(FOLDER, 'UI')
+
+ICONS_FOLDER = os.path.join(FOLDER,'Icons')
+
 Title = 'Menu'
 UI_File = 'autoRiggerMenu.ui'
+
+
 
 # -------------------------------------------------------------------
 
@@ -117,13 +122,13 @@ def maya_main_window():
 	main_window_ptr = omui.MQtUtil.mainWindow()
 	return wrapInstance(int(main_window_ptr), QtWidgets.QWidget)
 
-class AutoRiggerMenu(MayaQWidgetDockableMixin, QtWidgets.QDialog):
+class AutoRiggerMenu(QtWidgets.QDialog):
 
 	def __init__(self, parent=maya_main_window()):
 		super(AutoRiggerMenu, self).__init__(parent)
 
 		self.open_viewer=True
-		self.cWebsiteViewer = load_website_viewer.WebsiteViewerUI()
+		self.cWebsiteViewer = viewer
 
 		self.setWindowTitle(Title)
 		self.setFixedHeight(20)
