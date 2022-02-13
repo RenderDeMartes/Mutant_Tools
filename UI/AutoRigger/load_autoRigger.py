@@ -141,6 +141,9 @@ def add_sys_folders_remove_compiled():
 			if '__pycache__' in str(name):
 				#print (name + ': Have been deleted')
 				os.remove(os.path.join(path, name))
+			if 'DS_Store' in str(name):
+				# print (name + ': Have been deleted')
+				os.remove(os.path.join(path, name))
 
 	# also remove pyc from UIs folder
 	path = FOLDER
@@ -149,7 +152,9 @@ def add_sys_folders_remove_compiled():
 			if '.pyc' in str(name):
 				#print (name + ': Have been deleted')
 				os.remove(os.path.join(path, name))
-
+			if '.DS_Store' in str(name):
+				#print (name + ': Have been deleted')
+				os.remove(os.path.join(path, name))
 	print ('Cache removed...')
 #-------------------------------------------------------------------
 
