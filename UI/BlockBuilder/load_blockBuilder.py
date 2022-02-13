@@ -233,7 +233,7 @@ class BlockBuilder(QtMutantWindow.Qt_Mutant):
 		new_exec_code = new_exec_code.replace("def build_NAME_block():", "def build_{}_block():".format(name.lower()))
 		new_exec_code = new_exec_code.replace("#build_NAME_block()", "#build_{}_block()".format(name.lower()))
 
-		new_exec_code = new_exec_code.replace("/num_name.json", "/{}_{}.json".format(new_num, name))
+		new_exec_code = new_exec_code.replace("num_name.json", "{}_{}.json".format(new_num, name))
 		new_exec_code = new_exec_code.replace("icon = 'ICON_NAME'", "icon = '{}'".format(icon))
 
 		print (new_exec_code)

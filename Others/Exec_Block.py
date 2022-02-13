@@ -17,21 +17,25 @@ PYBLOCK_NAME = 'exec_NAME'
 
 #Read name conventions as nc[''] and setup as seup['']
 PATH = os.path.dirname(__file__)
-PATH = PATH.replace('/Blocks//{}'.format(TAB_FOLDER), '//Config') #change this path depending of the folder
+PATH = Path(PATH)
+PATH_PARTS = PATH.parts[:-2]
+FOLDER=''
+for f in PATH_PARTS:
+	FOLDER = os.path.join(FOLDER, f)
 
-JSON_FILE = (PATH + '/name_conventions.json')
+JSON_FILE = os.path.join(FOLDER, 'config', 'name_conventions.json')
 with open(JSON_FILE) as json_file:
 	nc = json.load(json_file)
 #Read curve shapes info
-CURVE_FILE = (PATH + '/curves.json')
+CURVE_FILE = os.path.join(FOLDER, 'config', 'curves.json')
 with open(CURVE_FILE) as curve_file:
 	curve_data = json.load(curve_file)
 #setup File
-SETUP_FILE = (PATH+'/rig_setup.json')
+SETUP_FILE = os.path.join(FOLDER, 'config', 'rig_setup.json')
 with open(SETUP_FILE) as setup_file:
-	setup = json.load(setup_file)	
+	setup = json.load(setup_file)
 
-MODULE_FILE = (os.path.dirname(__file__) +'/num_name.json')
+MODULE_FILE = os.path.join(os.path.dirname(__file__),'num_name.json')
 with open(MODULE_FILE) as module_file:
 	module = json.load(module_file)
 
