@@ -5,10 +5,10 @@ Building: BaseA_Block
 ------------------------------------------------------------------------------------
 Import successfully import exec_baseA 
 Precode BaseA_Block
-{'geometry': 'Geo', 'control': 'Ctrl', 'rig': 'Rig'}
+{u'geometry': u'Geo', u'control': u'Ctrl', u'rig': u'Rig'}
 {}
-{'bind_joints': 'Bind_Joints', 'bind_geo': 'Bind_Geo', 'misc': 'Miscellaneous', 'template': 'Template'}
-('Global_Ctrl', 'Mover_Ctrl', 'Mover_Gimbal_Ctrl')
+{u'misc': u'Miscellaneous', u'bind_joints': u'Bind_Joints', u'template': u'Template', u'bind_geo': u'Bind_Geo'}
+(u'Global_Ctrl', u'Mover_Ctrl', u'Mover_Gimbal_Ctrl')
 BaseA Created Successfully
 Build successfully exec_baseA.build_baseA_block()
 Postcode BaseA_Block
@@ -56,11 +56,11 @@ Spine_Base_Jnt
 Spine_Belly_Jnt
 Spine_Chest_Jnt
 Spine_End_Jnt
-adding loc to ['Spine_Base_Ctrl']
-adding loc to ['Spine_Chest_Ctrl']
-adding loc to ['Spine_Belly_Ctrl']
-adding loc to ['Spine_Belly_FK_Ctrl']
-adding loc to ['Spine_Base_FK_Ctrl']
+adding loc to [u'Spine_Base_Ctrl']
+adding loc to [u'Spine_Chest_Ctrl']
+adding loc to [u'Spine_Belly_Ctrl']
+adding loc to [u'Spine_Belly_FK_Ctrl']
+adding loc to [u'Spine_Base_FK_Ctrl']
 # Warning: Name '_________' of new attribute clashes with an existing attribute of node 'Spine_Attrs_Loc'. # 
 # Warning: Name '_________' of new attribute clashes with an existing attribute of node 'Spine_Attrs_Loc'. # 
 # Warning: Name '________' of new attribute clashes with an existing attribute of node 'Spine_Attrs_Loc'. # 
@@ -93,10 +93,10 @@ Import successfully import exec_clavicle
 Precode L_Clavicle_Block
 L_Clavicle_Jnt
 // Replaced 2 names.
-['L_Clavicle_Jnt', 'R_Clavicle_Jnt']
-['L_Clavicle_Ctrl']
+[u'L_Clavicle_Jnt', 'R_Clavicle_Jnt']
+[u'L_Clavicle_Ctrl']
 # Warning: Object, 'L_Clavicle_Bnd', skipped. It is already a child of the parent, 'world'. # 
-['R_Clavicle_Ctrl']
+[u'R_Clavicle_Ctrl']
 # Warning: Object, 'R_Clavicle_Bnd', skipped. It is already a child of the parent, 'world'. # 
 Build L_Clavicle_Block Success
 Build successfully exec_clavicle.build_clavicle_block()
@@ -109,16 +109,15 @@ Building: L_Shoulder_Block
 Import successfully import exec_limb
 Precode L_Shoulder_Block
 L_Shoulder_Jnt
-['L_Shoulder_Jnt', 'R_Shoulder_Jnt']
+[u'L_Shoulder_Jnt', u'R_Shoulder_Jnt']
 joints are: L_Shoulder_Jnt L_Elbow_Jnt L_Wrist_Jnt
 // Replaced 3 names.
 // Replaced 3 names.
-['L_Elbow_Fk_Jnt']
-['L_Wrist_Fk_Jnt']
+[u'L_Elbow_Fk_Jnt']
+[u'L_Wrist_Fk_Jnt']
 None
-FK = ['L_Shoulder_Fk_Ctrl', 'L_Elbow_Fk_Ctrl', 'L_Wrist_Fk_Ctrl']
-creating ik Chain for : L_Shoulder_Jnt
-// Error: searchReplaceNames _Ctrl  "selected"; // 
+FK = [u'L_Shoulder_Fk_Ctrl', u'L_Elbow_Fk_Ctrl', u'L_Wrist_Fk_Ctrl']
+creating ik Chain for : L_Shoulder_Jnt// Error: searchReplaceNames _Ctrl  "selected"; // 
 // Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
 // Error: searchReplaceNames _Jnt  "selected"; // 
 // Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
@@ -126,37 +125,37 @@ creating ik Chain for : L_Shoulder_Jnt
 // Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
 // Error: searchReplaceNames _Jnt  "selected"; // 
 // Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
-['L_Wrist_Ik_PoleVector_Ctrl_L_Elbow_Ik_Jnt_Connected_Crv', 'L_Wrist_Ik_PoleVector_Ctrl_ClsHandle', 'L_Elbow_Ik_Jnt_ClsHandle']
+ [u'L_Wrist_Ik_PoleVector_Ctrl_L_Elbow_Ik_Jnt_Connected_Crv', u'L_Wrist_Ik_PoleVector_Ctrl_ClsHandle', u'L_Elbow_Ik_Jnt_ClsHandle']
 // Error: searchReplaceNames _Ctrl  "selected"; // 
 // Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
 // Error: searchReplaceNames _Jnt  "selected"; // 
 // Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
-IK = ['L_Wrist_Ik_Ctrl', 'L_Wrist_Ik_PoleVector_Ctrl', 'L_Shoulder_Ik_Ctrl', 'L_Wrist_Ik_IKrp', 'L_Wrist_Ik_PoleVector_Ctrl_L_Elbow_Ik_Jnt_Connected_Crv']
-28.332410970088205
-['L_Shoulder_Fk_Ctrl_Offset_Grp', 'L_Wrist_Ik_Ctrl_Offset_Grp', 'L_Shoulder_Ik_Ctrl_Offset_Grp', 'L_Shoulder_Ik_Jnt_Ctrl_Grp']
+IK = [u'L_Wrist_Ik_Ctrl', u'L_Wrist_Ik_PoleVector_Ctrl', u'L_Shoulder_Ik_Ctrl', u'L_Wrist_Ik_IKrp', u'L_Wrist_Ik_PoleVector_Ctrl_L_Elbow_Ik_Jnt_Connected_Crv']
+28.3324109701
+[u'L_Shoulder_Fk_Ctrl_Offset_Grp', u'L_Wrist_Ik_Ctrl_Offset_Grp', u'L_Shoulder_Ik_Ctrl_Offset_Grp', u'L_Shoulder_Ik_Jnt_Ctrl_Grp']
 __________
-adding loc to ['L_Shoulder_Fk_Ctrl']
-adding loc to ['L_Elbow_Fk_Ctrl']
-adding loc to ['L_Wrist_Fk_Ctrl']
-adding loc to ['L_Wrist_Ik_Ctrl']
-adding loc to ['L_Wrist_Ik_PoleVector_Ctrl']
-adding loc to ['L_Shoulder_Ik_Ctrl']
-adding loc to ['L_Wrist_Ik_PoleVector_Ctrl_L_Elbow_Ik_Jnt_Connected_Crv']
+adding loc to [u'L_Shoulder_Fk_Ctrl']
+adding loc to [u'L_Elbow_Fk_Ctrl']
+adding loc to [u'L_Wrist_Fk_Ctrl']
+adding loc to [u'L_Wrist_Ik_Ctrl']
+adding loc to [u'L_Wrist_Ik_PoleVector_Ctrl']
+adding loc to [u'L_Shoulder_Ik_Ctrl']
+adding loc to [u'L_Wrist_Ik_PoleVector_Ctrl_L_Elbow_Ik_Jnt_Connected_Crv']
 L_Shoulder_Jnt_Switch_Loc.Switch_IK_FK
 L_Shoulder_Jnt_Switch_Loc
 # Warning: Name '_________' of new attribute clashes with an existing attribute of node 'L_Shoulder_Jnt_Switch_Loc'. # 
-L_Shoulder_Ik_Jnt_L_Wrist_Ik_Jnt_Distance_Shape_MultDiv L_Elbow_Ik_Jnt_NewScale_MultDiv L_Shoulder_Ik_Jnt_NewScale_MultDiv L_Wrist_Ik_IKrp_TotalDistance_MultDiv
-['L_Shoulder_Jnt', 'L_Elbow_Jnt', 'L_Wrist_Jnt'] ['L_Shoulder_Ik_Jnt', 'L_Elbow_Ik_Jnt', 'L_Wrist_Ik_Jnt'] ['L_Shoulder_Fk_Jnt', 'L_Elbow_Fk_Jnt', 'L_Wrist_Fk_Jnt'] ['L_Shoulder_Fk_Ctrl', 'L_Elbow_Fk_Ctrl', 'L_Wrist_Fk_Ctrl'] ['L_Wrist_Ik_Ctrl', 'L_Wrist_Ik_PoleVector_Ctrl', 'L_Shoulder_Ik_Ctrl', 'L_Wrist_Ik_IKrp', 'L_Wrist_Ik_PoleVector_Ctrl_L_Elbow_Ik_Jnt_Connected_Crv', ('L_Wrist_Ik_IKrp_Stretchy_Grp', 'L_Wrist_Ik_IKrp_NormalScale_Loc', ['L_Wrist_Ik_Jnt_Stretchy_Loc'], ['L_Shoulder_Ik_Jnt_Stretchy_Loc'], ['L_Elbow_Ik_Jnt_Stretchy_Loc'], 'L_Shoulder_Ik_Jnt_L_Wrist_Ik_Jnt_Distance_Shape', 'L_Elbow_Ik_Jnt_L_Wrist_Ik_Jnt_Distance_Shape', 'L_Shoulder_Ik_Jnt_L_Elbow_Ik_Jnt_Distance_Shape')] ['L_Shoulder_Fk_Ctrl_Offset_Grp', 'L_Wrist_Ik_Ctrl_Offset_Grp', 'L_Shoulder_Ik_Ctrl_Offset_Grp', 'L_Shoulder_Ik_Jnt_Ctrl_Grp']
+(u'L_Shoulder_Ik_Jnt_L_Wrist_Ik_Jnt_Distance_Shape_MultDiv', u'L_Elbow_Ik_Jnt_NewScale_MultDiv', u'L_Shoulder_Ik_Jnt_NewScale_MultDiv', u'L_Wrist_Ik_IKrp_TotalDistance_MultDiv')
+([u'L_Shoulder_Jnt', u'L_Elbow_Jnt', u'L_Wrist_Jnt'], ['L_Shoulder_Ik_Jnt', u'L_Elbow_Ik_Jnt', u'L_Wrist_Ik_Jnt'], ['L_Shoulder_Fk_Jnt', u'L_Elbow_Fk_Jnt', u'L_Wrist_Fk_Jnt'], [u'L_Shoulder_Fk_Ctrl', u'L_Elbow_Fk_Ctrl', u'L_Wrist_Fk_Ctrl'], [u'L_Wrist_Ik_Ctrl', u'L_Wrist_Ik_PoleVector_Ctrl', u'L_Shoulder_Ik_Ctrl', u'L_Wrist_Ik_IKrp', u'L_Wrist_Ik_PoleVector_Ctrl_L_Elbow_Ik_Jnt_Connected_Crv', (u'L_Wrist_Ik_IKrp_Stretchy_Grp', u'L_Wrist_Ik_IKrp_NormalScale_Loc', [u'L_Wrist_Ik_Jnt_Stretchy_Loc'], [u'L_Shoulder_Ik_Jnt_Stretchy_Loc'], [u'L_Elbow_Ik_Jnt_Stretchy_Loc'], u'L_Shoulder_Ik_Jnt_L_Wrist_Ik_Jnt_Distance_Shape', u'L_Elbow_Ik_Jnt_L_Wrist_Ik_Jnt_Distance_Shape', u'L_Shoulder_Ik_Jnt_L_Elbow_Ik_Jnt_Distance_Shape')], [u'L_Shoulder_Fk_Ctrl_Offset_Grp', u'L_Wrist_Ik_Ctrl_Offset_Grp', u'L_Shoulder_Ik_Ctrl_Offset_Grp', u'L_Shoulder_Ik_Jnt_Ctrl_Grp'])
 # Warning: Object, 'L_Shoulder_Twist_0_Jnt', skipped. It is already a child of the parent, 'world'. # 
 # Warning: History will be off for the command since Keep Originals is off and a selected item has no history. # 
 # Warning: New name contains invalid characters. Illegal characters were converted to "_". # 
 # Warning: History will be off for the command since Keep Originals is off and a selected item has no history. # 
-{'twist_grp': 'L_Shoulder_Twist_Grp', 'joints': ['L_Shoulder_Twist_0_Jnt', 'L_Shoulder_Twist_1_Jnt', 'L_Shoulder_Twist_2_Jnt', 'L_Shoulder_Twist_3_Jnt'], 'curve': 'L_Shoulder_Twist_JntCtrl_Crv', 'ik_spline': 'L_Shoulder_Twist_IKspl', 'no_rotate': 'L_Elbow_NoRotate_JntCtrl'}
-{'twist_grp': 'L_Elbow_Twist_Grp', 'joints': ['L_Elbow_Twist_0_Jnt', 'L_Elbow_Twist_1_Jnt', 'L_Elbow_Twist_2_Jnt', 'L_Elbow_Twist_3_Jnt'], 'curve': 'L_Elbow_Twist_JntCtrl_Crv', 'ik_spline': 'L_Elbow_Twist_IKspl'}
+{'no_rotate': u'L_Elbow_NoRotate_JntCtrl', 'joints': [u'L_Shoulder_Twist_0_Jnt', u'L_Shoulder_Twist_1_Jnt', u'L_Shoulder_Twist_2_Jnt', u'L_Shoulder_Twist_3_Jnt'], 'twist_grp': u'L_Shoulder_Twist_Grp', 'curve': u'L_Shoulder_Twist_JntCtrl_Crv', 'ik_spline': u'L_Shoulder_Twist_IKspl'}
+{'joints': [u'L_Elbow_Twist_0_Jnt', u'L_Elbow_Twist_1_Jnt', u'L_Elbow_Twist_2_Jnt', u'L_Elbow_Twist_3_Jnt'], 'twist_grp': u'L_Elbow_Twist_Grp', 'curve': u'L_Elbow_Twist_JntCtrl_Crv', 'ik_spline': u'L_Elbow_Twist_IKspl'}
 ----------------IK FK------------------
-(['L_Shoulder_Jnt', 'L_Elbow_Jnt', 'L_Wrist_Jnt'], ['L_Shoulder_Ik_Jnt', 'L_Elbow_Ik_Jnt', 'L_Wrist_Ik_Jnt'], ['L_Shoulder_Fk_Jnt', 'L_Elbow_Fk_Jnt', 'L_Wrist_Fk_Jnt'], ['L_Shoulder_Fk_Ctrl', 'L_Elbow_Fk_Ctrl', 'L_Wrist_Fk_Ctrl'], ['L_Wrist_Ik_Ctrl', 'L_Wrist_Ik_PoleVector_Ctrl', 'L_Shoulder_Ik_Ctrl', 'L_Wrist_Ik_IKrp', 'L_Wrist_Ik_PoleVector_Ctrl_L_Elbow_Ik_Jnt_Connected_Crv', ('L_Wrist_Ik_IKrp_Stretchy_Grp', 'L_Wrist_Ik_IKrp_NormalScale_Loc', ['L_Wrist_Ik_Jnt_Stretchy_Loc'], ['L_Shoulder_Ik_Jnt_Stretchy_Loc'], ['L_Elbow_Ik_Jnt_Stretchy_Loc'], 'L_Shoulder_Ik_Jnt_L_Wrist_Ik_Jnt_Distance_Shape', 'L_Elbow_Ik_Jnt_L_Wrist_Ik_Jnt_Distance_Shape', 'L_Shoulder_Ik_Jnt_L_Elbow_Ik_Jnt_Distance_Shape')], ['L_Shoulder_Fk_Ctrl_Offset_Grp', 'L_Wrist_Ik_Ctrl_Offset_Grp', 'L_Shoulder_Ik_Ctrl_Offset_Grp', 'L_Shoulder_Ik_Jnt_Ctrl_Grp'])
-{'twist_grp': 'L_Shoulder_Twist_Grp', 'joints': ['L_Shoulder_Twist_0_Jnt', 'L_Shoulder_Twist_1_Jnt', 'L_Shoulder_Twist_2_Jnt', 'L_Shoulder_Twist_3_Jnt'], 'curve': 'L_Shoulder_Twist_JntCtrl_Crv', 'ik_spline': 'L_Shoulder_Twist_IKspl', 'no_rotate': 'L_Elbow_NoRotate_JntCtrl'}
-{'twist_grp': 'L_Elbow_Twist_Grp', 'joints': ['L_Elbow_Twist_0_Jnt', 'L_Elbow_Twist_1_Jnt', 'L_Elbow_Twist_2_Jnt', 'L_Elbow_Twist_3_Jnt'], 'curve': 'L_Elbow_Twist_JntCtrl_Crv', 'ik_spline': 'L_Elbow_Twist_IKspl'}
+([u'L_Shoulder_Jnt', u'L_Elbow_Jnt', u'L_Wrist_Jnt'], ['L_Shoulder_Ik_Jnt', u'L_Elbow_Ik_Jnt', u'L_Wrist_Ik_Jnt'], ['L_Shoulder_Fk_Jnt', u'L_Elbow_Fk_Jnt', u'L_Wrist_Fk_Jnt'], [u'L_Shoulder_Fk_Ctrl', u'L_Elbow_Fk_Ctrl', u'L_Wrist_Fk_Ctrl'], [u'L_Wrist_Ik_Ctrl', u'L_Wrist_Ik_PoleVector_Ctrl', u'L_Shoulder_Ik_Ctrl', u'L_Wrist_Ik_IKrp', u'L_Wrist_Ik_PoleVector_Ctrl_L_Elbow_Ik_Jnt_Connected_Crv', (u'L_Wrist_Ik_IKrp_Stretchy_Grp', u'L_Wrist_Ik_IKrp_NormalScale_Loc', [u'L_Wrist_Ik_Jnt_Stretchy_Loc'], [u'L_Shoulder_Ik_Jnt_Stretchy_Loc'], [u'L_Elbow_Ik_Jnt_Stretchy_Loc'], u'L_Shoulder_Ik_Jnt_L_Wrist_Ik_Jnt_Distance_Shape', u'L_Elbow_Ik_Jnt_L_Wrist_Ik_Jnt_Distance_Shape', u'L_Shoulder_Ik_Jnt_L_Elbow_Ik_Jnt_Distance_Shape')], [u'L_Shoulder_Fk_Ctrl_Offset_Grp', u'L_Wrist_Ik_Ctrl_Offset_Grp', u'L_Shoulder_Ik_Ctrl_Offset_Grp', u'L_Shoulder_Ik_Jnt_Ctrl_Grp'])
+{'no_rotate': u'L_Elbow_NoRotate_JntCtrl', 'joints': [u'L_Shoulder_Twist_0_Jnt', u'L_Shoulder_Twist_1_Jnt', u'L_Shoulder_Twist_2_Jnt', u'L_Shoulder_Twist_3_Jnt'], 'twist_grp': u'L_Shoulder_Twist_Grp', 'curve': u'L_Shoulder_Twist_JntCtrl_Crv', 'ik_spline': u'L_Shoulder_Twist_IKspl'}
+{'joints': [u'L_Elbow_Twist_0_Jnt', u'L_Elbow_Twist_1_Jnt', u'L_Elbow_Twist_2_Jnt', u'L_Elbow_Twist_3_Jnt'], 'twist_grp': u'L_Elbow_Twist_Grp', 'curve': u'L_Elbow_Twist_JntCtrl_Crv', 'ik_spline': u'L_Elbow_Twist_IKspl'}
 L_Shoulder_Twist_0_Bnd
 L_Shoulder_Twist_1_Bnd
 L_Shoulder_Twist_2_Bnd
@@ -168,12 +167,11 @@ L_Elbow_Twist_3_Bnd
 joints are: R_Shoulder_Jnt R_Elbow_Jnt R_Wrist_Jnt
 // Replaced 3 names.
 // Replaced 3 names.
-['R_Elbow_Fk_Jnt']
-['R_Wrist_Fk_Jnt']
+[u'R_Elbow_Fk_Jnt']
+[u'R_Wrist_Fk_Jnt']
 None
-FK = ['R_Shoulder_Fk_Ctrl', 'R_Elbow_Fk_Ctrl', 'R_Wrist_Fk_Ctrl']
-creating ik Chain for : R_Shoulder_Jnt
-// Error: searchReplaceNames _Ctrl  "selected"; // 
+FK = [u'R_Shoulder_Fk_Ctrl', u'R_Elbow_Fk_Ctrl', u'R_Wrist_Fk_Ctrl']
+creating ik Chain for : R_Shoulder_Jnt// Error: searchReplaceNames _Ctrl  "selected"; // 
 // Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
 // Error: searchReplaceNames _Jnt  "selected"; // 
 // Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
@@ -181,37 +179,37 @@ creating ik Chain for : R_Shoulder_Jnt
 // Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
 // Error: searchReplaceNames _Jnt  "selected"; // 
 // Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
-['R_Wrist_Ik_PoleVector_Ctrl_R_Elbow_Ik_Jnt_Connected_Crv', 'R_Wrist_Ik_PoleVector_Ctrl_ClsHandle', 'R_Elbow_Ik_Jnt_ClsHandle']
+ [u'R_Wrist_Ik_PoleVector_Ctrl_R_Elbow_Ik_Jnt_Connected_Crv', u'R_Wrist_Ik_PoleVector_Ctrl_ClsHandle', u'R_Elbow_Ik_Jnt_ClsHandle']
 // Error: searchReplaceNames _Ctrl  "selected"; // 
 // Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
 // Error: searchReplaceNames _Jnt  "selected"; // 
 // Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
-IK = ['R_Wrist_Ik_Ctrl', 'R_Wrist_Ik_PoleVector_Ctrl', 'R_Shoulder_Ik_Ctrl', 'R_Wrist_Ik_IKrp', 'R_Wrist_Ik_PoleVector_Ctrl_R_Elbow_Ik_Jnt_Connected_Crv']
-28.332408353551596
-['R_Shoulder_Fk_Ctrl_Offset_Grp', 'R_Wrist_Ik_Ctrl_Offset_Grp', 'R_Shoulder_Ik_Ctrl_Offset_Grp', 'R_Wrist_Ik_Ctrl_Offset_Grp__Mirror_Grp']
+IK = [u'R_Wrist_Ik_Ctrl', u'R_Wrist_Ik_PoleVector_Ctrl', u'R_Shoulder_Ik_Ctrl', u'R_Wrist_Ik_IKrp', u'R_Wrist_Ik_PoleVector_Ctrl_R_Elbow_Ik_Jnt_Connected_Crv']
+28.3324083536
+[u'R_Shoulder_Fk_Ctrl_Offset_Grp', u'R_Wrist_Ik_Ctrl_Offset_Grp', u'R_Shoulder_Ik_Ctrl_Offset_Grp', u'u_R_Wrist_Ik_Ctrl_Offset_Grp__Mirror_Grp']
 __________
-adding loc to ['R_Shoulder_Fk_Ctrl']
-adding loc to ['R_Elbow_Fk_Ctrl']
-adding loc to ['R_Wrist_Fk_Ctrl']
-adding loc to ['R_Wrist_Ik_Ctrl']
-adding loc to ['R_Wrist_Ik_PoleVector_Ctrl']
-adding loc to ['R_Shoulder_Ik_Ctrl']
-adding loc to ['R_Wrist_Ik_PoleVector_Ctrl_R_Elbow_Ik_Jnt_Connected_Crv']
+adding loc to [u'R_Shoulder_Fk_Ctrl']
+adding loc to [u'R_Elbow_Fk_Ctrl']
+adding loc to [u'R_Wrist_Fk_Ctrl']
+adding loc to [u'R_Wrist_Ik_Ctrl']
+adding loc to [u'R_Wrist_Ik_PoleVector_Ctrl']
+adding loc to [u'R_Shoulder_Ik_Ctrl']
+adding loc to [u'R_Wrist_Ik_PoleVector_Ctrl_R_Elbow_Ik_Jnt_Connected_Crv']
 R_Shoulder_Jnt_Switch_Loc.Switch_IK_FK
 R_Shoulder_Jnt_Switch_Loc
 # Warning: Name '_________' of new attribute clashes with an existing attribute of node 'R_Shoulder_Jnt_Switch_Loc'. # 
-R_Shoulder_Ik_Jnt_R_Wrist_Ik_Jnt_Distance_Shape_MultDiv R_Elbow_Ik_Jnt_NewScale_MultDiv R_Shoulder_Ik_Jnt_NewScale_MultDiv R_Wrist_Ik_IKrp_TotalDistance_MultDiv
-['R_Shoulder_Jnt', 'R_Elbow_Jnt', 'R_Wrist_Jnt'] ['R_Shoulder_Ik_Jnt', 'R_Elbow_Ik_Jnt', 'R_Wrist_Ik_Jnt'] ['R_Shoulder_Fk_Jnt', 'R_Elbow_Fk_Jnt', 'R_Wrist_Fk_Jnt'] ['R_Shoulder_Fk_Ctrl', 'R_Elbow_Fk_Ctrl', 'R_Wrist_Fk_Ctrl'] ['R_Wrist_Ik_Ctrl', 'R_Wrist_Ik_PoleVector_Ctrl', 'R_Shoulder_Ik_Ctrl', 'R_Wrist_Ik_IKrp', 'R_Wrist_Ik_PoleVector_Ctrl_R_Elbow_Ik_Jnt_Connected_Crv', ('R_Wrist_Ik_IKrp_Stretchy_Grp', 'R_Wrist_Ik_IKrp_NormalScale_Loc', ['R_Wrist_Ik_Jnt_Stretchy_Loc'], ['R_Shoulder_Ik_Jnt_Stretchy_Loc'], ['R_Elbow_Ik_Jnt_Stretchy_Loc'], 'R_Shoulder_Ik_Jnt_R_Wrist_Ik_Jnt_Distance_Shape', 'R_Elbow_Ik_Jnt_R_Wrist_Ik_Jnt_Distance_Shape', 'R_Shoulder_Ik_Jnt_R_Elbow_Ik_Jnt_Distance_Shape')] ['R_Shoulder_Fk_Ctrl_Offset_Grp', 'R_Wrist_Ik_Ctrl_Offset_Grp', 'R_Shoulder_Ik_Ctrl_Offset_Grp', 'R_Wrist_Ik_Ctrl_Offset_Grp__Mirror_Grp']
+(u'R_Shoulder_Ik_Jnt_R_Wrist_Ik_Jnt_Distance_Shape_MultDiv', u'R_Elbow_Ik_Jnt_NewScale_MultDiv', u'R_Shoulder_Ik_Jnt_NewScale_MultDiv', u'R_Wrist_Ik_IKrp_TotalDistance_MultDiv')
+([u'R_Shoulder_Jnt', u'R_Elbow_Jnt', u'R_Wrist_Jnt'], ['R_Shoulder_Ik_Jnt', u'R_Elbow_Ik_Jnt', u'R_Wrist_Ik_Jnt'], ['R_Shoulder_Fk_Jnt', u'R_Elbow_Fk_Jnt', u'R_Wrist_Fk_Jnt'], [u'R_Shoulder_Fk_Ctrl', u'R_Elbow_Fk_Ctrl', u'R_Wrist_Fk_Ctrl'], [u'R_Wrist_Ik_Ctrl', u'R_Wrist_Ik_PoleVector_Ctrl', u'R_Shoulder_Ik_Ctrl', u'R_Wrist_Ik_IKrp', u'R_Wrist_Ik_PoleVector_Ctrl_R_Elbow_Ik_Jnt_Connected_Crv', (u'R_Wrist_Ik_IKrp_Stretchy_Grp', u'R_Wrist_Ik_IKrp_NormalScale_Loc', [u'R_Wrist_Ik_Jnt_Stretchy_Loc'], [u'R_Shoulder_Ik_Jnt_Stretchy_Loc'], [u'R_Elbow_Ik_Jnt_Stretchy_Loc'], u'R_Shoulder_Ik_Jnt_R_Wrist_Ik_Jnt_Distance_Shape', u'R_Elbow_Ik_Jnt_R_Wrist_Ik_Jnt_Distance_Shape', u'R_Shoulder_Ik_Jnt_R_Elbow_Ik_Jnt_Distance_Shape')], [u'R_Shoulder_Fk_Ctrl_Offset_Grp', u'R_Wrist_Ik_Ctrl_Offset_Grp', u'R_Shoulder_Ik_Ctrl_Offset_Grp', u'u_R_Wrist_Ik_Ctrl_Offset_Grp__Mirror_Grp'])
 # Warning: Object, 'R_Shoulder_Twist_0_Jnt', skipped. It is already a child of the parent, 'world'. # 
 # Warning: History will be off for the command since Keep Originals is off and a selected item has no history. # 
 # Warning: New name contains invalid characters. Illegal characters were converted to "_". # 
 # Warning: History will be off for the command since Keep Originals is off and a selected item has no history. # 
-{'twist_grp': 'R_Shoulder_Twist_Grp', 'joints': ['R_Shoulder_Twist_0_Jnt', 'R_Shoulder_Twist_1_Jnt', 'R_Shoulder_Twist_2_Jnt', 'R_Shoulder_Twist_3_Jnt'], 'curve': 'R_Shoulder_Twist_JntCtrl_Crv', 'ik_spline': 'R_Shoulder_Twist_IKspl', 'no_rotate': 'R_Elbow_NoRotate_JntCtrl'}
-{'twist_grp': 'R_Elbow_Twist_Grp', 'joints': ['R_Elbow_Twist_0_Jnt', 'R_Elbow_Twist_1_Jnt', 'R_Elbow_Twist_2_Jnt', 'R_Elbow_Twist_3_Jnt'], 'curve': 'R_Elbow_Twist_JntCtrl_Crv', 'ik_spline': 'R_Elbow_Twist_IKspl'}
+{'no_rotate': u'R_Elbow_NoRotate_JntCtrl', 'joints': [u'R_Shoulder_Twist_0_Jnt', u'R_Shoulder_Twist_1_Jnt', u'R_Shoulder_Twist_2_Jnt', u'R_Shoulder_Twist_3_Jnt'], 'twist_grp': u'R_Shoulder_Twist_Grp', 'curve': u'R_Shoulder_Twist_JntCtrl_Crv', 'ik_spline': u'R_Shoulder_Twist_IKspl'}
+{'joints': [u'R_Elbow_Twist_0_Jnt', u'R_Elbow_Twist_1_Jnt', u'R_Elbow_Twist_2_Jnt', u'R_Elbow_Twist_3_Jnt'], 'twist_grp': u'R_Elbow_Twist_Grp', 'curve': u'R_Elbow_Twist_JntCtrl_Crv', 'ik_spline': u'R_Elbow_Twist_IKspl'}
 ----------------IK FK------------------
-(['R_Shoulder_Jnt', 'R_Elbow_Jnt', 'R_Wrist_Jnt'], ['R_Shoulder_Ik_Jnt', 'R_Elbow_Ik_Jnt', 'R_Wrist_Ik_Jnt'], ['R_Shoulder_Fk_Jnt', 'R_Elbow_Fk_Jnt', 'R_Wrist_Fk_Jnt'], ['R_Shoulder_Fk_Ctrl', 'R_Elbow_Fk_Ctrl', 'R_Wrist_Fk_Ctrl'], ['R_Wrist_Ik_Ctrl', 'R_Wrist_Ik_PoleVector_Ctrl', 'R_Shoulder_Ik_Ctrl', 'R_Wrist_Ik_IKrp', 'R_Wrist_Ik_PoleVector_Ctrl_R_Elbow_Ik_Jnt_Connected_Crv', ('R_Wrist_Ik_IKrp_Stretchy_Grp', 'R_Wrist_Ik_IKrp_NormalScale_Loc', ['R_Wrist_Ik_Jnt_Stretchy_Loc'], ['R_Shoulder_Ik_Jnt_Stretchy_Loc'], ['R_Elbow_Ik_Jnt_Stretchy_Loc'], 'R_Shoulder_Ik_Jnt_R_Wrist_Ik_Jnt_Distance_Shape', 'R_Elbow_Ik_Jnt_R_Wrist_Ik_Jnt_Distance_Shape', 'R_Shoulder_Ik_Jnt_R_Elbow_Ik_Jnt_Distance_Shape')], ['R_Shoulder_Fk_Ctrl_Offset_Grp', 'R_Wrist_Ik_Ctrl_Offset_Grp', 'R_Shoulder_Ik_Ctrl_Offset_Grp', 'R_Wrist_Ik_Ctrl_Offset_Grp__Mirror_Grp'])
-{'twist_grp': 'R_Shoulder_Twist_Grp', 'joints': ['R_Shoulder_Twist_0_Jnt', 'R_Shoulder_Twist_1_Jnt', 'R_Shoulder_Twist_2_Jnt', 'R_Shoulder_Twist_3_Jnt'], 'curve': 'R_Shoulder_Twist_JntCtrl_Crv', 'ik_spline': 'R_Shoulder_Twist_IKspl', 'no_rotate': 'R_Elbow_NoRotate_JntCtrl'}
-{'twist_grp': 'R_Elbow_Twist_Grp', 'joints': ['R_Elbow_Twist_0_Jnt', 'R_Elbow_Twist_1_Jnt', 'R_Elbow_Twist_2_Jnt', 'R_Elbow_Twist_3_Jnt'], 'curve': 'R_Elbow_Twist_JntCtrl_Crv', 'ik_spline': 'R_Elbow_Twist_IKspl'}
+([u'R_Shoulder_Jnt', u'R_Elbow_Jnt', u'R_Wrist_Jnt'], ['R_Shoulder_Ik_Jnt', u'R_Elbow_Ik_Jnt', u'R_Wrist_Ik_Jnt'], ['R_Shoulder_Fk_Jnt', u'R_Elbow_Fk_Jnt', u'R_Wrist_Fk_Jnt'], [u'R_Shoulder_Fk_Ctrl', u'R_Elbow_Fk_Ctrl', u'R_Wrist_Fk_Ctrl'], [u'R_Wrist_Ik_Ctrl', u'R_Wrist_Ik_PoleVector_Ctrl', u'R_Shoulder_Ik_Ctrl', u'R_Wrist_Ik_IKrp', u'R_Wrist_Ik_PoleVector_Ctrl_R_Elbow_Ik_Jnt_Connected_Crv', (u'R_Wrist_Ik_IKrp_Stretchy_Grp', u'R_Wrist_Ik_IKrp_NormalScale_Loc', [u'R_Wrist_Ik_Jnt_Stretchy_Loc'], [u'R_Shoulder_Ik_Jnt_Stretchy_Loc'], [u'R_Elbow_Ik_Jnt_Stretchy_Loc'], u'R_Shoulder_Ik_Jnt_R_Wrist_Ik_Jnt_Distance_Shape', u'R_Elbow_Ik_Jnt_R_Wrist_Ik_Jnt_Distance_Shape', u'R_Shoulder_Ik_Jnt_R_Elbow_Ik_Jnt_Distance_Shape')], [u'R_Shoulder_Fk_Ctrl_Offset_Grp', u'R_Wrist_Ik_Ctrl_Offset_Grp', u'R_Shoulder_Ik_Ctrl_Offset_Grp', u'u_R_Wrist_Ik_Ctrl_Offset_Grp__Mirror_Grp'])
+{'no_rotate': u'R_Elbow_NoRotate_JntCtrl', 'joints': [u'R_Shoulder_Twist_0_Jnt', u'R_Shoulder_Twist_1_Jnt', u'R_Shoulder_Twist_2_Jnt', u'R_Shoulder_Twist_3_Jnt'], 'twist_grp': u'R_Shoulder_Twist_Grp', 'curve': u'R_Shoulder_Twist_JntCtrl_Crv', 'ik_spline': u'R_Shoulder_Twist_IKspl'}
+{'joints': [u'R_Elbow_Twist_0_Jnt', u'R_Elbow_Twist_1_Jnt', u'R_Elbow_Twist_2_Jnt', u'R_Elbow_Twist_3_Jnt'], 'twist_grp': u'R_Elbow_Twist_Grp', 'curve': u'R_Elbow_Twist_JntCtrl_Crv', 'ik_spline': u'R_Elbow_Twist_IKspl'}
 R_Shoulder_Twist_0_Bnd
 R_Shoulder_Twist_1_Bnd
 R_Shoulder_Twist_2_Bnd
@@ -231,10 +229,10 @@ Import successfully import exec_pelvis
 Precode L_Pelvis_Block
 L_Pelvis_Jnt
 // Replaced 2 names.
-['L_Pelvis_Jnt', 'R_Pelvis_Jnt']
-['L_Pelvis_Ctrl']
+[u'L_Pelvis_Jnt', 'R_Pelvis_Jnt']
+[u'L_Pelvis_Ctrl']
 # Warning: Object, 'L_Pelvis_Bnd', skipped. It is already a child of the parent, 'world'. # 
-['R_Pelvis_Ctrl']
+[u'R_Pelvis_Ctrl']
 # Warning: Object, 'R_Pelvis_Bnd', skipped. It is already a child of the parent, 'world'. # 
 Build L_Pelvis_Block Success
 Build successfully exec_pelvis.build_pelvis_block()
@@ -247,16 +245,15 @@ Building: L_Hip_Block
 Import successfully import exec_limb
 Precode L_Hip_Block
 L_Hip_Jnt
-['L_Hip_Jnt', 'R_Hip_Jnt']
+[u'L_Hip_Jnt', u'R_Hip_Jnt']
 joints are: L_Hip_Jnt L_Knee_Jnt L_Ankle_Jnt
 // Replaced 3 names.
 // Replaced 3 names.
-['L_Knee_Fk_Jnt']
-['L_Ankle_Fk_Jnt']
+[u'L_Knee_Fk_Jnt']
+[u'L_Ankle_Fk_Jnt']
 None
-FK = ['L_Hip_Fk_Ctrl', 'L_Knee_Fk_Ctrl', 'L_Ankle_Fk_Ctrl']
-creating ik Chain for : L_Hip_Jnt
-// Error: searchReplaceNames _Ctrl  "selected"; // 
+FK = [u'L_Hip_Fk_Ctrl', u'L_Knee_Fk_Ctrl', u'L_Ankle_Fk_Ctrl']
+creating ik Chain for : L_Hip_Jnt// Error: searchReplaceNames _Ctrl  "selected"; // 
 // Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
 // Error: searchReplaceNames _Jnt  "selected"; // 
 // Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
@@ -264,37 +261,37 @@ creating ik Chain for : L_Hip_Jnt
 // Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
 // Error: searchReplaceNames _Jnt  "selected"; // 
 // Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
-['L_Ankle_Ik_PoleVector_Ctrl_L_Knee_Ik_Jnt_Connected_Crv', 'L_Ankle_Ik_PoleVector_Ctrl_ClsHandle', 'L_Knee_Ik_Jnt_ClsHandle']
+ [u'L_Ankle_Ik_PoleVector_Ctrl_L_Knee_Ik_Jnt_Connected_Crv', u'L_Ankle_Ik_PoleVector_Ctrl_ClsHandle', u'L_Knee_Ik_Jnt_ClsHandle']
 // Error: searchReplaceNames _Ctrl  "selected"; // 
 // Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
 // Error: searchReplaceNames _Jnt  "selected"; // 
 // Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
-IK = ['L_Ankle_Ik_Ctrl', 'L_Ankle_Ik_PoleVector_Ctrl', 'L_Hip_Ik_Ctrl', 'L_Ankle_Ik_IKrp', 'L_Ankle_Ik_PoleVector_Ctrl_L_Knee_Ik_Jnt_Connected_Crv']
-40.96857316986824
-['L_Hip_Fk_Ctrl_Offset_Grp', 'L_Ankle_Ik_Ctrl_Offset_Grp', 'L_Hip_Ik_Ctrl_Offset_Grp', 'L_Hip_Ik_Jnt_Ctrl_Grp']
+IK = [u'L_Ankle_Ik_Ctrl', u'L_Ankle_Ik_PoleVector_Ctrl', u'L_Hip_Ik_Ctrl', u'L_Ankle_Ik_IKrp', u'L_Ankle_Ik_PoleVector_Ctrl_L_Knee_Ik_Jnt_Connected_Crv']
+40.9685731699
+[u'L_Hip_Fk_Ctrl_Offset_Grp', u'L_Ankle_Ik_Ctrl_Offset_Grp', u'L_Hip_Ik_Ctrl_Offset_Grp', u'L_Hip_Ik_Jnt_Ctrl_Grp']
 __________
-adding loc to ['L_Hip_Fk_Ctrl']
-adding loc to ['L_Knee_Fk_Ctrl']
-adding loc to ['L_Ankle_Fk_Ctrl']
-adding loc to ['L_Ankle_Ik_Ctrl']
-adding loc to ['L_Ankle_Ik_PoleVector_Ctrl']
-adding loc to ['L_Hip_Ik_Ctrl']
-adding loc to ['L_Ankle_Ik_PoleVector_Ctrl_L_Knee_Ik_Jnt_Connected_Crv']
+adding loc to [u'L_Hip_Fk_Ctrl']
+adding loc to [u'L_Knee_Fk_Ctrl']
+adding loc to [u'L_Ankle_Fk_Ctrl']
+adding loc to [u'L_Ankle_Ik_Ctrl']
+adding loc to [u'L_Ankle_Ik_PoleVector_Ctrl']
+adding loc to [u'L_Hip_Ik_Ctrl']
+adding loc to [u'L_Ankle_Ik_PoleVector_Ctrl_L_Knee_Ik_Jnt_Connected_Crv']
 L_Hip_Jnt_Switch_Loc.Switch_IK_FK
 L_Hip_Jnt_Switch_Loc
 # Warning: Name '_________' of new attribute clashes with an existing attribute of node 'L_Hip_Jnt_Switch_Loc'. # 
-L_Hip_Ik_Jnt_L_Ankle_Ik_Jnt_Distance_Shape_MultDiv L_Knee_Ik_Jnt_NewScale_MultDiv L_Hip_Ik_Jnt_NewScale_MultDiv L_Ankle_Ik_IKrp_TotalDistance_MultDiv
-['L_Hip_Jnt', 'L_Knee_Jnt', 'L_Ankle_Jnt'] ['L_Hip_Ik_Jnt', 'L_Knee_Ik_Jnt', 'L_Ankle_Ik_Jnt'] ['L_Hip_Fk_Jnt', 'L_Knee_Fk_Jnt', 'L_Ankle_Fk_Jnt'] ['L_Hip_Fk_Ctrl', 'L_Knee_Fk_Ctrl', 'L_Ankle_Fk_Ctrl'] ['L_Ankle_Ik_Ctrl', 'L_Ankle_Ik_PoleVector_Ctrl', 'L_Hip_Ik_Ctrl', 'L_Ankle_Ik_IKrp', 'L_Ankle_Ik_PoleVector_Ctrl_L_Knee_Ik_Jnt_Connected_Crv', ('L_Ankle_Ik_IKrp_Stretchy_Grp', 'L_Ankle_Ik_IKrp_NormalScale_Loc', ['L_Ankle_Ik_Jnt_Stretchy_Loc'], ['L_Hip_Ik_Jnt_Stretchy_Loc'], ['L_Knee_Ik_Jnt_Stretchy_Loc'], 'L_Hip_Ik_Jnt_L_Ankle_Ik_Jnt_Distance_Shape', 'L_Knee_Ik_Jnt_L_Ankle_Ik_Jnt_Distance_Shape', 'L_Hip_Ik_Jnt_L_Knee_Ik_Jnt_Distance_Shape')] ['L_Hip_Fk_Ctrl_Offset_Grp', 'L_Ankle_Ik_Ctrl_Offset_Grp', 'L_Hip_Ik_Ctrl_Offset_Grp', 'L_Hip_Ik_Jnt_Ctrl_Grp']
+(u'L_Hip_Ik_Jnt_L_Ankle_Ik_Jnt_Distance_Shape_MultDiv', u'L_Knee_Ik_Jnt_NewScale_MultDiv', u'L_Hip_Ik_Jnt_NewScale_MultDiv', u'L_Ankle_Ik_IKrp_TotalDistance_MultDiv')
+([u'L_Hip_Jnt', u'L_Knee_Jnt', u'L_Ankle_Jnt'], ['L_Hip_Ik_Jnt', u'L_Knee_Ik_Jnt', u'L_Ankle_Ik_Jnt'], ['L_Hip_Fk_Jnt', u'L_Knee_Fk_Jnt', u'L_Ankle_Fk_Jnt'], [u'L_Hip_Fk_Ctrl', u'L_Knee_Fk_Ctrl', u'L_Ankle_Fk_Ctrl'], [u'L_Ankle_Ik_Ctrl', u'L_Ankle_Ik_PoleVector_Ctrl', u'L_Hip_Ik_Ctrl', u'L_Ankle_Ik_IKrp', u'L_Ankle_Ik_PoleVector_Ctrl_L_Knee_Ik_Jnt_Connected_Crv', (u'L_Ankle_Ik_IKrp_Stretchy_Grp', u'L_Ankle_Ik_IKrp_NormalScale_Loc', [u'L_Ankle_Ik_Jnt_Stretchy_Loc'], [u'L_Hip_Ik_Jnt_Stretchy_Loc'], [u'L_Knee_Ik_Jnt_Stretchy_Loc'], u'L_Hip_Ik_Jnt_L_Ankle_Ik_Jnt_Distance_Shape', u'L_Knee_Ik_Jnt_L_Ankle_Ik_Jnt_Distance_Shape', u'L_Hip_Ik_Jnt_L_Knee_Ik_Jnt_Distance_Shape')], [u'L_Hip_Fk_Ctrl_Offset_Grp', u'L_Ankle_Ik_Ctrl_Offset_Grp', u'L_Hip_Ik_Ctrl_Offset_Grp', u'L_Hip_Ik_Jnt_Ctrl_Grp'])
 # Warning: Object, 'L_Hip_Twist_0_Jnt', skipped. It is already a child of the parent, 'world'. # 
 # Warning: History will be off for the command since Keep Originals is off and a selected item has no history. # 
 # Warning: New name contains invalid characters. Illegal characters were converted to "_". # 
 # Warning: History will be off for the command since Keep Originals is off and a selected item has no history. # 
-{'twist_grp': 'L_Hip_Twist_Grp', 'joints': ['L_Hip_Twist_0_Jnt', 'L_Hip_Twist_1_Jnt', 'L_Hip_Twist_2_Jnt', 'L_Hip_Twist_3_Jnt'], 'curve': 'L_Hip_Twist_JntCtrl_Crv', 'ik_spline': 'L_Hip_Twist_IKspl', 'no_rotate': 'L_Knee_NoRotate_JntCtrl'}
-{'twist_grp': 'L_Knee_Twist_Grp', 'joints': ['L_Knee_Twist_0_Jnt', 'L_Knee_Twist_1_Jnt', 'L_Knee_Twist_2_Jnt', 'L_Knee_Twist_3_Jnt'], 'curve': 'L_Knee_Twist_JntCtrl_Crv', 'ik_spline': 'L_Knee_Twist_IKspl'}
+{'no_rotate': u'L_Knee_NoRotate_JntCtrl', 'joints': [u'L_Hip_Twist_0_Jnt', u'L_Hip_Twist_1_Jnt', u'L_Hip_Twist_2_Jnt', u'L_Hip_Twist_3_Jnt'], 'twist_grp': u'L_Hip_Twist_Grp', 'curve': u'L_Hip_Twist_JntCtrl_Crv', 'ik_spline': u'L_Hip_Twist_IKspl'}
+{'joints': [u'L_Knee_Twist_0_Jnt', u'L_Knee_Twist_1_Jnt', u'L_Knee_Twist_2_Jnt', u'L_Knee_Twist_3_Jnt'], 'twist_grp': u'L_Knee_Twist_Grp', 'curve': u'L_Knee_Twist_JntCtrl_Crv', 'ik_spline': u'L_Knee_Twist_IKspl'}
 ----------------IK FK------------------
-(['L_Hip_Jnt', 'L_Knee_Jnt', 'L_Ankle_Jnt'], ['L_Hip_Ik_Jnt', 'L_Knee_Ik_Jnt', 'L_Ankle_Ik_Jnt'], ['L_Hip_Fk_Jnt', 'L_Knee_Fk_Jnt', 'L_Ankle_Fk_Jnt'], ['L_Hip_Fk_Ctrl', 'L_Knee_Fk_Ctrl', 'L_Ankle_Fk_Ctrl'], ['L_Ankle_Ik_Ctrl', 'L_Ankle_Ik_PoleVector_Ctrl', 'L_Hip_Ik_Ctrl', 'L_Ankle_Ik_IKrp', 'L_Ankle_Ik_PoleVector_Ctrl_L_Knee_Ik_Jnt_Connected_Crv', ('L_Ankle_Ik_IKrp_Stretchy_Grp', 'L_Ankle_Ik_IKrp_NormalScale_Loc', ['L_Ankle_Ik_Jnt_Stretchy_Loc'], ['L_Hip_Ik_Jnt_Stretchy_Loc'], ['L_Knee_Ik_Jnt_Stretchy_Loc'], 'L_Hip_Ik_Jnt_L_Ankle_Ik_Jnt_Distance_Shape', 'L_Knee_Ik_Jnt_L_Ankle_Ik_Jnt_Distance_Shape', 'L_Hip_Ik_Jnt_L_Knee_Ik_Jnt_Distance_Shape')], ['L_Hip_Fk_Ctrl_Offset_Grp', 'L_Ankle_Ik_Ctrl_Offset_Grp', 'L_Hip_Ik_Ctrl_Offset_Grp', 'L_Hip_Ik_Jnt_Ctrl_Grp'])
-{'twist_grp': 'L_Hip_Twist_Grp', 'joints': ['L_Hip_Twist_0_Jnt', 'L_Hip_Twist_1_Jnt', 'L_Hip_Twist_2_Jnt', 'L_Hip_Twist_3_Jnt'], 'curve': 'L_Hip_Twist_JntCtrl_Crv', 'ik_spline': 'L_Hip_Twist_IKspl', 'no_rotate': 'L_Knee_NoRotate_JntCtrl'}
-{'twist_grp': 'L_Knee_Twist_Grp', 'joints': ['L_Knee_Twist_0_Jnt', 'L_Knee_Twist_1_Jnt', 'L_Knee_Twist_2_Jnt', 'L_Knee_Twist_3_Jnt'], 'curve': 'L_Knee_Twist_JntCtrl_Crv', 'ik_spline': 'L_Knee_Twist_IKspl'}
+([u'L_Hip_Jnt', u'L_Knee_Jnt', u'L_Ankle_Jnt'], ['L_Hip_Ik_Jnt', u'L_Knee_Ik_Jnt', u'L_Ankle_Ik_Jnt'], ['L_Hip_Fk_Jnt', u'L_Knee_Fk_Jnt', u'L_Ankle_Fk_Jnt'], [u'L_Hip_Fk_Ctrl', u'L_Knee_Fk_Ctrl', u'L_Ankle_Fk_Ctrl'], [u'L_Ankle_Ik_Ctrl', u'L_Ankle_Ik_PoleVector_Ctrl', u'L_Hip_Ik_Ctrl', u'L_Ankle_Ik_IKrp', u'L_Ankle_Ik_PoleVector_Ctrl_L_Knee_Ik_Jnt_Connected_Crv', (u'L_Ankle_Ik_IKrp_Stretchy_Grp', u'L_Ankle_Ik_IKrp_NormalScale_Loc', [u'L_Ankle_Ik_Jnt_Stretchy_Loc'], [u'L_Hip_Ik_Jnt_Stretchy_Loc'], [u'L_Knee_Ik_Jnt_Stretchy_Loc'], u'L_Hip_Ik_Jnt_L_Ankle_Ik_Jnt_Distance_Shape', u'L_Knee_Ik_Jnt_L_Ankle_Ik_Jnt_Distance_Shape', u'L_Hip_Ik_Jnt_L_Knee_Ik_Jnt_Distance_Shape')], [u'L_Hip_Fk_Ctrl_Offset_Grp', u'L_Ankle_Ik_Ctrl_Offset_Grp', u'L_Hip_Ik_Ctrl_Offset_Grp', u'L_Hip_Ik_Jnt_Ctrl_Grp'])
+{'no_rotate': u'L_Knee_NoRotate_JntCtrl', 'joints': [u'L_Hip_Twist_0_Jnt', u'L_Hip_Twist_1_Jnt', u'L_Hip_Twist_2_Jnt', u'L_Hip_Twist_3_Jnt'], 'twist_grp': u'L_Hip_Twist_Grp', 'curve': u'L_Hip_Twist_JntCtrl_Crv', 'ik_spline': u'L_Hip_Twist_IKspl'}
+{'joints': [u'L_Knee_Twist_0_Jnt', u'L_Knee_Twist_1_Jnt', u'L_Knee_Twist_2_Jnt', u'L_Knee_Twist_3_Jnt'], 'twist_grp': u'L_Knee_Twist_Grp', 'curve': u'L_Knee_Twist_JntCtrl_Crv', 'ik_spline': u'L_Knee_Twist_IKspl'}
 L_Hip_Twist_0_Bnd
 L_Hip_Twist_1_Bnd
 L_Hip_Twist_2_Bnd
@@ -306,12 +303,11 @@ L_Knee_Twist_3_Bnd
 joints are: R_Hip_Jnt R_Knee_Jnt R_Ankle_Jnt
 // Replaced 3 names.
 // Replaced 3 names.
-['R_Knee_Fk_Jnt']
-['R_Ankle_Fk_Jnt']
+[u'R_Knee_Fk_Jnt']
+[u'R_Ankle_Fk_Jnt']
 None
-FK = ['R_Hip_Fk_Ctrl', 'R_Knee_Fk_Ctrl', 'R_Ankle_Fk_Ctrl']
-creating ik Chain for : R_Hip_Jnt
-// Error: searchReplaceNames _Ctrl  "selected"; // 
+FK = [u'R_Hip_Fk_Ctrl', u'R_Knee_Fk_Ctrl', u'R_Ankle_Fk_Ctrl']
+creating ik Chain for : R_Hip_Jnt// Error: searchReplaceNames _Ctrl  "selected"; // 
 // Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
 // Error: searchReplaceNames _Jnt  "selected"; // 
 // Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
@@ -319,37 +315,37 @@ creating ik Chain for : R_Hip_Jnt
 // Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
 // Error: searchReplaceNames _Jnt  "selected"; // 
 // Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
-['R_Ankle_Ik_PoleVector_Ctrl_R_Knee_Ik_Jnt_Connected_Crv', 'R_Ankle_Ik_PoleVector_Ctrl_ClsHandle', 'R_Knee_Ik_Jnt_ClsHandle']
+ [u'R_Ankle_Ik_PoleVector_Ctrl_R_Knee_Ik_Jnt_Connected_Crv', u'R_Ankle_Ik_PoleVector_Ctrl_ClsHandle', u'R_Knee_Ik_Jnt_ClsHandle']
 // Error: searchReplaceNames _Ctrl  "selected"; // 
 // Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
 // Error: searchReplaceNames _Jnt  "selected"; // 
 // Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
-IK = ['R_Ankle_Ik_Ctrl', 'R_Ankle_Ik_PoleVector_Ctrl', 'R_Hip_Ik_Ctrl', 'R_Ankle_Ik_IKrp', 'R_Ankle_Ik_PoleVector_Ctrl_R_Knee_Ik_Jnt_Connected_Crv']
-40.968600000000016
-['R_Hip_Fk_Ctrl_Offset_Grp', 'R_Ankle_Ik_Ctrl_Offset_Grp', 'R_Hip_Ik_Ctrl_Offset_Grp', 'R_Ankle_Ik_Ctrl_Offset_Grp__Mirror_Grp']
+IK = [u'R_Ankle_Ik_Ctrl', u'R_Ankle_Ik_PoleVector_Ctrl', u'R_Hip_Ik_Ctrl', u'R_Ankle_Ik_IKrp', u'R_Ankle_Ik_PoleVector_Ctrl_R_Knee_Ik_Jnt_Connected_Crv']
+40.9686
+[u'R_Hip_Fk_Ctrl_Offset_Grp', u'R_Ankle_Ik_Ctrl_Offset_Grp', u'R_Hip_Ik_Ctrl_Offset_Grp', u'u_R_Ankle_Ik_Ctrl_Offset_Grp__Mirror_Grp']
 __________
-adding loc to ['R_Hip_Fk_Ctrl']
-adding loc to ['R_Knee_Fk_Ctrl']
-adding loc to ['R_Ankle_Fk_Ctrl']
-adding loc to ['R_Ankle_Ik_Ctrl']
-adding loc to ['R_Ankle_Ik_PoleVector_Ctrl']
-adding loc to ['R_Hip_Ik_Ctrl']
-adding loc to ['R_Ankle_Ik_PoleVector_Ctrl_R_Knee_Ik_Jnt_Connected_Crv']
+adding loc to [u'R_Hip_Fk_Ctrl']
+adding loc to [u'R_Knee_Fk_Ctrl']
+adding loc to [u'R_Ankle_Fk_Ctrl']
+adding loc to [u'R_Ankle_Ik_Ctrl']
+adding loc to [u'R_Ankle_Ik_PoleVector_Ctrl']
+adding loc to [u'R_Hip_Ik_Ctrl']
+adding loc to [u'R_Ankle_Ik_PoleVector_Ctrl_R_Knee_Ik_Jnt_Connected_Crv']
 R_Hip_Jnt_Switch_Loc.Switch_IK_FK
 R_Hip_Jnt_Switch_Loc
 # Warning: Name '_________' of new attribute clashes with an existing attribute of node 'R_Hip_Jnt_Switch_Loc'. # 
-R_Hip_Ik_Jnt_R_Ankle_Ik_Jnt_Distance_Shape_MultDiv R_Knee_Ik_Jnt_NewScale_MultDiv R_Hip_Ik_Jnt_NewScale_MultDiv R_Ankle_Ik_IKrp_TotalDistance_MultDiv
-['R_Hip_Jnt', 'R_Knee_Jnt', 'R_Ankle_Jnt'] ['R_Hip_Ik_Jnt', 'R_Knee_Ik_Jnt', 'R_Ankle_Ik_Jnt'] ['R_Hip_Fk_Jnt', 'R_Knee_Fk_Jnt', 'R_Ankle_Fk_Jnt'] ['R_Hip_Fk_Ctrl', 'R_Knee_Fk_Ctrl', 'R_Ankle_Fk_Ctrl'] ['R_Ankle_Ik_Ctrl', 'R_Ankle_Ik_PoleVector_Ctrl', 'R_Hip_Ik_Ctrl', 'R_Ankle_Ik_IKrp', 'R_Ankle_Ik_PoleVector_Ctrl_R_Knee_Ik_Jnt_Connected_Crv', ('R_Ankle_Ik_IKrp_Stretchy_Grp', 'R_Ankle_Ik_IKrp_NormalScale_Loc', ['R_Ankle_Ik_Jnt_Stretchy_Loc'], ['R_Hip_Ik_Jnt_Stretchy_Loc'], ['R_Knee_Ik_Jnt_Stretchy_Loc'], 'R_Hip_Ik_Jnt_R_Ankle_Ik_Jnt_Distance_Shape', 'R_Knee_Ik_Jnt_R_Ankle_Ik_Jnt_Distance_Shape', 'R_Hip_Ik_Jnt_R_Knee_Ik_Jnt_Distance_Shape')] ['R_Hip_Fk_Ctrl_Offset_Grp', 'R_Ankle_Ik_Ctrl_Offset_Grp', 'R_Hip_Ik_Ctrl_Offset_Grp', 'R_Ankle_Ik_Ctrl_Offset_Grp__Mirror_Grp']
+(u'R_Hip_Ik_Jnt_R_Ankle_Ik_Jnt_Distance_Shape_MultDiv', u'R_Knee_Ik_Jnt_NewScale_MultDiv', u'R_Hip_Ik_Jnt_NewScale_MultDiv', u'R_Ankle_Ik_IKrp_TotalDistance_MultDiv')
+([u'R_Hip_Jnt', u'R_Knee_Jnt', u'R_Ankle_Jnt'], ['R_Hip_Ik_Jnt', u'R_Knee_Ik_Jnt', u'R_Ankle_Ik_Jnt'], ['R_Hip_Fk_Jnt', u'R_Knee_Fk_Jnt', u'R_Ankle_Fk_Jnt'], [u'R_Hip_Fk_Ctrl', u'R_Knee_Fk_Ctrl', u'R_Ankle_Fk_Ctrl'], [u'R_Ankle_Ik_Ctrl', u'R_Ankle_Ik_PoleVector_Ctrl', u'R_Hip_Ik_Ctrl', u'R_Ankle_Ik_IKrp', u'R_Ankle_Ik_PoleVector_Ctrl_R_Knee_Ik_Jnt_Connected_Crv', (u'R_Ankle_Ik_IKrp_Stretchy_Grp', u'R_Ankle_Ik_IKrp_NormalScale_Loc', [u'R_Ankle_Ik_Jnt_Stretchy_Loc'], [u'R_Hip_Ik_Jnt_Stretchy_Loc'], [u'R_Knee_Ik_Jnt_Stretchy_Loc'], u'R_Hip_Ik_Jnt_R_Ankle_Ik_Jnt_Distance_Shape', u'R_Knee_Ik_Jnt_R_Ankle_Ik_Jnt_Distance_Shape', u'R_Hip_Ik_Jnt_R_Knee_Ik_Jnt_Distance_Shape')], [u'R_Hip_Fk_Ctrl_Offset_Grp', u'R_Ankle_Ik_Ctrl_Offset_Grp', u'R_Hip_Ik_Ctrl_Offset_Grp', u'u_R_Ankle_Ik_Ctrl_Offset_Grp__Mirror_Grp'])
 # Warning: Object, 'R_Hip_Twist_0_Jnt', skipped. It is already a child of the parent, 'world'. # 
 # Warning: History will be off for the command since Keep Originals is off and a selected item has no history. # 
 # Warning: New name contains invalid characters. Illegal characters were converted to "_". # 
 # Warning: History will be off for the command since Keep Originals is off and a selected item has no history. # 
-{'twist_grp': 'R_Hip_Twist_Grp', 'joints': ['R_Hip_Twist_0_Jnt', 'R_Hip_Twist_1_Jnt', 'R_Hip_Twist_2_Jnt', 'R_Hip_Twist_3_Jnt'], 'curve': 'R_Hip_Twist_JntCtrl_Crv', 'ik_spline': 'R_Hip_Twist_IKspl', 'no_rotate': 'R_Knee_NoRotate_JntCtrl'}
-{'twist_grp': 'R_Knee_Twist_Grp', 'joints': ['R_Knee_Twist_0_Jnt', 'R_Knee_Twist_1_Jnt', 'R_Knee_Twist_2_Jnt', 'R_Knee_Twist_3_Jnt'], 'curve': 'R_Knee_Twist_JntCtrl_Crv', 'ik_spline': 'R_Knee_Twist_IKspl'}
+{'no_rotate': u'R_Knee_NoRotate_JntCtrl', 'joints': [u'R_Hip_Twist_0_Jnt', u'R_Hip_Twist_1_Jnt', u'R_Hip_Twist_2_Jnt', u'R_Hip_Twist_3_Jnt'], 'twist_grp': u'R_Hip_Twist_Grp', 'curve': u'R_Hip_Twist_JntCtrl_Crv', 'ik_spline': u'R_Hip_Twist_IKspl'}
+{'joints': [u'R_Knee_Twist_0_Jnt', u'R_Knee_Twist_1_Jnt', u'R_Knee_Twist_2_Jnt', u'R_Knee_Twist_3_Jnt'], 'twist_grp': u'R_Knee_Twist_Grp', 'curve': u'R_Knee_Twist_JntCtrl_Crv', 'ik_spline': u'R_Knee_Twist_IKspl'}
 ----------------IK FK------------------
-(['R_Hip_Jnt', 'R_Knee_Jnt', 'R_Ankle_Jnt'], ['R_Hip_Ik_Jnt', 'R_Knee_Ik_Jnt', 'R_Ankle_Ik_Jnt'], ['R_Hip_Fk_Jnt', 'R_Knee_Fk_Jnt', 'R_Ankle_Fk_Jnt'], ['R_Hip_Fk_Ctrl', 'R_Knee_Fk_Ctrl', 'R_Ankle_Fk_Ctrl'], ['R_Ankle_Ik_Ctrl', 'R_Ankle_Ik_PoleVector_Ctrl', 'R_Hip_Ik_Ctrl', 'R_Ankle_Ik_IKrp', 'R_Ankle_Ik_PoleVector_Ctrl_R_Knee_Ik_Jnt_Connected_Crv', ('R_Ankle_Ik_IKrp_Stretchy_Grp', 'R_Ankle_Ik_IKrp_NormalScale_Loc', ['R_Ankle_Ik_Jnt_Stretchy_Loc'], ['R_Hip_Ik_Jnt_Stretchy_Loc'], ['R_Knee_Ik_Jnt_Stretchy_Loc'], 'R_Hip_Ik_Jnt_R_Ankle_Ik_Jnt_Distance_Shape', 'R_Knee_Ik_Jnt_R_Ankle_Ik_Jnt_Distance_Shape', 'R_Hip_Ik_Jnt_R_Knee_Ik_Jnt_Distance_Shape')], ['R_Hip_Fk_Ctrl_Offset_Grp', 'R_Ankle_Ik_Ctrl_Offset_Grp', 'R_Hip_Ik_Ctrl_Offset_Grp', 'R_Ankle_Ik_Ctrl_Offset_Grp__Mirror_Grp'])
-{'twist_grp': 'R_Hip_Twist_Grp', 'joints': ['R_Hip_Twist_0_Jnt', 'R_Hip_Twist_1_Jnt', 'R_Hip_Twist_2_Jnt', 'R_Hip_Twist_3_Jnt'], 'curve': 'R_Hip_Twist_JntCtrl_Crv', 'ik_spline': 'R_Hip_Twist_IKspl', 'no_rotate': 'R_Knee_NoRotate_JntCtrl'}
-{'twist_grp': 'R_Knee_Twist_Grp', 'joints': ['R_Knee_Twist_0_Jnt', 'R_Knee_Twist_1_Jnt', 'R_Knee_Twist_2_Jnt', 'R_Knee_Twist_3_Jnt'], 'curve': 'R_Knee_Twist_JntCtrl_Crv', 'ik_spline': 'R_Knee_Twist_IKspl'}
+([u'R_Hip_Jnt', u'R_Knee_Jnt', u'R_Ankle_Jnt'], ['R_Hip_Ik_Jnt', u'R_Knee_Ik_Jnt', u'R_Ankle_Ik_Jnt'], ['R_Hip_Fk_Jnt', u'R_Knee_Fk_Jnt', u'R_Ankle_Fk_Jnt'], [u'R_Hip_Fk_Ctrl', u'R_Knee_Fk_Ctrl', u'R_Ankle_Fk_Ctrl'], [u'R_Ankle_Ik_Ctrl', u'R_Ankle_Ik_PoleVector_Ctrl', u'R_Hip_Ik_Ctrl', u'R_Ankle_Ik_IKrp', u'R_Ankle_Ik_PoleVector_Ctrl_R_Knee_Ik_Jnt_Connected_Crv', (u'R_Ankle_Ik_IKrp_Stretchy_Grp', u'R_Ankle_Ik_IKrp_NormalScale_Loc', [u'R_Ankle_Ik_Jnt_Stretchy_Loc'], [u'R_Hip_Ik_Jnt_Stretchy_Loc'], [u'R_Knee_Ik_Jnt_Stretchy_Loc'], u'R_Hip_Ik_Jnt_R_Ankle_Ik_Jnt_Distance_Shape', u'R_Knee_Ik_Jnt_R_Ankle_Ik_Jnt_Distance_Shape', u'R_Hip_Ik_Jnt_R_Knee_Ik_Jnt_Distance_Shape')], [u'R_Hip_Fk_Ctrl_Offset_Grp', u'R_Ankle_Ik_Ctrl_Offset_Grp', u'R_Hip_Ik_Ctrl_Offset_Grp', u'u_R_Ankle_Ik_Ctrl_Offset_Grp__Mirror_Grp'])
+{'no_rotate': u'R_Knee_NoRotate_JntCtrl', 'joints': [u'R_Hip_Twist_0_Jnt', u'R_Hip_Twist_1_Jnt', u'R_Hip_Twist_2_Jnt', u'R_Hip_Twist_3_Jnt'], 'twist_grp': u'R_Hip_Twist_Grp', 'curve': u'R_Hip_Twist_JntCtrl_Crv', 'ik_spline': u'R_Hip_Twist_IKspl'}
+{'joints': [u'R_Knee_Twist_0_Jnt', u'R_Knee_Twist_1_Jnt', u'R_Knee_Twist_2_Jnt', u'R_Knee_Twist_3_Jnt'], 'twist_grp': u'R_Knee_Twist_Grp', 'curve': u'R_Knee_Twist_JntCtrl_Crv', 'ik_spline': u'R_Knee_Twist_IKspl'}
 R_Hip_Twist_0_Bnd
 R_Hip_Twist_1_Bnd
 R_Hip_Twist_2_Bnd
@@ -386,13 +382,13 @@ Precode L_Hand_Block
 L_Hand
 L_Hand_Palm_Jnt
 // Replaced 27 names.
-['L_Hand_Palm_Jnt', 'R_Hand_Palm_Jnt']
-['L_Hand_Thumb_00_Jnt', 'L_Hand_Index_00_Jnt', 'L_Hand_Middle_00_Jnt', 'L_Hand_Ring_00_Jnt', 'L_Hand_Pinky_00_Jnt']
+[u'L_Hand_Palm_Jnt', 'R_Hand_Palm_Jnt']
+[u'L_Hand_Thumb_00_Jnt', u'L_Hand_Index_00_Jnt', u'L_Hand_Middle_00_Jnt', u'L_Hand_Ring_00_Jnt', u'L_Hand_Pinky_00_Jnt']
 // Replaced 27 names.
-['L_Hand_Thumb_01_Jnt']
-['L_Hand_Thumb_02_Jnt']
-['L_Hand_Thumb_03_Jnt']
-['L_Hand_Thumb_00_Ctrl', 'L_Hand_Thumb_01_Ctrl', 'L_Hand_Thumb_02_Ctrl']
+[u'L_Hand_Thumb_01_Jnt']
+[u'L_Hand_Thumb_02_Jnt']
+[u'L_Hand_Thumb_03_Jnt']
+[u'L_Hand_Thumb_00_Ctrl', u'L_Hand_Thumb_01_Ctrl', u'L_Hand_Thumb_02_Ctrl']
 // Error: searchReplaceNames _Ctrl  "selected"; // 
 // Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
 // Error: searchReplaceNames _Jnt  "selected"; // 
@@ -401,28 +397,11 @@ L_Hand_Palm_Jnt
 // Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
 // Error: searchReplaceNames _Jnt  "selected"; // 
 // Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
-['L_Hand_Index_01_Jnt']
-['L_Hand_Index_02_Jnt']
-['L_Hand_Index_03_Jnt']
-['L_Hand_Index_04_Jnt']
-['L_Hand_Index_00_Ctrl', 'L_Hand_Index_01_Ctrl', 'L_Hand_Index_02_Ctrl', 'L_Hand_Index_03_Ctrl']
-// Error: searchReplaceNames _Ctrl  "selected"; // 
-// Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
-// Error: searchReplaceNames _Jnt  "selected"; // 
-// Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
-// Error: searchReplaceNames _Ctrl  "selected"; // 
-// Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
-// Error: searchReplaceNames _Jnt  "selected"; // 
-// Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
-// Error: searchReplaceNames _Ctrl  "selected"; // 
-// Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
-// Error: searchReplaceNames _Jnt  "selected"; // 
-// Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
-['L_Hand_Middle_01_Jnt']
-['L_Hand_Middle_02_Jnt']
-['L_Hand_Middle_03_Jnt']
-['L_Hand_Middle_04_Jnt']
-['L_Hand_Middle_00_Ctrl', 'L_Hand_Middle_01_Ctrl', 'L_Hand_Middle_02_Ctrl', 'L_Hand_Middle_03_Ctrl']
+[u'L_Hand_Index_01_Jnt']
+[u'L_Hand_Index_02_Jnt']
+[u'L_Hand_Index_03_Jnt']
+[u'L_Hand_Index_04_Jnt']
+[u'L_Hand_Index_00_Ctrl', u'L_Hand_Index_01_Ctrl', u'L_Hand_Index_02_Ctrl', u'L_Hand_Index_03_Ctrl']
 // Error: searchReplaceNames _Ctrl  "selected"; // 
 // Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
 // Error: searchReplaceNames _Jnt  "selected"; // 
@@ -435,11 +414,11 @@ L_Hand_Palm_Jnt
 // Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
 // Error: searchReplaceNames _Jnt  "selected"; // 
 // Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
-['L_Hand_Ring_01_Jnt']
-['L_Hand_Ring_02_Jnt']
-['L_Hand_Ring_03_Jnt']
-['L_Hand_Ring_04_Jnt']
-['L_Hand_Ring_00_Ctrl', 'L_Hand_Ring_01_Ctrl', 'L_Hand_Ring_02_Ctrl', 'L_Hand_Ring_03_Ctrl']
+[u'L_Hand_Middle_01_Jnt']
+[u'L_Hand_Middle_02_Jnt']
+[u'L_Hand_Middle_03_Jnt']
+[u'L_Hand_Middle_04_Jnt']
+[u'L_Hand_Middle_00_Ctrl', u'L_Hand_Middle_01_Ctrl', u'L_Hand_Middle_02_Ctrl', u'L_Hand_Middle_03_Ctrl']
 // Error: searchReplaceNames _Ctrl  "selected"; // 
 // Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
 // Error: searchReplaceNames _Jnt  "selected"; // 
@@ -452,11 +431,28 @@ L_Hand_Palm_Jnt
 // Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
 // Error: searchReplaceNames _Jnt  "selected"; // 
 // Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
-['L_Hand_Pinky_01_Jnt']
-['L_Hand_Pinky_02_Jnt']
-['L_Hand_Pinky_03_Jnt']
-['L_Hand_Pinky_04_Jnt']
-['L_Hand_Pinky_00_Ctrl', 'L_Hand_Pinky_01_Ctrl', 'L_Hand_Pinky_02_Ctrl', 'L_Hand_Pinky_03_Ctrl']
+[u'L_Hand_Ring_01_Jnt']
+[u'L_Hand_Ring_02_Jnt']
+[u'L_Hand_Ring_03_Jnt']
+[u'L_Hand_Ring_04_Jnt']
+[u'L_Hand_Ring_00_Ctrl', u'L_Hand_Ring_01_Ctrl', u'L_Hand_Ring_02_Ctrl', u'L_Hand_Ring_03_Ctrl']
+// Error: searchReplaceNames _Ctrl  "selected"; // 
+// Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
+// Error: searchReplaceNames _Jnt  "selected"; // 
+// Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
+// Error: searchReplaceNames _Ctrl  "selected"; // 
+// Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
+// Error: searchReplaceNames _Jnt  "selected"; // 
+// Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
+// Error: searchReplaceNames _Ctrl  "selected"; // 
+// Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
+// Error: searchReplaceNames _Jnt  "selected"; // 
+// Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
+[u'L_Hand_Pinky_01_Jnt']
+[u'L_Hand_Pinky_02_Jnt']
+[u'L_Hand_Pinky_03_Jnt']
+[u'L_Hand_Pinky_04_Jnt']
+[u'L_Hand_Pinky_00_Ctrl', u'L_Hand_Pinky_01_Ctrl', u'L_Hand_Pinky_02_Ctrl', u'L_Hand_Pinky_03_Ctrl']
 // Error: searchReplaceNames _Ctrl  "selected"; // 
 // Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
 // Error: searchReplaceNames _Jnt  "selected"; // 
@@ -527,13 +523,13 @@ Index_01
 // Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
 // Error: searchReplaceNames _Jnt  "selected"; // 
 // Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
-['L_Hand_Palm_Bnd', 'L_Hand_Index_00_Bnd', 'L_Hand_Index_01_Bnd', 'L_Hand_Index_02_Bnd', 'L_Hand_Index_03_Bnd', 'L_Hand_Index_04_Bnd', 'L_Hand_Middle_00_Bnd', 'L_Hand_Middle_01_Bnd', 'L_Hand_Middle_02_Bnd', 'L_Hand_Middle_03_Bnd', 'L_Hand_Middle_04_Bnd', 'L_Hand_InnerCup_Bnd', 'L_Hand_Thumb_00_Bnd', 'L_Hand_Thumb_01_Bnd', 'L_Hand_Thumb_02_Bnd', 'L_Hand_Thumb_03_Bnd', 'L_Hand_OutterCup_Bnd', 'L_Hand_Pinky_00_Bnd', 'L_Hand_Pinky_01_Bnd', 'L_Hand_Pinky_02_Bnd', 'L_Hand_Pinky_03_Bnd', 'L_Hand_Pinky_04_Bnd', 'L_Hand_Ring_00_Bnd', 'L_Hand_Ring_01_Bnd', 'L_Hand_Ring_02_Bnd', 'L_Hand_Ring_03_Bnd', 'L_Hand_Ring_04_Bnd']
+['L_Hand_Palm_Bnd', u'L_Hand_Index_00_Bnd', u'L_Hand_Index_01_Bnd', u'L_Hand_Index_02_Bnd', u'L_Hand_Index_03_Bnd', u'L_Hand_Index_04_Bnd', u'L_Hand_Middle_00_Bnd', u'L_Hand_Middle_01_Bnd', u'L_Hand_Middle_02_Bnd', u'L_Hand_Middle_03_Bnd', u'L_Hand_Middle_04_Bnd', u'L_Hand_InnerCup_Bnd', u'L_Hand_Thumb_00_Bnd', u'L_Hand_Thumb_01_Bnd', u'L_Hand_Thumb_02_Bnd', u'L_Hand_Thumb_03_Bnd', u'L_Hand_OutterCup_Bnd', u'L_Hand_Pinky_00_Bnd', u'L_Hand_Pinky_01_Bnd', u'L_Hand_Pinky_02_Bnd', u'L_Hand_Pinky_03_Bnd', u'L_Hand_Pinky_04_Bnd', u'L_Hand_Ring_00_Bnd', u'L_Hand_Ring_01_Bnd', u'L_Hand_Ring_02_Bnd', u'L_Hand_Ring_03_Bnd', u'L_Hand_Ring_04_Bnd']
 ['R_Hand_Thumb_00_Jnt', 'R_Hand_Index_00_Jnt', 'R_Hand_Middle_00_Jnt', 'R_Hand_Ring_00_Jnt', 'R_Hand_Pinky_00_Jnt']
 // Replaced 27 names.
-['R_Hand_Thumb_01_Jnt']
-['R_Hand_Thumb_02_Jnt']
-['R_Hand_Thumb_03_Jnt']
-['R_Hand_Thumb_00_Ctrl', 'R_Hand_Thumb_01_Ctrl', 'R_Hand_Thumb_02_Ctrl']
+[u'R_Hand_Thumb_01_Jnt']
+[u'R_Hand_Thumb_02_Jnt']
+[u'R_Hand_Thumb_03_Jnt']
+[u'R_Hand_Thumb_00_Ctrl', u'R_Hand_Thumb_01_Ctrl', u'R_Hand_Thumb_02_Ctrl']
 // Error: searchReplaceNames _Ctrl  "selected"; // 
 // Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
 // Error: searchReplaceNames _Jnt  "selected"; // 
@@ -542,28 +538,11 @@ Index_01
 // Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
 // Error: searchReplaceNames _Jnt  "selected"; // 
 // Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
-['R_Hand_Index_01_Jnt']
-['R_Hand_Index_02_Jnt']
-['R_Hand_Index_03_Jnt']
-['R_Hand_Index_04_Jnt']
-['R_Hand_Index_00_Ctrl', 'R_Hand_Index_01_Ctrl', 'R_Hand_Index_02_Ctrl', 'R_Hand_Index_03_Ctrl']
-// Error: searchReplaceNames _Ctrl  "selected"; // 
-// Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
-// Error: searchReplaceNames _Jnt  "selected"; // 
-// Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
-// Error: searchReplaceNames _Ctrl  "selected"; // 
-// Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
-// Error: searchReplaceNames _Jnt  "selected"; // 
-// Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
-// Error: searchReplaceNames _Ctrl  "selected"; // 
-// Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
-// Error: searchReplaceNames _Jnt  "selected"; // 
-// Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
-['R_Hand_Middle_01_Jnt']
-['R_Hand_Middle_02_Jnt']
-['R_Hand_Middle_03_Jnt']
-['R_Hand_Middle_04_Jnt']
-['R_Hand_Middle_00_Ctrl', 'R_Hand_Middle_01_Ctrl', 'R_Hand_Middle_02_Ctrl', 'R_Hand_Middle_03_Ctrl']
+[u'R_Hand_Index_01_Jnt']
+[u'R_Hand_Index_02_Jnt']
+[u'R_Hand_Index_03_Jnt']
+[u'R_Hand_Index_04_Jnt']
+[u'R_Hand_Index_00_Ctrl', u'R_Hand_Index_01_Ctrl', u'R_Hand_Index_02_Ctrl', u'R_Hand_Index_03_Ctrl']
 // Error: searchReplaceNames _Ctrl  "selected"; // 
 // Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
 // Error: searchReplaceNames _Jnt  "selected"; // 
@@ -576,11 +555,11 @@ Index_01
 // Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
 // Error: searchReplaceNames _Jnt  "selected"; // 
 // Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
-['R_Hand_Ring_01_Jnt']
-['R_Hand_Ring_02_Jnt']
-['R_Hand_Ring_03_Jnt']
-['R_Hand_Ring_04_Jnt']
-['R_Hand_Ring_00_Ctrl', 'R_Hand_Ring_01_Ctrl', 'R_Hand_Ring_02_Ctrl', 'R_Hand_Ring_03_Ctrl']
+[u'R_Hand_Middle_01_Jnt']
+[u'R_Hand_Middle_02_Jnt']
+[u'R_Hand_Middle_03_Jnt']
+[u'R_Hand_Middle_04_Jnt']
+[u'R_Hand_Middle_00_Ctrl', u'R_Hand_Middle_01_Ctrl', u'R_Hand_Middle_02_Ctrl', u'R_Hand_Middle_03_Ctrl']
 // Error: searchReplaceNames _Ctrl  "selected"; // 
 // Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
 // Error: searchReplaceNames _Jnt  "selected"; // 
@@ -593,11 +572,28 @@ Index_01
 // Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
 // Error: searchReplaceNames _Jnt  "selected"; // 
 // Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
-['R_Hand_Pinky_01_Jnt']
-['R_Hand_Pinky_02_Jnt']
-['R_Hand_Pinky_03_Jnt']
-['R_Hand_Pinky_04_Jnt']
-['R_Hand_Pinky_00_Ctrl', 'R_Hand_Pinky_01_Ctrl', 'R_Hand_Pinky_02_Ctrl', 'R_Hand_Pinky_03_Ctrl']
+[u'R_Hand_Ring_01_Jnt']
+[u'R_Hand_Ring_02_Jnt']
+[u'R_Hand_Ring_03_Jnt']
+[u'R_Hand_Ring_04_Jnt']
+[u'R_Hand_Ring_00_Ctrl', u'R_Hand_Ring_01_Ctrl', u'R_Hand_Ring_02_Ctrl', u'R_Hand_Ring_03_Ctrl']
+// Error: searchReplaceNames _Ctrl  "selected"; // 
+// Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
+// Error: searchReplaceNames _Jnt  "selected"; // 
+// Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
+// Error: searchReplaceNames _Ctrl  "selected"; // 
+// Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
+// Error: searchReplaceNames _Jnt  "selected"; // 
+// Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
+// Error: searchReplaceNames _Ctrl  "selected"; // 
+// Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
+// Error: searchReplaceNames _Jnt  "selected"; // 
+// Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
+[u'R_Hand_Pinky_01_Jnt']
+[u'R_Hand_Pinky_02_Jnt']
+[u'R_Hand_Pinky_03_Jnt']
+[u'R_Hand_Pinky_04_Jnt']
+[u'R_Hand_Pinky_00_Ctrl', u'R_Hand_Pinky_01_Ctrl', u'R_Hand_Pinky_02_Ctrl', u'R_Hand_Pinky_03_Ctrl']
 // Error: searchReplaceNames _Ctrl  "selected"; // 
 // Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
 // Error: searchReplaceNames _Jnt  "selected"; // 
@@ -668,7 +664,7 @@ Index_01
 // Error: Line 1.37: Wrong number of arguments on call to searchReplaceNames. // 
 // Error: searchReplaceNames _Jnt  "selected"; // 
 // Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
-['R_Hand_Palm_Bnd', 'R_Hand_Index_00_Bnd', 'R_Hand_Index_01_Bnd', 'R_Hand_Index_02_Bnd', 'R_Hand_Index_03_Bnd', 'R_Hand_Index_04_Bnd', 'R_Hand_Middle_00_Bnd', 'R_Hand_Middle_01_Bnd', 'R_Hand_Middle_02_Bnd', 'R_Hand_Middle_03_Bnd', 'R_Hand_Middle_04_Bnd', 'R_Hand_InnerCup_Bnd', 'R_Hand_Thumb_00_Bnd', 'R_Hand_Thumb_01_Bnd', 'R_Hand_Thumb_02_Bnd', 'R_Hand_Thumb_03_Bnd', 'R_Hand_OutterCup_Bnd', 'R_Hand_Pinky_00_Bnd', 'R_Hand_Pinky_01_Bnd', 'R_Hand_Pinky_02_Bnd', 'R_Hand_Pinky_03_Bnd', 'R_Hand_Pinky_04_Bnd', 'R_Hand_Ring_00_Bnd', 'R_Hand_Ring_01_Bnd', 'R_Hand_Ring_02_Bnd', 'R_Hand_Ring_03_Bnd', 'R_Hand_Ring_04_Bnd']
+['R_Hand_Palm_Bnd', u'R_Hand_Index_00_Bnd', u'R_Hand_Index_01_Bnd', u'R_Hand_Index_02_Bnd', u'R_Hand_Index_03_Bnd', u'R_Hand_Index_04_Bnd', u'R_Hand_Middle_00_Bnd', u'R_Hand_Middle_01_Bnd', u'R_Hand_Middle_02_Bnd', u'R_Hand_Middle_03_Bnd', u'R_Hand_Middle_04_Bnd', u'R_Hand_InnerCup_Bnd', u'R_Hand_Thumb_00_Bnd', u'R_Hand_Thumb_01_Bnd', u'R_Hand_Thumb_02_Bnd', u'R_Hand_Thumb_03_Bnd', u'R_Hand_OutterCup_Bnd', u'R_Hand_Pinky_00_Bnd', u'R_Hand_Pinky_01_Bnd', u'R_Hand_Pinky_02_Bnd', u'R_Hand_Pinky_03_Bnd', u'R_Hand_Pinky_04_Bnd', u'R_Hand_Ring_00_Bnd', u'R_Hand_Ring_01_Bnd', u'R_Hand_Ring_02_Bnd', u'R_Hand_Ring_03_Bnd', u'R_Hand_Ring_04_Bnd']
 Build L_Hand_Block Success
 Build successfully exec_hand.build_hand_block()
 Postcode L_Hand_Block
@@ -681,23 +677,23 @@ Import successfully import exec_foot
 Precode L_Foot_Block
 L_Foot_Ankle_Jnt
 // Replaced 8 names.
-['L_Foot_Ankle_Jnt', 'R_Foot_Ankle_Jnt']
-['L_Foot_Ankle_Jnt', 'L_Foot_Heel_Jnt', 'L_Foot_Toes_Jnt', 'L_Foot_In_Jnt', 'L_Foot_Out_Jnt', 'L_Foot_BallFloor_Jnt', 'L_Foot_Ball_Jnt', 'L_Foot_HeelMid_Jnt']
+[u'L_Foot_Ankle_Jnt', 'R_Foot_Ankle_Jnt']
+[u'L_Foot_Ankle_Jnt', u'L_Foot_Heel_Jnt', u'L_Foot_Toes_Jnt', u'L_Foot_In_Jnt', u'L_Foot_Out_Jnt', u'L_Foot_BallFloor_Jnt', u'L_Foot_Ball_Jnt', u'L_Foot_HeelMid_Jnt']
 # Warning: Object, 'L_Foot_Ankle_Jnt', skipped. It is already a child of the parent, 'world'. # 
-['L_Foot_Heel_RFL_Grp', 'L_Foot_In_RFL_Grp', 'L_Foot_Out_RFL_Grp', 'L_Foot_BallFloor_RFL_Grp', 'L_Foot_HeelMid_RFL_Grp', 'L_Foot_Ankle_RFL_Grp', 'L_Foot_Toes_RFL_Grp', 'L_Foot_Ball_RFL_Grp']
+[u'L_Foot_Heel_RFL_Grp', u'L_Foot_In_RFL_Grp', u'L_Foot_Out_RFL_Grp', u'L_Foot_BallFloor_RFL_Grp', u'L_Foot_HeelMid_RFL_Grp', u'L_Foot_Ankle_RFL_Grp', u'L_Foot_Toes_RFL_Grp', u'L_Foot_Ball_RFL_Grp']
 // Replaced 3 names.
 // Replaced 3 names.
-['L_Foot_Ankle_Ik_Jnt', 'L_Foot_Ball_Ik_Jnt', 'L_Foot_Toes_Ik_Jnt']
-['L_Foot_Ankle_Fk_Jnt', 'L_Foot_Ball_Fk_Jnt', 'L_Foot_Toes_Fk_Jnt']
+['L_Foot_Ankle_Ik_Jnt', u'L_Foot_Ball_Ik_Jnt', u'L_Foot_Toes_Ik_Jnt']
+['L_Foot_Ankle_Fk_Jnt', u'L_Foot_Ball_Fk_Jnt', u'L_Foot_Toes_Fk_Jnt']
 # Warning: Name '_________' of new attribute clashes with an existing attribute of node 'L_Ankle_Ik_Ctrl'. # 
 # Warning: Object, 'L_Foot_Ankle_Bnd', skipped. It is already a child of the parent, 'world'. # 
-['R_Foot_Ankle_Jnt', 'R_Foot_Heel_Jnt', 'R_Foot_Toes_Jnt', 'R_Foot_In_Jnt', 'R_Foot_Out_Jnt', 'R_Foot_BallFloor_Jnt', 'R_Foot_Ball_Jnt', 'R_Foot_HeelMid_Jnt']
+['R_Foot_Ankle_Jnt', u'R_Foot_Heel_Jnt', u'R_Foot_Toes_Jnt', u'R_Foot_In_Jnt', u'R_Foot_Out_Jnt', u'R_Foot_BallFloor_Jnt', u'R_Foot_Ball_Jnt', u'R_Foot_HeelMid_Jnt']
 # Warning: Object, 'R_Foot_Ankle_Jnt', skipped. It is already a child of the parent, 'world'. # 
-['R_Foot_Heel_RFL_Grp', 'R_Foot_In_RFL_Grp', 'R_Foot_Out_RFL_Grp', 'R_Foot_BallFloor_RFL_Grp', 'R_Foot_HeelMid_RFL_Grp', 'R_Foot_Ankle_RFL_Grp', 'R_Foot_Toes_RFL_Grp', 'R_Foot_Ball_RFL_Grp']
+[u'R_Foot_Heel_RFL_Grp', u'R_Foot_In_RFL_Grp', u'R_Foot_Out_RFL_Grp', u'R_Foot_BallFloor_RFL_Grp', u'R_Foot_HeelMid_RFL_Grp', u'R_Foot_Ankle_RFL_Grp', u'R_Foot_Toes_RFL_Grp', u'R_Foot_Ball_RFL_Grp']
 // Replaced 3 names.
 // Replaced 3 names.
-['R_Foot_Ankle_Ik_Jnt', 'R_Foot_Ball_Ik_Jnt', 'R_Foot_Toes_Ik_Jnt']
-['R_Foot_Ankle_Fk_Jnt', 'R_Foot_Ball_Fk_Jnt', 'R_Foot_Toes_Fk_Jnt']
+['R_Foot_Ankle_Ik_Jnt', u'R_Foot_Ball_Ik_Jnt', u'R_Foot_Toes_Ik_Jnt']
+['R_Foot_Ankle_Fk_Jnt', u'R_Foot_Ball_Fk_Jnt', u'R_Foot_Toes_Fk_Jnt']
 # Warning: Name '_________' of new attribute clashes with an existing attribute of node 'R_Ankle_Ik_Ctrl'. # 
 # Warning: Object, 'R_Foot_Ankle_Bnd', skipped. It is already a child of the parent, 'world'. # 
 Build L_Foot_Block Success
@@ -710,7 +706,7 @@ Building: Load_Skin_Block
 ------------------------------------------------------------------------------------
 Import successfully import exec_load_skin
 Precode Load_Skin_Block
-Getting skin data from:  
+('Getting skin data from: ', u'')
 Build successfully exec_load_skin.build_load_skin_block()
 Postcode Load_Skin_Block
 ------------------------------------------------------------------------------------
@@ -722,6 +718,16 @@ Import successfully import exec_load_ctrls
 Precode Load_Ctrls_Block
 Build successfully exec_load_ctrls.build_load_ctrls_block()
 Postcode Load_Ctrls_Block
+------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
+Building: RemoveStretchy_Block
+------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
+Import successfully import exec_code
+Precode RemoveStretchy_Block
+Build RemoveStretchy_Block Success
+Build successfully exec_code.build_code_block()
+Postcode RemoveStretchy_Block
 ------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------
 Building: Code_Block

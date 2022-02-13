@@ -264,48 +264,6 @@ class Modules_class(kinematics.Kinematics_class):
 
 	#----------------------------------------------------------------------------------------------------------------
 
-	def dual_ask_name(self, textA = 'Name 1', text_B = 'Name 2', command = ''):
-
-		class dual_ask():
-
-			def __init__(self):
-				self.input1 = ''
-				self.input2 = ''
-				
-				self.show_window()
-
-			def show_window(self):
-
-				windowID = 'Dual_Name'
-			
-				if cmds.window(windowID, exists = True):
-					cmds.deleteUI(windowID)
-			
-				def close_UI(*args):
-				
-					windowID = 'Dual Name'
-				
-					self.input1 = cmds.textFieldGrp( 'textField_A', query = True, text = True)
-					self.input2 = cmds.textFieldGrp( 'textField_B', query = True, text = True)
-					return 
-					cmds.deleteUI(window)
-
-					exec(command)
-
-				window = cmds.window(windowID)
-				cmds.rowColumnLayout()
-			
-				cmds.textFieldGrp('textField_A', label = textA )
-				cmds.textFieldGrp('textField_B', label = text_B )
-			
-				cmds.button(label = 'Create', command = close_UI)
-			
-				cmds.showWindow(window)
-
-		#names = dual_ask()
-
-	#----------------------------------------------------------------------------------------------------------------
-
 	def duplicate_and_remove_guides(self, input = ''):
 		'this will ducplicate the top chain joint and change the _Guide for _Jnt and rename all the chils plus parent to the world'
 
