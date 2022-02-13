@@ -11,7 +11,7 @@ import Mutant_Tools.Utils.Rigging
 from Mutant_Tools.Utils.Rigging import modules
 imp.reload(Mutant_Tools.Utils.Rigging.modules)
 
-modules = modules.RdM()
+modules = modules.Modules_class()
 modules.FUNC(ARGUMENTS)
 
 #----------------
@@ -63,15 +63,22 @@ except:
 #Read name conventions as nc[''] and setup as seup['']
 PATH = os.path.dirname(__file__)
 PATH = Path(PATH)
-PATH = os.path.join(*PATH.parts[:-2], 'Config')
+PATH_PARTS = PATH.parts[:-2]
+FOLDER=''
+for f in PATH_PARTS:
+	FOLDER = os.path.join(FOLDER, f)
 
-JSON_FILE = (PATH +'/name_conventions.json')
+JSON_FILE = os.path.join(FOLDER, 'config', 'name_conventions.json')
 with open(JSON_FILE) as json_file:
 	nc = json.load(json_file)
-SETUP_FILE = (PATH +'/rig_setup.json')
+#Read curve shapes info
+CURVE_FILE = os.path.join(FOLDER, 'config', 'curves.json')
+with open(CURVE_FILE) as curve_file:
+	curve_data = json.load(curve_file)
+#setup File
+SETUP_FILE = os.path.join(FOLDER, 'config', 'rig_setup.json')
 with open(SETUP_FILE) as setup_file:
 	setup = json.load(setup_file)
-
 
 #----------------------------------------------------------------------------------------------------------------
 
@@ -413,7 +420,7 @@ class Modules_class(kinematics.Kinematics_class):
 
 		"""
 
-		log_file = PATH.replace('/Config', '/log.txt')
+		log_file = os.path.join(FOLDER, 'log.txt')
 
 		if mode == 'create': 
 			print (log_file)
@@ -429,9 +436,8 @@ class Modules_class(kinematics.Kinematics_class):
 
 	def update_icons(self):
 
-		PATH = os.path.dirname(__file__)
-		PATH = Path(PATH)
-		FOLDER = os.path.join(*PATH.parts[:-2], 'Icons')
+
+		ICON_FOLDER = os.path.join(FOLDER, 'Icons')
 
 		if not cmds.objExists('Mutant_Build'):
 			return
@@ -444,7 +450,7 @@ class Modules_class(kinematics.Kinematics_class):
 					current_icon = Path(current_icon)
 					icon = os.path.join(*current_icon.parts[-1:])
 					print(icon)
-					cmds.setAttr('{}.iconName'.format(block), os.path.join(FOLDER, icon), type="string")
+					cmds.setAttr('{}.iconName'.format(block), os.path.join(ICON_FOLDER, icon), type="string")
 				except:pass
 
 

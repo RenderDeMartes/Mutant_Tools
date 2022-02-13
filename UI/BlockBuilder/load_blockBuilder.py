@@ -56,36 +56,40 @@ from collections import OrderedDict
 
 #-------------------------------------------------------------------
 
-#Read name conventions as nc[''] and setup as setup['']
+# QT WIndow!
+FOLDER_NAME = 'BlockBuilder'
+#Read name conventions as nc[''] and setup as seup['']
 PATH = os.path.dirname(__file__)
 PATH = Path(PATH)
-FOLDER = os.path.join(*PATH.parts[:-2], 'Config')
+PATH_PARTS = PATH.parts[:-2]
+FOLDER=''
+for f in PATH_PARTS:
+	FOLDER = os.path.join(FOLDER, f)
 
-JSON_FILE = os.path.join(PATH, 'name_conventions.json')
+Title = 'Block Builder'
+UI_File = 'BlockBuilder.ui'
+IconsPath = os.path.join(FOLDER, 'Icons')
+
+
+
+# -------------------------------------------------------------------
+
+JSON_FILE = os.path.join(FOLDER, 'config', 'name_conventions.json')
 with open(JSON_FILE) as json_file:
 	nc = json.load(json_file)
 #Read curve shapes info
-CURVE_FILE = os.path.join(PATH, 'curves.json')
+CURVE_FILE = os.path.join(FOLDER, 'config', 'curves.json')
 with open(CURVE_FILE) as curve_file:
 	curve_data = json.load(curve_file)
 #setup File
-SETUP_FILE = os.path.join(PATH, 'rig_setup.json')
+SETUP_FILE = os.path.join(FOLDER, 'config', 'rig_setup.json')
 with open(SETUP_FILE) as setup_file:
 	setup = json.load(setup_file)
+#Version File
+VERSION_FILE = os.path.join(FOLDER, 'config', 'version.json')
+with open(VERSION_FILE) as version_file:
+	version = json.load(version_file)
 
-
-
-#-------------------------------------------------------------------
-
-#QT WIndow!
-PATH = os.path.dirname(__file__)
-OTHERS_PATH = PATH.replace('\\UI\\BlockBuilder', '//Others') #get presets path to read files
-BLOCKS_PATH = PATH.replace('\\UI\\BlockBuilder', '//Blocks') #get Blocks paths to write files
-
-Title = 'Mutant // Block Builder'
-Folder = PATH.replace('\\UI\\BlockBuilder', '')
-UI_File = 'blockBuilder.ui'
-IconsPath =  Folder + '//Icons//'
 #-------------------------------------------------------------------
 
 import Mutant_Tools
@@ -115,7 +119,7 @@ class BlockBuilder(QtMutantWindow.Qt_Mutant):
 
 		self.setWindowTitle(Title)
 
-		self.designer_loader_child(path = Folder + '/UI/BlockBuilder/', ui_file = UI_File)
+		self.designer_loader_child(path=os.path.join(FOLDER, 'UI', FOLDER_NAME), ui_file=UI_File)
 		self.set_title('Block Builder')
 
 		self.create_layout()

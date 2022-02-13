@@ -78,11 +78,21 @@ except:
 	imp.reload(Mutant_Tools.Utils.Rigging.modules)
 
 #---------------------------------------------------
+#Read name conventions as nc[''] and setup as seup['']
 PATH = os.path.dirname(__file__)
-#Make Mac Compatible
 PATH = Path(PATH)
-PATH = os.path.join(*PATH.parts[:-2], 'Config')
+PATH_PARTS = PATH.parts[:-2]
+FOLDER=''
+for f in PATH_PARTS:
+	FOLDER = os.path.join(FOLDER, f)
 
+JSON_FILE = os.path.join(FOLDER, 'config', 'name_conventions.json')
+with open(JSON_FILE) as json_file:
+	nc = json.load(json_file)
+#setup File
+SETUP_FILE = os.path.join(FOLDER, 'config', 'rig_setup.json')
+with open(SETUP_FILE) as setup_file:
+	setup = json.load(setup_file)
 
 class Mutant(modules.Modules_class):
 
@@ -131,8 +141,7 @@ class Mutant(modules.Modules_class):
 
 	def get_local_version(self):
 
-		print(PATH)
-		local_version = self.read_json(path = PATH, json_file = 'version.json')
+		local_version = self.read_json(path = os.path.join(FOLDER, 'config'), json_file = 'version.json')
 		return local_version['version']
 
 	# ---------------------------------------------------
@@ -140,7 +149,7 @@ class Mutant(modules.Modules_class):
 	def compare_versions(self):
 
 		#if dev dont look for versions
-		version_data = self.read_json(path = PATH, json_file = 'version.json')
+		version_data = self.read_json(path = os.path.join(FOLDER, 'config'), json_file = 'version.json')
 
 		if version_data['dev_mode']:
 			print('Mutant is not searching for updates...')

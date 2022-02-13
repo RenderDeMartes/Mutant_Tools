@@ -57,31 +57,39 @@ from pathlib import Path
 
 # QT WIndow!
 FOLDER_NAME = 'RigTools'
-PATH = os.path.dirname(__file__)
-BLOCKS_PATH = PATH.replace('\\UI\\{}'.format(FOLDER_NAME), '//Blocks')  # get Blocks paths to write files
-
 Title = 'RigTools'
-Folder = PATH.replace('\\UI\\{}'.format(FOLDER_NAME), '')
 UI_File = 'RigTools.ui'
-IconsPath = Folder + '//Icons//'
+
+# QT WIndow!
+FOLDER_NAME = 'RigTools'
+#Read name conventions as nc[''] and setup as seup['']
+PATH = os.path.dirname(__file__)
+PATH = Path(PATH)
+PATH_PARTS = PATH.parts[:-2]
+FOLDER=''
+for f in PATH_PARTS:
+	FOLDER = os.path.join(FOLDER, f)
+
+IconsPath = os.path.join(FOLDER, 'Icons')
 
 # -------------------------------------------------------------------
 
-# Read name conventions as nc[''] and setup as seup['']
-PATH = os.path.dirname(__file__)
-PATH = PATH.replace('\\UI\\{}'.format(FOLDER_NAME), '//Config')  # change this path depending of the folder
-
-JSON_FILE = (PATH + '/name_conventions.json')
+JSON_FILE = os.path.join(FOLDER, 'config', 'name_conventions.json')
 with open(JSON_FILE) as json_file:
 	nc = json.load(json_file)
-# Read curve shapes info
-CURVE_FILE = (PATH + '/curves.json')
+#Read curve shapes info
+CURVE_FILE = os.path.join(FOLDER, 'config', 'curves.json')
 with open(CURVE_FILE) as curve_file:
 	curve_data = json.load(curve_file)
-# setup File
-SETUP_FILE = (PATH + '/rig_setup.json')
+#setup File
+SETUP_FILE = os.path.join(FOLDER, 'config', 'rig_setup.json')
 with open(SETUP_FILE) as setup_file:
 	setup = json.load(setup_file)
+#Version File
+VERSION_FILE = os.path.join(FOLDER, 'config', 'version.json')
+with open(VERSION_FILE) as version_file:
+	version = json.load(version_file)
+
 
 # -------------------------------------------------------------------
 
@@ -320,7 +328,7 @@ class RigTools_UI(QtMutantWindow.Qt_Mutant):
 
 		self.setWindowTitle(Title)
 
-		self.designer_loader_child(path=Folder + '/UI/{}/'.format(FOLDER_NAME), ui_file=UI_File)
+		self.designer_loader_child(path=os.path.join(FOLDER, 'UI', FOLDER_NAME), ui_file=UI_File)
 		self.set_title(Title)
 
 		self.resize(680,600)
@@ -405,7 +413,7 @@ class RigTools_UI(QtMutantWindow.Qt_Mutant):
 
 			button = QtWidgets.QPushButton()
 			button.setMinimumSize(30,30)
-			button.setIcon(QtGui.QIcon(IconsPath + 'MayaIcons//{}'.format(icon)))
+			button.setIcon(QtGui.QIcon(os.path.join(IconsPath, 'MayaIcons', icon)))
 			button.setIconSize(QtCore.QSize(30,30))
 			button.setToolTip(tooltip)
 			#connect button

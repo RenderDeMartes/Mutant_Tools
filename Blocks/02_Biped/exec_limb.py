@@ -18,20 +18,23 @@ mt = main_mutant.Mutant()
 TAB_FOLDER = '02_Biped'
 PYBLOCK_NAME = 'exec_head'
 
-#Read name conventions as nc[''] and setup as setup['']
+#Read name conventions as nc[''] and setup as seup['']
 PATH = os.path.dirname(__file__)
 PATH = Path(PATH)
-PATH = os.path.join(*PATH.parts[:-2], 'Config')
+PATH_PARTS = PATH.parts[:-2]
+FOLDER=''
+for f in PATH_PARTS:
+	FOLDER = os.path.join(FOLDER, f)
 
-JSON_FILE = (PATH + '/name_conventions.json')
+JSON_FILE = os.path.join(FOLDER, 'config', 'name_conventions.json')
 with open(JSON_FILE) as json_file:
 	nc = json.load(json_file)
 #Read curve shapes info
-CURVE_FILE = (PATH + '/curves.json')
+CURVE_FILE = os.path.join(FOLDER, 'config', 'curves.json')
 with open(CURVE_FILE) as curve_file:
 	curve_data = json.load(curve_file)
 #setup File
-SETUP_FILE = (PATH+'/rig_setup.json')
+SETUP_FILE = os.path.join(FOLDER, 'config', 'rig_setup.json')
 with open(SETUP_FILE) as setup_file:
 	setup = json.load(setup_file)
 
