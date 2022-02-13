@@ -55,11 +55,15 @@ mh = helpers.Helpers()
 
 #-----------------------------------------------------------------------------------------------
 
+#Read name conventions as nc[''] and setup as seup['']
 PATH = os.path.dirname(__file__)
 PATH = Path(PATH)
-PATH = os.path.join(*PATH.parts[:-3], 'Config')
+PATH_PARTS = PATH.parts[:-3]
+FOLDER=''
+for f in PATH_PARTS:
+	FOLDER = os.path.join(FOLDER, f)
 
-JSON_FILE = (os.path.join(PATH, "name_conventions.json"))
+JSON_FILE = os.path.join(FOLDER, 'config', 'name_conventions.json')
 with open(JSON_FILE) as json_file:
 	nc = json.load(json_file)
 

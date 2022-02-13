@@ -45,14 +45,18 @@ mh = helpers.Helpers()
 #Read name conventions as nc[''] and setup as seup['']
 PATH = os.path.dirname(__file__)
 PATH = Path(PATH)
-PATH = os.path.join(*PATH.parts[:-2], 'Config')
+PATH_PARTS = PATH.parts[:-2]
+FOLDER=''
+for f in PATH_PARTS:
+	FOLDER = os.path.join(FOLDER, f)
 
-JSON_FILE = os.path.join(PATH, "name_conventions.json")
+JSON_FILE = os.path.join(FOLDER, 'config', 'name_conventions.json')
 with open(JSON_FILE) as json_file:
 	nc = json.load(json_file)
-SETUP_FILE = os.path.join(PATH,'rig_setup.json')
+#setup File
+SETUP_FILE = os.path.join(FOLDER, 'config', 'rig_setup.json')
 with open(SETUP_FILE) as setup_file:
-    setup = json.load(setup_file)
+	setup = json.load(setup_file)
 
 # ---------------------------------------------------------------------------
 
@@ -105,7 +109,7 @@ class Guides(object):
             name = name + '.json'
 
         if path == None:
-            path = os.path.dirname(__file__).replace('\\Utils\\Rigging', '\\UI\\AutoRigger\\Presets')
+            cmds.error('We need a path to save')
 
         block_preset = OrderedDict()
 
@@ -171,7 +175,7 @@ class Guides(object):
             name = name + '.json'
 
         if path == None:
-            path = os.path.dirname(__file__).replace('\\Utils\\Rigging', '\\UI\\AutoRigger\\Presets')
+            cmds.error('We need a path to Load')
 
         data = self.read_json(path=path,
                               json_file=name)

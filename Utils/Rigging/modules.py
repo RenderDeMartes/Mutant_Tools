@@ -420,7 +420,7 @@ class Modules_class(kinematics.Kinematics_class):
 
 		"""
 
-		log_file = PATH.replace('/Config', '/log.txt')
+		log_file = os.path.join(FOLDER, 'log.txt')
 
 		if mode == 'create': 
 			print (log_file)
@@ -436,9 +436,8 @@ class Modules_class(kinematics.Kinematics_class):
 
 	def update_icons(self):
 
-		PATH = os.path.dirname(__file__)
-		PATH = Path(PATH)
-		FOLDER = os.path.join(*PATH.parts[:-2], 'Icons')
+
+		ICON_FOLDER = os.path.join(FOLDER, 'Icons')
 
 		if not cmds.objExists('Mutant_Build'):
 			return
@@ -451,7 +450,7 @@ class Modules_class(kinematics.Kinematics_class):
 					current_icon = Path(current_icon)
 					icon = os.path.join(*current_icon.parts[-1:])
 					print(icon)
-					cmds.setAttr('{}.iconName'.format(block), os.path.join(FOLDER, icon), type="string")
+					cmds.setAttr('{}.iconName'.format(block), os.path.join(ICON_FOLDER, icon), type="string")
 				except:pass
 
 

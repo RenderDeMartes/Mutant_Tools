@@ -48,9 +48,12 @@ mh = helpers.Helpers()
 #Read name conventions as nc[''] and setup as seup['']
 PATH = os.path.dirname(__file__)
 PATH = Path(PATH)
-PATH = os.path.join(*PATH.parts[:-2], 'Config')
+PATH_PARTS = PATH.parts[:-2]
+FOLDER=''
+for f in PATH_PARTS:
+	FOLDER = os.path.join(FOLDER, f)
 
-JSON_FILE = os.path.join(PATH, "name_conventions.json")
+JSON_FILE = os.path.join(FOLDER, 'config', 'name_conventions.json')
 with open(JSON_FILE) as json_file:
 	nc = json.load(json_file)
 
@@ -89,7 +92,7 @@ class NG_Mutant(object):
         config = ngst_api.InfluenceMappingConfig()
         config.use_distance_matching = True
         config.use_name_matching = False
-        ngst_api.import_json(geo, file=path+'\\'+geo+'.json', influences_mapping_config=config )
+        ngst_api.import_json(geo, file=os.path.join(path, geo, '.json'), influences_mapping_config=config )
 
     #----------------------------------------------------------------------
 
@@ -106,7 +109,7 @@ class NG_Mutant(object):
         config = ngst_api.InfluenceMappingConfig()
         config.use_distance_matching = True
         config.use_name_matching = False
-        ngst_api.export_json(geo, file=json_path+'\\'+geo+'.json')
+        ngst_api.export_json(geo, file=os.path.join(json_path, geo, '.json'))
 
     #----------------------------------------------------------------------
 
