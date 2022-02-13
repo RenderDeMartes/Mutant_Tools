@@ -109,7 +109,6 @@ Building: L_Shoulder_Block
 Import successfully import exec_limb
 Precode L_Shoulder_Block
 L_Shoulder_Jnt
-// Replaced 3 names.
 ['L_Shoulder_Jnt', 'R_Shoulder_Jnt']
 joints are: L_Shoulder_Jnt L_Elbow_Jnt L_Wrist_Jnt
 // Replaced 3 names.
@@ -133,7 +132,7 @@ creating ik Chain for : L_Shoulder_Jnt
 // Error: searchReplaceNames _Jnt  "selected"; // 
 // Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
 IK = ['L_Wrist_Ik_Ctrl', 'L_Wrist_Ik_PoleVector_Ctrl', 'L_Shoulder_Ik_Ctrl', 'L_Wrist_Ik_IKrp', 'L_Wrist_Ik_PoleVector_Ctrl_L_Elbow_Ik_Jnt_Connected_Crv']
-28.332410970088205
+28.332410970088215
 ['L_Shoulder_Fk_Ctrl_Offset_Grp', 'L_Wrist_Ik_Ctrl_Offset_Grp', 'L_Shoulder_Ik_Ctrl_Offset_Grp', 'L_Shoulder_Ik_Jnt_Ctrl_Grp']
 __________
 adding loc to ['L_Shoulder_Fk_Ctrl']
@@ -188,8 +187,8 @@ creating ik Chain for : R_Shoulder_Jnt
 // Error: searchReplaceNames _Jnt  "selected"; // 
 // Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
 IK = ['R_Wrist_Ik_Ctrl', 'R_Wrist_Ik_PoleVector_Ctrl', 'R_Shoulder_Ik_Ctrl', 'R_Wrist_Ik_IKrp', 'R_Wrist_Ik_PoleVector_Ctrl_R_Elbow_Ik_Jnt_Connected_Crv']
-28.332410970088205
-['R_Shoulder_Fk_Ctrl_Offset_Grp', 'R_Wrist_Ik_Ctrl_Offset_Grp', 'R_Shoulder_Ik_Ctrl_Offset_Grp', 'R_Shoulder_Ik_Jnt_Ctrl_Grp']
+28.332408353551592
+['R_Shoulder_Fk_Ctrl_Offset_Grp', 'R_Wrist_Ik_Ctrl_Offset_Grp', 'R_Shoulder_Ik_Ctrl_Offset_Grp', 'R_Wrist_Ik_Ctrl_Offset_Grp__Mirror_Grp']
 __________
 adding loc to ['R_Shoulder_Fk_Ctrl']
 adding loc to ['R_Elbow_Fk_Ctrl']
@@ -202,7 +201,7 @@ R_Shoulder_Jnt_Switch_Loc.Switch_IK_FK
 R_Shoulder_Jnt_Switch_Loc
 # Warning: Name '_________' of new attribute clashes with an existing attribute of node 'R_Shoulder_Jnt_Switch_Loc'. # 
 R_Shoulder_Ik_Jnt_R_Wrist_Ik_Jnt_Distance_Shape_MultDiv R_Elbow_Ik_Jnt_NewScale_MultDiv R_Shoulder_Ik_Jnt_NewScale_MultDiv R_Wrist_Ik_IKrp_TotalDistance_MultDiv
-['R_Shoulder_Jnt', 'R_Elbow_Jnt', 'R_Wrist_Jnt'] ['R_Shoulder_Ik_Jnt', 'R_Elbow_Ik_Jnt', 'R_Wrist_Ik_Jnt'] ['R_Shoulder_Fk_Jnt', 'R_Elbow_Fk_Jnt', 'R_Wrist_Fk_Jnt'] ['R_Shoulder_Fk_Ctrl', 'R_Elbow_Fk_Ctrl', 'R_Wrist_Fk_Ctrl'] ['R_Wrist_Ik_Ctrl', 'R_Wrist_Ik_PoleVector_Ctrl', 'R_Shoulder_Ik_Ctrl', 'R_Wrist_Ik_IKrp', 'R_Wrist_Ik_PoleVector_Ctrl_R_Elbow_Ik_Jnt_Connected_Crv', ('R_Wrist_Ik_IKrp_Stretchy_Grp', 'R_Wrist_Ik_IKrp_NormalScale_Loc', ['R_Wrist_Ik_Jnt_Stretchy_Loc'], ['R_Shoulder_Ik_Jnt_Stretchy_Loc'], ['R_Elbow_Ik_Jnt_Stretchy_Loc'], 'R_Shoulder_Ik_Jnt_R_Wrist_Ik_Jnt_Distance_Shape', 'R_Elbow_Ik_Jnt_R_Wrist_Ik_Jnt_Distance_Shape', 'R_Shoulder_Ik_Jnt_R_Elbow_Ik_Jnt_Distance_Shape')] ['R_Shoulder_Fk_Ctrl_Offset_Grp', 'R_Wrist_Ik_Ctrl_Offset_Grp', 'R_Shoulder_Ik_Ctrl_Offset_Grp', 'R_Shoulder_Ik_Jnt_Ctrl_Grp']
+['R_Shoulder_Jnt', 'R_Elbow_Jnt', 'R_Wrist_Jnt'] ['R_Shoulder_Ik_Jnt', 'R_Elbow_Ik_Jnt', 'R_Wrist_Ik_Jnt'] ['R_Shoulder_Fk_Jnt', 'R_Elbow_Fk_Jnt', 'R_Wrist_Fk_Jnt'] ['R_Shoulder_Fk_Ctrl', 'R_Elbow_Fk_Ctrl', 'R_Wrist_Fk_Ctrl'] ['R_Wrist_Ik_Ctrl', 'R_Wrist_Ik_PoleVector_Ctrl', 'R_Shoulder_Ik_Ctrl', 'R_Wrist_Ik_IKrp', 'R_Wrist_Ik_PoleVector_Ctrl_R_Elbow_Ik_Jnt_Connected_Crv', ('R_Wrist_Ik_IKrp_Stretchy_Grp', 'R_Wrist_Ik_IKrp_NormalScale_Loc', ['R_Wrist_Ik_Jnt_Stretchy_Loc'], ['R_Shoulder_Ik_Jnt_Stretchy_Loc'], ['R_Elbow_Ik_Jnt_Stretchy_Loc'], 'R_Shoulder_Ik_Jnt_R_Wrist_Ik_Jnt_Distance_Shape', 'R_Elbow_Ik_Jnt_R_Wrist_Ik_Jnt_Distance_Shape', 'R_Shoulder_Ik_Jnt_R_Elbow_Ik_Jnt_Distance_Shape')] ['R_Shoulder_Fk_Ctrl_Offset_Grp', 'R_Wrist_Ik_Ctrl_Offset_Grp', 'R_Shoulder_Ik_Ctrl_Offset_Grp', 'R_Wrist_Ik_Ctrl_Offset_Grp__Mirror_Grp']
 # Warning: Object, 'R_Shoulder_Twist_0_Jnt', skipped. It is already a child of the parent, 'world'. # 
 # Warning: History will be off for the command since Keep Originals is off and a selected item has no history. # 
 # Warning: New name contains invalid characters. Illegal characters were converted to "_". # 
@@ -210,7 +209,7 @@ R_Shoulder_Ik_Jnt_R_Wrist_Ik_Jnt_Distance_Shape_MultDiv R_Elbow_Ik_Jnt_NewScale_
 {'twist_grp': 'R_Shoulder_Twist_Grp', 'joints': ['R_Shoulder_Twist_0_Jnt', 'R_Shoulder_Twist_1_Jnt', 'R_Shoulder_Twist_2_Jnt', 'R_Shoulder_Twist_3_Jnt'], 'curve': 'R_Shoulder_Twist_JntCtrl_Crv', 'ik_spline': 'R_Shoulder_Twist_IKspl', 'no_rotate': 'R_Elbow_NoRotate_JntCtrl'}
 {'twist_grp': 'R_Elbow_Twist_Grp', 'joints': ['R_Elbow_Twist_0_Jnt', 'R_Elbow_Twist_1_Jnt', 'R_Elbow_Twist_2_Jnt', 'R_Elbow_Twist_3_Jnt'], 'curve': 'R_Elbow_Twist_JntCtrl_Crv', 'ik_spline': 'R_Elbow_Twist_IKspl'}
 ----------------IK FK------------------
-(['R_Shoulder_Jnt', 'R_Elbow_Jnt', 'R_Wrist_Jnt'], ['R_Shoulder_Ik_Jnt', 'R_Elbow_Ik_Jnt', 'R_Wrist_Ik_Jnt'], ['R_Shoulder_Fk_Jnt', 'R_Elbow_Fk_Jnt', 'R_Wrist_Fk_Jnt'], ['R_Shoulder_Fk_Ctrl', 'R_Elbow_Fk_Ctrl', 'R_Wrist_Fk_Ctrl'], ['R_Wrist_Ik_Ctrl', 'R_Wrist_Ik_PoleVector_Ctrl', 'R_Shoulder_Ik_Ctrl', 'R_Wrist_Ik_IKrp', 'R_Wrist_Ik_PoleVector_Ctrl_R_Elbow_Ik_Jnt_Connected_Crv', ('R_Wrist_Ik_IKrp_Stretchy_Grp', 'R_Wrist_Ik_IKrp_NormalScale_Loc', ['R_Wrist_Ik_Jnt_Stretchy_Loc'], ['R_Shoulder_Ik_Jnt_Stretchy_Loc'], ['R_Elbow_Ik_Jnt_Stretchy_Loc'], 'R_Shoulder_Ik_Jnt_R_Wrist_Ik_Jnt_Distance_Shape', 'R_Elbow_Ik_Jnt_R_Wrist_Ik_Jnt_Distance_Shape', 'R_Shoulder_Ik_Jnt_R_Elbow_Ik_Jnt_Distance_Shape')], ['R_Shoulder_Fk_Ctrl_Offset_Grp', 'R_Wrist_Ik_Ctrl_Offset_Grp', 'R_Shoulder_Ik_Ctrl_Offset_Grp', 'R_Shoulder_Ik_Jnt_Ctrl_Grp'])
+(['R_Shoulder_Jnt', 'R_Elbow_Jnt', 'R_Wrist_Jnt'], ['R_Shoulder_Ik_Jnt', 'R_Elbow_Ik_Jnt', 'R_Wrist_Ik_Jnt'], ['R_Shoulder_Fk_Jnt', 'R_Elbow_Fk_Jnt', 'R_Wrist_Fk_Jnt'], ['R_Shoulder_Fk_Ctrl', 'R_Elbow_Fk_Ctrl', 'R_Wrist_Fk_Ctrl'], ['R_Wrist_Ik_Ctrl', 'R_Wrist_Ik_PoleVector_Ctrl', 'R_Shoulder_Ik_Ctrl', 'R_Wrist_Ik_IKrp', 'R_Wrist_Ik_PoleVector_Ctrl_R_Elbow_Ik_Jnt_Connected_Crv', ('R_Wrist_Ik_IKrp_Stretchy_Grp', 'R_Wrist_Ik_IKrp_NormalScale_Loc', ['R_Wrist_Ik_Jnt_Stretchy_Loc'], ['R_Shoulder_Ik_Jnt_Stretchy_Loc'], ['R_Elbow_Ik_Jnt_Stretchy_Loc'], 'R_Shoulder_Ik_Jnt_R_Wrist_Ik_Jnt_Distance_Shape', 'R_Elbow_Ik_Jnt_R_Wrist_Ik_Jnt_Distance_Shape', 'R_Shoulder_Ik_Jnt_R_Elbow_Ik_Jnt_Distance_Shape')], ['R_Shoulder_Fk_Ctrl_Offset_Grp', 'R_Wrist_Ik_Ctrl_Offset_Grp', 'R_Shoulder_Ik_Ctrl_Offset_Grp', 'R_Wrist_Ik_Ctrl_Offset_Grp__Mirror_Grp'])
 {'twist_grp': 'R_Shoulder_Twist_Grp', 'joints': ['R_Shoulder_Twist_0_Jnt', 'R_Shoulder_Twist_1_Jnt', 'R_Shoulder_Twist_2_Jnt', 'R_Shoulder_Twist_3_Jnt'], 'curve': 'R_Shoulder_Twist_JntCtrl_Crv', 'ik_spline': 'R_Shoulder_Twist_IKspl', 'no_rotate': 'R_Elbow_NoRotate_JntCtrl'}
 {'twist_grp': 'R_Elbow_Twist_Grp', 'joints': ['R_Elbow_Twist_0_Jnt', 'R_Elbow_Twist_1_Jnt', 'R_Elbow_Twist_2_Jnt', 'R_Elbow_Twist_3_Jnt'], 'curve': 'R_Elbow_Twist_JntCtrl_Crv', 'ik_spline': 'R_Elbow_Twist_IKspl'}
 R_Shoulder_Twist_0_Bnd
@@ -248,7 +247,6 @@ Building: L_Hip_Block
 Import successfully import exec_limb
 Precode L_Hip_Block
 L_Hip_Jnt
-// Replaced 3 names.
 ['L_Hip_Jnt', 'R_Hip_Jnt']
 joints are: L_Hip_Jnt L_Knee_Jnt L_Ankle_Jnt
 // Replaced 3 names.
@@ -272,7 +270,7 @@ creating ik Chain for : L_Hip_Jnt
 // Error: searchReplaceNames _Jnt  "selected"; // 
 // Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
 IK = ['L_Ankle_Ik_Ctrl', 'L_Ankle_Ik_PoleVector_Ctrl', 'L_Hip_Ik_Ctrl', 'L_Ankle_Ik_IKrp', 'L_Ankle_Ik_PoleVector_Ctrl_L_Knee_Ik_Jnt_Connected_Crv']
-40.96857316986824
+40.96857316986821
 ['L_Hip_Fk_Ctrl_Offset_Grp', 'L_Ankle_Ik_Ctrl_Offset_Grp', 'L_Hip_Ik_Ctrl_Offset_Grp', 'L_Hip_Ik_Jnt_Ctrl_Grp']
 __________
 adding loc to ['L_Hip_Fk_Ctrl']
@@ -327,8 +325,8 @@ creating ik Chain for : R_Hip_Jnt
 // Error: searchReplaceNames _Jnt  "selected"; // 
 // Error: Line 1.36: Wrong number of arguments on call to searchReplaceNames. // 
 IK = ['R_Ankle_Ik_Ctrl', 'R_Ankle_Ik_PoleVector_Ctrl', 'R_Hip_Ik_Ctrl', 'R_Ankle_Ik_IKrp', 'R_Ankle_Ik_PoleVector_Ctrl_R_Knee_Ik_Jnt_Connected_Crv']
-40.96857316986824
-['R_Hip_Fk_Ctrl_Offset_Grp', 'R_Ankle_Ik_Ctrl_Offset_Grp', 'R_Hip_Ik_Ctrl_Offset_Grp', 'R_Hip_Ik_Jnt_Ctrl_Grp']
+40.968600000000016
+['R_Hip_Fk_Ctrl_Offset_Grp', 'R_Ankle_Ik_Ctrl_Offset_Grp', 'R_Hip_Ik_Ctrl_Offset_Grp', 'R_Ankle_Ik_Ctrl_Offset_Grp__Mirror_Grp']
 __________
 adding loc to ['R_Hip_Fk_Ctrl']
 adding loc to ['R_Knee_Fk_Ctrl']
@@ -341,7 +339,7 @@ R_Hip_Jnt_Switch_Loc.Switch_IK_FK
 R_Hip_Jnt_Switch_Loc
 # Warning: Name '_________' of new attribute clashes with an existing attribute of node 'R_Hip_Jnt_Switch_Loc'. # 
 R_Hip_Ik_Jnt_R_Ankle_Ik_Jnt_Distance_Shape_MultDiv R_Knee_Ik_Jnt_NewScale_MultDiv R_Hip_Ik_Jnt_NewScale_MultDiv R_Ankle_Ik_IKrp_TotalDistance_MultDiv
-['R_Hip_Jnt', 'R_Knee_Jnt', 'R_Ankle_Jnt'] ['R_Hip_Ik_Jnt', 'R_Knee_Ik_Jnt', 'R_Ankle_Ik_Jnt'] ['R_Hip_Fk_Jnt', 'R_Knee_Fk_Jnt', 'R_Ankle_Fk_Jnt'] ['R_Hip_Fk_Ctrl', 'R_Knee_Fk_Ctrl', 'R_Ankle_Fk_Ctrl'] ['R_Ankle_Ik_Ctrl', 'R_Ankle_Ik_PoleVector_Ctrl', 'R_Hip_Ik_Ctrl', 'R_Ankle_Ik_IKrp', 'R_Ankle_Ik_PoleVector_Ctrl_R_Knee_Ik_Jnt_Connected_Crv', ('R_Ankle_Ik_IKrp_Stretchy_Grp', 'R_Ankle_Ik_IKrp_NormalScale_Loc', ['R_Ankle_Ik_Jnt_Stretchy_Loc'], ['R_Hip_Ik_Jnt_Stretchy_Loc'], ['R_Knee_Ik_Jnt_Stretchy_Loc'], 'R_Hip_Ik_Jnt_R_Ankle_Ik_Jnt_Distance_Shape', 'R_Knee_Ik_Jnt_R_Ankle_Ik_Jnt_Distance_Shape', 'R_Hip_Ik_Jnt_R_Knee_Ik_Jnt_Distance_Shape')] ['R_Hip_Fk_Ctrl_Offset_Grp', 'R_Ankle_Ik_Ctrl_Offset_Grp', 'R_Hip_Ik_Ctrl_Offset_Grp', 'R_Hip_Ik_Jnt_Ctrl_Grp']
+['R_Hip_Jnt', 'R_Knee_Jnt', 'R_Ankle_Jnt'] ['R_Hip_Ik_Jnt', 'R_Knee_Ik_Jnt', 'R_Ankle_Ik_Jnt'] ['R_Hip_Fk_Jnt', 'R_Knee_Fk_Jnt', 'R_Ankle_Fk_Jnt'] ['R_Hip_Fk_Ctrl', 'R_Knee_Fk_Ctrl', 'R_Ankle_Fk_Ctrl'] ['R_Ankle_Ik_Ctrl', 'R_Ankle_Ik_PoleVector_Ctrl', 'R_Hip_Ik_Ctrl', 'R_Ankle_Ik_IKrp', 'R_Ankle_Ik_PoleVector_Ctrl_R_Knee_Ik_Jnt_Connected_Crv', ('R_Ankle_Ik_IKrp_Stretchy_Grp', 'R_Ankle_Ik_IKrp_NormalScale_Loc', ['R_Ankle_Ik_Jnt_Stretchy_Loc'], ['R_Hip_Ik_Jnt_Stretchy_Loc'], ['R_Knee_Ik_Jnt_Stretchy_Loc'], 'R_Hip_Ik_Jnt_R_Ankle_Ik_Jnt_Distance_Shape', 'R_Knee_Ik_Jnt_R_Ankle_Ik_Jnt_Distance_Shape', 'R_Hip_Ik_Jnt_R_Knee_Ik_Jnt_Distance_Shape')] ['R_Hip_Fk_Ctrl_Offset_Grp', 'R_Ankle_Ik_Ctrl_Offset_Grp', 'R_Hip_Ik_Ctrl_Offset_Grp', 'R_Ankle_Ik_Ctrl_Offset_Grp__Mirror_Grp']
 # Warning: Object, 'R_Hip_Twist_0_Jnt', skipped. It is already a child of the parent, 'world'. # 
 # Warning: History will be off for the command since Keep Originals is off and a selected item has no history. # 
 # Warning: New name contains invalid characters. Illegal characters were converted to "_". # 
@@ -349,7 +347,7 @@ R_Hip_Ik_Jnt_R_Ankle_Ik_Jnt_Distance_Shape_MultDiv R_Knee_Ik_Jnt_NewScale_MultDi
 {'twist_grp': 'R_Hip_Twist_Grp', 'joints': ['R_Hip_Twist_0_Jnt', 'R_Hip_Twist_1_Jnt', 'R_Hip_Twist_2_Jnt', 'R_Hip_Twist_3_Jnt'], 'curve': 'R_Hip_Twist_JntCtrl_Crv', 'ik_spline': 'R_Hip_Twist_IKspl', 'no_rotate': 'R_Knee_NoRotate_JntCtrl'}
 {'twist_grp': 'R_Knee_Twist_Grp', 'joints': ['R_Knee_Twist_0_Jnt', 'R_Knee_Twist_1_Jnt', 'R_Knee_Twist_2_Jnt', 'R_Knee_Twist_3_Jnt'], 'curve': 'R_Knee_Twist_JntCtrl_Crv', 'ik_spline': 'R_Knee_Twist_IKspl'}
 ----------------IK FK------------------
-(['R_Hip_Jnt', 'R_Knee_Jnt', 'R_Ankle_Jnt'], ['R_Hip_Ik_Jnt', 'R_Knee_Ik_Jnt', 'R_Ankle_Ik_Jnt'], ['R_Hip_Fk_Jnt', 'R_Knee_Fk_Jnt', 'R_Ankle_Fk_Jnt'], ['R_Hip_Fk_Ctrl', 'R_Knee_Fk_Ctrl', 'R_Ankle_Fk_Ctrl'], ['R_Ankle_Ik_Ctrl', 'R_Ankle_Ik_PoleVector_Ctrl', 'R_Hip_Ik_Ctrl', 'R_Ankle_Ik_IKrp', 'R_Ankle_Ik_PoleVector_Ctrl_R_Knee_Ik_Jnt_Connected_Crv', ('R_Ankle_Ik_IKrp_Stretchy_Grp', 'R_Ankle_Ik_IKrp_NormalScale_Loc', ['R_Ankle_Ik_Jnt_Stretchy_Loc'], ['R_Hip_Ik_Jnt_Stretchy_Loc'], ['R_Knee_Ik_Jnt_Stretchy_Loc'], 'R_Hip_Ik_Jnt_R_Ankle_Ik_Jnt_Distance_Shape', 'R_Knee_Ik_Jnt_R_Ankle_Ik_Jnt_Distance_Shape', 'R_Hip_Ik_Jnt_R_Knee_Ik_Jnt_Distance_Shape')], ['R_Hip_Fk_Ctrl_Offset_Grp', 'R_Ankle_Ik_Ctrl_Offset_Grp', 'R_Hip_Ik_Ctrl_Offset_Grp', 'R_Hip_Ik_Jnt_Ctrl_Grp'])
+(['R_Hip_Jnt', 'R_Knee_Jnt', 'R_Ankle_Jnt'], ['R_Hip_Ik_Jnt', 'R_Knee_Ik_Jnt', 'R_Ankle_Ik_Jnt'], ['R_Hip_Fk_Jnt', 'R_Knee_Fk_Jnt', 'R_Ankle_Fk_Jnt'], ['R_Hip_Fk_Ctrl', 'R_Knee_Fk_Ctrl', 'R_Ankle_Fk_Ctrl'], ['R_Ankle_Ik_Ctrl', 'R_Ankle_Ik_PoleVector_Ctrl', 'R_Hip_Ik_Ctrl', 'R_Ankle_Ik_IKrp', 'R_Ankle_Ik_PoleVector_Ctrl_R_Knee_Ik_Jnt_Connected_Crv', ('R_Ankle_Ik_IKrp_Stretchy_Grp', 'R_Ankle_Ik_IKrp_NormalScale_Loc', ['R_Ankle_Ik_Jnt_Stretchy_Loc'], ['R_Hip_Ik_Jnt_Stretchy_Loc'], ['R_Knee_Ik_Jnt_Stretchy_Loc'], 'R_Hip_Ik_Jnt_R_Ankle_Ik_Jnt_Distance_Shape', 'R_Knee_Ik_Jnt_R_Ankle_Ik_Jnt_Distance_Shape', 'R_Hip_Ik_Jnt_R_Knee_Ik_Jnt_Distance_Shape')], ['R_Hip_Fk_Ctrl_Offset_Grp', 'R_Ankle_Ik_Ctrl_Offset_Grp', 'R_Hip_Ik_Ctrl_Offset_Grp', 'R_Ankle_Ik_Ctrl_Offset_Grp__Mirror_Grp'])
 {'twist_grp': 'R_Hip_Twist_Grp', 'joints': ['R_Hip_Twist_0_Jnt', 'R_Hip_Twist_1_Jnt', 'R_Hip_Twist_2_Jnt', 'R_Hip_Twist_3_Jnt'], 'curve': 'R_Hip_Twist_JntCtrl_Crv', 'ik_spline': 'R_Hip_Twist_IKspl', 'no_rotate': 'R_Knee_NoRotate_JntCtrl'}
 {'twist_grp': 'R_Knee_Twist_Grp', 'joints': ['R_Knee_Twist_0_Jnt', 'R_Knee_Twist_1_Jnt', 'R_Knee_Twist_2_Jnt', 'R_Knee_Twist_3_Jnt'], 'curve': 'R_Knee_Twist_JntCtrl_Crv', 'ik_spline': 'R_Knee_Twist_IKspl'}
 R_Hip_Twist_0_Bnd
@@ -724,16 +722,6 @@ Import successfully import exec_load_ctrls
 Precode Load_Ctrls_Block
 Build successfully exec_load_ctrls.build_load_ctrls_block()
 Postcode Load_Ctrls_Block
-------------------------------------------------------------------------------------
-------------------------------------------------------------------------------------
-Building: RemoveStretchy_Block
-------------------------------------------------------------------------------------
-------------------------------------------------------------------------------------
-Import successfully import exec_code
-Precode RemoveStretchy_Block
-Build RemoveStretchy_Block Success
-Build successfully exec_code.build_code_block()
-Postcode RemoveStretchy_Block
 ------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------
 Building: Code_Block
