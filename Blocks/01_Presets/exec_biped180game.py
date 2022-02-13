@@ -59,7 +59,9 @@ def create_biped180game_block(name = 'Biped180Game'):
 
     PATH = os.path.dirname(__file__)
     PATH = Path(PATH)
-    filepath = os.path.join(*PATH.parts[:-2], 'Utils','IO','Guide_Data','Biped180Game.ma')
+    PATH = os.path.dirname(__file__)
+    PATH = Path(PATH)
+    filepath = os.path.join(FOLDER, 'Utils','IO','Guide_Data','Biped180Game.ma')
     print('Loading: {}...'.format(filepath))
 
     cmds.file(filepath, i=True, type="mayaAscii")

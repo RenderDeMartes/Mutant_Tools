@@ -36,10 +36,10 @@ author:  Esteban Rodriguez <info@mutanttools.com>
 '''
 
 
-#loading screen so it looks nicer
 import time
 from maya import cmds
-import urllib.request
+try:import urllib.request
+except:pass
 
 '''
 cmds.progressWindow(title='Loading RdM Tools V3', progress=0, status='Starting', isInterruptable=True,maxValue=3)
@@ -49,7 +49,7 @@ time.sleep(1)
 cmds.progressWindow(edit=True, progress=2, status='Loading RdM Tools V{}'.format(version))
 '''
 
-import maya.mel
+import maya.mel as mel
 from maya import OpenMaya
 
 import os

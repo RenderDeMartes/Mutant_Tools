@@ -75,7 +75,6 @@ Title = 'WebsiteViewer'
 # -------------------------------------------------------------------
 
 import Mutant_Tools
-import Mutant_Tools.Utils
 from Mutant_Tools.Utils.Rigging import main_mutant
 
 imp.reload(Mutant_Tools.Utils.Rigging.main_mutant)

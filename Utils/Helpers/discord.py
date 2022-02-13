@@ -1,4 +1,5 @@
-from urllib.request import Request, urlopen
+try:from urllib.request import Request, urlopen
+except:pass
 import maya.OpenMayaUI as omui
 from maya import cmds
 import maya.OpenMaya as OpenMaya

@@ -59,7 +59,7 @@ def create_biped180_block(name = 'Biped180'):
 
     PATH = os.path.dirname(__file__)
     PATH = Path(PATH)
-    filepath = os.path.join(*PATH.parts[:-2], 'Utils','IO','Guide_Data','Biped180.ma')
+    filepath = os.path.join(FOLDER, 'Utils','IO','Guide_Data','Biped180.ma')
     print('Loading: {}...'.format(filepath))
 
     cmds.file(filepath, i=True, type="mayaAscii")
