@@ -449,7 +449,6 @@ class Modules_class(kinematics.Kinematics_class):
 					current_icon = cmds.getAttr('{}.iconName'.format(block), asString = True)
 					current_icon = Path(current_icon)
 					icon = os.path.join(*current_icon.parts[-1:])
-					print(icon)
 					cmds.setAttr('{}.iconName'.format(block), os.path.join(ICON_FOLDER, icon), type="string")
 				except:pass
 
