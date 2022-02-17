@@ -334,5 +334,7 @@ def build_limb_block():
         if str(side_guide).startswith(nc['right']):
             cmds.setAttr('{}.rotateX'.format(main_jnt_grp), 180)
             cmds.setAttr('{}.scaleX'.format(main_jnt_grp), -1)
+            cmds.setAttr('{}.scaleY'.format(main_jnt_grp), -1)
+            cmds.setAttr('{}.scaleZ'.format(main_jnt_grp), -1)
 
         cmds.scaleConstraint('Global_Ctrl', main_jnt_grp, mo=True)
