@@ -836,8 +836,20 @@ class Kinematics_class(tools.Tools_class):
 
 	# ----------------------------------------------------------------------------------------------------------------
 
-	def spline_twist(self, start = '', end = '', axis = setup['twist_axis'], amount = 4, mode = 'up'):
+	def spline_twist(self, start = '', end = '', axis = setup['twist_axis'], amount = 4, mode = 'up', right_side = False):
+		"""
 
+		Args:
+			start:
+			end:
+			axis:
+			amount:
+			mode:
+			right_side: bool set Advance Attrs a bit different.
+
+		Returns: {'twist_grp':twist_grp, 'joints':twist_joints, 'curve':spline_curve, 'ik_spline': ikSpline}
+
+		"""
 
 		if start == '':
 			start = cmds.ls(sl=True)[0]
@@ -904,11 +916,11 @@ class Kinematics_class(tools.Tools_class):
 
 		twist_grp = cmds.group(twist_start, twist_end, twist_joints[0], ikSpline, spline_curve, n = '{}{}'.format(twist_start.replace(nc['joint_ctrl'], ''),nc['group']))
 
-		cmds.setAttr("{}.dWorldUpAxis".format(ikSpline), 4)
+		cmds.setAttr("{}.dWorldUpAxis".format(ikSpline), 3)
 		cmds.setAttr("{}.dWorldUpVectorY".format(ikSpline), 0)
 		cmds.setAttr("{}.dWorldUpVectorEndY".format(ikSpline), 0)
-		cmds.setAttr( "{}.dWorldUpVectorZ".format(ikSpline), -1)
-		cmds.setAttr( "{}.dWorldUpVectorEndZ".format(ikSpline), -1)
+		cmds.setAttr( "{}.dWorldUpVectorZ".format(ikSpline), 1)
+		cmds.setAttr( "{}.dWorldUpVectorEndZ".format(ikSpline), 1)
 
 		if mode == 'up':
 			cmds.parent(no_rot_jnt, twist_grp)

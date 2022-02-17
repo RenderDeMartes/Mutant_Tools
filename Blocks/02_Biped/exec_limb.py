@@ -197,9 +197,19 @@ def build_limb_block():
         clean_rig_grp = cmds.group(em=True, n = side_guide.replace(nc['joint'],'_Rig'+ nc['group']))
         clean_ctrl_grp = cmds.group(em=True, n = side_guide.replace(nc['joint'],nc['ctrl']) + nc['group'])
 
-        cmds.parent(ikfk['upper_twist']['twist_grp'], clean_rig_grp)
+        #Flip Right Sides
+        if str(side_guide).startswith(nc['right']):
+            flip_twist_grp = cmds.group(em=True, n = side_guide.replace(nc['joint'], '_Flip'+nc['group']))
+            cmds.parent(ikfk['upper_twist']['twist_grp'], ikfk['lower_twist']['twist_grp'], flip_twist_grp)
+            cmds.parent(flip_twist_grp, clean_rig_grp)
+            cmds.setAttr('{}.rotateX'.format(flip_twist_grp), 180)
+            cmds.setAttr('{}.scaleX'.format(flip_twist_grp), -1)
+            cmds.setAttr('{}.scaleY'.format(flip_twist_grp), -1)
+            cmds.setAttr('{}.scaleZ'.format(flip_twist_grp), -1)
 
-        cmds.parent(ikfk['lower_twist']['twist_grp'], clean_rig_grp)
+        else:
+            cmds.parent(ikfk['upper_twist']['twist_grp'], clean_rig_grp)
+            cmds.parent(ikfk['lower_twist']['twist_grp'], clean_rig_grp)
 
         cmds.parent(ikfk['ik_fk'][0][0], clean_rig_grp)
         cmds.parent(ikfk['ik_fk'][1][0], clean_rig_grp)
@@ -320,4 +330,9 @@ def build_limb_block():
         cmds.parent(main_jnt_grp, cmds.listRelatives(ikfk['ik_fk'][0][0],p=True))
         cmds.parent(ikfk['ik_fk'][0][0], ikfk['ik_fk'][1][0], ikfk['ik_fk'][2][0], main_jnt_grp)
 
-        cmds.scaleConstraint('Global_Ctrl', main_jnt_grp)
+        #Fix Switch IKFK
+        if str(side_guide).startswith(nc['right']):
+            cmds.setAttr('{}.rotateX'.format(main_jnt_grp), 180)
+            cmds.setAttr('{}.scaleX'.format(main_jnt_grp), -1)
+
+        cmds.scaleConstraint('Global_Ctrl', main_jnt_grp, mo=True)
