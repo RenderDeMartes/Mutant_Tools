@@ -400,7 +400,7 @@ class Kinematics_class(tools.Tools_class):
 		
 	#----------------------------------------------------------------------------------------------------------------
 
-	def simple_ik_chain(self, start = '', end = '', size = 1, color = setup['main_color'], ik_curve = setup['ik_ctrl'], pv_curve = setup['pv_ctrl'], pv = True, top_curve = setup['top_ik_ctrl'], mirror_behavior = True):
+	def simple_ik_chain(self, start = '', end = '', size = 1, color = setup['main_color'], ik_curve = setup['ik_ctrl'], pv_curve = setup['pv_ctrl'], pv = True, top_curve = setup['top_ik_ctrl']):
 		"""This creates a simple IK chain between two joints with ctrls
 
 		Args:
@@ -412,7 +412,6 @@ class Kinematics_class(tools.Tools_class):
 			pv_curve: string type of controller based on curves.json
 			pv: bool true if pole vector
 			top_curve: string type of controller based on curves.json
-			mirror_behavior: bool true if right side
 
 		Returns: ik_system
 
@@ -444,9 +443,6 @@ class Kinematics_class(tools.Tools_class):
 		IK_grp = self.root_grp(replace_nc = True)
 		self.hide_attr(ctrl, s = True, v = True)
 
-		if mirror_behavior == True:
-			if ctrl.startswith(nc['right']):
-				self.mirror_group( input=IK_grp, world=False)
 
 		cmds.orientConstraint(ctrl, end ,mo =True)
 
@@ -469,10 +465,6 @@ class Kinematics_class(tools.Tools_class):
 			cmds.delete(pv_loc)
 			pv_grp = self.root_grp(replace_nc = True)
 
-			if mirror_behavior == True:
-				if pv_ctrl.startswith(nc['right']):
-					self.root_grp(pv_grp)
-					#self.mirror_group(input=pv_ctrl, world=False)
 
 			cmds.poleVectorConstraint(pv_ctrl, ik_handle)
 
@@ -492,10 +484,6 @@ class Kinematics_class(tools.Tools_class):
 		self.hide_attr(top_ctrl,r = True,  s = True, v = True)
 		ik_system.append(top_ctrl)
 
-		if mirror_behavior == True:
-			if top_ctrl.startswith(nc['right']):
-				self.mirror_group(input=top_grp, world=False)
-
 		cmds.parentConstraint(top_ctrl, start)
 
 		#organize and add color
@@ -503,15 +491,10 @@ class Kinematics_class(tools.Tools_class):
 		#create IK Grp
 		cmds.select(cl=True)
 		ik_main_grp = cmds.group(n = start + nc['ctrl'] + nc ['group'], em =True)
-		if start.startswith(nc['right']):
-			cmds.parent(cmds.listRelatives(pv_grp[0], p=True), ik_main_grp)
-			cmds.parent(cmds.listRelatives(IK_grp[0], p=True), ik_main_grp)
-			cmds.parent(cmds.listRelatives(top_grp[0], p=True), ik_main_grp)
-		else:
-			cmds.parent(pv_grp[0], ik_main_grp)
-			cmds.parent(IK_grp[0], ik_main_grp)
-			cmds.parent(top_grp[0], ik_main_grp)
-		#cmds.parent(line[0],ik_main_grp)
+
+		cmds.parent(pv_grp[0], ik_main_grp)
+		cmds.parent(IK_grp[0], ik_main_grp)
+		cmds.parent(top_grp[0], ik_main_grp)
 
 		for c in ik_system:
 			cmds.select(c)
