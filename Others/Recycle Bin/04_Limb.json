@@ -1,0 +1,34 @@
+{
+    "Name" :  "L_Shoulder,L_Elbow,L_Wrist",
+    "Description":"This will create a basic Limb System",
+    "Icon":"Limb.png",
+
+    "Enable" :  "True",
+
+    "python_file" : "exec_limb.py",
+    "import":"import exec_limb",
+    "imp.reload":"imp.reload(exec_limb)",
+    "exec_command" : "exec_limb.create_limb_block()",    
+    "build_command":"exec_limb.build_limb_block()",
+
+    "attrs": {
+            "SetParent_string":"new_locator",
+
+            "Mirror_enum":"True:False:Right_Only",
+
+            "CtrlSize_float": "4",
+            "TwistAmount_float": "4",
+
+            "IkCtrlType_enum": "cube:sphere",
+            "PVCtrlType_enum": "sphere:cube",
+            "IkTopCtrlType_enum": "pin_cube:cube:sphere:circleY:circleX:circleY",
+            "FKCtrlType_enum": "bounding_cube:circleY:circleX:circleY:pin_cube",
+
+
+            "SetGameParent_string": "",
+
+            "Help_string" : "Possible parent: L_Wrist_Jnt\n"
+
+            }
+
+ }
