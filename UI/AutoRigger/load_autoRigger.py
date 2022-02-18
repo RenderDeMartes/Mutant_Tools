@@ -58,6 +58,7 @@ imp.reload(load_autoRiggerMenu)
 
 from Mutant_Tools.UI.CodeReader import load_codeReader
 imp.reload(load_codeReader)
+log_ui = load_codeReader.Code_Reader(mode='view', code= '', config_attr = '')
 
 import Mutant_Tools.UI
 from Mutant_Tools.UI import QtMutantWindow
@@ -905,14 +906,15 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 
 		#log
 		try:
-			codeUI.close()
+			log_ui.close()
 		except:
 			pass
-
-		codeUI = load_codeReader.Code_Reader(mode='view', code= log, config_attr = '')
-		codeUI.ui.code_text.verticalScrollBar().setValue(codeUI.ui.code_text.verticalScrollBar().maximum())
-		codeUI.set_path_label(code_path =  PATH.replace('\\UI', '/log.txt'))
-		codeUI.show()
+		print(log)
+		log_ui.previous_code = log
+		log_ui.modify_ui_based_on_mode()
+		log_ui.ui.code_text.verticalScrollBar().setValue(log_ui.ui.code_text.verticalScrollBar().maximum())
+		log_ui.set_path_label(code_path = os.path.join(FOLDER,'log.txt'))
+		log_ui.show()
 
 	#-------------------------------------------------------------------
 
