@@ -94,7 +94,7 @@ Title = 'Code Reader'
 
 class Code_Reader(QtMutantWindow.Qt_Mutant):
 
-	def __init__(self, mode = 'view', code = '', config_attr = '', *args, **kwargs):
+	def __init__(self, mode = 'view', code = '', config_attr = ''):
 		super(Code_Reader, self).__init__()
 
 		#self.setWindowTitle(Title)
