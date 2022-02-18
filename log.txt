@@ -5,18 +5,19 @@ Building: L_Clavicle_Block
 ------------------------------------------------------------------------------------
 Import successfully import exec_clavicle
 Precode L_Clavicle_Block
-{'geometry': 'Geo', 'control': 'Ctrl', 'rig': 'Rig'}
-{}
-{'bind_joints': 'Bind_Joints', 'bind_geo': 'Bind_Geo', 'misc': 'Miscellaneous', 'template': 'Template'}
-BaseA Created Successfully
-L_Clavicle_Jnt
-// Replaced 2 names.
-['L_Clavicle_Jnt', 'R_Clavicle_Jnt']
-['L_Clavicle_Ctrl']
+// Error: line 1: Cannot find procedure "asdasfasf". // 
 # Traceback (most recent call last):
-# #   File "C:/Users/PC/Documents/maya/2022/scripts\Mutant_Tools\UI\AutoRigger\load_autoRigger.py", line 738, in build_autorigger
-    exec(buid_command)
-#   File "<string>", line 1, in <module>
-# #   File "C:\Users\PC\Documents\maya\2022\scripts\Mutant_Tools\Blocks\02_Biped\exec_clavicle.py", line 159, in build_clavicle_block
-    cmds.parentConstraint(block_parent, for_parent , mo = True)
-# ValueError: No object matches name: new_locato
+# #   File "C:/Users/PC/Documents/maya/2022/scripts\Mutant_Tools\UI\AutoRigger\load_autoRigger.py", line 729, in build_autorigger
+    exec(precode)
+#   File "<string>", line 1
+#     asdasfasf  asasf
+#                    ^
+# SyntaxError: invalid syntax
+# # 
+# During handling of the above exception, another exception occurred:
+
+# Traceback (most recent call last):
+# #   File "C:/Users/PC/Documents/maya/2022/scripts\Mutant_Tools\UI\AutoRigger\load_autoRigger.py", line 731, in build_autorigger
+    mel.eval(precode)
+# # RuntimeError: Error occurred during execution of MEL script
+line 1: line 1: Cannot find procedure "asdasfasf".

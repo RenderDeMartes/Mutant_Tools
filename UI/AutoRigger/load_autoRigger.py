@@ -831,7 +831,7 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		if cmds.getAttr('{}.postcode'.format(config)) != '':
 			self.ui.postbuild.setIcon(QtGui.QIcon(os.path.join(IconsPath ,'POSTCODE_ON.png')))
 		else:
-			self.ui.postbuild.setIcon(QtGui.QIcon(os.path.join(IconsPath ,'PODTCODE.png')))
+			self.ui.postbuild.setIcon(QtGui.QIcon(os.path.join(IconsPath ,'POSTCODE.png')))
 
 	#-------------------------------------------------------------------
 
@@ -846,7 +846,7 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 			codeUI.close()
 		except:
 			pass
-
+		imp.reload(load_codeReader)
 		codeUI = load_codeReader.Code_Reader(mode='write', code= pastcode_attr, config_attr = '{}.precode'.format(config))
 		codeUI.set_path_label(code_path = '{}.precode'.format(config))
 		codeUI.show()
@@ -860,7 +860,7 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		import_command = cmds.getAttr('{}.Import_Command'.format(config))
 		build_file = import_command.replace('import ', '')
 
-		current_path = Folder + '//Blocks'
+		current_path = os.path.join(FOLDER, 'Blocks')
 		script_name = build_file + '.py'
 
 		# if we need find it first
@@ -876,7 +876,7 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 			codeUI.close()
 		except:
 			pass
-
+		imp.reload(load_codeReader)
 		codeUI = load_codeReader.Code_Reader(mode='view', code= build_script, config_attr = '')
 		codeUI.set_path_label(code_path = file_path)
 		codeUI.show()
@@ -893,6 +893,7 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		except:
 			pass
 
+		imp.reload(load_codeReader)
 		codeUI = load_codeReader.Code_Reader(mode='write', code= postcode_attr, config_attr = '{}.postcode'.format(config))
 		codeUI.set_path_label(code_path = '{}.postcode'.format(config))
 		codeUI.show()
@@ -909,7 +910,11 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 			log_ui.close()
 		except:
 			pass
+
 		print(log)
+
+		imp.reload(load_codeReader)
+		log_ui = load_codeReader.Code_Reader(mode='view', code='', config_attr='')
 		log_ui.previous_code = log
 		log_ui.modify_ui_based_on_mode()
 		log_ui.ui.code_text.verticalScrollBar().setValue(log_ui.ui.code_text.verticalScrollBar().maximum())
