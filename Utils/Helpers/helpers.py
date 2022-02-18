@@ -27,6 +27,7 @@ author:  Esteban Rodriguez <info@mutanttools.com>
 from maya import cmds
 import json
 from pathlib import Path
+import os
 
 class Helpers(object):
 
