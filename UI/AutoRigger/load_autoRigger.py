@@ -892,6 +892,7 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 			codeUI.close()
 		except:
 			pass
+
 		imp.reload(load_codeReader)
 		codeUI = load_codeReader.Code_Reader(mode='write', code= postcode_attr, config_attr = '{}.postcode'.format(config))
 		codeUI.set_path_label(code_path = '{}.postcode'.format(config))
