@@ -1,4 +1,5 @@
 from maya import cmds
+import maya.mel as mel
 import json
 import imp
 import os
@@ -24,23 +25,23 @@ PATH = Path(PATH)
 PATH_PARTS = PATH.parts[:-2]
 FOLDER=''
 for f in PATH_PARTS:
-	FOLDER = os.path.join(FOLDER, f)
+    FOLDER = os.path.join(FOLDER, f)
 
 JSON_FILE = os.path.join(FOLDER, 'config', 'name_conventions.json')
 with open(JSON_FILE) as json_file:
-	nc = json.load(json_file)
+    nc = json.load(json_file)
 #Read curve shapes info
 CURVE_FILE = os.path.join(FOLDER, 'config', 'curves.json')
 with open(CURVE_FILE) as curve_file:
-	curve_data = json.load(curve_file)
+    curve_data = json.load(curve_file)
 #setup File
 SETUP_FILE = os.path.join(FOLDER, 'config', 'rig_setup.json')
 with open(SETUP_FILE) as setup_file:
-	setup = json.load(setup_file)
+    setup = json.load(setup_file)
 
 MODULE_FILE = os.path.join(os.path.dirname(__file__),'04_Limb.json')
 with open(MODULE_FILE) as module_file:
-	module = json.load(module_file)
+    module = json.load(module_file)
 
 
 
@@ -127,6 +128,12 @@ def build_limb_block():
     game_parent = cmds.getAttr('{}.SetGameParent'.format(config), asString = True)
     twist_amount = cmds.getAttr('{}.TwistAmount'.format(config))
 
+    # compatible with older versions without ribbons
+    if cmds.attributeQuery('Ribbons', n=config, exists=True):
+        create_ribbons = cmds.getAttr(config + '.Ribbons')
+    else:
+        create_ribbons = True
+
     #use this group for later cleaning, just assign them when you create the top on hierarchy
     clean_rig_grp = ''
     clean_ctrl_grp = ''
@@ -193,6 +200,85 @@ def build_limb_block():
 
         print (ikfk['upper_twist'])
         print (ikfk['lower_twist'])
+
+
+
+        #------------------------------------------------------------------------------------------------
+
+        #Add Ribbons
+
+        switch_locator = ikfk['ik_fk'][0][0]+ '_Switch' + nc['locator']
+
+        if create_ribbons:
+
+            #Ribbon stuff from BendyRibbons RdM ToolsV2
+
+            name = '{}'.format(str(side_guide).replace(nc['joint'], ''))
+
+            start = ikfk['ik_fk'][0][0]
+            mid = ikfk['ik_fk'][0][1]
+            end =ikfk['ik_fk'][0][2]
+
+            #create ribbon Plane
+            surface_plane = cmds.nurbsPlane(ch=1, d=1, v=1, p=(0, 0, 0), u=2, w=1, ax=(0, 0, 1), lr=1, n=name + nc['nurb'])
+            cluster01 = cmds.cluster(surface_plane[0] + '.cv[0][0:1]')
+            cluster02 = cmds.cluster(surface_plane[0] + '.cv[1][0:1]')
+            cluster03 = cmds.cluster(surface_plane[0] + '.cv[2][0:1]')
+            cmds.setAttr(str(surface_plane[0]) + '.visibility', 0)
+
+            cmds.delete(cmds.parentConstraint(start, cluster01, mo=False))
+            cmds.delete(cmds.parentConstraint(mid, cluster02, mo=False))
+            cmds.delete(cmds.parentConstraint(end, cluster03, mo=False))
+
+            cmds.delete(surface_plane, ch=True)
+
+            cmds.rebuildSurface(surface_plane[0], rt=0, kc=0, fr=0, end=1, sv=1, su=twist_amount*2, kr=0, dir=2, kcp=0,
+                                tol=0.01, dv=1, du=3, rpo=1)
+
+            #Create follicles
+            cmds.select(surface_plane[0])
+            mel.eval("createHair {} 1 10 0 0 0 0 5 0 1 2 1;".format(twist_amount*2))
+
+            cmds.delete('hairSystem1', 'pfxHair1', 'nucleus1')
+            cmds.setAttr(surface_plane[0] + '.inheritsTransform', 0)
+
+            for C in range(1, twist_amount*2 + 1):
+                cmds.delete('curve' + str(C))
+            cmds.rename('hairSystem1Follicles', name + nc['follicle'] + nc['group'])
+
+            follicles = cmds.ls(name + nc['follicle'] + nc['group'], dag=True, type='follicle')
+
+            fol_joints = []
+            for num, i in enumerate(follicles):
+                cmds.select(i)
+                cmds.rename(cmds.listRelatives(i, p=True), name + '_' + str(num) + nc['follicle'])
+                fol_jnt = cmds.joint(n = name + '_' +str(num) + nc['joint'])
+                fol_joints.append(fol_jnt)
+
+            #Bind twist to bendy surfaces
+            twist_joints = ikfk['upper_twist']['joints'][:-1] + ikfk['lower_twist']['joints'][:-1]
+            cmds.skinCluster(twist_joints, surface_plane[0], sm=0, bm=1, tsb=True, dropoffRate = 0.1)
+
+            #Create Vis Attr
+            vis_attr = mt.new_enum(input= switch_locator, name = 'Bendys', enums = 'Hide:Show')
+
+            #Ribbon Controllers
+            ribbon_ctrl_grp = cmds.group(em=True, n = name + '_Ribbons' + nc['ctrl'] + nc['group'])
+            for fol_jnt in fol_joints:
+                ctrl = mt.curve(input=fol_jnt, type='circleX',
+                                rename=True,
+                                custom_name=True, name=fol_jnt.replace(nc['joint'],  nc['ctrl']),
+                                size=ctrl_size/2,
+                                )
+                mt.assign_color(ctrl, color)
+                root, auto = mt.root_grp(input=ctrl, autoRoot=True)
+                cmds.parentConstraint(cmds.listRelatives(fol_jnt,p=True)[0], root, mo=False)
+                cmds.parentConstraint(ctrl, fol_jnt)
+                cmds.parent(root, ribbon_ctrl_grp)
+
+                cmds.connectAttr(vis_attr, '{}.v'.format(cmds.listRelatives(ctrl, shapes=True)[0]))
+
+        #----------------------------------------------------------
 
         clean_rig_grp = cmds.group(em=True, n = side_guide.replace(nc['joint'],'_Rig'+ nc['group']))
         clean_ctrl_grp = cmds.group(em=True, n = side_guide.replace(nc['joint'],nc['ctrl']) + nc['group'])
@@ -266,14 +352,50 @@ def build_limb_block():
             ''
             #cmds.orientConstraint()
         '''
+        #clean ctrls
+        cmds.parent(clean_ctrl_grp, setup['base_groups']['control']+ nc['group'])
+        cmds.parentConstraint('Rig_Ctrl_Grp' , clean_ctrl_grp,mo=True)
+        cmds.scaleConstraint('Rig_Ctrl_Grp' , clean_ctrl_grp,mo=True)
+
+        #parent rig
+        cmds.parent(clean_rig_grp, '{}{}'.format(setup['rig_groups']['misc'], nc['group']))
+
+
+        #clean ribbons
+        if create_ribbons:
+            cmds.parent(surface_plane[0], name + nc['follicle'] + nc['group'], clean_rig_grp)
+            cmds.parent(ribbon_ctrl_grp, clean_ctrl_grp)
+
+        #connected
+        cmds.parent(ikfk['ik_fk'][4][4], clean_ctrl_grp)
+
+        #stretchy fixes to make it scalable
+        main_jnt_grp = cmds.group(em=True, n = side_guide + '_Main' + nc['group'])
+        cmds.parent(main_jnt_grp, cmds.listRelatives(ikfk['ik_fk'][0][0],p=True))
+        cmds.parent(ikfk['ik_fk'][0][0], ikfk['ik_fk'][1][0], ikfk['ik_fk'][2][0], main_jnt_grp)
+
+        #Fix Switch IKFK
+        if str(side_guide).startswith(nc['right']):
+            cmds.setAttr('{}.rotateX'.format(main_jnt_grp), 180)
+            cmds.setAttr('{}.scaleX'.format(main_jnt_grp), -1)
+            cmds.setAttr('{}.scaleY'.format(main_jnt_grp), -1)
+            cmds.setAttr('{}.scaleZ'.format(main_jnt_grp), -1)
+
+        cmds.scaleConstraint('Global_Ctrl', main_jnt_grp, mo=True)
 
         #create bind Joints for the skin -------------------------
         #bind joints
         bind_joints = []
-        twist_joints = ikfk['upper_twist']['joints'] + ikfk['lower_twist']['joints']
         bind_joint = ''
 
-        for jnt in twist_joints:
+        if create_ribbons:
+            to_bind = fol_joints
+        else:
+            to_bind = ikfk['upper_twist']['joints'] + ikfk['lower_twist']['joints']
+
+        cmds.select(cl=True)
+
+        for jnt in to_bind:
             try: cmds.select(bind_joint)
             except:pass
             #bind_joint = mt.duplicate_change_names( input = jnt, hi = False, search=nc['joint'], replace = nc['joint_bind'])[0]
@@ -299,6 +421,8 @@ def build_limb_block():
             bind_joints.append(bind_joint)
             cmds.setAttr('{}.radius'.format(bind_joint), 2)
 
+
+
         #Finish -------------------------------------------
 
         #game parents for bind joints
@@ -314,27 +438,3 @@ def build_limb_block():
             if cmds.objExists(bind_jnt_grp):
                 cmds.parent(bind_joints[0], bind_jnt_grp)
 
-        #clean ctrls
-        cmds.parent(clean_ctrl_grp, setup['base_groups']['control']+ nc['group'])
-        cmds.parentConstraint('Rig_Ctrl_Grp' , clean_ctrl_grp,mo=True)
-        cmds.scaleConstraint('Rig_Ctrl_Grp' , clean_ctrl_grp,mo=True)
-
-        #parent rig
-        cmds.parent(clean_rig_grp, '{}{}'.format(setup['rig_groups']['misc'], nc['group']))
-
-        #connected
-        cmds.parent(ikfk['ik_fk'][4][4], clean_ctrl_grp)
-
-        #stretchy fixes to make it scalable
-        main_jnt_grp = cmds.group(em=True, n = side_guide + '_Main' + nc['group'])
-        cmds.parent(main_jnt_grp, cmds.listRelatives(ikfk['ik_fk'][0][0],p=True))
-        cmds.parent(ikfk['ik_fk'][0][0], ikfk['ik_fk'][1][0], ikfk['ik_fk'][2][0], main_jnt_grp)
-
-        #Fix Switch IKFK
-        if str(side_guide).startswith(nc['right']):
-            cmds.setAttr('{}.rotateX'.format(main_jnt_grp), 180)
-            cmds.setAttr('{}.scaleX'.format(main_jnt_grp), -1)
-            cmds.setAttr('{}.scaleY'.format(main_jnt_grp), -1)
-            cmds.setAttr('{}.scaleZ'.format(main_jnt_grp), -1)
-
-        cmds.scaleConstraint('Global_Ctrl', main_jnt_grp, mo=True)
