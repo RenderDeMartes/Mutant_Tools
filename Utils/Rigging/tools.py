@@ -1345,7 +1345,7 @@ class Tools_class(object):
 
 	def change_default(self, atrr, default):
 
-		cmds.addAttr('{}'.format(attr), e=1, dv=default)
+		cmds.addAttr('{}'.format(atrr), e=1, dv=default)
 
 	#----------------------------------------------------------------------------------------------------------------
 

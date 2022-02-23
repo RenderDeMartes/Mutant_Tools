@@ -15,6 +15,7 @@
             "SetParent_string":"new_locator",
 
             "Mirror_enum":"True:False:Right_Only",
+            "Ribbons_bool":"True",
 
             "CtrlSize_float": "4",
             "TwistAmount_float": "4",
