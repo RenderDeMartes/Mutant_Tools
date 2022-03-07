@@ -320,44 +320,41 @@ def build_limb_block():
                 cmds.delete(cmds.parentConstraint(first_joint, last_joint, middle_joints[1],mo=False))
                 cmds.delete(cmds.parentConstraint(first_joint, last_joint, middle_joints[2],mo=False))
 
-                #create iks
-                start_handle = cmds.ikHandle(n='{}_BendyStart{}'.format(name, nc['ik_sc']), sj=middle_joints[0],
-                                          ee=middle_joints[1], sol='ikSCsolver')[0]
-                end_handle = cmds.ikHandle(n='{}_BendyEnd{}'.format(name, nc['ik_sc']), sj=middle_joints[3],
-                                          ee=middle_joints[2], sol='ikSCsolver')[0]
-
-                ik_bendy_grp = cmds.group(middle_joints[0], middle_joints[3], start_handle, end_handle, n='{}_BendyIK{}'.format(name, nc['group']))
+                #create iks (now they are not IK anymore)
+                ik_bendy_grp = cmds.group(middle_joints[0], middle_joints[3], n='{}_BendyIK{}'.format(name, nc['group']))
 
                 #cmds.skinCluster(middle_joints, middle_limb_nurb[0], sm=0, bm=1, tsb=True)
-                cmds.skinCluster(twist_joints, middle_limb_nurb[0], sm=0, bm=1, tsb=True)
+                #cmds.skinCluster(twist_joints, middle_limb_nurb[0], sm=0, bm=1, tsb=True)
+                #put this under bs
 
                 # Pin IK Bendys
-                top_ik_bendy_ctrl = mt.curve(input=start_handle,
+                top_ik_bendy_ctrl = mt.curve(input=first_joint,
                                          type='pin_cube',
                                          rename=True,
                                          custom_name=True,
                                          name=name.replace(nc['joint'], 'Top_Handle' + nc['ctrl']),
                                          size=ctrl_size/3,
                                          )
-                mt.assign_color(top_ik_bendy_ctrl, color)
                 top_ik_bendy_root = mt.root_grp()
+                mt.assign_color(top_ik_bendy_ctrl, color)
                 cmds.delete(cmds.parentConstraint(first_joint, top_ik_bendy_root))
 
-                bottom_ik_bendy_ctrl = mt.curve(input=end_handle,
+                bottom_ik_bendy_ctrl = mt.curve(input=last_joint,
                                          type='pin_cube',
                                          rename=True,
                                          custom_name=True,
                                          name=name.replace(nc['joint'], '_Bottom_Handle' + nc['ctrl']),
                                          size=ctrl_size/3,
                                          )
-
                 mt.assign_color(bottom_ik_bendy_ctrl, color)
                 bottom_ik_bendy_root = mt.root_grp()
                 cmds.delete(cmds.parentConstraint(last_joint, bottom_ik_bendy_root))
 
                 #Aim to each other
-                cmds.delete(cmds.aimConstraint(top_ik_bendy_ctrl, bottom_ik_bendy_root, aimVector =(0, 1, 0), upVector = (0,0,-1)))
-                cmds.delete(cmds.aimConstraint(bottom_ik_bendy_ctrl, top_ik_bendy_root, aimVector =(0, 1, 0), upVector = (0,0,-1)))
+                #cmds.delete(cmds.aimConstraint(top_ik_bendy_ctrl, bottom_ik_bendy_root, aimVector =(0, 1, 0), upVector = (0,0,-1)))
+                #cmds.delete(cmds.aimConstraint(bottom_ik_bendy_ctrl, top_ik_bendy_root, aimVector =(0, 1, 0), upVector = (0,0,-1)))
+                cmds.rotate(0,0,90-cmds.getAttr('{}.jointOrientZ'.format(last_joint)), '{}.cv[0:22]'.format(bottom_ik_bendy_ctrl), r=True)
+                cmds.rotate(0,0,-90, '{}.cv[0:22]'.format(top_ik_bendy_ctrl), r=True)
 
                 #cmds.parentConstraint(first_joint, ik_bendy_grp,mo=True)
                 #cmds.parentConstraint(top_ik_bendy_ctrl, start_handle,mo=True)
@@ -374,7 +371,21 @@ def build_limb_block():
                 handle_controllers = [top_ik_bendy_ctrl, bottom_ik_bendy_ctrl]
 
                 #local system for handles
+                # local system for handles
+                local_geo_ik_geo = cmds.duplicate(middle_limb_nurb[0], n=name + 'Bendy_IK_Local' + nc['nurb'])
+                cmds.skinCluster(middle_joints, local_geo_ik_geo, sm=0, bm=1, tsb=True)
 
+                local_geo = cmds.duplicate(middle_limb_nurb[0], n=name + 'Bendy_Other_Local' + nc['nurb'])
+                #cmds.skinCluster(middle_joints, local_geo, sm=0, bm=1, tsb=True)
+
+                cmds.select(local_geo_ik_geo, local_geo, middle_limb_nurb[0])
+                bs = cmds.blendShape(n='{}_Bendy{}'.format(name, '_BS'), w=[(0, 1),(1, 1)],)
+                cmds.skinCluster(twist_joints, middle_limb_nurb[0], sm=0, bm=1, tsb=True)
+
+                local_grp = cmds.group(local_geo_ik_geo, local_geo, ik_bendy_grp, n = name + '_Local' + nc['group'])
+
+                cmds.connectAttr(top_ik_bendy_ctrl+'.rotate', middle_joints[0]+'.rotate')
+                cmds.connectAttr(bottom_ik_bendy_ctrl+'.rotate', middle_joints[3]+'.rotate')
 
                 #Bendys
                 # Create follicles
@@ -410,10 +421,10 @@ def build_limb_block():
                 forward = list(enumerate(ribbon_ctrls))
                 backward = list(reversed(forward))
 
-                up_vector_loc = cmds.spaceLocator(n = name + 'UpVector' + nc['locator'])[0]
-                cmds.delete(cmds.parentConstraint(first_joint, up_vector_loc,mo=False))
-                cmds.move(0,1,0, up_vector_loc, r=True)
-                cmds.parentConstraint(first_joint, up_vector_loc,mo=True)
+                #up_vector_loc = cmds.spaceLocator(n = name + 'UpVector' + nc['locator'])[0]
+                #cmds.delete(cmds.parentConstraint(first_joint, up_vector_loc,mo=False))
+                #cmds.move(0,1,0, up_vector_loc, r=True)
+                #cmds.parentConstraint(first_joint, up_vector_loc,mo=True)
 
                 for num,ctrl in enumerate(ribbon_ctrls):
                     auto = cmds.listRelatives(ctrl, p=True)
