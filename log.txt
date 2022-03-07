@@ -59,14 +59,17 @@ L_Shoulder_Ik_Jnt_L_Wrist_Ik_Jnt_Distance_Shape_MultDiv L_Elbow_Ik_Jnt_NewScale_
 (['L_Shoulder_Jnt', 'L_Elbow_Jnt', 'L_Wrist_Jnt'], ['L_Shoulder_Ik_Jnt', 'L_Elbow_Ik_Jnt', 'L_Wrist_Ik_Jnt'], ['L_Shoulder_Fk_Jnt', 'L_Elbow_Fk_Jnt', 'L_Wrist_Fk_Jnt'], ['L_Shoulder_Fk_Ctrl', 'L_Elbow_Fk_Ctrl', 'L_Wrist_Fk_Ctrl'], ['L_Wrist_Ik_Ctrl', 'L_Wrist_Ik_PoleVector_Ctrl', 'L_Shoulder_Ik_Ctrl', 'L_Wrist_Ik_IKrp', 'L_Wrist_Ik_PoleVector_Ctrl_L_Elbow_Ik_Jnt_Connected_Crv', ('L_Wrist_Ik_IKrp_Stretchy_Grp', 'L_Wrist_Ik_IKrp_NormalScale_Loc', ['L_Wrist_Ik_Jnt_Stretchy_Loc'], ['L_Shoulder_Ik_Jnt_Stretchy_Loc'], ['L_Elbow_Ik_Jnt_Stretchy_Loc'], 'L_Shoulder_Ik_Jnt_L_Wrist_Ik_Jnt_Distance_Shape', 'L_Elbow_Ik_Jnt_L_Wrist_Ik_Jnt_Distance_Shape', 'L_Shoulder_Ik_Jnt_L_Elbow_Ik_Jnt_Distance_Shape')], ['L_Shoulder_Fk_Ctrl_Offset_Grp', 'L_Wrist_Ik_Ctrl_Offset_Grp', 'L_Shoulder_Ik_Ctrl_Offset_Grp', 'L_Shoulder_Ik_Jnt_Ctrl_Grp'])
 {'twist_grp': 'L_Shoulder_Twist_Grp', 'joints': ['L_Shoulder_Twist_0_Jnt', 'L_Shoulder_Twist_1_Jnt', 'L_Shoulder_Twist_2_Jnt', 'L_Shoulder_Twist_3_Jnt'], 'curve': 'L_Shoulder_Twist_JntCtrl_Crv', 'ik_spline': 'L_Shoulder_Twist_IKspl', 'no_rotate': 'L_Elbow_NoRotate_JntCtrl'}
 {'twist_grp': 'L_Elbow_Twist_Grp', 'joints': ['L_Elbow_Twist_0_Jnt', 'L_Elbow_Twist_1_Jnt', 'L_Elbow_Twist_2_Jnt', 'L_Elbow_Twist_3_Jnt'], 'curve': 'L_Elbow_Twist_JntCtrl_Crv', 'ik_spline': 'L_Elbow_Twist_IKspl'}
-L_Shoulder_0_Bnd
-L_Shoulder_1_Bnd
-L_Shoulder_2_Bnd
-L_Shoulder_3_Bnd
-L_Shoulder_4_Bnd
-L_Shoulder_5_Bnd
-L_Shoulder_6_Bnd
-L_Shoulder_7_Bnd
+# Warning: Object, 'L_Shoulder_BendyMid_0_Jnt', skipped. It is already a child of the parent, 'world'. # 
+# Warning: Object, 'L_Shoulder_BendyMid_0_Jnt', skipped. It is already a child of the parent, 'world'. # 
+# Warning: Object, 'L_Elbow_BendyMid_0_Jnt', skipped. It is already a child of the parent, 'world'. # 
+L_Shoulder_Bnd_0_Bnd
+L_Shoulder_Bnd_1_Bnd
+L_Shoulder_Bnd_2_Bnd
+L_Shoulder_Bnd_3_Bnd
+L_Elbow_Bnd_0_Bnd
+L_Elbow_Bnd_1_Bnd
+L_Elbow_Bnd_2_Bnd
+L_Elbow_Bnd_3_Bnd
 joints are: R_Shoulder_Jnt R_Elbow_Jnt R_Wrist_Jnt
 // Replaced 3 names.
 // Replaced 3 names.
@@ -114,13 +117,16 @@ R_Shoulder_Ik_Jnt_R_Wrist_Ik_Jnt_Distance_Shape_MultDiv R_Elbow_Ik_Jnt_NewScale_
 (['R_Shoulder_Jnt', 'R_Elbow_Jnt', 'R_Wrist_Jnt'], ['R_Shoulder_Ik_Jnt', 'R_Elbow_Ik_Jnt', 'R_Wrist_Ik_Jnt'], ['R_Shoulder_Fk_Jnt', 'R_Elbow_Fk_Jnt', 'R_Wrist_Fk_Jnt'], ['R_Shoulder_Fk_Ctrl', 'R_Elbow_Fk_Ctrl', 'R_Wrist_Fk_Ctrl'], ['R_Wrist_Ik_Ctrl', 'R_Wrist_Ik_PoleVector_Ctrl', 'R_Shoulder_Ik_Ctrl', 'R_Wrist_Ik_IKrp', 'R_Wrist_Ik_PoleVector_Ctrl_R_Elbow_Ik_Jnt_Connected_Crv', ('R_Wrist_Ik_IKrp_Stretchy_Grp', 'R_Wrist_Ik_IKrp_NormalScale_Loc', ['R_Wrist_Ik_Jnt_Stretchy_Loc'], ['R_Shoulder_Ik_Jnt_Stretchy_Loc'], ['R_Elbow_Ik_Jnt_Stretchy_Loc'], 'R_Shoulder_Ik_Jnt_R_Wrist_Ik_Jnt_Distance_Shape', 'R_Elbow_Ik_Jnt_R_Wrist_Ik_Jnt_Distance_Shape', 'R_Shoulder_Ik_Jnt_R_Elbow_Ik_Jnt_Distance_Shape')], ['R_Shoulder_Fk_Ctrl_Offset_Grp', 'R_Wrist_Ik_Ctrl_Offset_Grp', 'R_Shoulder_Ik_Ctrl_Offset_Grp', 'R_Shoulder_Ik_Jnt_Ctrl_Grp'])
 {'twist_grp': 'R_Shoulder_Twist_Grp', 'joints': ['R_Shoulder_Twist_0_Jnt', 'R_Shoulder_Twist_1_Jnt', 'R_Shoulder_Twist_2_Jnt', 'R_Shoulder_Twist_3_Jnt'], 'curve': 'R_Shoulder_Twist_JntCtrl_Crv', 'ik_spline': 'R_Shoulder_Twist_IKspl', 'no_rotate': 'R_Elbow_NoRotate_JntCtrl'}
 {'twist_grp': 'R_Elbow_Twist_Grp', 'joints': ['R_Elbow_Twist_0_Jnt', 'R_Elbow_Twist_1_Jnt', 'R_Elbow_Twist_2_Jnt', 'R_Elbow_Twist_3_Jnt'], 'curve': 'R_Elbow_Twist_JntCtrl_Crv', 'ik_spline': 'R_Elbow_Twist_IKspl'}
-R_Shoulder_0_Bnd
-R_Shoulder_1_Bnd
-R_Shoulder_2_Bnd
-R_Shoulder_3_Bnd
-R_Shoulder_4_Bnd
-R_Shoulder_5_Bnd
-R_Shoulder_6_Bnd
-R_Shoulder_7_Bnd
+# Warning: Object, 'R_Shoulder_BendyMid_0_Jnt', skipped. It is already a child of the parent, 'world'. # 
+# Warning: Object, 'R_Shoulder_BendyMid_0_Jnt', skipped. It is already a child of the parent, 'world'. # 
+# Warning: Object, 'R_Elbow_BendyMid_0_Jnt', skipped. It is already a child of the parent, 'world'. # 
+R_Shoulder_Bnd_0_Bnd
+R_Shoulder_Bnd_1_Bnd
+R_Shoulder_Bnd_2_Bnd
+R_Shoulder_Bnd_3_Bnd
+R_Elbow_Bnd_0_Bnd
+R_Elbow_Bnd_1_Bnd
+R_Elbow_Bnd_2_Bnd
+R_Elbow_Bnd_3_Bnd
 Build successfully exec_limb.build_limb_block()
 Postcode L_Shoulder_Block

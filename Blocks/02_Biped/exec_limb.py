@@ -219,64 +219,263 @@ def build_limb_block():
             mid = ikfk['ik_fk'][0][1]
             end =ikfk['ik_fk'][0][2]
 
-            #create ribbon Plane
-            surface_plane = cmds.nurbsPlane(ch=1, d=1, v=1, p=(0, 0, 0), u=2, w=1, ax=(0, 0, 1), lr=1, n=name + nc['nurb'])
-            cluster01 = cmds.cluster(surface_plane[0] + '.cv[0][0:1]')
-            cluster02 = cmds.cluster(surface_plane[0] + '.cv[1][0:1]')
-            cluster03 = cmds.cluster(surface_plane[0] + '.cv[2][0:1]')
-            cmds.setAttr(str(surface_plane[0]) + '.visibility', 0)
+            #-----------------------------------
+            #Ribbon Middle Controllers
 
-            cmds.delete(cmds.parentConstraint(start, cluster01, mo=False))
-            cmds.delete(cmds.parentConstraint(mid, cluster02, mo=False))
-            cmds.delete(cmds.parentConstraint(end, cluster03, mo=False))
+            ribbon_first_vis_attr = mt.new_enum(input=switch_locator, name='BendyMain', enums='Hide:Show')
+            ribbon_second_vis_attr = mt.new_enum(input=switch_locator, name='BendyOffsets', enums='Hide:Show')
+            ribbon_third_vis_attr = mt.new_enum(input=switch_locator, name='BendyTweeks', enums='Hide:Show')
 
-            cmds.delete(surface_plane, ch=True)
+            #for dev set to 0 at the end
+            cmds.setAttr(ribbon_first_vis_attr, 1)
+            cmds.setAttr(ribbon_second_vis_attr, 1)
+            cmds.setAttr(ribbon_third_vis_attr, 1)
 
-            cmds.rebuildSurface(surface_plane[0], rt=0, kc=0, fr=0, end=1, sv=1, su=twist_amount*2, kr=0, dir=2, kcp=0,
-                                tol=0.01, dv=1, du=3, rpo=1)
+            def create_mid_ribbons(name, first_joint, last_joint, twist_joints, aim):
 
-            #Create follicles
-            cmds.select(surface_plane[0])
-            mel.eval("createHair {} 1 10 0 0 0 0 5 0 1 2 1;".format(twist_amount*2))
+                #main tweek Ribbons
+                ribbon_limb_nurb = cmds.nurbsPlane(ch=1, d=1, v=1, p=(0, 0, 0), u=1, w=1, ax=(0, 0, 1), lr=1,
+                                                       n=name + 'Ribbon'+ nc['nurb'])
+                cluster01 = cmds.cluster(ribbon_limb_nurb[0] + '.cv[0][0:1]')
+                cluster02 = cmds.cluster(ribbon_limb_nurb[0] + '.cv[1][0:1]')
+                cmds.setAttr(str(ribbon_limb_nurb[0]) + '.visibility', 0)
+                cmds.delete(cmds.parentConstraint(first_joint, cluster01, mo=False))
+                cmds.delete(cmds.parentConstraint(last_joint, cluster02, mo=False))
+                cmds.delete(ribbon_limb_nurb, ch=True)
+                cmds.rebuildSurface(ribbon_limb_nurb[0], rt=0, kc=0, fr=0, end=1, sv=1, su=twist_amount, kr=0,
+                                    dir=2, kcp=0,
+                                    tol=0.01, dv=1, du=3, rpo=1)
 
-            cmds.delete('hairSystem1', 'pfxHair1', 'nucleus1')
-            cmds.setAttr(surface_plane[0] + '.inheritsTransform', 0)
+                # Create follicles
+                cmds.select(ribbon_limb_nurb[0])
+                mel.eval("createHair {} 1 10 0 0 0 0 5 0 1 2 1;".format(twist_amount))
 
-            for C in range(1, twist_amount*2 + 1):
-                cmds.delete('curve' + str(C))
-            cmds.rename('hairSystem1Follicles', name + nc['follicle'] + nc['group'])
+                cmds.delete('hairSystem1', 'pfxHair1', 'nucleus1')
+                cmds.setAttr(ribbon_limb_nurb[0] + '.inheritsTransform', 0)
 
-            follicles = cmds.ls(name + nc['follicle'] + nc['group'], dag=True, type='follicle')
+                for C in range(1, twist_amount + 1):
+                    cmds.delete('curve' + str(C))
+                fol_grp = cmds.rename('hairSystem1Follicles', name + nc['follicle'] + nc['group'])
 
-            fol_joints = []
-            for num, i in enumerate(follicles):
-                cmds.select(i)
-                cmds.rename(cmds.listRelatives(i, p=True), name + '_' + str(num) + nc['follicle'])
-                fol_jnt = cmds.joint(n = name + '_' +str(num) + nc['joint'])
-                fol_joints.append(fol_jnt)
+                follicles = cmds.ls(name + nc['follicle'] + nc['group'], dag=True, type='follicle')
+                fol_joints = []
+                for num, i in enumerate(follicles):
+                    cmds.select(i)
+                    cmds.rename(cmds.listRelatives(i, p=True), name + '_' + str(num) + nc['follicle'])
+                    fol_jnt = cmds.joint(n=name + '_' + str(num) + nc['joint'])
+                    fol_joints.append(fol_jnt)
 
-            #Bind twist to bendy surfaces
-            twist_joints = ikfk['upper_twist']['joints'][:-1] + ikfk['lower_twist']['joints'][:-1]
-            cmds.skinCluster(twist_joints, surface_plane[0], sm=0, bm=1, tsb=True, dropoffRate = 0.1)
+                # Bind twist to bendy surfaces
+                cmds.skinCluster(twist_joints[:-1], ribbon_limb_nurb[0], sm=0, bm=1, tsb=True)
 
-            #Create Vis Attr
-            vis_attr = mt.new_enum(input= switch_locator, name = 'Bendys', enums = 'Hide:Show')
 
-            #Ribbon Controllers
-            ribbon_ctrl_grp = cmds.group(em=True, n = name + '_Ribbons' + nc['ctrl'] + nc['group'])
-            for fol_jnt in fol_joints:
-                ctrl = mt.curve(input=fol_jnt, type='circleX',
-                                rename=True,
-                                custom_name=True, name=fol_jnt.replace(nc['joint'],  nc['ctrl']),
-                                size=ctrl_size/2,
-                                )
-                mt.assign_color(ctrl, color)
-                root, auto = mt.root_grp(input=ctrl, autoRoot=True)
-                cmds.parentConstraint(cmds.listRelatives(fol_jnt,p=True)[0], root, mo=False)
-                cmds.parentConstraint(ctrl, fol_jnt)
-                cmds.parent(root, ribbon_ctrl_grp)
+                ribbon_ctrl_grp = cmds.group(em=True, n=name + '_Ribbons' + nc['ctrl'] + nc['group'])
+                ribbon_ctrls = []
+                for fol_jnt in fol_joints:
+                    ctrl = mt.curve(input=fol_jnt, type='square',
+                                    rename=True,
+                                    custom_name=True, name=fol_jnt.replace(nc['joint'], nc['ctrl']),
+                                    size=ctrl_size / 3,
+                                    )
+                    mt.assign_color(ctrl, color)
+                    root, auto = mt.root_grp(input=ctrl, autoRoot=True)
+                    cmds.parentConstraint(cmds.listRelatives(fol_jnt, p=True)[0], root, mo=False)
+                    cmds.parentConstraint(ctrl, fol_jnt)
+                    cmds.parent(root, ribbon_ctrl_grp)
 
-                cmds.connectAttr(vis_attr, '{}.v'.format(cmds.listRelatives(ctrl, shapes=True)[0]))
+                    cmds.connectAttr(ribbon_third_vis_attr, '{}.v'.format(cmds.listRelatives(ctrl, shapes=True)[0]))
+                    ribbon_ctrls.append(ctrl)
+
+                #--------------------------------------------------------------------------------
+                #--------------------------------------------------------------------------------
+                #--------------------------------------------------------------------------------
+
+                #Bendy Ribbons
+                # create ribbon Plane
+                middle_limb_nurb = cmds.nurbsPlane(ch=1, d=1, v=1, p=(0, 0, 0), u=1, w=1, ax=(0, 0, 1), lr=1,
+                                                       n=name + 'Bendy' + nc['nurb'])
+                cluster01 = cmds.cluster(middle_limb_nurb[0] + '.cv[0][0:1]')
+                cluster02 = cmds.cluster(middle_limb_nurb[0] + '.cv[1][0:1]')
+                #cmds.setAttr(str(middle_limb_nurb[0]) + '.visibility', 0)
+                cmds.delete(cmds.parentConstraint(first_joint, cluster01, mo=False))
+                cmds.delete(cmds.parentConstraint(last_joint, cluster02, mo=False))
+                cmds.delete(middle_limb_nurb, ch=True)
+                #cmds.rebuildSurface(middle_limb_nurb[0], rt=0, kc=0, fr=0, end=1, sv=1, su=2, kr=0,
+                cmds.rebuildSurface(middle_limb_nurb[0], rt=0, kc=0, fr=0, end=1, sv=1, su=len(twist_joints)+1, kr=0,
+                                    dir=2, kcp=0,
+                                    tol=0.01, dv=1, du=3, rpo=1)
+                #cmds.skinCluster(first_joint, middle_limb_nurb[0], sm=0, bm=1, tsb=True)
+
+                #create joints for iks
+                middle_joints = mt.joints_middle(start=first_joint, end=last_joint, axis=setup['twist_axis'], amount = 4, name = 'BendyMid')
+                for jnt in middle_joints:
+                    try:cmds.parent(jnt, w=True)
+                    except:pass
+
+                cmds.parent(middle_joints[1], middle_joints[0])
+                cmds.parent(middle_joints[2], middle_joints[3])
+
+
+                #put middle joints in middle
+                cmds.delete(cmds.parentConstraint(first_joint, last_joint, middle_joints[1],mo=False))
+                cmds.delete(cmds.parentConstraint(first_joint, last_joint, middle_joints[2],mo=False))
+
+                #create iks
+                start_handle = cmds.ikHandle(n='{}_BendyStart{}'.format(name, nc['ik_sc']), sj=middle_joints[0],
+                                          ee=middle_joints[1], sol='ikSCsolver')[0]
+                end_handle = cmds.ikHandle(n='{}_BendyEnd{}'.format(name, nc['ik_sc']), sj=middle_joints[3],
+                                          ee=middle_joints[2], sol='ikSCsolver')[0]
+
+                ik_bendy_grp = cmds.group(middle_joints[0], middle_joints[3], start_handle, end_handle, n='{}_BendyIK{}'.format(name, nc['group']))
+
+                #cmds.skinCluster(middle_joints, middle_limb_nurb[0], sm=0, bm=1, tsb=True)
+                cmds.skinCluster(twist_joints, middle_limb_nurb[0], sm=0, bm=1, tsb=True)
+
+                # Pin IK Bendys
+                top_ik_bendy_ctrl = mt.curve(input=start_handle,
+                                         type='pin_cube',
+                                         rename=True,
+                                         custom_name=True,
+                                         name=name.replace(nc['joint'], 'Top_Handle' + nc['ctrl']),
+                                         size=ctrl_size/3,
+                                         )
+                mt.assign_color(top_ik_bendy_ctrl, color)
+                top_ik_bendy_root = mt.root_grp()
+                cmds.delete(cmds.parentConstraint(first_joint, top_ik_bendy_root))
+
+                bottom_ik_bendy_ctrl = mt.curve(input=end_handle,
+                                         type='pin_cube',
+                                         rename=True,
+                                         custom_name=True,
+                                         name=name.replace(nc['joint'], '_Bottom_Handle' + nc['ctrl']),
+                                         size=ctrl_size/3,
+                                         )
+
+                mt.assign_color(bottom_ik_bendy_ctrl, color)
+                bottom_ik_bendy_root = mt.root_grp()
+                cmds.delete(cmds.parentConstraint(last_joint, bottom_ik_bendy_root))
+
+                #Aim to each other
+                cmds.delete(cmds.aimConstraint(top_ik_bendy_ctrl, bottom_ik_bendy_root, aimVector =(0, 1, 0), upVector = (0,0,-1)))
+                cmds.delete(cmds.aimConstraint(bottom_ik_bendy_ctrl, top_ik_bendy_root, aimVector =(0, 1, 0), upVector = (0,0,-1)))
+
+                #cmds.parentConstraint(first_joint, ik_bendy_grp,mo=True)
+                #cmds.parentConstraint(top_ik_bendy_ctrl, start_handle,mo=True)
+                #cmds.parentConstraint(bottom_ik_bendy_ctrl, end_handle, mo=True)
+                #cmds.parentConstraint(first_joint, middle_joints[0])
+                #cmds.parentConstraint(last_joint, middle_joints[3])
+
+                cmds.parentConstraint(first_joint, top_ik_bendy_root, mo=True)
+                cmds.parentConstraint(first_joint, bottom_ik_bendy_root, mo=True)
+
+                cmds.connectAttr(ribbon_second_vis_attr, '{}.v'.format(cmds.listRelatives(top_ik_bendy_ctrl, shapes=True)[0]))
+                cmds.connectAttr(ribbon_second_vis_attr, '{}.v'.format(cmds.listRelatives(bottom_ik_bendy_ctrl, shapes=True)[0]))
+
+                handle_controllers = [top_ik_bendy_ctrl, bottom_ik_bendy_ctrl]
+
+                #local system for handles
+
+
+                #Bendys
+                # Create follicles
+                cmds.select(middle_limb_nurb[0])
+                mel.eval("createHair {} 1 10 0 0 0 0 5 0 1 2 1;".format(3))
+
+                cmds.delete('hairSystem1', 'pfxHair1', 'nucleus1')
+                cmds.setAttr(middle_limb_nurb[0] + '.inheritsTransform', 0)
+
+                for C in range(1, 4):
+                    cmds.delete('curve' + str(C))
+                bendy_fol_grp = cmds.rename('hairSystem1Follicles', name + '_Bendy' + nc['follicle'] + nc['group'])
+
+                follicles = cmds.ls(bendy_fol_grp, dag=True, type='follicle')
+                cmds.setAttr(follicles[0] + '.parameterU', 0.05)
+                cmds.setAttr(follicles[-1] + '.parameterU', 0.95)
+
+                custom_name = ['Start', 'End']
+                second_ctrls = []
+                for num, fol in enumerate([follicles[0], follicles[-1]]):
+
+                    ribbon_ctrl = mt.curve(input=fol, type='sphere',
+                                    rename=True,
+                                    custom_name=True, name=name.replace(nc['joint'], custom_name[num]+'_Bendy'+nc['ctrl']),
+                                    size=ctrl_size/1.5,
+                                    )
+                    mt.assign_color(ribbon_ctrl, color)
+                    root, auto = mt.root_grp(input=ribbon_ctrl, autoRoot=True)
+                    cmds.parentConstraint(cmds.listRelatives(fol,p=True)[0], root, mo=False)
+                    cmds.connectAttr(ribbon_second_vis_attr, '{}.v'.format(cmds.listRelatives(ribbon_ctrl, shapes=True)[0]))
+                    second_ctrls.append(ribbon_ctrl)
+
+                forward = list(enumerate(ribbon_ctrls))
+                backward = list(reversed(forward))
+
+                up_vector_loc = cmds.spaceLocator(n = name + 'UpVector' + nc['locator'])[0]
+                cmds.delete(cmds.parentConstraint(first_joint, up_vector_loc,mo=False))
+                cmds.move(0,1,0, up_vector_loc, r=True)
+                cmds.parentConstraint(first_joint, up_vector_loc,mo=True)
+
+                for num,ctrl in enumerate(ribbon_ctrls):
+                    auto = cmds.listRelatives(ctrl, p=True)
+                    pc = cmds.parentConstraint(second_ctrls[0], second_ctrls[1], auto, skipRotate =('x','y','z'), mo=True)[0]
+                    cmds.setAttr(pc + '.' + second_ctrls[0] + 'W0', backward[num][0])
+                    cmds.setAttr(pc + '.'+ second_ctrls[1] + 'W1', forward[num][0])
+                    cmds.setAttr(pc + '.interpType', 2) #shortest
+
+                    #aim to ctrl
+                    #cmds.aimConstraint(second_ctrls[1], auto, aimVector =(aim, 0, 0), upVector = (0,0,-1)), worldUpType='vector', mo=True)#, worldUpObject=up_vector_loc, mo=True)
+                    cmds.aimConstraint(second_ctrls[1], auto, aimVector =(1, 0, 0), upVector = (-1,0,0), worldUpType='vector', mo=True)#, worldUpObject=up_vector_loc, mo=True)
+
+                '''
+                #this extra step causes a fix issue due the aim contraint se we need to add back the twist in a hardway
+                twist_readers = []
+                twist_readers_grp = cmds.group(em=True, n=name.replace(nc['joint'],'') + '_TwistReader'+nc['group'])
+                #for num, jnt in enumerate(twist_joints[1:]):
+                for num, jnt in enumerate(twist_joints[1:]):
+                    twist_reader = cmds.spaceLocator(n = jnt.replace(nc['joint'], '_TwistReader'+ nc['locator']))[0]
+                    twist_readers.append(twist_reader)
+                    twist_reader_grp = mt.root_grp()
+                    cmds.parent(twist_reader_grp, twist_readers_grp)
+                    mt.match(twist_reader_grp, jnt)
+                    cmds.parentConstraint(jnt,twist_reader)
+                    twist_ctrl_grp = mt.root_grp(ribbon_ctrls[num+1], custom = True, custom_name = '_Twist')[0]
+
+                    mt.connect_md_node(in_x1=twist_reader + '.rotateX',
+                                       in_x2=-1,
+                                       out_x=twist_ctrl_grp +'.rotateX',
+                                       mode='mult',
+                                       name='{}_TwistInv'.format(twist_reader),
+                                       force=False)
+
+                '''
+
+                return {'ribbon_ctrl_grp': ribbon_ctrl_grp, 'ribbon_ctrls':ribbon_ctrls,'ribbon_plane':ribbon_limb_nurb[0], 'fol_ribbon_grp':fol_grp, 'fol_joints':fol_joints,
+                        'second_ctrls':second_ctrls, 'handle_controllers':handle_controllers
+                        }
+
+            top_ribbon = create_mid_ribbons(name=start, first_joint=start, last_joint=mid, twist_joints=ikfk['upper_twist']['joints'], aim=1)
+            low_ribbon = create_mid_ribbons(name=mid, first_joint=mid, last_joint=end, twist_joints=ikfk['lower_twist']['joints'], aim=-1)
+
+            #Main mid controller
+            main_mid_ctrl = mt.curve(input=mid,
+                                     type='sphere',
+                                       rename=True,
+                                       custom_name=True,
+                                       name=name.replace(nc['joint'], 'Mid_Bendy' + nc['ctrl']),
+                                       size=ctrl_size,
+                                       )
+            mt.assign_color(main_mid_ctrl, color)
+            root_mid_ctrl = mt.root_grp(input=main_mid_ctrl)
+
+            cmds.parentConstraint(mid, root_mid_ctrl, mo=False)
+
+            cmds.pointConstraint(main_mid_ctrl, cmds.listRelatives(top_ribbon['second_ctrls'][1], p=True), mo=True)
+            cmds.pointConstraint(main_mid_ctrl, cmds.listRelatives(low_ribbon['second_ctrls'][0], p=True), mo=True)
+            cmds.connectAttr(ribbon_first_vis_attr,'{}.v'.format(cmds.listRelatives(main_mid_ctrl, shapes=True)[0]))
+
+            #cmds.pointConstraint(start, cmds.listRelatives(top_ribbon['second_ctrls'][0], p=True), mo=True)
+            #cmds.pointConstraint(end, cmds.listRelatives(low_ribbon['second_ctrls'][1], p=True), mo=True)
+
 
         #----------------------------------------------------------
 
@@ -363,8 +562,12 @@ def build_limb_block():
 
         #clean ribbons
         if create_ribbons:
-            cmds.parent(surface_plane[0], name + nc['follicle'] + nc['group'], clean_rig_grp)
-            cmds.parent(ribbon_ctrl_grp, clean_ctrl_grp)
+
+            cmds.parent(top_ribbon['ribbon_plane'], top_ribbon['fol_ribbon_grp'] , clean_rig_grp)
+            cmds.parent(top_ribbon['ribbon_ctrl_grp'], clean_ctrl_grp)
+            cmds.parent(low_ribbon['ribbon_plane'], low_ribbon['fol_ribbon_grp'] , clean_rig_grp)
+            cmds.parent(low_ribbon['ribbon_ctrl_grp'], clean_ctrl_grp)
+
 
         #connected
         cmds.parent(ikfk['ik_fk'][4][4], clean_ctrl_grp)
@@ -389,7 +592,8 @@ def build_limb_block():
         bind_joint = ''
 
         if create_ribbons:
-            to_bind = fol_joints
+            to_bind = top_ribbon['fol_joints'] + low_ribbon['fol_joints']
+
         else:
             to_bind = ikfk['upper_twist']['joints'] + ikfk['lower_twist']['joints']
 
