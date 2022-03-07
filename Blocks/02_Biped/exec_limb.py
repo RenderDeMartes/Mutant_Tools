@@ -362,9 +362,6 @@ def build_limb_block():
                 #cmds.parentConstraint(first_joint, middle_joints[0])
                 #cmds.parentConstraint(last_joint, middle_joints[3])
 
-                cmds.parentConstraint(first_joint, top_ik_bendy_root, mo=True)
-                cmds.parentConstraint(first_joint, bottom_ik_bendy_root, mo=True)
-
                 cmds.connectAttr(ribbon_second_vis_attr, '{}.v'.format(cmds.listRelatives(top_ik_bendy_ctrl, shapes=True)[0]))
                 cmds.connectAttr(ribbon_second_vis_attr, '{}.v'.format(cmds.listRelatives(bottom_ik_bendy_ctrl, shapes=True)[0]))
 
@@ -436,6 +433,13 @@ def build_limb_block():
                     #aim to ctrl
                     #cmds.aimConstraint(second_ctrls[1], auto, aimVector =(aim, 0, 0), upVector = (0,0,-1)), worldUpType='vector', mo=True)#, worldUpObject=up_vector_loc, mo=True)
                     cmds.aimConstraint(second_ctrls[1], auto, aimVector =(1, 0, 0), upVector = (-1,0,0), worldUpType='vector', mo=True)#, worldUpObject=up_vector_loc, mo=True)
+
+                #Connect Handles local to 2nd controllers
+                cmds.pointConstraint(second_ctrls[0], top_ik_bendy_root, mo=True)
+                cmds.pointConstraint(second_ctrls[1], bottom_ik_bendy_root, mo=True)
+                cmds.aimConstraint(second_ctrls[1], top_ik_bendy_root, mo=True)
+                cmds.aimConstraint(second_ctrls[0], bottom_ik_bendy_root, mo=True)
+
 
                 '''
                 #this extra step causes a fix issue due the aim contraint se we need to add back the twist in a hardway
