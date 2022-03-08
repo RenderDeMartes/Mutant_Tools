@@ -261,9 +261,10 @@ def build_limb_block():
                 fol_joints = []
                 for num, i in enumerate(follicles):
                     cmds.select(i)
-                    cmds.rename(cmds.listRelatives(i, p=True), name + '_' + str(num) + nc['follicle'])
+                    fol_new_name = cmds.rename(cmds.listRelatives(i, p=True), name + '_' + str(num) + nc['follicle'])
                     fol_jnt = cmds.joint(n=name + '_' + str(num) + nc['joint'])
                     fol_joints.append(fol_jnt)
+
 
                 # Bind twist to bendy surfaces
                 cmds.skinCluster(twist_joints[:-1], ribbon_limb_nurb[0], sm=0, bm=1, tsb=True)
@@ -396,13 +397,13 @@ def build_limb_block():
                     cmds.delete('curve' + str(C))
                 bendy_fol_grp = cmds.rename('hairSystem1Follicles', name + '_Bendy' + nc['follicle'] + nc['group'])
 
-                follicles = cmds.ls(bendy_fol_grp, dag=True, type='follicle')
-                cmds.setAttr(follicles[0] + '.parameterU', 0.05)
-                cmds.setAttr(follicles[-1] + '.parameterU', 0.95)
+                bendy_follicles = cmds.ls(bendy_fol_grp, dag=True, type='follicle')
+                cmds.setAttr(bendy_follicles[0] + '.parameterU', 0.05)
+                cmds.setAttr(bendy_follicles[-1] + '.parameterU', 0.95)
 
                 custom_name = ['Start', 'End']
                 second_ctrls = []
-                for num, fol in enumerate([follicles[0], follicles[-1]]):
+                for num, fol in enumerate([bendy_follicles[0], bendy_follicles[-1]]):
 
                     ribbon_ctrl = mt.curve(input=fol, type='sphere',
                                     rename=True,
@@ -418,10 +419,7 @@ def build_limb_block():
                 forward = list(enumerate(ribbon_ctrls))
                 backward = list(reversed(forward))
 
-                #up_vector_loc = cmds.spaceLocator(n = name + 'UpVector' + nc['locator'])[0]
-                #cmds.delete(cmds.parentConstraint(first_joint, up_vector_loc,mo=False))
-                #cmds.move(0,1,0, up_vector_loc, r=True)
-                #cmds.parentConstraint(first_joint, up_vector_loc,mo=True)
+                extra_aim_forward_grp = cmds.group(em=True, n = name + '_ForwardAim' + nc['group'])
 
                 for num,ctrl in enumerate(ribbon_ctrls):
                     auto = cmds.listRelatives(ctrl, p=True)
@@ -433,6 +431,17 @@ def build_limb_block():
                     #aim to ctrl
                     #cmds.aimConstraint(second_ctrls[1], auto, aimVector =(aim, 0, 0), upVector = (0,0,-1)), worldUpType='vector', mo=True)#, worldUpObject=up_vector_loc, mo=True)
                     cmds.aimConstraint(second_ctrls[1], auto, aimVector =(1, 0, 0), upVector = (-1,0,0), worldUpType='vector', mo=True)#, worldUpObject=up_vector_loc, mo=True)
+
+                    #add extra aim to next controller
+                    aim_loc = cmds.spaceLocator(n = ctrl.replace(nc['ctrl'], '_Aim'+nc['locator']))[0]
+                    aim_loc_root = mt.root_grp()
+                    cmds.parent(aim_loc_root, extra_aim_forward_grp)
+                    cmds.delete(cmds.parentConstraint(ribbon_ctrls[num], aim_loc_root, mo=False))
+                    cmds.parentConstraint(cmds.listRelatives(ribbon_ctrls[num],p=True)[0], aim_loc_root, mo=True)
+                    try:cmds.aimConstraint(cmds.listRelatives(ribbon_ctrls[num+1],p=True)[0], aim_loc, aimVector =(1, 0, 0), upVector = (-1,0,0), worldUpType='vector', mo=True)
+                    except:pass`
+                    aim_grp = mt.root_grp(ribbon_ctrls[num], custom=True, custom_name='_ForwardAim')[0]
+                    cmds.connectAttr(aim_loc+'.rotate', aim_grp+'.rotate')
 
                 #Connect Handles local to 2nd controllers
                 cmds.pointConstraint(second_ctrls[0], top_ik_bendy_root, mo=True)
@@ -476,7 +485,7 @@ def build_limb_block():
                                      type='sphere',
                                        rename=True,
                                        custom_name=True,
-                                       name=name.replace(nc['joint'], 'Mid_Bendy' + nc['ctrl']),
+                                       name=mid.replace(nc['joint'], 'Mid_Bendy' + nc['ctrl']),
                                        size=ctrl_size,
                                        )
             mt.assign_color(main_mid_ctrl, color)
