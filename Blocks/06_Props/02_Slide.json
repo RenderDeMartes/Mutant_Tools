@@ -1,0 +1,19 @@
+{
+    "Name": "Slide",
+    "Description": "Slide System in Nurbs",
+    "Icon": "Down.png",
+    "Enable": "True",
+    "python_file": "exec_slide.py",
+    "import": "import exec_slide",
+    "imp.reload": "imp.reload(exec_slide)",
+    "exec_command": "exec_slide.create_slide_block()",
+    "build_command": "exec_slide.build_slide_block()",
+    "attrs": {
+        "SetParent_string": "new_locator",
+        "MirrorBehavior_bool": "False",
+        "SetSlideNurb_string": "new_plane",
+        "CtrlSize_float": "4",
+        "CtrlColor_enum": "lightBlue:blue:white:purple:green:red:yellow:grey",
+        "Help_string": "Select a Nurbs and create a slide system, Mirror behavior true fro rght side slides"
+    }
+}
