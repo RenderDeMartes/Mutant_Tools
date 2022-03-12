@@ -270,7 +270,7 @@ def build_limb_block():
                 cmds.skinCluster(twist_joints[:-1], ribbon_limb_nurb[0], sm=0, bm=1, tsb=True)
 
 
-                ribbon_ctrl_grp = cmds.group(em=True, n=name + '_Ribbons' + nc['ctrl'] + nc['group'])
+                tweks_ribbon_ctrl_grp = cmds.group(em=True, n=name + '_Ribbons' + nc['ctrl'] + nc['group'])
                 ribbon_ctrls = []
                 for fol_jnt in fol_joints:
                     ctrl = mt.curve(input=fol_jnt, type='square',
@@ -282,11 +282,10 @@ def build_limb_block():
                     root, auto = mt.root_grp(input=ctrl, autoRoot=True)
                     cmds.parentConstraint(cmds.listRelatives(fol_jnt, p=True)[0], root, mo=False)
                     cmds.parentConstraint(ctrl, fol_jnt)
-                    cmds.parent(root, ribbon_ctrl_grp)
+                    cmds.parent(root, tweks_ribbon_ctrl_grp)
 
                     cmds.connectAttr(ribbon_third_vis_attr, '{}.v'.format(cmds.listRelatives(ctrl, shapes=True)[0]))
                     ribbon_ctrls.append(ctrl)
-
                 #--------------------------------------------------------------------------------
                 #--------------------------------------------------------------------------------
                 #--------------------------------------------------------------------------------
@@ -333,7 +332,7 @@ def build_limb_block():
                                          type='pin_cube',
                                          rename=True,
                                          custom_name=True,
-                                         name=name.replace(nc['joint'], 'Top_Handle' + nc['ctrl']),
+                                         name=name.replace(nc['joint'], '_Top_Handle' + nc['ctrl']),
                                          size=ctrl_size/3,
                                          )
                 top_ik_bendy_root = mt.root_grp()
@@ -403,6 +402,7 @@ def build_limb_block():
 
                 custom_name = ['Start', 'End']
                 second_ctrls = []
+                second_roots = []
                 for num, fol in enumerate([bendy_follicles[0], bendy_follicles[-1]]):
 
                     ribbon_ctrl = mt.curve(input=fol, type='sphere',
@@ -415,6 +415,7 @@ def build_limb_block():
                     cmds.parentConstraint(cmds.listRelatives(fol,p=True)[0], root, mo=False)
                     cmds.connectAttr(ribbon_second_vis_attr, '{}.v'.format(cmds.listRelatives(ribbon_ctrl, shapes=True)[0]))
                     second_ctrls.append(ribbon_ctrl)
+                    second_roots.append(root)
 
                 forward = list(enumerate(ribbon_ctrls))
                 backward = list(reversed(forward))
@@ -439,7 +440,7 @@ def build_limb_block():
                     cmds.delete(cmds.parentConstraint(ribbon_ctrls[num], aim_loc_root, mo=False))
                     cmds.parentConstraint(cmds.listRelatives(ribbon_ctrls[num],p=True)[0], aim_loc_root, mo=True)
                     try:cmds.aimConstraint(cmds.listRelatives(ribbon_ctrls[num+1],p=True)[0], aim_loc, aimVector =(1, 0, 0), upVector = (-1,0,0), worldUpType='vector', mo=True)
-                    except:pass`
+                    except:pass
                     aim_grp = mt.root_grp(ribbon_ctrls[num], custom=True, custom_name='_ForwardAim')[0]
                     cmds.connectAttr(aim_loc+'.rotate', aim_grp+'.rotate')
 
@@ -449,32 +450,19 @@ def build_limb_block():
                 cmds.aimConstraint(second_ctrls[1], top_ik_bendy_root, mo=True)
                 cmds.aimConstraint(second_ctrls[0], bottom_ik_bendy_root, mo=True)
 
+                #clean the ribbon a bit
+                ribbon_ctrl_grp = cmds.group(n=name.replace(nc["joint"], '_Ribbon' + nc['ctrl'] + nc['group']),em=True)
+                cmds.parent(second_roots, tweks_ribbon_ctrl_grp, bottom_ik_bendy_root, top_ik_bendy_root,ribbon_ctrl_grp)
 
-                '''
-                #this extra step causes a fix issue due the aim contraint se we need to add back the twist in a hardway
-                twist_readers = []
-                twist_readers_grp = cmds.group(em=True, n=name.replace(nc['joint'],'') + '_TwistReader'+nc['group'])
-                #for num, jnt in enumerate(twist_joints[1:]):
-                for num, jnt in enumerate(twist_joints[1:]):
-                    twist_reader = cmds.spaceLocator(n = jnt.replace(nc['joint'], '_TwistReader'+ nc['locator']))[0]
-                    twist_readers.append(twist_reader)
-                    twist_reader_grp = mt.root_grp()
-                    cmds.parent(twist_reader_grp, twist_readers_grp)
-                    mt.match(twist_reader_grp, jnt)
-                    cmds.parentConstraint(jnt,twist_reader)
-                    twist_ctrl_grp = mt.root_grp(ribbon_ctrls[num+1], custom = True, custom_name = '_Twist')[0]
+                ribbon_rig_group = cmds.group(n=name.replace(nc["joint"], '_Ribbon_Rig' + nc['group']), em=True)
+                cmds.parent(local_grp, bendy_fol_grp, extra_aim_forward_grp , middle_limb_nurb[0], ribbon_rig_group)
 
-                    mt.connect_md_node(in_x1=twist_reader + '.rotateX',
-                                       in_x2=-1,
-                                       out_x=twist_ctrl_grp +'.rotateX',
-                                       mode='mult',
-                                       name='{}_TwistInv'.format(twist_reader),
-                                       force=False)
-
-                '''
+                #transfer scale from twist to ibbon jnts
+                for num, jnt in enumerate(twist_joints):
+                    cmds.connectAttr('{}.scale'.format(jnt), '{}.scale'.format(fol_joints[num]))
 
                 return {'ribbon_ctrl_grp': ribbon_ctrl_grp, 'ribbon_ctrls':ribbon_ctrls,'ribbon_plane':ribbon_limb_nurb[0], 'fol_ribbon_grp':fol_grp, 'fol_joints':fol_joints,
-                        'second_ctrls':second_ctrls, 'handle_controllers':handle_controllers
+                        'second_ctrls':second_ctrls, 'handle_controllers':handle_controllers, 'clean_rig_grp': ribbon_rig_group, 'clean_ctrl_grp' : ribbon_ctrl_grp
                         }
 
             top_ribbon = create_mid_ribbons(name=start, first_joint=start, last_joint=mid, twist_joints=ikfk['upper_twist']['joints'], aim=1)
@@ -505,6 +493,23 @@ def build_limb_block():
 
         clean_rig_grp = cmds.group(em=True, n = side_guide.replace(nc['joint'],'_Rig'+ nc['group']))
         clean_ctrl_grp = cmds.group(em=True, n = side_guide.replace(nc['joint'],nc['ctrl']) + nc['group'])
+
+        # clean ribbons
+        if create_ribbons:
+            cmds.parent(top_ribbon['ribbon_plane'], top_ribbon['clean_rig_grp'], top_ribbon['fol_ribbon_grp'],
+                        clean_rig_grp)
+            cmds.parent(top_ribbon['ribbon_ctrl_grp'], top_ribbon['clean_ctrl_grp'], clean_ctrl_grp)
+            cmds.parent(low_ribbon['ribbon_plane'], low_ribbon['clean_rig_grp'], low_ribbon['fol_ribbon_grp'],
+                        clean_rig_grp)
+            cmds.parent(low_ribbon['ribbon_ctrl_grp'], low_ribbon['clean_ctrl_grp'], clean_ctrl_grp)
+
+            cmds.parent(root_mid_ctrl, clean_ctrl_grp)
+
+            #fix righ side
+            if str(side_guide).startswith(nc['right']):
+                for handle in top_ribbon['handle_controllers'] +  low_ribbon['handle_controllers']:
+                    cmds.setAttr('{}.scaleX'.format(cmds.listRelatives(handle,p=True)[0]), -1)
+                    cmds.rotate(0,0,180, '{}.cv[0:22]'.format(handle), r=True)
 
         #Flip Right Sides
         if str(side_guide).startswith(nc['right']):
@@ -582,15 +587,6 @@ def build_limb_block():
 
         #parent rig
         cmds.parent(clean_rig_grp, '{}{}'.format(setup['rig_groups']['misc'], nc['group']))
-
-
-        #clean ribbons
-        if create_ribbons:
-
-            cmds.parent(top_ribbon['ribbon_plane'], top_ribbon['fol_ribbon_grp'] , clean_rig_grp)
-            cmds.parent(top_ribbon['ribbon_ctrl_grp'], clean_ctrl_grp)
-            cmds.parent(low_ribbon['ribbon_plane'], low_ribbon['fol_ribbon_grp'] , clean_rig_grp)
-            cmds.parent(low_ribbon['ribbon_ctrl_grp'], clean_ctrl_grp)
 
 
         #connected
