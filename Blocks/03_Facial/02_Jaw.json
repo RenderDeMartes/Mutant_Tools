@@ -10,9 +10,8 @@
     "build_command": "exec_jaw.build_jaw_block()",
     "attrs": {
         "SetParent_string": "new_locator",
-        "CtrlType_enum": "circleX:circleY:circleZ:square",
+        "CtrlType_enum": "circleY:circleX:circleZ:square",
         "CtrlSize_float": "4",
-        "SetGameParent_string": "",
         "Help_string": "Possible parent: JawEnd_Jnt "
     }
 }
