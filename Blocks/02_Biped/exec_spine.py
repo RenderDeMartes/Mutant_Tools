@@ -99,7 +99,6 @@ def build_spine_block():
 
     #groups for later cleaning
     clean_ctrl_grp = cmds.group(em=True, name = name + nc['ctrl'] + nc['group'])
-    clean_joint_grp = cmds.group(em=True, name = name + nc['joint'] + nc['group'])
     clean_rig_grp = cmds.group(em=True, name = name + '_Rig' + nc['group'])
 
     #orient the joints
@@ -116,6 +115,8 @@ def build_spine_block():
         block_parent = cmds.spaceLocator( n = '{}'.format(str(block).replace(nc['module'],'_Parent' + nc['locator'])))
     else:
         block_parent = cmds.getAttr('{}.SetParent'.format(config))
+
+    game_parent = cmds.getAttr('{}.SetGameParent'.format(config))
 
     spine_joints = [ new_guide,
                     '{}_Base{}'.format(name, nc['joint']),
@@ -293,6 +294,50 @@ def build_spine_block():
     cmds.parentConstraint(chest_ctrl, up_loc, mo=False)
     cmds.aimConstraint(up_loc, parent_locators[4], aimVector= (0, 1, 0), upVector =(0, 0, -1), worldUpType="object", worldUpObject=twist_locators[4])
 
-    #Clean a bit
+    #Volumen Preservation
+    curve_info_node = cmds.createNode('curveInfo', n = name + '_CurveInfo')
+    cmds.connectAttr('{}.worldSpace[0]'.format(spine_cv_shape),'{}.inputCurve'.format(curve_info_node))
+    curve_lenght = cmds.getAttr('{}.arcLength'.format(curve_info_node))
+    for jnt in spine_joints[1:-1]:
+        md = mt.connect_md_node(in_x1=curve_lenght ,in_x2="{}.arcLength".format(curve_info_node),out_x = '{}.scaleY'.format(jnt), mode = 'divide')
+        cmds.connectAttr('{}.output.outputX'.format(md), '{}.scaleZ'.format(jnt))
+
+    # bind joints
+    bind_joints = []
+    for jnt in spine_joints:
+        try:
+            cmds.select(bind_joint)
+        except:
+            pass
+        bind_joint = cmds.joint(n=jnt.replace(nc['joint'], nc['joint_bind']))
+        cmds.delete(cmds.parentConstraint(jnt, bind_joint, mo=False))
+        cmds.delete(cmds.scaleConstraint(jnt, bind_joint, mo=False))
+        cmds.makeIdentity(a=True, t=True, s=True, r=True)
+        cmds.parentConstraint(jnt, bind_joint, mo=False)
+        cmds.scaleConstraint(jnt, bind_joint, mo=True)
+        if game_parent:
+            cmds.setAttr('{}.segmentScaleCompensate'.format(bind_joint), 0)
+
+        # clean bind joints and radius to 1.5
+        bind_joints.append(bind_joint)
+        cmds.setAttr('{}.radius'.format(bind_joint), 2)
 
 
+    # game parents for bind joints
+    if cmds.objExists(game_parent):
+        cmds.parent(bind_joints[0], game_parent)
+
+    else:
+        bind_jnt_grp = '{}{}'.format(setup['rig_groups']['bind_joints'], nc['group'])
+        if cmds.objExists(bind_jnt_grp):
+            cmds.parent(bind_joints[0], bind_jnt_grp)
+
+    #parent to block parent
+    cmds.parentConstraint(block_parent, clean_ctrl_grp, mo=True)
+
+    # parent system
+    cmds.parent(spine_cv, spine_joints[0], cluster_locs_grp, clean_rig_grp)
+    cmds.parent(base_ik_ctrl_root, base_ctrl_root, clean_ctrl_grp)
+
+    cmds.parent(clean_rig_grp, '{}{}'.format(setup['rig_groups']['misc'], nc['group']))
+    cmds.parent(clean_ctrl_grp, setup['base_groups']['control'] + nc['group'])

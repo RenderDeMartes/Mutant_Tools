@@ -1,26 +1,7 @@
 {
     "Mutant_Rig_Nodes": [
-        "Spine_Base_Jnt_SquashExtra_MultDiv",
-        "Spine_Base_Jnt_SquashExtra_MultDiv1",
-        "Spine_Belly_Jnt_SquashExtra_MultDiv",
-        "Spine_Belly_Jnt_SquashExtra_MultDiv1",
-        "Spine_Chest_Jnt_SquashExtra_MultDiv",
-        "Spine_Chest_Jnt_SquashExtra_MultDiv1",
-        "Spine_OffOnVolume_Blend",
-        "Spine_OffOnVolume_Blend1",
-        "Spine_OffOnVolume_Blend2",
-        "Belly_Breath_Add_X",
-        "Belly_Breath_Add_YZ",
-        "Chest_Breath_Add_X",
-        "Chest_Breath_Add_YZ",
-        "reverse1",
-        "Spine_curveInfo_Node",
-        "Spine_OffOnStretch_Blend",
-        "Spine_OffsetAdd",
-        "Normalize_MultDiv",
-        "StretchyDivide_MultDiv",
-        "SquashInvPower_MultDiv",
-        "SquashDivide_MultDiv",
-        "Spine_breath_Expression"
+        "Spine_CurveInfo_MultDiv",
+        "Spine_CurveInfo_MultDiv1",
+        "Spine_CurveInfo_MultDiv2"
     ]
 }
