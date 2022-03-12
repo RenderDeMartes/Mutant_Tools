@@ -56,21 +56,21 @@ def create_spine_block(name = 'Spine'):
     block = block[0]
     
     cmds.select(cl=True)
-    spineBase_guide = mt.create_joint_guide(name = name + '_Base')
-    cmds.parent(spineBase_guide, block)
-    spineInv_guide = mt.create_joint_guide(name = name + '_Inv')
-    cmds.move(0,-1,0)
-    spineBelly_guide = mt.create_joint_guide(name = name + '_Belly')
+    spineRoot_guide = mt.create_joint_guide(name = name + '_Root')
+    cmds.parent(spineRoot_guide, block)
+    spineBase_guide = mt.create_joint_guide(name=name + '_Base')
     cmds.move(0,2,0)
-    spineChest_guide = mt.create_joint_guide(name = name + '_Chest')
+    spineBelly_guide = mt.create_joint_guide(name = name + '_Belly')
     cmds.move(0,4,0)
-    spineEnd_guide = mt.create_joint_guide(name = name + '_End')
+    spineChest_guide = mt.create_joint_guide(name = name + '_Chest')
     cmds.move(0,6,0)
+    spineEnd_guide = mt.create_joint_guide(name = name + '_End')
+    cmds.move(0,8,0)
 
+    cmds.parent(spineBase_guide,spineRoot_guide)
     cmds.parent(spineBelly_guide,spineBase_guide)
     cmds.parent(spineChest_guide,spineBelly_guide)
     cmds.parent(spineEnd_guide,spineChest_guide)
-    cmds.parent(spineInv_guide,spineBase_guide)
 
     cmds.select(block)
     #mt.orient_joint(input = spineBase_guide)
@@ -100,6 +100,7 @@ def build_spine_block():
     #groups for later cleaning
     clean_ctrl_grp = cmds.group(em=True, name = name + nc['ctrl'] + nc['group'])
     clean_joint_grp = cmds.group(em=True, name = name + nc['joint'] + nc['group'])
+    clean_rig_grp = cmds.group(em=True, name = name + '_Rig' + nc['group'])
 
     #orient the joints
     mt.orient_joint(input = guide)
@@ -108,9 +109,6 @@ def build_spine_block():
     cmds.setAttr('{}_End{}.jointOrientX'.format(name, nc['joint']), 0)
     cmds.setAttr('{}_End{}.jointOrientY'.format(name, nc['joint']), 0)
     cmds.setAttr('{}_End{}.jointOrientZ'.format(name, nc['joint']), 0)
-    cmds.setAttr('{}_Inv{}.jointOrientX'.format(name, nc['joint']), 0)
-    cmds.setAttr('{}_Inv{}.jointOrientY'.format(name, nc['joint']), 0)
-    cmds.setAttr('{}_Inv{}.jointOrientZ'.format(name, nc['joint']), 0)
 
 
     #use this locator in case parent is set to new locator
@@ -120,389 +118,181 @@ def build_spine_block():
         block_parent = cmds.getAttr('{}.SetParent'.format(config))
 
     spine_joints = [ new_guide,
+                    '{}_Base{}'.format(name, nc['joint']),
                     '{}_Belly{}'.format(name, nc['joint']),
                     '{}_Chest{}'.format(name, nc['joint']),
                     '{}_End{}'.format(name, nc['joint']),
-                    '{}_Inv{}'.format(name, nc['joint']),
                      ]
 
+    back_distance = cmds.getAttr(spine_joints[2]+'.translateX')
 
     #build
-    cv_divisions =  3
-    #create ik handle
-    ikSpline = cmds.ikHandle(sj=new_guide,
-                             ee='{}_End{}'.format(name, nc['joint']),
-                             sol='ikSplineSolver',
-                             n= block.replace(nc['module'],nc['ik_spline']),
-                             ccv=True,
-                             pcv = False)
+    #create curve
+    #curve -d 3 -p -4.975538 -0.0440359 0 -p -4.973703 0.623842 0 -p -4.970034 1.959596 0 -p -4.988382 3.471494 0 -p -4.997556 4.227444 0 -k 0 -k 0 -k 0 -k 1 -k 2 -k 2 -k 2 ;
+    root_pos = cmds.xform(spine_joints[0], q=True, ws=True, t=True)
+    base_pos = cmds.xform(spine_joints[1], q=True, ws=True, t=True)
+    belly_pos = cmds.xform(spine_joints[2], q=True, ws=True, t=True)
+    chest_pos = cmds.xform(spine_joints[3], q=True, ws=True, t=True)
+    end_pos = cmds.xform(spine_joints[4], q=True, ws=True, t=True)
 
-    spline_curve =  ikSpline[2]
-    spline_curve = cmds.rename(spline_curve, name + nc['curve'])
-    spline_curve = cmds.rebuildCurve(spline_curve, ch =  True,  rpo = True, rt = False, end =True, kr = False, kcp = False, kep = True , kt =False, s = cv_divisions, d = 3, tol = 0.01)[0]
-    cmds.setAttr('{}.inheritsTransform'.format(spline_curve),0)
+    spine_cv = cmds.curve(d=3, p = [root_pos, base_pos, belly_pos, chest_pos, end_pos], k = [0, 0, 0, 1, 2, 2, 2], n = name + '_Main' +nc['curve'])
+    spine_cv = cmds.rebuildCurve(keepRange=0, ch=False, rebuildType=3, kcp = 1, kep=1, kt = 0, s=4, d=3, tol = 0.01)[0]
+    spine_cv_shape = cmds.listRelatives(spine_cv, s=True)[0]
+    cmds.setAttr('{}.inheritsTransform'.format(spine_cv), 0)
 
-    effector_spline = cmds.rename(ikSpline[1],
-                                  name + nc['effector'])
-    ikSpline = ikSpline[0]
+    #create locator clusters
+    cluster_locators=[]
+    cluster_locs_grp = cmds.group(em=True, n=name+'_Cls'+nc["locator"]+nc['group'])
+    spine_ik_ctrls = []
 
-    ik_grp = cmds.group(ikSpline, spline_curve, n = name + '_Ik' + nc['group'])
+    for num, jnt in enumerate(spine_joints):
+        #create cluster locators
+        loc = cmds.spaceLocator(n = jnt.replace(nc['joint'], '_Cls'+nc['locator']))[0]
+        cmds.parent(loc, cluster_locs_grp)
+        cluster_locators.append(loc)
+        cmds.delete(cmds.pointConstraint(jnt, loc, mo=False))
+        decomposeNode = cmds.createNode('decomposeMatrix', n = loc.replace(nc['locator'], '_decomposeMatrix'))
+        cmds.connectAttr("{}.worldMatrix[0]".format(loc), "{}.inputMatrix".format(decomposeNode))
+        cmds.connectAttr('{}.outputTranslate'.format(decomposeNode), '{}.controlPoints[{}]'.format(spine_cv_shape,num))
 
-    #move cv to fit the joints
-    belly_pos = cmds.xform('{}_Belly{}'.format(name, nc['joint']), q=True, ws=True, t=True)
-    cmds.move(belly_pos[0],belly_pos[1],belly_pos[2],'{}.cv[2]'.format(spline_curve))
-    chest_pos = cmds.xform('{}_Chest{}'.format(name, nc['joint']), q=True, ws=True, t=True)
-    cmds.move(chest_pos[0],chest_pos[1],chest_pos[2],'{}.cv[3]'.format(spline_curve))
+        #create ik controllers
+        ctrl = mt.curve(input=jnt,
+                        type='sphere',
+                        rename=True,
+                        custom_name=True, name=jnt.replace(nc['joint'], '_IK' + nc['ctrl']),
+                        size=ctrl_size / 2,
+                        )
+        cmds.delete(cmds.pointConstraint(jnt, ctrl))
+        cmds.move(0,0,back_distance, '{}.cv[0:101]'.format(ctrl), r=True)
 
-    #do ctrl joints to bind to the cv
-    print ('Spine Joints:')
-    ctrl_joints = []
-    for jnt in spine_joints[:-1]:
+        mt.assign_color(ctrl, 'yellow')
+        root = mt.root_grp(input=ctrl)
+        cmds.parentConstraint(ctrl, loc, mo=True)
+        spine_ik_ctrls.append(ctrl)
 
-        cmds.select(cl=True)
-        print(jnt)
-        ctrl_jnt = cmds.joint(n = jnt.replace(nc['joint'], nc['joint_ctrl']), rad = 1.25)
-        cmds.delete(cmds.parentConstraint(jnt, ctrl_jnt, mo=False))    
-        ctrl_joints.append(ctrl_jnt)
+    #Belly is going to be purple
+    mt.assign_color(spine_ik_ctrls[2], 'purple')
 
+    #Create FK controllers
+    base_ik_ctrl = mt.curve(input=spine_joints[0],
+                         type='pringle',
+                         rename=True,
+                         custom_name=True, name=name + '_Bottom_Ik' + nc['ctrl'],
+                         size=ctrl_size * 1.5
+                         )
+    cmds.rotate(0, 0, 0)
+    base_ik_ctrl_root = mt.root_grp()
+    mt.assign_color(base_ik_ctrl, 'purple')
+    mt.match(base_ik_ctrl_root, spine_joints[0], r=False)
 
-    cmds.skinCluster(ctrl_joints[:-1], spline_curve, tsb=True)
-    cmds.parent(ctrl_joints, spine_joints[0],spine_joints[-1], clean_joint_grp)
+    base_ctrl = mt.curve(input=spine_joints[1],
+                        type='square',
+                        rename=True,
+                        custom_name=True, name=spine_joints[1].replace(nc['joint'], '_FK' + nc['ctrl']),
+                        size=ctrl_size*1.5
+                        )
+    cmds.rotate(0,0,0)
+    base_ctrl_root = mt.root_grp()
+    mt.assign_color(base_ctrl, 'lightBlue')
+    mt.match(base_ctrl_root, spine_joints[1], r=False)
 
-    #create controllers
-    spine_ctrls = []
+    belly_ctrl = mt.curve(input=spine_joints[2],
+                        type='square',
+                        rename=True,
+                        custom_name=True, name=spine_joints[2].replace(nc['joint'], '_FK' + nc['ctrl']),
+                        size=ctrl_size*1.5
+                        )
+    cmds.rotate(0,0,0)
+    belly_ctrl_root = mt.root_grp()
+    mt.assign_color(belly_ctrl, 'lightBlue')
+    mt.match(belly_ctrl_root, spine_joints[2], r=False)
 
-    cmds.select(cl=True)
-    base_ctrl = mt.curve(input = '',
-                         type = 'cube', rename = True,
-                         custom_name = True,
-                         name = str(ctrl_joints[0]).replace(nc['joint_ctrl'],nc['ctrl']),
-                         size = ctrl_size)
-    mt.assign_color(color = 'yellow')
-    base_offset = mt.root_grp()
-    mt.match(base_offset,ctrl_joints[0], t=True, r=False)
-    cmds.parentConstraint(base_ctrl, ctrl_joints[0], mo=True)
-    cmds.parentConstraint(base_ctrl, spine_joints[-1], mo=True)
-    cmds.scaleConstraint(base_ctrl, spine_joints[-1], mo=True)
-    spine_ctrls.append(base_ctrl)
-    cmds.select(cl=True)
+    chest_ctrl = mt.curve(input=spine_joints[4],
+                        type='pringle',
+                        rename=True,
+                        custom_name=True, name=spine_joints[3].replace(nc['joint'], '_Top_IK' + nc['ctrl']),
+                        size=ctrl_size*1.5
+                        )
+    cmds.rotate(0,0,0)
+    chest_ctrl_root = mt.root_grp()
+    mt.assign_color(chest_ctrl, 'purple')
+    mt.match(chest_ctrl_root, spine_joints[4], r=False)
 
-    chest_ctrl = mt.curve(input = '',
-                         type = 'cube', rename = True,
-                         custom_name = True,
-                         name = str(ctrl_joints[2]).replace(nc['joint_ctrl'], nc['ctrl']),
-                         size = ctrl_size)
-    mt.assign_color(color = 'yellow')
-    chest_offset = mt.root_grp()
-    mt.match(chest_offset,ctrl_joints[2], t=True, r=False)
-    cmds.parentConstraint(chest_ctrl, ctrl_joints[2], mo=True)
-    cmds.parentConstraint(chest_ctrl, ctrl_joints[3], mo=True)
-    spine_ctrls.append(chest_ctrl)
+    #Create hierarchy
+    cmds.parent(belly_ctrl_root, base_ctrl)
+    cmds.parent(chest_ctrl_root, belly_ctrl)
 
-    cmds.select(cl=True)
-    belly_ctrl = mt.curve(input = '',
-                         type = 'octagon', rename = True,
-                         custom_name = True,
-                         name = str(ctrl_joints[1]).replace(nc['joint_ctrl'], nc['ctrl']),
-                         size = ctrl_size)
-    mt.assign_color(color = 'green')
-    belly_offset = mt.root_grp()
-    mt.match(belly_offset,ctrl_joints[1], t=True, r=False)
-    cmds.parentConstraint(belly_ctrl, ctrl_joints[1], mo=True)
-    spine_ctrls.append(belly_ctrl)
+    cmds.parent(cmds.listRelatives(spine_ik_ctrls[0], p=True), base_ik_ctrl)
+    cmds.parent(cmds.listRelatives(spine_ik_ctrls[1], p=True), base_ik_ctrl)
+    cmds.parent(cmds.listRelatives(spine_ik_ctrls[2], p=True), base_ctrl)
+    cmds.parent(cmds.listRelatives(spine_ik_ctrls[3], p=True), chest_ctrl)
+    cmds.parent(cmds.listRelatives(spine_ik_ctrls[4], p=True), chest_ctrl)
 
-    #FK Belly Ctrl
-    cmds.select(cl=True)
-    belly_fk_ctrl = mt.curve(input = '',
-                         type = 'square', rename = True,
-                         custom_name = True,
-                         name = str(ctrl_joints[1]).replace(nc['joint_ctrl'],'_FK' + nc['ctrl']),
-                         size = ctrl_size*1.25)
-    mt.assign_color(color = 'lightBlue')
-    belly_fk_offset = mt.root_grp()
-    mt.match(belly_fk_offset,ctrl_joints[1], t=True, r=False)
-    spine_ctrls.append(belly_fk_ctrl)
+    #create locators that follows and connect to joints
+    #setup to find parameters
+    temp_loc = cmds.spaceLocator()[0]
+    near_point_node = cmds.createNode('nearestPointOnCurve')
+    cmds.connectAttr("{}.worldSpace[0]".format(spine_cv_shape), '{}.inputCurve'.format(near_point_node))
+    cmds.connectAttr("{}.translate".format(temp_loc), "{}.inPosition".format(near_point_node))
 
-    #FK Base Ctrl
-    cmds.select(cl=True)
-    base_fk_ctrl = mt.curve(input = '',
-                         type = 'square', rename = True,
-                         custom_name = True,
-                         name = str(ctrl_joints[0]).replace(nc['joint_ctrl'],'_FK' + nc['ctrl']),
-                         size = ctrl_size*1.25)
-
-    mt.assign_color(color = 'lightBlue')
-    base_fk_offset = mt.root_grp()
-    mt.match(base_fk_offset,ctrl_joints[0], t=True, r=False)
-    spine_ctrls.append(base_fk_ctrl)
-
-    cmds.parent(belly_fk_offset,base_fk_ctrl)
-    cmds.parent(belly_offset,belly_fk_ctrl)
-    cmds.parent(chest_offset,belly_fk_ctrl)
-
-    #parent end
-    cmds.orientConstraint(chest_ctrl,'{}_End{}'.format(name, nc['joint']), mo=True)
-
-    #belly_ctrl = mid
-    belly_parent = cmds.parentConstraint(base_ctrl, chest_ctrl, belly_offset,mo=True)[0]
-
-
-    #Twist Joints
-    cmds.select(ctrl_joints[0])
-    start_twist_jnt = cmds.joint(n='{}_Base{}'.format(name, nc['joint_twist']), rad=1.35)
-    cmds.delete(cmds.parentConstraint('{}_Base{}'.format(name, nc['joint']),start_twist_jnt, mo=False))
-    cmds.select(ctrl_joints[3])
-    end_twist_jnt = cmds.joint(n='{}_End{}'.format(name, nc['joint_twist']), rad=1.35)
-    cmds.delete(cmds.parentConstraint('{}_End{}'.format(name, nc['joint']),end_twist_jnt, mo=False))
-
-    #Enable twist
-    cmds.setAttr("{}.dTwistControlEnable".format(ikSpline), 1)
-    cmds.setAttr("{}.dWorldUpType".format(ikSpline), 4)
-    cmds.connectAttr("{}.worldMatrix[0]".format(start_twist_jnt), "{}.dWorldUpMatrix".format(ikSpline), f=True)
-    cmds.connectAttr("{}.worldMatrix[0]".format(end_twist_jnt), "{}.dWorldUpMatrixEnd".format(ikSpline), f=True)
-
-    #Shape attrs
-    # add attrs in all controllers
-    for ctrl in spine_ctrls:
-        cmds.select(ctrl)
-        if cmds.objectType(ctrl) == 'transform':
-            spine_attrs = mt.shape_with_attr(input='', obj_name='{}_Attrs'.format(name), attr_name='BellyMid')
-
-    cmds.addAttr(spine_attrs, e=1, dv=0.5)
-    cmds.setAttr(spine_attrs, 0.5)
-
-    cmds.connectAttr(spine_attrs, str(belly_parent) + '.Spine_Chest_CtrlW1') #Spine_Chest_CtrlW1
-    rev_mid = cmds.shadingNode('reverse', asUtility=True)
-    cmds.connectAttr(spine_attrs, rev_mid + '.input.inputX.')
-    cmds.connectAttr(rev_mid + '.output.outputX', str(belly_parent) + '.Spine_Base_CtrlW0')
-
-    #add AttrsStretchyMult
-    mt.line_attr(input= spine_attrs.split('.')[0],name = 'SnS')
-    stretchy_attr =mt.new_attr(input= spine_attrs.split('.')[0], name = 'Stretchy', min = 0 , max = 1, default = 1)
-
-    preserve_volume = mt.new_attr(input= stretchy_attr.split('.')[0], name = 'Volume', min = 0 , max = 1, default = 1)
-    offset_attr = mt.new_attr(input= stretchy_attr.split('.')[0], name = 'OffsetStretchy', min = -10 , max = 10, default = 0)
-
-    mt.line_attr(input=stretchy_attr.split('.')[0], name='Stretch')
-    chest_stretch = mt.new_attr(input=stretchy_attr.split('.')[0], name='ChestStretch', min=0, max=10, default=1)
-    belly_stretch = mt.new_attr(input=stretchy_attr.split('.')[0], name='BellyStretch', min=0, max=10, default=1)
-    base_stretch = mt.new_attr(input=stretchy_attr.split('.')[0], name='BaseStretch', min=0, max=10, default=1)
-
-    mt.line_attr(input= stretchy_attr.split('.')[0],name = 'Volume')
-    chest_volume =mt.new_attr(input= stretchy_attr.split('.')[0], name = 'ChestVolume', min = 0.01 , max = 10, default = 1)
-    belly_volume =mt.new_attr(input= stretchy_attr.split('.')[0], name = 'BellyVolume', min = 0.01 , max = 10, default = 1)
-    base_volume =mt.new_attr(input= stretchy_attr.split('.')[0], name = 'BaseVolume', min = 0.01 , max = 10, default = 1)
-
-    #Stretchy
-
-    curve_info_node = cmds.shadingNode("curveInfo", asUtility = True, n = name + "_curveInfo_Node")
-    cmds.connectAttr('{}.worldSpace[0]'.format(cmds.listRelatives(spline_curve,shapes=True)[0]),'{}.inputCurve'.format(curve_info_node),f=True)
-    arch_lenght_attr = '{}.arcLength'.format(curve_info_node)
-    original_len = cmds.getAttr(arch_lenght_attr)
-
-    #normalize
-    normalize_loc = cmds.spaceLocator(n = name + '_Normalize' + nc['locator'])[0]
-    cmds.parent(normalize_loc, ik_grp)
-    normalize_node = mt.connect_md_node(in_x1= arch_lenght_attr,
-                                   in_x2 = normalize_loc + '.scaleX',
-                                   out_x= '',
-                                   mode='divide',
-                                   name= 'Normalize',
-                                   force=False)
-
-    stretchy_divide = mt.connect_md_node(in_x1=  normalize_node + '.output.outputX',
-                                   in_x2 = original_len,
-                                   out_x= '',
-                                   mode='divide',
-                                   name= 'StretchyDivide',
-                                   force=False)
-
-    squash_inv_node = mt.connect_md_node(in_x1=stretchy_divide + '.output.outputX',
-                                         in_x2=0.5,
-                                         out_x='',
-                                         mode='power',
-                                         name='SquashInvPower',
-                                         force=False)
-
-    squash_dive_node = mt.connect_md_node(in_x1=1,
-                                         in_x2= squash_inv_node + '.output.outputX',
-                                         out_x='',
-                                         mode='divide',
-                                         name='SquashDivide',
-                                         force=False)
-
-    attr_toX = stretchy_divide + '.output.outputX'
-    attr_toYZ = squash_dive_node + '.output.outputX'
-    volume_nodes = []
-    #connect to joints
-    for jnt in spine_joints[:-2]:
-        spine_squash_md = mt.connect_md_node(in_x1=attr_toX,
-                                      in_x2= stretchy_attr.split('.')[0] +'.' +jnt.split('_')[1]+'Stretch',
-                                      out_x= jnt + '.scaleX',
-                                      mode='mult',
-                                      name='{}_SquashExtra'.format(jnt),
-                                      force=False)
-
-        spine_volume_md = mt.connect_md_node(in_x1=attr_toYZ,
-                                      in_x2= stretchy_attr.split('.')[0] +'.' +jnt.split('_')[1]+'Volume',
-                                      out_x= jnt + '.scaleY',
-                                      mode='mult',
-                                      name='{}_SquashExtra'.format(jnt),
-                                      force=False)
-        volume_nodes.append(spine_volume_md)
-        cmds.connectAttr(spine_volume_md + '.output.outputX', jnt + '.scaleZ' )
-
-        mt.put_inside_rig_container([spine_squash_md,spine_volume_md])
-        #connectExtra
-
-    #turn off on stretch offset and volume
-    #stretch
-    blendColors = cmds.shadingNode('blendColors', asUtility=True, name = name + '_OffOnStretch'+ nc['blend'])
-    cmds.connectAttr('{}.output.outputX'.format(normalize_node), '{}.color1.color1R'.format(blendColors), f=True)
-    cmds.connectAttr('{}.output.outputR'.format(blendColors), '{}.input1.input1X'.format(stretchy_divide), f=True)
-    cmds.setAttr('{}.color2.color2R'.format(blendColors),original_len)
-    cmds.connectAttr(stretchy_attr, '{}.blender'.format(blendColors),f=True)
-    #volume
-    for node in volume_nodes:
-        blendColors_volume = cmds.shadingNode('blendColors', asUtility=True, name=name + '_OffOnVolume' + nc['blend'])
-        cmds.connectAttr('{}.output.outputX'.format(node), '{}.color1.color1R'.format(blendColors_volume), f=True)
-        jnt_name = cmds.listConnections(node,d=True,  et=True,t='joint',s=False)[0]
-        cmds.connectAttr('{}.output.outputR'.format(blendColors_volume), '{}.scaleY'.format(jnt_name), f=True)
-        cmds.connectAttr('{}.output.outputR'.format(blendColors_volume), '{}.scaleZ'.format(jnt_name), f=True)
-        cmds.setAttr('{}.color2.color2R'.format(blendColors_volume), 1)
-        cmds.connectAttr(preserve_volume, '{}.blender'.format(blendColors_volume), f=True)
-
-        mt.put_inside_rig_container([blendColors_volume])
-
-    #offsetStretch
-    double_linear_add = cmds.shadingNode('addDoubleLinear', asUtility=True, name = name + '_OffsetAdd')
-    cmds.connectAttr('{}.output.outputX'.format(normalize_node), '{}.input1'.format(double_linear_add), f=True)
-    cmds.connectAttr('{}.output'.format(double_linear_add), '{}.color1.color1R'.format(blendColors), f=True)
-    cmds.connectAttr(offset_attr, '{}.input2'.format(double_linear_add),f=True)
-
-    #Breath
-    chest_volume_nodes = volume_nodes[2]
-    #2.5 seg inhale 2.5 exale
-    print('Breathing...')
-
-    mt.line_attr(input= stretchy_attr.split('.')[0],name = 'Breath')
-    breath_auto =mt.new_attr(input= stretchy_attr.split('.')[0], name = 'BreathAuto', min = 0 , max = 1, default = 0)
-    breath_frequency  =mt.new_attr(input= stretchy_attr.split('.')[0], name = 'BreathFrequency', min = 0 , max = 10, default = 2.5)
-    breath_amount =mt.new_attr(input= stretchy_attr.split('.')[0], name = 'BreathAmount', min = 0.1 , max = 10, default = 1)
-    breath_chest =mt.new_attr(input= stretchy_attr.split('.')[0], name = 'BreathChest', min = 0 , max = 10, default = 1)
-    breath_belly=mt.new_attr(input= stretchy_attr.split('.')[0], name = 'BreathBelly', min = 0 , max = 10, default = 0.5)
-    chest_rotate=mt.new_attr(input= stretchy_attr.split('.')[0], name = 'ChestRotate', min = 0 , max = 10, default = 2.5)
-
-
-    #create add Nodes to automate the breathe
-    belly_volume_nodes = volume_nodes[1]
-    chest_volume_nodes = volume_nodes[1]
-
-    add_x_belly = mt.replace_connection_with_doublelinear(input = '{}_Belly{}'.format(name, nc['joint']),
-                                            attr = 'scaleX',
-                                            name = 'Belly_Breath_Add_X')
-
-    add_yz_belly = mt.replace_connection_with_doublelinear(input = '{}_Belly{}'.format(name, nc['joint']),
-                                            attr = 'scaleY',
-                                            name = 'Belly_Breath_Add_YZ')
-
-    cmds.connectAttr('{}.output'.format(add_yz_belly), '{}_Belly{}'.format(name, nc['joint']) + '.scaleZ', f=True)
-
-    add_x_chest = mt.replace_connection_with_doublelinear(input = '{}_Chest{}'.format(name, nc['joint']),
-                                            attr = 'scaleX',
-                                            name = 'Chest_Breath_Add_X')
-
-    add_yz_chest = mt.replace_connection_with_doublelinear(input = '{}_Chest{}'.format(name, nc['joint']),
-                                            attr = 'scaleY',
-                                            name = 'Chest_Breath_Add_YZ')
-    cmds.connectAttr('{}.output'.format(add_yz_chest), '{}_Chest{}'.format(name, nc['joint']) + '.scaleZ', f=True)
-
-    #chest rotation
-    chest_offset = mt.root_grp(input = chest_ctrl, custom = True, custom_name = '{}_Chest_Breath_{}'.format(name, nc['group']))[0]
-
-    #breathing expression
-    breath_exp = cmds.expression(n = name + '_breath' + nc['expression'],
-                                 s= """//Breath_attrs
-                                        $freq = {}/2;
-                                        $amount = {} * {};
-                                        $breath = sin(time*$freq)*$amount;
-                                        //Apply_it_to_the_nodes
-                                        {}.input2 = $breath * 0.07 *{};
-                                        {}.input2 = $breath * 0.07 *{};
-                                        {}.input2 = $breath * 0.07 *{};
-                                        {}.input2 = $breath * 0.07 *{};
-                                        {}.rotateX = -1 * sin(time*$freq*$amount)*$amount*{}-{}/2;
-                                        """.format(breath_frequency,
-                                                   breath_amount,
-                                                   breath_auto,
-                                                   add_x_belly,  breath_belly,
-                                                   add_yz_belly, breath_belly,
-                                                   add_x_chest,  breath_chest,
-                                                   add_yz_chest, breath_chest,
-                                                   chest_offset, chest_rotate,chest_rotate
-                                                   ).replace(' ', '')
-                                 )
-
-    #bind joints
-    bind_joints = []
+    parent_locators = []
     for jnt in spine_joints:
-        try:
-            cmds.select(bind_joint)
-        except:
-            pass
-        bind_joint = cmds.joint(n=jnt.replace(nc['joint'], nc['joint_bind']))
-        cmds.delete(cmds.parentConstraint(jnt, bind_joint, mo=False))
-        cmds.delete(cmds.scaleConstraint(jnt, bind_joint, mo=False))
-        cmds.makeIdentity(a=True, t=True, s=True, r=True)
-        cmds.parentConstraint(jnt, bind_joint, mo=False)
-        cmds.scaleConstraint(jnt, bind_joint, mo=True)
-        cmds.setAttr('{}.segmentScaleCompensate'.format(bind_joint), 0)
-        cmds.setAttr('{}.inheritsTransform'.format(bind_joint), 0)
+        #position temp loc to find parameters
+        cmds.delete(cmds.pointConstraint(jnt, temp_loc))
+        param = cmds.getAttr('{}.result.parameter'.format(near_point_node))
 
-        # clean bind joints and radius to 1.5
-        print(bind_joint)
+        parent_locator=cmds.spaceLocator(n = jnt.replace(nc['joint'], '_Parent'+nc['locator']))[0]
+        parent_locators.append(parent_locator)
+        onCurveInfo = cmds.createNode('pointOnCurveInfo', n = jnt.replace(nc['joint'], '_POCI'))
+        cmds.connectAttr("{}.worldSpace[0]".format(spine_cv_shape), '{}.inputCurve'.format(onCurveInfo))
+        cmds.setAttr('{}.parameter'.format(onCurveInfo), param)
+        cmds.connectAttr('{}.result.position'.format(onCurveInfo), '{}.translate'.format(parent_locator))
+        cmds.parentConstraint(parent_locator, jnt, mo=True)
 
-        bind_joints.append(bind_joint)
-        cmds.setAttr('{}.radius'.format(bind_joint), 2)
+    #delete setup to find parameters
+    cmds.delete(temp_loc, near_point_node)
+    parent_locators_grp = cmds.group(parent_locators, n=name+'_Parents'+nc['locator']+nc['group'])
+    cmds.parent(parent_locators_grp, clean_rig_grp)
+    cmds.setAttr('{}.inheritsTransform'.format(parent_locators_grp), 0)
 
-    cmds.parent(bind_joints[-1], bind_joints[0])
-
-    #game parents for bind joints
-    game_parent = cmds.getAttr('{}.SetGameParent'.format(config))
-    if cmds.objExists(game_parent):
-        cmds.parent(bind_joints[0], game_parent)
-
-    else:
-        bind_jnt_grp = '{}{}'.format(setup['rig_groups']['bind_joints'], nc['group'])
-        if cmds.objExists(bind_jnt_grp):
-            cmds.parent(bind_joints[0], bind_jnt_grp)
-
-
-    #clean a bit
-    clean_rig_grp = cmds.group(em=True, n = '{}{}'.format(block.replace(nc['module'],'_Rig'), nc['group']))
-    cmds.parent(clean_joint_grp, ik_grp, clean_rig_grp)
-    cmds.parent(base_fk_offset,clean_ctrl_grp)
-    cmds.parent(base_offset,clean_ctrl_grp)
-
-    cmds.parentConstraint(block_parent, clean_ctrl_grp, mo=True)
-
-    cmds.parent(clean_ctrl_grp, setup['base_groups']['control'] + nc['group'])
-    cmds.parent(clean_rig_grp, '{}{}'.format(setup['rig_groups']['misc'], nc['group']))
-
-    mt.put_inside_rig_container([rev_mid, curve_info_node, blendColors, double_linear_add])
-
-    #stretchy fixes
-    cmds.connectAttr('Global_Ctrl.scale', normalize_loc+'.scale')
-    cmds.scaleConstraint('Global_Ctrl', clean_rig_grp, mo=True)
-    cmds.scaleConstraint('Global_Ctrl', clean_ctrl_grp, mo=True)
-
-    mt.put_inside_rig_container(
-        [normalize_node, stretchy_divide, squash_inv_node, squash_dive_node, breath_exp])
-
-    print ('Build {} Success'.format(block))
+    #Aim and Twists
+    twist_locators = []
+    twist_locators_roots =[]
+    twist_locators_grp = cmds.group(em=True, n=name+'_Twists'+nc['locator']+nc['group'])
+    for loc in parent_locators:
+        twist_loc = cmds.spaceLocator(n = loc.replace('Parent', 'Twist'))[0]
+        root, auto = mt.root_grp(twist_loc, autoRoot=True)
+        twist_locators.append(twist_loc)
+        cmds.delete(cmds.pointConstraint(loc, twist_loc, mo =False))
+        cmds.move(0,0,back_distance*-2, r=True)
+        cmds.parent(root, twist_locators_grp)
+        twist_locators_roots.append(root)
 
 
-#build_spine_block()
+    cmds.parent(twist_locators_grp, clean_rig_grp)
 
-"""
-"""
+    #twist joints hierarchies
+    cmds.parentConstraint(chest_ctrl, twist_locators_roots[-1], mo=True)
+    cmds.parentConstraint(base_ik_ctrl, twist_locators_roots[0], mo=True)
+    mid_parent = cmds.parentConstraint(twist_locators[-1], twist_locators[0], twist_locators_roots[2], mo=True)[0]
+    cmds.setAttr('{}.interpType'.format(mid_parent), 2)
+    bot_mid_parent = cmds.parentConstraint(twist_locators[0], twist_locators[2], twist_locators_roots[1], mo=True)[0]
+    cmds.setAttr('{}.interpType'.format(bot_mid_parent), 2)
+    top_mid_parent = cmds.parentConstraint(twist_locators[-1], twist_locators[2], twist_locators_roots[3], mo=True)[0]
+    cmds.setAttr('{}.interpType'.format(top_mid_parent), 2)
+
+    #aims
+    cmds.aimConstraint(parent_locators[1], parent_locators[0], aimVector= (0, 1, 0), upVector =(0, 0, -1), worldUpType="object", worldUpObject=twist_locators[0])
+    cmds.aimConstraint(parent_locators[2], parent_locators[1], aimVector= (0, 1, 0), upVector =(0, 0, -1), worldUpType="object", worldUpObject=twist_locators[1])
+    cmds.aimConstraint(parent_locators[3], parent_locators[2], aimVector= (0, 1, 0), upVector =(0, 0, -1), worldUpType="object", worldUpObject=twist_locators[2])
+    cmds.aimConstraint(parent_locators[4], parent_locators[3], aimVector= (0, 1, 0), upVector =(0, 0, -1), worldUpType="object", worldUpObject=twist_locators[3])
+    #create up vector for last loc
+    up_loc = cmds.spaceLocator(n=name+'_UpVector'+nc['locator'])[0]
+    cmds.move(0,1,0)
+    cmds.parent(up_loc, clean_rig_grp)
+    cmds.parentConstraint(chest_ctrl, up_loc, mo=False)
+    cmds.aimConstraint(up_loc, parent_locators[4], aimVector= (0, 1, 0), upVector =(0, 0, -1), worldUpType="object", worldUpObject=twist_locators[4])
+
+    #Clean a bit
+
+
