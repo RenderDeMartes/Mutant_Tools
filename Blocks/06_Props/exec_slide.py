@@ -110,6 +110,7 @@ def build_slide_block():
                           name=name+nc['ctrl'],
                           size=size)
     mt.assign_color(color=color)
+    cmds.delete(cmds.parentConstraint(position_locator, slide_ctrl))
     slide_ctrl_root = mt.root_grp(slide_ctrl)
 
     if mirror_behavior:
