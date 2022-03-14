@@ -114,7 +114,7 @@ def build_slide_block():
     slide_ctrl_root = mt.root_grp(slide_ctrl)
 
     if mirror_behavior:
-        mt.mirror_group(world=False)
+        slide_ctrl_root = mt.mirror_group(world=False)
 
     cmds.parentConstraint(slide_ctrl, position_locator,mo=True)
     mt.assign_color(input=driver_locator ,color=color)
