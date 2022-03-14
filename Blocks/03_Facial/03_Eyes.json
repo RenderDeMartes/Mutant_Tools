@@ -1,5 +1,5 @@
 {
-    "Name": "Eyes",
+    "Name": "L_Eyes",
     "Description": "Will create eyes aim system",
     "Icon": "Eyes.png",
     "Enable": "True",
@@ -10,9 +10,8 @@
     "build_command": "exec_eyes.build_eyes_block()",
     "attrs": {
         "SetParent_string": "new_locator",
-        "Mirror_enum": "True:False:Right_Only",
+        "EyesAmount_enum": "Two:One",
         "CtrlSize_float": "4",
-        "SetGameParent_string": "",
-        "Help_string": "Possible parent: "
+        "Help_string": "Possible parent: Create Eye aim system"
     }
 }
