@@ -50,7 +50,7 @@ def create_eyelids_block(name='Nose'):
 		cmds.warning('Name already exists.')
 		return ''
 
-	block = mt.create_block(name=name, icon='Nose', attrs=module['attrs'], build_command=module['build_command'],
+	block = mt.create_block(name=name, icon='Eyes', attrs=module['attrs'], build_command=module['build_command'],
 							import_command=module['import'])
 	config = block[1]
 	block = block[0]
@@ -82,8 +82,8 @@ def build_eyelids_block():
 	ctrl_size = cmds.getAttr('{}.CtrlSize'.format(config))
 
 
-#Video give us this ones
-
+#Video TutorialScripts
+#Tutorial: https://vimeo.com/66583205
 def getUParam(pnt=[], crv=None):
     point = OpenMaya.MPoint(pnt[0], pnt[1], pnt[2])
     curveFn = OpenMaya.MFnNurbsCurve(getDagPath(crv))
@@ -145,8 +145,9 @@ crear 5 joints para binder a la curva de 5 puntos y esos joints son controlados 
 los controles de del medio deben moverse con el centro y la esquina50/50
 
 video 3 smart blink
-
-
+ 
+ Mejor hacer esto viendo el video
+ 
 
 '''
 
