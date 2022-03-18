@@ -1,0 +1,14 @@
+------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
+Building: Jaw_Block
+------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
+Import successfully import exec_jaw
+Precode Jaw_Block
+{'geometry': 'Geo', 'control': 'Ctrl', 'rig': 'Rig'}
+{}
+{'bind_joints': 'Bind_Joints', 'bind_geo': 'Bind_Geo', 'misc': 'Miscellaneous', 'template': 'Template'}
+BaseA Created Successfully
+['Jaw_Jnt', 'JawUpperLip_Jnt', 'JawLowerLip_Jnt']
+Build successfully exec_jaw.build_jaw_block()
+Postcode Jaw_Block

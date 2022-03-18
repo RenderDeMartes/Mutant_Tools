@@ -122,6 +122,16 @@ def build_skull_block():
 
     cmds.parentConstraint(block_parent, clean_ctrl_grp)
 
+    #Bind joints
+    bind_jnt_grp = '{}{}'.format(setup['rig_groups']['bind_joints'], nc['group'])
+    for jnt in [new_guide, lower_head]:
+        cmds.select(cl=True)
+        bind_joint = cmds.joint(n = jnt.replace(nc['joint'], nc['joint_bind']))
+        cmds.parentConstraint(jnt, bind_joint)
+        cmds.setAttr('{}.radius'.format(bind_joint), 1.5)
+        cmds.parent(bind_joint, bind_jnt_grp)
+
+
 
     print ('Build {} Success'.format(block))
 

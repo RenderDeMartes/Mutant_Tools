@@ -130,6 +130,7 @@ def build_jaw_block():
     mt.assign_color(color='green')
     jaw_ctrl_root = mt.root_grp()[0]
     cmds.connectAttr(jaw_ctrl+'.rotate', global_locator+'.rotate')
+    cmds.connectAttr('{}.translate'.format(jaw_ctrl), '{}.translate'.format(jaw_jnt_mover))
 
     up_limit = mt.new_attr(input=jaw_ctrl, name='UpperLipBreak', min=0, max=90, default=5)
     side_limits = mt.new_attr(input=jaw_ctrl, name='SideBreaks', min=0, max=90, default=5)
@@ -141,7 +142,6 @@ def build_jaw_block():
 
     mt.hide_attr(input=jaw_ctrl, s=True)
 
-    cmds.connectAttr('{}.translate'.format(jaw_ctrl), '{}.translate'.format(jaw_jnt_mover))
 
     #Bind joints
     bind_jnt_grp = '{}{}'.format(setup['rig_groups']['bind_joints'], nc['group'])
