@@ -1,4 +1,5 @@
 from maya import cmds, OpenMaya
+import maya.mel as mel
 import json
 import imp
 import os
@@ -22,42 +23,42 @@ PATH = Path(PATH)
 PATH_PARTS = PATH.parts[:-2]
 FOLDER=''
 for f in PATH_PARTS:
-	FOLDER = os.path.join(FOLDER, f)
+    FOLDER = os.path.join(FOLDER, f)
 
 JSON_FILE = os.path.join(FOLDER, 'config', 'name_conventions.json')
 with open(JSON_FILE) as json_file:
-	nc = json.load(json_file)
+    nc = json.load(json_file)
 #Read curve shapes info
 CURVE_FILE = os.path.join(FOLDER, 'config', 'curves.json')
 with open(CURVE_FILE) as curve_file:
-	curve_data = json.load(curve_file)
+    curve_data = json.load(curve_file)
 #setup File
 SETUP_FILE = os.path.join(FOLDER, 'config', 'rig_setup.json')
 with open(SETUP_FILE) as setup_file:
-	setup = json.load(setup_file)
+    setup = json.load(setup_file)
 
 MODULE_FILE = os.path.join(os.path.dirname(__file__),'04_Eyelids.json')
 with open(MODULE_FILE) as module_file:
-	module = json.load(module_file)
+    module = json.load(module_file)
 
 
 # ---------------------------------------------
 
 def create_eyelids_block(name='Nose'):
-	# name checks and block creation
-	name = mt.ask_name(text=module['Name'])
-	if cmds.objExists('{}{}'.format(name, nc['module'])):
-		cmds.warning('Name already exists.')
-		return ''
+    # name checks and block creation
+    name = mt.ask_name(text=module['Name'])
+    if cmds.objExists('{}{}'.format(name, nc['module'])):
+        cmds.warning('Name already exists.')
+        return ''
 
-	block = mt.create_block(name=name, icon='Eyes', attrs=module['attrs'], build_command=module['build_command'],
-							import_command=module['import'])
-	config = block[1]
-	block = block[0]
+    block = mt.create_block(name=name, icon='Eyes', attrs=module['attrs'], build_command=module['build_command'],
+                            import_command=module['import'])
+    config = block[1]
+    block = block[0]
 
-	cmds.select(block)
+    cmds.select(block)
 
-	print('{} Created Successfully'.format(name))
+    print('{} Created Successfully'.format(name))
 
 
 # create_nose_block()
@@ -65,21 +66,222 @@ def create_eyelids_block(name='Nose'):
 # -------------------------
 
 def build_eyelids_block():
-	mt.check_is_there_is_base()
+    mt.check_is_there_is_base()
 
-	block = cmds.ls(sl=True)
-	config = cmds.listConnections(block)[1]
-	block = block[0]
-	guide = cmds.listRelatives(block, c=True)[0]
-	name = guide.replace(nc['guide'], '')
+    block = cmds.ls(sl=True)
+    config = cmds.listConnections(block)[1]
+    block = block[0]
+    #guide = cmds.listRelatives(block, c=True)[0]
+    name = block.replace(nc['module'], '')
 
-	# use this locator in case parent is set to new locator
-	if cmds.getAttr('{}.SetParent'.format(config)) == 'new_locator':
-		block_parent = cmds.spaceLocator(n='{}'.format(str(block).replace(nc['module'], '_Parent' + nc['locator'])))
-	else:
-		block_parent = cmds.getAttr('{}.SetParent'.format(config))
+    # use this locator in case parent is set to new locator
+    if cmds.getAttr('{}.SetParent'.format(config)) == 'new_locator':
+        block_parent = cmds.spaceLocator(n='{}'.format(str(block).replace(nc['module'], '_Parent' + nc['locator'])))
+    else:
+        block_parent = cmds.getAttr('{}.SetParent'.format(config))
 
-	ctrl_size = cmds.getAttr('{}.CtrlSize'.format(config))
+    ctrl_size = cmds.getAttr('{}.CtrlSize'.format(config))
+
+    upper_edge = cmds.getAttr('{}.SetUpperEdge'.format(config), asString=True).split(',')
+    lower_edge = cmds.getAttr('{}.SetLowerEdge'.format(config), asString = True).split(',')
+    eye_pivot = cmds.getAttr('{}.SetEyePivot'.format(config), asString = True)
+
+    mirror_attr = cmds.getAttr('{}.Mirror'.format(config), asString=True)
+
+    to_build = [name]
+    if mirror_attr == 'True':
+        to_build = [name, name.replace(nc['left'], nc['right'])]
+
+    for name in to_build:
+
+
+        #Create locator at center of eye with up vector
+        eye_pivot_locator = cmds.spaceLocator(n=name+"_EyePivot"+nc['locator'])[0]
+        cmds.delete(cmds.parentConstraint(eye_pivot, eye_pivot_locator))
+        eye_up_vector_locator = cmds.spaceLocator(n=name+"_UpVector"+nc['locator'])[0]
+        cmds.delete(cmds.parentConstraint(eye_pivot_locator, eye_up_vector_locator))
+        cmds.move(0,3*ctrl_size,0, r=True)
+
+        def create_eye_system(name, edge, center_pivot, check_curve =True):
+
+            #side settings
+            if name.startswith(nc['right']):
+                color = 'red'
+            elif name.startswith(nc['left']):
+                color = 'blue'
+            else:
+                color = 'yellow'
+
+            #
+            cmds.select(edge)
+            linear_curve = cmds.polyToCurve(form = 0,
+                                            degree = 1,
+                                            conformToSmoothMeshPreview = 1,
+                                            n =name+'_Vtx'+nc['curve'],
+                                            ch=False)[0]
+            linear_curve_shape = cmds.listRelatives(linear_curve, s=True)[0]
+            linear_curve_cvs = cmds.getAttr('{}.spans'.format(linear_curve_shape)) + 1
+
+            #make sure curve is in correct orientation
+            if check_curve:
+                cmds.select('{}.cv[0]'.format(linear_curve))
+                zero_cls = cmds.cluster()[1]
+                cmds.select('{}.cv[1]'.format(linear_curve))
+                one_cls = cmds.cluster()[1]
+                if cmds.getAttr('{}.originX'.format(zero_cls)) > cmds.getAttr('{}.originX'.format(one_cls)):
+                    cmds.reverseCurve(linear_curve, ch=False, replaceOriginal=True )
+                cmds.delete(zero_cls, one_cls)
+
+            cmds.delete(linear_curve, ch=True)
+
+            center_joints = []
+            end_joints = []
+            end_locators = []
+            points_on_curve_infos = []
+            tweek_controllers = []
+            vtx_joints_grp = cmds.group(em=True, n='{}_VtxJnts{}'.format(name, nc['group']))
+            aim_locators_grp = cmds.group(em=True, n='{}_AimLocators{}'.format(name, nc['group']))
+            tweek_ctrl_grp = cmds.group(em=True, n='{}_Tweeks{}{}'.format(name, nc['ctrl'], nc['group']))
+
+            for num in range(linear_curve_cvs):
+                #Place joint at pivot and on vertex
+                cmds.select(cl=True)
+                origin_jnt = cmds.joint(n='{}_Origin_{}{}'.format(name, num, nc['joint']))
+                center_joints.append(origin_jnt)
+                vtx_jnt = cmds.joint(n='{}_{}{}'.format(name, num, nc['joint']))
+                end_joints.append(vtx_jnt)
+                cmds.select('{}.cv[{}]'.format(linear_curve, num))
+                temp_cls = cmds.cluster()
+                cmds.delete(cmds.parentConstraint(eye_pivot, origin_jnt))
+                cmds.delete(cmds.parentConstraint(temp_cls, vtx_jnt))
+                cmds.select(origin_jnt)
+                mel.eval('joint -e  -oj xyz -secondaryAxisOrient yup -ch -zso;')
+                cmds.delete(temp_cls)
+                cmds.parent(origin_jnt, vtx_joints_grp)
+                origin_root=mt.root_grp(input=origin_jnt)
+                #end locators to work as aim
+                end_locator=cmds.spaceLocator(n='{}_{}{}'.format(name, num, nc['locator']))[0]
+                end_locators.append(end_locator)
+                cmds.delete(cmds.parentConstraint(vtx_jnt, end_locator))
+                cmds.parent(end_locator, aim_locators_grp)
+
+                cmds.aimConstraint(end_locator, origin_jnt,
+                                   aimVector= (1, 0, 0), upVector =(0, 1, 0),
+                                   worldUpType="object", worldUpObject=eye_up_vector_locator)
+
+                #point on curve info per cv
+                poci = cmds.createNode('pointOnCurveInfo', n='{}_{}_POCI'.format(name, num) )
+                points_on_curve_infos.append(poci)
+                cmds.connectAttr('{}.worldSpace[0]'.format(linear_curve_shape), '{}.inputCurve'.format(poci))
+                cmds.connectAttr('{}.position'.format(poci), '{}.translate'.format(end_locator))
+                cmds.setAttr('{}.parameter'.format(poci), num)
+
+                # create controllers to control the curve
+                ctrl = mt.curve(input=end_locator,
+                                type='circleZ',
+                                rename=True,
+                                custom_name=True,
+                                name=end_locator.replace(nc['locator'], nc['ctrl']),
+                                size=ctrl_size/3)
+                tweek_controllers.append(ctrl)
+                mt.assign_color(color=color)
+                ctrl_root = mt.root_grp()[0]
+                mt.match(ctrl_root, end_locator, r = True, t = True)
+                #Group so the origin jnt controll te end position of ctrl too as local
+                pivot_grp = cmds.group(em=True, n= ctrl_root.replace(nc['group'],'Pivot'+nc['group']))
+                pivot_root = mt.root_grp()[0]
+                mt.match(pivot_root, origin_jnt, r = True, t = True)
+                cmds.parent(ctrl_root, pivot_grp)
+
+                cmds.parent(pivot_root, tweek_ctrl_grp)
+
+                end_root=mt.root_grp(input=vtx_jnt)
+
+                #Connect directy to threat as local
+                cmds.connectAttr('{}.rotate'.format(ctrl), '{}.rotate'.format(vtx_jnt))
+                cmds.connectAttr('{}.translate'.format(ctrl), '{}.translate'.format(vtx_jnt))
+                cmds.connectAttr('{}.rotate'.format(origin_jnt), '{}.rotate'.format(pivot_grp))
+                cmds.connectAttr('{}.translate'.format(origin_jnt), '{}.translate'.format(pivot_grp))
+
+
+            main_ctrl_grp = cmds.group(em=True, n='{}{}{}'.format(name, nc['ctrl'], nc['group']))
+            cmds.parent(tweek_ctrl_grp, main_ctrl_grp)
+
+            #Create 5 points curve and wire it to the linear one
+            five_curve = cmds.duplicate(linear_curve, n=name+'_WireDriver'+nc['curve'])[0]
+            mel.eval('rebuildCurve -ch 1 -rpo 1 -rt 0 -end 1 -kr 0'
+                     ''
+                     ''
+                     ' -kcp 0 -kep 1 -kt 0 -s 4 -d 3 -tol 0.01 "{}";'.format(five_curve))
+            five_curve_shape = cmds.listRelatives(five_curve, s=True)[0]
+
+            mel.eval('wire -n "{}_Wire" -gw false -en 1.000000 -ce 0.000000 -li 0.000000 -w {} {};'.format(name, five_curve, linear_curve))
+
+            #Create 5 controllers to manipulate main curve
+            cv_to_add_ctrl_to = ['{}.cv[0]'.format(five_curve),
+                                     '{}.cv[2]'.format(five_curve),
+                                     '{}.cv[3]'.format(five_curve),
+                                     '{}.cv[4]'.format(five_curve),
+                                     '{}.cv[6]'.format(five_curve),
+                                     ]
+            main_ctrl_names = ['Start',
+                               'StartMid',
+                               'Mid',
+                               'EndMid',
+                               'End'
+                                ]
+            main_ctrls=[]
+            five_jnts = []
+            main_joint_grp = cmds.group(em=True, n='{}{}{}'.format(name, nc['joint'], nc['group']))
+
+            for num, cv in enumerate(cv_to_add_ctrl_to):
+                cmds.select(cv)
+                temp_cls = cmds.cluster()
+                ctrl = mt.curve(input=temp_cls,
+                                type='circleZ',
+                                rename=True,
+                                custom_name=True,
+                                name=name+main_ctrl_names[num]+nc['ctrl'] ,
+                                size=ctrl_size)
+                main_ctrls.append(ctrl)
+                mt.assign_color(color=color)
+                ctrl_root = mt.root_grp()[0]
+                cmds.parent(ctrl_root, main_ctrl_grp)
+                mt.match(ctrl_root, temp_cls, r=True, t=True)
+                # cmds.delete(cmds.aimConstraint(eye_pivot, ctrl_root,
+                #                    aimVector= (0, 0, -1), upVector =(0, 1, 0),
+                #                    worldUpType="object", worldUpObject=eye_up_vector_locator))
+                cmds.delete(temp_cls)
+
+                cmds.select(cl=True)
+                jnt = cmds.joint(n=name+main_ctrl_names[num]+nc['joint'] )
+                five_jnts.append(jnt)
+                mt.match(jnt, ctrl, r=True, t=True)
+                jnt_root = mt.root_grp()[0]
+                cmds.parent(jnt_root, main_joint_grp)
+                cmds.connectAttr('{}.rotate'.format(ctrl), '{}.rotate'.format(jnt))
+                cmds.connectAttr('{}.translate'.format(ctrl), '{}.translate'.format(jnt))
+
+            cmds.skinCluster(five_jnts, five_curve, sm=0, bm=1, tsb=True)
+            #Mid ctrls moves with center and corne
+            pc = cmds.parentConstraint(main_ctrls[0], main_ctrls[2], cmds.listRelatives(main_ctrls[1],p=True), mo=True)[0]
+            cmds.setAttr('{}.interpType'.format(pc), 2)
+            pc2 = cmds.parentConstraint(main_ctrls[4], main_ctrls[2], cmds.listRelatives(main_ctrls[3], p=True), mo=True)[0]
+            cmds.setAttr('{}.interpType'.format(pc2), 2)
+
+            pcj = cmds.parentConstraint(five_jnts[0], five_jnts[2], cmds.listRelatives(five_jnts[1], p=True), mo=True)[0]
+            cmds.setAttr('{}.interpType'.format(pc), 2)
+            pc2j = cmds.parentConstraint(five_jnts[4], five_jnts[2], cmds.listRelatives(five_jnts[3], p=True), mo=True)[0]
+            cmds.setAttr('{}.interpType'.format(pc2), 2)
+
+        upper_system = create_eye_system(name = name+'_Up',
+                                          edge=upper_edge,
+                                          center_pivot=eye_pivot)
+
+        lower_system = create_eye_system(name = name+'_Dw',
+                                          edge=lower_edge,
+                                          center_pivot=eye_pivot)
+
 
 
 #Video TutorialScripts
@@ -121,24 +323,10 @@ def getDagPath(objectName):
 #Created during video
 
 '''
-#instrucciones
-video 1
-create locator in center of eye
-create up vector for center of eye
-crear cadenas de joint por vertices 1 en el centro y otro en el vertice, oritnarlos para que queden viendo bien
-create a locator in every eye end jnt
-aim constraint del locator nuevo al centro del ojo
-
-video 2
-
-LINEAR!!! crear curva cv per vtx LINEAR!!!!
-usar getUParam(pos_locator, curva) para para saber donde poner cada locator en la curva
-point on curve info para poner el locator que tiene al aim en el upParam que conseguimos
 
 Crear una curva cubica con 5 puntos, 2 bordes, 1 centro y 2 medios (Creo que duplicar y rebuild es la forma para que haga match)
 recordar poner en degree 3 
  
-Conectar la curva con 5 puntos a la linear por wire
 crear 5 controlles en los 5 puntos de la curva de 5 puntos (las esquinas pueden ser compartidas)
 crear 5 joints para binder a la curva de 5 puntos y esos joints son controlados por los 5 controles
 
@@ -146,7 +334,7 @@ los controles de del medio deben moverse con el centro y la esquina50/50
 
 video 3 smart blink
  
- Mejor hacer esto viendo el video
+Mejor hacer esto viendo el video
  
 
 '''
