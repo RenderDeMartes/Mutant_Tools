@@ -283,7 +283,8 @@ def build_eyelids_block():
                     'clean_ctrls': [main_ctrl_grp],
                     'linear_cv':linear_curve,
                     'tweeks': tweek_controllers,
-                    'ctrls': main_ctrls}
+                    'ctrls': main_ctrls,
+                    'tweek_joints' : end_joints}
 
         upper_system = create_eye_system(name = name+'_Up',
                                           edge=upper_edge,
@@ -396,8 +397,17 @@ def build_eyelids_block():
             cmds.parent(rig_mirror, '{}{}'.format(setup['rig_groups']['misc'], nc['group']))
             cmds.parent(ctrl_mirror, setup['base_groups']['control'] + nc['group'])
 
+        #create bind joints
+        bind_jnt_grp = '{}{}'.format(setup['rig_groups']['bind_joints'], nc['group'])
+        for jnt in upper_system['tweek_joints']+lower_system['tweek_joints']:
+            cmds.select(cl=True)
+            bind_joint = cmds.joint(n=jnt.replace(nc['joint'], nc['joint_bind']))
+            cmds.parentConstraint(jnt, bind_joint)
+            cmds.scaleConstraint(jnt, bind_joint)
+            cmds.setAttr('{}.radius'.format(bind_joint), 1.5)
+            cmds.parent(bind_joint, bind_jnt_grp)
 
-#Video TutorialScripts
+        #Video TutorialScripts
 #Tutorial: https://vimeo.com/66583205
 def getUParam(pnt=[], crv=None):
     point = OpenMaya.MPoint(pnt[0], pnt[1], pnt[2])
@@ -434,16 +444,6 @@ def getDagPath(objectName):
         return oNode
 
 #Created during video
-
-'''
-
-video 3 smart blink
- 
-Mejor hacer esto viendo el video
- 
-
-'''
-
 
 
 
