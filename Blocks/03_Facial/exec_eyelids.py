@@ -303,9 +303,9 @@ def build_eyelids_block():
             guide_attrs_position = cmds.spaceLocator(n=name+'_Attrs'+nc['locator'])[0]
 
         #hide ctrls
-        mt.line_attr(input=guide_attrs_position, name='VisSwitches')
-        show_ctrl_attr = mt.new_enum(input=guide_attrs_position, name='midCtrls', enums='Hide:Show')
-        show_tweeks_attr = mt.new_enum(input=guide_attrs_position, name='tweekCtrls', enums='Hide:Show')
+        mt.line_attr(input=guide_attrs_position, name='Eye_Vis')
+        show_ctrl_attr = mt.new_enum(input=guide_attrs_position, name='eyeMidCtrls', enums='Hide:Show')
+        show_tweeks_attr = mt.new_enum(input=guide_attrs_position, name='eyeTweekCtrls', enums='Hide:Show')
 
         for ctrl in upper_system['tweeks']+lower_system['tweeks']:
             shape = cmds.listRelatives(ctrl, s=True)[0]
@@ -314,8 +314,8 @@ def build_eyelids_block():
             shape = cmds.listRelatives(ctrl, s=True)[0]
             cmds.connectAttr(show_ctrl_attr, '{}.v'.format(shape))
 
-        cmds.setAttr(show_ctrl_attr, 1)
-        cmds.setAttr(show_tweeks_attr, 1)
+        cmds.setAttr(show_ctrl_attr, 0)
+        cmds.setAttr(show_tweeks_attr, 0)
 
         #Smart Blink 0 min video 3
         upr_curve = upper_system['clean_rig'][3]

@@ -13,10 +13,10 @@ mt = main_mutant.Mutant()
 
 #---------------------------------------------
 
-TAB_FOLDER = '03_Facial'
+TAB_FOLDER = '02_Biped'
 PYBLOCK_NAME = 'exec_eyes'
 
-#Read name conventions as nc[''] and setup as seup['']
+#Read name conventions as nc[''] and setup as setup['']
 PATH = os.path.dirname(__file__)
 PATH = Path(PATH)
 PATH_PARTS = PATH.parts[:-2]
@@ -36,7 +36,7 @@ SETUP_FILE = os.path.join(FOLDER, 'config', 'rig_setup.json')
 with open(SETUP_FILE) as setup_file:
 	setup = json.load(setup_file)
 
-MODULE_FILE = os.path.join(os.path.dirname(__file__),'03_Eyes.json')
+MODULE_FILE = os.path.join(os.path.dirname(__file__),'08_Eyes.json')
 with open(MODULE_FILE) as module_file:
 	module = json.load(module_file)
 
