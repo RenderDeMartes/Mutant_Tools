@@ -220,6 +220,7 @@ def build_eyelids_block():
             five_curve_shape = cmds.listRelatives(five_curve, s=True)[0]
 
             wire = mel.eval('wire -n "{}_Wire" -gw false -en 1.000000 -ce 0.000000 -li 0.000000 -w {} {};'.format(name, five_curve, linear_curve))
+            cmds.setAttr('{}.dropoffDistance[0]'.format(wire[0]), 999)
             wire_base=wire[1]+'BaseWire'
 
             #Create 5 controllers to manipulate main curve
@@ -344,12 +345,14 @@ def build_eyelids_block():
 
         cmds.setAttr(smart_blink_heigth_attr, 1)
         up_wire = cmds.wire(upr_target_curve, n="{}_UpWire".format(name) , w=blink_cv)
+        cmds.setAttr('{}.dropoffDistance[0]'.format(up_wire[0]), 999)
         cmds.setAttr('{}.scale[0]'.format(up_wire[0]), 0)
         up_wire_base = up_wire[1] + 'BaseWire'
 
         cmds.setAttr(smart_blink_heigth_attr, 0)
         dw_wire = cmds.wire(lwr_target_curve, n="{}_DwWire".format(name) , w=blink_cv)
         cmds.setAttr('{}.scale[0]'.format(dw_wire[0]), 0)
+        cmds.setAttr('{}.dropoffDistance[0]'.format(dw_wire[0]), 999)
         dw_wire_base = dw_wire[1] + 'BaseWire1'
 
         cmds.select(upr_target_curve, linear_upr_curve)
