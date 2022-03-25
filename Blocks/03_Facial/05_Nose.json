@@ -10,6 +10,7 @@
     "build_command": "exec_nose.build_nose_block()",
     "attrs": {
         "SetParent_string": "new_locator",
+        "SetAttrsPosition_string": "new_locator",
         "CtrlSize_float": "4",
         "Help_string": "Possible parent: "
     }

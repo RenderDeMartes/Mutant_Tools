@@ -165,3 +165,16 @@ def build_jaw_block():
 
     cmds.parent(clean_rig_grp, '{}{}'.format(setup['rig_groups']['misc'], nc['group']))
     cmds.parent(clean_ctrl_grp, setup['base_groups']['control'] + nc['group'])
+
+    #VIS
+    # hide ctrls
+    attrs_position = cmds.getAttr('{}.SetAttrsPosition'.format(config), asString=True)
+    if attrs_position == 'new_locator':
+        guide_attrs_position = cmds.spaceLocator(n=name + '_Attrs' + nc['locator'])[0]
+
+    mt.line_attr(input=guide_attrs_position, name='Jaw_Vis')
+    main_ctrl_attr = mt.new_enum(input=guide_attrs_position, name='jawMainCtrls', enums='Hide:Show')
+    cmds.setAttr(main_ctrl_attr, 1)
+    for ctrl in [jaw_ctrl]:
+        shape = cmds.listRelatives(ctrl, s=True)[0]
+        cmds.connectAttr(main_ctrl_attr, '{}.v'.format(shape))

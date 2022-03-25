@@ -10,6 +10,7 @@
     "build_command": "exec_skull.build_skull_block()",
     "attrs": {
         "SetParent_string": "new_locator",
+        "SetAttrsPosition_string": "new_locator",
         "CtrlType_enum": "square:circleX:circleY:circleZ",
         "CtrlSize_float": "4",
         "CtrlColor_enum": "lightBlue:blue:white:purple:green:red:yellow:grey",

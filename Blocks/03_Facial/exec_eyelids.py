@@ -86,6 +86,7 @@ def build_eyelids_block():
     lower_edge = cmds.getAttr('{}.SetLowerEdge'.format(config), asString = True).split(',')
     eye_pivot = cmds.getAttr('{}.SetEyePivot'.format(config), asString = True)
     attrs_position = cmds.getAttr('{}.SetAttrsPosition'.format(config), asString = True)
+    blink_attr_position = cmds.getAttr('{}.SetBlinkAttrsPosition'.format(config), asString = True)
 
     mirror_attr = cmds.getAttr('{}.Mirror'.format(config), asString=True)
 
@@ -298,9 +299,13 @@ def build_eyelids_block():
         #Attrs location
         if name.startswith(nc['right']):
             attrs_position = attrs_position.replace(nc['left'], nc['right'])
+        if name.startswith(nc['right']):
+            blink_attr_position = blink_attr_position.replace(nc['left'], nc['right'])
 
         if attrs_position == 'new_locator':
             guide_attrs_position = cmds.spaceLocator(n=name+'_Attrs'+nc['locator'])[0]
+        if blink_attr_position == 'new_locator':
+            guide_blink_attrs_position = cmds.spaceLocator(n=name+'_BlinkAttrs'+nc['locator'])[0]
 
         #hide ctrls
         mt.line_attr(input=guide_attrs_position, name='Eye_Vis')
@@ -325,12 +330,12 @@ def build_eyelids_block():
         cmds.select(upr_curve, lwr_curve, blink_cv)
         bs = cmds.blendShape(n='{}_Blink{}'.format(name, '_BS'), w=[(0, 1), (1, 1)])[0]
 
-        cmds.select(guide_attrs_position)
-        mt.line_attr(input=guide_attrs_position, name='SmartBlink')
-        blink_attr = mt.new_attr(input=guide_attrs_position, name='blink', min=0, max=1, default=0)
+        cmds.select(guide_blink_attrs_position)
+        mt.line_attr(input=guide_blink_attrs_position, name='SmartBlink')
+        blink_attr = mt.new_attr(input=guide_blink_attrs_position, name='blink', min=0, max=1, default=0)
 
 
-        smart_blink_heigth_attr = mt.new_attr(input=guide_attrs_position, name='blinkHeight', min=0, max=1, default=0.35)
+        smart_blink_heigth_attr = mt.new_attr(input=guide_blink_attrs_position, name='blinkHeight', min=0, max=1, default=0.35)
         cmds.connectAttr(smart_blink_heigth_attr, '{}.{}'.format(bs, upr_curve))
 
         reverse_node = cmds.createNode('reverse', n =name+'_Blink_Reverse')
@@ -363,8 +368,8 @@ def build_eyelids_block():
 
 
         cmds.select(guide_attrs_position)
-        upr_blink_mult_attr = mt.new_attr(input=guide_attrs_position, name='uprBlinkMult', min=1, max=1.5, default=1)
-        lwr_blink_mult_attr = mt.new_attr(input=guide_attrs_position, name='lwrBlinkMult', min=1, max=1.5, default=1)
+        upr_blink_mult_attr = mt.new_attr(input=guide_blink_attrs_position, name='uprBlinkMult', min=1, max=1.5, default=1)
+        lwr_blink_mult_attr = mt.new_attr(input=guide_blink_attrs_position, name='lwrBlinkMult', min=1, max=1.5, default=1)
 
 
         mt.connect_md_node(in_x1=blink_attr,
@@ -410,7 +415,11 @@ def build_eyelids_block():
             cmds.setAttr('{}.radius'.format(bind_joint), 1.5)
             cmds.parent(bind_joint, bind_jnt_grp)
 
-        #Video TutorialScripts
+        #parent to block_parent
+        cmds.parentConstraint(block_parent, clean_ctrl_grp, mo=True)
+
+
+#Video TutorialScripts
 #Tutorial: https://vimeo.com/66583205
 def getUParam(pnt=[], crv=None):
     point = OpenMaya.MPoint(pnt[0], pnt[1], pnt[2])

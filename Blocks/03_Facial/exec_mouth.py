@@ -509,6 +509,9 @@ def build_mouth_block():
         shape = cmds.listRelatives(ctrl, s=True)[0]
         cmds.connectAttr(main_ctrl_attr, '{}.v'.format(shape))
 
+    #parent ctrls to block parent
+    cmds.parentConstraint(block_parent, clean_ctrl_grp, mo=True)
+
     #Clean a bit
     cmds.parent(clean_rig_grp, '{}{}'.format(setup['rig_groups']['misc'], nc['group']))
     cmds.parent(clean_ctrl_grp, setup['base_groups']['control'] + nc['group'])

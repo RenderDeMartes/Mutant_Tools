@@ -201,3 +201,27 @@ def build_nose_block():
 
     cmds.parent(cmds.listRelatives(origin_ctrl, p=True)[0], clean_ctrl_grp)
     cmds.parent(new_guide, clean_rig_grp)
+
+
+    #vis
+    attrs_position = cmds.getAttr('{}.SetAttrsPosition'.format(config), asString=True)
+
+    if attrs_position == 'new_locator':
+        guide_attrs_position = cmds.spaceLocator(n=name + '_Attrs' + nc['locator'])[0]
+
+    mt.line_attr(input=guide_attrs_position, name='Nose_Vis')
+    main_ctrl_attr = mt.new_enum(input=guide_attrs_position, name='noseMainCtrls', enums='Hide:Show')
+    mid_ctrl_attr = mt.new_enum(input=guide_attrs_position, name='noseMidCtrls', enums='Hide:Show')
+    show_tweeks_attr = mt.new_enum(input=guide_attrs_position, name='noseTweekCtrls', enums='Hide:Show')
+
+    cmds.setAttr(main_ctrl_attr, 1)
+
+    for ctrl in [base_ctrl]:
+        shape = cmds.listRelatives(ctrl, s=True)[0]
+        cmds.connectAttr(main_ctrl_attr, '{}.v'.format(shape))
+    for ctrl in [top_ctrl, l_nostril_ctrl, r_nostril_ctrl]:
+        shape = cmds.listRelatives(ctrl, s=True)[0]
+        cmds.connectAttr(mid_ctrl_attr, '{}.v'.format(shape))
+    for ctrl in [origin_ctrl, bridge_ctrl, tip_ctrl, r_nostril_end_ctrl, l_nostril_end_ctrl]:
+        shape = cmds.listRelatives(ctrl, s=True)[0]
+        cmds.connectAttr(show_tweeks_attr, '{}.v'.format(shape))

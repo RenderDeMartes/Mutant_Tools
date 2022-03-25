@@ -287,8 +287,11 @@ def build_brows_block():
             guide_attrs_position = cmds.spaceLocator(n=name+'_Attrs'+nc['locator'])[0]
 
         mt.line_attr(input=guide_attrs_position, name='Brows_Vis')
+        main_ctrl_attr = mt.new_enum(input=guide_attrs_position, name='browsMainCtrls', enums='Hide:Show')
         mid_ctrl_attr = mt.new_enum(input=guide_attrs_position, name='browsMidCtrls', enums='Hide:Show')
         show_tweeks_attr = mt.new_enum(input=guide_attrs_position, name='browsTweekCtrls', enums='Hide:Show')
+
+        cmds.setAttr(main_ctrl_attr, 1)
 
         for ctrl in tweek_controllers:
             shape = cmds.listRelatives(ctrl, s=True)[0]
@@ -296,6 +299,9 @@ def build_brows_block():
         for ctrl in sec_ctrls:
             shape = cmds.listRelatives(ctrl, s=True)[0]
             cmds.connectAttr(mid_ctrl_attr, '{}.v'.format(shape))
+        for ctrl in main_ctrls + [brow_ctrl]:
+            shape = cmds.listRelatives(ctrl, s=True)[0]
+            cmds.connectAttr(main_ctrl_attr, '{}.v'.format(shape))
 
         #clean a bit
         clean_ctrl_grp = cmds.group(em=True, name=name + nc['ctrl'] + nc['group'])
@@ -339,3 +345,7 @@ def build_brows_block():
             cmds.scaleConstraint(jnt, bind_joint)
             cmds.setAttr('{}.radius'.format(bind_joint), 1.5)
             cmds.parent(bind_joint, bind_jnt_grp)
+
+
+        #Block Parent
+        cmds.parentConstraint(block_parent, clean_ctrl_grp, mo=True)

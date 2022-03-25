@@ -99,6 +99,7 @@ def build_skull_block():
     new_guide = mt.duplicate_and_remove_guides(guide)
     lower_head = cmds.listRelatives(new_guide, c=True)[0]
     cmds.parent(lower_head,  w=True)
+    ctrls = []
     for jnt in [new_guide, lower_head]:
         jnt_root = mt.root_grp(input=jnt)
         ctrl = mt.curve(input=jnt,
@@ -115,7 +116,7 @@ def build_skull_block():
         mt.hide_attr(input=ctrl, s=True)
         cmds.parent(ctrl_root, clean_ctrl_grp)
         cmds.parent(jnt_root, clean_rig_grp)
-
+        ctrls.append(ctrl)
 
     cmds.parent(clean_rig_grp, '{}{}'.format(setup['rig_groups']['misc'], nc['group']))
     cmds.parent(clean_ctrl_grp, setup['base_groups']['control'] + nc['group'])
@@ -132,6 +133,18 @@ def build_skull_block():
         cmds.parent(bind_joint, bind_jnt_grp)
 
 
+    #VIS
+    # hide ctrls
+    attrs_position = cmds.getAttr('{}.SetAttrsPosition'.format(config), asString=True)
+    if attrs_position == 'new_locator':
+        guide_attrs_position = cmds.spaceLocator(n=name + '_Attrs' + nc['locator'])[0]
+
+    mt.line_attr(input=guide_attrs_position, name='Skull_Vis')
+    main_ctrl_attr = mt.new_enum(input=guide_attrs_position, name='skullMainCtrls', enums='Hide:Show')
+    cmds.setAttr(main_ctrl_attr, 1)
+    for ctrl in ctrls:
+        shape = cmds.listRelatives(ctrl, s=True)[0]
+        cmds.connectAttr(main_ctrl_attr, '{}.v'.format(shape))
 
     print ('Build {} Success'.format(block))
 

@@ -10,6 +10,7 @@
     "build_command": "exec_cheeks.build_cheek_block()",
     "attrs": {
         "SetParent_string": "new_locator",
+        "SetAttrsPosition_string": "new_locator",
         "Mirror_enum": "True:False:Right_Only",
         "CtrlSize_float": "4",
         "Help_string": "Will crete cheek rig system"
