@@ -1,0 +1,20 @@
+{
+    "Name": "Lips",
+    "Description": "Will create mouth system",
+    "Icon": "Lips.png",
+    "Enable": "True",
+    "python_file": "exec_mouth.py",
+    "import": "import exec_mouth",
+    "imp.reload": "imp.reload(exec_mouth)",
+    "exec_command": "exec_mouth.create_mouth_block()",
+    "build_command": "exec_mouth.build_mouth_block()",
+    "attrs": {
+        "SetParent_string": "new_locator",
+        "SetAttrsPosition_string": "new_locator",
+        "Mirror_enum": "True:False:Right_Only",
+        "SetUpperEdge_string": "",
+        "SetLowerEdge_string": "",
+        "CtrlSize_float": 4,
+        "Help_string" : "Create mouth lips rig\n"
+    }
+}

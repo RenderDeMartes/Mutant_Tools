@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>516</width>
-    <height>562</height>
+    <width>716</width>
+    <height>688</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -153,31 +153,10 @@
          <property name="spacing">
           <number>0</number>
          </property>
-         <item row="0" column="2">
+         <item row="0" column="3">
           <widget class="QRadioButton" name="facial_radio">
            <property name="text">
             <string>Facial</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="5">
-          <widget class="QRadioButton" name="props_radio">
-           <property name="text">
-            <string>Props</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="4">
-          <widget class="QRadioButton" name="clothes_radio">
-           <property name="text">
-            <string>Clothes</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="6">
-          <widget class="QRadioButton" name="games_radio">
-           <property name="text">
-            <string>Games</string>
            </property>
           </widget>
          </item>
@@ -188,7 +167,42 @@
            </property>
           </widget>
          </item>
-         <item row="0" column="1">
+         <item row="0" column="7">
+          <widget class="QRadioButton" name="games_radio">
+           <property name="text">
+            <string>Games</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="5">
+          <widget class="QRadioButton" name="clothes_radio">
+           <property name="text">
+            <string>Clothes</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="8">
+          <widget class="QRadioButton" name="data_radio">
+           <property name="text">
+            <string>Data</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="4">
+          <widget class="QRadioButton" name="animals_radio">
+           <property name="text">
+            <string>Animals</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="10">
+          <widget class="QRadioButton" name="other_radio">
+           <property name="text">
+            <string>Other</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="2">
           <widget class="QRadioButton" name="biped_radio">
            <property name="text">
             <string>Biped</string>
@@ -198,24 +212,17 @@
            </property>
           </widget>
          </item>
-         <item row="0" column="8">
-          <widget class="QRadioButton" name="other_radio">
+         <item row="0" column="6">
+          <widget class="QRadioButton" name="props_radio">
            <property name="text">
-            <string>Other</string>
+            <string>Props</string>
            </property>
           </widget>
          </item>
-         <item row="0" column="3">
-          <widget class="QRadioButton" name="animals_radio">
+         <item row="0" column="1">
+          <widget class="QRadioButton" name="stellar_radio">
            <property name="text">
-            <string>Animals</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="7">
-          <widget class="QRadioButton" name="data_radio">
-           <property name="text">
-            <string>Data</string>
+            <string>Stellar</string>
            </property>
           </widget>
          </item>

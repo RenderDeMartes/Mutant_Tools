@@ -1,0 +1,21 @@
+------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
+Building: L_Eyelids_Block
+------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
+Import successfully import exec_eyelids
+Precode L_Eyelids_Block
+{'geometry': 'Geo', 'control': 'Ctrl', 'rig': 'Rig'}
+{}
+{'bind_joints': 'Bind_Joints', 'bind_geo': 'Bind_Geo', 'misc': 'Miscellaneous', 'template': 'Template'}
+BaseA Created Successfully
+# Warning: History will be on for the command since a selected item has history. # 
+// Warning: line 1: History will be off for the command since Keep Originals is off and a selected item has no history. // 
+// Warning: line 1: History will be off for the command since Keep Originals is off and a selected item has no history. // 
+# Warning: Name '_________' of new attribute clashes with an existing attribute of node 'L_Eyelids_Attrs_Loc'. # 
+# Warning: History will be on for the command since a selected item has history. # 
+// Warning: line 1: History will be off for the command since Keep Originals is off and a selected item has no history. // 
+// Warning: line 1: History will be off for the command since Keep Originals is off and a selected item has no history. // 
+# Warning: Name '_________' of new attribute clashes with an existing attribute of node 'R_Eyelids_Attrs_Loc'. # 
+Build successfully exec_eyelids.build_eyelids_block()
+Postcode L_Eyelids_Block

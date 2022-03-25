@@ -1,0 +1,26 @@
+{
+    "Name": "L_Eyelids",
+    "Description": "Eyelids Setup by Marco Giordano video\n",
+
+    "Icon": "Eyes.png",
+
+    "Enable": "True",
+
+    "python_file": "exec_eyelids.py",
+    "import": "import exec_eyelids",
+    "imp.reload": "imp.reload(exec_eyelids)",
+    "exec_command": "exec_eyelids.create_eyelids_block()",
+    "build_command": "exec_eyelids.build_eyelids_block()",
+
+    "attrs": {
+        "SetParent_string": "new_locator",
+        "SetAttrsPosition_string": "new_locator",
+        "SetBlinkAttrsPosition_string": "new_locator",
+        "Mirror_enum": "True:False:Right_Only",
+        "SetUpperEdge_string": "",
+        "SetLowerEdge_string": "",
+        "SetEyePivot_string": "",
+        "CtrlSize_float": 4,
+        "Help_string" : "Create eyelids rig, based on Marco Giordano tutorial\n"
+    }
+}

@@ -7,8 +7,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>418</width>
-    <height>464</height>
+    <width>533</width>
+    <height>566</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -409,8 +409,8 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>234</width>
-              <height>211</height>
+              <width>309</width>
+              <height>272</height>
              </rect>
             </property>
             <layout class="QGridLayout" name="gridLayout_20">
@@ -605,8 +605,8 @@ background: qlineargradient(x1: 0, y1: 0.5, x2: 1, y2: 0.5, stop: 0 #44494b, sto
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>372</width>
-              <height>70</height>
+              <width>475</width>
+              <height>78</height>
              </rect>
             </property>
             <layout class="QGridLayout" name="gridLayout_13">
@@ -642,6 +642,11 @@ background: qlineargradient(x1: 0, y1: 0.5, x2: 1, y2: 0.5, stop: 0 #44494b, sto
          </item>
         </layout>
        </widget>
+       <widget class="QWidget" name="Stellar">
+        <attribute name="title">
+         <string>Stellar</string>
+        </attribute>
+       </widget>
        <widget class="QWidget" name="Biped">
         <attribute name="title">
          <string>Biped</string>
@@ -657,8 +662,8 @@ background: qlineargradient(x1: 0, y1: 0.5, x2: 1, y2: 0.5, stop: 0 #44494b, sto
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>372</width>
-              <height>70</height>
+              <width>475</width>
+              <height>78</height>
              </rect>
             </property>
             <layout class="QGridLayout" name="gridLayout_14">
@@ -699,8 +704,8 @@ background: qlineargradient(x1: 0, y1: 0.5, x2: 1, y2: 0.5, stop: 0 #44494b, sto
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>372</width>
-              <height>70</height>
+              <width>475</width>
+              <height>78</height>
              </rect>
             </property>
             <layout class="QGridLayout" name="gridLayout_15">
@@ -741,8 +746,8 @@ background: qlineargradient(x1: 0, y1: 0.5, x2: 1, y2: 0.5, stop: 0 #44494b, sto
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>372</width>
-              <height>70</height>
+              <width>475</width>
+              <height>78</height>
              </rect>
             </property>
             <layout class="QGridLayout" name="gridLayout_16">
@@ -783,8 +788,8 @@ background: qlineargradient(x1: 0, y1: 0.5, x2: 1, y2: 0.5, stop: 0 #44494b, sto
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>372</width>
-              <height>70</height>
+              <width>475</width>
+              <height>78</height>
              </rect>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -825,8 +830,8 @@ background: qlineargradient(x1: 0, y1: 0.5, x2: 1, y2: 0.5, stop: 0 #44494b, sto
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>372</width>
-              <height>70</height>
+              <width>475</width>
+              <height>78</height>
              </rect>
             </property>
             <layout class="QGridLayout" name="gridLayout_17">
@@ -867,8 +872,8 @@ background: qlineargradient(x1: 0, y1: 0.5, x2: 1, y2: 0.5, stop: 0 #44494b, sto
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>372</width>
-              <height>70</height>
+              <width>475</width>
+              <height>78</height>
              </rect>
             </property>
             <layout class="QGridLayout" name="gridLayout_21">
@@ -909,8 +914,8 @@ background: qlineargradient(x1: 0, y1: 0.5, x2: 1, y2: 0.5, stop: 0 #44494b, sto
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>372</width>
-              <height>70</height>
+              <width>475</width>
+              <height>78</height>
              </rect>
             </property>
             <layout class="QGridLayout" name="gridLayout_23">
@@ -951,8 +956,8 @@ background: qlineargradient(x1: 0, y1: 0.5, x2: 1, y2: 0.5, stop: 0 #44494b, sto
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>372</width>
-              <height>70</height>
+              <width>475</width>
+              <height>78</height>
              </rect>
             </property>
             <layout class="QGridLayout" name="gridLayout_18">
