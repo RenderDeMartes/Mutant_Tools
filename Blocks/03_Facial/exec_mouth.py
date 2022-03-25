@@ -288,8 +288,8 @@ def build_mouth_block():
         main_ctrl_root = mt.root_grp()[0]
         cmds.parent(main_ctrl_root, main_ctrl_grp)
 
-        cmds.connectAttr('{}.rotate'.format(end_locator), '{}.rotate'.format(ctrl_root))
-        cmds.connectAttr('{}.translate'.format(end_locator), '{}.translate'.format(ctrl_root))
+        cmds.connectAttr('{}.rotate'.format(main_ctrl), '{}.rotate'.format(main_loc))
+        cmds.connectAttr('{}.translate'.format(main_ctrl), '{}.translate'.format(main_loc))
 
         cmds.select(
         '{}.cv[0:1]'.format(main_ctrl),
