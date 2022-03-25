@@ -177,7 +177,7 @@ def build_mouth_block():
             cmds.connectAttr('{}.translate'.format(ctrl), '{}.translate'.format(vtx_jnt))
             cmds.connectAttr('{}.scale'.format(ctrl), '{}.scale'.format(vtx_jnt))
             cmds.connectAttr('{}.rotate'.format(end_locator), '{}.rotate'.format(ctrl_root))
-            cmds.connectAttr('{}.translate'.format(end_locator), '{}.translate'.format(ctrl_root))
+            #cmds.connectAttr('{}.translate'.format(end_locator), '{}.translate'.format(ctrl_root))
 
             cmds.delete(cmds.parentConstraint(vtx_root, ctrl))
             cmds.parent(vtx_root, vtx_joints_grp)
