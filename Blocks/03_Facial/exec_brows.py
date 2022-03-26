@@ -97,6 +97,20 @@ def build_brows_block():
     if mirror_attr == 'True':
         to_build = [name, name.replace(nc['left'], nc['right'])]
 
+    #hide ctrls
+    if name.startswith(nc['right']):
+        attrs_position = attrs_position.replace(nc['left'], nc['right'])
+
+    if attrs_position == 'new_locator':
+        guide_attrs_position = cmds.spaceLocator(n=name+'_Attrs'+nc['locator'])[0]
+    else:
+        guide_attrs_position = attrs_position
+
+    mt.line_attr(input=guide_attrs_position, name='Brows_Vis')
+    main_ctrl_attr = mt.new_enum(input=guide_attrs_position, name='browsMainCtrls', enums='Hide:Show')
+    mid_ctrl_attr = mt.new_enum(input=guide_attrs_position, name='browsMidCtrls', enums='Hide:Show')
+    show_tweeks_attr = mt.new_enum(input=guide_attrs_position, name='browsTweekCtrls', enums='Hide:Show')
+
     for name in to_build:
 
         # side settings
@@ -279,17 +293,6 @@ def build_brows_block():
         cmds.connectAttr('{}.translate'.format(brow_ctrl), '{}.translate'.format(driver_joints_grp))
         cmds.connectAttr('{}.scale'.format(brow_ctrl), '{}.scale'.format(driver_joints_grp))
 
-        #hide ctrls
-        if name.startswith(nc['right']):
-            attrs_position = attrs_position.replace(nc['left'], nc['right'])
-
-        if attrs_position == 'new_locator':
-            guide_attrs_position = cmds.spaceLocator(n=name+'_Attrs'+nc['locator'])[0]
-
-        mt.line_attr(input=guide_attrs_position, name='Brows_Vis')
-        main_ctrl_attr = mt.new_enum(input=guide_attrs_position, name='browsMainCtrls', enums='Hide:Show')
-        mid_ctrl_attr = mt.new_enum(input=guide_attrs_position, name='browsMidCtrls', enums='Hide:Show')
-        show_tweeks_attr = mt.new_enum(input=guide_attrs_position, name='browsTweekCtrls', enums='Hide:Show')
 
         cmds.setAttr(main_ctrl_attr, 1)
 

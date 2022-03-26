@@ -104,6 +104,22 @@ def build_cheek_block():
 
     to_build = [name]
 
+
+    #vis
+    attrs_position = cmds.getAttr('{}.SetAttrsPosition'.format(config), asString=True)
+
+    if attrs_position == 'new_locator':
+        guide_attrs_position = cmds.spaceLocator(n=name + '_Attrs' + nc['locator'])[0]
+    else:
+        guide_attrs_position = attrs_position
+
+    mt.line_attr(input=guide_attrs_position, name='Cheeks_Vis')
+    main_ctrl_attr = mt.new_enum(input=guide_attrs_position, name='cheeksMainCtrls', enums='Hide:Show')
+    mid_ctrl_attr = mt.new_enum(input=guide_attrs_position, name='cheeksMidCtrls', enums='Hide:Show')
+    show_tweeks_attr = mt.new_enum(input=guide_attrs_position, name='cheeksTweekCtrls', enums='Hide:Show')
+
+    cmds.setAttr(main_ctrl_attr, 1)
+
     if mirror_attr == 'True':
         to_build = [name, name.replace(nc['left'], nc['right'])]
 
@@ -328,19 +344,7 @@ def build_cheek_block():
             cmds.setAttr('{}.radius'.format(bind_joint), 1.5)
             cmds.parent(bind_joint, bind_jnt_grp)
 
-        #vis
-        attrs_position = cmds.getAttr('{}.SetAttrsPosition'.format(config), asString=True)
-
-        if attrs_position == 'new_locator':
-            guide_attrs_position = cmds.spaceLocator(n=name + '_Attrs' + nc['locator'])[0]
-
-        mt.line_attr(input=guide_attrs_position, name='Cheeks_Vis')
-        main_ctrl_attr = mt.new_enum(input=guide_attrs_position, name='cheeksMainCtrls', enums='Hide:Show')
-        mid_ctrl_attr = mt.new_enum(input=guide_attrs_position, name='cheeksMidCtrls', enums='Hide:Show')
-        show_tweeks_attr = mt.new_enum(input=guide_attrs_position, name='cheeksTweekCtrls', enums='Hide:Show')
-
-        cmds.setAttr(main_ctrl_attr, 1)
-
+        #Vis switches
         for ctrl in main_ctrls, cheeck_ctrl:
             shape = cmds.listRelatives(ctrl, s=True)[0]
             cmds.connectAttr(main_ctrl_attr, '{}.v'.format(shape))
@@ -352,7 +356,4 @@ def build_cheek_block():
             cmds.connectAttr(show_tweeks_attr, '{}.v'.format(shape))
 
         #Block Parent
-        if side_guide.startswith(nc['right']):
-            block_parent = block_parent.replace(nc['left'],nc['right'])
-
         cmds.parentConstraint(block_parent, clean_ctrl_grp, mo=True)
