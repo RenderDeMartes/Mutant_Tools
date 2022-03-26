@@ -1,4 +1,4 @@
-from maya import cmds
+from maya import cmds, mel
 import json
 import imp
 import os
@@ -294,13 +294,119 @@ def build_spine_block():
     cmds.parentConstraint(chest_ctrl, up_loc, mo=False)
     cmds.aimConstraint(up_loc, parent_locators[4], aimVector= (0, 1, 0), upVector =(0, 0, -1), worldUpType="object", worldUpObject=twist_locators[4])
 
+    #Share attrs locator
+    all_controllers =  [chest_ctrl, belly_ctrl, base_ctrl, base_ik_ctrl] + spine_ik_ctrls
+    for ctrl in all_controllers:
+        cmds.select(ctrl)
+        if cmds.objectType(ctrl) == 'transform':
+            spine_attrs_loc = mt.shape_with_attr(input='', obj_name='{}_Attrs'.format(name), attr_name='Test').split('.')[0]
+    mel.eval('catch (`deleteAttr -attribute "Test" "Spine_Root_IK_Ctrl|Spine_Attrs_Loc"`);')
+    show_ik_ctrls_attr = mt.new_enum(input=spine_attrs_loc, name='ikCtrls', enums='Hide:Show')
+    show_extra_ik_ctrls_attr = mt.new_enum(input=spine_attrs_loc, name='ikCtrlsExtra', enums='Hide:Show')
+    show_fk_ctrls_attr = mt.new_enum(input=spine_attrs_loc, name='fkCtrls', enums='Hide:Show')
+    cmds.setAttr(show_ik_ctrls_attr, 1)
+    cmds.setAttr(show_extra_ik_ctrls_attr, 0)
+    cmds.setAttr(show_fk_ctrls_attr, 1)
+
+    for ctrl in spine_ik_ctrls[1:-1]+[base_ik_ctrl, chest_ctrl]:
+        shape = cmds.listRelatives(ctrl, s=True)[0]
+        cmds.connectAttr(show_ik_ctrls_attr, '{}.v'.format(shape))
+    for ctrl in [spine_ik_ctrls[0], spine_ik_ctrls[-1]]:
+        shape = cmds.listRelatives(ctrl, s=True)[0]
+        cmds.connectAttr(show_extra_ik_ctrls_attr, '{}.v'.format(shape))
+    for ctrl in [belly_ctrl, base_ctrl]:
+        shape = cmds.listRelatives(ctrl, s=True)[0]
+        cmds.connectAttr(show_fk_ctrls_attr, '{}.v'.format(shape))
+
+
     #Volumen Preservation
     curve_info_node = cmds.createNode('curveInfo', n = name + '_CurveInfo')
     cmds.connectAttr('{}.worldSpace[0]'.format(spine_cv_shape),'{}.inputCurve'.format(curve_info_node))
     curve_lenght = cmds.getAttr('{}.arcLength'.format(curve_info_node))
-    for jnt in spine_joints[1:-1]:
-        md = mt.connect_md_node(in_x1=curve_lenght ,in_x2="{}.arcLength".format(curve_info_node),out_x = '{}.scaleY'.format(jnt), mode = 'divide')
-        cmds.connectAttr('{}.output.outputX'.format(md), '{}.scaleZ'.format(jnt))
+
+    mt.line_attr(input=spine_attrs_loc, name='Squash')
+
+    squash_attrs = []
+    for jnt in spine_joints:
+        clean_name = jnt.replace(name, '').replace(nc['joint'], '') + 'Squash'
+        squash_attr = mt.new_attr(input=spine_attrs_loc, name=clean_name, min=0, max=1, default=1)
+        squash_attrs.append(squash_attr)
+        cmds.setAttr(squash_attr, 1)
+
+        remap_node = cmds.createNode('remapValue', name = jnt+'_RemapValue')
+        cmds.setAttr(remap_node+'.outputMin', 1)
+        md = mt.connect_md_node(in_x1=curve_lenght ,in_x2="{}.arcLength".format(curve_info_node),out_x = '{}.outputMax'.format(remap_node), mode = 'divide')
+        cmds.connectAttr('{}.outColor.outColorR'.format(remap_node), '{}.scaleY'.format(jnt))
+        cmds.connectAttr('{}.outColor.outColorR'.format(remap_node), '{}.scaleZ'.format(jnt))
+        cmds.connectAttr(squash_attr, remap_node+'.inputValue')
+
+    cmds.setAttr(squash_attrs[0], 0)
+    cmds.setAttr(squash_attrs[-1], 0)
+
+    #Auto Breath
+    mt.line_attr(input=spine_attrs_loc, name='Breath')
+    breath_auto = mt.new_attr(input=spine_attrs_loc, name='BreathAuto', min=0, max=1, default=0)
+    breath_frequency = mt.new_attr(input=spine_attrs_loc, name='BreathFrequency', min=0, max=10,
+                                   default=2.5)
+    breath_amount = mt.new_attr(input=spine_attrs_loc, name='BreathAmount', min=0.1, max=10, default=1)
+    breath_chest = mt.new_attr(input=spine_attrs_loc, name='BreathChest', min=0, max=10, default=1)
+    breath_belly = mt.new_attr(input=spine_attrs_loc, name='BreathBelly', min=0, max=10, default=0.5)
+    chest_rotate = mt.new_attr(input=spine_attrs_loc, name='ChestRotate', min=0, max=10, default=2.5)
+
+    chest_offset = mt.root_grp(input=chest_ctrl, custom=True, custom_name='{}_Chest_Breath_{}'.format(name, nc['group']))[0]
+
+    def replace_connection_with_doublelinear(input = '', attr = '', name = 'DoubleLinear'):
+        double_linear = cmds.shadingNode('addDoubleLinear', asUtility=True, name=name)
+        #connection_to_replace = cmds.listConnections('{}.{}'.format(input, attr), p=True)[0]
+        #print(connection_to_replace)
+        cmds.setAttr('{}.input1'.format(double_linear), 1)
+        cmds.connectAttr('{}.output'.format(double_linear), '{}.{}'.format(input, attr), f=True)
+        #mt.put_inside_rig_container([double_linear])
+        return double_linear
+
+    add_x_belly = replace_connection_with_doublelinear(input='{}_Belly{}'.format(name, nc['joint']),
+                                                          attr='scaleX',
+                                                          name='Belly_Breath_Add_X')
+
+    add_yz_belly = mt.replace_connection_with_doublelinear(input='{}_Belly{}'.format(name, nc['joint']),
+                                                           attr='scaleY',
+                                                           name='Belly_Breath_Add_YZ')
+
+    cmds.connectAttr('{}.output'.format(add_yz_belly), '{}_Belly{}'.format(name, nc['joint']) + '.scaleZ', f=True)
+
+    add_x_chest = replace_connection_with_doublelinear(input='{}_Chest{}'.format(name, nc['joint']),
+                                                          attr='scaleX',
+                                                          name='Chest_Breath_Add_X')
+
+    add_yz_chest = mt.replace_connection_with_doublelinear(input='{}_Chest{}'.format(name, nc['joint']),
+                                                           attr='scaleY',
+                                                           name='Chest_Breath_Add_YZ')
+    cmds.connectAttr('{}.output'.format(add_yz_chest), '{}_Chest{}'.format(name, nc['joint']) + '.scaleZ', f=True)
+
+
+    # breathing expression
+    breath_exp = cmds.expression(n=name + '_breath' + nc['expression'],
+                                 s="""//Breath_attrs
+                                        $freq = {}/2;
+                                        $amount = {} * {};
+                                        $breath = sin(time*$freq)*$amount;
+                                        //Apply_it_to_the_nodes
+                                        {}.input2 = $breath * 0.07 *{};
+                                        {}.input2 = $breath * 0.07 *{};
+                                        {}.input2 = $breath * 0.07 *{};
+                                        {}.input2 = $breath * 0.07 *{};
+                                        {}.rotateX = -1 * sin(time*$freq*$amount)*$amount*{}-{}/2;
+                                        """.format(breath_frequency,
+                                                   breath_amount,
+                                                   breath_auto,
+                                                   add_x_belly, breath_belly,
+                                                   add_yz_belly, breath_belly,
+                                                   add_x_chest, breath_chest,
+                                                   add_yz_chest, breath_chest,
+                                                   chest_offset, chest_rotate, chest_rotate
+                                                   ).replace(' ', '')
+                                 )
+
 
     # bind joints
     bind_joints = []
