@@ -208,6 +208,8 @@ def build_nose_block():
 
     if attrs_position == 'new_locator':
         guide_attrs_position = cmds.spaceLocator(n=name + '_Attrs' + nc['locator'])[0]
+    else:
+        guide_attrs_position = attrs_position
 
     mt.line_attr(input=guide_attrs_position, name='Nose_Vis')
     main_ctrl_attr = mt.new_enum(input=guide_attrs_position, name='noseMainCtrls', enums='Hide:Show')

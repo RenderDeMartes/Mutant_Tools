@@ -90,6 +90,16 @@ def build_eyelids_block():
 
     mirror_attr = cmds.getAttr('{}.Mirror'.format(config), asString=True)
 
+    if attrs_position == 'new_locator':
+        guide_attrs_position = cmds.spaceLocator(n=name+'_Attrs'+nc['locator'])[0]
+    else:
+        guide_attrs_position = attrs_position
+
+    #hide ctrls
+    mt.line_attr(input=guide_attrs_position, name='Eye_Vis')
+    show_ctrl_attr = mt.new_enum(input=guide_attrs_position, name='eyeMidCtrls', enums='Hide:Show')
+    show_tweeks_attr = mt.new_enum(input=guide_attrs_position, name='eyeTweekCtrls', enums='Hide:Show')
+
     to_build = [name]
     if mirror_attr == 'True':
         to_build = [name, name.replace(nc['left'], nc['right'])]
@@ -298,19 +308,11 @@ def build_eyelids_block():
 
         #Attrs location
         if name.startswith(nc['right']):
-            attrs_position = attrs_position.replace(nc['left'], nc['right'])
-        if name.startswith(nc['right']):
             blink_attr_position = blink_attr_position.replace(nc['left'], nc['right'])
 
-        if attrs_position == 'new_locator':
-            guide_attrs_position = cmds.spaceLocator(n=name+'_Attrs'+nc['locator'])[0]
         if blink_attr_position == 'new_locator':
             guide_blink_attrs_position = cmds.spaceLocator(n=name+'_BlinkAttrs'+nc['locator'])[0]
 
-        #hide ctrls
-        mt.line_attr(input=guide_attrs_position, name='Eye_Vis')
-        show_ctrl_attr = mt.new_enum(input=guide_attrs_position, name='eyeMidCtrls', enums='Hide:Show')
-        show_tweeks_attr = mt.new_enum(input=guide_attrs_position, name='eyeTweekCtrls', enums='Hide:Show')
 
         for ctrl in upper_system['tweeks']+lower_system['tweeks']:
             shape = cmds.listRelatives(ctrl, s=True)[0]
