@@ -56,8 +56,8 @@ from collections import OrderedDict
 
 #-------------------------------------------------------------------
 
-# QT WIndow!
-FOLDER_NAME = 'BlockBuilder'
+
+
 #Read name conventions as nc[''] and setup as seup['']
 PATH = os.path.dirname(__file__)
 PATH = Path(PATH)
@@ -65,14 +65,6 @@ PATH_PARTS = PATH.parts[:-2]
 FOLDER=''
 for f in PATH_PARTS:
 	FOLDER = os.path.join(FOLDER, f)
-
-Title = 'Block Builder'
-UI_File = 'BlockBuilder.ui'
-IconsPath = os.path.join(FOLDER, 'Icons')
-
-
-
-# -------------------------------------------------------------------
 
 JSON_FILE = os.path.join(FOLDER, 'config', 'name_conventions.json')
 with open(JSON_FILE) as json_file:
@@ -85,11 +77,21 @@ with open(CURVE_FILE) as curve_file:
 SETUP_FILE = os.path.join(FOLDER, 'config', 'rig_setup.json')
 with open(SETUP_FILE) as setup_file:
 	setup = json.load(setup_file)
-#Version File
-VERSION_FILE = os.path.join(FOLDER, 'config', 'version.json')
-with open(VERSION_FILE) as version_file:
-	version = json.load(version_file)
 
+#-------------------------------------------------------------------
+    
+import imp
+import Mutant_Tools
+from Mutant_Tools.UI.AutoRigger import load_autoRigger
+imp.reload(load_autoRigger)
+
+try:AutoRigger.close()
+except:pass
+AutoRigger = load_autoRigger.AutoRigger()
+AutoRigger.show()
+
+BLOCKS_PATH = os.path.join(FOLDER, 'Blocks')
+OTHERS_PATH = os.path.join(FOLDER, 'Others')
 #-------------------------------------------------------------------
 
 import Mutant_Tools
@@ -119,7 +121,7 @@ class BlockBuilder(QtMutantWindow.Qt_Mutant):
 
 		self.setWindowTitle(Title)
 
-		self.designer_loader_child(path=os.path.join(FOLDER, 'UI', FOLDER_NAME), ui_file=UI_File)
+		self.designer_loader_child(path=os.path.join(FOLDER, 'UI','BlockBuilder'), ui_file=UI_File)
 		self.set_title('Block Builder')
 
 		self.create_layout()
@@ -147,7 +149,9 @@ class BlockBuilder(QtMutantWindow.Qt_Mutant):
 		icon = self.ui.icon_line.text()
 
 		if self.ui.presets_radio.isChecked():
-			tab = '01_Presets'
+			tab = '00_Presets'
+		elif self.ui.stellar_radio.isChecked():
+			tab = '01_Stellar'
 		elif self.ui.biped_radio.isChecked():
 			tab = '02_Biped'
 		elif self.ui.facial_radio.isChecked():
@@ -199,19 +203,21 @@ class BlockBuilder(QtMutantWindow.Qt_Mutant):
 		block_data['attrs'] = attrs_data
 
 		#find next number for the json file
-		all_blocks = glob.glob('{}//{}//*json'.format(BLOCKS_PATH, tab))
+		all_blocks = glob.glob(os.path.join(BLOCKS_PATH, tab, '*json'))
 		pprint.pprint(all_blocks)
 
 		if all_blocks:
 			last_block = all_blocks[-1]
-			last_num = last_block.split('\\')[-1].split('_')[0]
+			last_block = last_block.split('\\')[-1]
+			last_num = last_block.split('/')[-1].split('_')[0]
 			print (last_num)
 			new_num = '0' + str(int(last_num[1]) + 1)
 		else:
 			new_num=0
 
 		#write json file
-		with open('{}//{}//{}_{}.json'.format(BLOCKS_PATH, tab, new_num, name), 'w') as new_config:
+		new_json_file = os.path.join(BLOCKS_PATH, tab, '{}_{}.json'.format(new_num, name.lower()))
+		with open(new_json_file, 'w') as new_config:
 			json.dump(block_data, new_config, indent=4, sort_keys = False)
 
 		pprint.pprint(block_data)
@@ -219,9 +225,9 @@ class BlockBuilder(QtMutantWindow.Qt_Mutant):
 		#open exec python file and change it to fit new one
 
 		if self.ui.simple_block.isChecked():
-			base_python_preset = OTHERS_PATH + '//exec_block.py'
+			base_python_preset = os.path.join(OTHERS_PATH,'Exec_Block.py')
 		else:
-			base_python_preset = OTHERS_PATH + '//exec_block_sides.py'
+			base_python_preset = os.path.join(OTHERS_PATH,'exec_block_sides.py')
 
 		with open(base_python_preset) as exec_block:
 			exec_code = exec_block.read()
@@ -239,8 +245,8 @@ class BlockBuilder(QtMutantWindow.Qt_Mutant):
 		print (new_exec_code)
 
 		#write .py file
-
-		with open('{}//{}//exec_{}.py'.format(BLOCKS_PATH, tab, name.lower()), 'w') as new_py:
+		new_file = os.path.join(BLOCKS_PATH, tab, 'exec_{}.py'.format(name.lower()))
+		with open(new_file, 'w') as new_py:
 				new_py.write(new_exec_code)
 
 	#-------------------------------------------------------------------

@@ -1,0 +1,19 @@
+{
+    "Name": "Lattice",
+    "Description": "Whis will create a Local Lattice Block",
+    "Icon": "Lattice.png",
+    "Enable": "True",
+    "python_file": "exec_lattice.py",
+    "import": "import exec_lattice",
+    "imp.reload": "imp.reload(exec_lattice)",
+    "exec_command": "exec_lattice.create_lattice_block()",
+    "build_command": "exec_lattice.build_lattice_block()",
+    "attrs": {
+        "SetParent_string": "new_locator",
+        "SetGeo_string": "new_cube",
+        "CtrlSize_float": "4",
+        "CtrlAmount_float": "4",
+        "DeltaMush_bool": false,
+        "Help_string": "Will create a Lattice system"
+    }
+}
