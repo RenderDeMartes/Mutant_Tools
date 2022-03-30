@@ -12,7 +12,11 @@
         "SetParent_string": "new_locator",
         "SetGeo_string": "new_cube",
         "CtrlSize_float": "4",
-        "CtrlAmount_float": "4",
+
+        "XAmount_float": "4",
+        "YAmount_float": "4",
+        "ZAmount_float": "4",
+
         "DeltaMush_bool": false,
         "Help_string": "Will create a Lattice system"
     }

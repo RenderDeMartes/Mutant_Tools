@@ -100,17 +100,20 @@ def build_lattice_block():
         geo = cmds.getAttr('{}.SetParent'.format(config))
 
     size = cmds.getAttr('{}.CtrlSize'.format(config))
+    x_amount = cmds.getAttr('{}.XAmount'.format(config))
+    y_amount = cmds.getAttr('{}.YAmount'.format(config))
+    z_amount = cmds.getAttr('{}.ZAmount'.format(config))
 
     # create lattice
-    lattice_deformer = cmds.lattice(divisions=(2, 3, 2), objectCentered=True, ldv=(2, 2, 2), ol=False,
+    lattice_deformer = cmds.lattice(divisions=(x_amount, y_amount, z_amount), objectCentered=True, ldv=(2, 2, 2), ol=False,
                                     n='{}_Lat_'.format(name), outsideLattice=1)
 
-    # clusters for controll lattice points
+    # clusters for control lattice points
     clusters =[]
     ctrls =[]
     ctrls_root =[]
 
-    for num in range(cmds.getAttr('{}.CtrlAmount'.format(config))):
+    for num in range(x_amount):
         print(num)
 
     # center one must be relative so it can be aprented to the main lattice
