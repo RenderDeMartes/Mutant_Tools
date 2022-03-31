@@ -1,0 +1,172 @@
+'''
+version: 1.0.0
+date: 21/04/2020
+
+#----------------
+content:
+
+#----------------
+how to:
+
+import imp
+import Mutant_Tools
+from Mutant_Tools.UI.FolderName import load_pyname
+imp.reload(load_pyname)
+
+try:cMutantUI.close()
+except:pass
+cMutantUI = load_pyname.MutantUI()
+cMutantUI.show()
+
+#----------------
+dependencies:
+
+QT FILE
+ICONS
+JSON FILES
+Main Mutant
+
+#----------------
+licence: https://www.eulatemplate.com/live.php?token=FGISW7ApRfgywum6murbBmLcusKONzkv
+author:  Esteban Rodriguez <info@renderdemartes.com>
+
+'''
+# -------------------------------------------------------------------
+from shiboken2 import wrapInstance
+from PySide2 import QtGui, QtCore
+from PySide2 import QtUiTools
+from PySide2 import QtWidgets
+from PySide2.QtWidgets import *
+
+import maya.OpenMayaUI as omui
+from functools import partial
+from maya import OpenMaya
+import maya.cmds as cmds
+import maya.mel as mel
+
+import os
+import imp
+import sys
+import json
+import glob
+import pprint
+from pathlib import Path
+
+
+# -------------------------------------------------------------------
+
+# QT WIndow!
+FOLDER_NAME = 'AutoSkinning'
+PATH = os.path.dirname(__file__)
+BLOCKS_PATH = PATH.replace('\\UI\\{}'.format(FOLDER_NAME), '//Blocks')  # get Blocks paths to write files
+
+Title = 'AutoSkinning || Mutant'
+Folder = PATH.replace('\\UI\\{}'.format(FOLDER_NAME), '')
+UI_File = 'AutoSkinning.ui'
+IconsPath = Folder + '//Icons//'
+
+# -------------------------------------------------------------------
+
+# Read name conventions as nc[''] and setup as seup['']
+PATH = os.path.dirname(__file__)
+PATH = PATH.replace('\\UI\\{}'.format(FOLDER_NAME), '//Config')  # change this path depending of the folder
+
+JSON_FILE = (PATH + '/name_conventions.json')
+with open(JSON_FILE) as json_file:
+	nc = json.load(json_file)
+# Read curve shapes info
+CURVE_FILE = (PATH + '/curves.json')
+with open(CURVE_FILE) as curve_file:
+	curve_data = json.load(curve_file)
+# setup File
+SETUP_FILE = (PATH + '/rig_setup.json')
+with open(SETUP_FILE) as setup_file:
+	setup = json.load(setup_file)
+
+# -------------------------------------------------------------------
+
+import Mutant_Tools
+import Mutant_Tools.Utils
+from Mutant_Tools.Utils.Rigging import main_mutant
+
+imp.reload(Mutant_Tools.Utils.Rigging.main_mutant)
+mt = main_mutant.Mutant()
+
+import Mutant_Tools.UI
+from Mutant_Tools.UI import QtMutantWindow
+imp.reload(QtMutantWindow)
+Qt_Mutant = QtMutantWindow.Qt_Mutant()
+
+
+# -------------------------------------------------------------------
+
+
+def maya_main_window():
+	main_window_ptr = omui.MQtUtil.mainWindow()
+	return wrapInstance(int(main_window_ptr), QtWidgets.QWidget)
+
+class Auto_Skinning(QtMutantWindow.Qt_Mutant):
+
+	def __init__(self):
+		super(Auto_Skinning, self).__init__()
+
+		self.setWindowTitle(Title)
+
+		self.designer_loader_child(path=Folder + '/UI/{}/'.format(FOLDER_NAME), ui_file=UI_File)
+		self.set_title(Title)
+
+		self.create_layout()
+		self.create_connections()
+
+	# -------------------------------------------------------------------
+
+	def create_layout(self):
+		"""
+
+		Returns:
+
+		"""
+
+
+	def create_connections(self):
+		"""
+
+		Returns:
+
+		"""
+
+		self.ui.textButton.clicked.connect(self.set_text)
+		self.ui.sliderButton.clicked.connect(self.print_num)
+
+	def set_text(self):
+		text_field = self.ui.textField
+		sel = cmds.ls(sl=True)
+
+		text_field.setText(str(sel))
+
+		return sel
+
+	def print_num(self):
+		slider = self.ui.slider
+		print(slider.value())
+
+	# -------------------------------------------------------------------
+
+	# CLOSE EVENTS _________________________________
+	def closeEvent(self, event):
+		''
+
+
+# -------------------------------------------------------------------
+
+if __name__ == "__main__":
+
+	try:
+		cMutantUI.close()  # pylint: disable=E0601
+		cMutantUI.deleteLater()
+	except:
+		pass
+	cMutantUI = Auto_Skinning()
+	cMutantUI.show()
+
+# -------------------------------------------------------------------
