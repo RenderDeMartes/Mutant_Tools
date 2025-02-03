@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 '''
 version: 1.0.0
 date: 21/04/2020
@@ -12,7 +13,7 @@ how to:
 	
 import Mutant_Tools
 from Mutant_Tools.UI import load_name
-imp.reload(load_name)
+reload(load_name)
 
 try:name.close()
 except:pass
@@ -47,7 +48,11 @@ import maya.cmds as cmds
 import maya.mel as mel
 
 import os
-import imp
+try:
+    import importlib;from importlib import reload
+except:
+    import imp;from imp import reload
+
 import sys
 import json
 
@@ -84,7 +89,11 @@ IconsPath =  Folder + '/Icons/' #icons path
 import Mutant_Tools
 import Mutant_Tools.Utils.Rigging
 from Mutant_Tools.Utils.Rigging import main_mutant
-imp.reload(Mutant_Tools.Utils.Rigging.main_mutant)
+try:
+    import importlib;from importlib import reload
+except:
+    import imp;from imp import reload
+reload(Mutant_Tools.Utils.Rigging.main_mutant)
 
 mt = main_mutant.Mutant()
 

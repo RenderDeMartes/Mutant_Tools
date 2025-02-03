@@ -1,0 +1,19 @@
+{
+    "Name": "StickyLips",
+    "Description": "StickyLips System",
+    "Icon": "Sticky.png",
+    "Enable": "True",
+    "python_file": "exec_stickylips.py",
+    "import": "import exec_stickylips",
+    "imp.reload": "reload(exec_stickylips)",
+    "exec_command": "exec_stickylips.create_stickylips_block()",
+    "build_command": "exec_stickylips.build_stickylips_block()",
+    "attrs": {
+        "SetJawBone_string" : "",
+        "SetNotJawBone_string" : "",
+        "SetLeftMouthCtrl_string" : "new_locator",
+        "SetMouthEdge_string" : "",
+        "SetFaceGeo_string" : "",
+        "Help_string": "StickyLips System for FaceBuilds"
+    }
+}

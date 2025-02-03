@@ -1,8 +1,10 @@
 {
+   "studio" : "Stellar",
+
    "main_grp" : "Asset Name",
 
    "base_groups": {
-               "geometry" : "Geo",
+               "geometry" : "Extra_Geo",
                "control" : "Ctrl",
                "rig" : "Rig"  
                 },
@@ -21,16 +23,19 @@
 
    "right_color" : "red",
    "left_color" : "blue",
+   "right_secundary_color" : "pink",
+   "left_secundary_color" : "lightBlue",
    "center_color" : "yellow",
    "main_color" : "lightBlue",
+   "main_secundary_color" : "purple",
    "gimbal_color" : "grey",
 
    "ik_ctrl" : "cube",
    "pv_ctrl" : "sphere",
    "top_ik_ctrl" : "circleX",
 
-   "fk_ctrl" : "bounding_cube",
-   "spine_fk_ctrl" : "circleY",
+   "fk_ctrl" : "circlePointIn",
+   "spine_fk_ctrl" : "squarePointUp",
 
    "ik_fk_method" : "blend",
 

@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 '''
 version: 1.0.0
 date: 21/04/2020
@@ -10,9 +11,9 @@ how to:
 
 import Mutant_Tools.UI
 from Mutant_Tools.UI import QtMutantWindow
-imp.reload(QtMutantWindow)
+reload(QtMutantWindow)
 import Mutant_Tools.UI.CustomWidgets.expandableWidget as expandableWidget
-imp.reload(expandableWidget)
+reload(expandableWidget)
 try:
     mtui.close()
 except:
@@ -147,9 +148,9 @@ class expandableWidget(QtWidgets.QDialog):
 
     def change_button_icon(self):
         if self.frame.isVisible():
-            self.open_button.setIcon(QtGui.QIcon(ICONS_FOLDER + 'DDown.png'))
+            self.open_button.setIcon(QtGui.QIcon(os.path.join(ICONS_FOLDER, 'DDown.png')))
         else:
-            self.open_button.setIcon(QtGui.QIcon(ICONS_FOLDER + 'DRight.png'))
+            self.open_button.setIcon(QtGui.QIcon(os.path.join(ICONS_FOLDER, 'DRight.png')))
 
 
 

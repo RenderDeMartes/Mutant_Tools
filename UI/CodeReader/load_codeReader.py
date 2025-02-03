@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 '''
 version: 1.0.0
 
@@ -9,8 +10,12 @@ how to:
 
 import Mutant_Tools
 from Mutant_Tools.UI.CodeReader import load_codeReader
-import imp
-imp.reload(load_codeReader)
+try:
+    import importlib;from importlib import reload
+except:
+    import imp;from imp import reload
+
+reload(load_codeReader)
 
 try:codeUI.close()
 except:pass
@@ -46,7 +51,11 @@ import maya.cmds as cmds
 import maya.mel as mel
 
 import os
-import imp
+try:
+    import importlib;from importlib import reload
+except:
+    import imp;from imp import reload
+
 import sys
 import json
 import subprocess
@@ -79,7 +88,7 @@ with open(SETUP_FILE) as setup_file:
 import Mutant_Tools.UI
 from Mutant_Tools.UI import QtMutantWindow
 
-imp.reload(QtMutantWindow)
+reload(QtMutantWindow)
 Qt_Mutant = QtMutantWindow.Qt_Mutant()
 
 #-------------------------------------------------------------------
@@ -130,7 +139,7 @@ class Code_Reader(QtMutantWindow.Qt_Mutant):
 
 	def modify_ui_based_on_mode(self):
 
-		print(self.mode)
+		#print(self.mode)
 		if self.mode == 'view':
 			self.ui.python_radio.setParent(None)
 			self.ui.mel_radio.setParent(None)
@@ -138,7 +147,11 @@ class Code_Reader(QtMutantWindow.Qt_Mutant):
 		else:
 			self.ui.code_text.setPlainText(self.previous_code)
 
-		self.ui.code_text.verticalScrollBar().maximum()
+		try:
+			self.ui.code_text.verticalScrollBar().maximum()
+		except:
+			pass
+
 	def slider_changed(self):
 		self.ui.code_text.verticalScrollBar().setValue(self.ui.code_text.verticalScrollBar().maximum())
 

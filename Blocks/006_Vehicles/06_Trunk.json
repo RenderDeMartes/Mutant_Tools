@@ -1,0 +1,15 @@
+{
+    "Name": "Trunk",
+    "Description": "Trunk Block",
+    "Icon": "Trunk.png",
+    "Enable": "True",
+    "python_file": "exec_trunk.py",
+    "import": "import exec_trunk",
+    "imp.reload": "reload(exec_trunk)",
+    "exec_command": "exec_trunk.create_trunk_block()",
+    "build_command": "exec_trunk.build_trunk_block()",
+    "attrs": {
+        "SetParent_string": "new_locator",
+        "Help_string": "Will create a Trunk System"
+    }
+}

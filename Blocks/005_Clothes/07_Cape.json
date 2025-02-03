@@ -1,0 +1,15 @@
+{
+    "Name": "Cape",
+    "Description": "Will create a Cape System",
+    "Icon": "Cape.png",
+    "Enable": "True",
+    "python_file": "exec_cape.py",
+    "import": "import exec_cape",
+    "imp.reload": "reload(exec_cape)",
+    "exec_command": "exec_cape.create_cape_block()",
+    "build_command": "exec_cape.build_cape_block()",
+    "attrs": {
+        "SetParent_string": "new_locator",
+        "Help_string": "Will create a Cape System"
+    }
+}

@@ -1,0 +1,12 @@
+{
+    "Name": "toonTemplate",
+    "Description": "Will import the toon Face Template ",
+    "Icon": "SausageFace.png",
+    "Enable": "True",
+    "python_file": "exec_toonFaceTemplate.py",
+    "import": "import exec_toonFaceTemplate",
+    "imp.reload": "reload(exec_toonFaceTemplate)",
+    "exec_command": "exec_toonFaceTemplate.create_toonFaceTemplate_block()",
+    "build_command": "exec_toonFaceTemplate.build_toonFaceTemplate_block()",
+    "attrs": {}
+}

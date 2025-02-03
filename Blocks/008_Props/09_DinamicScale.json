@@ -1,0 +1,14 @@
+{
+    "Name": "DinamicScale",
+    "Description": "Add Size Attrs and Extra Scale to Base",
+    "Icon": "ExtraScales.png",
+    "Enable": "True",
+    "python_file": "exec_dinamic_scale.py",
+    "import": "import exec_dinamic_scale",
+    "imp.reload": "reload(exec_dinamic_scale)",
+    "exec_command": "exec_dinamic_scale.create_dinamic_scale_block()",
+    "build_command": "exec_dinamic_scale.build_dinamic_scale_block()",
+    "attrs": {
+        "Help_string": "Add Size Attrs and Extra Scale to Base"
+    }
+}

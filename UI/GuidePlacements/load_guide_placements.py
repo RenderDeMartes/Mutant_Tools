@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 '''
 version: 1.0.0
 date: 21/04/2020
@@ -8,10 +9,14 @@ content:
 #----------------
 how to:
 
-import imp
+try:
+    import importlib;from importlib import reload
+except:
+    import imp;from imp import reload
+
 import Mutant_Tools
 from Mutant_Tools.UI.GuidePlacements import load_guide_placements
-imp.reload(load_guide_placements)
+reload(load_guide_placements)
 
 try:cGuidePlacements.close()
 except:pass
@@ -45,7 +50,11 @@ import maya.cmds as cmds
 import maya.mel as mel
 
 import os
-import imp
+try:
+    import importlib;from importlib import reload
+except:
+    import imp;from imp import reload
+
 import sys
 import json
 import glob
@@ -97,15 +106,15 @@ import Mutant_Tools
 import Mutant_Tools.Utils
 from Mutant_Tools.Utils.Rigging import main_mutant
 
-imp.reload(Mutant_Tools.Utils.Rigging.main_mutant)
+reload(Mutant_Tools.Utils.Rigging.main_mutant)
 mt = main_mutant.Mutant()
 
 from Mutant_Tools.UI import QtMutantWindow
-imp.reload(QtMutantWindow)
+reload(QtMutantWindow)
 Qt_Mutant = QtMutantWindow.Qt_Mutant()
 
 from Mutant_Tools.Utils.Helpers import helpers
-imp.reload(Mutant_Tools.Utils.Helpers.helpers)
+reload(Mutant_Tools.Utils.Helpers.helpers)
 mh = helpers.Helpers()
 
 # -------------------------------------------------------------------
@@ -127,7 +136,7 @@ class GuidePlacements(QtMutantWindow.Qt_Mutant):
 
 		self.create_layout()
 		self.create_connections()
-		self.resize(500,750)
+		self.resize(800,900)
 
 		self.place_widgets=[]
 		self.ik_ref_widgets=[]
@@ -175,11 +184,19 @@ class GuidePlacements(QtMutantWindow.Qt_Mutant):
 		self.load_custom.triggered.connect(lambda: self.load_preset())
 		self.guideMenu.addSeparator()
 
-		self.load_biped = self.guideMenu.addAction("Load Biped")
-		self.load_biped.triggered.connect(lambda: self.load_biped_data())
-		self.load_biped_wrap = self.guideMenu.addAction("Load Wrap3 Biped")
-		self.load_biped_wrap.triggered.connect(lambda: self.load_biped_wrap_data())
+
+		self.load_biped_frank = self.guideMenu.addAction("Load Frank Biped")
+		self.load_biped_frank.triggered.connect(lambda: self.load_frankBiped_data())
+		self.load_biped_ag = self.guideMenu.addAction("Load Mutant Avenger")
+		self.load_biped_ag.triggered.connect(lambda: self.load_agBiped_data())
+		self.load_stellarMale = self.guideMenu.addAction("Load Stellar Male")
+		self.load_stellarMale.triggered.connect(lambda: self.load_stellarMale_data())
+		self.load_stellarFemale = self.guideMenu.addAction("Load Stellar Female")
+		self.load_stellarFemale.triggered.connect(lambda: self.load_stellarFemale_data())
+
 		self.guideMenu.addSeparator()
+
+
 
 		self.menuBar.addMenu(self.guideMenu)
 
@@ -190,7 +207,7 @@ class GuidePlacements(QtMutantWindow.Qt_Mutant):
 	# -------------------------------------------------------------------
 	#Guides
 
-	def create_place_guide_widget(self, guide_text = '', position_text='', aim_text=''):
+	def create_place_guide_widget(self, guide_text = '', position_text='', aim_text='', aim_axis='', up_axis=''):
 
 		placement_box = QGroupBox()
 		self.ui.place_layout.addWidget(placement_box)
@@ -204,10 +221,10 @@ class GuidePlacements(QtMutantWindow.Qt_Mutant):
 		else:
 			guide_edit.setText(guide_text)
 		guide_button = QPushButton()
-		guide_button.setIcon(QtGui.QIcon(IconsPath + 'DLeft.png'))
+		guide_button.setIcon(QtGui.QIcon(os.path.join(IconsPath, 'DLeft.png')))
 		guide_button.clicked.connect(partial(self.selection_to_line_edit, guide_edit))
 		sel_guide_button = QPushButton()
-		sel_guide_button.setIcon(QtGui.QIcon(IconsPath + 'Cursor.png'))
+		sel_guide_button.setIcon(QtGui.QIcon(os.path.join(IconsPath, 'Cursor.png')))
 		sel_guide_button.clicked.connect(partial(self.select_text, guide_edit))
 
 		main_layout.addWidget(guide_edit)
@@ -220,10 +237,10 @@ class GuidePlacements(QtMutantWindow.Qt_Mutant):
 		else:
 			position_edit.setText(position_text)
 		position_button = QPushButton()
-		position_button.setIcon(QtGui.QIcon(IconsPath + 'DLeft.png'))
+		position_button.setIcon(QtGui.QIcon(os.path.join(IconsPath, 'DLeft.png')))
 		position_button.clicked.connect(partial(self.selection_to_line_edit, position_edit))
 		sel_position_button = QPushButton()
-		sel_position_button.setIcon(QtGui.QIcon(IconsPath + 'Cursor.png'))
+		sel_position_button.setIcon(QtGui.QIcon(os.path.join(IconsPath, 'Cursor.png')))
 		sel_position_button.clicked.connect(partial(self.select_text, position_edit))
 
 		main_layout.addWidget(position_edit)
@@ -236,24 +253,44 @@ class GuidePlacements(QtMutantWindow.Qt_Mutant):
 		else:
 			aim_edit.setText(aim_text)
 		aim_button = QPushButton()
-		aim_button.setIcon(QtGui.QIcon(IconsPath + 'DLeft.png'))
+		aim_button.setIcon(QtGui.QIcon(os.path.join(IconsPath, 'DLeft.png')))
 		aim_button.clicked.connect(partial(self.selection_to_line_edit, aim_edit))
 		sel_aim_button = QPushButton()
-		sel_aim_button.setIcon(QtGui.QIcon(IconsPath + 'Cursor.png'))
+		sel_aim_button.setIcon(QtGui.QIcon(os.path.join(IconsPath, 'Cursor.png')))
 		sel_aim_button.clicked.connect(partial(self.select_text, aim_edit))
 
 		main_layout.addWidget(aim_edit)
 		main_layout.addWidget(aim_button)
 		main_layout.addWidget(sel_aim_button)
 
-		build_button = aim_button = QPushButton('Build')
+		#Aim axis and up
+		#aim_axis = '', up_axis = ''
+		aim_axis_line = QLineEdit()
+		aim_axis_line.setFixedSize(60,20)
+		aim_axis_line.setToolTip('Aim Axis')
+		if not aim_axis:
+			aim_axis_line.setText('1,0,0')
+		else:
+			aim_axis_line.setText(aim_axis)
+		aim_up_line = QLineEdit()
+		aim_up_line.setFixedSize(50,20)
+		aim_up_line.setToolTip('Up Axis')
+		if not up_axis:
+			aim_up_line.setText('0,1,0')
+		else:
+			aim_up_line.setText(up_axis)
+
+		main_layout.addWidget(aim_axis_line)
+		main_layout.addWidget(aim_up_line)
+
+		build_button = QPushButton('Build')
 		for_build = []
-		for_build.append([guide_edit, position_edit, aim_edit])
+		for_build.append([guide_edit, position_edit, aim_edit, aim_axis_line, aim_up_line])
 		build_button.clicked.connect(partial(self.place_guides, 'selection', for_build))
 		main_layout.addWidget(build_button)
 
 
-		self.place_widgets.append([guide_edit, position_edit, aim_edit])
+		self.place_widgets.append([guide_edit, position_edit, aim_edit, aim_axis_line, aim_up_line])
 
 	# -------------------------------------------------------------------
 
@@ -278,6 +315,7 @@ class GuidePlacements(QtMutantWindow.Qt_Mutant):
 
 	def clean_selection(self, sel):
 		clean_sel = str(sel)[1:-1]
+		clean_sel = clean_sel.replace("u'", "'")
 		clean_sel = clean_sel.replace("'", "")
 		return clean_sel
 
@@ -303,6 +341,13 @@ class GuidePlacements(QtMutantWindow.Qt_Mutant):
 			position = guide_pairs[1].text()
 			position = position.split(',')
 			aim = guide_pairs[2].text()
+
+			aim_axis = guide_pairs[3].text().split(',')
+			aim_axis = (float(aim_axis[0]),float(aim_axis[1]),float(aim_axis[2]))
+
+			aim_up = guide_pairs[4].text().split(',')
+			aim_up = (float(aim_up[0]),float(aim_up[1]),float(aim_up[2]))
+
 			if guide and position:
 				print (guide, '>>>' ,position, '>>>', aim)
 
@@ -314,16 +359,16 @@ class GuidePlacements(QtMutantWindow.Qt_Mutant):
 				temp_cls = cmds.cluster()[1]
 				cmds.delete(cmds.pointConstraint(temp_cls, guide, mo=False))
 				cmds.delete(temp_cls)
+				cmds.select(guide)
 
 
-			aim_delete = []
 			if guide and aim:
 				cmds.select(aim)
-				temp_contraint2 = cmds.aimConstraint(temp_loc, guide, mo=False)[0]
+				temp_contraint = cmds.aimConstraint(temp_loc, guide, mo=False, worldUpType='vector', upVector=(aim_up), aimVector=aim_axis)[0]
 				cmds.delete(cmds.parentConstraint(temp_loc,aim, mo=False))
 
-				cmds.delete(temp_loc,temp_contraint2)
-
+				cmds.delete(temp_loc,temp_contraint)
+				cmds.select(guide)
 
 		cmds.undoInfo(closeChunk=True)
 
@@ -343,7 +388,7 @@ class GuidePlacements(QtMutantWindow.Qt_Mutant):
 		start_edit = QLineEdit()
 		start_edit.setText(start_text)
 		start_button = QPushButton()
-		start_button.setIcon(QtGui.QIcon(IconsPath + 'DLeft.png'))
+		start_button.setIcon(QtGui.QIcon(os.path.join(IconsPath, 'DLeft.png')))
 		start_button.clicked.connect(partial(self.selection_to_line_edit, start_edit))
 
 		main_layout.addWidget(start_edit)
@@ -352,7 +397,7 @@ class GuidePlacements(QtMutantWindow.Qt_Mutant):
 		mid_edit = QLineEdit()
 		mid_edit.setText(mid_text)
 		mid_button = QPushButton()
-		mid_button.setIcon(QtGui.QIcon(IconsPath + 'DLeft.png'))
+		mid_button.setIcon(QtGui.QIcon(os.path.join(IconsPath, 'DLeft.png')))
 		mid_button.clicked.connect(partial(self.selection_to_line_edit, mid_edit))
 
 		main_layout.addWidget(mid_edit)
@@ -361,7 +406,7 @@ class GuidePlacements(QtMutantWindow.Qt_Mutant):
 		end_edit = QLineEdit()
 		end_edit.setText(end_text)
 		end_button = QPushButton()
-		end_button.setIcon(QtGui.QIcon(IconsPath + 'DLeft.png'))
+		end_button.setIcon(QtGui.QIcon(os.path.join(IconsPath, 'DLeft.png')))
 		end_button.clicked.connect(partial(self.selection_to_line_edit, end_edit))
 
 		main_layout.addWidget(end_edit)
@@ -453,7 +498,9 @@ class GuidePlacements(QtMutantWindow.Qt_Mutant):
 			guide = guide_pairs[0].text()
 			position = guide_pairs[1].text()
 			aim = guide_pairs[2].text()
-			guide_data[str(num)] = {guide : [position, aim]}
+			aim_axis = guide_pairs[3].text()
+			aim_up = guide_pairs[4].text()
+			guide_data[str(num)] = {guide : [position, aim, aim_axis, aim_up]}
 
 
 		ref_data={}
@@ -472,20 +519,27 @@ class GuidePlacements(QtMutantWindow.Qt_Mutant):
 		pprint.pprint(preset_data)
 
 		path = mh.export_window(extension=".json")[0]
-		if path:
-			new_file = mh.write_json(path=path,
-							json_file='',
-							data=preset_data)
-		print(new_file)
+
+		with open(path, 'w') as f:
+			json.dump(preset_data, f, ensure_ascii=False, indent=4)
+
+		print(path)
+
 		return preset_data
 
 	# -------------------------------------------------------------------
 
-	def load_preset(self, path = None):
+	def load_preset(self, path = None, json_file=None):
+
 		if path == None:
 			read_path = mh.import_window(extension = ".json")[0]
+			with open(read_path) as f:
+				data = json.load(f)
+
 		else:
 			read_path=path
+			json_file = json_file
+			data = mh.read_json(path=read_path, json_file=json_file)
 
 		if not read_path:
 			return False
@@ -495,7 +549,6 @@ class GuidePlacements(QtMutantWindow.Qt_Mutant):
 		for i in reversed(range(self.ui.ref_layout.count())):
 			self.ui.ref_layout.itemAt(i).widget().setParent(None)
 
-		data = mh.read_json(path = read_path, json_file = '')
 		guides = data['guides']
 		refs = data['refs']
 		code = data['code']
@@ -504,7 +557,12 @@ class GuidePlacements(QtMutantWindow.Qt_Mutant):
 		for num, guide in enumerate(guides):
 			guide_data = guides[str(num)]
 			for guide_name in guide_data:
-				self.create_place_guide_widget(guide_text=guide_name, position_text=guide_data[guide_name][0], aim_text=guide_data[guide_name][1])
+				try:
+					self.create_place_guide_widget(guide_text=guide_name, position_text=guide_data[guide_name][0],
+											   aim_text=guide_data[guide_name][1], aim_axis=guide_data[guide_name][2], up_axis=guide_data[guide_name][3])
+				except:
+					self.create_place_guide_widget(guide_text=guide_name, position_text=guide_data[guide_name][0],
+											   aim_text=guide_data[guide_name][1])
 
 		#Refs---------------------
 		for num, ref in enumerate(refs):
@@ -526,12 +584,55 @@ class GuidePlacements(QtMutantWindow.Qt_Mutant):
 
 	# -------------------------------------------------------------------
 	def load_biped_wrap_data(self):
-		json_file = os.path.dirname(__file__) + '\\Guides\\BipedWrap.json'
-		self.load_preset(path = json_file)
+		json_file = os.path.join(os.path.dirname(__file__),'Guides')
+		self.load_preset(path = json_file, json_file='BipedWrap.json')
+		print(json_file)
 
 	def load_biped_data(self):
-		json_file = os.path.dirname(__file__) + '\\Guides\\Biped.json'
-		self.load_preset(path=json_file)
+		json_file = os.path.join(os.path.dirname(__file__),'Guides')
+		print(json_file)
+		self.load_preset(path=json_file, json_file='Biped.json')
+
+	def load_frankBiped_data(self):
+		json_file = os.path.join(os.path.dirname(__file__),'Guides')
+		print(json_file)
+		self.load_preset(path=json_file, json_file='frankBody.json')
+
+	def load_agBiped_data(self):
+		json_file = os.path.join(os.path.dirname(__file__),'Guides')
+		print(json_file)
+		self.load_preset(path=json_file, json_file='avengerBody.json')
+
+
+	def load_stellarMale_data(self):
+		json_file = os.path.join(os.path.dirname(__file__),'Guides')
+		print(json_file)
+		self.load_preset(path=json_file, json_file='StellarMale.json')
+
+	def load_stellarFemale_data(self):
+		json_file = os.path.join(os.path.dirname(__file__),'Guides')
+		print(json_file)
+		self.load_preset(path=json_file, json_file='StellarFemale.json')
+
+
+
+	# -------------------------------------------------------------------
+	# -------------------------------------------------------------------
+	# -------------------------------------------------------------------
+
+	def exit_ui(self):
+
+		close_comfirm = cmds.confirmDialog(
+						title='Close Mutant Autorigger',
+						message='Are you sure?',
+						button=['Close', 'Stay Open'],
+						defaultButton='Stay Open',
+						dismissString='Stay Open',
+						cancelButton = 'Stay Open')
+
+		if close_comfirm == 'Close':
+			print('Mutant is closing')
+			self.close()
 
 
 # -------------------------------------------------------------------

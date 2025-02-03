@@ -1,0 +1,17 @@
+{
+    "Name": "Drift",
+    "Description": "Drift Block",
+    "Icon": "Drift.png",
+    "Enable": "True",
+    "python_file": "exec_drift.py",
+    "import": "import exec_drift",
+    "imp.reload": "reload(exec_drift)",
+    "exec_command": "exec_drift.create_drift_block()",
+    "build_command": "exec_drift.build_drift_block()",
+    "attrs": {
+        "SetParent_string": "new_locator",
+        "SetFrontDrift_string": "",
+        "SetBackDrift_string": "",
+        "Help_string": "Will create a Drift System"
+    }
+}

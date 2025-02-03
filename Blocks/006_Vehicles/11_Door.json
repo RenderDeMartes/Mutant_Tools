@@ -1,0 +1,16 @@
+{
+    "Name": "Door",
+    "Description": "Door Block",
+    "Icon": "Door.png",
+    "Enable": "True",
+    "python_file": "exec_door.py",
+    "import": "import exec_door",
+    "imp.reload": "reload(exec_door)",
+    "exec_command": "exec_door.create_door_block()",
+    "build_command": "exec_door.build_door_block()",
+    "attrs": {
+        "SetParent_string": "new_locator",
+        "Mirror_enum": "True:False",
+        "Help_string": "Will create a Door System"
+    }
+}

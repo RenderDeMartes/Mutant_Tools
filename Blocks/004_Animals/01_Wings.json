@@ -1,0 +1,15 @@
+{
+    "Name": "Wings",
+    "Description": "Create Wings System RdM Wings",
+    "Icon": "Wing.png",
+    "Enable": "True",
+    "python_file": "exec_wings.py",
+    "import": "import exec_wings",
+    "imp.reload": "reload(exec_wings)",
+    "exec_command": "exec_wings.create_wings_block()",
+    "build_command": "exec_wings.build_wings_block()",
+    "attrs": {
+        "SetParent_string": "new_locator",
+        "Help_string": "Create Wings System RdM Wings"
+    }
+}

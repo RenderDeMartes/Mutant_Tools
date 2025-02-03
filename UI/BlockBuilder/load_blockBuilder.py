@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 '''
 version: 1.0.0
 
@@ -7,11 +8,19 @@ content:
 #----------------
 how to:
 
-import imp
+try:
+    import importlib;from importlib import reload
+except:
+    import imp;from imp import reload
+
 import Mutant_Tools
 from Mutant_Tools.UI.BlockBuilder import load_blockBuilder
-import imp
-imp.reload(load_blockBuilder)
+try:
+    import importlib;from importlib import reload
+except:
+    import imp;from imp import reload
+
+reload(load_blockBuilder)
 
 try:BlockBuilder.close()
 except:pass
@@ -45,7 +54,11 @@ import maya.cmds as cmds
 import maya.mel as mel
 
 import os
-import imp
+try:
+    import importlib;from importlib import reload
+except:
+    import imp;from imp import reload
+
 import sys
 import json
 import glob
@@ -56,8 +69,8 @@ from collections import OrderedDict
 
 #-------------------------------------------------------------------
 
-# QT WIndow!
-FOLDER_NAME = 'BlockBuilder'
+
+
 #Read name conventions as nc[''] and setup as seup['']
 PATH = os.path.dirname(__file__)
 PATH = Path(PATH)
@@ -65,14 +78,6 @@ PATH_PARTS = PATH.parts[:-2]
 FOLDER=''
 for f in PATH_PARTS:
 	FOLDER = os.path.join(FOLDER, f)
-
-Title = 'Block Builder'
-UI_File = 'BlockBuilder.ui'
-IconsPath = os.path.join(FOLDER, 'Icons')
-
-
-
-# -------------------------------------------------------------------
 
 JSON_FILE = os.path.join(FOLDER, 'config', 'name_conventions.json')
 with open(JSON_FILE) as json_file:
@@ -85,22 +90,36 @@ with open(CURVE_FILE) as curve_file:
 SETUP_FILE = os.path.join(FOLDER, 'config', 'rig_setup.json')
 with open(SETUP_FILE) as setup_file:
 	setup = json.load(setup_file)
-#Version File
-VERSION_FILE = os.path.join(FOLDER, 'config', 'version.json')
-with open(VERSION_FILE) as version_file:
-	version = json.load(version_file)
 
+#-------------------------------------------------------------------
+    
+try:
+    import importlib;from importlib import reload
+except:
+    import imp;from imp import reload
+
+import Mutant_Tools
+from Mutant_Tools.UI.AutoRigger import load_autoRigger
+reload(load_autoRigger)
+
+try:AutoRigger.close()
+except:pass
+AutoRigger = load_autoRigger.AutoRigger()
+AutoRigger.show()
+
+BLOCKS_PATH = os.path.join(FOLDER, 'Blocks')
+OTHERS_PATH = os.path.join(FOLDER, 'Others')
 #-------------------------------------------------------------------
 
 import Mutant_Tools
 import Mutant_Tools.Utils
 from Mutant_Tools.Utils.Rigging import main_mutant
-imp.reload(Mutant_Tools.Utils.Rigging.main_mutant)
+reload(Mutant_Tools.Utils.Rigging.main_mutant)
 mt = main_mutant.Mutant()
 
 import Mutant_Tools.UI
 from Mutant_Tools.UI import QtMutantWindow
-imp.reload(QtMutantWindow)
+reload(QtMutantWindow)
 Qt_Mutant = QtMutantWindow.Qt_Mutant()
 
 #-------------------------------------------------------------------
@@ -117,9 +136,9 @@ class BlockBuilder(QtMutantWindow.Qt_Mutant):
 	def __init__(self):
 		super(BlockBuilder, self).__init__()
 
-		self.setWindowTitle(Title)
+		self.setWindowTitle('Block Builder')
 
-		self.designer_loader_child(path=os.path.join(FOLDER, 'UI', FOLDER_NAME), ui_file=UI_File)
+		self.designer_loader_child(path=os.path.join(FOLDER, 'UI','BlockBuilder'), ui_file='blockBuilder.ui')
 		self.set_title('Block Builder')
 
 		self.create_layout()
@@ -137,7 +156,8 @@ class BlockBuilder(QtMutantWindow.Qt_Mutant):
 	def create_block(self):
 		self.create_config()
 		OpenMaya.MGlobal.displayInfo('Block Created Succesfully')
-		self.close()
+		if self.ui.close_after.isChecked():
+			self.close()
 
 	def create_config(self):
 
@@ -147,23 +167,27 @@ class BlockBuilder(QtMutantWindow.Qt_Mutant):
 		icon = self.ui.icon_line.text()
 
 		if self.ui.presets_radio.isChecked():
-			tab = '01_Presets'
+			tab = '000_Presets'
+		elif self.ui.studio_radio.isChecked():
+			tab = '001_Studio'
 		elif self.ui.biped_radio.isChecked():
-			tab = '02_Biped'
+			tab = '002_Biped'
 		elif self.ui.facial_radio.isChecked():
-			tab = '03_Facial'
+			tab = '003_Facial'
 		elif self.ui.animals_radio.isChecked():
-			tab = '04_Animals'
+			tab = '004_Animals'
 		elif self.ui.clothes_radio.isChecked():
-			tab = '05_Clothes'
+			tab = '005_Clothes'
+		elif self.ui.vehicles_radio.isChecked():
+			tab = '006_Vehicles'
 		elif self.ui.props_radio.isChecked():
-			tab = '06_Props'
+			tab = '008_Props'
 		elif self.ui.games_radio.isChecked():
-			tab = '07_Games'
+			tab = '007_Games'
 		elif self.ui.data_radio.isChecked():
-			tab = '08_Data'
+			tab = '009_Data'
 		else :
-			tab = '09_Other'
+			tab = '010_Other'
 
 
 		#create the config dic with ordered dict so it can mantain the order we desire
@@ -177,7 +201,7 @@ class BlockBuilder(QtMutantWindow.Qt_Mutant):
 
 		block_data['python_file'] =  'exec_{}.py'.format(name.lower())
 		block_data['import'] =       'import exec_{}'.format(name.lower())
-		block_data['imp.reload'] =   'imp.reload(exec_{})'.format(name.lower())
+		block_data['imp.reload'] =   'reload(exec_{})'.format(name.lower())
 		block_data['exec_command'] = 'exec_{}.create_{}_block()'.format(name.lower(), name.lower())
 		block_data['build_command'] ='exec_{}.build_{}_block()'.format(name.lower(), name.lower())
 
@@ -199,19 +223,21 @@ class BlockBuilder(QtMutantWindow.Qt_Mutant):
 		block_data['attrs'] = attrs_data
 
 		#find next number for the json file
-		all_blocks = glob.glob('{}//{}//*json'.format(BLOCKS_PATH, tab))
+		all_blocks = glob.glob(os.path.join(BLOCKS_PATH, tab, '*json'))
 		pprint.pprint(all_blocks)
 
 		if all_blocks:
 			last_block = all_blocks[-1]
-			last_num = last_block.split('\\')[-1].split('_')[0]
+			last_block = last_block.split('\\')[-1]
+			last_num = last_block.split('/')[-1].split('_')[0]
 			print (last_num)
 			new_num = '0' + str(int(last_num[1]) + 1)
 		else:
 			new_num=0
 
 		#write json file
-		with open('{}//{}//{}_{}.json'.format(BLOCKS_PATH, tab, new_num, name), 'w') as new_config:
+		new_json_file = os.path.join(BLOCKS_PATH, tab, '{}_{}.json'.format(new_num, name))
+		with open(new_json_file, 'w') as new_config:
 			json.dump(block_data, new_config, indent=4, sort_keys = False)
 
 		pprint.pprint(block_data)
@@ -219,9 +245,9 @@ class BlockBuilder(QtMutantWindow.Qt_Mutant):
 		#open exec python file and change it to fit new one
 
 		if self.ui.simple_block.isChecked():
-			base_python_preset = OTHERS_PATH + '//exec_block.py'
+			base_python_preset = os.path.join(OTHERS_PATH,'Exec_Block.py')
 		else:
-			base_python_preset = OTHERS_PATH + '//exec_block_sides.py'
+			base_python_preset = os.path.join(OTHERS_PATH,'exec_block_sides.py')
 
 		with open(base_python_preset) as exec_block:
 			exec_code = exec_block.read()
@@ -239,8 +265,8 @@ class BlockBuilder(QtMutantWindow.Qt_Mutant):
 		print (new_exec_code)
 
 		#write .py file
-
-		with open('{}//{}//exec_{}.py'.format(BLOCKS_PATH, tab, name.lower()), 'w') as new_py:
+		new_file = os.path.join(BLOCKS_PATH, tab, 'exec_{}.py'.format(name.lower()))
+		with open(new_file, 'w') as new_py:
 				new_py.write(new_exec_code)
 
 	#-------------------------------------------------------------------

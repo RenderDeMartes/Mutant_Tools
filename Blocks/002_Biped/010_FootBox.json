@@ -1,0 +1,26 @@
+{
+    "Name": "L_FootBox",
+    "Description": "Create foot boxes geos for the foot block",
+    "Icon": "FootBox.png",
+    "Enable": "True",
+    "python_file": "exec_footbox.py",
+    "import": "import exec_footbox",
+    "imp.reload": "reload(exec_footbox)",
+    "exec_command": "exec_footbox.create_footbox_block()",
+    "build_command": "exec_footbox.build_footbox_block()",
+    "attrs": {
+        "SetToes_string": "",
+        "SetBallFloor_string": "",
+        "SetHeel_string": "",
+        "SetIn_string": "",
+        "SetOut_string": "",
+        "SetBallParent_string": "",
+        "SetHeelParent_string": "",
+
+        "Mirror_bool": "True",
+        "Color_enum": "pink:orange:blue:light_blue:red:green:purple:yellow:cyan:gray:brown",
+        "SetAttrsPosition_string": "new_locator",
+        "ForceYZero_bool": "True",
+        "Help_string": "Create foot boxes for the foot block"
+    }
+}

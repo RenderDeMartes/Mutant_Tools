@@ -1,4 +1,4 @@
 {
-    "dev_mode":"On",
-    "version" : "0.12"
+    "dev_mode" : "Off",
+    "version"  : "1.5"
 }

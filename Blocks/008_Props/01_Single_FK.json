@@ -1,0 +1,29 @@
+{
+    "Name": "Single_FK",
+    "Description": "This will create a Single FK Ctrl + Joint, Like for COG or Single Needs",
+    "Icon": "Bone.png",
+
+    "Enable": "True",
+
+    "python_file": "exec_single_fk.py",
+    "import": "import exec_single_fk",
+    "imp.reload": "reload(exec_single_fk)",
+    "exec_command": "exec_single_fk.create_single_fk_block()",
+    "build_command": "exec_single_fk.build_single_fk_block()",
+
+    "attrs": {
+        "SetCtrlParent_Hierarchy_string": "Rig_Ctrl_Grp",
+
+        "CtrlType_enum": "sphere:cube:square:octagon:hexagon:pringle:feet:hand:circleX:circleY:circleZ:3dArrow:2dArrow:mover:2dArrow:root:cog",
+        "CtrlSize_float": "4",
+        "CtrlColor_enum": "lightBlue:blue:white:purple:green:red:yellow:grey",
+
+        "Gimbal_bool": "True",
+        
+        "CreateJoint_bool": "True",
+        "SetJointParent_Hierarchy_string": "Miscellaneous_Grp",
+
+        "Help_string" : "Possible parent: Bone_Jnt\n"
+        
+    }
+}

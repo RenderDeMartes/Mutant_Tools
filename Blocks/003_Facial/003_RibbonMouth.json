@@ -1,0 +1,19 @@
+{
+    "Name": "Lips",
+    "Description": "Will create ribbons mouth system",
+    "Icon": "RibbonLips.png",
+    "Enable": "True",
+    "python_file": "exec_ribbon_mouth.py",
+    "import": "import exec_ribbon_mouth",
+    "imp.reload": "reload(exec_ribbon_mouth)",
+    "exec_command": "exec_ribbon_mouth.create_mouth_block()",
+    "build_command": "exec_ribbon_mouth.build_mouth_block()",
+    "attrs": {
+        "SetParent_string": "new_locator",
+        "SetAttrsPosition_string": "new_locator",
+        "SetUpperEdge_string": "",
+        "SetLowerEdge_string": "",
+        "CtrlSize_float": 4,
+        "Help_string" : "Create ribbons mouth lips rig\n"
+    }
+}

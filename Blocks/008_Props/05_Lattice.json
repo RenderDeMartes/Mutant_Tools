@@ -1,0 +1,20 @@
+{
+    "Name": "Lattice",
+    "Description": "Lattice Local Rig",
+    "Icon": "Lattice.png",
+    "Enable": "True",
+    "python_file": "exec_lattice.py",
+    "import": "import exec_lattice",
+    "imp.reload": "reload(exec_lattice)",
+    "exec_command": "exec_lattice.create_lattice_block()",
+    "build_command": "exec_lattice.build_lattice_block()",
+    "attrs": {
+        "SetGeo_string": "new_cube",
+        "SetParent_string": "new_locator",
+        "SetAttrsPosition_string": "new_locator",
+        "Local_bool" : "False",
+        "CtrlSize_float": "4",
+        "CtrlColor_enum": "purple:lightBlue:blue:white:green:red:yellow:grey",
+        "Help_string": "Lattice Local Rig"
+    }
+}

@@ -1,0 +1,12 @@
+{
+    "Name": "PropTemplate",
+    "Description": "Create props guides",
+    "Icon": "PropTemplate.png",
+    "Enable": "True",
+    "python_file": "exec_prop_template.py",
+    "import": "import exec_prop_template",
+    "imp.reload": "reload(exec_prop_template)",
+    "exec_command": "exec_prop_template.create_prop_template_block()",
+    "build_command": "exec_prop_template.build_prop_template_block()",
+    "attrs": {}
+}

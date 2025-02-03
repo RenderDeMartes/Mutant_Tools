@@ -1,0 +1,16 @@
+{
+    "Name": "Eyelashes",
+    "Description": "This will create an eyelash system over the eye block",
+    "Icon": "Eyelashes.png",
+    "Enable": "True",
+    "python_file": "exec_eyelashes.py",
+    "import": "import exec_eyelashes",
+    "imp.reload": "reload(exec_eyelashes)",
+    "exec_command": "exec_eyelashes.create_eyelashes_block()",
+    "build_command": "exec_eyelashes.build_eyelashes_block()",
+    "attrs": {
+        "EyeName_string": "L_Eyelids",
+        "SetAttrsPosition_string": "new_locator",
+        "Help_string": "This will create an eyelash system over the eye block"
+    }
+}

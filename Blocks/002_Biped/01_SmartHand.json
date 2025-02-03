@@ -1,0 +1,15 @@
+{
+    "Name": "SmartHand",
+    "Description": "Control Fingers in a smarter way.",
+    "Icon": "SmartHand.png",
+    "Enable": "True",
+    "python_file": "exec_smarthand.py",
+    "import": "import exec_smarthand",
+    "imp.reload": "reload(exec_smarthand)",
+    "exec_command": "exec_smarthand.create_smarthand_block()",
+    "build_command": "exec_smarthand.build_smarthand_block()",
+    "attrs": {
+        "HandBlock_string": "L_Hand",
+        "Help_string": "Possible parent: *_Jnt "
+    }
+}

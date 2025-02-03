@@ -1,0 +1,17 @@
+{
+    "Name": "Shirt",
+    "Description": "Create a Shirt System",
+    "Icon": "Shirt.png",
+    "Enable": "True",
+    "python_file": "exec_shirt.py",
+    "import": "import exec_shirt",
+    "imp.reload": "reload(exec_shirt)",
+    "exec_command": "exec_shirt.create_shirt_block()",
+    "build_command": "exec_shirt.build_shirt_block()",
+    "attrs": {
+        "SetParent_string": "new_locator",
+        "SetGeo_string": "new_cube",
+        "WireDropoff_float": "10",
+        "Help_string": "Shirt System, to add more geos: 'deformer -e -g GEO DEFORMER;"
+    }
+}

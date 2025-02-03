@@ -1,0 +1,15 @@
+{
+    "Name": "Toon_Fixes",
+    "Description": "Fixes for Toon Chars",
+    "Icon": "letter-b.png",
+    "Enable": "True",
+    "python_file": "exec_toon_fixes.py",
+    "import": "import exec_toon_fixes",
+    "imp.reload": "reload(exec_toon_fixes)",
+    "exec_command": "exec_toon_fixes.create_toon_fixes_block()",
+    "build_command": "exec_toon_fixes.build_toon_fixes_block()",
+
+    "attrs": {
+        "Help_string": "Fixes for Toon Chars"
+    }
+}

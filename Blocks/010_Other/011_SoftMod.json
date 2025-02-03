@@ -1,0 +1,23 @@
+{
+    "Name" :  "SoftMod",
+    "Description":"This will add a soft mod to a given vertex",
+    "Icon":"SoftMod.png",
+
+    "Enable" :  "True",
+
+
+    "python_file" : "exec_softMod.py",
+    "import":"import exec_softMod ",
+    "imp.reload":"reload(exec_softMod)",
+    "exec_command" : "exec_softMod.create_softMod_block()",
+    "build_command":"exec_softMod.build_softMod_block()",
+
+    "attrs": {
+        "SetTargetVertex_string":"",
+        "SetControlParent_string":"Ctrl_Grp",
+        "Mirror_bool": "False",
+
+        "Help_string": "This will add a soft mod to a given vertex"
+    }
+}
+

@@ -1,0 +1,12 @@
+{
+    "Name": "PropTemplate",
+    "Description": "Create Quad Template",
+    "Icon": "Quad.png",
+    "Enable": "True",
+    "python_file": "exec_quad_template.py",
+    "import": "import exec_quad_template",
+    "imp.reload": "reload(exec_quad_template)",
+    "exec_command": "exec_quad_template.create_quad_template_block()",
+    "build_command": "exec_quad_template.build_quad_template_block()",
+    "attrs": {}
+}

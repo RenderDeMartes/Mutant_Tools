@@ -1,0 +1,119 @@
+{
+    "../../StudioLibrary": {
+        "name": "StudioLibrary",
+        "path": "../../StudioLibrary",
+        "type": "Folder",
+        "folder": "../..",
+        "category": "Animation",
+        "modified": 1702672523.706719,
+        "__class__": "studiolibrary.folderitem.FolderItem"
+    },
+    "../../StudioLibrary/Default.pose": {
+        "name": "Default.pose",
+        "path": "../../StudioLibrary/Default.pose",
+        "type": ".pose",
+        "folder": "../../StudioLibrary",
+        "category": "StudioLibrary",
+        "modified": 1702672842.2846274,
+        "__class__": "studiolibrarymaya.poseitem.PoseItem"
+    },
+    "../../StudioLibrary/Face1.anim": {
+        "name": "Face1.anim",
+        "path": "../../StudioLibrary/Face1.anim",
+        "type": ".anim",
+        "folder": "../../StudioLibrary",
+        "category": "StudioLibrary",
+        "modified": 1702672523.6531768,
+        "__class__": "studiolibrarymaya.animitem.AnimItem"
+    },
+    "../../StudioLibrary/Face2.anim": {
+        "name": "Face2.anim",
+        "path": "../../StudioLibrary/Face2.anim",
+        "type": ".anim",
+        "folder": "../../StudioLibrary",
+        "category": "StudioLibrary",
+        "modified": 1702672523.6581786,
+        "__class__": "studiolibrarymaya.animitem.AnimItem"
+    },
+    "../../StudioLibrary/Face3.anim": {
+        "name": "Face3.anim",
+        "path": "../../StudioLibrary/Face3.anim",
+        "type": ".anim",
+        "folder": "../../StudioLibrary",
+        "category": "StudioLibrary",
+        "modified": 1702672523.6627648,
+        "__class__": "studiolibrarymaya.animitem.AnimItem"
+    },
+    "../../StudioLibrary/Hands.anim": {
+        "name": "Hands.anim",
+        "path": "../../StudioLibrary/Hands.anim",
+        "type": ".anim",
+        "folder": "../../StudioLibrary",
+        "category": "StudioLibrary",
+        "modified": 1702672523.674951,
+        "__class__": "studiolibrarymaya.animitem.AnimItem"
+    },
+    "../../StudioLibrary/Run1.anim": {
+        "name": "Run1.anim",
+        "path": "../../StudioLibrary/Run1.anim",
+        "type": ".anim",
+        "folder": "../../StudioLibrary",
+        "category": "StudioLibrary",
+        "modified": 1702672523.680456,
+        "__class__": "studiolibrarymaya.animitem.AnimItem"
+    },
+    "../../StudioLibrary/Run2.anim": {
+        "name": "Run2.anim",
+        "path": "../../StudioLibrary/Run2.anim",
+        "type": ".anim",
+        "folder": "../../StudioLibrary",
+        "category": "StudioLibrary",
+        "modified": 1702672523.6870008,
+        "__class__": "studiolibrarymaya.animitem.AnimItem"
+    },
+    "../../StudioLibrary/Run3.anim": {
+        "name": "Run3.anim",
+        "path": "../../StudioLibrary/Run3.anim",
+        "type": ".anim",
+        "folder": "../../StudioLibrary",
+        "category": "StudioLibrary",
+        "modified": 1702672523.693543,
+        "__class__": "studiolibrarymaya.animitem.AnimItem"
+    },
+    "../../StudioLibrary/Walk1.anim": {
+        "name": "Walk1.anim",
+        "path": "../../StudioLibrary/Walk1.anim",
+        "type": ".anim",
+        "folder": "../../StudioLibrary",
+        "category": "StudioLibrary",
+        "modified": 1702672523.6995454,
+        "__class__": "studiolibrarymaya.animitem.AnimItem"
+    },
+    "../../StudioLibrary/Walk2.anim": {
+        "name": "Walk2.anim",
+        "path": "../../StudioLibrary/Walk2.anim",
+        "type": ".anim",
+        "folder": "../../StudioLibrary",
+        "category": "StudioLibrary",
+        "modified": 1702672523.705719,
+        "__class__": "studiolibrarymaya.animitem.AnimItem"
+    },
+    "../../StudioLibrary/Walk3.anim": {
+        "name": "Walk3.anim",
+        "path": "../../StudioLibrary/Walk3.anim",
+        "type": ".anim",
+        "folder": "../../StudioLibrary",
+        "category": "StudioLibrary",
+        "modified": 1702672523.7107205,
+        "__class__": "studiolibrarymaya.animitem.AnimItem"
+    },
+    "../../__pycache__": {
+        "name": "__pycache__",
+        "path": "../../__pycache__",
+        "type": "Folder",
+        "folder": "../..",
+        "category": "Animation",
+        "modified": 1702576877.3248875,
+        "__class__": "studiolibrary.folderitem.FolderItem"
+    }
+}

@@ -1,0 +1,20 @@
+{
+    "Name": "L_Hip,L_Knee,L_Ankle,L_Ball",
+    "Description": "Create a Quadruped Leg",
+    "Icon": "Quad_Limb.png",
+    "Enable": "True",
+    "python_file": "exec_quadlimb.py",
+    "import": "import exec_quadlimb",
+    "imp.reload": "reload(exec_quadlimb)",
+    "exec_command": "exec_quadlimb.create_quadlimb_block()",
+    "build_command": "exec_quadlimb.build_quadlimb_block()",
+    "attrs": {
+        "SetParent_string": "new_locator",
+        "Mirror_enum": "True:False:Right_Only",
+        "DogMode_enum": "Back:Front",
+        "CtrlSize_float": "4",
+        "TwistAmount_float": "4",
+        "CreateRibbons_bool": "True",
+        "Help_string": "Create a Quadruped Leg"
+    }
+}

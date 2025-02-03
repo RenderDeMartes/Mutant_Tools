@@ -1,12 +1,17 @@
+from __future__ import absolute_import
 from maya import cmds
 import json
-import imp
+try:
+    import importlib;from importlib import reload
+except:
+    import imp;from imp import reload
 import os
+from pathlib import Path
 
 import Mutant_Tools
 import Mutant_Tools.Utils.Rigging
 from Mutant_Tools.Utils.Rigging import main_mutant
-imp.reload(Mutant_Tools.Utils.Rigging.main_mutant)
+reload(Mutant_Tools.Utils.Rigging.main_mutant)
 
 mt = main_mutant.Mutant()
 
@@ -15,33 +20,32 @@ mt = main_mutant.Mutant()
 TAB_FOLDER = 'TAB'
 PYBLOCK_NAME = 'exec_NAME'
 
-#Read name conventions as nc[''] and setup as seup['']
-PATH = os.path.dirname(__file__)
-PATH = Path(PATH)
-PATH_PARTS = PATH.parts[:-2]
-FOLDER=''
-for f in PATH_PARTS:
-	FOLDER = os.path.join(FOLDER, f)
-
-JSON_FILE = os.path.join(FOLDER, 'config', 'name_conventions.json')
-with open(JSON_FILE) as json_file:
-	nc = json.load(json_file)
-#Read curve shapes info
-CURVE_FILE = os.path.join(FOLDER, 'config', 'curves.json')
-with open(CURVE_FILE) as curve_file:
-	curve_data = json.load(curve_file)
-#setup File
-SETUP_FILE = os.path.join(FOLDER, 'config', 'rig_setup.json')
-with open(SETUP_FILE) as setup_file:
-	setup = json.load(setup_file)
-
-MODULE_FILE = os.path.join(os.path.dirname(__file__),'num_name.json')
-with open(MODULE_FILE) as module_file:
-	module = json.load(module_file)
-
 #---------------------------------------------
 
 def create_NAME_block(name = 'NAME'):
+
+    #---------------------------------------------------
+    #---------------------------------------------------
+    #---------------------------------------------------
+
+
+    # Read name conventions as nc[''] and setup as seup['']
+    PATH = os.path.dirname(__file__)
+    PATH = Path(PATH)
+    PATH_PARTS = PATH.parts[:-2]
+    FOLDER = ''
+    for f in PATH_PARTS:
+        FOLDER = os.path.join(FOLDER, f)
+
+    MODULE_FILE = os.path.join(os.path.dirname(__file__), 'num_name.json')
+    with open(MODULE_FILE) as module_file:
+        module = json.load(module_file)
+
+    nc, curve_data, setup = mt.import_configs()
+
+    #---------------------------------------------------
+    #---------------------------------------------------
+    #---------------------------------------------------
 
     #name checks and block creation
     name = mt.ask_name(text = module['Name'])
@@ -67,17 +71,17 @@ def create_NAME_block(name = 'NAME'):
 
 def build_NAME_block():
 
+    nc, curve_data, setup = mt.import_configs()
+
     mt.check_is_there_is_base()
 
     block = cmds.ls(sl=True)
     config = cmds.listConnections(block)[1]
     block = block[0]
     guide = cmds.listRelatives(block, c=True)[0]
+    name = block.replace(nc['module'],'')
 
-    #groups for later cleaning
-    clean_rig_grp = ''
-    clean_ctrl_grp = ''
-    
+
     #cmds.getAttr('{}.AttrName'.format(config))
     #cmds.getAttr('{}.AttrName'.format(config), asString = True)
 
@@ -95,8 +99,11 @@ def build_NAME_block():
 
 
     #clean a bit
-    clean_rig_grp = cmds.group(em=True, n = '{}{}'.format(block.replace(nc['module'],'_Rig'), nc['group']))
+    clean_ctrl_grp = cmds.group(em=True, name = name + nc['ctrl'] + nc['group'])
+    clean_rig_grp = cmds.group(em=True, name = name + '_Rig' + nc['group'])
 
+    cmds.parent(clean_rig_grp, '{}{}'.format(setup['rig_groups']['misc'], nc['group']))
+    cmds.parent(clean_ctrl_grp, setup['base_groups']['control'] + nc['group'])
 
     print ('Build {} Success'.format(block))
 

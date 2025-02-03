@@ -1,0 +1,12 @@
+{
+    "Name": "SausageTemplate",
+    "Description": "Will import the Minotaur Template ",
+    "Icon": "Minotaur.png",
+    "Enable": "True",
+    "python_file": "exec_minotaurTemplate.py",
+    "import": "import exec_minotaurTemplate",
+    "imp.reload": "reload(exec_minotaurTemplate)",
+    "exec_command": "exec_minotaurTemplate.create_minotaurTemplate_block()",
+    "build_command": "exec_minotaurTemplate.build_minotaurTemplate_block()",
+    "attrs": {}
+}

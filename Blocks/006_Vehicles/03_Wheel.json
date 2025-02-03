@@ -1,0 +1,17 @@
+{
+    "Name": "Wheel",
+    "Description": "Wheel Block",
+    "Icon": "Wheel.png",
+    "Enable": "True",
+    "python_file": "exec_wheel.py",
+    "import": "import exec_wheel",
+    "imp.reload": "reload(exec_wheel)",
+    "exec_command": "exec_wheel.create_wheel_block()",
+    "build_command": "exec_wheel.build_wheel_block()",
+    "attrs": {
+        "SetParent_string": "new_locator",
+        "Mirror_enum": "True:False",
+        "SetManualRotationAttPos_string" : "",
+        "Help_string": "Will create a Wheel system"
+    }
+}

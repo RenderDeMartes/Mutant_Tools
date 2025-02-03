@@ -1,0 +1,31 @@
+{
+    "Name": "L_Foot",
+    "Description": "This will create a Foot System for FK and IK Legs",
+    
+    "Icon": "Foot.png",
+
+    "Enable": "True",
+
+    "python_file": "exec_foot.py",
+    "import": "import exec_foot",
+    "imp.reload": "reload(exec_foot)",
+    "exec_command": "exec_foot.create_foot_block()",
+    "build_command": "exec_foot.build_foot_block()",
+
+    "attrs": {
+
+        "SetIKCtrl_string": "new_locator",
+        "SetFKCtrl_string": "new_locator",
+
+        "Mirror_enum": "True:False:Right_Only",
+
+        "SwitchIKFKAttr_string": "new_attr",
+        "IkAttrsPosition_string": "new_locator",
+
+        "IKLeg_string": "new_locator",
+        "CtrlSize_float": "1",
+        "SetGameParent_string": "",
+
+        "Help_string" : "Possible parent: L_Foot_BallToes_Jnt\n"
+    }
+}

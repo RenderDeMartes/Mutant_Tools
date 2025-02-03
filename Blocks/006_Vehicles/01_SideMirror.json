@@ -1,0 +1,18 @@
+{
+    "Name": "L_SideMirror", 
+    "Description": "This will create side mirror controllers", 
+    "Icon": "SideMirror.png",
+    "Enable": "True", 
+    "python_file": "exec_side_mirror.py", 
+    "import": "import exec_side_mirror", 
+    "imp.reload": "reload(exec_side_mirror)", 
+    "exec_command": "exec_side_mirror.create_side_mirror_block()", 
+    "build_command": "exec_side_mirror.build_side_mirror_block()", 
+    "attrs": {
+        "SetParent_string": "new_locator", 
+        "Mirror_enum": "True:False:Right_Only", 
+        "CtrlSize_float": "4",
+        "CtrlType_enum": "circleX:bounding_cube",
+        "Help_string": "This will create a side mirror controller"
+    }
+}

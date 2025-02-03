@@ -1,0 +1,16 @@
+{
+    "Name": "Window",
+    "Description": "Window Block",
+    "Icon": "Window.png",
+    "Enable": "True",
+    "python_file": "exec_window.py",
+    "import": "import exec_window",
+    "imp.reload": "reload(exec_window)",
+    "exec_command": "exec_window.create_window_block()",
+    "build_command": "exec_window.build_window_block()",
+    "attrs": {
+        "SetParent_string": "new_locator",
+        "Mirror_enum": "True:False",
+        "Help_string": "Will create a Window System"
+    }
+}

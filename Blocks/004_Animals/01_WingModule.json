@@ -1,0 +1,17 @@
+{
+    "Name": "L_WingExtra",
+    "Description": "Will Create single Wing Module",
+    "Icon": "WingModule.png",
+    "Enable": "True",
+    "python_file": "exec_wingmodule.py",
+    "import": "import exec_wingmodule",
+    "imp.reload": "reload(exec_wingmodule)",
+    "exec_command": "exec_wingmodule.create_wingmodule_block()",
+    "build_command": "exec_wingmodule.build_wingmodule_block()",
+    "attrs": {
+        "SetParent_string": "new_locator",
+        "Amount_float": "5",
+        "Mirror_bool": "True",
+        "Help_string": "Will Create Single Wing Module"
+    }
+}

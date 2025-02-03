@@ -1,0 +1,18 @@
+{
+    "Name": "PoseToAttr",
+    "Description": "Will save current pose to an attr via SDK",
+    "Icon": "AnimToAttr.png",
+    "Enable": "True",
+    "python_file": "exec_anim_to_attr.py",
+    "import": "import exec_anim_to_attr",
+    "imp.reload": "reload(exec_anim_to_attr)",
+    "exec_command": "exec_anim_to_attr.create_animtoattr_block()",
+    "build_command": "exec_anim_to_attr.build_animtoattr_block()",
+    "attrs": {
+        "SetObject_string": "",
+        "NewAttrName_string": "Pose",
+        "SetNewAttrNode_string": "new_locator",
+        "AnimStep_string": "0.5",
+        "Help_string": "Select object to save the current pose to an attr, will save it using SDK, Anim Step is the amount the sdk will move after each pose, add should be == 1, You can set objects with Name_*"
+    }
+}

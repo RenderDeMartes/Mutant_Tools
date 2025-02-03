@@ -1,0 +1,12 @@
+{
+    "Name": "ToonTemplate",
+    "Description": "Will import the Toon Template ",
+    "Icon": "Sausage.png",
+    "Enable": "True",
+    "python_file": "exec_toonTemplate.py",
+    "import": "import exec_toonTemplate",
+    "imp.reload": "reload(exec_toonTemplate)",
+    "exec_command": "exec_toonTemplate.create_toonTemplate_block()",
+    "build_command": "exec_toonTemplate.build_toonTemplate_block()",
+    "attrs": {}
+}

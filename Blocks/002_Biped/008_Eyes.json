@@ -1,0 +1,17 @@
+{
+    "Name": "L_Eyes",
+    "Description": "Will create eyes aim system",
+    "Icon": "Eyes.png",
+    "Enable": "True",
+    "python_file": "exec_eyes.py",
+    "import": "import exec_eyes",
+    "imp.reload": "reload(exec_eyes)",
+    "exec_command": "exec_eyes.create_eyes_block()",
+    "build_command": "exec_eyes.build_eyes_block()",
+    "attrs": {
+        "SetParent_string": "new_locator",
+        "EyesAmount_enum": "Two:One",
+        "CtrlSize_float": "4",
+        "Help_string": "Possible parent: Create Eye aim system"
+    }
+}

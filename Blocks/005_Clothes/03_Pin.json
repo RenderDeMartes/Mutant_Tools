@@ -1,0 +1,15 @@
+{
+    "Name": "Pin",
+    "Description": "Create a Pin System",
+    "Icon": "Pin.png",
+    "Enable": "False",
+    "python_file": "exec_pin.py",
+    "import": "import exec_pin",
+    "imp.reload": "reload(exec_pin)",
+    "exec_command": "exec_pin.create_pin_block()",
+    "build_command": "exec_pin.build_pin_block()",
+    "attrs": {
+        "SetParent_string": "new_locator",
+        "Help_string": "Pin System"
+    }
+}

@@ -1,0 +1,20 @@
+{
+    "Name": "L_PupilDilation",
+    "Description": "Will create pupil dilation system",
+    "Icon": "Pupil.png",
+    "Enable": "True",
+    "python_file": "exec_pupil_dilation.py",
+    "import": "import exec_pupil_dilation",
+    "imp.reload": "reload(exec_pupil_dilation)",
+    "exec_command": "exec_pupil_dilation.create_pupil_dilation_block()",
+    "build_command": "exec_pupil_dilation.build_pupil_dilation_block()",
+    "attrs": {
+        "SetEyeMesh_string": "",
+        "SetEyeEdgeRing_string": "",
+        "SetIrisEdgeLoop_string": "",
+        "SetBlendShapeNode_string": "new_blendshape_node",
+        "SetTargetCtrl_string": "",
+        "Mirror_bool": "True",
+        "Help_string": "Select edge ring from the middle of the eye to de center. "
+    }
+}

@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 '''
 version: 1.0.0
 date: 21/04/2020
@@ -12,7 +13,7 @@ how to:
 
 import Mutant_Tools
 from Mutant_Tools.UI.AutoRigger import load_autoRiggerMenu
-imp.reload(load_autoRiggerMenu)
+reload(load_autoRiggerMenu)
 
 try:AutoRiggerMenu.close()
 except:pass
@@ -49,7 +50,11 @@ import maya.mel as mel
 from pathlib import Path
 
 import os
-import imp
+try:
+    import importlib;from importlib import reload
+except:
+    import imp;from imp import reload
+
 import sys
 import json
 
@@ -57,29 +62,34 @@ try:from urllib.request import Request, urlopen
 except:pass
 
 import Mutant_Tools
-from Mutant_Tools.UI.WebsiteViewer import load_website_viewer
-imp.reload(load_website_viewer)
-viewer = load_website_viewer.WebsiteViewerUI()
 
 from Mutant_Tools.Utils.Helpers import helpers
-imp.reload(Mutant_Tools.Utils.Helpers.helpers)
+reload(Mutant_Tools.Utils.Helpers.helpers)
 mh = helpers.Helpers()
 
 from Mutant_Tools.Utils.IO import SkinUtils
-imp.reload(Mutant_Tools.Utils.IO.SkinUtils)
+reload(Mutant_Tools.Utils.IO.SkinUtils)
 skin = SkinUtils.Skinning()
 
 from Mutant_Tools.Utils.IO import NgSkinUtils
-imp.reload(Mutant_Tools.Utils.IO.NgSkinUtils)
+reload(Mutant_Tools.Utils.IO.NgSkinUtils)
 ngmt = NgSkinUtils.NG_Mutant()
 
 from Mutant_Tools.Utils.IO import CtrlUtils
-imp.reload(Mutant_Tools.Utils.IO.CtrlUtils)
+reload(Mutant_Tools.Utils.IO.CtrlUtils)
 ctrls = CtrlUtils.Ctrls()
 
 from Mutant_Tools.Utils.IO import Guides
-imp.reload(Mutant_Tools.Utils.IO.Guides)
+reload(Mutant_Tools.Utils.IO.Guides)
 guides = Guides.Guides()
+
+from Mutant_Tools.Utils.Rigging import main_mutant
+reload(Mutant_Tools.Utils.Rigging.main_mutant)
+mt = main_mutant.Mutant()
+
+import Mutant_Tools.Utils.IO
+from Mutant_Tools.Utils.IO import EasySkin
+reload(Mutant_Tools.Utils.IO.EasySkin)
 
 # -------------------------------------------------------------------
 
@@ -133,7 +143,7 @@ class AutoRiggerMenu(QtWidgets.QDialog):
 		super(AutoRiggerMenu, self).__init__(parent)
 
 		self.open_viewer=True
-		self.cWebsiteViewer = viewer
+		self.cWebsiteViewer = self.load_viewer()
 
 		self.setWindowTitle(Title)
 		self.setFixedHeight(20)
@@ -141,6 +151,12 @@ class AutoRiggerMenu(QtWidgets.QDialog):
 		self.init_ui()
 		self.create_layout()
 		self.create_connections()
+
+	def load_viewer(self):
+		from Mutant_Tools.UI.WebsiteViewer import load_website_viewer
+		reload(load_website_viewer)
+		viewer = load_website_viewer.WebsiteViewerUI()
+		return viewer
 
 	def init_ui(self):
 		UIPath = os.path.join(FOLDER,'UI','AutoRigger')
@@ -169,10 +185,13 @@ class AutoRiggerMenu(QtWidgets.QDialog):
 		self.save_guide = self.fileMenu.addAction("Save Guide")
 		self.load_guide = self.fileMenu.addAction("Load Guide")
 		self.place_guide = self.fileMenu.addAction("Guide Placement")
+		self.butcher = self.fileMenu.addAction("Butcher")
 		self.fileMenu.addSeparator()
 
 		self.bind_selected = self.fileMenu.addAction("Bind Selected Geo")
 		self.download_ng = self.fileMenu.addAction("Download NgSkinToolsV2")
+		self.fileMenu.addSeparator()
+
 		self.save_skin = self.fileMenu.addAction("Save All Skins")
 		self.load_skin = self.fileMenu.addAction("Load All Skins")
 		self.save_sel_skin = self.fileMenu.addAction("Save Selected Skins")
@@ -181,7 +200,15 @@ class AutoRiggerMenu(QtWidgets.QDialog):
 
 		self.save_ctrls = self.fileMenu.addAction("Save Ctrls")
 		self.load_ctrls = self.fileMenu.addAction("Load Ctrls")
+		self.save_selected_ctrls = self.fileMenu.addAction("Save Selected Ctrls")
+		self.load_selected_ctrls = self.fileMenu.addAction("Load Selected Ctrls")
 		self.mirror_ctrls = self.fileMenu.addAction("Mirror Ctrls")
+		self.mirror_selected_ctrls = self.fileMenu.addAction("Mirror Selected Ctrls")
+		self.fileMenu.addSeparator()
+
+		self.dev_reload = self.fileMenu.addAction("Reload Blocks")
+		self.toggle_dev = self.fileMenu.addAction("Toggle Dev Mode")
+
 		self.fileMenu.addSeparator()
 
 		self.menuBar.addMenu(self.fileMenu)
@@ -229,6 +256,7 @@ class AutoRiggerMenu(QtWidgets.QDialog):
 		self.save_guide.triggered.connect(lambda: guides.export_ma_guide())
 		self.load_guide.triggered.connect(lambda: guides.import_ma_guide())
 		self.place_guide.triggered.connect(lambda: self.load_guide_placement())
+		self.butcher.triggered.connect(lambda: self.load_butcher())
 
 		self.bind_selected.triggered.connect(lambda: skin.bind_to_bnd())
 		self.save_skin.triggered.connect(self.save_skins)
@@ -238,7 +266,10 @@ class AutoRiggerMenu(QtWidgets.QDialog):
 
 		self.save_ctrls.triggered.connect(lambda: ctrls.save_all())
 		self.load_ctrls.triggered.connect(lambda: ctrls.load_all())
-		self.mirror_ctrls.triggered.connect(lambda: ctrls.mirror_all())
+		self.save_selected_ctrls.triggered.connect(lambda: ctrls.save_all(ctrls='Selected'))
+		self.load_selected_ctrls.triggered.connect(lambda: ctrls.load_selected())
+		self.mirror_ctrls.triggered.connect(lambda: ctrls.mirror_all_ctrl_shapes())
+		self.mirror_selected_ctrls.triggered.connect(lambda: ctrls.mirror_all_ctrl_shapes(ctrls='Selected'))
 
 		#HELP MENU
 		self.discord.triggered.connect(lambda: self.cWebsiteViewer.open_link('https://discord.gg/pqGeYhUcAW'))
@@ -253,38 +284,21 @@ class AutoRiggerMenu(QtWidgets.QDialog):
 		self.paypal.triggered.connect(lambda: self.open_website('https://www.paypal.com/paypalme/renderdemartes'))
 		self.crypto.triggered.connect(lambda: self.open_website('https://mutanttools.com/donate/'))
 
+		#Dev Mode
+		self.toggle_dev.triggered.connect(lambda: mt.toggle_dev_mode())
+
 	# -------------------------------------------------------------------
 	def save_skins(self):
-		try:
-			ngmt.export_all_skins()
-		except:
-			import ngSkinTools2
-			ngSkinTools2.open_ui()
-			ngmt.export_all_skins()
+		EasySkin.save_all_skins_to()
 
 	def load_skins(self):
-		try:
-			ngmt.import_all_skins()
-		except:
-			import ngSkinTools2
-			ngSkinTools2.open_ui()
-			ngmt.import_all_skins()
+		EasySkin.load_all_skins_from()
 
 	def save_sel_skins(self):
-		try:
-			ngmt.export_selected_skin()
-		except:
-			import ngSkinTools2
-			ngSkinTools2.open_ui()
-			ngmt.export_selected_skin()
+		EasySkin.save_selected_geos()
 
 	def load_sel_skins(self):
-		try:
-			ngmt.import_selected_skins()
-		except:
-			import ngSkinTools2
-			ngSkinTools2.open_ui()
-			ngmt.import_selected_skins()
+		EasySkin.load_selected_geos()
 
 	# -------------------------------------------------------------------
 
@@ -325,32 +339,46 @@ class AutoRiggerMenu(QtWidgets.QDialog):
 		response = urlopen(req)
 		response.read()
 
-		try:OpenMaya.MGlobal.displayInfo('Message Sent')
-		except:pass
+		#try:OpenMaya.MGlobal.displayInfo('Message Sent')
+		#except:pass
 
 	# -------------------------------------------------------------------
 
 	def send_bugs(self):
 		from Mutant_Tools.Utils.Helpers import discord
-		imp.reload(discord)
+		reload(discord)
 		discord.send_bugs()
 
 	# -------------------------------------------------------------------
 
 	def send_requests(self):
 		from Mutant_Tools.Utils.Helpers import discord
-		imp.reload(discord)
+		reload(discord)
 		discord.send_requests()
 
 	# -------------------------------------------------------------------
 	def load_guide_placement(self):
 		from Mutant_Tools.UI.GuidePlacements import load_guide_placements
-		imp.reload(load_guide_placements)
+		reload(load_guide_placements)
 
 		try:cGuidePlacements.close()
 		except:pass
 		cGuidePlacements = load_guide_placements.GuidePlacements()
 		cGuidePlacements.show()
+
+	# -------------------------------------------------------------------
+
+	def load_butcher(self):
+		import Mutant_Tools
+		from Mutant_Tools.UI.Butcher import load_butcher
+		reload(load_butcher)
+
+		try:
+			cButcherUI.close()
+		except:
+			pass
+		cButcherUI = load_butcher.ButcherUI()
+		cButcherUI.show()
 
 	# -------------------------------------------------------------------
 

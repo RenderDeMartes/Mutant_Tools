@@ -1,0 +1,29 @@
+{
+    "../../Walk": {
+        "category": "Anims", 
+        "name": "Walk", 
+        "__class__": "studiolibrary.folderitem.FolderItem", 
+        "modified": 1702670901.723947, 
+        "path": "../../Walk", 
+        "folder": "../..", 
+        "type": "Folder"
+    }, 
+    "../../Walk/Walk1.anim": {
+        "category": "Walk", 
+        "name": "Walk1.anim", 
+        "modified": 1702670915.32965, 
+        "__class__": "studiolibrarymaya.animitem.AnimItem", 
+        "path": "../../Walk/Walk1.anim", 
+        "folder": "../../Walk", 
+        "type": ".anim"
+    }, 
+    "../../Walk/Walk2.anim": {
+        "category": "Walk", 
+        "name": "Walk2.anim", 
+        "path": "../../Walk/Walk2.anim", 
+        "folder": "../../Walk", 
+        "type": ".anim", 
+        "modified": 1702670991.647143, 
+        "__class__": "studiolibrarymaya.animitem.AnimItem"
+    }
+}

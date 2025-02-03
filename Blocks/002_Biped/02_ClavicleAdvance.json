@@ -1,0 +1,19 @@
+{
+    "Name": "ClavicleAdvance",
+    "Description": "This will create a Clavicle Advance system",
+    "Icon": "ClavicleAdvance.png",
+    "Enable": "True",
+    "python_file": "exec_clavicleadvance.py",
+    "import": "import exec_clavicleadvance",
+    "imp.reload": "reload(exec_clavicleadvance)",
+    "exec_command": "exec_clavicleadvance.create_clavicleadvance_block()",
+    "build_command": "exec_clavicleadvance.build_clavicleadvance_block()",
+    "attrs": {
+        "SetParent_string": "new_locator",
+        "Mirror_enum": "True:False:Right_Only",
+        "TwistAmount_float": "4",
+        "Ribbon_bool": "True",
+        "SetGameParent_string": "",
+        "Help_string": "This will create a Clavicle Advance system, you need to create the basic one first"
+    }
+}

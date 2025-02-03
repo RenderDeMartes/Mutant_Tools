@@ -1,0 +1,19 @@
+{
+    "Name": "C_SteeringWheel",
+    "Description": "This will create a steering wheel controller",
+    "Icon": "SteeringWheel.png",
+    "Enable": "True",
+    "python_file": "exec_steering_wheel.py",
+    "import": "import exec_steering_wheel",
+    "imp.reload": "reload(exec_steering_wheel)",
+    "exec_command": "exec_steering_wheel.create_steering_wheel_block()",
+    "build_command": "exec_steering_wheel.build_steering_wheel_block()",
+    "attrs":{
+        "SetParent_string": "new_locator",
+        "CtrlSize_float": "4",
+        "CtrlType_enum": "circleX:bounding_cube",
+        "CtrlColor_enum": "lightBlue:blue:white:purple:green:red:yellow:grey",
+        "Help_string": "This will create a steering wheel controller"
+    }
+
+}

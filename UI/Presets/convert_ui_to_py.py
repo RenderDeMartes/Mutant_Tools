@@ -1,5 +1,5 @@
+from __future__ import absolute_import
 import pyside2uic
-
 myUI = 'C://Users//rodri//OneDrive//Documents//maya//2022//scripts//Mutant_Tools//UI//blockBuilder.ui'
 myPY = 'C://Users//rodri//OneDrive//Documents//maya//2022//scripts//Mutant_Tools//UI//TEST.py'
 

@@ -80,7 +80,7 @@
         <item>
          <widget class="QLineEdit" name="description_line">
           <property name="text">
-           <string>Whis will create a BLOCK that does something</string>
+           <string>This will create a BLOCK that does something</string>
           </property>
          </widget>
         </item>
@@ -167,21 +167,7 @@
            </property>
           </widget>
          </item>
-         <item row="0" column="7">
-          <widget class="QRadioButton" name="games_radio">
-           <property name="text">
-            <string>Games</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="5">
-          <widget class="QRadioButton" name="clothes_radio">
-           <property name="text">
-            <string>Clothes</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="8">
+         <item row="0" column="9">
           <widget class="QRadioButton" name="data_radio">
            <property name="text">
             <string>Data</string>
@@ -195,7 +181,21 @@
            </property>
           </widget>
          </item>
-         <item row="0" column="10">
+         <item row="0" column="8">
+          <widget class="QRadioButton" name="games_radio">
+           <property name="text">
+            <string>Games</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="5">
+          <widget class="QRadioButton" name="clothes_radio">
+           <property name="text">
+            <string>Clothes</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="11">
           <widget class="QRadioButton" name="other_radio">
            <property name="text">
             <string>Other</string>
@@ -212,7 +212,7 @@
            </property>
           </widget>
          </item>
-         <item row="0" column="6">
+         <item row="0" column="7">
           <widget class="QRadioButton" name="props_radio">
            <property name="text">
             <string>Props</string>
@@ -220,9 +220,16 @@
           </widget>
          </item>
          <item row="0" column="1">
-          <widget class="QRadioButton" name="stellar_radio">
+          <widget class="QRadioButton" name="studio_radio">
            <property name="text">
-            <string>Stellar</string>
+            <string>Studio</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="6">
+          <widget class="QRadioButton" name="vehicles_radio">
+           <property name="text">
+            <string>Vehicles</string>
            </property>
           </widget>
          </item>
@@ -434,7 +441,7 @@
      </layout>
     </widget>
    </item>
-   <item row="1" column="0">
+   <item row="2" column="0">
     <layout class="QHBoxLayout" name="horizontalLayout_8">
      <property name="topMargin">
       <number>0</number>
@@ -453,6 +460,16 @@
       </widget>
      </item>
     </layout>
+   </item>
+   <item row="1" column="0">
+    <widget class="QCheckBox" name="close_after">
+     <property name="text">
+      <string>Close After Creation</string>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>

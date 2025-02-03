@@ -1,0 +1,15 @@
+{
+    "Name": "Skirt",
+    "Description": "Create a Skirt System",
+    "Icon": "Skirt.png",
+    "Enable": "True",
+    "python_file": "exec_skirt.py",
+    "import": "import exec_skirt",
+    "imp.reload": "reload(exec_skirt)",
+    "exec_command": "exec_skirt.create_skirt_block()",
+    "build_command": "exec_skirt.build_skirt_block()",
+    "attrs": {
+        "SetParent_string": "new_locator",
+        "Help_string": "Skirt System"
+    }
+}

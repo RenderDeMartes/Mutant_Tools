@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 '''
 version: 1.0.0
 date: 21/04/2020
@@ -6,11 +7,15 @@ date: 21/04/2020
 
 how to:
 
-import imp
+try:
+    import importlib;from importlib import reload
+except:
+    import imp;from imp import reload
+
 import Mutant_Tools
 import Mutant_Tools.Utils.IO
 from Mutant_Tools.Utils.IO import Guides
-imp.reload(Mutant_Tools.Utils.IO.Guides)
+reload(Mutant_Tools.Utils.IO.Guides)
 
 guides = Guides.Guides()
 guides.FUNC_NAME(argument = '')
@@ -28,7 +33,11 @@ author:  Esteban Rodriguez <info@mutanttools.com>
 
 import os
 import json
-import imp
+try:
+    import importlib;from importlib import reload
+except:
+    import imp;from imp import reload
+
 from pathlib import Path
 
 from maya import cmds as cmds
@@ -36,7 +45,7 @@ from maya import OpenMaya as om
 
 import Mutant_Tools
 from Mutant_Tools.Utils.Helpers import helpers
-imp.reload(Mutant_Tools.Utils.Helpers.helpers)
+reload(Mutant_Tools.Utils.Helpers.helpers)
 mh = helpers.Helpers()
 
 

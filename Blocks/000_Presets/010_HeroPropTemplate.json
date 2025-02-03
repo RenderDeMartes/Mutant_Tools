@@ -1,0 +1,12 @@
+{
+    "Name": "PropTemplate",
+    "Description": "Create hero props guides",
+    "Icon": "HeroPropTemplate.png",
+    "Enable": "True",
+    "python_file": "exec_heroprop_template.py",
+    "import": "import exec_heroprop_template",
+    "imp.reload": "reload(exec_heroprop_template)",
+    "exec_command": "exec_heroprop_template.create_prop_template_block()",
+    "build_command": "exec_heroprop_template.build_prop_template_block()",
+    "attrs": {}
+}

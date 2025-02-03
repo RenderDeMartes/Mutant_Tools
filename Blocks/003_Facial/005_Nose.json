@@ -1,0 +1,17 @@
+{
+    "Name": "Nose",
+    "Description": "Will create a local nose rig",
+    "Icon": "Nose.png",
+    "Enable": "True",
+    "python_file": "exec_nose.py",
+    "import": "import exec_nose",
+    "imp.reload": "reload(exec_nose)",
+    "exec_command": "exec_nose.create_nose_block()",
+    "build_command": "exec_nose.build_nose_block()",
+    "attrs": {
+        "SetParent_string": "new_locator",
+        "SetAttrsPosition_string": "new_locator",
+        "CtrlSize_float": "4",
+        "Help_string": "Possible parent: "
+    }
+}

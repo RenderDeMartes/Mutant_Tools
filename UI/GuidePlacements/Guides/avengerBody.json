@@ -1,0 +1,105 @@
+{
+    "refs": {}, 
+    "code": {
+        "code": "from maya import cmds", 
+        "mode": "python"
+    }, 
+    "guides": {
+        "11": {
+            "L_Pelvis_Guide": [
+                "C_Body_prxy.vtx[14215], C_Body_prxy.vtx[14219]", 
+                ""
+            ]
+        }, 
+        "10": {
+            "L_Shoulder_Guide": [
+                "C_Body_prxy.vtx[4629:4652]", 
+                ""
+            ]
+        }, 
+        "13": {
+            "L_Hand_Palm_Guide": [
+                "L_Wrist_Guide", 
+                ""
+            ]
+        }, 
+        "12": {
+            "L_Hip_Guide": [
+                "C_Body_prxy.vtx[3391:3402], C_Body_prxy.vtx[3575], C_Body_prxy.vtx[3597], C_Body_prxy.vtx[3619], C_Body_prxy.vtx[3640], C_Body_prxy.vtx[3677], C_Body_prxy.vtx[3699], C_Body_prxy.vtx[3742]", 
+                ""
+            ]
+        }, 
+        "15": {
+            "L_Eyes_Guide": [
+                "L_Cornea_hi.vtx[0:721]", 
+                ""
+            ]
+        }, 
+        "14": {
+            "L_Foot_Ankle_Guide": [
+                "L_Ankle_Guide", 
+                ""
+            ]
+        }, 
+        "1": {
+            "Spine_Root_Guide": [
+                "C_Body_prxy.vtx[8240:8255], C_Body_prxy.vtx[8362], C_Body_prxy.vtx[14216:14229], C_Body_prxy.vtx[14271]", 
+                ""
+            ]
+        }, 
+        "0": {
+            "COG_Loc": [
+                "C_Body_prxy.vtx[8137:8149], C_Body_prxy.vtx[8179], C_Body_prxy.vtx[8193], C_Body_prxy.vtx[8207], C_Body_prxy.vtx[8365], C_Body_prxy.vtx[14127:14137], C_Body_prxy.vtx[14159], C_Body_prxy.vtx[14173], C_Body_prxy.vtx[14187], C_Body_prxy.vtx[14274]", 
+                ""
+            ]
+        }, 
+        "3": {
+            "Spine_Belly_Guide": [
+                "C_Body_prxy.vtx[10552:10568], C_Body_prxy.vtx[14402:14416]", 
+                ""
+            ]
+        }, 
+        "2": {
+            "Spine_Base_Guide": [
+                "C_Body_prxy.vtx[8137:8149], C_Body_prxy.vtx[8179], C_Body_prxy.vtx[8193], C_Body_prxy.vtx[8207], C_Body_prxy.vtx[8365], C_Body_prxy.vtx[14127:14137], C_Body_prxy.vtx[14159], C_Body_prxy.vtx[14173], C_Body_prxy.vtx[14187], C_Body_prxy.vtx[14274]", 
+                ""
+            ]
+        }, 
+        "5": {
+            "Spine_End_Guide": [
+                "C_Body_prxy.vtx[6442:6445], C_Body_prxy.vtx[6456:6459], C_Body_prxy.vtx[6481], C_Body_prxy.vtx[6490], C_Body_prxy.vtx[6509], C_Body_prxy.vtx[6511], C_Body_prxy.vtx[6603], C_Body_prxy.vtx[6606], C_Body_prxy.vtx[6608], C_Body_prxy.vtx[6610], C_Body_prxy.vtx[6726], C_Body_prxy.vtx[6761], C_Body_prxy.vtx[6958], C_Body_prxy.vtx[7047], C_Body_prxy.vtx[7092], C_Body_prxy.vtx[7111], C_Body_prxy.vtx[7202], C_Body_prxy.vtx[7214], C_Body_prxy.vtx[7218], C_Body_prxy.vtx[7222], C_Body_prxy.vtx[7224], C_Body_prxy.vtx[7254], C_Body_prxy.vtx[7646], C_Body_prxy.vtx[7677], C_Body_prxy.vtx[12807:12810], C_Body_prxy.vtx[12821:12824], C_Body_prxy.vtx[12846], C_Body_prxy.vtx[12855], C_Body_prxy.vtx[12874], C_Body_prxy.vtx[12876], C_Body_prxy.vtx[12968], C_Body_prxy.vtx[12971], C_Body_prxy.vtx[12973], C_Body_prxy.vtx[12975], C_Body_prxy.vtx[13091], C_Body_prxy.vtx[13126], C_Body_prxy.vtx[13323], C_Body_prxy.vtx[13412], C_Body_prxy.vtx[13457], C_Body_prxy.vtx[13476], C_Body_prxy.vtx[13567], C_Body_prxy.vtx[13579], C_Body_prxy.vtx[13583], C_Body_prxy.vtx[13587], C_Body_prxy.vtx[13589], C_Body_prxy.vtx[13619]", 
+                ""
+            ]
+        }, 
+        "4": {
+            "Spine_Chest_Guide": [
+                "C_Body_prxy.vtx[10586:10602], C_Body_prxy.vtx[14432:14446]", 
+                ""
+            ]
+        }, 
+        "7": {
+            "Head_Guide": [
+                "C_Body_prxy.vtx[6930], C_Body_prxy.vtx[7327:7342], C_Body_prxy.vtx[7694], C_Body_prxy.vtx[13295], C_Body_prxy.vtx[13692:13707]", 
+                ""
+            ]
+        }, 
+        "6": {
+            "Neck_Guide": [
+                "Spine_End_Guide", 
+                ""
+            ]
+        }, 
+        "9": {
+            "L_Clavicle_Guide": [
+                "C_Body_prxy.vtx[14104], C_Body_prxy.vtx[14370]", 
+                ""
+            ]
+        }, 
+        "8": {
+            "HeadEnd_Guide": [
+                "C_Body_prxy.vtx[7578]", 
+                ""
+            ]
+        }
+    }
+}

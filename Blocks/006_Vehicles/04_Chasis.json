@@ -1,0 +1,15 @@
+{
+    "Name": "Chasis",
+    "Description": "Chasis Block",
+    "Icon": "Chasis.png",
+    "Enable": "True",
+    "python_file": "exec_chasis.py",
+    "import": "import exec_chasis",
+    "imp.reload": "reload(exec_chasis)",
+    "exec_command": "exec_chasis.create_chasis_block()",
+    "build_command": "exec_chasis.build_chasis_block()",
+    "attrs": {
+        "SetParent_string": "new_locator",
+        "Help_string": "Will create a Chasis System"
+    }
+}

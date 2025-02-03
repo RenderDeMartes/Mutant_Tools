@@ -1,0 +1,23 @@
+{
+    "Name": "Setter",
+    "Description": "WIll set attrs",
+    "Icon": "Pose.png",
+    "Enable": "True",
+    "python_file": "exec_setter.py",
+    "import": "import exec_setter",
+    "imp.reload": "reload(exec_setter)",
+    "exec_command": "exec_setter.create_setter_block()",
+    "build_command": "exec_setter.build_setter_block()",
+    "attrs": {
+        "Pose0_string": "node,tx,ty,tz,rx,ry,rz,sx,sy,sz",
+        "Pose1_string": "",
+        "Pose2_string": "",
+        "Pose3_string": "",
+        "Pose4_string": "",
+        "Pose5_string": "",
+        "Pose6_string": "",
+        "Pose7_string": "",
+        "Pose8_string": "",
+        "Help_string": "Need to be the input like this: node,tx,ty,tz,rx,ry,rz,sx,sy,sz, ex: pCube1,10,5,2,rx,50,rz,0.5,sy,sz"
+    }
+}

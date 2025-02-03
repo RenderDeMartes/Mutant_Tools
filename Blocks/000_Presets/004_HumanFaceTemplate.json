@@ -1,0 +1,12 @@
+{
+    "Name": "humanBodyTemplate",
+    "Description": "Will import the human Body Template ",
+    "Icon": "Face.png",
+    "Enable": "True",
+    "python_file": "exec_humanFaceTemplate.py",
+    "import": "import exec_humanFaceTemplate",
+    "imp.reload": "reload(exec_humanFaceTemplate)",
+    "exec_command": "exec_humanFaceTemplate.create_humanFaceTemplate_block()",
+    "build_command": "exec_humanFaceTemplate.build_humanFaceTemplate_block()",
+    "attrs": {}
+}

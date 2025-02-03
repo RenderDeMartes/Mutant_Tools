@@ -1,0 +1,15 @@
+{
+    "Name": "Tie",
+    "Description": "Create a Tie System",
+    "Icon": "Tie.png",
+    "Enable": "False",
+    "python_file": "exec_tie.py",
+    "import": "import exec_tie",
+    "imp.reload": "reload(exec_tie)",
+    "exec_command": "exec_tie.create_tie_block()",
+    "build_command": "exec_tie.build_tie_block()",
+    "attrs": {
+        "SetParent_string": "new_locator",
+        "Help_string": "Tie System"
+    }
+}

@@ -1,0 +1,25 @@
+{
+    "Name": "Hair", 
+    "Description": "Will create multiple FK chains for a hair setup.", 
+    "Icon": "Hair.png", 
+    "Enable": "True", 
+    "python_file": "exec_hair.py", 
+    "import": "import exec_hair", 
+    "imp.reload": "reload(exec_hair)", 
+    "exec_command": "exec_hair.create_hair_block()", 
+    "build_command": "exec_hair.build_hair_block()", 
+    "attrs": {
+        "SetParent_string": "new_locator",
+        "Mirror_bool": "False",
+        "AutoRotate_bool": "False",
+        "SubAutoRotate_bool": "False",
+        "CtrlSize_float": "1",
+        "CtrlColor_enum": "lightBlue:blue:white:purple:green:red:yellow:grey",
+        "CtrlType_enum": "circleY:circleX:circleZ:square:sphere:cube:octagon:hexagon:pringle:feet:hand:3dArrow:2dArrow:mover:2dArrow:root:cog",
+        "TwistAxis_enum": "X:Y:Z",
+        "SetLockPin_string": "",
+        "SetLockGuides_string": "",
+        "SetLockAttrs_string": "",
+        "Help_string": "Will create multiple FK chains for a hair setup.\nFor SetLockCtrls set the guide from each chain you want to lock. \nFor SetLockParent set what to lock the ctrls to. \nFor SetLockAttrs set ctrl to have the lock attrs."
+    }
+}

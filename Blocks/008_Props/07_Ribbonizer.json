@@ -1,0 +1,22 @@
+{
+    "Name": "Ribbon",
+    "Description": "Creates a ribbon, Copyright (C) 2018 Orkhan Ashrafov\n",
+    "Icon": "Ribbon.png",
+    "Enable": "True",
+    "python_file": "exec_ribbonizer.py",
+    "import": "import exec_ribbonizer",
+    "imp.reload": "reload(exec_ribbonizer)",
+    "exec_command": "exec_ribbonizer.create_ribbonizer_block()",
+    "build_command": "exec_ribbonizer.build_ribbonizer_block()",
+    "attrs": {
+        "SetParent_string": "new_locator",
+        "Equal_bool": "True",
+        "Ctrls_float": "5",
+        "Joints_float": "5",
+        "Constraint_bool": "True",
+        "AddFk_bool": "True",
+        "Wire_bool": "False",
+        "MiddleCtrlPosition_enum": "Original:Start:End",
+        "Help_string": "Remove constraint for a local system."
+    }
+}

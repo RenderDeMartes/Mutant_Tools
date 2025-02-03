@@ -1,0 +1,17 @@
+{
+    "Name": "Skin",
+    "Description": "Will skin joints to geos",
+    "Icon": "Skin.png",
+    "Enable": "True",
+    "python_file": "exec_skin.py",
+    "import": "import exec_skin",
+    "imp.reload": "reload(exec_skin)",
+    "exec_command": "exec_skin.create_skin_block()",
+    "build_command": "exec_skin.build_skin_block()",
+    "attrs": {
+        "SetGeo_string": "",
+        "SetJoints_string": "*_Bnd",
+        "Help_string" : "Skin desire joints to geo, you can give names and * for overall parts, separate with ', comas', the command will select and then skin it"
+
+    }
+}

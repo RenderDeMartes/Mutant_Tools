@@ -1,3 +1,5 @@
+from __future__ import absolute_import
+# coding:utf-8
 '''
 version: 1.0.0
 date: 21/04/2020
@@ -8,10 +10,14 @@ content:
 #----------------
 how to:
 
-import imp
+try:
+    import importlib;from importlib import reload
+except:
+    import imp;from imp import reload
+
 import Mutant_Tools
 from Mutant_Tools.UI.RigTools import load_RigTools
-imp.reload(load_RigTools)
+reload(load_RigTools)
 
 try:cRigToolsUI.close()
 except:pass
@@ -32,6 +38,7 @@ author:  Esteban Rodriguez <info@renderdemartes.com>
 
 '''
 # -------------------------------------------------------------------
+#from typing import OrderedDict
 from shiboken2 import wrapInstance
 from PySide2 import QtGui, QtCore
 from PySide2 import QtUiTools
@@ -45,11 +52,16 @@ import maya.cmds as cmds
 import maya.mel as mel
 
 import os
-import imp
+try:
+    import importlib;from importlib import reload
+except:
+    import imp;from imp import reload
+
 import sys
 import json
 import glob
 import pprint
+import collections
 from pathlib import Path
 
 
@@ -97,18 +109,29 @@ import Mutant_Tools
 import Mutant_Tools.Utils
 from Mutant_Tools.Utils.Rigging import main_mutant
 
-imp.reload(Mutant_Tools.Utils.Rigging.main_mutant)
+reload(Mutant_Tools.Utils.Rigging.main_mutant)
 mt = main_mutant.Mutant()
 
 import Mutant_Tools.UI
 from Mutant_Tools.UI import QtMutantWindow
-imp.reload(QtMutantWindow)
+reload(QtMutantWindow)
 Qt_Mutant = QtMutantWindow.Qt_Mutant()
 
 import Mutant_Tools.Utils.Helpers
 from Mutant_Tools.Utils.Helpers import helpers
-imp.reload(Mutant_Tools.Utils.Helpers.helpers)
+reload(Mutant_Tools.Utils.Helpers.helpers)
 mh = helpers.Helpers()
+
+from Mutant_Tools.Utils.IO import SkinUtils
+reload(SkinUtils)
+ms = SkinUtils.Skinning()
+
+import Mutant_Tools
+import Mutant_Tools.Utils
+from Mutant_Tools.Utils.Rigging import main_mutant
+
+reload(Mutant_Tools.Utils.Rigging.main_mutant)
+mt = main_mutant.Mutant()
 
 # -------------------------------------------------------------------
 
@@ -331,10 +354,19 @@ class RigTools_UI(QtMutantWindow.Qt_Mutant):
 		self.designer_loader_child(path=os.path.join(FOLDER, 'UI', FOLDER_NAME), ui_file=UI_File)
 		self.set_title(Title)
 
-		self.resize(680,600)
-
+		self.tools_tab_size = [650, 690]
+		self.resize(self.tools_tab_size[0], self.tools_tab_size[1])
+		self.tab_sizes = {'Rename':[490,470],
+						  'Tools': self.tools_tab_size,
+						  'Ctrls': [550, 840],
+						  'Skin':[800,700],
+						  'Correctives':[700, 650]
+						  }
+		self.loaded_tabs =[]
 		self.create_layout()
 		self.create_connections()
+
+		self.create_menu()
 
 	# -------------------------------------------------------------------
 
@@ -348,6 +380,70 @@ class RigTools_UI(QtMutantWindow.Qt_Mutant):
 		self.ui.rig_frame.hide()
 		self.populate_ui_shelf(rig_tab, self.ui.rig_shelf)
 		self.populate_ui_shelf(sculpting_tab, self.ui.sculpt_shelf)
+		self.load_tools_tab()
+
+
+	def load_tabs(self):
+		""" Add tabs UI to main Rig Tools UI
+
+		Returns: None
+
+		"""
+
+		layouts = [self.ui.rename_layout, self.ui.tools_layout, self.ui.ctrls_layout, self.ui.skin_layout, self.ui.correctives_layout]
+
+		from Mutant_Tools.UI.RigTools.Tabs import load_RenameTab, load_ToolsTab, load_CtrlsTab, load_SkinTab, load_CorrectivesTab
+		reload(load_RenameTab)
+		reload(load_ToolsTab)
+		reload(load_CtrlsTab)
+		reload(load_SkinTab)
+		reload(load_CorrectivesTab)
+
+		self.cRename_ui = load_RenameTab.RenameTab()
+		self.cTools_ui = load_ToolsTab.ToolsTab()
+		self.cCtrls_ui = load_CtrlsTab.CtrlsTab()
+		self.cSkin_ui = load_SkinTab.SkinTab()
+		self.cCorrectives_ui = load_CorrectivesTab.CorrectivesTab()
+
+		ui_tabs = [self.cRename_ui, self.cTools_ui, self.cCtrls_ui, self.cSkin_ui, self.cCorrectives_ui]
+
+		for layout, ui in zip(layouts, ui_tabs):
+			layout.addWidget(ui)
+
+	def load_tools_tab(self):
+		from Mutant_Tools.UI.RigTools.Tabs import load_ToolsTab
+		reload(load_ToolsTab)
+		self.cTools_ui = load_ToolsTab.ToolsTab()
+		self.ui.tools_layout.addWidget(self.cTools_ui)
+		self.loaded_tabs.append('Tools')
+
+	def load_skin_tab(self):
+		from Mutant_Tools.UI.RigTools.Tabs import load_SkinTab
+		reload(load_SkinTab)
+		self.cSkin_ui = load_SkinTab.SkinTab()
+		self.ui.skin_layout.addWidget(self.cSkin_ui)
+		self.loaded_tabs.append('Skin')
+
+	def load_rename_tab(self):
+		from Mutant_Tools.UI.RigTools.Tabs import load_RenameTab
+		reload(load_RenameTab)
+		self.cRename_ui = load_RenameTab.RenameTab()
+		self.ui.rename_layout.addWidget(self.cRename_ui)
+		self.loaded_tabs.append('Rename')
+
+	def load_ctrls_tab(self):
+		from Mutant_Tools.UI.RigTools.Tabs import load_CtrlsTab
+		reload(load_CtrlsTab)
+		self.cCtrls_ui = load_CtrlsTab.CtrlsTab()
+		self.ui.ctrls_layout.addWidget(self.cCtrls_ui)
+		self.loaded_tabs.append('Ctrls')
+
+	def load_correctives_tab(self):
+		from Mutant_Tools.UI.RigTools.Tabs import load_CorrectivesTab
+		reload(load_CorrectivesTab)
+		self.cCorrectives_ui = load_CorrectivesTab.CorrectivesTab()
+		self.ui.correctives_layout.addWidget(self.cCorrectives_ui)
+		self.loaded_tabs.append('Correctives')
 
 
 	def create_connections(self):
@@ -356,24 +452,40 @@ class RigTools_UI(QtMutantWindow.Qt_Mutant):
 		Returns:
 
 		"""
-
 		self.ui.hide_shelfs.clicked.connect(self.toggle_shelfs_vis)
-		self.ui.smallerGuideBtn.clicked.connect(lambda: self.resize_guides(0.75))
-		self.ui.biggerGuideBtn.clicked.connect(lambda: self.resize_guides(1.25))
-		self.ui.JointSizeSlider.valueChanged.connect(lambda: cmds.jointDisplayScale(self.ui.JointSizeSlider.value() * 0.04))
+		self.ui.tabs.currentChanged.connect(self.on_tab_change)
 
-		self.ui.HideAxisBtn.clicked.connect(lambda: self.toggle_axis(False))
-		self.ui.ShowAxisBtn.clicked.connect(lambda: self.toggle_axis(True))
-		self.ui.lockContainerBtn.clicked.connect(lambda: self.toogle_contrainers(True))
-		self.ui.unlockContainerBtn.clicked.connect(lambda: self.toogle_contrainers(False))
 
-		self.ui.HideBtn.clicked.connect(self.hide_attrs)
-		self.ui.RevealBtn.clicked.connect(self.show_attrs)
+	def on_tab_change(self):
+		""" When tab changes position resize to fit better the Ui
 
-		self.ui.SimpleFKBtn.clicked.connect(lambda: mt.fk_chain(size = self.ui.SimpleFKSizeSlider.value(),
-																color = self.ui.SimpleFKColorBox.currentText(),
-																curve_type = self.ui.SimpleFKShapeBox.currentText()))
+		Returns:
 
+		"""
+
+		if self.ui.sculpt_frame.isVisible():
+			add=170
+		else:
+			add=0
+
+		current_tab = self.ui.tabs.tabText(self.ui.tabs.currentIndex())
+		self.resize(self.tab_sizes[current_tab][0],
+					self.tab_sizes[current_tab][1]+add)
+
+		if current_tab == 'Rename' and 'Rename' not in self.loaded_tabs:
+			self.load_rename_tab()
+
+		if current_tab == 'Tools' and 'Tools' not in self.loaded_tabs:
+			self.load_tools_tab()
+
+		if current_tab == 'Ctrls' and 'Ctrls' not in self.loaded_tabs:
+			self.load_ctrls_tab()
+
+		if current_tab == 'Skin' and 'Skin' not in self.loaded_tabs:
+			self.load_skin_tab()
+
+		if current_tab == 'Correctives' and 'Correctives' not in self.loaded_tabs:
+			self.load_correctives_tab()
 
 	def toggle_shelfs_vis(self):
 		""" Show or hide fake rigging and sculting shelfs
@@ -384,9 +496,14 @@ class RigTools_UI(QtMutantWindow.Qt_Mutant):
 		if self.ui.sculpt_frame.isVisible():
 			self.ui.sculpt_frame.hide()
 			self.ui.rig_frame.hide()
+			self.resize(self.frameGeometry().width(),
+						self.frameGeometry().height()-170)
 		else:
 			self.ui.sculpt_frame.show()
 			self.ui.rig_frame.show()
+			self.resize(self.frameGeometry().width(),
+						self.frameGeometry().height()+170)
+
 
 	def populate_ui_shelf(self, dict_data, layout):
 		""" Populate shelfs that mimic riging and sculting of native maya
@@ -424,7 +541,7 @@ class RigTools_UI(QtMutantWindow.Qt_Mutant):
 			#add to layout
 			layout.addWidget(button)
 
-	#stole event filler and add right click as obj name
+	# stole event filler and add right click as obj name
 	def eventFilter(self, obj, event):
 		if event.type() == QtCore.QEvent.MouseButtonPress:
 			if event.button() == QtCore.Qt.LeftButton:
@@ -437,101 +554,6 @@ class RigTools_UI(QtMutantWindow.Qt_Mutant):
 	def shelf_click(self, mel_code):
 		mel.eval(mel_code)
 
-	def resize_guides(self, size):
-		""" Make guides bigger or smaller
-
-		Args:
-			size: amount to mult the guides to
-
-		Returns: None
-
-		"""
-
-		guides= cmds.ls('*{}'.format(nc['guide']))
-
-		for g in guides:
-			cmds.select('{}_Ctrl_CtrlShape.cv[0:101]'.format(g),
-						'{}_Ctrl_Ctrl_Ctrl_CtrlShape.cv[0:9]'.format(g),
-						'{}_Ctrl_Ctrl_CtrlShape.cv[0:9]'.format(g),
-						'{}_CtrlShape.cv[0:9]'.format(g))
-
-			cmds.scale(size,size,size, r=True)
-
-		cmds.select(cl=True)
-
-
-	def toggle_axis(self, vis = True):
-		""" Show or hide joints axis
-
-		Args:
-			vis: bool show or hide
-
-		Returns: None
-
-		"""
-		#if no joints are selected, do it for all the joints in the scene
-		if len(cmds.ls(sl=1, type="joint")) == 0:
-			jointList = cmds.ls(type="joint")
-		else:
-			jointList = cmds.ls(sl=1, type="joint")
-
-		#set the displayLocalAxis attribute to what the user specifies
-		for jnt in jointList:
-			cmds.setAttr(jnt + ".displayLocalAxis", vis)
-
-	# -------------------------------------------------------------------
-
-	def toogle_contrainers(self, lock=True):
-		"""Remove nodes from rig container and add them back based on settings file
-
-		Args:
-			lock: bool
-
-		Returns: None
-
-		"""
-		settings = mh.read_json(os.path.dirname(__file__) + '\\', 'RigTools.settings')
-
-		if lock == True:
-			container_data = settings['Mutant_Rig_Nodes']
-			for node in container_data:
-				if cmds.objExists(node):
-					try:cmds.container('Mutant_Rig', edit=True, addNode=node)
-					except:pass
-
-		else:
-			if not cmds.objExists('Mutant_Rig'):
-				cmds.warning('No Mutant_Rig_Container in scene')
-				return
-			nodes = cmds.container('Mutant_Rig', query=True, nodeList=True)
-			for node in nodes:
-				cmds.container('Mutant_Rig', edit=True, removeNode=node)
-
-			settings['Mutant_Rig_Nodes'] = nodes
-			mh.write_json(os.path.dirname(__file__) + '\\', 'RigTools.settings', settings)
-
-	# -------------------------------------------------------------------
-
-	def hide_attrs(self):
-		from Mutant_Tools.UI.RigTools.rdm2 import ShowHideAttr
-		imp.reload(ShowHideAttr)
-		ShowHideAttr.hideSelection(hideT=self.ui.HideTranslateCheckBox.isChecked(),
-					  hideR=self.ui.HideRotateCheckBox.isChecked(),
-					  hideS=self.ui.HideScaleCheckBox.isChecked(),
-					  hideV=self.ui.HideVisibilityCheckBox.isChecked())
-
-	def show_attrs(self):
-		from Mutant_Tools.UI.RigTools.rdm2 import ShowHideAttr
-		imp.reload(ShowHideAttr)
-		ShowHideAttr.showAll()
-
-	# -------------------------------------------------------------------
-
-
-
-	# -------------------------------------------------------------------
-	# -------------------------------------------------------------------
-	# -------------------------------------------------------------------
 
 
 	# CLOSE EVENTS _________________________________
@@ -553,12 +575,3 @@ if __name__ == "__main__":
 
 # -------------------------------------------------------------------
 
-'''
-#Notes
-
-
-
-
-
-
-'''

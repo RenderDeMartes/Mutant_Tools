@@ -1,0 +1,18 @@
+{
+    "Name": "Smart_RFL",
+    "Description": "Will create a fancy RFL system for current Feet",
+    "Icon": "RFL.png",
+    "Enable": "True",
+    "python_file": "exec_smart_rfl.py",
+    "import": "import exec_smart_rfl",
+    "imp.reload": "reload(exec_smart_rfl)",
+    "exec_command": "exec_smart_rfl.create_smart_rfl_block()",
+    "build_command": "exec_smart_rfl.build_smart_rfl_block()",
+    "attrs": {
+        "SetRFLAttrsPosition_string": "L_Ankle_Ik_Ctrl",
+        "AltMode_bool" : "False",
+        "TransferAttrs_bool" : "True",
+        "SetFootBlockName_string" : "",
+        "Help_string": "Will create a fancy RFL system for current Feet, Just put the name of the Feet name and the Attrs position "
+    }
+}

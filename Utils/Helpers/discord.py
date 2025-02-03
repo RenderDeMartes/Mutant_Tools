@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 try:from urllib.request import Request, urlopen
 except:pass
 import maya.OpenMayaUI as omui
@@ -21,7 +22,8 @@ def send_webhook_message(webhook, message):
     response.read()
 
     try:
-        OpenMaya.MGlobal.displayInfo('Message Sent')
+        #OpenMaya.MGlobal.displayInfo('Message Sent')
+        ''
     except:
         pass
 

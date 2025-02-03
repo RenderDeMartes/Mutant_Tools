@@ -1,0 +1,396 @@
+{
+    "refs": {
+        "1": {
+            "start": "L_thigh", 
+            "end": "L_leg", 
+            "mid": "L_knee"
+        }, 
+        "0": {
+            "start": "L_shoulder", 
+            "end": "L_wrist", 
+            "mid": "L_elbow"
+        }
+    }, 
+    "code": {
+        "code": "from maya import cmds\nimport Mutant_Tools\nimport Mutant_Tools.Utils.Rigging\nfrom Mutant_Tools.Utils.Rigging import main_mutant\nimp.reload(Mutant_Tools.Utils.Rigging.main_mutant)\n\nmt = main_mutant.Mutant()\n\n\nclass Unlock_Guide(object):\n    \n    def __init__(self):\n        \n        self.unlock = True\n        self.attrs_to_lock = []\n        self.get_state()\n        \n    def get_state(self):\n        if cmds.getAttr('COG.rotateX', lock=True):\n            self.unlock = True\n        else:\n            self.unlock = False\n            self.attrs_to_lock = [u'spine_1.rotateX',\n u'spine_1.scaleX',\n u'spine_1.rotateY',\n u'spine_1.scaleY',\n u'spine_1.rotateZ',\n u'spine_1.scaleZ',\n u'neck_0.rotateX',\n u'neck_0.scaleX',\n u'neck_0.rotateY',\n u'neck_0.scaleY',\n u'neck_0.rotateZ',\n u'neck_0.scaleZ',\n u'L_eye_1.translateX',\n u'L_eye_1.rotateX',\n u'L_eye_1.scaleX',\n u'L_eye_1.translateY',\n u'L_eye_1.rotateY',\n u'L_eye_1.scaleY',\n u'L_eye_1.rotateZ',\n u'L_eye_1.scaleZ',\n u'R_eye_1.translateX',\n u'R_eye_1.rotateX',\n u'R_eye_1.scaleX',\n u'R_eye_1.translateY',\n u'R_eye_1.rotateY',\n u'R_eye_1.scaleY',\n u'R_eye_1.rotateZ',\n u'R_eye_1.scaleZ',\n u'L_RingFinger_3.rotateX',\n u'L_RingFinger_3.scaleX',\n u'L_RingFinger_3.translateY',\n u'L_RingFinger_3.rotateY',\n u'L_RingFinger_3.scaleY',\n u'L_RingFinger_3.translateZ',\n u'L_RingFinger_3.rotateZ',\n u'L_RingFinger_3.scaleZ',\n u'L_RingFinger_2.rotateX',\n u'L_RingFinger_2.scaleX',\n u'L_RingFinger_2.translateY',\n u'L_RingFinger_2.rotateY',\n u'L_RingFinger_2.scaleY',\n u'L_RingFinger_2.translateZ',\n u'L_RingFinger_2.scaleZ',\n u'L_RingFinger_1.rotateX',\n u'L_RingFinger_1.scaleX',\n u'L_RingFinger_1.translateY',\n u'L_RingFinger_1.rotateY',\n u'L_RingFinger_1.scaleY',\n u'L_RingFinger_1.translateZ',\n u'L_RingFinger_1.scaleZ',\n u'L_RingFinger_0.rotateX',\n u'L_RingFinger_0.scaleX',\n u'L_RingFinger_0.translateY',\n u'L_RingFinger_0.rotateY',\n u'L_RingFinger_0.scaleY',\n u'L_RingFinger_0.translateZ',\n u'L_RingFinger_0.scaleZ',\n u'L_RingPalm.scaleX',\n u'L_RingPalm.scaleY',\n u'L_RingPalm.scaleZ',\n u'L_PinkyFinger_3.rotateX',\n u'L_PinkyFinger_3.scaleX',\n u'L_PinkyFinger_3.translateY',\n u'L_PinkyFinger_3.rotateY',\n u'L_PinkyFinger_3.scaleY',\n u'L_PinkyFinger_3.translateZ',\n u'L_PinkyFinger_3.rotateZ',\n u'L_PinkyFinger_3.scaleZ',\n u'L_PinkyFinger_2.rotateX',\n u'L_PinkyFinger_2.scaleX',\n u'L_PinkyFinger_2.translateY',\n u'L_PinkyFinger_2.rotateY',\n u'L_PinkyFinger_2.scaleY',\n u'L_PinkyFinger_2.translateZ',\n u'L_PinkyFinger_2.scaleZ',\n u'L_PinkyFinger_1.rotateX',\n u'L_PinkyFinger_1.scaleX',\n u'L_PinkyFinger_1.translateY',\n u'L_PinkyFinger_1.rotateY',\n u'L_PinkyFinger_1.scaleY',\n u'L_PinkyFinger_1.translateZ',\n u'L_PinkyFinger_1.scaleZ',\n u'L_PinkyFinger_0.rotateX',\n u'L_PinkyFinger_0.scaleX',\n u'L_PinkyFinger_0.translateY',\n u'L_PinkyFinger_0.rotateY',\n u'L_PinkyFinger_0.scaleY',\n u'L_PinkyFinger_0.translateZ',\n u'L_PinkyFinger_0.scaleZ',\n u'L_PinkyPalm.scaleX',\n u'L_PinkyPalm.scaleY',\n u'L_PinkyPalm.scaleZ',\n u'L_IndexFinger_3.rotateX',\n u'L_IndexFinger_3.scaleX',\n u'L_IndexFinger_3.translateY',\n u'L_IndexFinger_3.rotateY',\n u'L_IndexFinger_3.scaleY',\n u'L_IndexFinger_3.translateZ',\n u'L_IndexFinger_3.rotateZ',\n u'L_IndexFinger_3.scaleZ',\n u'L_IndexFinger_2.rotateX',\n u'L_IndexFinger_2.scaleX',\n u'L_IndexFinger_2.translateY',\n u'L_IndexFinger_2.rotateY',\n u'L_IndexFinger_2.scaleY',\n u'L_IndexFinger_2.translateZ',\n u'L_IndexFinger_2.scaleZ',\n u'L_IndexFinger_1.rotateX',\n u'L_IndexFinger_1.scaleX',\n u'L_IndexFinger_1.translateY',\n u'L_IndexFinger_1.rotateY',\n u'L_IndexFinger_1.scaleY',\n u'L_IndexFinger_1.translateZ',\n u'L_IndexFinger_1.scaleZ',\n u'L_IndexFinger_0.rotateX',\n u'L_IndexFinger_0.scaleX',\n u'L_IndexFinger_0.translateY',\n u'L_IndexFinger_0.rotateY',\n u'L_IndexFinger_0.scaleY',\n u'L_IndexFinger_0.translateZ',\n u'L_IndexFinger_0.scaleZ',\n u'L_IndexPalm.scaleX',\n u'L_IndexPalm.scaleY',\n u'L_IndexPalm.scaleZ',\n u'L_MiddleFinger_3.rotateX',\n u'L_MiddleFinger_3.scaleX',\n u'L_MiddleFinger_3.translateY',\n u'L_MiddleFinger_3.rotateY',\n u'L_MiddleFinger_3.scaleY',\n u'L_MiddleFinger_3.translateZ',\n u'L_MiddleFinger_3.rotateZ',\n u'L_MiddleFinger_3.scaleZ',\n u'L_MiddleFinger_2.rotateX',\n u'L_MiddleFinger_2.scaleX',\n u'L_MiddleFinger_2.translateY',\n u'L_MiddleFinger_2.rotateY',\n u'L_MiddleFinger_2.scaleY',\n u'L_MiddleFinger_2.translateZ',\n u'L_MiddleFinger_2.scaleZ',\n u'L_MiddleFinger_1.rotateX',\n u'L_MiddleFinger_1.scaleX',\n u'L_MiddleFinger_1.translateY',\n u'L_MiddleFinger_1.rotateY',\n u'L_MiddleFinger_1.scaleY',\n u'L_MiddleFinger_1.translateZ',\n u'L_MiddleFinger_1.scaleZ',\n u'L_MiddleFinger_0.rotateX',\n u'L_MiddleFinger_0.scaleX',\n u'L_MiddleFinger_0.translateY',\n u'L_MiddleFinger_0.rotateY',\n u'L_MiddleFinger_0.scaleY',\n u'L_MiddleFinger_0.translateZ',\n u'L_MiddleFinger_0.scaleZ',\n u'L_MiddlePalm.scaleX',\n u'L_MiddlePalm.scaleY',\n u'L_MiddlePalm.scaleZ',\n u'L_ThumbFinger_3.rotateX',\n u'L_ThumbFinger_3.scaleX',\n u'L_ThumbFinger_3.translateY',\n u'L_ThumbFinger_3.rotateY',\n u'L_ThumbFinger_3.scaleY',\n u'L_ThumbFinger_3.translateZ',\n u'L_ThumbFinger_3.rotateZ',\n u'L_ThumbFinger_3.scaleZ',\n u'L_ThumbFinger_2.rotateX',\n u'L_ThumbFinger_2.scaleX',\n u'L_ThumbFinger_2.translateY',\n u'L_ThumbFinger_2.rotateY',\n u'L_ThumbFinger_2.scaleY',\n u'L_ThumbFinger_2.translateZ',\n u'L_ThumbFinger_2.scaleZ',\n u'L_ThumbFinger_1.rotateX',\n u'L_ThumbFinger_1.scaleX',\n u'L_ThumbFinger_1.translateY',\n u'L_ThumbFinger_1.rotateY',\n u'L_ThumbFinger_1.scaleY',\n u'L_ThumbFinger_1.translateZ',\n u'L_ThumbFinger_1.scaleZ',\n u'L_ThumbFinger_0.scaleX',\n u'L_ThumbFinger_0.scaleY',\n u'L_ThumbFinger_0.scaleZ',\n u'L_hand.translateX',\n u'L_hand.scaleX',\n u'L_hand.translateY',\n u'L_hand.scaleY',\n u'L_hand.translateZ',\n u'L_hand.scaleZ',\n u'L_wrist.rotateX',\n u'L_wrist.scaleX',\n u'L_wrist.translateY',\n u'L_wrist.rotateY',\n u'L_wrist.scaleY',\n u'L_wrist.translateZ',\n u'L_wrist.rotateZ',\n u'L_wrist.scaleZ',\n u'L_elbow.rotateX',\n u'L_elbow.scaleX',\n u'L_elbow.translateY',\n u'L_elbow.scaleY',\n u'L_elbow.translateZ',\n u'L_elbow.rotateZ',\n u'L_elbow.scaleZ',\n u'L_shoulder.scaleX',\n u'L_shoulder.scaleY',\n u'L_shoulder.scaleZ',\n u'L_clavicle.scaleX',\n u'L_clavicle.scaleY',\n u'L_clavicle.scaleZ',\n u'neck_1.rotateX',\n u'neck_1.scaleX',\n u'neck_1.rotateY',\n u'neck_1.scaleY',\n u'neck_1.rotateZ',\n u'neck_1.scaleZ',\n u'spine_2.rotateX',\n u'spine_2.scaleX',\n u'spine_2.rotateY',\n u'spine_2.scaleY',\n u'spine_2.rotateZ',\n u'spine_2.scaleZ',\n u'L_footInner.rotateX',\n u'L_footInner.scaleX',\n u'L_footInner.rotateY',\n u'L_footInner.scaleY',\n u'L_footInner.rotateZ',\n u'L_footInner.scaleZ',\n u'L_footOuter.rotateX',\n u'L_footOuter.scaleX',\n u'L_footOuter.rotateY',\n u'L_footOuter.scaleY',\n u'L_footOuter.rotateZ',\n u'L_footOuter.scaleZ',\n u'L_footTip.translateX',\n u'L_footTip.rotateX',\n u'L_footTip.scaleX',\n u'L_footTip.rotateY',\n u'L_footTip.scaleY',\n u'L_footTip.rotateZ',\n u'L_footTip.scaleZ',\n u'L_footHeel_parentConst.translateX',\n u'L_footHeel_parentConst.rotateX',\n u'L_footHeel_parentConst.scaleX',\n u'L_footHeel_parentConst.translateY',\n u'L_footHeel_parentConst.rotateY',\n u'L_footHeel_parentConst.scaleY',\n u'L_footHeel_parentConst.translateZ',\n u'L_footHeel_parentConst.rotateZ',\n u'L_footHeel_parentConst.scaleZ',\n u'L_footHeel.rotateX',\n u'L_footHeel.scaleX',\n u'L_footHeel.rotateY',\n u'L_footHeel.scaleY',\n u'L_footHeel.rotateZ',\n u'L_footHeel.scaleZ',\n u'L_legIK.translateX',\n u'L_legIK.rotateX',\n u'L_legIK.scaleX',\n u'L_legIK.translateY',\n u'L_legIK.rotateY',\n u'L_legIK.scaleY',\n u'L_legIK.translateZ',\n u'L_legIK.rotateZ',\n u'L_legIK.scaleZ',\n u'L_footToe.rotateX',\n u'L_footToe.scaleX',\n u'L_footToe.translateY',\n u'L_footToe.rotateY',\n u'L_footToe.scaleY',\n u'L_footToe.translateZ',\n u'L_footToe.rotateZ',\n u'L_footToe.scaleZ',\n u'L_footBall_parentConst.translateX',\n u'L_footBall_parentConst.rotateX',\n u'L_footBall_parentConst.scaleX',\n u'L_footBall_parentConst.translateY',\n u'L_footBall_parentConst.rotateY',\n u'L_footBall_parentConst.scaleY',\n u'L_footBall_parentConst.translateZ',\n u'L_footBall_parentConst.rotateZ',\n u'L_footBall_parentConst.scaleZ',\n u'L_footBall.rotateX',\n u'L_footBall.scaleX',\n u'L_footBall.translateY',\n u'L_footBall.rotateY',\n u'L_footBall.scaleY',\n u'L_footBall.translateZ',\n u'L_footBall.rotateZ',\n u'L_footBall.scaleZ',\n u'L_footAnkle.translateX',\n u'L_footAnkle.rotateX',\n u'L_footAnkle.scaleX',\n u'L_footAnkle.translateY',\n u'L_footAnkle.rotateY',\n u'L_footAnkle.scaleY',\n u'L_footAnkle.translateZ',\n u'L_footAnkle.scaleZ',\n u'L_leg.rotateX',\n u'L_leg.scaleX',\n u'L_leg.translateY',\n u'L_leg.rotateY',\n u'L_leg.scaleY',\n u'L_leg.translateZ',\n u'L_leg.rotateZ',\n u'L_leg.scaleZ',\n u'L_knee.rotateX',\n u'L_knee.scaleX',\n u'L_knee.translateY',\n u'L_knee.rotateY',\n u'L_knee.scaleY',\n u'L_knee.translateZ',\n u'L_knee.scaleZ',\n u'L_thigh.scaleX',\n u'L_thigh.translateY',\n u'L_thigh.rotateY',\n u'L_thigh.scaleY',\n u'L_thigh.translateZ',\n u'L_thigh.scaleZ',\n u'L_hip.scaleX',\n u'L_hip.scaleY',\n u'L_hip.scaleZ',\n u'COG.rotateX',\n u'COG.scaleX',\n u'COG.rotateY',\n u'COG.scaleY',\n u'COG.rotateZ',\n u'COG.scaleZ'] \n            \n    def toggle(self):\n       \n        if self.unlock:\n            print('unlocking')\n            for child in cmds.listRelatives('defaultBody_TEMPLATE', ad=True):\n                attrs = ['translate', 'rotate', 'scale']\n                axis = ['X', 'Y', 'Z']\n                for ax in axis:\n                    for attr in attrs:\n                        if cmds.getAttr(child+'.'+attr+ax, lock=True):\n                            self.attrs_to_lock.append(child+'.'+attr+ax)                      \n                        cmds.setAttr(child+'.'+attr+ax, lock=0)\n            self.unlock=False    \n                     \n        else:\n            print('locking')\n            for attr in self.attrs_to_lock:\n                cmds.setAttr(attr, lock=True)\n            self.unlock=True\n        \n                        \ncUnlock = Unlock_Guide()\ncUnlock.toggle()\n", 
+        "mode": "python"
+    }, 
+    "guides": {
+        "42": {
+            "L_footTip": [
+                "C_Body_prxy.vtx[15342]", 
+                "", 
+                "1,0,0", 
+                "0,1,0"
+            ]
+        }, 
+        "43": {
+            "L_footOuter": [
+                "C_Body_prxy.vtx[15577]", 
+                "", 
+                "1,0,0", 
+                "0,1,0"
+            ]
+        }, 
+        "24": {
+            "L_RingFinger_0": [
+                "C_Body_prxy.vtx[82], C_Body_prxy.vtx[913]", 
+                "L_RingFinger_1", 
+                "1,0,0", 
+                "0,1,0"
+            ]
+        }, 
+        "25": {
+            "L_RingPalm": [
+                "C_Body_prxy.vtx[1740], C_Body_prxy.vtx[1850]", 
+                "L_RingFinger_0", 
+                "1,0,0", 
+                "0,1,0"
+            ]
+        }, 
+        "26": {
+            "L_MiddleFinger_3": [
+                "C_Body_prxy.vtx[772]", 
+                "", 
+                "1,0,0", 
+                "0,1,0"
+            ]
+        }, 
+        "27": {
+            "L_MiddleFinger_2": [
+                "C_Body_prxy.vtx[106:107], C_Body_prxy.vtx[109], C_Body_prxy.vtx[119], C_Body_prxy.vtx[149:152], C_Body_prxy.vtx[582], C_Body_prxy.vtx[591], C_Body_prxy.vtx[709], C_Body_prxy.vtx[785], C_Body_prxy.vtx[787], C_Body_prxy.vtx[795], C_Body_prxy.vtx[1542], C_Body_prxy.vtx[1560]", 
+                "L_MiddleFinger_3", 
+                "1,0,0", 
+                "0,1,0"
+            ]
+        }, 
+        "20": {
+            "L_PinkyPalm": [
+                "C_Body_prxy.vtx[1852], C_Body_prxy.vtx[1857]", 
+                "L_PinkyFinger_0", 
+                "1,0,0", 
+                "0,1,0"
+            ]
+        }, 
+        "21": {
+            "L_RingFinger_3": [
+                "C_Body_prxy.vtx[1152]", 
+                "", 
+                "1,0,0", 
+                "0,1,0"
+            ]
+        }, 
+        "22": {
+            "L_RingFinger_2": [
+                "C_Body_prxy.vtx[304:305], C_Body_prxy.vtx[307], C_Body_prxy.vtx[312], C_Body_prxy.vtx[315], C_Body_prxy.vtx[341], C_Body_prxy.vtx[343], C_Body_prxy.vtx[345], C_Body_prxy.vtx[560], C_Body_prxy.vtx[569], C_Body_prxy.vtx[1043], C_Body_prxy.vtx[1124], C_Body_prxy.vtx[1128], C_Body_prxy.vtx[1443], C_Body_prxy.vtx[1586], C_Body_prxy.vtx[1604]", 
+                "L_RingFinger_3", 
+                "1,0,0", 
+                "0,1,0"
+            ]
+        }, 
+        "23": {
+            "L_RingFinger_1": [
+                "C_Body_prxy.vtx[284:288], C_Body_prxy.vtx[297], C_Body_prxy.vtx[300], C_Body_prxy.vtx[310], C_Body_prxy.vtx[557], C_Body_prxy.vtx[572], C_Body_prxy.vtx[1005], C_Body_prxy.vtx[1020], C_Body_prxy.vtx[1031], C_Body_prxy.vtx[1055], C_Body_prxy.vtx[1580], C_Body_prxy.vtx[1610]", 
+                "L_RingFinger_2", 
+                "1,0,0", 
+                "0,1,0"
+            ]
+        }, 
+        "46": {
+            "L_footToe": [
+                "C_Body_prxy.vtx[15342]", 
+                "", 
+                "1,0,0", 
+                "0,1,0"
+            ]
+        }, 
+        "44": {
+            "L_footInner": [
+                "C_Body_prxy.vtx[15481]", 
+                "", 
+                "1,0,0", 
+                "0,1,0"
+            ]
+        }, 
+        "45": {
+            "L_footBall": [
+                "C_Body_prxy.vtx[14909:14910], C_Body_prxy.vtx[14914:14917], C_Body_prxy.vtx[14942], C_Body_prxy.vtx[14949], C_Body_prxy.vtx[15084], C_Body_prxy.vtx[15129:15130], C_Body_prxy.vtx[15147], C_Body_prxy.vtx[15376], C_Body_prxy.vtx[15478:15479], C_Body_prxy.vtx[15581], C_Body_prxy.vtx[15617], C_Body_prxy.vtx[15629], C_Body_prxy.vtx[15637]", 
+                "", 
+                "1,0,0", 
+                "0,1,0"
+            ]
+        }, 
+        "28": {
+            "L_MiddleFinger_1": [
+                "C_Body_prxy.vtx[92:93], C_Body_prxy.vtx[98], C_Body_prxy.vtx[100], C_Body_prxy.vtx[111:112], C_Body_prxy.vtx[114:115], C_Body_prxy.vtx[579], C_Body_prxy.vtx[594], C_Body_prxy.vtx[675], C_Body_prxy.vtx[686], C_Body_prxy.vtx[694], C_Body_prxy.vtx[726], C_Body_prxy.vtx[1536], C_Body_prxy.vtx[1566]", 
+                "L_MiddleFinger_2", 
+                "1,0,0", 
+                "0,1,0"
+            ]
+        }, 
+        "29": {
+            "L_MiddleFinger_0": [
+                "C_Body_prxy.vtx[830], C_Body_prxy.vtx[1686]", 
+                "L_MiddleFinger_1", 
+                "1,0,0", 
+                "0,1,0"
+            ]
+        }, 
+        "40": {
+            "L_leg": [
+                "C_Body_prxy.vtx[3312:3313]", 
+                "", 
+                "1,0,0", 
+                "0,1,0"
+            ]
+        }, 
+        "41": {
+            "L_footHeel": [
+                "C_Body_prxy.vtx[14875]", 
+                "", 
+                "1,0,0", 
+                "0,1,0"
+            ]
+        }, 
+        "1": {
+            "spineMid": [
+                "C_Body_prxy.vtx[10569:10585], C_Body_prxy.vtx[14417:14431]", 
+                "", 
+                "1,0,0", 
+                "0,1,0"
+            ]
+        }, 
+        "0": {
+            "COG": [
+                "C_Body_prxy.vtx[8208:8217], C_Body_prxy.vtx[8228], C_Body_prxy.vtx[8230], C_Body_prxy.vtx[8232], C_Body_prxy.vtx[8234], C_Body_prxy.vtx[8236], C_Body_prxy.vtx[8238], C_Body_prxy.vtx[8364], C_Body_prxy.vtx[14188:14195], C_Body_prxy.vtx[14204], C_Body_prxy.vtx[14206], C_Body_prxy.vtx[14208], C_Body_prxy.vtx[14210], C_Body_prxy.vtx[14212], C_Body_prxy.vtx[14214], C_Body_prxy.vtx[14273]", 
+                "", 
+                "1,0,0", 
+                "0,1,0"
+            ]
+        }, 
+        "3": {
+            "spine_2": [
+                "C_Body_prxy.vtx[7857:7860], C_Body_prxy.vtx[7893], C_Body_prxy.vtx[7920:7921], C_Body_prxy.vtx[7950:7954], C_Body_prxy.vtx[7983], C_Body_prxy.vtx[8171], C_Body_prxy.vtx[8185], C_Body_prxy.vtx[8199], C_Body_prxy.vtx[8373], C_Body_prxy.vtx[13975:13977], C_Body_prxy.vtx[13998], C_Body_prxy.vtx[14004:14005], C_Body_prxy.vtx[14010:14013], C_Body_prxy.vtx[14038], C_Body_prxy.vtx[14151], C_Body_prxy.vtx[14165], C_Body_prxy.vtx[14179], C_Body_prxy.vtx[14282]", 
+                "", 
+                "1,0,0", 
+                "0,1,0"
+            ]
+        }, 
+        "2": {
+            "": [
+                "", 
+                "", 
+                "1,0,0", 
+                "0,1,0"
+            ]
+        }, 
+        "5": {
+            "head_0": [
+                "C_Body_prxy.vtx[7257], C_Body_prxy.vtx[13622]", 
+                "", 
+                "1,0,0", 
+                "0,1,0"
+            ]
+        }, 
+        "4": {
+            "neck_0": [
+                "C_Body_prxy.vtx[6961:6979], C_Body_prxy.vtx[7045], C_Body_prxy.vtx[7049], C_Body_prxy.vtx[7094], C_Body_prxy.vtx[7113], C_Body_prxy.vtx[7200], C_Body_prxy.vtx[7206], C_Body_prxy.vtx[7212], C_Body_prxy.vtx[7226], C_Body_prxy.vtx[7252], C_Body_prxy.vtx[7670], C_Body_prxy.vtx[7676], C_Body_prxy.vtx[13326:13344], C_Body_prxy.vtx[13410], C_Body_prxy.vtx[13414], C_Body_prxy.vtx[13459], C_Body_prxy.vtx[13478], C_Body_prxy.vtx[13565], C_Body_prxy.vtx[13571], C_Body_prxy.vtx[13577], C_Body_prxy.vtx[13591], C_Body_prxy.vtx[13617]", 
+                "", 
+                "1,0,0", 
+                "0,1,0"
+            ]
+        }, 
+        "7": {
+            "L_eye_1": [
+                "L_Cornea_hi.vtx[532]", 
+                "", 
+                "1,0,0", 
+                "0,1,0"
+            ]
+        }, 
+        "6": {
+            "L_eye_0": [
+                "L_Cornea_hi", 
+                "", 
+                "1,0,0", 
+                "0,1,0"
+            ]
+        }, 
+        "9": {
+            "R_eye_1": [
+                "R_Cornea_hi.vtx[532]", 
+                "", 
+                "1,0,0", 
+                "0,1,0"
+            ]
+        }, 
+        "8": {
+            "R_eye_0": [
+                "R_Cornea_hi", 
+                "", 
+                "1,0,0", 
+                "0,1,0"
+            ]
+        }, 
+        "39": {
+            "L_knee": [
+                "C_Body_prxy.vtx[3820:3821], C_Body_prxy.vtx[3824:3825], C_Body_prxy.vtx[3827], C_Body_prxy.vtx[3829], C_Body_prxy.vtx[3832:3833], C_Body_prxy.vtx[3835], C_Body_prxy.vtx[3837], C_Body_prxy.vtx[3839], C_Body_prxy.vtx[3841], C_Body_prxy.vtx[3843], C_Body_prxy.vtx[3845], C_Body_prxy.vtx[3847], C_Body_prxy.vtx[3849], C_Body_prxy.vtx[3852], C_Body_prxy.vtx[3888], C_Body_prxy.vtx[3891]", 
+                "", 
+                "1,0,0", 
+                "0,1,0"
+            ]
+        }, 
+        "38": {
+            "L_thigh": [
+                "C_Body_prxy.vtx[3914:3932]", 
+                "", 
+                "1,0,0", 
+                "0,1,0"
+            ]
+        }, 
+        "11": {
+            "L_wrist": [
+                "C_Body_prxy.vtx[1793:1816]", 
+                "L_hand", 
+                "1,0,0", 
+                "0,1,0"
+            ]
+        }, 
+        "10": {
+            "L_hand": [
+                "C_Body_prxy.vtx[1793:1816]", 
+                "", 
+                "1,0,0", 
+                "0,1,0"
+            ]
+        }, 
+        "13": {
+            "L_shoulder": [
+                "C_Body_prxy.vtx[14238:14255], C_Body_prxy.vtx[14260], C_Body_prxy.vtx[14265], C_Body_prxy.vtx[14270], C_Body_prxy.vtx[14297], C_Body_prxy.vtx[14306], C_Body_prxy.vtx[14315]", 
+                "L_elbow", 
+                "1,0,0", 
+                "0,1,0"
+            ]
+        }, 
+        "12": {
+            "L_elbow": [
+                "C_Body_prxy.vtx[4186], C_Body_prxy.vtx[4189], C_Body_prxy.vtx[4192], C_Body_prxy.vtx[4195], C_Body_prxy.vtx[4198], C_Body_prxy.vtx[4201], C_Body_prxy.vtx[4204], C_Body_prxy.vtx[4207], C_Body_prxy.vtx[4210], C_Body_prxy.vtx[4213], C_Body_prxy.vtx[4216], C_Body_prxy.vtx[4219], C_Body_prxy.vtx[4222], C_Body_prxy.vtx[4225], C_Body_prxy.vtx[4228], C_Body_prxy.vtx[4231], C_Body_prxy.vtx[4234], C_Body_prxy.vtx[4237], C_Body_prxy.vtx[4240], C_Body_prxy.vtx[4243], C_Body_prxy.vtx[4246], C_Body_prxy.vtx[4406], C_Body_prxy.vtx[4428], C_Body_prxy.vtx[4450]", 
+                "L_wrist", 
+                "1,0,0", 
+                "0,1,0"
+            ]
+        }, 
+        "15": {
+            "": [
+                "", 
+                "", 
+                "1,0,0", 
+                "0,1,0"
+            ]
+        }, 
+        "14": {
+            "L_clavicle": [
+                "C_Body_prxy.vtx[13947], C_Body_prxy.vtx[14147]", 
+                "L_shoulder", 
+                "1,0,0", 
+                "0,1,0"
+            ]
+        }, 
+        "17": {
+            "L_PinkyFinger_2": [
+                "C_Body_prxy.vtx[272:274], C_Body_prxy.vtx[276], C_Body_prxy.vtx[278], C_Body_prxy.vtx[355], C_Body_prxy.vtx[357:358], C_Body_prxy.vtx[538], C_Body_prxy.vtx[547], C_Body_prxy.vtx[973], C_Body_prxy.vtx[985], C_Body_prxy.vtx[1163], C_Body_prxy.vtx[1167], C_Body_prxy.vtx[1629], C_Body_prxy.vtx[1647]", 
+                "L_PinkyFinger_3", 
+                "1,0,0", 
+                "0,1,0"
+            ]
+        }, 
+        "16": {
+            "L_PinkyFinger_3": [
+                "C_Body_prxy.vtx[1228]", 
+                "", 
+                "1,0,0", 
+                "0,1,0"
+            ]
+        }, 
+        "19": {
+            "L_PinkyFinger_0": [
+                "C_Body_prxy.vtx[890], C_Body_prxy.vtx[1463]", 
+                "L_PinkyFinger_1", 
+                "1,0,0", 
+                "0,1,0"
+            ]
+        }, 
+        "18": {
+            "L_PinkyFinger_1": [
+                "C_Body_prxy.vtx[242:244], C_Body_prxy.vtx[248], C_Body_prxy.vtx[251], C_Body_prxy.vtx[255], C_Body_prxy.vtx[257], C_Body_prxy.vtx[259], C_Body_prxy.vtx[535], C_Body_prxy.vtx[550], C_Body_prxy.vtx[919], C_Body_prxy.vtx[924], C_Body_prxy.vtx[930], C_Body_prxy.vtx[950], C_Body_prxy.vtx[1623], C_Body_prxy.vtx[1653]", 
+                "L_PinkyFinger_2", 
+                "1,0,0", 
+                "0,1,0"
+            ]
+        }, 
+        "31": {
+            "L_IndexFinger_3": [
+                "C_Body_prxy.vtx[1339]", 
+                "", 
+                "1,0,0", 
+                "0,1,0"
+            ]
+        }, 
+        "30": {
+            "L_MiddlePalm": [
+                "C_Body_prxy.vtx[1741], C_Body_prxy.vtx[1846]", 
+                "L_MiddleFinger_0", 
+                "1,0,0", 
+                "0,1,0"
+            ]
+        }, 
+        "37": {
+            "L_hip": [
+                "C_Body_prxy.vtx[14135], C_Body_prxy.vtx[14195]", 
+                "", 
+                "1,0,0", 
+                "0,1,0"
+            ]
+        }, 
+        "36": {
+            "L_ThumbFinger_0": [
+                "C_Body_prxy.vtx[1841], C_Body_prxy.vtx[1866]", 
+                "", 
+                "1,0,0", 
+                "0,1,0"
+            ]
+        }, 
+        "35": {
+            "L_IndexPalm": [
+                "C_Body_prxy.vtx[69], C_Body_prxy.vtx[1844]", 
+                "L_IndexFinger_0", 
+                "1,0,0", 
+                "0,1,0"
+            ]
+        }, 
+        "34": {
+            "L_IndexFinger_0": [
+                "C_Body_prxy.vtx[836], C_Body_prxy.vtx[1464]", 
+                "L_IndexFinger_1", 
+                "1,0,0", 
+                "0,1,0"
+            ]
+        }, 
+        "33": {
+            "L_IndexFinger_1": [
+                "C_Body_prxy.vtx[62:64], C_Body_prxy.vtx[389:390], C_Body_prxy.vtx[393], C_Body_prxy.vtx[426], C_Body_prxy.vtx[429], C_Body_prxy.vtx[492], C_Body_prxy.vtx[507], C_Body_prxy.vtx[646], C_Body_prxy.vtx[1240], C_Body_prxy.vtx[1246], C_Body_prxy.vtx[1321], C_Body_prxy.vtx[1492], C_Body_prxy.vtx[1522]", 
+                "L_IndexFinger_2", 
+                "1,0,0", 
+                "0,1,0"
+            ]
+        }, 
+        "32": {
+            "L_IndexFinger_2": [
+                "C_Body_prxy.vtx[400:401], C_Body_prxy.vtx[413:415], C_Body_prxy.vtx[422:423], C_Body_prxy.vtx[425], C_Body_prxy.vtx[495], C_Body_prxy.vtx[504], C_Body_prxy.vtx[1280], C_Body_prxy.vtx[1295], C_Body_prxy.vtx[1298], C_Body_prxy.vtx[1305], C_Body_prxy.vtx[1498], C_Body_prxy.vtx[1516]", 
+                "L_IndexFinger_3", 
+                "1,0,0", 
+                "0,1,0"
+            ]
+        }
+    }
+}

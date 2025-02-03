@@ -1,0 +1,21 @@
+{
+    "Name": "Teeth",
+    "Description": "Will Create Teeth System",
+    "Icon": "Teeth.png",
+    "Enable": "True",
+    "python_file": "exec_teeth.py",
+    "import": "import exec_teeth",
+    "imp.reload": "reload(exec_teeth)",
+    "exec_command": "exec_teeth.create_teeth_block()",
+    "build_command": "exec_teeth.build_teeth_block()",
+    "attrs": {
+        "SetUprParent_string": "new_locator",
+        "SetLwrParent_string": "new_locator",
+        "SetAttrsPosition_string": "new_locator",
+        "SetJawJnt_string": "",
+        "UprTeeth_bool": "True",
+        "LwrTeeth_bool": "True",
+        "CtrlSize_float": "4",
+        "Help_string": "Will Create Teeth System"
+    }
+}

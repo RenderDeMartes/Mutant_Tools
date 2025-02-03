@@ -1,0 +1,18 @@
+{
+    "Name": "L_Brow",
+    "Description": "Will create a local Advance Brows Rig",
+    "Icon": "BrowsAdvance.png",
+    "Enable": "True",
+    "python_file": "exec_brows_advance.py",
+    "import": "import exec_brows_advance",
+    "imp.reload": "reload(exec_brows_advance)",
+    "exec_command": "exec_brows_advance.create_brows_advance_block()",
+    "build_command": "exec_brows_advance.build_brows_advance_block()",
+    "attrs": {
+        "SetParent_string": "new_locator",
+        "Mirror_enum": "True:False:Right_Only",
+        "SetAttrsPosition_string": "new_locator",
+        "CtrlSize_float": "4",
+        "Help_string": "Will crete brows rig system"
+    }
+}

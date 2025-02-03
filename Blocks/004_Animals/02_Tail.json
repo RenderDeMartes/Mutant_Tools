@@ -1,0 +1,17 @@
+{
+    "Name": "Tail",
+    "Description": "Create IK/FK Tail System",
+    "Icon": "Tail.png",
+    "Enable": "True",
+    "python_file": "exec_tail.py",
+    "import": "import exec_tail",
+    "imp.reload": "reload(exec_tail)",
+    "exec_command": "exec_tail.create_tail_block()",
+    "build_command": "exec_tail.build_tail_block()",
+    "attrs": {
+        "SetParent_string": "new_locator",
+        "FkCtrls_float": "5",
+        "Joints_float": "10",
+        "Help_string": "Create IK/FK Tail System"
+    }
+}

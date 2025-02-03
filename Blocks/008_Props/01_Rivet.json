@@ -1,0 +1,15 @@
+{
+    "Name": "Rivet",
+    "Description": "Will Create a Rivet on Selecter Faces",
+    "Icon": "Rivet.png",
+    "Enable": "True",
+    "python_file": "exec_rivet.py",
+    "import": "import exec_rivet",
+    "imp.reload": "reload(exec_rivet)",
+    "exec_command": "exec_rivet.create_rivet_block()",
+    "build_command": "exec_rivet.build_rivet_block()",
+    "attrs": {
+        "SetFaces_string": "",
+        "Help_string": "Will Create a Rivet on Selecter Faces"
+    }
+}

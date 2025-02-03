@@ -1,0 +1,16 @@
+{
+    "Name": "Push",
+    "Description": "Push Block",
+    "Icon": "Push.png",
+    "Enable": "True",
+    "python_file": "exec_push.py",
+    "import": "import exec_push",
+    "imp.reload": "reload(exec_push)",
+    "exec_command": "exec_push.create_push_block()",
+    "build_command": "exec_push.build_push_block()",
+    "attrs": {
+        "SetParent_string": "new_locator",
+        "SetWheelGeo_string" : "",
+        "Help_string": "Will create a Push System"
+    }
+}

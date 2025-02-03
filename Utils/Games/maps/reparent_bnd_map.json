@@ -1,0 +1,16 @@
+{
+    "COG_Bnd" : "Root",
+    "Spine_Root_Bnd" : "COG_Bnd",
+    "L_Clavicle_Bnd" : "Spine_Chest_Bnd",
+    "L_Hand_Palm_Bnd" : "L_Elbow_Bnd_?_Bnd",
+    "L_Pelvis_Bnd" : "Spine_Root_Bnd",
+    "L_Foot_Ankle_Bnd" : "L_Knee_Bnd_?_Bnd",
+    "R_Clavicle_Bnd" : "Spine_Chest_Bnd",
+    "R_Hand_Palm_Bnd" : "R_Elbow_Bnd_?_Bnd",
+    "R_Pelvis_Bnd" : "Spine_Root_Bnd",
+    "R_Foot_Ankle_Bnd" : "R_Knee_Bnd_?_Bnd",
+    "Neck_1_Bnd" : "Spine_End_Bnd",
+    "L_Eyes_Bnd" : "Head_Bnd",
+    "R_Eyes_Bnd" : "Head_Bnd"
+
+}

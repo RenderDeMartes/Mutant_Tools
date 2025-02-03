@@ -1,0 +1,15 @@
+{
+    "Name": "ConvertFace",
+    "Description": "Will convert Mutant Face Template to Games",
+    "Icon": "FaceGames.png",
+    "Enable": "True",
+    "python_file": "exec_convertface.py",
+    "import": "import exec_convertface",
+    "imp.reload": "reload(exec_convertface)",
+    "exec_command": "exec_convertface.create_convertface_block()",
+    "build_command": "exec_convertface.build_convertface_block()",
+    "attrs": {
+        "Engine_enum": "unity:unreal",
+        "Help_string": "Will convert Mutant Face Template to Games"
+    }
+}

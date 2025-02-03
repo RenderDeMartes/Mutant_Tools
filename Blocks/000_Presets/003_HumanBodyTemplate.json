@@ -1,0 +1,12 @@
+{
+    "Name": "humanBodyTemplate",
+    "Description": "Will import the human Body Template ",
+    "Icon": "Hero.png",
+    "Enable": "True",
+    "python_file": "exec_humanBodyTemplate.py",
+    "import": "import exec_humanBodyTemplate",
+    "imp.reload": "reload(exec_humanBodyTemplate)",
+    "exec_command": "exec_humanBodyTemplate.create_humanBodyTemplate_block()",
+    "build_command": "exec_humanBodyTemplate.build_humanBodyTemplate_block()",
+    "attrs": {}
+}

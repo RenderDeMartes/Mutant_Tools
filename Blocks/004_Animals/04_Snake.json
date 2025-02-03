@@ -1,0 +1,15 @@
+{
+    "Name": "Snake",
+    "Description": "Will create a Snake System",
+    "Icon": "Snake.png",
+    "Enable": "True",
+    "python_file": "exec_snake.py",
+    "import": "import exec_snake",
+    "imp.reload": "reload(exec_snake)",
+    "exec_command": "exec_snake.create_snake_block()",
+    "build_command": "exec_snake.build_snake_block()",
+    "attrs": {
+        "SetParent_string": "new_locator",
+        "Help_string": "Will create a snake System, bind joints will match curve"
+    }
+}

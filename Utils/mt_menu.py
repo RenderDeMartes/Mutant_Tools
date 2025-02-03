@@ -1,3 +1,4 @@
+from __future__ import absolute_import, division
 '''
 version: 1.0.0
 date: 21/04/2020
@@ -6,11 +7,15 @@ date: 21/04/2020
 
 how to:
 
-import imp
+try:
+    import importlib;from importlib import reload
+except:
+    import imp;from imp import reload
+
 import Mutant_Tools
 import Mutant_Tools.Utils
 from Mutant_Tools.Utils import mt_menu
-imp.reload(Mutant_Tools.Utils.mt_menu)
+reload(Mutant_Tools.Utils.mt_menu)
 mt_menu.create_mutant_menu()
 mt_menu.put_in_userSetup()
 
@@ -23,11 +28,14 @@ licence: https://www.eulatemplate.com/live.php?token=FGISW7ApRfgywum6murbBmLcusK
 author:  Esteban Rodriguez <info@mutanttools.com>
 
 '''
-
 import re
 import os
 import sys
-import imp
+try:
+    import importlib;from importlib import reload
+except:
+    import imp;from imp import reload
+
 import maya.mel as mel
 from pathlib import Path
 from functools import partial
@@ -37,11 +45,11 @@ from maya import cmds
 import Mutant_Tools
 import Mutant_Tools.Utils.Rigging
 from Mutant_Tools.Utils.Rigging import main_mutant
-imp.reload(Mutant_Tools.Utils.Rigging.main_mutant)
+reload(Mutant_Tools.Utils.Rigging.main_mutant)
 
 mt = main_mutant.Mutant()
-try:mt.compare_versions()
-except:pass
+#try:mt.compare_versions()
+#except:pass
 # -------------------------------------------------------------------------------------------
 
 #Read name conventions as nc[''] and setup as seup['']
@@ -60,10 +68,14 @@ def help(*args):
 # -------------------------------------------------------------------------------------------
 
 def open_rig_builder(*args):
-    import imp
+    try:
+        import importlib;from importlib import reload
+    except:
+        import imp;from imp import reload
+
     import Mutant_Tools
     from Mutant_Tools.UI.AutoRigger import load_autoRigger
-    imp.reload(load_autoRigger)
+    reload(load_autoRigger)
     try:
         AutoRigger.close()
     except:
@@ -74,7 +86,7 @@ def open_rig_builder(*args):
 
 def load_guide_placement(self):
     from Mutant_Tools.UI.GuidePlacements import load_guide_placements
-    imp.reload(load_guide_placements)
+    reload(load_guide_placements)
 
     try:
         cGuidePlacements.close()
@@ -83,12 +95,20 @@ def load_guide_placement(self):
     cGuidePlacements = load_guide_placements.GuidePlacements()
     cGuidePlacements.show()
 
-def open_block_builder(*args):
-    import imp
+def open_block_builder(args):
+    try:
+        import importlib;from importlib import reload
+    except:
+        import imp;from imp import reload
+
     import Mutant_Tools
     from Mutant_Tools.UI.BlockBuilder import load_blockBuilder
-    import imp
-    imp.reload(load_blockBuilder)
+    try:
+        import importlib;from importlib import reload
+    except:
+        import imp;from imp import reload
+
+    reload(load_blockBuilder)
 
     try:
         BlockBuilder.close()
@@ -100,37 +120,25 @@ def open_block_builder(*args):
 def view_log(*args):
     import Mutant_Tools
     from Mutant_Tools.UI.CodeReader import load_codeReader
-    import imp
-    imp.reload(load_codeReader)
-
     try:
-        codeUI.close()
+        import importlib;from importlib import reload
     except:
-        pass
+        import imp;from imp import reload
 
-    log_file = mt.Mutant_logger(mode='log')
-    with open(log_file) as log_data:
-        log = log_data.read()
+    reload(load_codeReader)
 
-    codeUI = load_codeReader.Code_Reader(mode='view', code=log, config_attr='')
-    codeUI.ui.code_text.verticalScrollBar().setValue(codeUI.ui.code_text.verticalScrollBar().maximum())
-    code_path = os.path.join(*PATH.parts[:-1], 'log.txt')
-    codeUI.set_path_label(code_path=code_path)
-    codeUI.show()
+    
 
 
 def open_website(website='http://mutanttools.com/', mode = 'view'):
     from Mutant_Tools.UI.WebsiteViewer import load_website_viewer
-    imp.reload(load_website_viewer)
+    reload(load_website_viewer)
     cWebsiteViewer = load_website_viewer.WebsiteViewerUI(website=website)
     if mode == 'view':
         cWebsiteViewer.show()
     else:
         cWebsiteViewer.open_link(website)
 
-
-def rigging_tutorial(*args):
-    open_website('https://mutanttools.com/riggers/')
 
 def riggers_help(*args):
     open_website('https://mutanttools.com/riggers/')
@@ -155,12 +163,12 @@ def join_discord(*args):
 
 def report_bug(*args):
     from Mutant_Tools.Utils.Helpers import discord
-    imp.reload(discord)
+    reload(discord)
     discord.send_bugs()
 
 def request_feature(*args):
     from Mutant_Tools.Utils.Helpers import discord
-    imp.reload(discord)
+    reload(discord)
     discord.send_requests()
 
 def contact(*args):
@@ -170,10 +178,14 @@ def download_latest(*args):
     open_website('https://mutanttools.com/#download', 'open')
 
 def open_rig_tools(*args):
-    import imp
+    try:
+        import importlib;from importlib import reload
+    except:
+        import imp;from imp import reload
+
     import Mutant_Tools
     from Mutant_Tools.UI.RigTools import load_RigTools
-    imp.reload(load_RigTools)
+    reload(load_RigTools)
 
     try:
         cRigToolsUI.close()
@@ -184,6 +196,151 @@ def open_rig_tools(*args):
 
 def tools_tutorial(*args):
     open_website('https://mutanttools.com/')
+
+def face_install(*args):
+    try:
+        import importlib;
+        from importlib import reload
+    except:
+        import imp;
+        from imp import reload
+
+    import Mutant_Tools
+    from Mutant_Tools.UI.FaceInstall import load_face_install
+    reload(load_face_install)
+
+    try:
+        cFaceInstallUI.close()
+    except:
+        pass
+    cFaceInstallUI = load_face_install.FaceInstallUI()
+    cFaceInstallUI.show()
+
+def zombinator(*args):
+    import Mutant_Tools.UI
+    try:
+        import importlib;
+        from importlib import reload
+    except:
+        import imp;
+        from imp import reload
+
+    import Mutant_Tools
+    from Mutant_Tools.UI.Zombinator import load_zombinator
+    reload(load_zombinator)
+
+    try:
+        cZombinator.close()
+    except:
+        pass
+    cZombinator = load_zombinator.Zombinator()
+    cZombinator.show()
+
+def shelves(*args):
+    try:
+        import importlib;
+        from importlib import reload
+    except:
+        import imp;
+        from imp import reload
+
+    import Mutant_Tools
+    from Mutant_Tools.UI.Shelves import load_shelves
+    reload(load_shelves)
+
+    try:
+        cShelvesUI.close()
+    except:
+        pass
+    cShelvesUI = load_shelves.ShelvesUI()
+    cShelvesUI.show()
+
+def ROM(*args):
+    try:
+        import importlib;
+        from importlib import reload
+    except:
+        import imp;
+        from imp import reload
+
+    import Mutant_Tools
+    from Mutant_Tools.UI.AnimLoader import load_anim_loader
+    reload(load_anim_loader)
+
+    try:
+        cAnimLoaderUI.close()
+    except:
+        pass
+    cAnimLoaderUI = load_anim_loader.AnimLoaderUI()
+    cAnimLoaderUI.show()
+
+def crowds(*args):
+    try:
+        import importlib;
+        from importlib import reload
+    except:
+        import imp;
+        from imp import reload
+
+    import Mutant_Tools
+    from Mutant_Tools.UI.GamesCrowds import load_games_crowds
+    reload(load_games_crowds)
+
+    try:
+        cGamesCrowds.close()
+    except:
+        pass
+    cGamesCrowds = load_games_crowds.GamesCrowds()
+    cGamesCrowds.show()
+
+def games(*args):
+    try:
+        import importlib;
+        from importlib import reload
+    except:
+        import imp;
+        from imp import reload
+
+    import Mutant_Tools
+    from Mutant_Tools.UI.GamesCrowds import load_games_crowds
+    reload(load_games_crowds)
+
+    try:
+        cGamesCrowds.close()
+    except:
+        pass
+    cGamesCrowds = load_games_crowds.GamesCrowds()
+    cGamesCrowds.show()
+    cGamesCrowds.ui.tabWidget.setCurrentIndex(2)
+
+def helpers(*args):
+    import Mutant_Tools.UI
+
+    try:
+        import importlib;
+        from importlib import reload
+    except:
+        import imp;
+        from imp import reload
+
+    import Mutant_Tools
+    from Mutant_Tools.UI.Helpers import load_helpers
+    reload(load_helpers)
+
+    try:
+        cHelperUI.close()
+    except:
+        pass
+    cHelperUI = load_helpers.HelperUI()
+    cHelperUI.show()
+
+def shapes(*args):
+    open_website('https://www.braverabbit.com/shapes/', 'open')
+
+def faceform_wrap(*args):
+    open_website('https://faceform.com/', 'open')
+
+
 # -------------------------------------------------------------------------------------------
 
 def create_mutant_menu(*args):
@@ -198,33 +355,49 @@ def create_mutant_menu(*args):
 
     #-------------------------------------------------------------------------------------------
 
-    menu_organizer = {"Mutant Tools": {
+    menu_organizer = {
+
+            "Mutant Tools": {
                             "Open Website": help,
-                            "Download Latest": download_latest
+                            "Download Latest": download_latest,
+                            "Line": '',
+                            ":)" : make_maya_pretty,
+                            ";)": make_outliner_pretty,
                             },
 
 
-            "Auto Rigger" :{
+            "Rigging" :{    "Rig Tools": open_rig_tools,
+                            "Helpers": helpers,
+                            "Line" : '',
                             "Open Autorigger": open_rig_builder,
-                            "Guide Placement" : load_guide_placement,
-                            "Tutorial": rigging_tutorial,
+                            "Face Install" : face_install,
+                            "AnotherLine": '',
                             "View Log": view_log,
                             "Help": riggers_help
                              },
-            "Rigging Tools":{
-                            "Rig Tools": open_rig_tools,
-                            "Tutorial" : tools_tutorial
-                            },
+
+            "Games/Crowds" : { "Games" : games,
+                               "Crowds": crowds,
+
+                    },
+
+            "Misc" : {"Zombinator" : zombinator,
+                      "ROM" : ROM,
+                      "Scene Shelves" : shelves,
+                    },
 
             "Developers" :{
                             "Block Builder": open_block_builder,
+                            "Line" : '',
                             ".mt commands": mt_commands,
-                            "Create Blocks Help": developers_block_help
+                            "Help": developers_block_help
                             },
 
 
             "Dependencies": {
-                            "Ng Skin Tools V2": install_ng
+                            "Ng Skin Tools V2": install_ng,
+                            "Brave Rabbit Shapes" : shapes,
+                            "Faceform Wrap" : faceform_wrap,
                             },
 
             "Donate": {
@@ -235,6 +408,7 @@ def create_mutant_menu(*args):
 
             "Discord": {
                         "Join Community": join_discord,
+                        "Line":'',
                         "Report Bug": report_bug,
                         "Request Feature": request_feature
                         },
@@ -248,30 +422,25 @@ def create_mutant_menu(*args):
     #-------------------------------------------------------------------------------------------
 
     icon_buttons = {'Mutant Tools': 'LogoBlack03.png',
-
                     'Open Autorigger':'LogoWhite03.png',
-
-                    'Ng Skin Tools V2':'Ng.png',
 
                     'Discord': 'Discord.png',
                     'Join Community':'Discord.png',
                     "Report Bug": "Bot.png",
                     "Request Feature": "HeadNeck.png",
 
-                    'Paypal':'Paypal.png',
-                    'Crypto':'BTC.png',
                     }
 
     #-------------------------------------------------------------------------------------------
-
+    menu_items = {}
     for item in menu_organizer:
         if item in icon_buttons:
             icon = icon_buttons[item]
         else:
             icon = ''
         cmds.setParent('MutantTools', menu=1)
-        menu_item = cmds.menuItem(sm=True, to=True, ann='', l=item, i= ICONS_PATH + icon)
-
+        menu_item = cmds.menuItem(sm=True, to=True, ann='', l=item, i= os.path.join(ICONS_PATH, icon))
+        menu_items[item] = menu_item
         submenus = menu_organizer[item]
         for subitem in submenus:
             if subitem in icon_buttons:
@@ -279,39 +448,66 @@ def create_mutant_menu(*args):
             else:
                 icon = ''
             cmds.setParent(menu_item, menu=1)
-            submenu_item = cmds.menuItem(l=subitem, c=submenus[subitem], i= ICONS_PATH + icon)
+            if "Line" in subitem:
+                cmds.menuItem(divider=True)
+            else:
+                submenu_item = cmds.menuItem(l=subitem, c=submenus[subitem], i= os.path.join(ICONS_PATH, icon))
 
     #-------------------------------------------------------------------------------------------
 
-def put_in_userSetup():
-    load = """\n
-#Start Mutant Tools
-#--------------------------------
-from maya import cmds
-try:
-    def load_mutant_menu():
-        import imp
-        import Mutant_Tools
-        import Mutant_Tools.Utils
-        from Mutant_Tools.Utils import mt_menu
-        imp.reload(Mutant_Tools.Utils.mt_menu)
-        mt_menu.create_mutant_menu()
-    cmds.evalDeferred(load_mutant_menu)
-except:
-    pass
-#--------------------------------
-#End Mutant Tools
-    
-"""
+    #Add custom items
+    cmds.setParent(menu_items['Mutant Tools'], menu=1)
+    dvd_submenu = cmds.menuItem(l='DVD', c=run_screensaver)
 
-    #read data
+
+def put_in_userSetup():
+
+    # read data
     PATH = os.path.dirname(__file__)
+    print(PATH)
     PATH = Path(PATH)
     PATH_PARTS = PATH.parts[:-2]
     FOLDER = ''
     for f in PATH_PARTS:
         FOLDER = os.path.join(FOLDER, f)
-    user_setup_path = os.path.join(FOLDER, 'userSetup.py')
+    user_setup_path = os.path.join(cmds.internalVar(usd=True), 'userSetup.py')
+
+    load = """\n
+#Start Mutant Tools
+try:
+    from maya import cmds
+    import sys
+    import os
+    from maya import cmds
+        
+    try:
+        import importlib;from importlib import reload
+    except:
+        import imp;from imp import reload
+    
+    
+    import Mutant_Tools
+    import Mutant_Tools.Utils
+    from Mutant_Tools.Utils import mt_menu
+    reload(Mutant_Tools.Utils.mt_menu)
+    
+    def load_mutant_menu():
+            try:
+                import importlib;from importlib import reload
+            except:
+                import imp;from imp import reload
+    
+            import Mutant_Tools
+            import Mutant_Tools.Utils
+            from Mutant_Tools.Utils import mt_menu
+            reload(Mutant_Tools.Utils.mt_menu)
+            mt_menu.create_mutant_menu()
+            
+    cmds.evalDeferred(load_mutant_menu)
+except:
+    pass
+#--------------------------------
+#End Mutant Tools"""
 
     if os.path.isfile(user_setup_path):
         userSetup = open(user_setup_path, "r")
@@ -352,3 +548,67 @@ except:
     userSetup.close()
 
 
+def make_maya_pretty(*args):
+    code = """
+# change colors start
+from maya import cmds, mel
+
+def change_colors():
+    gMainWindow = mel.eval('$tmpVar=$gMainWindow')
+    cmds.window(gMainWindow, e=True, mw=True, bgc=(0.31, 0.3, 0.5))
+
+cmds.evalDeferred(change_colors)
+# change colors end
+    """
+    print(os.path.join(cmds.internalVar(usd=True), 'userSetup.py'))
+    print(code)
+    exec(code)
+
+def make_outliner_pretty(*args):
+    import maya.mel as mel
+    sel = cmds.ls(sl=True)
+    import random
+    from random import randrange
+    if not sel:
+        reset_colors()
+
+    for i in sel:
+        r = randrange(255)
+        g = randrange(255)
+        b = randrange(255)
+        rand_color = [r, g, b]
+        cmds.select(i)
+        cmds.setAttr ( i + ".useOutlinerColor" , True)
+        cmds.setAttr(i + ".outlinerColor", r/255, g/255, b/255)
+
+    cmds.select(sel)
+    mel.eval('AEdagNodeCommonRefreshOutliners();')
+
+def reset_colors():
+    all = cmds.ls('*')
+    print('Reseting')
+    for i in all:
+        try:
+            cmds.setAttr(i + ".useOutlinerColor", False)
+        except:
+            pass
+
+def run_screensaver(*args):
+
+    code = """
+######-----------DVD-----------######
+from PySide2 import QtWidgets
+import Mutant_Tools
+from Mutant_Tools.UI.DVD import dvd
+
+try:
+    reload(dvd)
+
+    square_app = dvd.SquareMoveApp()
+    square_app.showFullScreen()
+    QtWidgets.QApplication.instance().exec_()
+
+except Exception as e:
+    print("Error running screensaver: {}".format(e))"""
+    exec(code)
+    print(code)

@@ -1,3 +1,4 @@
+from __future__ import absolute_import, division
 '''
 version: 1.0.0
 date: 21/04/2020
@@ -9,10 +10,14 @@ This will create a UI for the autorriger tool. Is dinamically created based on t
 
 #----------------
 how to:
-import imp
+try:
+    import importlib;from importlib import reload
+except:
+    import imp;from imp import reload
+
 import Mutant_Tools
 from Mutant_Tools.UI.AutoRigger import load_autoRigger
-imp.reload(load_autoRigger)
+reload(load_autoRigger)
 
 try:AutoRigger.close()
 except:pass
@@ -47,29 +52,49 @@ import maya.cmds as cmds
 import maya.mel as mel
 
 import os
-import imp
+import time
+import tempfile
+
+try:
+    import importlib;from importlib import reload
+except:
+    import imp;from imp import reload
+
 import sys
 import json
 from collections import OrderedDict
 from pathlib import Path
+try:
+	from rstar import convention
+	convention.set_project()
+except Exception as e:
+	cmds.warning('Error loading rstar.convention on load_AutoRigger')
 
 from Mutant_Tools.UI.AutoRigger import load_autoRiggerMenu
-imp.reload(load_autoRiggerMenu)
+reload(load_autoRiggerMenu)
 
 from Mutant_Tools.UI.CodeReader import load_codeReader
-imp.reload(load_codeReader)
+reload(load_codeReader)
 log_ui = load_codeReader.Code_Reader(mode='view', code= '', config_attr = '')
 
 import Mutant_Tools.UI
 from Mutant_Tools.UI import QtMutantWindow
-imp.reload(QtMutantWindow)
+reload(QtMutantWindow)
 
 import Mutant_Tools.UI.CustomWidgets.expandableWidget as expandableWidget
-imp.reload(expandableWidget)
+reload(expandableWidget)
 
 from Mutant_Tools.Utils.Helpers import helpers
-imp.reload(Mutant_Tools.Utils.Helpers.helpers)
+reload(Mutant_Tools.Utils.Helpers.helpers)
 mh = helpers.Helpers()
+
+import Mutant_Tools.Utils.IO
+from Mutant_Tools.Utils.IO import EasySkin
+reload(Mutant_Tools.Utils.IO.EasySkin)
+
+from Mutant_Tools.Utils.IO import CtrlUtils
+reload(Mutant_Tools.Utils.IO.CtrlUtils)
+ctrls = CtrlUtils.Ctrls()
 
 #-------------------------------------------------------------------
 
@@ -109,18 +134,17 @@ UI_File = 'autoRigger.ui'
 IconsPath =  os.path.join(FOLDER, 'Icons')
 Title = 'AutoRigger'
 
-
 #-------------------------------------------------------------------
 
 import Mutant_Tools
 import Mutant_Tools.Utils.Rigging
 from Mutant_Tools.Utils.Rigging import main_mutant
-imp.reload(Mutant_Tools.Utils.Rigging.main_mutant)
+reload(Mutant_Tools.Utils.Rigging.main_mutant)
 
 mt = main_mutant.Mutant()
 
 import Mutant_Tools.UI.CustomWidgets.expandableWidget as expandableWidget
-imp.reload(expandableWidget)
+reload(expandableWidget)
 
 #-------------------------------------------------------------------
 def add_sys_folders_remove_compiled():
@@ -157,6 +181,7 @@ def add_sys_folders_remove_compiled():
 				#print (name + ': Have been deleted')
 				os.remove(os.path.join(path, name))
 	print ('Cache removed...')
+
 #-------------------------------------------------------------------
 
 class AutoRigger(QtMutantWindow.Qt_Mutant):
@@ -168,20 +193,22 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		self.setWindowTitle(Title)
 		self.set_title(Title)
 
+		self.create_menu()
+
 		self.resize(605, 652)
 
 		#load blocks folders to sys and remove all the compiled info in BLOCKS and UI Folder
-		add_sys_folders_remove_compiled()
-
+		if mt.check_dev_mode():
+			add_sys_folders_remove_compiled()
+		self.reload_ready = False
 		self.designer_loader_child(path=os.path.join(FOLDER,'UI','AutoRigger'), ui_file=UI_File)
 
 		self.create_menus()
 		self.create_layout()
 		self.create_connections()
-		try:OpenMaya.MGlobal.displayInfo('<3')
-		except:pass
+		self.reload_blocks_if_isnt_working()
 
-		#08_Data init
+		#009_Data init
 		self.current_block = None
 		self.current_block_folder = None
 
@@ -189,35 +216,88 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		mt.update_icons()
 
 		#find tools updates:
-		mt.compare_versions()
+		#mt.compare_versions()
 
 		#load script job
+		self.current_selected_block = False
 		self.mutant_sj = cmds.scriptJob(event=["SelectionChanged", self.mutant_script_job])
+
+		self.recipes_dict = {}
+
+		self.studio_name = setup['studio']
+		self.ui.tabs.setTabText(1, self.studio_name)
+
+		try:OpenMaya.MGlobal.displayInfo('<3')
+		except:pass
+
+	#-------------------------------------------------------------------
+
+	def force_load_of_dependency_plugins(self):
+		plugins_windows = ['quatNodes.mll', 'objExport.mll','lookdevKit.mll', 'matrixNodes.mll']
+		plugins_linux = plugins = ['quatNodes.so', 'objExport.so','lookdevKit.so', 'matrixNodes.so']
+		for w_plugin, l_plugin in zip(plugins_windows, plugins_linux):
+			try:cmds.loadPlugin(w_plugin)
+			except:cmds.loadPlugin(l_plugin)
+
+	def exit_ui(self):
+
+		close_comfirm = cmds.confirmDialog(
+						title='Close Mutant Autorigger',
+						message='Are you sure?',
+						button=['Close', 'Stay Open'],
+						defaultButton='Stay Open',
+						dismissString='Stay Open',
+						cancelButton = 'Stay Open')
+
+		if close_comfirm == 'Close':
+			print('Mutant is closing')
+			self.close()
 
 	#-------------------------------------------------------------------
 
 	def mutant_script_job(self):
+		sel = cmds.ls(sl=True)
+		if not sel:
+			return
+		if self.current_selected_block == sel[0]:
+			return
+
 		try:
-			sel = cmds.ls(sl=True)[-1]
-			if str(sel).endswith('_Block'):
+			if str(sel[0]).endswith('_Block'):
 				self.create_properties_layout(block = cmds.ls(sl=True)[0])
+				self.current_selected_block = sel[0]
 		except:
 			pass
+
+
+	#-------------------------------------------------------------------
+	def reload_blocks_if_isnt_working(self):
+
+		try:
+			import exec_limb
+		except:
+			self.reload_all_blocks()
 
 	#-------------------------------------------------------------------
 	def create_menus(self):
 
-		self.menu = load_autoRiggerMenu.AutoRiggerMenu()
-		self.ui.menuLayout.addWidget(self.menu)
-		self.search_button = QPushButton()
-		#self.search_button.setFixedSize(20,20)
-		#self.ui.menuLayout.addWidget(self.search_button)
+		# self.menu = load_autoRiggerMenu.AutoRiggerMenu()
+		# self.ui.menuLayout.addWidget(self.menu)
+		# self.search_button = QPushButton()
+		# #self.search_button.setFixedSize(20,20)
+		# #self.ui.menuLayout.addWidget(self.search_button)
+
+		#Relaod blocks connection in Menu
+		self.menu.dev_reload.triggered.connect(self.reload_all_blocks)
+		
 
 	def create_layout(self):
 		self.create_block_buttons()
 		self.delete_side_buttons()
 
-		self.create_all_side_buttons()
+		try:self.create_all_side_buttons()
+		except Exception as e:
+			print(e)
 
 		try:self.ui.layout().setContentsMargins(3, 3, 3, 3)
 		except:pass
@@ -233,8 +313,12 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 
 
 	def reload_ui(self):
+
+		#Search delete
+		self.ui.search_line.setText('')
+
 		self.create_layout()
-		OpenMaya.MGlobal.displayInfo('<3')
+		#OpenMaya.MGlobal.displayInfo('<3')
 
 		#rest propierties layout too
 		for i in reversed(range(self.ui.properties_layout.count())):
@@ -251,19 +335,80 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		self.ui.postbuild.clicked.connect(lambda : self.edit_postbuild_code(self.current_block))
 		self.ui.log.clicked.connect(lambda : self.view_log())
 
+		self.ui.search_button.clicked.connect(self.search_command)
+
+	#-------------------------------------------------------------------
+	def reload_all_blocks(self):
+
+		if self.reload_ready and not mt.check_dev_mode():
+			return True
+
+		add_sys_folders_remove_compiled()
+
+		#'create all the buttons in the tabs blocks'
+		blocks_folders = os.listdir(os.path.join(FOLDER, 'Blocks'))
+
+		#Progress bar
+		from Mutant_Tools.UI.ProgressBar import load_progress_bar
+		reload(load_progress_bar)
+		cProgressBarUI = load_progress_bar.ProgressBarUI(items=blocks_folders,
+														 title='Loading Mutant...')
+		cProgressBarUI.show()
+		avoid_folders = ['.DS_Store']
+
+		for num, block_folder in enumerate(blocks_folders):
+
+			if block_folder in avoid_folders:
+				continue
+			cProgressBarUI.set_percent(num)
+
+			print (block_folder)
+			if block_folder not in sys.path:
+				sys.path.append(block_folder)
+
+			# clean_folder_name = block_folder.split('_')[1]
+			# files = os.listdir(os.path.join(FOLDER, 'Blocks', block_folder))
+			#
+			# for num, block_file in enumerate(files):
+			# 	#print(block_file)
+			#
+			# 	if not '.json' in str(block_file): #if the file != a json continue with the next one
+			# 		continue
+			#
+			# 	#read the json file with block information
+			# 	real_path =  os.path.join(FOLDER, 'Blocks', block_folder,  block_file)
+			# 	sys.path.append(real_path)
+			#
+			# 	with open(real_path, "r") as block_info:
+			# 		block = json.load(block_info)
+			# 		#reaload with json files info if dev mode is on, off loads faster
+			# 		try:
+			# 			exec(block['import'])
+			# 			exec(block['imp.reload'])
+			# 		except Exception as e:
+			# 			print('Importing error on {}'.format(block_file), e)
+
+		cProgressBarUI.close()
 
 	#-------------------------------------------------------------------
 	def create_block_buttons(self):
 
+		if mt.check_dev_mode():
+			self.reload_all_blocks()
+
 		#first we delete all the previews items on the layouts
 		for i in reversed(range(self.ui.presets_layout.count())):
 			self.ui.presets_layout.itemAt(i).widget().setParent(None)
+		for i in reversed(range(self.ui.studio_layout.count())):
+			self.ui.studio_layout.itemAt(i).widget().setParent(None)
 		for i in reversed(range(self.ui.biped_layout.count())):
 			self.ui.biped_layout.itemAt(i).widget().setParent(None)
 		for i in reversed(range(self.ui.facial_layout.count())):
 			self.ui.facial_layout.itemAt(i).widget().setParent(None)
 		for i in reversed(range(self.ui.animals_layout.count())):
 			self.ui.animals_layout.itemAt(i).widget().setParent(None)
+		for i in reversed(range(self.ui.vehicles_layout.count())):
+			self.ui.vehicles_layout.itemAt(i).widget().setParent(None)
 		for i in reversed(range(self.ui.clothes_layout.count())):
 			self.ui.clothes_layout.itemAt(i).widget().setParent(None)
 		for i in reversed(range(self.ui.props_layout.count())):
@@ -274,74 +419,99 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 			self.ui.data_layout.itemAt(i).widget().setParent(None)
 		for i in reversed(range(self.ui.other_layout.count())):
 			self.ui.other_layout.itemAt(i).widget().setParent(None)
+
 		#'create all the buttons in the tabs blocks'
-		#print ('Relaod UI')
-		#print (Folder)
 		blocks_folders = os.listdir(os.path.join(FOLDER, 'Blocks'))
-		#blocks_folders = ['01_Presets', '02_Biped']
-		#print ('Block Folders : ' + str(blocks_folders))
-
+		avoid_folders = ['.DS_Store', 'OldSystems']
 		for block_folder in blocks_folders:
-
+			if block_folder in avoid_folders:
+				continue
+			#print (block_folder)
 			clean_folder_name = block_folder.split('_')[1]
-			files = os.listdir(os.path.join(FOLDER, 'Blocks', block_folder))
+			files = sorted(os.listdir(os.path.join(FOLDER, 'Blocks', block_folder)))
+			have_order = False
+			if 'order.json' in files:
+				have_order = True
+
+			if have_order:
+				order_path = os.path.join(FOLDER, 'Blocks', block_folder, 'order.json')
+				with open(order_path, "r") as order_path:
+					order_data = json.load(order_path)
+
+				files = []
+				for tittle in order_data:
+					files.append(tittle+'_Tittle.json')
+					order_files = order_data[tittle]
+					for f in order_files:
+						files.append(f)
 
 			for block_file in files:
-				#print(block_file)
 
-				if not '.json' in str(block_file): #if the file is not a json continue with the next one
-					#print ('skiped' + block_file)
+				if not '.json' in str(block_file): #if the file != a json continue with the next one
 					continue
-				#read the json file with block information
-				real_path =  os.path.join(FOLDER, 'Blocks', block_folder,  block_file)
-				#print (real_path)
 
-				with open(real_path, "r") as block_info:
-					block = json.load(block_info)
-					#reaload with json files info if dev mode is on, off loads faster
-					if version['dev_mode'] == 'On':
-						exec(block['import'])
-						exec(block['imp.reload'])
-						#print ('reloading {}'.format(block_file))
+				if 'Tittle' in block_file:
+					button = QFrame()
+					button.setFrameShape(QFrame.VLine)
+					button.setFrameShadow(QFrame.Sunken)
+					button.setToolTip(block_file.replace('_Tittle.json', ''))
+					button.setFixedHeight(15)
+					button.setContentsMargins(0, 0, 0, 0)
 
-				#create button
-				block_name = str(block_file).split('_')[1].replace('.json', '')
-				button = QPushButton()#give a nicer name
-				button.clicked.connect(partial (self.create_new_block, real_path))
-				button.clicked.connect(self.create_layout)
-				button.setToolTip(block['Description'])
-				try:
-					button.setIcon(QtGui.QIcon(os.path.join(IconsPath ,block['Icon'])))
-					button.setIconSize((QtCore.QSize(35, 35)))
-					button.setStyleSheet("text-align:right;")
-					#button.setText(block_name)
-				except:
-					button.setText(block_name)
+				else:
+					#read the json file with block information
+					real_path =  os.path.join(FOLDER, 'Blocks', block_folder,  block_file)
 
-				if block['Enable'] == 'False':
-					button.setEnabled(False)
+					with open(real_path, "r") as block_info:
+						block = json.load(block_info)
+						#reaload with json files info if dev mode is on, off loads faster
+
+					#create button
+					block_name = str(block_file).split('_')[1].replace('.json', '')
+					button = QPushButton()#give a nicer name
+					button.clicked.connect(partial (self.create_new_block, real_path))
+					button.clicked.connect(self.create_layout)
+					button.setToolTip(block['Description'])
+					button.setFixedSize(40, 40)
+
+
+					try:
+						button.setIcon(QtGui.QIcon(os.path.join(IconsPath ,block['Icon'])))
+						button.setIconSize((QtCore.QSize(35, 35)))
+						button.setStyleSheet("text-align:right;")
+						#button.setText(block_name)
+					except:
+						button.setText(block_name)
+
+					if block['Enable'] == 'False':
+						button.setEnabled(False)
 
 				#parent to correct tab
-				if block_folder == '01_Presets':
+				if block_folder == '000_Presets':
 					self.ui.presets_layout.addWidget(button)
-				elif block_folder == '02_Biped':
+				elif block_folder == '001_Studio':
+					self.ui.studio_layout.addWidget(button)
+				elif block_folder == '002_Biped':
 					self.ui.biped_layout.addWidget(button)
-				elif block_folder == '03_Facial':
+				elif block_folder == '003_Facial':
 					self.ui.facial_layout.addWidget(button)
-				elif block_folder == '04_Animals':
+				elif block_folder == '004_Animals':
 					self.ui.animals_layout.addWidget(button)
-				elif block_folder == '05_Clothes':
+				elif block_folder == '005_Clothes':
 					self.ui.clothes_layout.addWidget(button)
-				elif block_folder == '06_Props':
-					self.ui.props_layout.addWidget(button)
-				elif block_folder == '07_Games':
+				elif block_folder == '006_Vehicles':
+					self.ui.vehicles_layout.addWidget(button)
+				elif block_folder == '007_Games':
 					self.ui.games_layout.addWidget(button)
-				elif block_folder == '08_Data':
+				elif block_folder == '008_Props':
+					self.ui.props_layout.addWidget(button)
+				elif block_folder == '009_Data':
 					self.ui.data_layout.addWidget(button)
 				else:
 					self.ui.other_layout.addWidget(button)
 
-				button.setFixedSize(40, 40)
+				if not have_order:
+					button.setFixedSize(42, 42)
 
 	#-------------------------------------------------------------------
 	def create_new_block(self,bock_path):
@@ -354,9 +524,11 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		cmds.undoInfo(openChunk=True)
 
 		exec (block['import'])
-		try:exec (block['imp.reload'])
-		except: print ('couldnt imp.reload {}'.format(bock_path))
+		if mt.check_dev_mode():
+			try:exec (block['imp.reload'])
+			except: print ('couldnt imp.reload {}'.format(bock_path))
 		exec (block['exec_command'])
+		mt.update_icons()
 		self.create_properties_layout(block = cmds.ls(sl=True)[0])
 
 		cmds.undoInfo(closeChunk=True)
@@ -370,26 +542,36 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 
 		self.ui.side_scroll.setWidgetResizable(True)
 
-	def delete_side_buttonblock(self, block):
+	def options_side_buttonblock(self, block, layout):
 
-		delete_comfirm = cmds.confirmDialog(
-						title='Name Block',
-						message='Are you sure you want to delete: {}'.format(block),
-						button=['Delete', 'Cancel'],
-						defaultButton='Delete',
-						dismissString='Cancel',
-						cancelButton = 'Cancel')
+		from Mutant_Tools.UI.AutoRigger import load_autoRiggerOptions
+		reload(load_autoRiggerOptions)
+		options = load_autoRiggerOptions.AutoRiggerOptions(autorigger_ui=self, block=block, layout=layout)
+		options.show()
 
-		if delete_comfirm == 'Delete':
-			cmds.delete(block)
-
-		self.create_layout()
 
 	#-------------------------------------------------------------------
 
 	def create_all_side_buttons(self):
-		if cmds.objExists('Mutant_Build'):
-			for num, child in enumerate(cmds.listRelatives('Mutant_Build', c=True)):
+
+		#search_data
+		search_text = self.ui.search_line.text()
+
+		cmds.select('Mutant_Build')
+		sel = cmds.ls(sl=True)
+		if not sel:
+			build_group = 'Mutant_Build'
+		else:
+			build_childs = cmds.listRelatives(sel[0], ad=True)
+			for child in build_childs:
+				if nc['module'] in str(child):
+					build_group = sel[0]
+					break
+				else:
+					build_group = 'Mutant_Build'
+
+		if cmds.objExists(build_group):
+			for num, child in enumerate(cmds.listRelatives(build_group, c=True)):
 				if not child.endswith(nc['module']):
 					colapsable_box = expandableWidget.expandableWidget(parent=self.ui.side_layout, title=child.replace('_Build', ''))
 					grand_childs = cmds.listRelatives(child, c=True)
@@ -398,9 +580,20 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 						continue
 					else:
 						for grand_child in grand_childs:
-							self.create_side_button(pack_name=grand_child, index=num, block_parent=colapsable_box.layout)
+							if search_text:
+								if search_text.lower() in grand_child.lower():
+									self.create_side_button(pack_name=grand_child, index=num,
+															block_parent=colapsable_box.layout)
+							else:
+								self.create_side_button(pack_name=grand_child, index=num, block_parent=colapsable_box.layout)
 				else:
-					self.create_side_button(pack_name=child, index=num, block_parent=None)
+					if search_text:
+						if search_text.lower() in grand_child.lower():
+							self.create_side_button(pack_name=child, index=num, block_parent=None)
+						else:
+							continue
+					else:
+						self.create_side_button(pack_name=child, index=num, block_parent=None)
 
 	#-------------------------------------------------------------------
 	def create_side_button(self, pack_name = 'Mutant_Block', index = 0, block_parent = None):
@@ -432,16 +625,16 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 			edit_button.setText(pack_name)
 
 
-		delete_button = QtWidgets.QPushButton()
-		delete_button.setFixedSize(15,15)
-		delete_button.setIcon(QtGui.QIcon(os.path.join(IconsPath ,'Delete.png')))
-		delete_button.setToolTip('Delete: {}'.format(pack_name))
+		options_button = QtWidgets.QPushButton()
+		options_button.setFixedSize(15,15)
+		options_button.setIcon(QtGui.QIcon(os.path.join(IconsPath ,'Gear.png')))
+		options_button.setToolTip('Options: {}'.format(pack_name))
 
 		h_layout = QtWidgets.QHBoxLayout()
 		v_layout = QtWidgets.QVBoxLayout()
 
 		v_layout.addWidget(up_button)
-		v_layout.addWidget(delete_button)
+		v_layout.addWidget(options_button)
 		v_layout.addWidget(down_button)
 		h_layout.addLayout(v_layout)
 		h_layout.addWidget(edit_button)
@@ -458,7 +651,7 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		down_button.clicked.connect(self.create_layout)
 
 		edit_button.clicked.connect(partial (self.create_properties_layout, pack_name))
-		delete_button.clicked.connect(partial (self.delete_side_buttonblock, pack_name))
+		options_button.clicked.connect(partial (self.options_side_buttonblock, pack_name, side_hbox))
 
 	#-------------------------------------------------------------------
 	def create_properties_layout(self, block):
@@ -471,7 +664,6 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 
 		#collect data for opening logs and codes
 		self.current_block = block
-		print (self.current_block)
 
 		#print (block)
 		cmds.select(self.current_block)
@@ -535,9 +727,16 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 
 				if 'Set' in attr: #if set in name it will create a greab button
 					set_button = QtWidgets.QPushButton('Set Selection')
-					set_button.setFixedSize(80,35)
+					set_button.setFixedSize(80,30)
 					set_button.clicked.connect(partial(self.lineEdit_get_selection,line_edit, edit_attr))
+
+					select_button = QtWidgets.QPushButton()
+					select_button.setFixedSize(20, 20)
+					select_button.setIcon(QtGui.QIcon(os.path.join(IconsPath, 'Cursor.png')))
+					select_button.clicked.connect(partial(self.lineEdit_sel_selection,line_edit, edit_attr))
+
 					h_layout.addWidget(set_button)
+					h_layout.addWidget(select_button)
 
 				if 'File' in attr:
 					file_button = QtWidgets.QPushButton('Browse')
@@ -588,7 +787,10 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 				int_label = QtWidgets.QLabel(str(cmds.getAttr(edit_attr)))
 				int_slider = QtWidgets.QSlider(QtCore.Qt.Horizontal)
 				int_slider.setValue(cmds.getAttr(edit_attr))
-				int_slider.setMaximum(20)
+				if cmds.getAttr(edit_attr) > 20:
+					int_slider.setMaximum(100)
+				else:
+					int_slider.setMaximum(20)
 				int_slider.setStyleSheet('background-color: none;')
 				int_slider.valueChanged.connect(partial(self.slider_update_attr, int_label, int_slider, edit_attr))
 
@@ -625,13 +827,29 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 
 	def lineEdit_get_selection(self, field, attr,*args):
 		sel = cmds.ls(sl=True)
+		print(sel)
 		#remove ugly lists keys
 		nice_selection = str(sel)[1:-1]
+		nice_selection = nice_selection.replace("u'", "'")
 		nice_selection = nice_selection.replace("'", "")
-
 
 		field.setText(nice_selection)
 		cmds.setAttr(attr, nice_selection, type = 'string')
+
+	def lineEdit_sel_selection(self, field, attr,*args):
+		value = field.text()
+		attr = cmds.getAttr(attr)
+
+		if value == attr:
+			print(attr)
+
+		if ',' in value:
+			value = value.split(',')
+
+		try:
+			cmds.select(value)
+		except:
+			cmds.warning('Selection doesnt exists')
 
 	def lineEdit_get_file(self, field, attr, *args):
 		path = mh.import_window(extension=".json")[0]
@@ -644,8 +862,16 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		cmds.setAttr(attr, path, type='string')
 
 	def slider_update_attr(self, label, slider,attr, *args):
+		if slider.value() == 20:
+			self.update_max_slider(slider, attr)
 		cmds.setAttr(attr, slider.value())
 		label.setText(str(slider.value()))
+
+	def update_max_slider(self, slider, attr):
+		print('updating value')
+		cmds.addAttr(attr, edit=True, max=100)
+		slider.setMaximum(100)
+
 
 	def checkBox_update_attr(self, checkBox,attr, *args):
 		cmds.setAttr(attr, checkBox.isChecked())
@@ -655,26 +881,52 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 
 	#-------------------------------------------------------------------
 
-	def get_blocks_to_build(self):
+	def get_blocks_to_build(self, mode='Build Mutant Tools'):
+
+		print(mode)
+
 		to_build = []
-		blocks = cmds.listRelatives('Mutant_Build', c=True)
-		for child in blocks:
-			if not child.endswith(nc['module']):
-				grand_childs = cmds.listRelatives(child, c=True)
+
+		if mode == 'Build Mutant Tools':
+			blocks = cmds.listRelatives('Mutant_Build', c=True)
+		elif mode == 'Build Selected Group':
+			grp = cmds.ls(sl=True)[0]
+			blocks = cmds.listRelatives(grp, c=True)
+		elif mode == 'Build Selected Block':
+			blocks = cmds.ls(sl=True)
+
+		for block in blocks:
+			if not block.endswith(nc['module']):
+				grand_childs = cmds.listRelatives(block, c=True)
+				if not grand_childs:
+					continue
 				for grand_child in grand_childs:
 					to_build.append(grand_child)
 			else:
-				to_build.append(child)
+				to_build.append(block)
 
 		return to_build
 
 	#-------------------------------------------------------------------
-	def build_autorigger(self):
+	def build_autorigger(self, only_progressbar=False):
 
+		self.ui.bar_label.resize(100, 200)
 		self.ui.bar_label.setText('Starting the Build')
 
-		if not self.check_if_previous_build():
+		#Load need plugins
+		self.force_load_of_dependency_plugins()
+
+		#Check rebuild
+		rebuild = self.check_if_previous_build()
+		if not rebuild:
 			return False
+
+		if rebuild == 'First Build':
+			load_io = False
+		elif rebuild == 'Just Rebuild':
+			load_io = False
+		else:
+			load_io = True
 
 		cmds.undoInfo(openChunk=True)
 
@@ -687,11 +939,21 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 			pass
 
 		#build
-		blocks = self.get_blocks_to_build()
+		blocks = self.get_blocks_to_build(mode = self.ui.build_method.currentText())
 		progress_max = len(blocks)
 		self.ui.progressBar.setMaximum(progress_max)
+		if only_progressbar:
+			from Mutant_Tools.UI.ProgressBar import load_progress_bar
+			reload(load_progress_bar)
+			cProgressBarUI = load_progress_bar.ProgressBarUI(items=blocks,
+															 title='Building Mutant...')
+			cProgressBarUI.show()
+
 		#select each block and run the build command and make progress bar move
 		for num, block in enumerate(blocks):
+
+			#just for fun
+			cmds.refresh()
 
 			#log
 			mt.Mutant_logger(mode = 'create')
@@ -709,6 +971,7 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 			config = cmds.listConnections(block)[1]
 			precode = cmds.getAttr('{}.precode'.format(config))
 			import_command = cmds.getAttr('{}.Import_Command'.format(config))
+			reload_command = import_command.replace('import', 'reload(')+')'.replace(' ', '')
 			buid_command = cmds.getAttr('{}.Build_Command'.format(config))
 			postcode = cmds.getAttr('{}.postcode'.format(config))
 
@@ -716,9 +979,13 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 			self.ui.bar_label.setToolTip(buid_command)
 
 			exec(import_command)
+			exec(reload_command)
 			print ('Import successfully {}'.format(import_command))
+			pre_build_nodes = self.get_all_nodes()
 			#if error in build show log and stop log writing
 			try:
+				if only_progressbar:
+					cProgressBarUI.set_percent(num)
 				# ----------------------
 				# Precode---------------
 				# ----------------------
@@ -735,7 +1002,12 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 				# ----------------------
 				cmds.select(block)
 				#Build the blocks
-				exec(buid_command)
+				recipe_obj = None
+				recipe_obj = eval(buid_command)
+				recipe_name = block.replace(nc['module'],'')
+				add_on = {recipe_name:recipe_obj}
+				self.recipes_dict.update(add_on)
+
 				print('Build successfully {}'.format(buid_command))
 				# ----------------------
 				# Postcode--------------
@@ -755,9 +1027,13 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 				mt.Mutant_logger(mode='stop')
 				self.view_log()
 				cmds.undoInfo(closeChunk=True)
-				if version['dev_mode'] != 'On':
+				if not mt.check_dev_mode():
 					cmds.undo()
+				if only_progressbar:
+					cProgressBarUI.close()
 				return
+
+			post_build_nodes = self.get_all_nodes()
 
 			#succes message
 			self.ui.bar_label.setText('{}'.format(block))
@@ -773,6 +1049,15 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 				cmds.undoInfo(closeChunk=True)
 				return
 
+			#put build nodes only in notes
+			if not cmds.attributeQuery("notes", n=block, ex=True):
+				cmds.addAttr(block, ln="notes", sn="nts", dt="string")
+			nodes_dif = self.get_diference_in_nodes(pre_build_nodes, post_build_nodes)
+			cmds.setAttr("{}.notes".format(block), nodes_dif, type="string")
+
+		if only_progressbar:
+			cProgressBarUI.close()
+
 		#all success message
 		print('Mutant Build Complete')
 		self.ui.bar_label.setText('Mutant Build Complete')
@@ -782,9 +1067,63 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		if cmds.objExists('Mutant_Rig'):
 			cmds.parent('Mutant_Rig', 'Miscellaneous_Grp')
 
+		#IO
+		if load_io:
+			ctrls.load_all(path=os.path.join(tempfile.gettempdir(), 'RebuildTempCtrls', 'tempControllers.json'))
+			EasySkin.load_all_skins_from(folder_path=os.path.join(tempfile.gettempdir(), 'RebuildTempSkin'))
+			# Load parent hierarchy
+			temp_folder = os.path.join(tempfile.gettempdir(), 'RebuildTemp')
+			skeleton_file = os.path.join(temp_folder, 'skeleton_hierarchy.txt')
+			if cmds.objExists('Skeleton'):
+				self.load_joint_parents("Skeleton", skeleton_file)
+
 		cmds.undoInfo(closeChunk=True)
 
+	def save_joint_parents(self, group_name, file_path):
+		"""
+        Save the parent hierarchy of joints under the specified group to a file.
+        :param group_name: Name of the group containing the joints.
+        :param file_path: File path to save the parent hierarchy information.
+        """
+		joints = cmds.listRelatives(group_name, ad=True, type='joint') or []
+		parent_dict = {}
+
+		for joint in joints:
+			parent = cmds.listRelatives(joint, parent=True)
+			if parent:
+				parent_dict[joint] = parent[0]
+
+		with open(file_path, 'w') as file:
+			for joint, parent in parent_dict.items():
+				file.write(f"{joint},{parent}\n")
+
+	def load_joint_parents(self, group_name, file_path):
+		"""
+        Load the parent hierarchy of joints from the provided file and apply to the joints under the specified group.
+        :param group_name: Name of the group containing the joints.
+        :param file_path: File path containing the parent hierarchy information.
+        """
+		with open(file_path, 'r') as file:
+			parent_dict = {}
+			for line in file:
+				joint, parent = line.strip().split(',')
+				parent_dict[joint] = parent
+
+		for joint, parent in parent_dict.items():
+			if cmds.objExists(joint) and cmds.objExists(parent):
+				try:
+					cmds.parent(joint, parent)
+				except:
+					pass
+
 	#-------------------------------------------------------------------
+
+	def get_all_nodes(self):
+		return cmds.ls('*')
+
+	def get_diference_in_nodes(self, new_list, old_list):
+		dif = set(old_list).difference(set(new_list))
+		return dif
 
 	def check_if_previous_build(self):
 
@@ -793,22 +1132,64 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 			delete_comfirm = cmds.confirmDialog(
 				title='Delete current build?',
 				message='Are you sure you want to rebuild?',
-				button=['Rebuild', 'Cancel'],
-				defaultButton='Rebuild',
+				button=['Delete and Rebuild', 'Just Rebuild', 'Cancel'],
+				defaultButton='Delete and Rebuild',
 				dismissString='Cancel',
 				cancelButton='Cancel')
 
-			if delete_comfirm == 'Rebuild':
-				cmds.delete(build_grp)
+			if delete_comfirm == 'Delete and Rebuild':
 
+				if cmds.listRelatives('Mutant_Build', p=True):
+					cmds.parent('Mutant_Build', w=True)
+
+				#IO
+
+				# Skeleton Hierarchy
+				if cmds.objExists('Skeleton'):
+					temp_folder = os.path.join(tempfile.gettempdir(), 'RebuildTemp')
+					if not os.path.exists(temp_folder):
+						os.mkdir(temp_folder)
+					skeleton_file = os.path.join(temp_folder, 'skeleton_hierarchy.txt')
+					# Save parent hierarchy to file
+					self.save_joint_parents("Skeleton", skeleton_file)
+
+
+				# Controllers
+				temp_controllers_folder = os.path.join(tempfile.gettempdir(), 'RebuildTempCtrls')
+				if not os.path.exists(temp_controllers_folder):
+					os.mkdir(temp_controllers_folder)
+				ctrls.save_all(folder_path=os.path.join(temp_controllers_folder, 'tempControllers.json'),
+							   force_validate=True)
+
+				#Skins
+				temp_skin_folder = os.path.join(tempfile.gettempdir(), 'RebuildTempSkin')
+				if not os.path.exists(temp_skin_folder):
+					os.mkdir(temp_skin_folder)
+				else:
+					try:
+						import shutil
+						shutil.rmtree(temp_skin_folder)
+						print('Deleted: ', temp_skin_folder)
+					except:
+						pass
+				if not os.path.exists(temp_skin_folder):
+					os.mkdir(temp_skin_folder)
+				EasySkin.save_all_skins_to(folder_path=temp_skin_folder)
+
+				#Delete
+				cmds.delete(build_grp)
 				if cmds.objExists('Mutant_Rig'):
 					cmds.delete('Mutant_Rig')
 
-				return True
+				return temp_skin_folder, temp_controllers_folder
+
+			elif delete_comfirm == 'Just Rebuild':
+				return 'Just Rebuild'
+
 			else:
 				return False
-
-		return True
+		else:
+			return 'First Build'
 
 
 	#-------------------------------------------------------------------
@@ -846,7 +1227,7 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 			codeUI.close()
 		except:
 			pass
-		imp.reload(load_codeReader)
+		reload(load_codeReader)
 		codeUI = load_codeReader.Code_Reader(mode='write', code= pastcode_attr, config_attr = '{}.precode'.format(config))
 		codeUI.set_path_label(code_path = '{}.precode'.format(config))
 		codeUI.show()
@@ -876,7 +1257,7 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 			codeUI.close()
 		except:
 			pass
-		imp.reload(load_codeReader)
+		reload(load_codeReader)
 		codeUI = load_codeReader.Code_Reader(mode='view', code= build_script, config_attr = '')
 		codeUI.set_path_label(code_path = file_path)
 		codeUI.show()
@@ -893,7 +1274,7 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		except:
 			pass
 
-		imp.reload(load_codeReader)
+		reload(load_codeReader)
 		codeUI = load_codeReader.Code_Reader(mode='write', code= postcode_attr, config_attr = '{}.postcode'.format(config))
 		codeUI.set_path_label(code_path = '{}.postcode'.format(config))
 		codeUI.show()
@@ -913,13 +1294,32 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 
 		print(log)
 
-		imp.reload(load_codeReader)
+		reload(load_codeReader)
 		log_ui = load_codeReader.Code_Reader(mode='view', code='', config_attr='')
 		log_ui.previous_code = log
 		log_ui.modify_ui_based_on_mode()
 		log_ui.ui.code_text.verticalScrollBar().setValue(log_ui.ui.code_text.verticalScrollBar().maximum())
-		log_ui.set_path_label(code_path = os.path.join(FOLDER,'log.txt'))
+		log_ui.set_path_label(code_path = os.path.join(cmds.internalVar(usd=True),'Mutant_log.txt'))
 		log_ui.show()
+
+	#-------------------------------------------------------------------
+
+	def search_command(self):
+		self.delete_side_buttons()
+		self.create_all_side_buttons()
+
+	def show_bar_only(self):
+		self.ui.menuLayout.setParent(None)
+		self.ui.tabs.setParent(None)
+		self.ui.side_scroll.setParent(None)
+		self.ui.attrs_layout.setParent(None)
+		self.ui.code_layout.setParent(None)
+		self.ui.build_layout.setParent(None)
+		self.ui.build_btn.setParent(None)
+		self.ui.build_method.setParent(None)
+		self.ui.search_layout.setParent(None)
+		self.adjustSize()    
+		self.show()
 
 	#-------------------------------------------------------------------
 
@@ -948,4 +1348,23 @@ if __name__ == "__main__":
 	AutoRigger_ui.show()
 
 #-------------------------------------------------------------------
+
+print('''
+#Import Menu
+import Mutant_Tools
+import Mutant_Tools.Utils
+from Mutant_Tools.Utils import mt_menu
+reload(Mutant_Tools.Utils.mt_menu)
+mt_menu.create_mutant_menu()
+mt_menu.put_in_userSetup()
+
+#Import Main Mutant Tools
+import imp
+from imp import reload
+import Mutant_Tools
+import Mutant_Tools.Utils
+from Mutant_Tools.Utils.Rigging import main_mutant
+reload(Mutant_Tools.Utils.Rigging.main_mutant)
+mt = main_mutant.Mutant()
+''')
 

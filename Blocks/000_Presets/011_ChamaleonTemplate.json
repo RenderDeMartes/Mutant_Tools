@@ -1,0 +1,12 @@
+{
+    "Name": "chamaleonTemplate",
+    "Description": "Will Import the chamaleon template",
+    "Icon": "Chamaleon.png",
+    "Enable": "True",
+    "python_file": "exec_chamaleonTemplate.py",
+    "import": "import exec_chamaleonTemplate",
+    "imp.reload": "reload(exec_chamaleonTemplate)",
+    "exec_command": "exec_chamaleonTemplate.create_chamaleontemplate_block()",
+    "build_command": "exec_chamaleonTemplate.build_chamaleontemplate_block()",
+    "attrs": {}
+}

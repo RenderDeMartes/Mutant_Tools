@@ -1,0 +1,75 @@
+{
+
+    "root": "C_Subc_God_01_Ctrl",
+
+    "cog": "C_Rev_Spine_01_Ctrl",
+    "spine_base": "C_Oft_Spine_01_Ctrl",
+    "spine_belly": "C_Oft_Spine_02_Ctrl",
+    "spine_chest": "C_Oft_Spine_03_Ctrl",
+
+    "neck": "",
+    "neck_mid": "",
+    "head": "",
+    "l_eye": "JNT_Flw_EyeBall_01_L",
+    "r_eye": "JNT_Flw_EyeBall_01_R",
+    "jaw": "",
+
+    "L_hip": "L_Leg_01_Wjnt",
+    "l_hip_twist_01": "L_Leg_02_Wjnt",
+    "l_hip_twist_02": "L_Leg_03_Wjnt",
+    "l_hip_twist_03": "L_Leg_04_Wjnt",
+    "l_hip_twist_04": "L_Leg_05_Wjnt",
+
+    "l_knee": "L_Leg_06_Wjnt",
+    "l_knee_twist_01": "L_Leg_07_Wjnt",
+    "l_knee_twist_02": "L_Leg_08_Wjnt",
+    "l_knee_twist_03": "L_Leg_09_Wjnt",
+    "l_knee_twist_04": "L_Leg_10_Wjnt",
+
+    "l_ankle": "L_Ik_Foot_01_Ctrl",
+    "l_ball": "L_Ik_Foot_05_Ctrl",
+    "l_toes": "L_Ik_Foot_06_Ctrl",
+
+    "l_clavicle": "L_Clavicle_01_Wjnt",
+
+    "l_shoulder": "L_Arm_01_Wjnt",
+    "l_shoulder_twist_01": "L_Arm_02_Wjnt",
+    "l_shoulder_twist_02": "L_Arm_03_Wjnt",
+    "l_shoulder_twist_03": "L_Arm_04_Wjnt",
+    "l_shoulder_twist_04": "L_Arm_05_Wjnt",
+
+    "l_elbow": "L_Arm_06_Wjnt",
+    "l_elbow_twist_01": "L_Arm_07_Wjnt",
+    "l_elbow_twist_02": "L_Arm_08_Wjnt",
+    "l_elbow_twist_03": "L_Arm_09_Wjnt",
+    "l_elbow_twist_04": "L_Arm_10_Wjnt",
+    "l_elbow_twist_05": "L_Arm_10_Wjnt",
+
+    "l_wrist": "L_Prm_Wrist_01_Ctrl_Ancr",
+
+    "l_thumb_1" : "L_Thumb_02_Wjnt",
+    "l_thumb_2" : "L_Thumb_03_Wjnt",
+    "l_thumb_3" : "L_Thumb_04_Wjnt",
+    "l_thumb_4" : "L_Thumb_05_Wjnt",
+
+    "l_index_1" : "L_Index_02_Wjnt",
+    "l_index_2" : "L_Index_03_Wjnt",
+    "l_index_3" : "L_Index_04_Wjnt",
+    "l_index_4" : "L_Index_05_Wjnt",
+
+    "l_middle_1" : "L_Middle_02_Wjnt",
+    "l_middle_2" : "L_Middle_03_Wjnt",
+    "l_middle_3" : "L_Middle_04_Wjnt",
+    "l_middle_4" : "L_Middle_05_Wjnt",
+
+    "l_ring_1" : "L_Hand_Ring_02_Bnd",
+    "l_ring_2" : "L_Hand_Ring_03_Bnd",
+    "l_ring_3" : "L_Hand_Ring_04_Bnd",
+    "l_ring_4" : "L_Hand_Ring_05_Bnd",
+
+    "l_pinky_1" : "L_Pinky_02_Wjnt",
+    "l_pinky_2" : "L_Pinky_03_Wjnt",
+    "l_pinky_3" : "L_Pinky_04_Wjnt",
+    "l_pinky_4" : "L_Pinky_02_Wjnt"
+
+}

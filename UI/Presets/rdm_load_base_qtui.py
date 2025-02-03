@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 from PySide2 import QtUiTools
 from PySide2 import QtWidgets
 from PySide2 import QtGui,QtCore

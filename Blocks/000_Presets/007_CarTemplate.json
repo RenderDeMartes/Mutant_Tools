@@ -1,0 +1,12 @@
+{
+    "Name": "CarTemplate",
+    "Description": "Will Import the Car template",
+    "Icon": "Car.png",
+    "Enable": "True",
+    "python_file": "exec_carTemplate.py",
+    "import": "import exec_carTemplate",
+    "imp.reload": "reload(exec_carTemplate)",
+    "exec_command": "exec_carTemplate.create_cartemplate_block()",
+    "build_command": "exec_carTemplate.build_cartemplate_block()",
+    "attrs": {}
+}

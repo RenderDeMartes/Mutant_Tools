@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 '''
 version: 1.0.0
 date: 21/04/2020
@@ -9,7 +10,7 @@ how to:
 import Mutant_Tools
 import Mutant_Tools.Utils.Helpers
 from Mutant_Tools.Utils.Helpers import helpers
-imp.reload(Mutant_Tools.Utils.Helpers.helpers)
+reload(Mutant_Tools.Utils.Helpers.helpers)
 
 mh = helpers.Helpers()
 mh.FUNC(ARGUMENTS)
@@ -28,6 +29,13 @@ from maya import cmds
 import json
 from pathlib import Path
 import os
+
+PATH = os.path.dirname(__file__)
+PATH = Path(PATH)
+PATH_PARTS = PATH.parts[:-2]
+FOLDER=''
+for f in PATH_PARTS:
+	FOLDER = os.path.join(FOLDER, f)
 
 class Helpers(object):
 
@@ -78,7 +86,7 @@ class Helpers(object):
 
 		write_json = os.path.join(path, json_file)
 
-		with open(write_json, 'w', encoding='utf-8') as f:
+		with open(write_json, 'w') as f:
 			json.dump(data, f, ensure_ascii=False, indent=4)
 
 		return write_json
@@ -95,11 +103,15 @@ class Helpers(object):
 		Returns: dictionary with data
 
 		"""
+		#Force to allow only path and not json file
+		try:
+			json_data = os.path.join(path, json_file)
 
-		json_data = os.path.join(path, json_file)
-
-		with open(json_data) as f:
-			data = json.load(f)
+			with open(json_data) as f:
+				data = json.load(f)
+		except:
+			with open(path) as f:
+				data = json.load(f)
 
 		return data
 
@@ -170,14 +182,20 @@ class Helpers(object):
 	# ----------------------------------------------------------------------------------------------------------------
 
 	def export_window(self, extension = ".ma"):
-		basicFilter = '*' + extension
+		if extension == 'maya_file':
+			basicFilter="Maya Files (*.ma *.mb);;Maya ASCII (*.ma);;Maya Binary (*.mb)"
+		else:
+			basicFilter = '*' + extension
 		dialog = cmds.fileDialog2(fileFilter=basicFilter, fileMode=0, caption="Save As")
 		return dialog
 
 	# ----------------------------------------------------------------------------------------------------------------
 
 	def import_window(self, extension = ".ma"):
-		basicFilter = '*' + extension
+		if extension == 'maya_file':
+			basicFilter="Maya Files (*.ma *.mb);;Maya ASCII (*.ma);;Maya Binary (*.mb)"
+		else:
+			basicFilter = '*' + extension
 		dialog = cmds.fileDialog2(fileFilter=basicFilter, fileMode=1, caption="Open")
 		return dialog
 
@@ -186,3 +204,36 @@ class Helpers(object):
 	def folder_window(self):
 		dialog = cmds.fileDialog2(dialogStyle=1, fileMode=3, caption="Open")
 		return dialog[0]
+
+	# ----------------------------------------------------------------------------------------------------------------
+	def find_user_show(self):
+
+		try:
+			settings = self.read_json(path=os.path.join(cmds.internalVar(usd=True)),json_file='MutantTools.settings')
+		except:
+			self.write_json(path=os.path.join(cmds.internalVar(usd=True)),json_file='MutantTools.settings', data = {'user': False})
+			settings = self.read_json(path=os.path.join(cmds.internalVar(usd=True)),json_file='MutantTools.settings')
+
+		if 'user' in settings:
+			user = settings['user']
+		else:
+			user = cmds.promptDialog(t='Ask User', m='Whats you user name?')
+			user = cmds.promptDialog(query=True, text=True)
+			settings['user'] = user
+			self.write_json(path=os.path.join(cmds.internalVar(usd=True)), json_file='MutantTools.settings',
+							data=settings)
+		print(user)
+
+		#Compare user with config file to find show
+		studio_config = self.read_json(os.path.join(FOLDER, 'config'), 'studio.json')
+
+
+		for show in studio_config['shows']:
+			for u in studio_config['shows'][show]:
+				if u in user:
+					print(show)
+					return show
+
+		return False
+
+# ----------------------------------------------------------------------------------------------------------------

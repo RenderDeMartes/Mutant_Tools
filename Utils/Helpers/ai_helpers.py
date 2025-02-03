@@ -1,15 +1,20 @@
+from __future__ import absolute_import
 from maya import cmds
 from maya import OpenMaya
 
 import json
-import imp
+try:
+    import importlib;from importlib import reload
+except:
+    import imp;from imp import reload
+
 import os
 from pathlib import Path
 
 import Mutant_Tools
 import Mutant_Tools.Utils
 from Mutant_Tools.Utils import main_mutant
-imp.reload(Mutant_Tools.Utils.main_mutant)
+reload(Mutant_Tools.Utils.main_mutant)
 
 mt = main_mutant.Mutant()
 

@@ -1,0 +1,16 @@
+{
+    "Name": "L_Orbicularis",
+    "Description": "Will create Orbicularis Outside Eyelids Rig",
+    "Icon": "Orbicularis.png",
+    "Enable": "True",
+    "python_file": "exec_orbicularis.py",
+    "import": "import exec_orbicularis",
+    "imp.reload": "reload(exec_orbicularis)",
+    "exec_command": "exec_orbicularis.create_orbicularis_block()",
+    "build_command": "exec_orbicularis.build_orbicularis_block()",
+    "attrs": {
+        "SetParent_string": "new_locator",
+        "SetGeo_string": "",
+        "Help_string": "Will create Orbicularis Outside Eyelids Rig"
+    }
+}

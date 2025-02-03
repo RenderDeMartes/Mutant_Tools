@@ -1,0 +1,15 @@
+{
+    "Name": "ConvertBody",
+    "Description": "Will convert Mutant Body Template to Games",
+    "Icon": "BodyGames.png",
+    "Enable": "True",
+    "python_file": "exec_convertbody.py",
+    "import": "import exec_convertbody",
+    "imp.reload": "reload(exec_convertbody)",
+    "exec_command": "exec_convertbody.create_convertbody_block()",
+    "build_command": "exec_convertbody.build_convertbody_block()",
+    "attrs": {
+        "Engine_enum": "unity:unreal",
+        "Help_string": "Will convert Mutant Body Template to Games"
+    }
+}

@@ -1,0 +1,15 @@
+{
+    "Name": "MouthPostBuilds",
+    "Description": "WIll Improve current Mouth Systems",
+    "Icon": "LipsPost.png",
+    "Enable": "True",
+    "python_file": "exec_mouthpostbuilds.py",
+    "import": "import exec_mouthpostbuilds",
+    "imp.reload": "reload(exec_mouthpostbuilds)",
+    "exec_command": "exec_mouthpostbuilds.create_mouthpostbuilds_block()",
+    "build_command": "exec_mouthpostbuilds.build_mouthpostbuilds_block()",
+    "attrs": {
+        "name_string": "Lips",
+        "Help_string": "WIll Improve current Mouth Systems"
+    }
+}

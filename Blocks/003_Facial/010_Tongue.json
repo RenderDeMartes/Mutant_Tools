@@ -1,0 +1,18 @@
+{
+    "Name": "Tongue",
+    "Description": "create Tongue system",
+    "Icon": "Tongue.png",
+    "Enable": "True",
+    "python_file": "exec_tongue.py",
+    "import": "import exec_tongue",
+    "imp.reload": "reload(exec_tongue)",
+    "exec_command": "exec_tongue.create_tongue_block()",
+    "build_command": "exec_tongue.build_tongue_block()",
+    "attrs": {
+        "SetParent_string": "new_locator",
+        "SetAttrsPosition_string": "new_locator",
+        "CtrlSize_float": "4",
+        "CtrlColor_enum": "lightBlue:blue:white:purple:green:red:yellow:grey",
+        "Help_string": "Create Tongue System"
+    }
+}

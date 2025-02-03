@@ -1,0 +1,16 @@
+{
+    "Name": "L_Front_AntLeg", 
+    "Description": "This will create a AntLeg System", 
+    "Icon": "AntLeg.png", 
+    "Enable": "True", 
+    "python_file": "exec_antleg.py", 
+    "import": "import exec_antleg", 
+    "imp.reload": "reload(exec_antleg)", 
+    "exec_command": "exec_antleg.create_antleg_block()", 
+    "build_command": "exec_antleg.build_antleg_block()", 
+    "attrs": {
+        "SetParent_string": "new_locator", 
+        "Mirror_enum": "True:False:Right_Only",
+        "Help_string": "Possible parent: *_Jnt "
+    }
+}

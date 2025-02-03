@@ -1,0 +1,14 @@
+{
+    "Name": "Make_Ctrls",
+    "Description": "This will tag the control with proper name convention.",
+    "Icon": "Tag.png",
+    "Enable": "True",
+    "python_file": "exec_make_ctrls.py",
+    "import": "import exec_make_ctrls",
+    "imp.reload": "reload(exec_make_ctrls)",
+    "exec_command": "exec_make_ctrls.create_make_ctrls_block()",
+    "build_command": "exec_make_ctrls.build_make_ctrls_block()",
+    
+    "attrs": {
+    }
+}

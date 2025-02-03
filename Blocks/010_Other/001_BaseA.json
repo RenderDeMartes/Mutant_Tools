@@ -1,0 +1,22 @@
+{
+    "Name" :  "BaseA",
+    "Description":"This will create a Base to hold the rig (type A)",
+    "Icon":"BaseA.png",
+
+    "Enable" :  "True",
+
+    
+    "python_file" : "exec_baseA.py",
+    "import":"import exec_baseA ",
+    "imp.reload":"reload(exec_baseA)",
+    "exec_command" : "exec_baseA.create_BaseA()",    
+    "build_command":"exec_baseA.build_baseA_block()",
+ 
+    "attrs": {
+        "Name_string":"Mutant_Tools",
+        "CtrlScale_float":"4",
+        "CtrlColor_enum": "lightBlue:blue:white:purple:green:red:yellow:grey"
+    }
+}
+
+ 

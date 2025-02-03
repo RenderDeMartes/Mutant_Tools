@@ -1,0 +1,16 @@
+{
+    "Name": "QuadSpine",
+    "Description": "This will create a QuadSpine System",
+    "Icon": "QuadSpine.png",
+    "Enable": "True",
+    "python_file": "exec_quadspine.py",
+    "import": "import exec_quadspine",
+    "imp.reload": "reload(exec_quadspine)",
+    "exec_command": "exec_quadspine.create_quadspine_block()",
+    "build_command": "exec_quadspine.build_quadspine_block()",
+    "attrs": {
+        "SetParent_string": "new_locator",
+        "CtrlSize_float": "4",
+        "Help_string": "This will create a QuadSpine System"
+    }
+}

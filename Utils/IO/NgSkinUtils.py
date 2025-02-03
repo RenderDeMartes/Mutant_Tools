@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 '''
 version: 1.0.0
 date: 21/04/2020
@@ -5,11 +6,15 @@ date: 21/04/2020
 #----------------
 
 how to:
-import imp
+try:
+    import importlib;from importlib import reload
+except:
+    import imp;from imp import reload
+
 import Mutant_Tools
 import Mutant_Tools.Utils.IO
 from Mutant_Tools.Utils.IO import NgSkinUtils
-imp.reload(Mutant_Tools.Utils.IO.NgSkinUtils)
+reload(Mutant_Tools.Utils.IO.NgSkinUtils)
 
 ngmt = NgSkinUtils.NG_Mutant()
 ngmt.FUNC_NAME(argument = '')
@@ -31,18 +36,22 @@ import webbrowser
 import os
 import json
 from maya import cmds
-import imp
+try:
+    import importlib;from importlib import reload
+except:
+    import imp;from imp import reload
+
 import glob
 from pathlib import Path
 
 import Mutant_Tools
 import Mutant_Tools.Utils.IO
 from Mutant_Tools.Utils.IO import SkinUtils
-imp.reload(Mutant_Tools.Utils.IO.SkinUtils)
+reload(Mutant_Tools.Utils.IO.SkinUtils)
 skin_utils = SkinUtils.Skinning()
 
 from Mutant_Tools.Utils.Helpers import helpers
-imp.reload(Mutant_Tools.Utils.Helpers.helpers)
+reload(Mutant_Tools.Utils.Helpers.helpers)
 mh = helpers.Helpers()
 
 #Read name conventions as nc[''] and setup as seup['']
@@ -63,16 +72,19 @@ try:
     from ngSkinTools2.api import *
     from ngSkinTools2.api import init_layers, Layers
 
-except Exception:
-    result = cmds.confirmDialog(title='Download ngSkinTools2',
-                                message='We need to install ngSkinTools2 in order to use NG Mutant Utils.',
-                                button=['Download', 'Cancel'],
-                                defaultButton='Download',
-                                cancelButton='Cancel',
-                                dismissString='Cancel')
+except Exception :
+    # result = cmds.confirmDialog(title='Download ngSkinTools2',
+    #                             message='We need to install ngSkinTools2 in order to use NG Mutant Utils.',
+    #                             button=['Download', 'Cancel'],
+    #                             defaultButton='Download',
+    #                             cancelButton='Cancel',
+    #                             dismissString='Cancel')
 
-    if result == 'Download':
-        webbrowser.open("https://www.ngskintools.com/")
+
+    # if result == 'Download':
+    #     webbrowser.open("https://www.ngskintools.com/")
+
+    ''
 
 #---------------------------------------------
 

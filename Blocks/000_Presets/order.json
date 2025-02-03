@@ -1,0 +1,11 @@
+{
+
+  "Simple" : ["003_HumanSimpleBodyTemplate.json", "004_HumanSimpleFaceTemplate.json"],
+  "Cartoon" : ["001_ToonTemplate.json", "002_ToonFaceTemplate.json"],
+  "Complex" : ["003_HumanBodyTemplate.json", "004_HumanFaceTemplate.json"],
+  "Games" : ["003_HumanGameTemplate.json"],
+  "Animals" : ["005_minotaurTemplate.json", "006_QuadTemplate.json", "008_SeagullTemplate.json", "011_ChamaleonTemplate.json"],
+  "Vehicles" : ["007_CarTemplate.json"],
+  "Props" : ["009_PropTemplate.json", "010_HeroPropTemplate.json"]
+
+}

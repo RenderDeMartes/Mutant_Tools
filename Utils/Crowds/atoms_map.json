@@ -1,0 +1,55 @@
+{
+
+    "root": "",
+
+    "cog": "Hips_Skl",
+    "spine_base": "SpineHolder_Skl",
+    "spine_belly": "Spine_Skl",
+    "spine_chest": "Spine1_Skl",
+
+    "neck": "Neck_Skl",
+    "neck_mid": "Neck1_Skl",
+    "head": "Head_Skl",
+    "l_eye": "LeftEye_Skl",
+    "r_eye": "RightEye_Skl",
+    "jaw": "Jaw_Skl",
+
+    "l_hip": "LeftUpLeg_Skl",
+    "l_knee": "LeftLeg_Skl",
+    "l_ankle": "LeftFoot_Skl",
+    "l_ball": "LeftToeBase_Skl",
+    "l_toes": "LeftToeEnd_Skl",
+
+    "l_clavicle": "LeftShoulder_Skl",
+
+    "l_shoulder": "LeftArm_Skl",
+    "l_shoulder_twist": "LeftArm_Roll_Skl",
+    "l_elbow": "LeftForeArm_Skl",
+    "l_elbow_twist": "LeftForeArm_Roll_Skl",
+    "l_wrist": "LeftHand_Skl",
+
+    "l_thumb_1" : "LeftHandThumb1_Skl",
+    "l_thumb_2" : "LeftHandThumb2_Skl",
+    "l_thumb_3" : "LeftHandThumb3_Skl",
+    "l_thumb_4" : "LeftHandThumb4_Skl",
+
+    "l_index_1" : "LeftHandIndex1_Skl",
+    "l_index_2" : "LeftHandIndex2_Skl",
+    "l_index_3" : "LeftHandIndex3_Skl",
+    "l_index_4" : "LeftHandIndex4_Skl",
+
+    "l_middle_1" : "LeftHandMiddle1_Skl",
+    "l_middle_2" : "LeftHandMiddle2_Skl",
+    "l_middle_3" : "LeftHandMiddle3_Skl",
+    "l_middle_4" : "LeftHandMiddle4_Skl",
+
+    "l_ring_1" : "LeftHandRing1_Skl",
+    "l_ring_2" : "LeftHandRing2_Skl",
+    "l_ring_3" : "LeftHandRing3_Skl",
+    "l_ring_4" : "LeftHandRing4_Skl",
+
+    "l_pinky_1" : "LeftHandPinky1_Skl",
+    "l_pinky_2" : "LeftHandPinky2_Skl",
+    "l_pinky_3" : "LeftHandPinky3_Skl",
+    "l_pinky_4" : "LeftHandPinky4_Skl"
+}

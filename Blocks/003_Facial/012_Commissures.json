@@ -1,0 +1,16 @@
+{
+    "Name": "Commissures",
+    "Description": "This will create a commissures systeam for the lips blendshapes",
+    "Icon": "Commissures.png",
+    "Enable": "True",
+    "python_file": "exec_commissures.py",
+    "import": "import exec_commissures",
+    "imp.reload": "reload(exec_commissures)",
+    "exec_command": "exec_commissures.create_commissures_block()",
+    "build_command": "exec_commissures.build_commissures_block()",
+    "attrs": {
+        "LeftCornerCtrl_string": "new_locator",
+        "RightCornerCtrl_string": "new_locator",
+        "Help_string": "This will create a commissures slide systeam for the lips blendshapes"
+    }
+}

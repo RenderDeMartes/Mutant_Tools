@@ -1,0 +1,15 @@
+{
+    "Name": "Cap",
+    "Description": "Create a Cap System",
+    "Icon": "Cap.png",
+    "Enable": "False",
+    "python_file": "exec_cap.py",
+    "import": "import exec_cap",
+    "imp.reload": "reload(exec_cap)",
+    "exec_command": "exec_cap.create_cap_block()",
+    "build_command": "exec_cap.build_cap_block()",
+    "attrs": {
+        "SetParent_string": "new_locator",
+        "Help_string": "Cap System"
+    }
+}

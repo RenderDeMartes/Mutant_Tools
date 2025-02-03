@@ -1,0 +1,5658 @@
+{
+    "0": {
+        "root": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 0.0,
+            "translateZ": 0.0
+        },
+        "cog": {
+            "rotateX": 3.863433837890625,
+            "rotateY": 169.67727661132812,
+            "rotateZ": -10.152633666992188,
+            "translateX": 0.1396268606185913,
+            "translateY": 69.6753921508789,
+            "translateZ": -0.9952828884124756
+        },
+        "spine_base": {
+            "rotateX": -1.413573980331421,
+            "rotateY": 0.5925769805908203,
+            "rotateZ": -1.2414685487747192,
+            "translateX": 0.0,
+            "translateY": 11.981800079345703,
+            "translateZ": -0.15530000627040863
+        },
+        "spine_belly": {
+            "rotateX": -2.8538923263549805,
+            "rotateY": 1.2498512268066406,
+            "rotateZ": 1.5572993755340576,
+            "translateX": 0.0,
+            "translateY": 13.979999542236328,
+            "translateZ": 0.0
+        },
+        "spine_chest": {
+            "rotateX": -2.8538899421691895,
+            "rotateY": 1.2498492002487183,
+            "rotateZ": 1.5573046207427979,
+            "translateX": 0.0,
+            "translateY": 15.977100372314453,
+            "translateZ": 0.0
+        },
+        "neck": {
+            "rotateX": 2.3215765953063965,
+            "rotateY": -20.433523178100586,
+            "rotateZ": 1.0960124731063843,
+            "translateX": 0.0,
+            "translateY": 17.974199295043945,
+            "translateZ": 0.0
+        },
+        "head": {
+            "rotateX": -9.693022727966309,
+            "rotateY": -40.1677360534668,
+            "rotateZ": 22.040855407714844,
+            "translateX": 0.0,
+            "translateY": 9.093500137329102,
+            "translateZ": 7.190700054168701
+        },
+        "l_hip": {
+            "rotateX": 48.48970413208008,
+            "rotateY": 15.222282409667969,
+            "rotateZ": -16.6610107421875,
+            "translateX": 11.733599662780762,
+            "translateY": -6.656400203704834,
+            "translateZ": -0.33799999952316284
+        },
+        "l_knee": {
+            "rotateX": -36.13969039916992,
+            "rotateY": -23.373165130615234,
+            "rotateZ": 18.533132553100586,
+            "translateX": 0.0,
+            "translateY": 39.40520095825195,
+            "translateZ": 0.0
+        },
+        "l_ankle": {
+            "rotateX": -12.681388854980469,
+            "rotateY": -18.56670379638672,
+            "rotateZ": -2.652556896209717,
+            "translateX": 0.0,
+            "translateY": 32.44839859008789,
+            "translateZ": 0.0
+        },
+        "l_ball": {
+            "rotateX": 8.557744026184082,
+            "rotateY": 1.1356297731399536,
+            "rotateZ": 3.3451526165008545,
+            "translateX": 0.0,
+            "translateY": 20.432600021362305,
+            "translateZ": 0.0
+        },
+        "l_toes": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 8.329299926757812,
+            "translateZ": 0.0
+        },
+        "r_hip": {
+            "rotateX": 0.0038655526004731655,
+            "rotateY": 54.03961944580078,
+            "rotateZ": -24.309871673583984,
+            "translateX": -11.733599662780762,
+            "translateY": -6.656400203704834,
+            "translateZ": -0.531499981880188
+        },
+        "r_knee": {
+            "rotateX": -46.104854583740234,
+            "rotateY": -20.39750862121582,
+            "rotateZ": -1.3351960182189941,
+            "translateX": 0.0,
+            "translateY": 39.432098388671875,
+            "translateZ": 0.0
+        },
+        "r_ankle": {
+            "rotateX": 33.114437103271484,
+            "rotateY": -24.58745574951172,
+            "rotateZ": -15.307117462158203,
+            "translateX": 0.0,
+            "translateY": 32.51250076293945,
+            "translateZ": 0.0
+        },
+        "r_ball": {
+            "rotateX": -0.4652433693408966,
+            "rotateY": -0.561982274055481,
+            "rotateZ": 4.795709609985352,
+            "translateX": 0.0,
+            "translateY": 20.724700927734375,
+            "translateZ": 0.0
+        },
+        "r_toes": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 8.437700271606445,
+            "translateZ": 0.0
+        },
+        "l_clavicle": {
+            "rotateX": 11.989739418029785,
+            "rotateY": 0.45647501945495605,
+            "rotateZ": -2.732947587966919,
+            "translateX": 9.286999702453613,
+            "translateY": 16.066200256347656,
+            "translateZ": -0.022199999541044235
+        },
+        "r_clavicle": {
+            "rotateX": 16.40865707397461,
+            "rotateY": -5.997914791107178,
+            "rotateZ": -6.197197437286377,
+            "translateX": -9.286999702453613,
+            "translateY": 16.066299438476562,
+            "translateZ": -0.027300000190734863
+        },
+        "l_shoulder": {
+            "rotateX": 22.3850154876709,
+            "rotateY": 3.0776703357696533,
+            "rotateZ": -26.358783721923828,
+            "translateX": 0.0,
+            "translateY": 19.612899780273438,
+            "translateZ": 0.0
+        },
+        "l_elbow": {
+            "rotateX": 32.748111724853516,
+            "rotateY": 32.578086853027344,
+            "rotateZ": 17.720890045166016,
+            "translateX": 0.0,
+            "translateY": 28.5935001373291,
+            "translateZ": 0.0
+        },
+        "l_wrist": {
+            "rotateX": -14.12533950805664,
+            "rotateY": 35.08811569213867,
+            "rotateZ": 0.18281996250152588,
+            "translateX": 0.0,
+            "translateY": 32.26020050048828,
+            "translateZ": 0.0
+        },
+        "r_shoulder": {
+            "rotateX": 18.629791259765625,
+            "rotateY": -0.20696847140789032,
+            "rotateZ": 10.168717384338379,
+            "translateX": 0.0,
+            "translateY": 19.612899780273438,
+            "translateZ": 0.0
+        },
+        "r_elbow": {
+            "rotateX": 27.759689331054688,
+            "rotateY": -43.17239761352539,
+            "rotateZ": -10.567360877990723,
+            "translateX": 0.0,
+            "translateY": 28.594499588012695,
+            "translateZ": 0.0
+        },
+        "r_wrist": {
+            "rotateX": -23.639705657958984,
+            "rotateY": -40.38172149658203,
+            "rotateZ": -4.176834583282471,
+            "translateX": 0.0,
+            "translateY": 32.25529861450195,
+            "translateZ": 0.0
+        }
+    },
+    "1": {
+        "root": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 0.0,
+            "translateZ": 0.0
+        },
+        "cog": {
+            "rotateX": 4.067675908406575,
+            "rotateY": 169.04284032185873,
+            "rotateZ": -8.852182388305662,
+            "translateX": 4.968848153948785,
+            "translateY": 69.80837122599284,
+            "translateZ": -0.8936036005616188
+        },
+        "spine_base": {
+            "rotateX": -1.3699573775132496,
+            "rotateY": 0.7836193591356279,
+            "rotateZ": -1.0623840242624283,
+            "translateX": 0.0,
+            "translateY": 11.981800079345703,
+            "translateZ": -0.15530000627040863
+        },
+        "spine_belly": {
+            "rotateX": -2.7627019683519998,
+            "rotateY": 1.4642921686172485,
+            "rotateZ": 1.8067268828550975,
+            "translateX": 0.0,
+            "translateY": 13.979999542236328,
+            "translateZ": 0.0
+        },
+        "spine_chest": {
+            "rotateX": -2.7627012034257254,
+            "rotateY": 1.4642920047044754,
+            "rotateZ": 1.806730896234512,
+            "translateX": 0.0,
+            "translateY": 15.977100372314453,
+            "translateZ": 0.0
+        },
+        "neck": {
+            "rotateX": 2.4071477949619293,
+            "rotateY": -20.2131089369456,
+            "rotateZ": 2.6458391000827155,
+            "translateX": 0.0,
+            "translateY": 17.974199295043945,
+            "translateZ": 0.0
+        },
+        "head": {
+            "rotateX": -10.021749536196392,
+            "rotateY": -39.31590588887532,
+            "rotateZ": 21.575070222218834,
+            "translateX": 0.0,
+            "translateY": 9.093500137329102,
+            "translateZ": 7.190700054168701
+        },
+        "l_hip": {
+            "rotateX": 46.577423095703125,
+            "rotateY": 14.405076225598652,
+            "rotateZ": -22.310553789138797,
+            "translateX": 11.733599662780762,
+            "translateY": -6.656400203704834,
+            "translateZ": -0.33799999952316284
+        },
+        "l_knee": {
+            "rotateX": -34.53462441762289,
+            "rotateY": -30.221278190612793,
+            "rotateZ": 14.707041382789612,
+            "translateX": 0.0,
+            "translateY": 39.40520095825195,
+            "translateZ": 0.0
+        },
+        "l_ankle": {
+            "rotateX": -13.647526343663534,
+            "rotateY": -17.163193901379902,
+            "rotateZ": -2.821571697791417,
+            "translateX": 0.0,
+            "translateY": 32.44839859008789,
+            "translateZ": 0.0
+        },
+        "l_ball": {
+            "rotateX": 8.664165377616882,
+            "rotateY": 2.9682120432456336,
+            "rotateZ": 2.3849140008290606,
+            "translateX": 0.0,
+            "translateY": 20.432600021362305,
+            "translateZ": 0.0
+        },
+        "l_toes": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 8.329299926757812,
+            "translateZ": 0.0
+        },
+        "r_hip": {
+            "rotateX": -3.5630534059794927,
+            "rotateY": 52.83490180969238,
+            "rotateZ": -19.523911078770954,
+            "translateX": -11.733599662780762,
+            "translateY": -6.656400203704834,
+            "translateZ": -0.531499981880188
+        },
+        "r_knee": {
+            "rotateX": -42.00012572606405,
+            "rotateY": -18.93346349398295,
+            "rotateZ": -0.8515882578988869,
+            "translateX": 0.0,
+            "translateY": 39.432098388671875,
+            "translateZ": 0.0
+        },
+        "r_ankle": {
+            "rotateX": 35.46771844228109,
+            "rotateY": -26.577499707539875,
+            "rotateZ": -17.47163399060567,
+            "translateX": 0.0,
+            "translateY": 32.51250076293945,
+            "translateZ": 0.0
+        },
+        "r_ball": {
+            "rotateX": -0.3301787111752976,
+            "rotateY": -0.8709929088751475,
+            "rotateZ": 4.762495199839274,
+            "translateX": 0.0,
+            "translateY": 20.724700927734375,
+            "translateZ": 0.0
+        },
+        "r_toes": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 8.437700271606445,
+            "translateZ": 0.0
+        },
+        "l_clavicle": {
+            "rotateX": 10.776260972023008,
+            "rotateY": 0.3277953509241343,
+            "rotateZ": -3.0754170119762425,
+            "translateX": 9.286999702453613,
+            "translateY": 16.066200256347656,
+            "translateZ": -0.022199999541044235
+        },
+        "r_clavicle": {
+            "rotateX": 17.63447300593058,
+            "rotateY": -6.089219729105632,
+            "rotateZ": -7.409423967202505,
+            "translateX": -9.286999702453613,
+            "translateY": 16.066299438476562,
+            "translateZ": -0.027300000190734863
+        },
+        "l_shoulder": {
+            "rotateX": 22.58709899584452,
+            "rotateY": 3.0269029537836714,
+            "rotateZ": -25.990543683369953,
+            "translateX": 0.0,
+            "translateY": 19.612899780273438,
+            "translateZ": 0.0
+        },
+        "l_elbow": {
+            "rotateX": 32.16803948084513,
+            "rotateY": 32.42477639516195,
+            "rotateZ": 17.484764575958252,
+            "translateX": 0.0,
+            "translateY": 28.5935001373291,
+            "translateZ": 0.0
+        },
+        "l_wrist": {
+            "rotateX": -14.518311460812885,
+            "rotateY": 34.90363868077596,
+            "rotateZ": 0.6730460176865259,
+            "translateX": 0.0,
+            "translateY": 32.26020050048828,
+            "translateZ": 0.0
+        },
+        "r_shoulder": {
+            "rotateX": 17.628966967264812,
+            "rotateY": 0.0024089956035216287,
+            "rotateZ": 10.387131333351135,
+            "translateX": 0.0,
+            "translateY": 19.612899780273438,
+            "translateZ": 0.0
+        },
+        "r_elbow": {
+            "rotateX": 27.806742509206135,
+            "rotateY": -43.07635672887166,
+            "rotateZ": -10.265122493108114,
+            "translateX": 0.0,
+            "translateY": 28.594499588012695,
+            "translateZ": 0.0
+        },
+        "r_wrist": {
+            "rotateX": -23.433242559432983,
+            "rotateY": -39.92531522115072,
+            "rotateZ": -4.158797919750214,
+            "translateX": 0.0,
+            "translateY": 32.25529861450195,
+            "translateZ": 0.0
+        }
+    },
+    "2": {
+        "root": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 0.0,
+            "translateZ": 0.0
+        },
+        "cog": {
+            "rotateX": 4.2664337158203125,
+            "rotateY": 168.39108276367188,
+            "rotateZ": -7.68304443359375,
+            "translateX": 9.532670021057129,
+            "translateY": 69.8917007446289,
+            "translateZ": -0.7928598523139954
+        },
+        "spine_base": {
+            "rotateX": -1.3294434547424316,
+            "rotateY": 0.9760719537734986,
+            "rotateZ": -0.9167097806930542,
+            "translateX": 0.0,
+            "translateY": 11.981800079345703,
+            "translateZ": -0.15530000627040863
+        },
+        "spine_belly": {
+            "rotateX": -2.677971839904785,
+            "rotateY": 1.6969799995422363,
+            "rotateZ": 2.008437156677246,
+            "translateX": 0.0,
+            "translateY": 13.979999542236328,
+            "translateZ": 0.0
+        },
+        "spine_chest": {
+            "rotateX": -2.6779725551605225,
+            "rotateY": 1.69698166847229,
+            "rotateZ": 2.008439302444458,
+            "translateX": 0.0,
+            "translateY": 15.977100372314453,
+            "translateZ": 0.0
+        },
+        "neck": {
+            "rotateX": 2.425776243209839,
+            "rotateY": -20.02861785888672,
+            "rotateZ": 4.060111045837402,
+            "translateX": 0.0,
+            "translateY": 17.974199295043945,
+            "translateZ": 0.0
+        },
+        "head": {
+            "rotateX": -10.283063888549805,
+            "rotateY": -38.57258224487305,
+            "rotateZ": 21.14904022216797,
+            "translateX": 0.0,
+            "translateY": 9.093500137329102,
+            "translateZ": 7.190700054168701
+        },
+        "l_hip": {
+            "rotateX": 44.61787796020508,
+            "rotateY": 13.53905200958252,
+            "rotateZ": -27.517972946166992,
+            "translateX": 11.733599662780762,
+            "translateY": -6.656400203704834,
+            "translateZ": -0.33799999952316284
+        },
+        "l_knee": {
+            "rotateX": -33.12348556518555,
+            "rotateY": -36.55911636352539,
+            "rotateZ": 11.312872886657715,
+            "translateX": 0.0,
+            "translateY": 39.40520095825195,
+            "translateZ": 0.0
+        },
+        "l_ankle": {
+            "rotateX": -14.286994934082031,
+            "rotateY": -15.11569309234619,
+            "rotateZ": -2.837855577468872,
+            "translateX": 0.0,
+            "translateY": 32.44839859008789,
+            "translateZ": 0.0
+        },
+        "l_ball": {
+            "rotateX": 9.528665542602539,
+            "rotateY": 6.321378231048584,
+            "rotateZ": 1.5975158214569092,
+            "translateX": 0.0,
+            "translateY": 20.432600021362305,
+            "translateZ": 0.0
+        },
+        "l_toes": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 8.329299926757812,
+            "translateZ": 0.0
+        },
+        "r_hip": {
+            "rotateX": -6.750208377838135,
+            "rotateY": 51.712669372558594,
+            "rotateZ": -14.976102828979492,
+            "translateX": -11.733599662780762,
+            "translateY": -6.656400203704834,
+            "translateZ": -0.531499981880188
+        },
+        "r_knee": {
+            "rotateX": -38.280670166015625,
+            "rotateY": -17.55584716796875,
+            "rotateZ": -0.40654775500297546,
+            "translateX": 0.0,
+            "translateY": 39.432098388671875,
+            "translateZ": 0.0
+        },
+        "r_ankle": {
+            "rotateX": 37.5864372253418,
+            "rotateY": -28.322643280029297,
+            "rotateZ": -19.374513626098633,
+            "translateX": 0.0,
+            "translateY": 32.51250076293945,
+            "translateZ": 0.0
+        },
+        "r_ball": {
+            "rotateX": -0.016989627853035927,
+            "rotateY": -1.2402266263961792,
+            "rotateZ": 4.998590469360352,
+            "translateX": 0.0,
+            "translateY": 20.724700927734375,
+            "translateZ": 0.0
+        },
+        "r_toes": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 8.437700271606445,
+            "translateZ": 0.0
+        },
+        "l_clavicle": {
+            "rotateX": 9.667442321777344,
+            "rotateY": 0.21322692930698395,
+            "rotateZ": -3.3651986122131348,
+            "translateX": 9.286999702453613,
+            "translateY": 16.066200256347656,
+            "translateZ": -0.022199999541044235
+        },
+        "r_clavicle": {
+            "rotateX": 18.732906341552734,
+            "rotateY": -6.169351100921631,
+            "rotateZ": -8.499956130981445,
+            "translateX": -9.286999702453613,
+            "translateY": 16.066299438476562,
+            "translateZ": -0.027300000190734863
+        },
+        "l_shoulder": {
+            "rotateX": 22.756195068359375,
+            "rotateY": 2.9442431926727295,
+            "rotateZ": -25.60988998413086,
+            "translateX": 0.0,
+            "translateY": 19.612899780273438,
+            "translateZ": 0.0
+        },
+        "l_elbow": {
+            "rotateX": 31.615535736083984,
+            "rotateY": 32.30479431152344,
+            "rotateZ": 17.236167907714844,
+            "translateX": 0.0,
+            "translateY": 28.5935001373291,
+            "translateZ": 0.0
+        },
+        "l_wrist": {
+            "rotateX": -14.790091514587402,
+            "rotateY": 34.76245880126953,
+            "rotateZ": 1.1091976165771484,
+            "translateX": 0.0,
+            "translateY": 32.26020050048828,
+            "translateZ": 0.0
+        },
+        "r_shoulder": {
+            "rotateX": 16.769935607910156,
+            "rotateY": 0.18853136897087097,
+            "rotateZ": 10.526100158691406,
+            "translateX": 0.0,
+            "translateY": 19.612899780273438,
+            "translateZ": 0.0
+        },
+        "r_elbow": {
+            "rotateX": 27.829479217529297,
+            "rotateY": -42.94635009765625,
+            "rotateZ": -10.000941276550293,
+            "translateX": 0.0,
+            "translateY": 28.594499588012695,
+            "translateZ": 0.0
+        },
+        "r_wrist": {
+            "rotateX": -23.2442569732666,
+            "rotateY": -39.45172882080078,
+            "rotateZ": -4.125152587890625,
+            "translateX": 0.0,
+            "translateY": 32.25529861450195,
+            "translateZ": 0.0
+        }
+    },
+    "3": {
+        "root": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 0.0,
+            "translateZ": 0.0
+        },
+        "cog": {
+            "rotateX": 4.435028076171875,
+            "rotateY": 167.64405822753906,
+            "rotateZ": -7.236129760742188,
+            "translateX": 12.636795043945312,
+            "translateY": 69.70195770263672,
+            "translateZ": -0.6972615718841553
+        },
+        "spine_base": {
+            "rotateX": -1.3059942722320557,
+            "rotateY": 1.1762807369232178,
+            "rotateZ": -0.9547920823097229,
+            "translateX": 0.0,
+            "translateY": 11.981800079345703,
+            "translateZ": -0.15530000627040863
+        },
+        "spine_belly": {
+            "rotateX": -2.6287729740142822,
+            "rotateY": 2.0300257205963135,
+            "rotateZ": 1.9477026462554934,
+            "translateX": 0.0,
+            "translateY": 13.979999542236328,
+            "translateZ": 0.0
+        },
+        "spine_chest": {
+            "rotateX": -2.628774404525757,
+            "rotateY": 2.030029058456421,
+            "rotateZ": 1.9476994276046753,
+            "translateX": 0.0,
+            "translateY": 15.977100372314453,
+            "translateZ": 0.0
+        },
+        "neck": {
+            "rotateX": 2.0762195587158203,
+            "rotateY": -20.041704177856445,
+            "rotateZ": 4.728832244873047,
+            "translateX": 0.0,
+            "translateY": 17.974199295043945,
+            "translateZ": 0.0
+        },
+        "head": {
+            "rotateX": -10.173609733581543,
+            "rotateY": -38.42604446411133,
+            "rotateZ": 20.94166374206543,
+            "translateX": 0.0,
+            "translateY": 9.093500137329102,
+            "translateZ": 7.190700054168701
+        },
+        "l_hip": {
+            "rotateX": 42.398380279541016,
+            "rotateY": 12.404528617858887,
+            "rotateZ": -30.29371070861816,
+            "translateX": 11.733599662780762,
+            "translateY": -6.656400203704834,
+            "translateZ": -0.33799999952316284
+        },
+        "l_knee": {
+            "rotateX": -32.77894592285156,
+            "rotateY": -40.0904426574707,
+            "rotateZ": 10.294279098510742,
+            "translateX": 0.0,
+            "translateY": 39.40520095825195,
+            "translateZ": 0.0
+        },
+        "l_ankle": {
+            "rotateX": -13.12978458404541,
+            "rotateY": -9.52624225616455,
+            "rotateZ": -2.0141193866729736,
+            "translateX": 0.0,
+            "translateY": 32.44839859008789,
+            "translateZ": 0.0
+        },
+        "l_ball": {
+            "rotateX": 14.562599182128904,
+            "rotateY": 18.037755966186523,
+            "rotateZ": 1.760740041732788,
+            "translateX": 0.0,
+            "translateY": 20.432600021362305,
+            "translateZ": 0.0
+        },
+        "l_toes": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 8.329299926757812,
+            "translateZ": 0.0
+        },
+        "r_hip": {
+            "rotateX": -7.848661422729492,
+            "rotateY": 51.044105529785156,
+            "rotateZ": -11.73813247680664,
+            "translateX": -11.733599662780762,
+            "translateY": -6.656400203704834,
+            "translateZ": -0.531499981880188
+        },
+        "r_knee": {
+            "rotateX": -36.68021774291992,
+            "rotateY": -16.653589248657227,
+            "rotateZ": -0.17362716794013977,
+            "translateX": 0.0,
+            "translateY": 39.432098388671875,
+            "translateZ": 0.0
+        },
+        "r_ankle": {
+            "rotateX": 38.415061950683594,
+            "rotateY": -28.720834732055668,
+            "rotateZ": -19.838390350341797,
+            "translateX": 0.0,
+            "translateY": 32.51250076293945,
+            "translateZ": 0.0
+        },
+        "r_ball": {
+            "rotateX": 1.2758837938308716,
+            "rotateY": -1.940687298774719,
+            "rotateZ": 6.715888977050781,
+            "translateX": 0.0,
+            "translateY": 20.724700927734375,
+            "translateZ": 0.0
+        },
+        "r_toes": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 8.437700271606445,
+            "translateZ": 0.0
+        },
+        "l_clavicle": {
+            "rotateX": 9.134252548217773,
+            "rotateY": 0.17627036571502686,
+            "rotateZ": -3.36519718170166,
+            "translateX": 9.286999702453613,
+            "translateY": 16.066200256347656,
+            "translateZ": -0.022199999541044235
+        },
+        "r_clavicle": {
+            "rotateX": 19.130735397338867,
+            "rotateY": -6.188027858734131,
+            "rotateZ": -8.92116928100586,
+            "translateX": -9.286999702453613,
+            "translateY": 16.066299438476562,
+            "translateZ": -0.027300000190734863
+        },
+        "l_shoulder": {
+            "rotateX": 22.743860244750977,
+            "rotateY": 2.6861753463745117,
+            "rotateZ": -25.160961151123047,
+            "translateX": 0.0,
+            "translateY": 19.612899780273438,
+            "translateZ": 0.0
+        },
+        "l_elbow": {
+            "rotateX": 31.214658737182617,
+            "rotateY": 32.36811828613281,
+            "rotateZ": 16.91897964477539,
+            "translateX": 0.0,
+            "translateY": 28.5935001373291,
+            "translateZ": 0.0
+        },
+        "l_wrist": {
+            "rotateX": -14.395316123962402,
+            "rotateY": 34.859413146972656,
+            "rotateZ": 1.2479397058486938,
+            "translateX": 0.0,
+            "translateY": 32.26020050048828,
+            "translateZ": 0.0
+        },
+        "r_shoulder": {
+            "rotateX": 16.690765380859375,
+            "rotateY": 0.24675072729587555,
+            "rotateZ": 10.228120803833008,
+            "translateX": 0.0,
+            "translateY": 19.612899780273438,
+            "translateZ": 0.0
+        },
+        "r_elbow": {
+            "rotateX": 27.718475341796875,
+            "rotateY": -42.62953186035156,
+            "rotateZ": -9.946074485778809,
+            "translateX": 0.0,
+            "translateY": 28.594499588012695,
+            "translateZ": 0.0
+        },
+        "r_wrist": {
+            "rotateX": -23.151397705078125,
+            "rotateY": -38.88365173339844,
+            "rotateZ": -4.005659580230713,
+            "translateX": 0.0,
+            "translateY": 32.25529861450195,
+            "translateZ": 0.0
+        }
+    },
+    "4": {
+        "root": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 0.0,
+            "translateZ": 0.0
+        },
+        "cog": {
+            "rotateX": 4.5594024658203125,
+            "rotateY": 166.56423950195312,
+            "rotateZ": -7.3400115966796875,
+            "translateX": 15.612710952758789,
+            "translateY": 69.14158630371094,
+            "translateZ": -0.5861290693283081
+        },
+        "spine_base": {
+            "rotateX": -1.2813516855239868,
+            "rotateY": 1.4376519918441772,
+            "rotateZ": -1.2315568923950195,
+            "translateX": 0.0,
+            "translateY": 11.981800079345703,
+            "translateZ": -0.15530000627040863
+        },
+        "spine_belly": {
+            "rotateX": -2.5794756412506104,
+            "rotateY": 2.529297351837158,
+            "rotateZ": 1.7313395738601685,
+            "translateX": 0.0,
+            "translateY": 13.979999542236328,
+            "translateZ": 0.0
+        },
+        "spine_chest": {
+            "rotateX": -2.5794761180877686,
+            "rotateY": 2.529301166534424,
+            "rotateZ": 1.7313405275344849,
+            "translateX": 0.0,
+            "translateY": 15.977100372314453,
+            "translateZ": 0.0
+        },
+        "neck": {
+            "rotateX": 1.4346858263015747,
+            "rotateY": -20.004514694213867,
+            "rotateZ": 4.958505630493164,
+            "translateX": 0.0,
+            "translateY": 17.974199295043945,
+            "translateZ": 0.0
+        },
+        "head": {
+            "rotateX": -9.78625774383545,
+            "rotateY": -38.43479537963867,
+            "rotateZ": 20.797855377197266,
+            "translateX": 0.0,
+            "translateY": 9.093500137329102,
+            "translateZ": 7.190700054168701
+        },
+        "l_hip": {
+            "rotateX": 40.0464973449707,
+            "rotateY": 11.764893531799316,
+            "rotateZ": -32.696388244628906,
+            "translateX": 11.733599662780762,
+            "translateY": -6.656400203704834,
+            "translateZ": -0.33799999952316284
+        },
+        "l_knee": {
+            "rotateX": -30.438232421875004,
+            "rotateY": -41.32132339477539,
+            "rotateZ": 9.739532470703125,
+            "translateX": 0.0,
+            "translateY": 39.40520095825195,
+            "translateZ": 0.0
+        },
+        "l_ankle": {
+            "rotateX": -9.201929092407227,
+            "rotateY": -0.913614809513092,
+            "rotateZ": -1.2472331523895264,
+            "translateX": 0.0,
+            "translateY": 32.44839859008789,
+            "translateZ": 0.0
+        },
+        "l_ball": {
+            "rotateX": 17.060853958129883,
+            "rotateY": 24.53325653076172,
+            "rotateZ": 3.1588993072509766,
+            "translateX": 0.0,
+            "translateY": 20.432600021362305,
+            "translateZ": 0.0
+        },
+        "l_toes": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 8.329299926757812,
+            "translateZ": 0.0
+        },
+        "r_hip": {
+            "rotateX": -8.187568664550781,
+            "rotateY": 50.89820861816406,
+            "rotateZ": -9.564702987670898,
+            "translateX": -11.733599662780762,
+            "translateY": -6.656400203704834,
+            "translateZ": -0.531499981880188
+        },
+        "r_knee": {
+            "rotateX": -37.7963981628418,
+            "rotateY": -16.394142150878906,
+            "rotateZ": 0.5356276035308838,
+            "translateX": 0.0,
+            "translateY": 39.432098388671875,
+            "translateZ": 0.0
+        },
+        "r_ankle": {
+            "rotateX": 38.82181930541992,
+            "rotateY": -29.043106079101562,
+            "rotateZ": -20.17484474182129,
+            "translateX": 0.0,
+            "translateY": 32.51250076293945,
+            "translateZ": 0.0
+        },
+        "r_ball": {
+            "rotateX": 3.90235424041748,
+            "rotateY": -3.030628204345703,
+            "rotateZ": 10.148746490478516,
+            "translateX": 0.0,
+            "translateY": 20.724700927734375,
+            "translateZ": 0.0
+        },
+        "r_toes": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 8.437700271606445,
+            "translateZ": 0.0
+        },
+        "l_clavicle": {
+            "rotateX": 8.942182540893555,
+            "rotateY": 0.15143710374832153,
+            "rotateZ": -3.4334728717803955,
+            "translateX": 9.286999702453613,
+            "translateY": 16.066200256347656,
+            "translateZ": -0.022199999541044235
+        },
+        "r_clavicle": {
+            "rotateX": 19.241069793701172,
+            "rotateY": -6.1850385665893555,
+            "rotateZ": -9.23041820526123,
+            "translateX": -9.286999702453613,
+            "translateY": 16.066299438476562,
+            "translateZ": -0.027300000190734863
+        },
+        "l_shoulder": {
+            "rotateX": 22.40361976623535,
+            "rotateY": 2.2599895000457764,
+            "rotateZ": -24.577932357788086,
+            "translateX": 0.0,
+            "translateY": 19.612899780273438,
+            "translateZ": 0.0
+        },
+        "l_elbow": {
+            "rotateX": 31.184038162231445,
+            "rotateY": 32.509666442871094,
+            "rotateZ": 16.96021842956543,
+            "translateX": 0.0,
+            "translateY": 28.5935001373291,
+            "translateZ": 0.0
+        },
+        "l_wrist": {
+            "rotateX": -13.952936172485352,
+            "rotateY": 34.948219299316406,
+            "rotateZ": 1.119911551475525,
+            "translateX": 0.0,
+            "translateY": 32.26020050048828,
+            "translateZ": 0.0
+        },
+        "r_shoulder": {
+            "rotateX": 16.90705680847168,
+            "rotateY": 0.24648569524288175,
+            "rotateZ": 9.742050170898438,
+            "translateX": 0.0,
+            "translateY": 19.612899780273438,
+            "translateZ": 0.0
+        },
+        "r_elbow": {
+            "rotateX": 27.485445022583008,
+            "rotateY": -42.25590896606445,
+            "rotateZ": -9.800548553466797,
+            "translateX": 0.0,
+            "translateY": 28.594499588012695,
+            "translateZ": 0.0
+        },
+        "r_wrist": {
+            "rotateX": -23.0017147064209,
+            "rotateY": -38.33367919921875,
+            "rotateZ": -4.237483501434326,
+            "translateX": 0.0,
+            "translateY": 32.25529861450195,
+            "translateZ": 0.0
+        }
+    },
+    "5": {
+        "root": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 0.0,
+            "translateZ": 0.0
+        },
+        "cog": {
+            "rotateX": 4.56903076171875,
+            "rotateY": 165.12649536132812,
+            "rotateZ": -8.11187744140625,
+            "translateX": 18.497173309326172,
+            "translateY": 68.35118103027344,
+            "translateZ": -0.44828522205352783
+        },
+        "spine_base": {
+            "rotateX": -1.2480002641677856,
+            "rotateY": 1.7072899341583252,
+            "rotateZ": -1.7237648963928223,
+            "translateX": 0.0,
+            "translateY": 11.981800079345703,
+            "translateZ": -0.15530000627040863
+        },
+        "spine_belly": {
+            "rotateX": -2.5170555114746094,
+            "rotateY": 3.081843376159668,
+            "rotateZ": 1.3265821933746338,
+            "translateX": 0.0,
+            "translateY": 13.979999542236328,
+            "translateZ": 0.0
+        },
+        "spine_chest": {
+            "rotateX": -2.517054796218872,
+            "rotateY": 3.081846237182617,
+            "rotateZ": 1.3265761137008667,
+            "translateX": 0.0,
+            "translateY": 15.977100372314453,
+            "translateZ": 0.0
+        },
+        "neck": {
+            "rotateX": 0.6355046033859253,
+            "rotateY": -19.883590698242188,
+            "rotateZ": 4.5844645500183105,
+            "translateX": 0.0,
+            "translateY": 17.974199295043945,
+            "translateZ": 0.0
+        },
+        "head": {
+            "rotateX": -9.115591049194336,
+            "rotateY": -38.618099212646484,
+            "rotateZ": 20.750707626342773,
+            "translateX": 0.0,
+            "translateY": 9.093500137329102,
+            "translateZ": 7.190700054168701
+        },
+        "l_hip": {
+            "rotateX": 38.056732177734375,
+            "rotateY": 10.959348678588867,
+            "rotateZ": -33.92437744140625,
+            "translateX": 11.733599662780762,
+            "translateY": -6.656400203704834,
+            "translateZ": -0.33799999952316284
+        },
+        "l_knee": {
+            "rotateX": -26.521326065063477,
+            "rotateY": -39.291412353515625,
+            "rotateZ": 8.546326637268066,
+            "translateX": 0.0,
+            "translateY": 39.40520095825195,
+            "translateZ": 0.0
+        },
+        "l_ankle": {
+            "rotateX": -4.450969219207764,
+            "rotateY": 7.326514720916748,
+            "rotateZ": 0.793876051902771,
+            "translateX": 0.0,
+            "translateY": 32.44839859008789,
+            "translateZ": 0.0
+        },
+        "l_ball": {
+            "rotateX": 12.362768173217773,
+            "rotateY": 20.67350959777832,
+            "rotateZ": 2.8868441581726074,
+            "translateX": 0.0,
+            "translateY": 20.432600021362305,
+            "translateZ": 0.0
+        },
+        "l_toes": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 8.329299926757812,
+            "translateZ": 0.0
+        },
+        "r_hip": {
+            "rotateX": -8.097957611083984,
+            "rotateY": 51.324100494384766,
+            "rotateZ": -8.513140678405762,
+            "translateX": -11.733599662780762,
+            "translateY": -6.656400203704834,
+            "translateZ": -0.531499981880188
+        },
+        "r_knee": {
+            "rotateX": -40.7432746887207,
+            "rotateY": -16.838455200195312,
+            "rotateZ": 1.1566102504730225,
+            "translateX": 0.0,
+            "translateY": 39.432098388671875,
+            "translateZ": 0.0
+        },
+        "r_ankle": {
+            "rotateX": 38.627967834472656,
+            "rotateY": -29.753904342651364,
+            "rotateZ": -19.528427124023438,
+            "translateX": 0.0,
+            "translateY": 32.51250076293945,
+            "translateZ": 0.0
+        },
+        "r_ball": {
+            "rotateX": 7.775318145751953,
+            "rotateY": -7.731986999511718,
+            "rotateZ": 14.565336227416994,
+            "translateX": 0.0,
+            "translateY": 20.724700927734375,
+            "translateZ": 0.0
+        },
+        "r_toes": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 8.437700271606445,
+            "translateZ": 0.0
+        },
+        "l_clavicle": {
+            "rotateX": 9.119715690612793,
+            "rotateY": 0.13447561860084534,
+            "rotateZ": -3.609344482421875,
+            "translateX": 9.286999702453613,
+            "translateY": 16.066200256347656,
+            "translateZ": -0.022199999541044235
+        },
+        "r_clavicle": {
+            "rotateX": 19.082035064697266,
+            "rotateY": -6.159540176391602,
+            "rotateZ": -9.507890701293945,
+            "translateX": -9.286999702453613,
+            "translateY": 16.066299438476562,
+            "translateZ": -0.027300000190734863
+        },
+        "l_shoulder": {
+            "rotateX": 21.537424087524414,
+            "rotateY": 1.7462109327316284,
+            "rotateZ": -24.146629333496094,
+            "translateX": 0.0,
+            "translateY": 19.612899780273438,
+            "translateZ": 0.0
+        },
+        "l_elbow": {
+            "rotateX": 31.86773681640625,
+            "rotateY": 32.57352828979492,
+            "rotateZ": 17.688941955566406,
+            "translateX": 0.0,
+            "translateY": 28.5935001373291,
+            "translateZ": 0.0
+        },
+        "l_wrist": {
+            "rotateX": -13.774764060974121,
+            "rotateY": 34.81867599487305,
+            "rotateZ": 0.9506236910820008,
+            "translateX": 0.0,
+            "translateY": 32.26020050048828,
+            "translateZ": 0.0
+        },
+        "r_shoulder": {
+            "rotateX": 17.284446716308594,
+            "rotateY": 0.21735692024230957,
+            "rotateZ": 8.94152545928955,
+            "translateX": 0.0,
+            "translateY": 19.612899780273438,
+            "translateZ": 0.0
+        },
+        "r_elbow": {
+            "rotateX": 27.196121215820312,
+            "rotateY": -41.96372604370117,
+            "rotateZ": -9.515859603881836,
+            "translateX": 0.0,
+            "translateY": 28.594499588012695,
+            "translateZ": 0.0
+        },
+        "r_wrist": {
+            "rotateX": -22.753095626831055,
+            "rotateY": -37.946353912353516,
+            "rotateZ": -4.842148303985596,
+            "translateX": 0.0,
+            "translateY": 32.25529861450195,
+            "translateZ": 0.0
+        }
+    },
+    "6": {
+        "root": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 0.0,
+            "translateZ": 0.0
+        },
+        "cog": {
+            "rotateX": 4.162174832793916,
+            "rotateY": 162.8779374581905,
+            "rotateZ": -10.176664994032793,
+            "translateX": 22.864252635410853,
+            "translateY": 66.87814113071987,
+            "translateZ": -0.2613123910767691
+        },
+        "spine_base": {
+            "rotateX": -1.155911658491407,
+            "rotateY": 1.9521654588835577,
+            "rotateZ": -2.538231406893049,
+            "translateX": 0.0,
+            "translateY": 11.981800079345703,
+            "translateZ": -0.15530000627040863
+        },
+        "spine_belly": {
+            "rotateX": -2.3473122460501537,
+            "rotateY": 3.642617702484131,
+            "rotateZ": 0.562760551060949,
+            "translateX": 0.0,
+            "translateY": 13.979999542236328,
+            "translateZ": 0.0
+        },
+        "spine_chest": {
+            "rotateX": -2.3473127058574135,
+            "rotateY": 3.6426189626966203,
+            "rotateZ": 0.5627593243760721,
+            "translateX": 0.0,
+            "translateY": 15.977100372314453,
+            "translateZ": 0.0
+        },
+        "neck": {
+            "rotateX": -0.07213206376348219,
+            "rotateY": -19.58665316445487,
+            "rotateZ": 2.310669030461992,
+            "translateX": 0.0,
+            "translateY": 17.974199295043945,
+            "translateZ": 0.0
+        },
+        "head": {
+            "rotateX": -7.971338101795741,
+            "rotateY": -39.30288887023926,
+            "rotateZ": 21.193564414978027,
+            "translateX": 0.0,
+            "translateY": 9.093500137329102,
+            "translateZ": 7.190700054168701
+        },
+        "l_hip": {
+            "rotateX": 38.002518517630435,
+            "rotateY": 8.0725462777274,
+            "rotateZ": -33.86097472054618,
+            "translateX": 11.733599662780762,
+            "translateY": -6.656400203704834,
+            "translateZ": -0.33799999952316284
+        },
+        "l_knee": {
+            "rotateX": -26.09648173195975,
+            "rotateY": -32.30622482299805,
+            "rotateZ": 8.612948690141952,
+            "translateX": 0.0,
+            "translateY": 39.40520095825195,
+            "translateZ": 0.0
+        },
+        "l_ankle": {
+            "rotateX": 0.4593273912157334,
+            "rotateY": 14.243574721472605,
+            "rotateZ": 6.49341880423682,
+            "translateX": 0.0,
+            "translateY": 32.44839859008789,
+            "translateZ": 0.0
+        },
+        "l_ball": {
+            "rotateX": 2.970227250031062,
+            "rotateY": 5.279766295637403,
+            "rotateZ": 2.779943755694798,
+            "translateX": 0.0,
+            "translateY": 20.432600021362305,
+            "translateZ": 0.0
+        },
+        "l_toes": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 8.329299926757812,
+            "translateZ": 0.0
+        },
+        "r_hip": {
+            "rotateX": -6.886947648865836,
+            "rotateY": 52.879495075770784,
+            "rotateZ": -8.227293355124338,
+            "translateX": -11.733599662780762,
+            "translateY": -6.656400203704834,
+            "translateZ": -0.531499981880188
+        },
+        "r_knee": {
+            "rotateX": -48.59609849112374,
+            "rotateY": -18.909544808523993,
+            "rotateZ": 1.6808646917343142,
+            "translateX": 0.0,
+            "translateY": 39.432098388671875,
+            "translateZ": 0.0
+        },
+        "r_ankle": {
+            "rotateX": 34.610550744192935,
+            "rotateY": -31.918656076703755,
+            "rotateZ": -14.542031015668597,
+            "translateX": 0.0,
+            "translateY": 32.51250076293945,
+            "translateZ": 0.0
+        },
+        "r_ball": {
+            "rotateX": 16.261701447623118,
+            "rotateY": -27.6652774810791,
+            "rotateZ": 18.664734840393066,
+            "translateX": 0.0,
+            "translateY": 20.724700927734375,
+            "translateZ": 0.0
+        },
+        "r_toes": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 8.437700271606445,
+            "translateZ": 0.0
+        },
+        "l_clavicle": {
+            "rotateX": 10.066349233899796,
+            "rotateY": 0.20806650391646797,
+            "rotateZ": -3.5977674041475565,
+            "translateX": 9.286999702453613,
+            "translateY": 16.066200256347656,
+            "translateZ": -0.022199999541044235
+        },
+        "r_clavicle": {
+            "rotateX": 18.108064242771693,
+            "rotateY": -6.078413350241524,
+            "rotateZ": -9.573210443769181,
+            "translateX": -9.286999702453613,
+            "translateY": 16.066299438476562,
+            "translateZ": -0.027300000190734863
+        },
+        "l_shoulder": {
+            "rotateX": 19.674969536917548,
+            "rotateY": 1.0677612721920013,
+            "rotateZ": -24.07365948813302,
+            "translateX": 0.0,
+            "translateY": 19.612899780273438,
+            "translateZ": 0.0
+        },
+        "l_elbow": {
+            "rotateX": 33.721719741821296,
+            "rotateY": 32.66779490879603,
+            "rotateZ": 19.20316573551723,
+            "translateX": 0.0,
+            "translateY": 28.5935001373291,
+            "translateZ": 0.0
+        },
+        "l_wrist": {
+            "rotateX": -14.064545495169504,
+            "rotateY": 34.47783606392997,
+            "rotateZ": 0.8279141655990055,
+            "translateX": 0.0,
+            "translateY": 32.26020050048828,
+            "translateZ": 0.0
+        },
+        "r_shoulder": {
+            "rotateX": 17.937066895621165,
+            "rotateY": 0.14283463944281852,
+            "rotateZ": 7.085834673472814,
+            "translateX": 0.0,
+            "translateY": 19.612899780273438,
+            "translateZ": 0.0
+        },
+        "r_elbow": {
+            "rotateX": 26.918632779802596,
+            "rotateY": -41.81495720999581,
+            "rotateZ": -9.119091783251081,
+            "translateX": 0.0,
+            "translateY": 28.594499588012695,
+            "translateZ": 0.0
+        },
+        "r_wrist": {
+            "rotateX": -22.61410903930664,
+            "rotateY": -37.695892333984375,
+            "rotateZ": -5.767439263207572,
+            "translateX": 0.0,
+            "translateY": 32.25529861450195,
+            "translateZ": 0.0
+        }
+    },
+    "7": {
+        "root": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 0.0,
+            "translateZ": 0.0
+        },
+        "cog": {
+            "rotateX": 3.11669921875,
+            "rotateY": 161.53330993652344,
+            "rotateZ": -12.171768188476562,
+            "translateX": 27.353286743164062,
+            "translateY": 64.65086364746094,
+            "translateZ": -0.20024895668029785
+        },
+        "spine_base": {
+            "rotateX": -1.0467698574066162,
+            "rotateY": 1.9531086683273313,
+            "rotateZ": -2.9888572692871094,
+            "translateX": 0.0,
+            "translateY": 11.981800079345703,
+            "translateZ": -0.15530000627040863
+        },
+        "spine_belly": {
+            "rotateX": -2.1399574279785156,
+            "rotateY": 3.688198089599609,
+            "rotateZ": 0.09696945548057556,
+            "translateX": 0.0,
+            "translateY": 13.979999542236328,
+            "translateZ": 0.0
+        },
+        "spine_chest": {
+            "rotateX": -2.1399574279785156,
+            "rotateY": 3.688204288482666,
+            "rotateZ": 0.09696386009454727,
+            "translateX": 0.0,
+            "translateY": 15.977100372314453,
+            "translateZ": 0.0
+        },
+        "neck": {
+            "rotateX": 1.0689436197280884,
+            "rotateY": -19.0191707611084,
+            "rotateZ": -1.282536268234253,
+            "translateX": 0.0,
+            "translateY": 17.974199295043945,
+            "translateZ": 0.0
+        },
+        "head": {
+            "rotateX": -7.644855976104736,
+            "rotateY": -40.00336456298828,
+            "rotateZ": 22.43956756591797,
+            "translateX": 0.0,
+            "translateY": 9.093500137329102,
+            "translateZ": 7.190700054168701
+        },
+        "l_hip": {
+            "rotateX": 39.99797439575195,
+            "rotateY": 4.248083114624023,
+            "rotateZ": -33.153873443603516,
+            "translateX": 11.733599662780762,
+            "translateY": -6.656400203704834,
+            "translateZ": -0.33799999952316284
+        },
+        "l_knee": {
+            "rotateX": -34.214599609375,
+            "rotateY": -28.439292907714844,
+            "rotateZ": 12.976387977600098,
+            "translateX": 0.0,
+            "translateY": 39.40520095825195,
+            "translateZ": 0.0
+        },
+        "l_ankle": {
+            "rotateX": 6.218099594116211,
+            "rotateY": 15.940441131591797,
+            "rotateZ": 8.630108833312988,
+            "translateX": 0.0,
+            "translateY": 32.44839859008789,
+            "translateZ": 0.0
+        },
+        "l_ball": {
+            "rotateX": 0.873259425163269,
+            "rotateY": -1.3621903657913208,
+            "rotateZ": 2.3092234134674072,
+            "translateX": 0.0,
+            "translateY": 20.432600021362305,
+            "translateZ": 0.0
+        },
+        "l_toes": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 8.329299926757812,
+            "translateZ": 0.0
+        },
+        "r_hip": {
+            "rotateX": -1.411224126815796,
+            "rotateY": 53.964866638183594,
+            "rotateZ": -9.084613800048828,
+            "translateX": -11.733599662780762,
+            "translateY": -6.656400203704834,
+            "translateZ": -0.531499981880188
+        },
+        "r_knee": {
+            "rotateX": -65.24075317382812,
+            "rotateY": -21.459884643554688,
+            "rotateZ": 6.198239326477051,
+            "translateX": 0.0,
+            "translateY": 39.432098388671875,
+            "translateZ": 0.0
+        },
+        "r_ankle": {
+            "rotateX": 18.753765106201172,
+            "rotateY": -27.389503479003906,
+            "rotateZ": -5.220670700073242,
+            "translateX": 0.0,
+            "translateY": 32.51250076293945,
+            "translateZ": 0.0
+        },
+        "r_ball": {
+            "rotateX": 27.47105598449707,
+            "rotateY": -48.24225997924805,
+            "rotateZ": 12.64609146118164,
+            "translateX": 0.0,
+            "translateY": 20.724700927734375,
+            "translateZ": 0.0
+        },
+        "r_toes": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 8.437700271606445,
+            "translateZ": 0.0
+        },
+        "l_clavicle": {
+            "rotateX": 11.318475723266602,
+            "rotateY": 0.37887823581695557,
+            "rotateZ": -3.0287764072418213,
+            "translateX": 9.286999702453613,
+            "translateY": 16.066200256347656,
+            "translateZ": -0.022199999541044235
+        },
+        "r_clavicle": {
+            "rotateX": 16.61444664001465,
+            "rotateY": -5.970330238342285,
+            "rotateZ": -8.89886474609375,
+            "translateX": -9.286999702453613,
+            "translateY": 16.066299438476562,
+            "translateZ": -0.027300000190734863
+        },
+        "l_shoulder": {
+            "rotateX": 18.69133186340332,
+            "rotateY": 0.906260311603546,
+            "rotateZ": -24.034128189086914,
+            "translateX": 0.0,
+            "translateY": 19.612899780273438,
+            "translateZ": 0.0
+        },
+        "l_elbow": {
+            "rotateX": 34.51982498168945,
+            "rotateY": 33.40256881713867,
+            "rotateZ": 19.411226272583008,
+            "translateX": 0.0,
+            "translateY": 28.5935001373291,
+            "translateZ": 0.0
+        },
+        "l_wrist": {
+            "rotateX": -13.91833209991455,
+            "rotateY": 34.75764083862305,
+            "rotateZ": 0.9950650930404662,
+            "translateX": 0.0,
+            "translateY": 32.26020050048828,
+            "translateZ": 0.0
+        },
+        "r_shoulder": {
+            "rotateX": 18.11561393737793,
+            "rotateY": 0.0733700767159462,
+            "rotateZ": 5.6264424324035645,
+            "translateX": 0.0,
+            "translateY": 19.612899780273438,
+            "translateZ": 0.0
+        },
+        "r_elbow": {
+            "rotateX": 27.089702606201172,
+            "rotateY": -41.74235153198242,
+            "rotateZ": -9.494109153747559,
+            "translateX": 0.0,
+            "translateY": 28.594499588012695,
+            "translateZ": 0.0
+        },
+        "r_wrist": {
+            "rotateX": -23.70940589904785,
+            "rotateY": -37.41701889038086,
+            "rotateZ": -5.855173110961914,
+            "translateX": 0.0,
+            "translateY": 32.25529861450195,
+            "translateZ": 0.0
+        }
+    },
+    "8": {
+        "root": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 0.0,
+            "translateZ": 0.0
+        },
+        "cog": {
+            "rotateX": 2.2070465087890625,
+            "rotateY": 161.25057983398438,
+            "rotateZ": -13.113433837890625,
+            "translateX": 30.12594223022461,
+            "translateY": 62.846580505371094,
+            "translateZ": -0.15892034769058228
+        },
+        "spine_base": {
+            "rotateX": -1.0129730701446533,
+            "rotateY": 1.8871725797653198,
+            "rotateZ": -3.243136405944824,
+            "translateX": 0.0,
+            "translateY": 11.981800079345703,
+            "translateZ": -0.15530000627040863
+        },
+        "spine_belly": {
+            "rotateX": -2.0766444206237793,
+            "rotateY": 3.5545263290405273,
+            "rotateZ": 0.057415302842855453,
+            "translateX": 0.0,
+            "translateY": 13.979999542236328,
+            "translateZ": 0.0
+        },
+        "spine_chest": {
+            "rotateX": -2.076645612716675,
+            "rotateY": 3.55452036857605,
+            "rotateZ": 0.05741419643163681,
+            "translateX": 0.0,
+            "translateY": 15.977100372314453,
+            "translateZ": 0.0
+        },
+        "neck": {
+            "rotateX": 2.6651246547698975,
+            "rotateY": -18.482656478881836,
+            "rotateZ": -2.844005823135376,
+            "translateX": 0.0,
+            "translateY": 17.974199295043945,
+            "translateZ": 0.0
+        },
+        "head": {
+            "rotateX": -8.058420181274414,
+            "rotateY": -40.05619430541992,
+            "rotateZ": 23.28850555419922,
+            "translateX": 0.0,
+            "translateY": 9.093500137329102,
+            "translateZ": 7.190700054168701
+        },
+        "l_hip": {
+            "rotateX": 41.82680892944336,
+            "rotateY": 1.8743147850036619,
+            "rotateZ": -32.56590270996094,
+            "translateX": 11.733599662780762,
+            "translateY": -6.656400203704834,
+            "translateZ": -0.33799999952316284
+        },
+        "l_knee": {
+            "rotateX": -41.44584274291992,
+            "rotateY": -26.09085464477539,
+            "rotateZ": 17.656421661376953,
+            "translateX": 0.0,
+            "translateY": 39.40520095825195,
+            "translateZ": 0.0
+        },
+        "l_ankle": {
+            "rotateX": 9.862722396850586,
+            "rotateY": 13.55191707611084,
+            "rotateZ": 7.340505123138428,
+            "translateX": 0.0,
+            "translateY": 32.44839859008789,
+            "translateZ": 0.0
+        },
+        "l_ball": {
+            "rotateX": 1.0546964406967163,
+            "rotateY": -1.421343445777893,
+            "rotateZ": 1.9583147764205933,
+            "translateX": 0.0,
+            "translateY": 20.432600021362305,
+            "translateZ": 0.0
+        },
+        "l_toes": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 8.329299926757812,
+            "translateZ": 0.0
+        },
+        "r_hip": {
+            "rotateX": 5.013847351074219,
+            "rotateY": 52.601924896240234,
+            "rotateZ": -9.232349395751953,
+            "translateX": -11.733599662780762,
+            "translateY": -6.656400203704834,
+            "translateZ": -0.531499981880188
+        },
+        "r_knee": {
+            "rotateX": -74.6224136352539,
+            "rotateY": -18.759042739868164,
+            "rotateZ": 6.610487937927246,
+            "translateX": 0.0,
+            "translateY": 39.432098388671875,
+            "translateZ": 0.0
+        },
+        "r_ankle": {
+            "rotateX": 7.50272274017334,
+            "rotateY": -17.172739028930664,
+            "rotateZ": -1.882295250892639,
+            "translateX": 0.0,
+            "translateY": 32.51250076293945,
+            "translateZ": 0.0
+        },
+        "r_ball": {
+            "rotateX": 27.37559700012207,
+            "rotateY": -48.18553924560547,
+            "rotateZ": 9.305910110473633,
+            "translateX": 0.0,
+            "translateY": 20.724700927734375,
+            "translateZ": 0.0
+        },
+        "r_toes": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 8.437700271606445,
+            "translateZ": 0.0
+        },
+        "l_clavicle": {
+            "rotateX": 11.710505485534668,
+            "rotateY": 0.439053475856781,
+            "rotateZ": -2.758234739303589,
+            "translateX": 9.286999702453613,
+            "translateY": 16.066200256347656,
+            "translateZ": -0.022199999541044235
+        },
+        "r_clavicle": {
+            "rotateX": 16.07450294494629,
+            "rotateY": -5.927880764007568,
+            "rotateZ": -8.304837226867676,
+            "translateX": -9.286999702453613,
+            "translateY": 16.066299438476562,
+            "translateZ": -0.027300000190734863
+        },
+        "l_shoulder": {
+            "rotateX": 19.00201416015625,
+            "rotateY": 1.1979694366455078,
+            "rotateZ": -23.754417419433594,
+            "translateX": 0.0,
+            "translateY": 19.612899780273438,
+            "translateZ": 0.0
+        },
+        "l_elbow": {
+            "rotateX": 34.018699645996094,
+            "rotateY": 33.99302673339844,
+            "rotateZ": 18.91816520690918,
+            "translateX": 0.0,
+            "translateY": 28.5935001373291,
+            "translateZ": 0.0
+        },
+        "l_wrist": {
+            "rotateX": -13.4501953125,
+            "rotateY": 35.152984619140625,
+            "rotateZ": 1.6741715669631958,
+            "translateX": 0.0,
+            "translateY": 32.26020050048828,
+            "translateZ": 0.0
+        },
+        "r_shoulder": {
+            "rotateX": 17.630550384521484,
+            "rotateY": 0.12464472651481628,
+            "rotateZ": 5.6380696296691895,
+            "translateX": 0.0,
+            "translateY": 19.612899780273438,
+            "translateZ": 0.0
+        },
+        "r_elbow": {
+            "rotateX": 27.345897674560547,
+            "rotateY": -41.54268264770508,
+            "rotateZ": -10.191305160522461,
+            "translateX": 0.0,
+            "translateY": 28.594499588012695,
+            "translateZ": 0.0
+        },
+        "r_wrist": {
+            "rotateX": -25.013057708740234,
+            "rotateY": -37.040611267089844,
+            "rotateZ": -5.442481517791748,
+            "translateX": 0.0,
+            "translateY": 32.25529861450195,
+            "translateZ": 0.0
+        }
+    },
+    "9": {
+        "root": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 0.0,
+            "translateZ": 0.0
+        },
+        "cog": {
+            "rotateX": 1.39599609375,
+            "rotateY": 161.28753662109375,
+            "rotateZ": -13.696624755859375,
+            "translateX": 32.703529357910156,
+            "translateY": 61.32242965698242,
+            "translateZ": -0.08370289206504822
+        },
+        "spine_base": {
+            "rotateX": -1.021604299545288,
+            "rotateY": 1.8056684732437134,
+            "rotateZ": -3.5921580791473384,
+            "translateX": 0.0,
+            "translateY": 11.981800079345703,
+            "translateZ": -0.15530000627040863
+        },
+        "spine_belly": {
+            "rotateX": -2.0996131896972656,
+            "rotateY": 3.412315845489502,
+            "rotateZ": 0.16536091268062592,
+            "translateX": 0.0,
+            "translateY": 13.979999542236328,
+            "translateZ": 0.0
+        },
+        "spine_chest": {
+            "rotateX": -2.099611759185791,
+            "rotateY": 3.412306785583496,
+            "rotateZ": 0.16536684334278107,
+            "translateX": 0.0,
+            "translateY": 15.977100372314453,
+            "translateZ": 0.0
+        },
+        "neck": {
+            "rotateX": 4.118816375732422,
+            "rotateY": -18.099855422973633,
+            "rotateZ": -3.0599141120910645,
+            "translateX": 0.0,
+            "translateY": 17.974199295043945,
+            "translateZ": 0.0
+        },
+        "head": {
+            "rotateX": -8.667454719543457,
+            "rotateY": -39.810482025146484,
+            "rotateZ": 23.785985946655273,
+            "translateX": 0.0,
+            "translateY": 9.093500137329102,
+            "translateZ": 7.190700054168701
+        },
+        "l_hip": {
+            "rotateX": 43.24359893798828,
+            "rotateY": 0.050540219992399216,
+            "rotateZ": -32.31878662109375,
+            "translateX": 11.733599662780762,
+            "translateY": -6.656400203704834,
+            "translateZ": -0.33799999952316284
+        },
+        "l_knee": {
+            "rotateX": -46.884525299072266,
+            "rotateY": -23.225093841552734,
+            "rotateZ": 22.136362075805664,
+            "translateX": 0.0,
+            "translateY": 39.40520095825195,
+            "translateZ": 0.0
+        },
+        "l_ankle": {
+            "rotateX": 12.621243476867676,
+            "rotateY": 11.044302940368652,
+            "rotateZ": 6.163390159606934,
+            "translateX": 0.0,
+            "translateY": 32.44839859008789,
+            "translateZ": 0.0
+        },
+        "l_ball": {
+            "rotateX": 0.781355082988739,
+            "rotateY": -1.3732120990753174,
+            "rotateZ": 2.1226322650909424,
+            "translateX": 0.0,
+            "translateY": 20.432600021362305,
+            "translateZ": 0.0
+        },
+        "l_toes": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 8.329299926757812,
+            "translateZ": 0.0
+        },
+        "r_hip": {
+            "rotateX": 10.449883460998535,
+            "rotateY": 48.20588684082031,
+            "rotateZ": -8.255110740661621,
+            "translateX": -11.733599662780762,
+            "translateY": -6.656400203704834,
+            "translateZ": -0.531499981880188
+        },
+        "r_knee": {
+            "rotateX": -78.9682388305664,
+            "rotateY": -12.244361877441406,
+            "rotateZ": -2.9550163745880127,
+            "translateX": 0.0,
+            "translateY": 39.432098388671875,
+            "translateZ": 0.0
+        },
+        "r_ankle": {
+            "rotateX": 7.210404872894288,
+            "rotateY": -12.716826438903809,
+            "rotateZ": -3.284658193588257,
+            "translateX": 0.0,
+            "translateY": 32.51250076293945,
+            "translateZ": 0.0
+        },
+        "r_ball": {
+            "rotateX": 23.94741439819336,
+            "rotateY": -41.26789093017578,
+            "rotateZ": 9.803556442260742,
+            "translateX": 0.0,
+            "translateY": 20.724700927734375,
+            "translateZ": 0.0
+        },
+        "r_toes": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 8.437700271606445,
+            "translateZ": 0.0
+        },
+        "l_clavicle": {
+            "rotateX": 11.546975135803223,
+            "rotateY": 0.4282001554965973,
+            "rotateZ": -2.7582411766052246,
+            "translateX": 9.286999702453613,
+            "translateY": 16.066200256347656,
+            "translateZ": -0.022199999541044235
+        },
+        "r_clavicle": {
+            "rotateX": 16.13634490966797,
+            "rotateY": -5.9380598068237305,
+            "rotateZ": -7.878807067871095,
+            "translateX": -9.286999702453613,
+            "translateY": 16.066299438476562,
+            "translateZ": -0.027300000190734863
+        },
+        "l_shoulder": {
+            "rotateX": 19.877864837646484,
+            "rotateY": 1.7015818357467651,
+            "rotateZ": -23.4464168548584,
+            "translateX": 0.0,
+            "translateY": 19.612899780273438,
+            "translateZ": 0.0
+        },
+        "l_elbow": {
+            "rotateX": 33.073341369628906,
+            "rotateY": 34.2574348449707,
+            "rotateZ": 18.451904296875,
+            "translateX": 0.0,
+            "translateY": 28.5935001373291,
+            "translateZ": 0.0
+        },
+        "l_wrist": {
+            "rotateX": -13.432421684265137,
+            "rotateY": 35.45081329345703,
+            "rotateZ": 2.788759708404541,
+            "translateX": 0.0,
+            "translateY": 32.26020050048828,
+            "translateZ": 0.0
+        },
+        "r_shoulder": {
+            "rotateX": 16.789440155029297,
+            "rotateY": 0.3089176416397095,
+            "rotateZ": 6.382819652557373,
+            "translateX": 0.0,
+            "translateY": 19.612899780273438,
+            "translateZ": 0.0
+        },
+        "r_elbow": {
+            "rotateX": 27.500703811645508,
+            "rotateY": -41.28866958618164,
+            "rotateZ": -10.807175636291504,
+            "translateX": 0.0,
+            "translateY": 28.594499588012695,
+            "translateZ": 0.0
+        },
+        "r_wrist": {
+            "rotateX": -26.1243953704834,
+            "rotateY": -36.71327590942383,
+            "rotateZ": -4.908560752868652,
+            "translateX": 0.0,
+            "translateY": 32.25529861450195,
+            "translateZ": 0.0
+        }
+    },
+    "10": {
+        "root": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 0.0,
+            "translateZ": 0.0
+        },
+        "cog": {
+            "rotateX": 0.8676550728934151,
+            "rotateY": 161.61629268101282,
+            "rotateZ": -13.29110826764788,
+            "translateX": 37.00895064217704,
+            "translateY": 60.70904949733189,
+            "translateZ": 0.009987109473773407
+        },
+        "spine_base": {
+            "rotateX": -1.0779352869306293,
+            "rotateY": 1.7326281411307198,
+            "rotateZ": -3.535083174705506,
+            "translateX": 0.0,
+            "translateY": 11.981800079345703,
+            "translateZ": -0.15530000627040863
+        },
+        "spine_belly": {
+            "rotateX": -2.210124526705061,
+            "rotateY": 3.2524285146168297,
+            "rotateZ": 0.42896236372845503,
+            "translateX": 0.0,
+            "translateY": 13.979999542236328,
+            "translateZ": 0.0
+        },
+        "spine_chest": {
+            "rotateX": -2.2101230961935863,
+            "rotateY": 3.2524332659585133,
+            "rotateZ": 0.42896367290190285,
+            "translateX": 0.0,
+            "translateY": 15.977100372314453,
+            "translateZ": 0.0
+        },
+        "neck": {
+            "rotateX": 5.202990225383213,
+            "rotateY": -18.05882113320487,
+            "rotateZ": -2.0596131426947455,
+            "translateX": 0.0,
+            "translateY": 17.974199295043945,
+            "translateZ": 0.0
+        },
+        "head": {
+            "rotateX": -9.389877114977155,
+            "rotateY": -39.461241313389365,
+            "rotateZ": 24.014792578560964,
+            "translateX": 0.0,
+            "translateY": 9.093500137329102,
+            "translateZ": 7.190700054168701
+        },
+        "l_hip": {
+            "rotateX": 43.449615750994,
+            "rotateY": -1.511212528550199,
+            "rotateZ": -30.075461387634277,
+            "translateX": 11.733599662780762,
+            "translateY": -6.656400203704834,
+            "translateZ": -0.33799999952316284
+        },
+        "l_knee": {
+            "rotateX": -50.77677372523717,
+            "rotateY": -18.593922887529647,
+            "rotateZ": 26.138259342738557,
+            "translateX": 0.0,
+            "translateY": 39.40520095825195,
+            "translateZ": 0.0
+        },
+        "l_ankle": {
+            "rotateX": 15.156468459538049,
+            "rotateY": 6.616094435964313,
+            "rotateZ": 4.182201675006322,
+            "translateX": 0.0,
+            "translateY": 32.44839859008789,
+            "translateZ": 0.0
+        },
+        "l_ball": {
+            "rotateX": 0.784477881022862,
+            "rotateY": -1.361067805971418,
+            "rotateZ": 2.2327289751597807,
+            "translateX": 0.0,
+            "translateY": 20.432600021362305,
+            "translateZ": 0.0
+        },
+        "l_toes": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 8.329299926757812,
+            "translateZ": 0.0
+        },
+        "r_hip": {
+            "rotateX": 16.74585839680263,
+            "rotateY": 32.99115957532611,
+            "rotateZ": -10.630591460636683,
+            "translateX": -11.733599662780762,
+            "translateY": -6.656400203704834,
+            "translateZ": -0.531499981880188
+        },
+        "r_knee": {
+            "rotateX": -84.22969218662806,
+            "rotateY": -2.226127926260234,
+            "rotateZ": -19.061219675200324,
+            "translateX": 0.0,
+            "translateY": 39.432098388671875,
+            "translateZ": 0.0
+        },
+        "r_ankle": {
+            "rotateX": 8.823050124304634,
+            "rotateY": -4.845413446426392,
+            "rotateZ": -4.884461522102356,
+            "translateX": 0.0,
+            "translateY": 32.51250076293945,
+            "translateZ": 0.0
+        },
+        "r_ball": {
+            "rotateX": 45.346164158412385,
+            "rotateY": -22.160924639020656,
+            "rotateZ": 19.008544036320277,
+            "translateX": 0.0,
+            "translateY": 20.724700927734375,
+            "translateZ": 0.0
+        },
+        "r_toes": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 8.437700271606445,
+            "translateZ": 0.0
+        },
+        "l_clavicle": {
+            "rotateX": 10.802539144243513,
+            "rotateY": 0.3668263171400343,
+            "rotateZ": -2.8474249499184747,
+            "translateX": 9.286999702453613,
+            "translateY": 16.066200256347656,
+            "translateZ": -0.022199999541044235
+        },
+        "r_clavicle": {
+            "rotateX": 16.668574878147673,
+            "rotateY": -5.995103665760585,
+            "rotateZ": -7.6931063788277765,
+            "translateX": -9.286999702453613,
+            "translateY": 16.066299438476562,
+            "translateZ": -0.027300000190734863
+        },
+        "l_shoulder": {
+            "rotateX": 21.36311272212437,
+            "rotateY": 2.440324212823595,
+            "rotateZ": -23.289096014840265,
+            "translateX": 0.0,
+            "translateY": 19.612899780273438,
+            "translateZ": 0.0
+        },
+        "l_elbow": {
+            "rotateX": 31.679000854492188,
+            "rotateY": 34.1554194859096,
+            "rotateZ": 18.083719662257604,
+            "translateX": 0.0,
+            "translateY": 28.5935001373291,
+            "translateZ": 0.0
+        },
+        "l_wrist": {
+            "rotateX": -14.393907478877477,
+            "rotateY": 35.844933373587466,
+            "rotateZ": 4.265274150030953,
+            "translateX": 0.0,
+            "translateY": 32.26020050048828,
+            "translateZ": 0.0
+        },
+        "r_shoulder": {
+            "rotateX": 15.621044772011892,
+            "rotateY": 0.7432562112808228,
+            "rotateZ": 7.885535342352732,
+            "translateX": 0.0,
+            "translateY": 19.612899780273438,
+            "translateZ": 0.0
+        },
+        "r_elbow": {
+            "rotateX": 27.391389983040945,
+            "rotateY": -41.20934922354562,
+            "rotateZ": -10.865111214773995,
+            "translateX": 0.0,
+            "translateY": 28.594499588012695,
+            "translateZ": 0.0
+        },
+        "r_wrist": {
+            "rotateX": -26.742774963378906,
+            "rotateY": -36.96653856549944,
+            "rotateZ": -4.346725021089826,
+            "translateX": 0.0,
+            "translateY": 32.25529861450195,
+            "translateZ": 0.0
+        }
+    },
+    "11": {
+        "root": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 0.0,
+            "translateZ": 0.0
+        },
+        "cog": {
+            "rotateX": 1.0466766357421875,
+            "rotateY": 162.35108947753906,
+            "rotateZ": -11.595779418945312,
+            "translateX": 42.31923294067383,
+            "translateY": 61.97069549560547,
+            "translateZ": 0.035034120082855225
+        },
+        "spine_base": {
+            "rotateX": -1.1475307941436768,
+            "rotateY": 1.596539855003357,
+            "rotateZ": -2.4953784942626953,
+            "translateX": 0.0,
+            "translateY": 11.981800079345703,
+            "translateZ": -0.15530000627040863
+        },
+        "spine_belly": {
+            "rotateX": -2.3323254585266113,
+            "rotateY": 3.004521131515503,
+            "rotateZ": 0.7165575623512268,
+            "translateX": 0.0,
+            "translateY": 13.979999542236328,
+            "translateZ": 0.0
+        },
+        "spine_chest": {
+            "rotateX": -2.3323259353637695,
+            "rotateY": 3.004518985748291,
+            "rotateZ": 0.7165566682815552,
+            "translateX": 0.0,
+            "translateY": 15.977100372314453,
+            "translateZ": 0.0
+        },
+        "neck": {
+            "rotateX": 5.614115238189697,
+            "rotateY": -18.225299835205078,
+            "rotateZ": -1.4651191234588623,
+            "translateX": 0.0,
+            "translateY": 17.974199295043945,
+            "translateZ": 0.0
+        },
+        "head": {
+            "rotateX": -9.767187118530273,
+            "rotateY": -39.44390106201172,
+            "rotateZ": 24.11238670349121,
+            "translateX": 0.0,
+            "translateY": 9.093500137329102,
+            "translateZ": 7.190700054168701
+        },
+        "l_hip": {
+            "rotateX": 41.17036819458008,
+            "rotateY": -1.846644997596741,
+            "rotateZ": -24.533445358276367,
+            "translateX": 11.733599662780762,
+            "translateY": -6.656400203704834,
+            "translateZ": -0.33799999952316284
+        },
+        "l_knee": {
+            "rotateX": -50.83750534057617,
+            "rotateY": -14.697366714477539,
+            "rotateZ": 26.271787643432617,
+            "translateX": 0.0,
+            "translateY": 39.40520095825195,
+            "translateZ": 0.0
+        },
+        "l_ankle": {
+            "rotateX": 16.555255889892578,
+            "rotateY": 2.3217499256134033,
+            "rotateZ": 1.8343894481658938,
+            "translateX": 0.0,
+            "translateY": 32.44839859008789,
+            "translateZ": 0.0
+        },
+        "l_ball": {
+            "rotateX": 0.8496621251106262,
+            "rotateY": -1.4104912281036377,
+            "rotateZ": 2.1628823280334473,
+            "translateX": 0.0,
+            "translateY": 20.432600021362305,
+            "translateZ": 0.0
+        },
+        "l_toes": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 8.329299926757812,
+            "translateZ": 0.0
+        },
+        "r_hip": {
+            "rotateX": 20.417905807495117,
+            "rotateY": 18.081453323364258,
+            "rotateZ": -14.231367111206055,
+            "translateX": -11.733599662780762,
+            "translateY": -6.656400203704834,
+            "translateZ": -0.531499981880188
+        },
+        "r_knee": {
+            "rotateX": -89.21847534179688,
+            "rotateY": 2.6577136516571045,
+            "rotateZ": -32.34590530395508,
+            "translateX": 0.0,
+            "translateY": 39.432098388671875,
+            "translateZ": 0.0
+        },
+        "r_ankle": {
+            "rotateX": 16.36579704284668,
+            "rotateY": -2.812974452972412,
+            "rotateZ": -5.149317264556885,
+            "translateX": 0.0,
+            "translateY": 32.51250076293945,
+            "translateZ": 0.0
+        },
+        "r_ball": {
+            "rotateX": 27.019153594970703,
+            "rotateY": 15.680667877197266,
+            "rotateZ": 10.667601585388184,
+            "translateX": 0.0,
+            "translateY": 20.724700927734375,
+            "translateZ": 0.0
+        },
+        "r_toes": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 8.437700271606445,
+            "translateZ": 0.0
+        },
+        "l_clavicle": {
+            "rotateX": 10.282975196838379,
+            "rotateY": 0.3558633625507355,
+            "rotateZ": -2.6831932067871094,
+            "translateX": 9.286999702453613,
+            "translateY": 16.066200256347656,
+            "translateZ": -0.022199999541044235
+        },
+        "r_clavicle": {
+            "rotateX": 16.831151962280273,
+            "rotateY": -6.010676860809326,
+            "rotateZ": -7.69883918762207,
+            "translateX": -9.286999702453613,
+            "translateY": 16.066299438476562,
+            "translateZ": -0.027300000190734863
+        },
+        "l_shoulder": {
+            "rotateX": 22.279081344604492,
+            "rotateY": 2.9289937019348145,
+            "rotateZ": -23.454008102416992,
+            "translateX": 0.0,
+            "translateY": 19.612899780273438,
+            "translateZ": 0.0
+        },
+        "l_elbow": {
+            "rotateX": 30.955680847167972,
+            "rotateY": 34.0415153503418,
+            "rotateZ": 17.993589401245117,
+            "translateX": 0.0,
+            "translateY": 28.5935001373291,
+            "translateZ": 0.0
+        },
+        "l_wrist": {
+            "rotateX": -14.737764358520508,
+            "rotateY": 36.161067962646484,
+            "rotateZ": 4.858911514282227,
+            "translateX": 0.0,
+            "translateY": 32.26020050048828,
+            "translateZ": 0.0
+        },
+        "r_shoulder": {
+            "rotateX": 15.165591239929197,
+            "rotateY": 1.0384341478347778,
+            "rotateZ": 9.211487770080566,
+            "translateX": 0.0,
+            "translateY": 19.612899780273438,
+            "translateZ": 0.0
+        },
+        "r_elbow": {
+            "rotateX": 27.12176513671875,
+            "rotateY": -41.46867370605469,
+            "rotateZ": -10.22293758392334,
+            "translateX": 0.0,
+            "translateY": 28.594499588012695,
+            "translateZ": 0.0
+        },
+        "r_wrist": {
+            "rotateX": -26.5180606842041,
+            "rotateY": -37.80654525756836,
+            "rotateZ": -4.204261302947998,
+            "translateX": 0.0,
+            "translateY": 32.25529861450195,
+            "translateZ": 0.0
+        }
+    },
+    "12": {
+        "root": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 0.0,
+            "translateZ": 0.0
+        },
+        "cog": {
+            "rotateX": 1.31976318359375,
+            "rotateY": 163.18743896484375,
+            "rotateZ": -10.442672729492188,
+            "translateX": 46.14384078979492,
+            "translateY": 62.911590576171875,
+            "translateZ": 0.004562854766845703
+        },
+        "spine_base": {
+            "rotateX": -1.207587480545044,
+            "rotateY": 1.3922827243804932,
+            "rotateZ": -1.7226468324661255,
+            "translateX": 0.0,
+            "translateY": 11.981800079345703,
+            "translateZ": -0.15530000627040863
+        },
+        "spine_belly": {
+            "rotateX": -2.4415199756622314,
+            "rotateY": 2.6982245445251465,
+            "rotateZ": 0.9279036521911621,
+            "translateX": 0.0,
+            "translateY": 13.979999542236328,
+            "translateZ": 0.0
+        },
+        "spine_chest": {
+            "rotateX": -2.4415194988250732,
+            "rotateY": 2.698225259780884,
+            "rotateZ": 0.9279026985168458,
+            "translateX": 0.0,
+            "translateY": 15.977100372314453,
+            "translateZ": 0.0
+        },
+        "neck": {
+            "rotateX": 5.861711502075195,
+            "rotateY": -18.33207893371582,
+            "rotateZ": -1.5348039865493774,
+            "translateX": 0.0,
+            "translateY": 17.974199295043945,
+            "translateZ": 0.0
+        },
+        "head": {
+            "rotateX": -9.855567932128906,
+            "rotateY": -39.587562561035156,
+            "rotateZ": 24.09931755065918,
+            "translateX": 0.0,
+            "translateY": 9.093500137329102,
+            "translateZ": 7.190700054168701
+        },
+        "l_hip": {
+            "rotateX": 39.383548736572266,
+            "rotateY": -1.6429495811462402,
+            "rotateZ": -20.319549560546875,
+            "translateX": 11.733599662780762,
+            "translateY": -6.656400203704834,
+            "translateZ": -0.33799999952316284
+        },
+        "l_knee": {
+            "rotateX": -50.15152359008789,
+            "rotateY": -12.33102798461914,
+            "rotateZ": 25.520729064941406,
+            "translateX": 0.0,
+            "translateY": 39.40520095825195,
+            "translateZ": 0.0
+        },
+        "l_ankle": {
+            "rotateX": 17.26891326904297,
+            "rotateY": -0.31161263585090637,
+            "rotateZ": 0.16825735569000244,
+            "translateX": 0.0,
+            "translateY": 32.44839859008789,
+            "translateZ": 0.0
+        },
+        "l_ball": {
+            "rotateX": 0.8675576448440552,
+            "rotateY": -1.4142553806304932,
+            "rotateZ": 2.1521239280700684,
+            "translateX": 0.0,
+            "translateY": 20.432600021362305,
+            "translateZ": 0.0
+        },
+        "l_toes": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 8.329299926757812,
+            "translateZ": 0.0
+        },
+        "r_hip": {
+            "rotateX": 23.579370498657227,
+            "rotateY": 13.380602836608887,
+            "rotateZ": -17.931718826293945,
+            "translateX": -11.733599662780762,
+            "translateY": -6.656400203704834,
+            "translateZ": -0.531499981880188
+        },
+        "r_knee": {
+            "rotateX": -88.0564956665039,
+            "rotateY": 4.603669166564941,
+            "rotateZ": -38.41524887084961,
+            "translateX": 0.0,
+            "translateY": 39.432098388671875,
+            "translateZ": 0.0
+        },
+        "r_ankle": {
+            "rotateX": 18.4533634185791,
+            "rotateY": -0.9802846312522888,
+            "rotateZ": -4.02094841003418,
+            "translateX": 0.0,
+            "translateY": 32.51250076293945,
+            "translateZ": 0.0
+        },
+        "r_ball": {
+            "rotateX": 22.283998489379883,
+            "rotateY": 9.96254825592041,
+            "rotateZ": 11.12735652923584,
+            "translateX": 0.0,
+            "translateY": 20.724700927734375,
+            "translateZ": 0.0
+        },
+        "r_toes": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 8.437700271606445,
+            "translateZ": 0.0
+        },
+        "l_clavicle": {
+            "rotateX": 10.281291007995605,
+            "rotateY": 0.3744998872280121,
+            "rotateZ": -2.5521085262298584,
+            "translateX": 9.286999702453613,
+            "translateY": 16.066200256347656,
+            "translateZ": -0.022199999541044235
+        },
+        "r_clavicle": {
+            "rotateX": 16.60489845275879,
+            "rotateY": -5.991791725158691,
+            "rotateZ": -7.515689849853516,
+            "translateX": -9.286999702453613,
+            "translateY": 16.066299438476562,
+            "translateZ": -0.027300000190734863
+        },
+        "l_shoulder": {
+            "rotateX": 22.502986907958984,
+            "rotateY": 3.1530699729919434,
+            "rotateZ": -23.6328125,
+            "translateX": 0.0,
+            "translateY": 19.612899780273438,
+            "translateZ": 0.0
+        },
+        "l_elbow": {
+            "rotateX": 30.80106925964355,
+            "rotateY": 34.049842834472656,
+            "rotateZ": 18.036279678344727,
+            "translateX": 0.0,
+            "translateY": 28.5935001373291,
+            "translateZ": 0.0
+        },
+        "l_wrist": {
+            "rotateX": -14.538535118103026,
+            "rotateY": 36.17685317993164,
+            "rotateZ": 4.956934452056885,
+            "translateX": 0.0,
+            "translateY": 32.26020050048828,
+            "translateZ": 0.0
+        },
+        "r_shoulder": {
+            "rotateX": 15.276744842529295,
+            "rotateY": 1.021093487739563,
+            "rotateZ": 10.09359073638916,
+            "translateX": 0.0,
+            "translateY": 19.612899780273438,
+            "translateZ": 0.0
+        },
+        "r_elbow": {
+            "rotateX": 26.98177719116211,
+            "rotateY": -41.559730529785156,
+            "rotateZ": -9.928301811218262,
+            "translateX": 0.0,
+            "translateY": 28.594499588012695,
+            "translateZ": 0.0
+        },
+        "r_wrist": {
+            "rotateX": -26.023365020751953,
+            "rotateY": -38.12104415893555,
+            "rotateZ": -4.244039058685303,
+            "translateX": 0.0,
+            "translateY": 32.25529861450195,
+            "translateZ": 0.0
+        }
+    },
+    "13": {
+        "root": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 0.0,
+            "translateZ": 0.0
+        },
+        "cog": {
+            "rotateX": 1.64996337890625,
+            "rotateY": 164.21278381347656,
+            "rotateZ": -9.552825927734375,
+            "translateX": 50.043800354003906,
+            "translateY": 63.55574035644531,
+            "translateZ": -0.03949117660522461
+        },
+        "spine_base": {
+            "rotateX": -1.2978413105010986,
+            "rotateY": 1.130841851234436,
+            "rotateZ": -1.1195363998413086,
+            "translateX": 0.0,
+            "translateY": 11.981800079345703,
+            "translateZ": -0.15530000627040863
+        },
+        "spine_belly": {
+            "rotateX": -2.6138556003570557,
+            "rotateY": 2.289734363555908,
+            "rotateZ": 1.1186312437057495,
+            "translateX": 0.0,
+            "translateY": 13.979999542236328,
+            "translateZ": 0.0
+        },
+        "spine_chest": {
+            "rotateX": -2.613856792449951,
+            "rotateY": 2.2897346019744873,
+            "rotateZ": 1.1186354160308838,
+            "translateX": 0.0,
+            "translateY": 15.977100372314453,
+            "translateZ": 0.0
+        },
+        "neck": {
+            "rotateX": 6.027944087982178,
+            "rotateY": -18.50122833251953,
+            "rotateZ": -1.7822309732437134,
+            "translateX": 0.0,
+            "translateY": 17.974199295043945,
+            "translateZ": 0.0
+        },
+        "head": {
+            "rotateX": -9.812552452087402,
+            "rotateY": -39.85899353027344,
+            "rotateZ": 23.968294143676758,
+            "translateX": 0.0,
+            "translateY": 9.093500137329102,
+            "translateZ": 7.190700054168701
+        },
+        "l_hip": {
+            "rotateX": 37.92607879638672,
+            "rotateY": -1.3143597841262817,
+            "rotateZ": -16.296560287475586,
+            "translateX": 11.733599662780762,
+            "translateY": -6.656400203704834,
+            "translateZ": -0.33799999952316284
+        },
+        "l_knee": {
+            "rotateX": -49.371768951416016,
+            "rotateY": -9.94540786743164,
+            "rotateZ": 24.68457794189453,
+            "translateX": 0.0,
+            "translateY": 39.40520095825195,
+            "translateZ": 0.0
+        },
+        "l_ankle": {
+            "rotateX": 17.953842163085938,
+            "rotateY": -2.823275566101074,
+            "rotateZ": -1.4883960485458374,
+            "translateX": 0.0,
+            "translateY": 32.44839859008789,
+            "translateZ": 0.0
+        },
+        "l_ball": {
+            "rotateX": 0.838101863861084,
+            "rotateY": -1.4062837362289429,
+            "rotateZ": 2.1795599460601807,
+            "translateX": 0.0,
+            "translateY": 20.432600021362305,
+            "translateZ": 0.0
+        },
+        "l_toes": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 8.329299926757812,
+            "translateZ": 0.0
+        },
+        "r_hip": {
+            "rotateX": 26.74437713623047,
+            "rotateY": 12.763607025146484,
+            "rotateZ": -22.18903160095215,
+            "translateX": -11.733599662780762,
+            "translateY": -6.656400203704834,
+            "translateZ": -0.531499981880188
+        },
+        "r_knee": {
+            "rotateX": -83.47576141357422,
+            "rotateY": 6.9576592445373535,
+            "rotateZ": -40.90220642089844,
+            "translateX": 0.0,
+            "translateY": 39.432098388671875,
+            "translateZ": 0.0
+        },
+        "r_ankle": {
+            "rotateX": 19.910341262817383,
+            "rotateY": -1.4246820211410522,
+            "rotateZ": -3.7884197235107417,
+            "translateX": 0.0,
+            "translateY": 32.51250076293945,
+            "translateZ": 0.0
+        },
+        "r_ball": {
+            "rotateX": 16.45211410522461,
+            "rotateY": 3.3136487007141113,
+            "rotateZ": 12.970252990722656,
+            "translateX": 0.0,
+            "translateY": 20.724700927734375,
+            "translateZ": 0.0
+        },
+        "r_toes": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 8.437700271606445,
+            "translateZ": 0.0
+        },
+        "l_clavicle": {
+            "rotateX": 10.596302032470703,
+            "rotateY": 0.40182921290397644,
+            "rotateZ": -2.485753297805786,
+            "translateX": 9.286999702453613,
+            "translateY": 16.066200256347656,
+            "translateZ": -0.022199999541044235
+        },
+        "r_clavicle": {
+            "rotateX": 16.18248176574707,
+            "rotateY": -5.9570207595825195,
+            "rotateZ": -7.111408710479736,
+            "translateX": -9.286999702453613,
+            "translateY": 16.066299438476562,
+            "translateZ": -0.027300000190734863
+        },
+        "l_shoulder": {
+            "rotateX": 22.24610710144043,
+            "rotateY": 3.2456328868865967,
+            "rotateZ": -23.97859001159668,
+            "translateX": 0.0,
+            "translateY": 19.612899780273438,
+            "translateZ": 0.0
+        },
+        "l_elbow": {
+            "rotateX": 30.948068618774418,
+            "rotateY": 34.07143783569336,
+            "rotateZ": 18.298080444335938,
+            "translateX": 0.0,
+            "translateY": 28.5935001373291,
+            "translateZ": 0.0
+        },
+        "l_wrist": {
+            "rotateX": -14.540922164916992,
+            "rotateY": 36.01637649536133,
+            "rotateZ": 4.876317977905273,
+            "translateX": 0.0,
+            "translateY": 32.26020050048828,
+            "translateZ": 0.0
+        },
+        "r_shoulder": {
+            "rotateX": 15.604392051696777,
+            "rotateY": 0.8652439117431641,
+            "rotateZ": 10.902769088745117,
+            "translateX": 0.0,
+            "translateY": 19.612899780273438,
+            "translateZ": 0.0
+        },
+        "r_elbow": {
+            "rotateX": 26.92535400390625,
+            "rotateY": -41.61699295043945,
+            "rotateZ": -9.901595115661621,
+            "translateX": 0.0,
+            "translateY": 28.594499588012695,
+            "translateZ": 0.0
+        },
+        "r_wrist": {
+            "rotateX": -25.23464584350586,
+            "rotateY": -38.28836441040039,
+            "rotateZ": -4.368960857391357,
+            "translateX": 0.0,
+            "translateY": 32.25529861450195,
+            "translateZ": 0.0
+        }
+    },
+    "14": {
+        "root": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 0.0,
+            "translateZ": 0.0
+        },
+        "cog": {
+            "rotateX": 2.022552490234375,
+            "rotateY": 165.27386474609375,
+            "rotateZ": -8.937591552734375,
+            "translateX": 53.94800567626953,
+            "translateY": 63.88444519042969,
+            "translateZ": -0.08792608976364136
+        },
+        "spine_base": {
+            "rotateX": -1.4242291450500488,
+            "rotateY": 0.8614824414253235,
+            "rotateZ": -0.6888403296470642,
+            "translateX": 0.0,
+            "translateY": 11.981800079345703,
+            "translateZ": -0.15530000627040863
+        },
+        "spine_belly": {
+            "rotateX": -2.8613667488098145,
+            "rotateY": 1.8211785554885862,
+            "rotateZ": 1.2120108604431152,
+            "translateX": 0.0,
+            "translateY": 13.979999542236328,
+            "translateZ": 0.0
+        },
+        "spine_chest": {
+            "rotateX": -2.861365795135498,
+            "rotateY": 1.821185350418091,
+            "rotateZ": 1.2120102643966675,
+            "translateX": 0.0,
+            "translateY": 15.977100372314453,
+            "translateZ": 0.0
+        },
+        "neck": {
+            "rotateX": 6.0605340003967285,
+            "rotateY": -18.747499465942383,
+            "rotateZ": -2.0598790645599365,
+            "translateX": 0.0,
+            "translateY": 17.974199295043945,
+            "translateZ": 0.0
+        },
+        "head": {
+            "rotateX": -9.682577133178711,
+            "rotateY": -40.214595794677734,
+            "rotateZ": 23.740623474121094,
+            "translateX": 0.0,
+            "translateY": 9.093500137329102,
+            "translateZ": 7.190700054168701
+        },
+        "l_hip": {
+            "rotateX": 36.83613586425781,
+            "rotateY": -0.928151249885559,
+            "rotateZ": -12.467394828796387,
+            "translateX": 11.733599662780762,
+            "translateY": -6.656400203704834,
+            "translateZ": -0.33799999952316284
+        },
+        "l_knee": {
+            "rotateX": -48.5817756652832,
+            "rotateY": -7.642341613769532,
+            "rotateZ": 23.828189849853516,
+            "translateX": 0.0,
+            "translateY": 39.40520095825195,
+            "translateZ": 0.0
+        },
+        "l_ankle": {
+            "rotateX": 18.629926681518555,
+            "rotateY": -5.222637176513672,
+            "rotateZ": -3.1372220516204834,
+            "translateX": 0.0,
+            "translateY": 32.44839859008789,
+            "translateZ": 0.0
+        },
+        "l_ball": {
+            "rotateX": 0.7450268268585205,
+            "rotateY": -1.4253507852554321,
+            "rotateZ": 2.2118172645568848,
+            "translateX": 0.0,
+            "translateY": 20.432600021362305,
+            "translateZ": 0.0
+        },
+        "l_toes": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 8.329299926757812,
+            "translateZ": 0.0
+        },
+        "r_hip": {
+            "rotateX": 29.179367065429684,
+            "rotateY": 14.775242805480955,
+            "rotateZ": -25.802337646484375,
+            "translateX": -11.733599662780762,
+            "translateY": -6.656400203704834,
+            "translateZ": -0.531499981880188
+        },
+        "r_knee": {
+            "rotateX": -75.90453338623047,
+            "rotateY": 9.063994407653809,
+            "rotateZ": -39.5565185546875,
+            "translateX": 0.0,
+            "translateY": 39.432098388671875,
+            "translateZ": 0.0
+        },
+        "r_ankle": {
+            "rotateX": 22.394052505493164,
+            "rotateY": -4.712222099304199,
+            "rotateZ": -4.983494281768799,
+            "translateX": 0.0,
+            "translateY": 32.51250076293945,
+            "translateZ": 0.0
+        },
+        "r_ball": {
+            "rotateX": 9.195465087890625,
+            "rotateY": -3.1414711475372314,
+            "rotateZ": 14.038454055786133,
+            "translateX": 0.0,
+            "translateY": 20.724700927734375,
+            "translateZ": 0.0
+        },
+        "r_toes": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 8.437700271606445,
+            "translateZ": 0.0
+        },
+        "l_clavicle": {
+            "rotateX": 11.142059326171875,
+            "rotateY": 0.43662577867507935,
+            "rotateZ": -2.456455945968628,
+            "translateX": 9.286999702453613,
+            "translateY": 16.066200256347656,
+            "translateZ": -0.022199999541044235
+        },
+        "r_clavicle": {
+            "rotateX": 15.689323425292969,
+            "rotateY": -5.913825035095215,
+            "rotateZ": -6.562366485595703,
+            "translateX": -9.286999702453613,
+            "translateY": 16.066299438476562,
+            "translateZ": -0.027300000190734863
+        },
+        "l_shoulder": {
+            "rotateX": 21.390430450439453,
+            "rotateY": 3.1031343936920166,
+            "rotateZ": -24.605649948120117,
+            "translateX": 0.0,
+            "translateY": 19.612899780273438,
+            "translateZ": 0.0
+        },
+        "l_elbow": {
+            "rotateX": 31.471591949462894,
+            "rotateY": 34.07258224487305,
+            "rotateZ": 18.789031982421875,
+            "translateX": 0.0,
+            "translateY": 28.5935001373291,
+            "translateZ": 0.0
+        },
+        "l_wrist": {
+            "rotateX": -14.86000156402588,
+            "rotateY": 35.75518035888672,
+            "rotateZ": 4.475183486938477,
+            "translateX": 0.0,
+            "translateY": 32.26020050048828,
+            "translateZ": 0.0
+        },
+        "r_shoulder": {
+            "rotateX": 16.013547897338867,
+            "rotateY": 0.6634734272956848,
+            "rotateZ": 11.410271644592285,
+            "translateX": 0.0,
+            "translateY": 19.612899780273438,
+            "translateZ": 0.0
+        },
+        "r_elbow": {
+            "rotateX": 27.0032901763916,
+            "rotateY": -41.80075454711914,
+            "rotateZ": -10.100909233093262,
+            "translateX": 0.0,
+            "translateY": 28.594499588012695,
+            "translateZ": 0.0
+        },
+        "r_wrist": {
+            "rotateX": -24.449560165405273,
+            "rotateY": -38.60458755493164,
+            "rotateZ": -4.552839279174805,
+            "translateX": 0.0,
+            "translateY": 32.25529861450195,
+            "translateZ": 0.0
+        }
+    },
+    "15": {
+        "root": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 0.0,
+            "translateZ": 0.0
+        },
+        "cog": {
+            "rotateX": 2.5019938151041665,
+            "rotateY": 166.78608449300128,
+            "rotateZ": -8.210692087809246,
+            "translateX": 59.400537490844755,
+            "translateY": 64.2419827779134,
+            "translateZ": -0.17771666248639423
+        },
+        "spine_base": {
+            "rotateX": -1.5972600082556405,
+            "rotateY": 0.5309282634407282,
+            "rotateZ": -0.023866648475328982,
+            "translateX": 0.0,
+            "translateY": 11.981800079345703,
+            "translateZ": -0.15530000627040863
+        },
+        "spine_belly": {
+            "rotateX": -3.1999387343724566,
+            "rotateY": 1.0384688579166927,
+            "rotateZ": 1.094976450006167,
+            "translateX": 0.0,
+            "translateY": 13.979999542236328,
+            "translateZ": 0.0
+        },
+        "spine_chest": {
+            "rotateX": -3.1999370455741882,
+            "rotateY": 1.0384716596454382,
+            "rotateZ": 1.0949777911106746,
+            "translateX": 0.0,
+            "translateY": 15.977100372314453,
+            "translateZ": 0.0
+        },
+        "neck": {
+            "rotateX": 5.740749756495158,
+            "rotateY": -19.185617129007976,
+            "rotateZ": -2.244811783234278,
+            "translateX": 0.0,
+            "translateY": 17.974199295043945,
+            "translateZ": 0.0
+        },
+        "head": {
+            "rotateX": -9.488648255666098,
+            "rotateY": -40.6779104868571,
+            "rotateZ": 23.375645478566486,
+            "translateX": 0.0,
+            "translateY": 9.093500137329102,
+            "translateZ": 7.190700054168701
+        },
+        "l_hip": {
+            "rotateX": 35.17796993255615,
+            "rotateY": -0.10642674068609845,
+            "rotateZ": -7.089600642522177,
+            "translateX": 11.733599662780762,
+            "translateY": -6.656400203704834,
+            "translateZ": -0.33799999952316284
+        },
+        "l_knee": {
+            "rotateX": -46.26156266530354,
+            "rotateY": -5.0308047235012054,
+            "rotateZ": 22.42867596944173,
+            "translateX": 0.0,
+            "translateY": 39.40520095825195,
+            "translateZ": 0.0
+        },
+        "l_ankle": {
+            "rotateX": 19.062188148498535,
+            "rotateY": -8.766364812850952,
+            "rotateZ": -5.862780004739761,
+            "translateX": 0.0,
+            "translateY": 32.44839859008789,
+            "translateZ": 0.0
+        },
+        "l_ball": {
+            "rotateX": 1.0552153661847115,
+            "rotateY": -1.3115271131197612,
+            "rotateZ": 2.121047655741374,
+            "translateX": 0.0,
+            "translateY": 20.432600021362305,
+            "translateZ": 0.0
+        },
+        "l_toes": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 8.329299926757812,
+            "translateZ": 0.0
+        },
+        "r_hip": {
+            "rotateX": 31.00972588857015,
+            "rotateY": 21.001464764277138,
+            "rotateZ": -29.109499136606853,
+            "translateX": -11.733599662780762,
+            "translateY": -6.656400203704834,
+            "translateZ": -0.531499981880188
+        },
+        "r_knee": {
+            "rotateX": -61.11512374877929,
+            "rotateY": 2.595445195833838,
+            "rotateZ": -29.400260766347248,
+            "translateX": 0.0,
+            "translateY": 39.432098388671875,
+            "translateZ": 0.0
+        },
+        "r_ankle": {
+            "rotateX": 19.635509967803955,
+            "rotateY": -7.862716962893803,
+            "rotateZ": -6.083808978398641,
+            "translateX": 0.0,
+            "translateY": 32.51250076293945,
+            "translateZ": 0.0
+        },
+        "r_ball": {
+            "rotateX": 5.352998952070872,
+            "rotateY": -5.171682476997375,
+            "rotateZ": 12.441915392875671,
+            "translateX": 0.0,
+            "translateY": 20.724700927734375,
+            "translateZ": 0.0
+        },
+        "r_toes": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 8.437700271606445,
+            "translateZ": 0.0
+        },
+        "l_clavicle": {
+            "rotateX": 11.716332276662191,
+            "rotateY": 0.505794070661068,
+            "rotateZ": -2.18459752202034,
+            "translateX": 9.286999702453613,
+            "translateY": 16.066200256347656,
+            "translateZ": -0.022199999541044235
+        },
+        "r_clavicle": {
+            "rotateX": 15.127480506896973,
+            "rotateY": -5.856512904167175,
+            "rotateZ": -5.885212302207947,
+            "translateX": -9.286999702453613,
+            "translateY": 16.066299438476562,
+            "translateZ": -0.027300000190734863
+        },
+        "l_shoulder": {
+            "rotateX": 20.390546639760338,
+            "rotateY": 2.5230345825354257,
+            "rotateZ": -25.596521695454918,
+            "translateX": 0.0,
+            "translateY": 19.612899780273438,
+            "translateZ": 0.0
+        },
+        "l_elbow": {
+            "rotateX": 31.57945458094279,
+            "rotateY": 33.83267466227213,
+            "rotateZ": 18.140790621439614,
+            "translateX": 0.0,
+            "translateY": 28.5935001373291,
+            "translateZ": 0.0
+        },
+        "l_wrist": {
+            "rotateX": -15.049826542536417,
+            "rotateY": 35.39982573191325,
+            "rotateZ": 3.21945458650589,
+            "translateX": 0.0,
+            "translateY": 32.26020050048828,
+            "translateZ": 0.0
+        },
+        "r_shoulder": {
+            "rotateX": 16.67225480079651,
+            "rotateY": 0.4390304250021776,
+            "rotateZ": 11.49689801534017,
+            "translateX": 0.0,
+            "translateY": 19.612899780273438,
+            "translateZ": 0.0
+        },
+        "r_elbow": {
+            "rotateX": 27.208533763885498,
+            "rotateY": -42.04360453287761,
+            "rotateZ": -10.493875503540039,
+            "translateX": 0.0,
+            "translateY": 28.594499588012695,
+            "translateZ": 0.0
+        },
+        "r_wrist": {
+            "rotateX": -23.825870513916016,
+            "rotateY": -39.11928780873617,
+            "rotateZ": -4.828010519345601,
+            "translateX": 0.0,
+            "translateY": 32.25529861450195,
+            "translateZ": 0.0
+        }
+    },
+    "16": {
+        "root": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 0.0,
+            "translateZ": 0.0
+        },
+        "cog": {
+            "rotateX": 2.934326171875,
+            "rotateY": 168.27865600585938,
+            "rotateZ": -7.54522705078125,
+            "translateX": 64.79637908935547,
+            "translateY": 64.56082153320312,
+            "translateZ": -0.2545766830444336
+        },
+        "spine_base": {
+            "rotateX": -1.7538843154907227,
+            "rotateY": 0.22290247678756714,
+            "rotateZ": 0.5995731949806213,
+            "translateX": 0.0,
+            "translateY": 11.981800079345703,
+            "translateZ": -0.15530000627040863
+        },
+        "spine_belly": {
+            "rotateX": -3.5063838958740234,
+            "rotateY": 0.2796761095523834,
+            "rotateZ": 0.9563425779342651,
+            "translateX": 0.0,
+            "translateY": 13.979999542236328,
+            "translateZ": 0.0
+        },
+        "spine_chest": {
+            "rotateX": -3.5063822269439697,
+            "rotateY": 0.27967357635498047,
+            "rotateZ": 0.9563463926315309,
+            "translateX": 0.0,
+            "translateY": 15.977100372314453,
+            "translateZ": 0.0
+        },
+        "neck": {
+            "rotateX": 5.348958492279053,
+            "rotateY": -19.63334846496582,
+            "rotateZ": -2.336962938308716,
+            "translateX": 0.0,
+            "translateY": 17.974199295043945,
+            "translateZ": 0.0
+        },
+        "head": {
+            "rotateX": -9.31419563293457,
+            "rotateY": -41.113182067871094,
+            "rotateZ": 23.0325927734375,
+            "translateX": 0.0,
+            "translateY": 9.093500137329102,
+            "translateZ": 7.190700054168701
+        },
+        "l_hip": {
+            "rotateX": 33.53616714477539,
+            "rotateY": 0.7592925429344177,
+            "rotateZ": -1.830109715461731,
+            "translateX": 11.733599662780762,
+            "translateY": -6.656400203704834,
+            "translateZ": -0.33799999952316284
+        },
+        "l_knee": {
+            "rotateX": -43.74761199951172,
+            "rotateY": -2.6673007011413574,
+            "rotateZ": 21.105093002319336,
+            "translateX": 0.0,
+            "translateY": 39.40520095825195,
+            "translateZ": 0.0
+        },
+        "l_ankle": {
+            "rotateX": 19.344173431396484,
+            "rotateY": -12.21828842163086,
+            "rotateZ": -8.518746376037598,
+            "translateX": 0.0,
+            "translateY": 32.44839859008789,
+            "translateZ": 0.0
+        },
+        "l_ball": {
+            "rotateX": 1.2332879304885864,
+            "rotateY": -1.2859469652175903,
+            "rotateZ": 2.093536615371704,
+            "translateX": 0.0,
+            "translateY": 20.432600021362305,
+            "translateZ": 0.0
+        },
+        "l_toes": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 8.329299926757812,
+            "translateZ": 0.0
+        },
+        "r_hip": {
+            "rotateX": 32.450965881347656,
+            "rotateY": 27.794837951660156,
+            "rotateZ": -31.778200149536133,
+            "translateX": -11.733599662780762,
+            "translateY": -6.656400203704834,
+            "translateZ": -0.531499981880188
+        },
+        "r_knee": {
+            "rotateX": -46.616119384765625,
+            "rotateY": -5.878968238830566,
+            "rotateZ": -18.839679718017578,
+            "translateX": 0.0,
+            "translateY": 39.432098388671875,
+            "translateZ": 0.0
+        },
+        "r_ankle": {
+            "rotateX": 15.441538810729982,
+            "rotateY": -9.561832427978516,
+            "rotateZ": -6.368767738342285,
+            "translateX": 0.0,
+            "translateY": 32.51250076293945,
+            "translateZ": 0.0
+        },
+        "r_ball": {
+            "rotateX": 2.5415658950805664,
+            "rotateY": -5.787700653076172,
+            "rotateZ": 10.154535293579102,
+            "translateX": 0.0,
+            "translateY": 20.724700927734375,
+            "translateZ": 0.0
+        },
+        "r_toes": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 8.437700271606445,
+            "translateZ": 0.0
+        },
+        "l_clavicle": {
+            "rotateX": 12.166507720947266,
+            "rotateY": 0.575851559638977,
+            "rotateZ": -1.857185363769531,
+            "translateX": 9.286999702453613,
+            "translateY": 16.066200256347656,
+            "translateZ": -0.022199999541044235
+        },
+        "r_clavicle": {
+            "rotateX": 14.644043922424316,
+            "rotateY": -5.806041717529297,
+            "rotateZ": -5.277382850646973,
+            "translateX": -9.286999702453613,
+            "translateY": 16.066299438476562,
+            "translateZ": -0.027300000190734863
+        },
+        "l_shoulder": {
+            "rotateX": 19.580032348632812,
+            "rotateY": 1.9409008026123045,
+            "rotateZ": -26.498062133789062,
+            "translateX": 0.0,
+            "translateY": 19.612899780273438,
+            "translateZ": 0.0
+        },
+        "l_elbow": {
+            "rotateX": 31.51809310913086,
+            "rotateY": 33.53071975708008,
+            "rotateZ": 17.276283264160156,
+            "translateX": 0.0,
+            "translateY": 28.5935001373291,
+            "translateZ": 0.0
+        },
+        "l_wrist": {
+            "rotateX": -15.159329414367674,
+            "rotateY": 35.05361557006836,
+            "rotateZ": 1.9661619663238525,
+            "translateX": 0.0,
+            "translateY": 32.26020050048828,
+            "translateZ": 0.0
+        },
+        "r_shoulder": {
+            "rotateX": 17.32628059387207,
+            "rotateY": 0.23818838596343994,
+            "rotateZ": 11.52076244354248,
+            "translateX": 0.0,
+            "translateY": 19.612899780273438,
+            "translateZ": 0.0
+        },
+        "r_elbow": {
+            "rotateX": 27.382553100585938,
+            "rotateY": -42.24779510498047,
+            "rotateZ": -10.83704662322998,
+            "translateX": 0.0,
+            "translateY": 28.594499588012695,
+            "translateZ": 0.0
+        },
+        "r_wrist": {
+            "rotateX": -23.231708526611328,
+            "rotateY": -39.60531234741211,
+            "rotateZ": -5.136966705322266,
+            "translateX": 0.0,
+            "translateY": 32.25529861450195,
+            "translateZ": 0.0
+        }
+    },
+    "17": {
+        "root": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 0.0,
+            "translateZ": 0.0
+        },
+        "cog": {
+            "rotateX": 3.024261474609375,
+            "rotateY": 169.2218475341797,
+            "rotateZ": -7.298599243164062,
+            "translateX": 68.36044311523438,
+            "translateY": 64.65733337402344,
+            "translateZ": -0.2254282832145691
+        },
+        "spine_base": {
+            "rotateX": -1.7818328142166138,
+            "rotateY": 0.08871341496706009,
+            "rotateZ": 0.7810662388801575,
+            "translateX": 0.0,
+            "translateY": 11.981800079345703,
+            "translateZ": -0.15530000627040863
+        },
+        "spine_belly": {
+            "rotateX": -3.561134099960327,
+            "rotateY": -0.045378003269433975,
+            "rotateZ": 0.920125424861908,
+            "translateX": 0.0,
+            "translateY": 13.979999542236328,
+            "translateZ": 0.0
+        },
+        "spine_chest": {
+            "rotateX": -3.5611348152160645,
+            "rotateY": -0.04538203030824661,
+            "rotateZ": 0.9201276898384094,
+            "translateX": 0.0,
+            "translateY": 15.977100372314453,
+            "translateZ": 0.0
+        },
+        "neck": {
+            "rotateX": 4.9495062828063965,
+            "rotateY": -19.937301635742188,
+            "rotateZ": -2.0579216480255127,
+            "translateX": 0.0,
+            "translateY": 17.974199295043945,
+            "translateZ": 0.0
+        },
+        "head": {
+            "rotateX": -9.301077842712402,
+            "rotateY": -41.3005256652832,
+            "rotateZ": 22.936473846435547,
+            "translateX": 0.0,
+            "translateY": 9.093500137329102,
+            "translateZ": 7.190700054168701
+        },
+        "l_hip": {
+            "rotateX": 32.544403076171875,
+            "rotateY": 1.409469723701477,
+            "rotateZ": 1.2892361879348755,
+            "translateX": 11.733599662780762,
+            "translateY": -6.656400203704834,
+            "translateZ": -0.33799999952316284
+        },
+        "l_knee": {
+            "rotateX": -41.79519271850586,
+            "rotateY": -1.852431654930115,
+            "rotateZ": 20.70429039001465,
+            "translateX": 0.0,
+            "translateY": 39.40520095825195,
+            "translateZ": 0.0
+        },
+        "l_ankle": {
+            "rotateX": 19.118600845336914,
+            "rotateY": -14.066825866699219,
+            "rotateZ": -9.750022888183594,
+            "translateX": 0.0,
+            "translateY": 32.44839859008789,
+            "translateZ": 0.0
+        },
+        "l_ball": {
+            "rotateX": 0.3475170433521271,
+            "rotateY": -1.8344751596450808,
+            "rotateZ": 2.505345344543457,
+            "translateX": 0.0,
+            "translateY": 20.432600021362305,
+            "translateZ": 0.0
+        },
+        "l_toes": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 8.329299926757812,
+            "translateZ": 0.0
+        },
+        "r_hip": {
+            "rotateX": 32.55124282836914,
+            "rotateY": 33.209381103515625,
+            "rotateZ": -31.560743331909176,
+            "translateX": -11.733599662780762,
+            "translateY": -6.656400203704834,
+            "translateZ": -0.531499981880188
+        },
+        "r_knee": {
+            "rotateX": -40.787322998046875,
+            "rotateY": -15.807818412780762,
+            "rotateZ": -15.068052291870115,
+            "translateX": 0.0,
+            "translateY": 39.432098388671875,
+            "translateZ": 0.0
+        },
+        "r_ankle": {
+            "rotateX": 9.312678337097168,
+            "rotateY": -4.141096115112305,
+            "rotateZ": -2.6717066764831543,
+            "translateX": 0.0,
+            "translateY": 32.51250076293945,
+            "translateZ": 0.0
+        },
+        "r_ball": {
+            "rotateX": 1.4711153507232666,
+            "rotateY": -3.757661581039429,
+            "rotateZ": 7.077687740325928,
+            "translateX": 0.0,
+            "translateY": 20.724700927734375,
+            "translateZ": 0.0
+        },
+        "r_toes": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 8.437700271606445,
+            "translateZ": 0.0
+        },
+        "l_clavicle": {
+            "rotateX": 11.967679977416992,
+            "rotateY": 0.6159833073616028,
+            "rotateZ": -1.4945656061172485,
+            "translateX": 9.286999702453613,
+            "translateY": 16.066200256347656,
+            "translateZ": -0.022199999541044235
+        },
+        "r_clavicle": {
+            "rotateX": 14.621323585510254,
+            "rotateY": -5.803891658782959,
+            "rotateZ": -5.144289016723633,
+            "translateX": -9.286999702453613,
+            "translateY": 16.066299438476562,
+            "translateZ": -0.027300000190734863
+        },
+        "l_shoulder": {
+            "rotateX": 19.860572814941406,
+            "rotateY": 1.7861984968185425,
+            "rotateZ": -26.589134216308594,
+            "translateX": 0.0,
+            "translateY": 19.612899780273438,
+            "translateZ": 0.0
+        },
+        "l_elbow": {
+            "rotateX": 31.02627182006836,
+            "rotateY": 33.15958023071289,
+            "rotateZ": 16.46963882446289,
+            "translateX": 0.0,
+            "translateY": 28.5935001373291,
+            "translateZ": 0.0
+        },
+        "l_wrist": {
+            "rotateX": -14.996476173400879,
+            "rotateY": 34.847286224365234,
+            "rotateZ": 1.5796451568603516,
+            "translateX": 0.0,
+            "translateY": 32.26020050048828,
+            "translateZ": 0.0
+        },
+        "r_shoulder": {
+            "rotateX": 17.70734977722168,
+            "rotateY": 0.17802368104457855,
+            "rotateZ": 11.651693344116211,
+            "translateX": 0.0,
+            "translateY": 19.612899780273438,
+            "translateZ": 0.0
+        },
+        "r_elbow": {
+            "rotateX": 27.273143768310547,
+            "rotateY": -42.19960021972656,
+            "rotateZ": -10.737589836120605,
+            "translateX": 0.0,
+            "translateY": 28.594499588012695,
+            "translateZ": 0.0
+        },
+        "r_wrist": {
+            "rotateX": -22.623788833618164,
+            "rotateY": -39.749481201171875,
+            "rotateZ": -5.523554801940918,
+            "translateX": 0.0,
+            "translateY": 32.25529861450195,
+            "translateZ": 0.0
+        }
+    },
+    "18": {
+        "root": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 0.0,
+            "translateZ": 0.0
+        },
+        "cog": {
+            "rotateX": 3.1833605176291964,
+            "rotateY": 170.19152834575837,
+            "rotateZ": -7.316724553375586,
+            "translateX": 74.14306095668248,
+            "translateY": 64.36393247331891,
+            "translateZ": -0.17134658353669302
+        },
+        "spine_base": {
+            "rotateX": -1.7612401757921492,
+            "rotateY": 0.016369754182440886,
+            "rotateZ": 0.5542302844779833,
+            "translateX": 0.0,
+            "translateY": 11.981800079345703,
+            "translateZ": -0.15530000627040863
+        },
+        "spine_belly": {
+            "rotateX": -3.523453644343785,
+            "rotateY": -0.1030018642943885,
+            "rotateZ": 0.9999788786683764,
+            "translateX": 0.0,
+            "translateY": 13.979999542236328,
+            "translateZ": 0.0
+        },
+        "spine_chest": {
+            "rotateX": -3.523454632077898,
+            "rotateY": -0.1030009231264038,
+            "rotateZ": 0.9999750554561615,
+            "translateX": 0.0,
+            "translateY": 15.977100372314453,
+            "translateZ": 0.0
+        },
+        "neck": {
+            "rotateX": 4.535849196570259,
+            "rotateY": -20.291377885001047,
+            "rotateZ": -1.2873247819287434,
+            "translateX": 0.0,
+            "translateY": 17.974199295043945,
+            "translateZ": 0.0
+        },
+        "head": {
+            "rotateX": -9.541877610342844,
+            "rotateY": -41.3567932673863,
+            "rotateZ": 22.968950816563197,
+            "translateX": 0.0,
+            "translateY": 9.093500137329102,
+            "translateZ": 7.190700054168701
+        },
+        "l_hip": {
+            "rotateX": 31.9816883632115,
+            "rotateY": 2.344563935484205,
+            "rotateZ": 5.927865701062339,
+            "translateX": 11.733599662780762,
+            "translateY": -6.656400203704834,
+            "translateZ": -0.33799999952316284
+        },
+        "l_knee": {
+            "rotateX": -40.409606388636995,
+            "rotateY": -1.9444180982453476,
+            "rotateZ": 20.96378721509661,
+            "translateX": 0.0,
+            "translateY": 39.40520095825195,
+            "translateZ": 0.0
+        },
+        "l_ankle": {
+            "rotateX": 18.352370262145996,
+            "rotateY": -14.46914175578526,
+            "rotateZ": -9.508799484797887,
+            "translateX": 0.0,
+            "translateY": 32.44839859008789,
+            "translateZ": 0.0
+        },
+        "l_ball": {
+            "rotateX": -0.3571997221027107,
+            "rotateY": -0.43422056095940653,
+            "rotateZ": 2.7070920637675697,
+            "translateX": 0.0,
+            "translateY": 20.432600021362305,
+            "translateZ": 0.0
+        },
+        "l_toes": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 8.329299926757812,
+            "translateZ": 0.0
+        },
+        "r_hip": {
+            "rotateX": 31.191764014107843,
+            "rotateY": 41.04103360857282,
+            "rotateZ": -30.641700744628913,
+            "translateX": -11.733599662780762,
+            "translateY": -6.656400203704834,
+            "translateZ": -0.531499981880188
+        },
+        "r_knee": {
+            "rotateX": -39.61270250592913,
+            "rotateY": -20.932105541229248,
+            "rotateZ": -14.785346099308558,
+            "translateX": 0.0,
+            "translateY": 39.432098388671875,
+            "translateZ": 0.0
+        },
+        "r_ankle": {
+            "rotateX": 5.446547916957309,
+            "rotateY": 2.13999943648066,
+            "rotateZ": 1.483033818858011,
+            "translateX": 0.0,
+            "translateY": 32.51250076293945,
+            "translateZ": 0.0
+        },
+        "r_ball": {
+            "rotateX": 0.7668494071279252,
+            "rotateY": -1.7055514710290087,
+            "rotateZ": 4.206524951117379,
+            "translateX": 0.0,
+            "translateY": 20.724700927734375,
+            "translateZ": 0.0
+        },
+        "r_toes": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 8.437700271606445,
+            "translateZ": 0.0
+        },
+        "l_clavicle": {
+            "rotateX": 11.421744482857841,
+            "rotateY": 0.6449641415051052,
+            "rotateZ": -1.1126405383859361,
+            "translateX": 9.286999702453613,
+            "translateY": 16.066200256347656,
+            "translateZ": -0.022199999541044235
+        },
+        "r_clavicle": {
+            "rotateX": 14.954367841993058,
+            "rotateY": -5.844510078430176,
+            "rotateZ": -5.194259371076311,
+            "translateX": -9.286999702453613,
+            "translateY": 16.066299438476562,
+            "translateZ": -0.027300000190734863
+        },
+        "l_shoulder": {
+            "rotateX": 20.472873960222515,
+            "rotateY": 1.8506440690585542,
+            "rotateZ": -26.2523136138916,
+            "translateX": 0.0,
+            "translateY": 19.612899780273438,
+            "translateZ": 0.0
+        },
+        "l_elbow": {
+            "rotateX": 30.715096473693848,
+            "rotateY": 32.60816056387765,
+            "rotateZ": 16.49242946079799,
+            "translateX": 0.0,
+            "translateY": 28.5935001373291,
+            "translateZ": 0.0
+        },
+        "l_wrist": {
+            "rotateX": -15.34874153137207,
+            "rotateY": 34.594120843069895,
+            "rotateZ": 2.057772806712559,
+            "translateX": 0.0,
+            "translateY": 32.26020050048828,
+            "translateZ": 0.0
+        },
+        "r_shoulder": {
+            "rotateX": 17.97377613612584,
+            "rotateY": 0.14889635731066977,
+            "rotateZ": 11.748594284057617,
+            "translateX": 0.0,
+            "translateY": 19.612899780273438,
+            "translateZ": 0.0
+        },
+        "r_elbow": {
+            "rotateX": 27.1021055494036,
+            "rotateY": -42.41940116882324,
+            "rotateZ": -10.391719954354423,
+            "translateX": 0.0,
+            "translateY": 28.594499588012695,
+            "translateZ": 0.0
+        },
+        "r_wrist": {
+            "rotateX": -22.03544657570975,
+            "rotateY": -40.20572635105678,
+            "rotateZ": -5.889874390193394,
+            "translateX": 0.0,
+            "translateY": 32.25529861450195,
+            "translateZ": 0.0
+        }
+    },
+    "19": {
+        "root": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 0.0,
+            "translateZ": 0.0
+        },
+        "cog": {
+            "rotateX": 3.2757568359375,
+            "rotateY": 170.6763458251953,
+            "rotateZ": -7.8330535888671875,
+            "translateX": 80.40177917480469,
+            "translateY": 63.98595428466797,
+            "translateZ": -0.10129070281982422
+        },
+        "spine_base": {
+            "rotateX": -1.6931594610214233,
+            "rotateY": -0.02062039077281952,
+            "rotateZ": -0.18597255647182465,
+            "translateX": 0.0,
+            "translateY": 11.981800079345703,
+            "translateZ": -0.15530000627040863
+        },
+        "spine_belly": {
+            "rotateX": -3.3990089893341064,
+            "rotateY": 0.012411530129611492,
+            "rotateZ": 1.1692396402359009,
+            "translateX": 0.0,
+            "translateY": 13.979999542236328,
+            "translateZ": 0.0
+        },
+        "spine_chest": {
+            "rotateX": -3.399007797241211,
+            "rotateY": 0.012409563176333904,
+            "rotateZ": 1.1692403554916382,
+            "translateX": 0.0,
+            "translateY": 15.977100372314453,
+            "translateZ": 0.0
+        },
+        "neck": {
+            "rotateX": 4.816659927368164,
+            "rotateY": -20.38958168029785,
+            "rotateZ": -0.5958696007728577,
+            "translateX": 0.0,
+            "translateY": 17.974199295043945,
+            "translateZ": 0.0
+        },
+        "head": {
+            "rotateX": -10.0259428024292,
+            "rotateY": -41.20024871826172,
+            "rotateZ": 23.190933227539062,
+            "translateX": 0.0,
+            "translateY": 9.093500137329102,
+            "translateZ": 7.190700054168701
+        },
+        "l_hip": {
+            "rotateX": 32.05632019042969,
+            "rotateY": 3.6579658985137944,
+            "rotateZ": 9.353906631469727,
+            "translateX": 11.733599662780762,
+            "translateY": -6.656400203704834,
+            "translateZ": -0.33799999952316284
+        },
+        "l_knee": {
+            "rotateX": -40.6954460144043,
+            "rotateY": -5.056738376617432,
+            "rotateZ": 23.972900390625,
+            "translateX": 0.0,
+            "translateY": 39.40520095825195,
+            "translateZ": 0.0
+        },
+        "l_ankle": {
+            "rotateX": 15.876865386962892,
+            "rotateY": -11.379944801330566,
+            "rotateZ": -5.578085899353027,
+            "translateX": 0.0,
+            "translateY": 32.44839859008789,
+            "translateZ": 0.0
+        },
+        "l_ball": {
+            "rotateX": 1.7365338802337646,
+            "rotateY": -4.145823001861572,
+            "rotateZ": 2.542198419570923,
+            "translateX": 0.0,
+            "translateY": 20.432600021362305,
+            "translateZ": 0.0
+        },
+        "l_toes": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 8.329299926757812,
+            "translateZ": 0.0
+        },
+        "r_hip": {
+            "rotateX": 28.72663116455078,
+            "rotateY": 47.19133758544922,
+            "rotateZ": -30.991502761840817,
+            "translateX": -11.733599662780762,
+            "translateY": -6.656400203704834,
+            "translateZ": -0.531499981880188
+        },
+        "r_knee": {
+            "rotateX": -45.55986022949219,
+            "rotateY": -21.259082794189453,
+            "rotateZ": -13.125441551208496,
+            "translateX": 0.0,
+            "translateY": 39.432098388671875,
+            "translateZ": 0.0
+        },
+        "r_ankle": {
+            "rotateX": 9.691349983215332,
+            "rotateY": 0.4390729069709778,
+            "rotateZ": 1.5609098672866821,
+            "translateX": 0.0,
+            "translateY": 32.51250076293945,
+            "translateZ": 0.0
+        },
+        "r_ball": {
+            "rotateX": 1.100012183189392,
+            "rotateY": -1.6397643089294434,
+            "rotateZ": 3.961977958679199,
+            "translateX": 0.0,
+            "translateY": 20.724700927734375,
+            "translateZ": 0.0
+        },
+        "r_toes": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 8.437700271606445,
+            "translateZ": 0.0
+        },
+        "l_clavicle": {
+            "rotateX": 10.779119491577148,
+            "rotateY": 0.6422794461250305,
+            "rotateZ": -0.9310026764869691,
+            "translateX": 9.286999702453613,
+            "translateY": 16.066200256347656,
+            "translateZ": -0.022199999541044235
+        },
+        "r_clavicle": {
+            "rotateX": 15.455224990844727,
+            "rotateY": -5.90073823928833,
+            "rotateZ": -5.523942947387695,
+            "translateX": -9.286999702453613,
+            "translateY": 16.066299438476562,
+            "translateZ": -0.027300000190734863
+        },
+        "l_shoulder": {
+            "rotateX": 21.485118865966797,
+            "rotateY": 2.2680890560150146,
+            "rotateZ": -25.689632415771484,
+            "translateX": 0.0,
+            "translateY": 19.612899780273438,
+            "translateZ": 0.0
+        },
+        "l_elbow": {
+            "rotateX": 30.341863632202152,
+            "rotateY": 32.31927490234375,
+            "rotateZ": 16.884349822998047,
+            "translateX": 0.0,
+            "translateY": 28.5935001373291,
+            "translateZ": 0.0
+        },
+        "l_wrist": {
+            "rotateX": -15.076205253601074,
+            "rotateY": 34.6312255859375,
+            "rotateZ": 3.2100377082824707,
+            "translateX": 0.0,
+            "translateY": 32.26020050048828,
+            "translateZ": 0.0
+        },
+        "r_shoulder": {
+            "rotateX": 18.103708267211914,
+            "rotateY": 0.11263688653707504,
+            "rotateZ": 11.399557113647461,
+            "translateX": 0.0,
+            "translateY": 19.612899780273438,
+            "translateZ": 0.0
+        },
+        "r_elbow": {
+            "rotateX": 27.102340698242188,
+            "rotateY": -42.93033981323242,
+            "rotateZ": -10.179461479187012,
+            "translateX": 0.0,
+            "translateY": 28.594499588012695,
+            "translateZ": 0.0
+        },
+        "r_wrist": {
+            "rotateX": -22.486221313476562,
+            "rotateY": -40.71586990356445,
+            "rotateZ": -5.208599090576172,
+            "translateX": 0.0,
+            "translateY": 32.25529861450195,
+            "translateZ": 0.0
+        }
+    },
+    "20": {
+        "root": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 0.0,
+            "translateZ": 0.0
+        },
+        "cog": {
+            "rotateX": 3.335296630859375,
+            "rotateY": 171.1273193359375,
+            "rotateZ": -8.260604858398438,
+            "translateX": 84.52920532226562,
+            "translateY": 64.05741119384766,
+            "translateZ": -0.1204952597618103
+        },
+        "spine_base": {
+            "rotateX": -1.6716251373291016,
+            "rotateY": -0.0559258870780468,
+            "rotateZ": -0.6709994077682495,
+            "translateX": 0.0,
+            "translateY": 11.981800079345703,
+            "translateZ": -0.15530000627040863
+        },
+        "spine_belly": {
+            "rotateX": -3.365159511566162,
+            "rotateY": 0.006691004615277052,
+            "rotateZ": 1.2703018188476562,
+            "translateX": 0.0,
+            "translateY": 13.979999542236328,
+            "translateZ": 0.0
+        },
+        "spine_chest": {
+            "rotateX": -3.3651585578918457,
+            "rotateY": 0.006693612784147263,
+            "rotateZ": 1.270301103591919,
+            "translateX": 0.0,
+            "translateY": 15.977100372314453,
+            "translateZ": 0.0
+        },
+        "neck": {
+            "rotateX": 4.993603706359863,
+            "rotateY": -20.52742576599121,
+            "rotateZ": -0.43153029680252075,
+            "translateX": 0.0,
+            "translateY": 17.974199295043945,
+            "translateZ": 0.0
+        },
+        "head": {
+            "rotateX": -10.105953216552734,
+            "rotateY": -41.348304748535156,
+            "rotateZ": 23.225690841674805,
+            "translateX": 0.0,
+            "translateY": 9.093500137329102,
+            "translateZ": 7.190700054168701
+        },
+        "l_hip": {
+            "rotateX": 32.86976623535156,
+            "rotateY": 5.111314296722412,
+            "rotateZ": 10.211004257202148,
+            "translateX": 11.733599662780762,
+            "translateY": -6.656400203704834,
+            "translateZ": -0.33799999952316284
+        },
+        "l_knee": {
+            "rotateX": -41.39914321899414,
+            "rotateY": -8.794651985168457,
+            "rotateZ": 28.09958267211914,
+            "translateX": 0.0,
+            "translateY": 39.40520095825195,
+            "translateZ": 0.0
+        },
+        "l_ankle": {
+            "rotateX": 10.452706336975098,
+            "rotateY": -9.223550796508789,
+            "rotateZ": -1.5628561973571777,
+            "translateX": 0.0,
+            "translateY": 32.44839859008789,
+            "translateZ": 0.0
+        },
+        "l_ball": {
+            "rotateX": 5.604149341583252,
+            "rotateY": -13.234146118164062,
+            "rotateZ": 1.8729388713836672,
+            "translateX": 0.0,
+            "translateY": 20.432600021362305,
+            "translateZ": 0.0
+        },
+        "l_toes": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 8.329299926757812,
+            "translateZ": 0.0
+        },
+        "r_hip": {
+            "rotateX": 26.220300674438477,
+            "rotateY": 50.0168342590332,
+            "rotateZ": -31.343887329101562,
+            "translateX": -11.733599662780762,
+            "translateY": -6.656400203704834,
+            "translateZ": -0.531499981880188
+        },
+        "r_knee": {
+            "rotateX": -48.888851165771484,
+            "rotateY": -22.14965057373047,
+            "rotateZ": -11.047905921936035,
+            "translateX": 0.0,
+            "translateY": 39.432098388671875,
+            "translateZ": 0.0
+        },
+        "r_ankle": {
+            "rotateX": 12.946181297302246,
+            "rotateY": -1.8613607883453371,
+            "rotateZ": 0.49697935581207275,
+            "translateX": 0.0,
+            "translateY": 32.51250076293945,
+            "translateZ": 0.0
+        },
+        "r_ball": {
+            "rotateX": 1.2259221076965332,
+            "rotateY": -2.0538482666015625,
+            "rotateZ": 4.503977298736572,
+            "translateX": 0.0,
+            "translateY": 20.724700927734375,
+            "translateZ": 0.0
+        },
+        "r_toes": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 8.437700271606445,
+            "translateZ": 0.0
+        },
+        "l_clavicle": {
+            "rotateX": 10.590530395507812,
+            "rotateY": 0.6513070464134216,
+            "rotateZ": -0.8167465925216675,
+            "translateX": 9.286999702453613,
+            "translateY": 16.066200256347656,
+            "translateZ": -0.022199999541044235
+        },
+        "r_clavicle": {
+            "rotateX": 15.62777042388916,
+            "rotateY": -5.921783447265625,
+            "rotateZ": -5.472445964813232,
+            "translateX": -9.286999702453613,
+            "translateY": 16.066299438476562,
+            "translateZ": -0.027300000190734863
+        },
+        "l_shoulder": {
+            "rotateX": 21.892091751098633,
+            "rotateY": 2.545503854751587,
+            "rotateZ": -25.400915145874023,
+            "translateX": 0.0,
+            "translateY": 19.612899780273438,
+            "translateZ": 0.0
+        },
+        "l_elbow": {
+            "rotateX": 30.33797836303711,
+            "rotateY": 32.381229400634766,
+            "rotateZ": 17.317012786865234,
+            "translateX": 0.0,
+            "translateY": 28.5935001373291,
+            "translateZ": 0.0
+        },
+        "l_wrist": {
+            "rotateX": -14.219660758972168,
+            "rotateY": 34.71600341796875,
+            "rotateZ": 3.793452262878418,
+            "translateX": 0.0,
+            "translateY": 32.26020050048828,
+            "translateZ": 0.0
+        },
+        "r_shoulder": {
+            "rotateX": 18.522953033447266,
+            "rotateY": 0.02983524277806282,
+            "rotateZ": 11.015839576721191,
+            "translateX": 0.0,
+            "translateY": 19.612899780273438,
+            "translateZ": 0.0
+        },
+        "r_elbow": {
+            "rotateX": 27.119888305664062,
+            "rotateY": -43.2394905090332,
+            "rotateZ": -10.159558296203613,
+            "translateX": 0.0,
+            "translateY": 28.594499588012695,
+            "translateZ": 0.0
+        },
+        "r_wrist": {
+            "rotateX": -23.00455665588379,
+            "rotateY": -41.043212890625,
+            "rotateZ": -4.402392387390137,
+            "translateX": 0.0,
+            "translateY": 32.25529861450195,
+            "translateZ": 0.0
+        }
+    },
+    "21": {
+        "root": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 0.0,
+            "translateZ": 0.0
+        },
+        "cog": {
+            "rotateX": 3.5129852294921875,
+            "rotateY": 171.76808166503906,
+            "rotateZ": -8.751861572265625,
+            "translateX": 88.42570495605469,
+            "translateY": 64.42738342285156,
+            "translateZ": -0.24854987859725952
+        },
+        "spine_base": {
+            "rotateX": -1.6871967315673828,
+            "rotateY": -0.03859155997633934,
+            "rotateZ": -1.0085394382476807,
+            "translateX": 0.0,
+            "translateY": 11.981800079345703,
+            "translateZ": -0.15530000627040863
+        },
+        "spine_belly": {
+            "rotateX": -3.4024887084960938,
+            "rotateY": 0.05465972423553467,
+            "rotateZ": 1.307924747467041,
+            "translateX": 0.0,
+            "translateY": 13.979999542236328,
+            "translateZ": 0.0
+        },
+        "spine_chest": {
+            "rotateX": -3.402487277984619,
+            "rotateY": 0.054658226668834686,
+            "rotateZ": 1.307924747467041,
+            "translateX": 0.0,
+            "translateY": 15.977100372314453,
+            "translateZ": 0.0
+        },
+        "neck": {
+            "rotateX": 4.568997383117676,
+            "rotateY": -20.88886260986328,
+            "rotateZ": -0.6856210827827454,
+            "translateX": 0.0,
+            "translateY": 17.974199295043945,
+            "translateZ": 0.0
+        },
+        "head": {
+            "rotateX": -9.764944076538086,
+            "rotateY": -41.91124725341797,
+            "rotateZ": 23.084291458129883,
+            "translateX": 0.0,
+            "translateY": 9.093500137329102,
+            "translateZ": 7.190700054168701
+        },
+        "l_hip": {
+            "rotateX": 35.73415756225586,
+            "rotateY": 6.991222381591797,
+            "rotateZ": 10.821386337280273,
+            "translateX": 11.733599662780762,
+            "translateY": -6.656400203704834,
+            "translateZ": -0.33799999952316284
+        },
+        "l_knee": {
+            "rotateX": -42.67705535888672,
+            "rotateY": -10.006797790527344,
+            "rotateZ": 30.408390045166012,
+            "translateX": 0.0,
+            "translateY": 39.40520095825195,
+            "translateZ": 0.0
+        },
+        "l_ankle": {
+            "rotateX": -0.6974250078201294,
+            "rotateY": -8.507793426513672,
+            "rotateZ": 2.856853723526001,
+            "translateX": 0.0,
+            "translateY": 32.44839859008789,
+            "translateZ": 0.0
+        },
+        "l_ball": {
+            "rotateX": 8.227697372436523,
+            "rotateY": -21.484647750854492,
+            "rotateZ": 1.088504433631897,
+            "translateX": 0.0,
+            "translateY": 20.432600021362305,
+            "translateZ": 0.0
+        },
+        "l_toes": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 8.329299926757812,
+            "translateZ": 0.0
+        },
+        "r_hip": {
+            "rotateX": 23.32192039489746,
+            "rotateY": 51.884681701660156,
+            "rotateZ": -31.62434005737305,
+            "translateX": -11.733599662780762,
+            "translateY": -6.656400203704834,
+            "translateZ": -0.531499981880188
+        },
+        "r_knee": {
+            "rotateX": -51.10667419433594,
+            "rotateY": -22.733518600463867,
+            "rotateZ": -9.34622573852539,
+            "translateX": 0.0,
+            "translateY": 39.432098388671875,
+            "translateZ": 0.0
+        },
+        "r_ankle": {
+            "rotateX": 16.16064453125,
+            "rotateY": -4.260693550109863,
+            "rotateZ": -1.0038808584213257,
+            "translateX": 0.0,
+            "translateY": 32.51250076293945,
+            "translateZ": 0.0
+        },
+        "r_ball": {
+            "rotateX": 1.2618993520736694,
+            "rotateY": -2.3203015327453613,
+            "rotateZ": 5.136846542358398,
+            "translateX": 0.0,
+            "translateY": 20.724700927734375,
+            "translateZ": 0.0
+        },
+        "r_toes": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 8.437700271606445,
+            "translateZ": 0.0
+        },
+        "l_clavicle": {
+            "rotateX": 10.95155143737793,
+            "rotateY": 0.6808509230613708,
+            "rotateZ": -0.7225512862205505,
+            "translateX": 9.286999702453613,
+            "translateY": 16.066200256347656,
+            "translateZ": -0.022199999541044235
+        },
+        "r_clavicle": {
+            "rotateX": 15.465914726257324,
+            "rotateY": -5.912262916564941,
+            "rotateZ": -4.896206378936768,
+            "translateX": -9.286999702453613,
+            "translateY": 16.066299438476562,
+            "translateZ": -0.027300000190734863
+        },
+        "l_shoulder": {
+            "rotateX": 21.63381004333496,
+            "rotateY": 2.5842854976654053,
+            "rotateZ": -25.180131912231445,
+            "translateX": 0.0,
+            "translateY": 19.612899780273438,
+            "translateZ": 0.0
+        },
+        "l_elbow": {
+            "rotateX": 30.833251953124996,
+            "rotateY": 32.5368537902832,
+            "rotateZ": 18.133371353149414,
+            "translateX": 0.0,
+            "translateY": 28.5935001373291,
+            "translateZ": 0.0
+        },
+        "l_wrist": {
+            "rotateX": -13.756412506103516,
+            "rotateY": 34.659793853759766,
+            "rotateZ": 3.9866938591003414,
+            "translateX": 0.0,
+            "translateY": 32.26020050048828,
+            "translateZ": 0.0
+        },
+        "r_shoulder": {
+            "rotateX": 19.37657356262207,
+            "rotateY": -0.14760728180408478,
+            "rotateZ": 10.675398826599121,
+            "translateX": 0.0,
+            "translateY": 19.612899780273438,
+            "translateZ": 0.0
+        },
+        "r_elbow": {
+            "rotateX": 27.123497009277344,
+            "rotateY": -43.450653076171875,
+            "rotateZ": -10.210294723510742,
+            "translateX": 0.0,
+            "translateY": 28.594499588012695,
+            "translateZ": 0.0
+        },
+        "r_wrist": {
+            "rotateX": -23.283784866333008,
+            "rotateY": -41.41119384765625,
+            "rotateZ": -3.819629192352295,
+            "translateX": 0.0,
+            "translateY": 32.25529861450195,
+            "translateZ": 0.0
+        }
+    },
+    "22": {
+        "root": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 0.0,
+            "translateZ": 0.0
+        },
+        "cog": {
+            "rotateX": 3.8195354526664196,
+            "rotateY": 172.1918323692673,
+            "rotateZ": -9.691177699413704,
+            "translateX": 93.60352216448102,
+            "translateY": 65.26028006417411,
+            "translateZ": -0.6176001131534572
+        },
+        "spine_base": {
+            "rotateX": -1.687817428793226,
+            "rotateY": 0.2090639746082677,
+            "rotateZ": -1.172769010066986,
+            "translateX": 0.0,
+            "translateY": 11.981800079345703,
+            "translateZ": -0.15530000627040863
+        },
+        "spine_belly": {
+            "rotateX": -3.4034228665488104,
+            "rotateY": 0.4962726235389702,
+            "rotateZ": 1.1798836972032276,
+            "translateX": 0.0,
+            "translateY": 13.979999542236328,
+            "translateZ": 0.0
+        },
+        "spine_chest": {
+            "rotateX": -3.403423377445766,
+            "rotateY": 0.4962743142885815,
+            "rotateZ": 1.1798858429704397,
+            "translateX": 0.0,
+            "translateY": 15.977100372314453,
+            "translateZ": 0.0
+        },
+        "neck": {
+            "rotateX": 3.203836236681258,
+            "rotateY": -21.412062781197683,
+            "rotateZ": -1.747134562049592,
+            "translateX": 0.0,
+            "translateY": 17.974199295043945,
+            "translateZ": 0.0
+        },
+        "head": {
+            "rotateX": -9.055878911699567,
+            "rotateY": -42.78033801487514,
+            "rotateZ": 22.9691584450858,
+            "translateX": 0.0,
+            "translateY": 9.093500137329102,
+            "translateZ": 7.190700054168701
+        },
+        "l_hip": {
+            "rotateX": 40.642447062901084,
+            "rotateY": 9.16545683997018,
+            "rotateZ": 9.507439545222693,
+            "translateX": 11.733599662780762,
+            "translateY": -6.656400203704834,
+            "translateZ": -0.33799999952316284
+        },
+        "l_knee": {
+            "rotateX": -46.06940868922642,
+            "rotateY": -12.86151702063424,
+            "rotateZ": 32.66951315743583,
+            "translateX": 0.0,
+            "translateY": 39.40520095825195,
+            "translateZ": 0.0
+        },
+        "l_ankle": {
+            "rotateX": -13.79519672904695,
+            "rotateY": -3.810755303927835,
+            "rotateZ": 6.244932396071296,
+            "translateX": 0.0,
+            "translateY": 32.44839859008789,
+            "translateZ": 0.0
+        },
+        "l_ball": {
+            "rotateX": 5.696716989789693,
+            "rotateY": -18.4951720918928,
+            "rotateZ": 2.9231002075331536,
+            "translateX": 0.0,
+            "translateY": 20.432600021362305,
+            "translateZ": 0.0
+        },
+        "l_toes": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 8.329299926757812,
+            "translateZ": 0.0
+        },
+        "r_hip": {
+            "rotateX": 19.517077173505513,
+            "rotateY": 53.28862598964146,
+            "rotateZ": -31.302028928484237,
+            "translateX": -11.733599662780762,
+            "translateY": -6.656400203704834,
+            "translateZ": -0.531499981880188
+        },
+        "r_knee": {
+            "rotateX": -53.01944732666015,
+            "rotateY": -22.637049402509415,
+            "rotateZ": -7.810811928340367,
+            "translateX": 0.0,
+            "translateY": 39.432098388671875,
+            "translateZ": 0.0
+        },
+        "r_ankle": {
+            "rotateX": 20.899179049900596,
+            "rotateY": -8.1993921143668,
+            "rotateZ": -3.60899711506707,
+            "translateX": 0.0,
+            "translateY": 32.51250076293945,
+            "translateZ": 0.0
+        },
+        "r_ball": {
+            "rotateX": 0.9028944415705542,
+            "rotateY": -2.5372111456734796,
+            "rotateZ": 5.46093099457877,
+            "translateX": 0.0,
+            "translateY": 20.724700927734375,
+            "translateZ": 0.0
+        },
+        "r_toes": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 8.437700271606445,
+            "translateZ": 0.0
+        },
+        "l_clavicle": {
+            "rotateX": 12.25672469820295,
+            "rotateY": 0.7083531064646584,
+            "rotateZ": -0.9192639120987478,
+            "translateX": 9.286999702453613,
+            "translateY": 16.066200256347656,
+            "translateZ": -0.022199999541044235
+        },
+        "r_clavicle": {
+            "rotateX": 14.76420491082328,
+            "rotateY": -5.829021794455392,
+            "rotateZ": -3.9238466875893736,
+            "translateX": -9.286999702453613,
+            "translateY": 16.066299438476562,
+            "translateZ": -0.027300000190734863
+        },
+        "l_shoulder": {
+            "rotateX": 20.80414731161935,
+            "rotateY": 2.343833276203701,
+            "rotateZ": -24.899247033255442,
+            "translateX": 0.0,
+            "translateY": 19.612899780273438,
+            "translateZ": 0.0
+        },
+        "l_elbow": {
+            "rotateX": 32.04634339468819,
+            "rotateY": 32.58116585867745,
+            "rotateZ": 19.604015350341797,
+            "translateX": 0.0,
+            "translateY": 28.5935001373291,
+            "translateZ": 0.0
+        },
+        "l_wrist": {
+            "rotateX": -14.504259926932196,
+            "rotateY": 34.3496276310512,
+            "rotateZ": 3.370844330106464,
+            "translateX": 0.0,
+            "translateY": 32.26020050048828,
+            "translateZ": 0.0
+        },
+        "r_shoulder": {
+            "rotateX": 20.75121429988316,
+            "rotateY": -0.5538378304668831,
+            "rotateZ": 10.409717014857701,
+            "translateX": 0.0,
+            "translateY": 19.612899780273438,
+            "translateZ": 0.0
+        },
+        "r_elbow": {
+            "rotateX": 27.237611634390696,
+            "rotateY": -43.57227461678641,
+            "rotateZ": -10.400282859802244,
+            "translateX": 0.0,
+            "translateY": 28.594499588012695,
+            "translateZ": 0.0
+        },
+        "r_wrist": {
+            "rotateX": -23.20062719072614,
+            "rotateY": -41.652017320905415,
+            "rotateZ": -3.579401544162205,
+            "translateX": 0.0,
+            "translateY": 32.25529861450195,
+            "translateZ": 0.0
+        }
+    },
+    "23": {
+        "root": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 0.0,
+            "translateZ": 0.0
+        },
+        "cog": {
+            "rotateX": 3.760589599609375,
+            "rotateY": 171.328857421875,
+            "rotateZ": -10.72216796875,
+            "translateX": 98.47721862792969,
+            "translateY": 66.36717224121094,
+            "translateZ": -0.9422177076339722
+        },
+        "spine_base": {
+            "rotateX": -1.585715413093567,
+            "rotateY": 0.48763689398765564,
+            "rotateZ": -1.1856056451797485,
+            "translateX": 0.0,
+            "translateY": 11.981800079345703,
+            "translateZ": -0.15530000627040863
+        },
+        "spine_belly": {
+            "rotateX": -3.195925235748291,
+            "rotateY": 1.016509771347046,
+            "rotateZ": 0.9374364018440247,
+            "translateX": 0.0,
+            "translateY": 13.979999542236328,
+            "translateZ": 0.0
+        },
+        "spine_chest": {
+            "rotateX": -3.195925235748291,
+            "rotateY": 1.0165159702301025,
+            "rotateZ": 0.9374292492866515,
+            "translateX": 0.0,
+            "translateY": 15.977100372314453,
+            "translateZ": 0.0
+        },
+        "neck": {
+            "rotateX": 2.951824188232422,
+            "rotateY": -21.118213653564453,
+            "rotateZ": -2.430194854736328,
+            "translateX": 0.0,
+            "translateY": 17.974199295043945,
+            "translateZ": 0.0
+        },
+        "head": {
+            "rotateX": -9.191146850585938,
+            "rotateY": -42.44807815551758,
+            "rotateZ": 23.29161262512207,
+            "translateX": 0.0,
+            "translateY": 9.093500137329102,
+            "translateZ": 7.190700054168701
+        },
+        "l_hip": {
+            "rotateX": 43.524818420410156,
+            "rotateY": 9.918097496032715,
+            "rotateZ": 5.138150215148926,
+            "translateX": 11.733599662780762,
+            "translateY": -6.656400203704834,
+            "translateZ": -0.33799999952316284
+        },
+        "l_knee": {
+            "rotateX": -49.819149017333984,
+            "rotateY": -15.87947368621826,
+            "rotateZ": 33.1805534362793,
+            "translateX": 0.0,
+            "translateY": 39.40520095825195,
+            "translateZ": 0.0
+        },
+        "l_ankle": {
+            "rotateX": -13.35981559753418,
+            "rotateY": -2.558515787124634,
+            "rotateZ": 5.22861909866333,
+            "translateX": 0.0,
+            "translateY": 32.44839859008789,
+            "translateZ": 0.0
+        },
+        "l_ball": {
+            "rotateX": 8.48476791381836,
+            "rotateY": -11.12570571899414,
+            "rotateZ": 1.514629602432251,
+            "translateX": 0.0,
+            "translateY": 20.432600021362305,
+            "translateZ": 0.0
+        },
+        "l_toes": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 8.329299926757812,
+            "translateZ": 0.0
+        },
+        "r_hip": {
+            "rotateX": 16.625232696533203,
+            "rotateY": 53.717437744140625,
+            "rotateZ": -29.420799255371094,
+            "translateX": -11.733599662780762,
+            "translateY": -6.656400203704834,
+            "translateZ": -0.531499981880188
+        },
+        "r_knee": {
+            "rotateX": -53.24884033203125,
+            "rotateY": -22.285991668701172,
+            "rotateZ": -6.972348213195801,
+            "translateX": 0.0,
+            "translateY": 39.432098388671875,
+            "translateZ": 0.0
+        },
+        "r_ankle": {
+            "rotateX": 24.70354652404785,
+            "rotateY": -12.409997940063477,
+            "rotateZ": -6.360870361328125,
+            "translateX": 0.0,
+            "translateY": 32.51250076293945,
+            "translateZ": 0.0
+        },
+        "r_ball": {
+            "rotateX": 0.6498908400535583,
+            "rotateY": -2.0354418754577637,
+            "rotateZ": 5.30038595199585,
+            "translateX": 0.0,
+            "translateY": 20.724700927734375,
+            "translateZ": 0.0
+        },
+        "r_toes": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 8.437700271606445,
+            "translateZ": 0.0
+        },
+        "l_clavicle": {
+            "rotateX": 13.060534477233887,
+            "rotateY": 0.6511017084121704,
+            "rotateZ": -1.6854419708251953,
+            "translateX": 9.286999702453613,
+            "translateY": 16.066200256347656,
+            "translateZ": -0.022199999541044235
+        },
+        "r_clavicle": {
+            "rotateX": 14.46767807006836,
+            "rotateY": -5.786386489868164,
+            "rotateZ": -4.276633262634277,
+            "translateX": -9.286999702453613,
+            "translateY": 16.066299438476562,
+            "translateZ": -0.027300000190734863
+        },
+        "l_shoulder": {
+            "rotateX": 20.926166534423828,
+            "rotateY": 2.553006887435913,
+            "rotateZ": -25.11461067199707,
+            "translateX": 0.0,
+            "translateY": 19.612899780273438,
+            "translateZ": 0.0
+        },
+        "l_elbow": {
+            "rotateX": 33.1267204284668,
+            "rotateY": 32.5246696472168,
+            "rotateZ": 20.58350944519043,
+            "translateX": 0.0,
+            "translateY": 28.5935001373291,
+            "translateZ": 0.0
+        },
+        "l_wrist": {
+            "rotateX": -14.975734710693358,
+            "rotateY": 34.35331726074219,
+            "rotateZ": 1.9481887817382812,
+            "translateX": 0.0,
+            "translateY": 32.26020050048828,
+            "translateZ": 0.0
+        },
+        "r_shoulder": {
+            "rotateX": 20.995311737060547,
+            "rotateY": -0.788438081741333,
+            "rotateZ": 10.241288185119629,
+            "translateX": 0.0,
+            "translateY": 19.612899780273438,
+            "translateZ": 0.0
+        },
+        "r_elbow": {
+            "rotateX": 27.425504684448242,
+            "rotateY": -43.46657943725586,
+            "rotateZ": -10.592117309570312,
+            "translateX": 0.0,
+            "translateY": 28.594499588012695,
+            "translateZ": 0.0
+        },
+        "r_wrist": {
+            "rotateX": -23.12125587463379,
+            "rotateY": -41.114402770996094,
+            "rotateZ": -3.5115153789520264,
+            "translateX": 0.0,
+            "translateY": 32.25529861450195,
+            "translateZ": 0.0
+        }
+    },
+    "24": {
+        "root": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 0.0,
+            "translateZ": 0.0
+        },
+        "cog": {
+            "rotateX": 3.647918701171875,
+            "rotateY": 170.6027069091797,
+            "rotateZ": -11.178848266601562,
+            "translateX": 101.76766204833984,
+            "translateY": 67.18507385253906,
+            "translateZ": -1.055167317390442
+        },
+        "spine_base": {
+            "rotateX": -1.520929217338562,
+            "rotateY": 0.5309159159660339,
+            "rotateZ": -1.2061678171157837,
+            "translateX": 0.0,
+            "translateY": 11.981800079345703,
+            "translateZ": -0.15530000627040863
+        },
+        "spine_belly": {
+            "rotateX": -3.066134214401245,
+            "rotateY": 1.1060746908187866,
+            "rotateZ": 0.8541736006736755,
+            "translateX": 0.0,
+            "translateY": 13.979999542236328,
+            "translateZ": 0.0
+        },
+        "spine_chest": {
+            "rotateX": -3.066133975982666,
+            "rotateY": 1.1060774326324463,
+            "rotateZ": 0.8541722893714905,
+            "translateX": 0.0,
+            "translateY": 15.977100372314453,
+            "translateZ": 0.0
+        },
+        "neck": {
+            "rotateX": 3.4213755130767822,
+            "rotateY": -20.728055953979492,
+            "rotateZ": -2.161346673965454,
+            "translateX": 0.0,
+            "translateY": 17.974199295043945,
+            "translateZ": 0.0
+        },
+        "head": {
+            "rotateX": -9.5449857711792,
+            "rotateY": -41.85227966308594,
+            "rotateZ": 23.380321502685547,
+            "translateX": 0.0,
+            "translateY": 9.093500137329102,
+            "translateZ": 7.190700054168701
+        },
+        "l_hip": {
+            "rotateX": 44.89200973510742,
+            "rotateY": 10.268476486206055,
+            "rotateZ": 1.014212727546692,
+            "translateX": 11.733599662780762,
+            "translateY": -6.656400203704834,
+            "translateZ": -0.33799999952316284
+        },
+        "l_knee": {
+            "rotateX": -50.47263717651367,
+            "rotateY": -17.73504638671875,
+            "rotateZ": 32.27951431274414,
+            "translateX": 0.0,
+            "translateY": 39.40520095825195,
+            "translateZ": 0.0
+        },
+        "l_ankle": {
+            "rotateX": -10.450784683227539,
+            "rotateY": -4.199544429779053,
+            "rotateZ": 3.446000099182129,
+            "translateX": 0.0,
+            "translateY": 32.44839859008789,
+            "translateZ": 0.0
+        },
+        "l_ball": {
+            "rotateX": 7.746273040771484,
+            "rotateY": -9.389684677124023,
+            "rotateZ": 1.7527543306350708,
+            "translateX": 0.0,
+            "translateY": 20.432600021362305,
+            "translateZ": 0.0
+        },
+        "l_toes": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 8.329299926757812,
+            "translateZ": 0.0
+        },
+        "r_hip": {
+            "rotateX": 14.228620529174805,
+            "rotateY": 53.87657928466797,
+            "rotateZ": -28.080825805664062,
+            "translateX": -11.733599662780762,
+            "translateY": -6.656400203704834,
+            "translateZ": -0.531499981880188
+        },
+        "r_knee": {
+            "rotateX": -52.61933517456055,
+            "rotateY": -22.042631149291992,
+            "rotateZ": -6.2669501304626465,
+            "translateX": 0.0,
+            "translateY": 39.432098388671875,
+            "translateZ": 0.0
+        },
+        "r_ankle": {
+            "rotateX": 26.842050552368164,
+            "rotateY": -15.17429447174072,
+            "rotateZ": -8.214855194091797,
+            "translateX": 0.0,
+            "translateY": 32.51250076293945,
+            "translateZ": 0.0
+        },
+        "r_ball": {
+            "rotateX": 0.31875327229499817,
+            "rotateY": -1.7302353382110596,
+            "rotateZ": 5.136014938354492,
+            "translateX": 0.0,
+            "translateY": 20.724700927734375,
+            "translateZ": 0.0
+        },
+        "r_toes": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 8.437700271606445,
+            "translateZ": 0.0
+        },
+        "l_clavicle": {
+            "rotateX": 13.114202499389648,
+            "rotateY": 0.5881053805351257,
+            "rotateZ": -2.2224528789520264,
+            "translateX": 9.286999702453613,
+            "translateY": 16.066200256347656,
+            "translateZ": -0.022199999541044235
+        },
+        "r_clavicle": {
+            "rotateX": 14.659614562988281,
+            "rotateY": -5.808248519897461,
+            "rotateZ": -4.87838888168335,
+            "translateX": -9.286999702453613,
+            "translateY": 16.066299438476562,
+            "translateZ": -0.027300000190734863
+        },
+        "l_shoulder": {
+            "rotateX": 21.35158348083496,
+            "rotateY": 2.9624645709991455,
+            "rotateZ": -25.65849494934082,
+            "translateX": 0.0,
+            "translateY": 19.612899780273438,
+            "translateZ": 0.0
+        },
+        "l_elbow": {
+            "rotateX": 33.63306427001953,
+            "rotateY": 32.61781311035156,
+            "rotateZ": 20.737091064453125,
+            "translateX": 0.0,
+            "translateY": 28.5935001373291,
+            "translateZ": 0.0
+        },
+        "l_wrist": {
+            "rotateX": -14.630653381347656,
+            "rotateY": 34.59913635253906,
+            "rotateZ": 0.9902943968772888,
+            "translateX": 0.0,
+            "translateY": 32.26020050048828,
+            "translateZ": 0.0
+        },
+        "r_shoulder": {
+            "rotateX": 20.625638961791992,
+            "rotateY": -0.7280434370040894,
+            "rotateZ": 9.99112606048584,
+            "translateX": 0.0,
+            "translateY": 19.612899780273438,
+            "translateZ": 0.0
+        },
+        "r_elbow": {
+            "rotateX": 27.474609375,
+            "rotateY": -43.3148193359375,
+            "rotateZ": -10.669412612915039,
+            "translateX": 0.0,
+            "translateY": 28.594499588012695,
+            "translateZ": 0.0
+        },
+        "r_wrist": {
+            "rotateX": -23.252912521362305,
+            "rotateY": -40.65885925292969,
+            "rotateZ": -3.491652727127075,
+            "translateX": 0.0,
+            "translateY": 32.25529861450195,
+            "translateZ": 0.0
+        }
+    },
+    "25": {
+        "root": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 0.0,
+            "translateZ": 0.0
+        },
+        "cog": {
+            "rotateX": 3.699256049262153,
+            "rotateY": 170.2478219491464,
+            "rotateZ": -10.925522415726272,
+            "translateX": 105.87590196397569,
+            "translateY": 68.01382841887298,
+            "translateZ": -1.049974728513647
+        },
+        "spine_base": {
+            "rotateX": -1.4819220039579601,
+            "rotateY": 0.5539957362192649,
+            "rotateZ": -1.2189080582724678,
+            "translateX": 0.0,
+            "translateY": 11.981800079345703,
+            "translateZ": -0.15530000627040863
+        },
+        "spine_belly": {
+            "rotateX": -2.9888265751026295,
+            "rotateY": 1.1586263444688585,
+            "rotateZ": 1.053256624274784,
+            "translateX": 0.0,
+            "translateY": 13.979999542236328,
+            "translateZ": 0.0
+        },
+        "spine_chest": {
+            "rotateX": -2.988825886337845,
+            "rotateY": 1.1586279957382768,
+            "rotateZ": 1.0532556794307855,
+            "translateX": 0.0,
+            "translateY": 15.977100372314453,
+            "translateZ": 0.0
+        },
+        "neck": {
+            "rotateX": 3.1476816777829764,
+            "rotateY": -20.597436127839263,
+            "rotateZ": -1.1663304964701313,
+            "translateX": 0.0,
+            "translateY": 17.974199295043945,
+            "translateZ": 0.0
+        },
+        "head": {
+            "rotateX": -9.628163161101165,
+            "rotateY": -41.2869512769911,
+            "rotateZ": 22.99329807140209,
+            "translateX": 0.0,
+            "translateY": 9.093500137329102,
+            "translateZ": 7.190700054168701
+        },
+        "l_hip": {
+            "rotateX": 46.10987854003906,
+            "rotateY": 11.775206636499478,
+            "rotateZ": -4.681112580829206,
+            "translateX": 11.733599662780762,
+            "translateY": -6.656400203704834,
+            "translateZ": -0.33799999952316284
+        },
+        "l_knee": {
+            "rotateX": -46.29842984234844,
+            "rotateY": -19.611799134148498,
+            "rotateZ": 28.106388374611175,
+            "translateX": 0.0,
+            "translateY": 39.40520095825195,
+            "translateZ": 0.0
+        },
+        "l_ankle": {
+            "rotateX": -10.788472281561958,
+            "rotateY": -8.638770147606188,
+            "rotateZ": 1.4409460314997877,
+            "translateX": 0.0,
+            "translateY": 32.44839859008789,
+            "translateZ": 0.0
+        },
+        "l_ball": {
+            "rotateX": 7.9046420344599975,
+            "rotateY": -6.078202247619623,
+            "rotateZ": 2.2510386572943806,
+            "translateX": 0.0,
+            "translateY": 20.432600021362305,
+            "translateZ": 0.0
+        },
+        "l_toes": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 8.329299926757812,
+            "translateZ": 0.0
+        },
+        "r_hip": {
+            "rotateX": 9.747556667981867,
+            "rotateY": 53.94256083170573,
+            "rotateZ": -26.81463086163556,
+            "translateX": -11.733599662780762,
+            "translateY": -6.656400203704834,
+            "translateZ": -0.531499981880188
+        },
+        "r_knee": {
+            "rotateX": -50.619131865324796,
+            "rotateY": -21.528157552083332,
+            "rotateZ": -4.72729354434543,
+            "translateX": 0.0,
+            "translateY": 39.432098388671875,
+            "translateZ": 0.0
+        },
+        "r_ankle": {
+            "rotateX": 28.93811197634097,
+            "rotateY": -18.27050809507017,
+            "rotateZ": -10.522237424497256,
+            "translateX": 0.0,
+            "translateY": 32.51250076293945,
+            "translateZ": 0.0
+        },
+        "r_ball": {
+            "rotateX": 0.049661057966726305,
+            "rotateY": -1.3501705770139334,
+            "rotateZ": 5.01692028398867,
+            "translateX": 0.0,
+            "translateY": 20.724700927734375,
+            "translateZ": 0.0
+        },
+        "r_toes": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 8.437700271606445,
+            "translateZ": 0.0
+        },
+        "l_clavicle": {
+            "rotateX": 12.78702160164162,
+            "rotateY": 0.5421044296688502,
+            "rotateZ": -2.4333775308397083,
+            "translateX": 9.286999702453613,
+            "translateY": 16.066200256347656,
+            "translateZ": -0.022199999541044235
+        },
+        "r_clavicle": {
+            "rotateX": 15.199175092909073,
+            "rotateY": -5.866876037032516,
+            "rotateZ": -5.336009837962964,
+            "translateX": -9.286999702453613,
+            "translateY": 16.066299438476562,
+            "translateZ": -0.027300000190734863
+        },
+        "l_shoulder": {
+            "rotateX": 21.705054106535734,
+            "rotateY": 3.042093285807857,
+            "rotateZ": -25.92641950536657,
+            "translateX": 0.0,
+            "translateY": 19.612899780273438,
+            "translateZ": 0.0
+        },
+        "l_elbow": {
+            "rotateX": 33.428376798276545,
+            "rotateY": 32.61819895991573,
+            "rotateZ": 19.861189312405056,
+            "translateX": 0.0,
+            "translateY": 28.5935001373291,
+            "translateZ": 0.0
+        },
+        "l_wrist": {
+            "rotateX": -14.442505589237918,
+            "rotateY": 34.77076382107205,
+            "rotateZ": 0.6448135464279735,
+            "translateX": 0.0,
+            "translateY": 32.26020050048828,
+            "translateZ": 0.0
+        },
+        "r_shoulder": {
+            "rotateX": 19.993207578305842,
+            "rotateY": -0.5669396453433563,
+            "rotateZ": 10.015951050652397,
+            "translateX": 0.0,
+            "translateY": 19.612899780273438,
+            "translateZ": 0.0
+        },
+        "r_elbow": {
+            "rotateX": 27.565535580670392,
+            "rotateY": -43.25758912828234,
+            "rotateZ": -10.648493307608145,
+            "translateX": 0.0,
+            "translateY": 28.594499588012695,
+            "translateZ": 0.0
+        },
+        "r_wrist": {
+            "rotateX": -23.38299242655436,
+            "rotateY": -40.52914174397786,
+            "rotateZ": -3.690827237235176,
+            "translateX": 0.0,
+            "translateY": 32.25529861450195,
+            "translateZ": 0.0
+        }
+    },
+    "26": {
+        "root": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 0.0,
+            "translateZ": 0.0
+        },
+        "cog": {
+            "rotateX": 3.781344943576389,
+            "rotateY": 169.96254928023725,
+            "rotateZ": -10.5390704119647,
+            "translateX": 110.13747872246631,
+            "translateY": 68.84461791427047,
+            "translateZ": -1.022630477393115
+        },
+        "spine_base": {
+            "rotateX": -1.4477483497725592,
+            "rotateY": 0.5732882061490306,
+            "rotateZ": -1.2301816874080236,
+            "translateX": 0.0,
+            "translateY": 11.981800079345703,
+            "translateZ": -0.15530000627040863
+        },
+        "spine_belly": {
+            "rotateX": -2.9213595699380948,
+            "rotateY": 1.2042380107773674,
+            "rotateZ": 1.3052794900205398,
+            "translateX": 0.0,
+            "translateY": 13.979999542236328,
+            "translateZ": 0.0
+        },
+        "spine_chest": {
+            "rotateX": -2.9213583910906755,
+            "rotateY": 1.2042390152260107,
+            "rotateZ": 1.3052778851102895,
+            "translateX": 0.0,
+            "translateY": 15.977100372314453,
+            "translateZ": 0.0
+        },
+        "neck": {
+            "rotateX": 2.734629374963266,
+            "rotateY": -20.515479652969926,
+            "rotateZ": -0.03515781958898131,
+            "translateX": 0.0,
+            "translateY": 17.974199295043945,
+            "translateZ": 0.0
+        },
+        "head": {
+            "rotateX": -9.660591514022263,
+            "rotateY": -40.72733603583442,
+            "rotateZ": 22.517074832209836,
+            "translateX": 0.0,
+            "translateY": 9.093500137329102,
+            "translateZ": 7.190700054168701
+        },
+        "l_hip": {
+            "rotateX": 47.29974937438965,
+            "rotateY": 13.498752629315407,
+            "rotateZ": -10.671073105600135,
+            "translateX": 11.733599662780762,
+            "translateY": -6.656400203704834,
+            "translateZ": -0.33799999952316284
+        },
+        "l_knee": {
+            "rotateX": -41.21902960318106,
+            "rotateY": -21.492523140377465,
+            "rotateZ": 23.319746158741147,
+            "translateX": 0.0,
+            "translateY": 39.40520095825195,
+            "translateZ": 0.0
+        },
+        "l_ankle": {
+            "rotateX": -11.734919601016573,
+            "rotateY": -13.60265781702818,
+            "rotateZ": -0.6058146114702541,
+            "translateX": 0.0,
+            "translateY": 32.44839859008789,
+            "translateZ": 0.0
+        },
+        "l_ball": {
+            "rotateX": 8.231173003161395,
+            "rotateY": -2.4713208079338145,
+            "rotateZ": 2.798102908664279,
+            "translateX": 0.0,
+            "translateY": 20.432600021362305,
+            "translateZ": 0.0
+        },
+        "l_toes": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 8.329299926757812,
+            "translateZ": 0.0
+        },
+        "r_hip": {
+            "rotateX": 4.875658114194981,
+            "rotateY": 53.99107487996419,
+            "rotateZ": -25.56226938742179,
+            "translateX": -11.733599662780762,
+            "translateY": -6.656400203704834,
+            "translateZ": -0.531499981880188
+        },
+        "r_knee": {
+            "rotateX": -48.36192265263311,
+            "rotateY": -20.962850252787273,
+            "rotateZ": -3.0312134888437097,
+            "translateX": 0.0,
+            "translateY": 39.432098388671875,
+            "translateZ": 0.0
+        },
+        "r_ankle": {
+            "rotateX": 31.026215411998606,
+            "rotateY": -21.428956173084394,
+            "rotateZ": -12.914631666960537,
+            "translateX": 0.0,
+            "translateY": 32.51250076293945,
+            "translateZ": 0.0
+        },
+        "r_ball": {
+            "rotateX": -0.20779765259336497,
+            "rotateY": -0.9560698988261054,
+            "rotateZ": 4.906314946987011,
+            "translateX": 0.0,
+            "translateY": 20.724700927734375,
+            "translateZ": 0.0
+        },
+        "r_toes": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 8.437700271606445,
+            "translateZ": 0.0
+        },
+        "l_clavicle": {
+            "rotateX": 12.388431531411632,
+            "rotateY": 0.49929011199209433,
+            "rotateZ": -2.583161009682549,
+            "translateX": 9.286999702453613,
+            "translateY": 16.066200256347656,
+            "translateZ": -0.022199999541044235
+        },
+        "r_clavicle": {
+            "rotateX": 15.803915129767521,
+            "rotateY": -5.9323970829999,
+            "rotateZ": -5.766605544973302,
+            "translateX": -9.286999702453613,
+            "translateY": 16.066299438476562,
+            "translateZ": -0.027300000190734863
+        },
+        "l_shoulder": {
+            "rotateX": 22.045034797103316,
+            "rotateY": 3.0598790689750954,
+            "rotateZ": -26.142601613645198,
+            "translateX": 0.0,
+            "translateY": 19.612899780273438,
+            "translateZ": 0.0
+        },
+        "l_elbow": {
+            "rotateX": 33.09037095529062,
+            "rotateY": 32.6011927569354,
+            "rotateZ": 18.79225942823622,
+            "translateX": 0.0,
+            "translateY": 28.5935001373291,
+            "translateZ": 0.0
+        },
+        "l_wrist": {
+            "rotateX": -14.283782835359926,
+            "rotateY": 34.92848036024306,
+            "rotateZ": 0.4141602336808491,
+            "translateX": 0.0,
+            "translateY": 32.26020050048828,
+            "translateZ": 0.0
+        },
+        "r_shoulder": {
+            "rotateX": 19.3115089557789,
+            "rotateY": -0.38695288863447,
+            "rotateZ": 10.09233612484402,
+            "translateX": 0.0,
+            "translateY": 19.612899780273438,
+            "translateZ": 0.0
+        },
+        "r_elbow": {
+            "rotateX": 27.664303320425528,
+            "rotateY": -43.21808327568902,
+            "rotateZ": -10.609158763179073,
+            "translateX": 0.0,
+            "translateY": 28.594499588012695,
+            "translateZ": 0.0
+        },
+        "r_wrist": {
+            "rotateX": -23.512776692708332,
+            "rotateY": -40.460516611735024,
+            "rotateZ": -3.9310712152057223,
+            "translateX": 0.0,
+            "translateY": 32.25529861450195,
+            "translateZ": 0.0
+        }
+    },
+    "27": {
+        "root": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 0.0,
+            "translateZ": 0.0
+        },
+        "cog": {
+            "rotateX": 3.863433837890625,
+            "rotateY": 169.67727661132812,
+            "rotateZ": -10.152618408203125,
+            "translateX": 114.39905548095703,
+            "translateY": 69.67540740966797,
+            "translateZ": -0.995286226272583
+        },
+        "spine_base": {
+            "rotateX": -1.4135746955871582,
+            "rotateY": 0.5925806760787964,
+            "rotateZ": -1.241455316543579,
+            "translateX": 0.0,
+            "translateY": 11.981800079345703,
+            "translateZ": -0.15530000627040863
+        },
+        "spine_belly": {
+            "rotateX": -2.8538925647735596,
+            "rotateY": 1.2498496770858765,
+            "rotateZ": 1.5573023557662964,
+            "translateX": 0.0,
+            "translateY": 13.979999542236328,
+            "translateZ": 0.0
+        },
+        "spine_chest": {
+            "rotateX": -2.853890895843506,
+            "rotateY": 1.2498500347137451,
+            "rotateZ": 1.557300090789795,
+            "translateX": 0.0,
+            "translateY": 15.977100372314453,
+            "translateZ": 0.0
+        },
+        "neck": {
+            "rotateX": 2.3215770721435547,
+            "rotateY": -20.433523178100586,
+            "rotateZ": 1.0960148572921753,
+            "translateX": 0.0,
+            "translateY": 17.974199295043945,
+            "translateZ": 0.0
+        },
+        "head": {
+            "rotateX": -9.69301986694336,
+            "rotateY": -40.167720794677734,
+            "rotateZ": 22.040851593017578,
+            "translateX": 0.0,
+            "translateY": 9.093500137329102,
+            "translateZ": 7.190700054168701
+        },
+        "l_hip": {
+            "rotateX": 48.489620208740234,
+            "rotateY": 15.222298622131346,
+            "rotateZ": -16.661033630371094,
+            "translateX": 11.733599662780762,
+            "translateY": -6.656400203704834,
+            "translateZ": -0.33799999952316284
+        },
+        "l_knee": {
+            "rotateX": -36.13962936401367,
+            "rotateY": -23.373247146606445,
+            "rotateZ": 18.533103942871094,
+            "translateX": 0.0,
+            "translateY": 39.40520095825195,
+            "translateZ": 0.0
+        },
+        "l_ankle": {
+            "rotateX": -12.681366920471191,
+            "rotateY": -18.566545486450195,
+            "rotateZ": -2.6525752544403076,
+            "translateX": 0.0,
+            "translateY": 32.44839859008789,
+            "translateZ": 0.0
+        },
+        "l_ball": {
+            "rotateX": 8.557703971862793,
+            "rotateY": 1.1355606317520142,
+            "rotateZ": 3.3451671600341797,
+            "translateX": 0.0,
+            "translateY": 20.432600021362305,
+            "translateZ": 0.0
+        },
+        "l_toes": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 8.329299926757812,
+            "translateZ": 0.0
+        },
+        "r_hip": {
+            "rotateX": 0.0037595604080706835,
+            "rotateY": 54.039588928222656,
+            "rotateZ": -24.309907913208008,
+            "translateX": -11.733599662780762,
+            "translateY": -6.656400203704834,
+            "translateZ": -0.531499981880188
+        },
+        "r_knee": {
+            "rotateX": -46.104713439941406,
+            "rotateY": -20.39754295349121,
+            "rotateZ": -1.33513343334198,
+            "translateX": 0.0,
+            "translateY": 39.432098388671875,
+            "translateZ": 0.0
+        },
+        "r_ankle": {
+            "rotateX": 33.11431884765625,
+            "rotateY": -24.587404251098633,
+            "rotateZ": -15.307025909423828,
+            "translateX": 0.0,
+            "translateY": 32.51250076293945,
+            "translateZ": 0.0
+        },
+        "r_ball": {
+            "rotateX": -0.46525636315345764,
+            "rotateY": -0.5619692206382751,
+            "rotateZ": 4.795709609985352,
+            "translateX": 0.0,
+            "translateY": 20.724700927734375,
+            "translateZ": 0.0
+        },
+        "r_toes": {
+            "rotateX": 0.0,
+            "rotateY": 0.0,
+            "rotateZ": 0.0,
+            "translateX": 0.0,
+            "translateY": 8.437700271606445,
+            "translateZ": 0.0
+        },
+        "l_clavicle": {
+            "rotateX": 11.98984146118164,
+            "rotateY": 0.4564757943153381,
+            "rotateZ": -2.7329444885253906,
+            "translateX": 9.286999702453613,
+            "translateY": 16.066200256347656,
+            "translateZ": -0.022199999541044235
+        },
+        "r_clavicle": {
+            "rotateX": 16.408655166625977,
+            "rotateY": -5.997918128967285,
+            "rotateZ": -6.197201251983643,
+            "translateX": -9.286999702453613,
+            "translateY": 16.066299438476562,
+            "translateZ": -0.027300000190734863
+        },
+        "l_shoulder": {
+            "rotateX": 22.3850154876709,
+            "rotateY": 3.077664852142334,
+            "rotateZ": -26.358783721923828,
+            "translateX": 0.0,
+            "translateY": 19.612899780273438,
+            "translateZ": 0.0
+        },
+        "l_elbow": {
+            "rotateX": 32.75236511230469,
+            "rotateY": 32.58418655395508,
+            "rotateZ": 17.723329544067383,
+            "translateX": 0.0,
+            "translateY": 28.5935001373291,
+            "translateZ": 0.0
+        },
+        "l_wrist": {
+            "rotateX": -14.125060081481934,
+            "rotateY": 35.08619689941406,
+            "rotateZ": 0.18350692093372345,
+            "translateX": 0.0,
+            "translateY": 32.26020050048828,
+            "translateZ": 0.0
+        },
+        "r_shoulder": {
+            "rotateX": 18.629810333251953,
+            "rotateY": -0.20696613192558289,
+            "rotateZ": 10.168721199035645,
+            "translateX": 0.0,
+            "translateY": 19.612899780273438,
+            "translateZ": 0.0
+        },
+        "r_elbow": {
+            "rotateX": 27.763071060180664,
+            "rotateY": -43.1785774230957,
+            "rotateZ": -10.56982421875,
+            "translateX": 0.0,
+            "translateY": 28.594499588012695,
+            "translateZ": 0.0
+        },
+        "r_wrist": {
+            "rotateX": -23.642560958862305,
+            "rotateY": -40.39189147949219,
+            "rotateZ": -4.1713151931762695,
+            "translateX": 0.0,
+            "translateY": 32.25529861450195,
+            "translateZ": 0.0
+        }
+    }
+}

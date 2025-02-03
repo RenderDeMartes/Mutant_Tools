@@ -1,0 +1,17 @@
+{
+    "Name": "Locals", 
+    "Description": "Create Local Duplicates for Main Geo and Atach via BlendShape", 
+    "Icon": "Locals.png", 
+    "Enable": "True", 
+    "python_file": "exec_locals.py", 
+    "import": "import exec_locals", 
+    "imp.reload": "reload(exec_locals)",
+    "exec_command": "exec_locals.create_locals_block()", 
+    "build_command": "exec_locals.build_locals_block()", 
+    "attrs": {
+        "SetGeo_string": "",
+        "SetExtraGeos_string": "",
+        "NewNames_string": "LocalA,LocalB,LocalC", 
+        "Help_string": "Create Local Duplicates for Main Geo and Atach via BlendShape, separate names with comas ','"
+    }
+}

@@ -531,3 +531,140 @@ TextEditor--TextEditorWidget > QWidget {
 QWidget#size_grip_box {
     margin-top: 0px;
 }
+
+
+/*Horizontal Slider https://www.qtcentre.org/threads/63722-QTslider-vertical-handle-customization-problem-CSS*/
+QSlider::groove:horizontal {
+border: 1px solid #484848;
+background: grey;
+height: 1px;
+border-radius: 4px;
+}
+
+QSlider::sub-page:horizontal {
+background: black;
+border: 1px solid white;
+height: 10px;
+border-radius: 4px;
+}
+
+QSlider::add-page:horizontal {
+background: 474b59;
+border: 1px solid #777;
+height: 10px;
+border-radius: 4px;
+}
+
+QSlider::handle:horizontal {
+background: #ced7d9;
+border: 1px solid #777;
+width: 13px;
+margin-top: -5px;
+margin-bottom: -3px;
+border-radius: 7px;
+}
+
+QSlider::handle:horizontal:hover {
+background: white;
+border: 1px solid #444;
+border-radius: 50%;
+width: 13px;
+margin-top: -5px;
+margin-bottom: -3px;
+border-radius: 7px;
+}
+
+QSlider::sub-page:horizontal:disabled {
+background: #bbb;
+border-color: #999;
+}
+
+QSlider::add-page:horizontal:disabled {
+background: #eee;
+border-color: #999;
+}
+
+QSlider::handle:horizontal:disabled {
+background: #eee;
+border: 1px solid #aaa;
+border-radius: 4px;
+}
+
+/******** Qslider Vertical ********/
+
+QSlider::groove:vertical {
+border: 1px solid #bbb;
+background: #484848;
+width: 1px;
+border-radius: 2px;
+}
+
+QSlider::sub-page:vertical {
+background: black;
+border: 1px solid white;
+width:: 10px;
+border-radius: 4px;
+}
+
+QSlider::add-page:vertical {
+background: 474b59;
+border: 1px solid #777;
+width: 10px;
+border-radius: 4px;
+}
+
+QSlider::handle:vertical {
+background: #ced7d9;
+border: 1px solid #777;
+height: 10px;
+margin-right: -5px;
+margin-left: -5px;
+margin-top: -1px;
+border-radius: -5px;
+}
+
+QSlider::handle:vertical:hover {
+background: white;
+border: 1px solid #444;
+border-radius: 50%;
+width: 13px;
+margin-top: -5px;
+margin-bottom: -3px;
+border-radius: 7px;
+}
+
+QSlider::sub-page:vertical:disabled {
+background: #bbb;
+border-color: #999;
+}
+
+QSlider::add-page:vertical:disabled {
+background: #eee;
+border-color: #999;
+}
+
+QSlider::handle:vertical:disabled {
+background: #eee;
+border: 1px solid #aaa;
+border-radius: 4px;
+}
+
+QRadioButton {
+    color:                  white;
+}
+
+QRadioButton::indicator {
+    width:                  10px;
+    height:                 10px;
+    border-radius:          7px;
+}
+
+QRadioButton::indicator:checked {
+    background-color:       grey;
+    border:                 2px solid white;
+}
+
+QRadioButton::indicator:unchecked {
+    background-color:       black;
+    border:                 2px solid white;
+}

@@ -1,0 +1,16 @@
+{
+    "Name": "Load_Skin",
+    "Description": "Load SKin Cluster Data",
+    "Icon": "Skin.png",
+    "Enable": "True",
+    "python_file": "exec_load_skin.py",
+    "import": "import exec_load_skin",
+    "imp.reload": "reload(exec_load_skin)",
+    "exec_command": "exec_load_skin.create_load_skin_block()",
+    "build_command": "exec_load_skin.build_load_skin_block()",
+
+    "attrs": {
+        "Path_string": "",
+        "Help_string": "Load Skin Cluster Data from Folder"
+    }
+}

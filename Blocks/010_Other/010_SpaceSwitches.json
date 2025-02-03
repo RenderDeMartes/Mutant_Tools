@@ -1,0 +1,27 @@
+{
+    "Name" :  "SpaceSwitches",
+    "Description":"This will add space switches to the target ctrl",
+    "Icon":"SpaceSwitch.png",
+
+    "Enable" :  "True",
+
+
+    "python_file" : "exec_spaceSwitches.py",
+    "import":"import exec_spaceSwitches ",
+    "imp.reload":"reload(exec_spaceSwitches)",
+    "exec_command" : "exec_spaceSwitches.create_spaceSwitches_block()",
+    "build_command":"exec_spaceSwitches.build_spaceSwitches_block()",
+
+    "attrs": {
+        "SetTargetCtrl_string":"",
+        "SetAttrsHolder_string": "",
+        "Translate_bool": "True",
+        "Animbot_bool": "True",
+        "Rotate_bool": "True",
+        "Spaces_string":"Mutant_Tools_Grp, Mover_Gimbal_Ctrl",
+        "Mirror_bool": "False",
+
+        "Help_string": "Separate the space switches with a ','"
+    }
+}
+

@@ -1,0 +1,16 @@
+{
+    "Name": "Squash",
+    "Description": "Create a Local Squash System",
+    "Icon": "Squash.png",
+    "Enable": "True",
+    "python_file": "exec_squash.py",
+    "import": "import exec_squash",
+    "imp.reload": "reload(exec_squash)",
+    "exec_command": "exec_squash.create_squash_block()",
+    "build_command": "exec_squash.build_squash_block()",
+    "attrs": {
+        "SetParent_string": "new_locator",
+        "SetGeo_string": "",
+        "Help_string": "Create a Local Squash System"
+    }
+}

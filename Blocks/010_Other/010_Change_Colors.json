@@ -1,0 +1,23 @@
+{
+    "Name": "ChangeColors",
+    "Description": "Change Colors",
+    "Icon": "ChangeColors.png",
+    "Enable": "True",
+    "python_file": "exec_change_colors.py",
+    "import": "import exec_change_colors",
+    "imp.reload": "reload(exec_change_colors)",
+    "exec_command": "exec_change_colors.create_change_colors_block()",
+    "build_command": "exec_change_colors.build_change_colors_block()",
+    "attrs": {
+        "ChangeColors1_string": "",
+        "ChangeColors2_string": "",
+        "ChangeColors3_string": "",
+        "ChangeColors4_string": "",
+        "ChangeColors5_string": "",
+        "ChangeColors6_string": "",
+        "ChangeColors7_string": "",
+        "ChangeColors8_string": "",
+        "ChangeColors9_string": "",
+        "Help_string": "Example: Head_Ctrl:Blue"
+    }
+}

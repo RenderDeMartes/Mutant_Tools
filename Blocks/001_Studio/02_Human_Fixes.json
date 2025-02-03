@@ -1,0 +1,14 @@
+{
+    "Name": "Human_Fixes",
+    "Description": "Fixes for Human Template",
+    "Icon": "letter-a.png",
+    "Enable": "True",
+    "python_file": "exec_human_fixes.py",
+    "import": "import exec_human_fixes",
+    "imp.reload": "reload(exec_human_fixes)",
+    "exec_command": "exec_human_fixes.create_human_fixes_block()",
+    "build_command": "exec_human_fixes.build_human_fixes_block()",
+    "attrs": {
+        "Help_string": "Fixes for Bipeds"
+    }
+}

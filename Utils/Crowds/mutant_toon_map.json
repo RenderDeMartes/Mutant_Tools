@@ -1,0 +1,74 @@
+{
+
+    "root": "Root",
+
+    "cog": "Spine_Base_Bnd",
+    "spine_base": "Spine_Root_Bnd",
+    "spine_belly": "Spine_Belly_Bnd",
+    "spine_chest": "Spine_Chest_Bnd",
+
+    "neck": "Neck_1_Bnd",
+    "neck_mid": "Neck_2_Bnd",
+    "head": "Head_Bnd",
+    "l_eye": "L_Eyes_Bnd",
+    "r_eye": "R_Eyes_Bnd",
+    "jaw": "",
+
+    "L_hip": "L_Hip_Bnd_0_Bnd",
+    "l_hip_twist_01": "L_Hip_Bnd_1_Bnd",
+    "l_hip_twist_02": "L_Hip_Bnd_2_Bnd",
+    "l_hip_twist_03": "L_Hip_Bnd_4_Bnd",
+    "l_hip_twist_04": "L_Hip_Bnd_5_Bnd",
+
+    "l_knee": "L_Knee_Bnd_0_Bnd",
+    "l_knee_twist_01": "L_Knee_Bnd_1_Bnd",
+    "l_knee_twist_02": "L_Knee_Bnd_2_Bnd",
+    "l_knee_twist_03": "L_Knee_Bnd_4_Bnd",
+    "l_knee_twist_04": "L_Knee_Bnd_5_Bnd",
+    "l_ankle": "L_Foot_Ankle_Bnd",
+    "l_ball": "L_Foot_BallToes_Bnd",
+    "l_toes": "L_Foot_Toes_Jnt",
+
+    "l_clavicle": "L_Clavicle_Jnt",
+
+    "l_shoulder": "L_Shoulder_Bnd_0_Bnd",
+    "l_shoulder_twist_01": "L_Shoulder_Bnd_1_Bnd",
+    "l_shoulder_twist_02": "L_Shoulder_Bnd_2_Bnd",
+    "l_shoulder_twist_03": "L_Shoulder_Bnd_4_Bnd",
+    "l_shoulder_twist_04": "L_Shoulder_Bnd_5_Bnd",
+
+    "l_elbow": "L_Elbow_Bnd_0_Bnd",
+    "l_elbow_twist_01": "L_Elbow_Bnd_1_Bnd",
+    "l_elbow_twist_02": "L_Elbow_Bnd_2_Bnd",
+    "l_elbow_twist_03": "L_Elbow_Bnd_4_Bnd",
+    "l_elbow_twist_04": "L_Elbow_Bnd_5_Bnd",
+    "l_elbow_twist_05": "L_Elbow_Bnd_6_Bnd",
+
+    "l_wrist": "L_Wrist_Jnt",
+
+    "l_thumb_1" : "L_Hand_Thumb_00_Bnd",
+    "l_thumb_2" : "L_Hand_Thumb_01_Bnd",
+    "l_thumb_3" : "L_Hand_Thumb_02_Bnd",
+    "l_thumb_4" : "L_Hand_Thumb_03_Bnd",
+
+    "l_index_1" : "L_Hand_Index_01_Bnd",
+    "l_index_2" : "L_Hand_Index_02_Bnd",
+    "l_index_3" : "L_Hand_Index_03_Bnd",
+    "l_index_4" : "L_Hand_Index_04_Bnd",
+
+    "l_middle_1" : "L_Hand_Middle_01_Bnd",
+    "l_middle_2" : "L_Hand_Middle_02_Bnd",
+    "l_middle_3" : "L_Hand_Middle_03_Bnd",
+    "l_middle_4" : "L_Hand_Middle_04_Bnd",
+
+    "l_ring_1" : "L_Hand_Ring_01_Bnd",
+    "l_ring_2" : "L_Hand_Ring_02_Bnd",
+    "l_ring_3" : "L_Hand_Ring_03_Bnd",
+    "l_ring_4" : "L_Hand_Ring_04_Bnd",
+
+    "l_pinky_1" : "L_Hand_Pinky_01_Bnd",
+    "l_pinky_2" : "L_Hand_Pinky_02_Bnd",
+    "l_pinky_3" : "L_Hand_Pinky_03_Bnd",
+    "l_pinky_4" : "L_Hand_Pinky_04_Bnd"
+
+}

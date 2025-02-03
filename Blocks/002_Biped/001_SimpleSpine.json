@@ -1,0 +1,21 @@
+{
+    "Name": "Spine",
+    "Description": "This will create a Simpler IK FK Spine System",
+    "Icon": "SimpleSpine.png",
+
+    "Enable": "True",
+    
+    "python_file": "exec_spine.py",
+
+    "import": "import exec_simple_spine",
+    "imp.reload": "reload(exec_simple_spine)",
+    "exec_command": "exec_simple_spine.create_spine_block()",
+    "build_command": "exec_simple_spine.build_spine_block()",
+
+    "attrs": {
+        "SetParent_string": "new_locator",
+        "CtrlSize_float": "4",
+        "SetGameParent_string": "",
+        "Help_string" : "Possible parent: Spine_End_Jnt or Spine_Inv_Jnt"
+    }
+}

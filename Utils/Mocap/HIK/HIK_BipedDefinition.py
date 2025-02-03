@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 import pymel.core as pm
 
 # /////////////////////////////////

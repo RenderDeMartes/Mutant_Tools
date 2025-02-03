@@ -1,0 +1,18 @@
+{
+    "Name": "MultiBone",
+    "Description": "Will create multiple bones with controllers",
+    "Icon": "MultiBone.png",
+    "Enable": "True",
+    "python_file": "exec_multibone.py",
+    "import": "import exec_multibone",
+    "imp.reload": "reload(exec_multibone)",
+    "exec_command": "exec_multibone.create_multibone_block()",
+    "build_command": "exec_multibone.build_multibone_block()",
+    "attrs": {
+        "SetParents_string": "new_locator_each",
+        "CtrlSize_float": "4",
+        "CtrlColor_enum": "yellow:lightBlue:blue:white:purple:green:red:grey",
+        "CtrlType_enum": "sphere:square:cube:octagon:hexagon:pringle:feet:hand:circleY:circleX:circleZ:3dArrow:2dArrow:mover:2dArrow:root:cog",
+        "Help_string": "For parent use: new_locator, new_locator_each or separate with a ','"
+    }
+}

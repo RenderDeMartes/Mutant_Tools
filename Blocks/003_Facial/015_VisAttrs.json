@@ -1,0 +1,15 @@
+{
+    "Name": "VisAttrs",
+    "Description": "This will create a ctrl to hold vis attrs",
+    "Icon": "VisAttrs.png",
+    "Enable": "True",
+    "python_file": "exec_visattrs.py",
+    "import": "import exec_visattrs",
+    "imp.reload": "reload(exec_visattrs)",
+    "exec_command": "exec_visattrs.create_visattrs_block()",
+    "build_command": "exec_visattrs.build_visattrs_block()",
+    "attrs": {
+        "SetParent_string": "new_locator",
+        "Help_string": "This will create a ctrl to hold vis attrs"
+    }
+}

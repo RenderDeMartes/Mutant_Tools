@@ -1,0 +1,18 @@
+{
+    "Name": "L_Cheecks",
+    "Description": "Will create a local Cheeck rig",
+    "Icon": "CheeksAdvance.png",
+    "Enable": "True",
+    "python_file": "exec_cheeks_advance.py",
+    "import": "import exec_cheeks_advance",
+    "imp.reload": "reload(exec_cheeks_advance)",
+    "exec_command": "exec_cheeks_advance.create_cheek_block()",
+    "build_command": "exec_cheeks_advance.build_cheek_block()",
+    "attrs": {
+        "SetParent_string": "new_locator",
+        "SetAttrsPosition_string": "new_locator",
+        "Mirror_enum": "True:False:Right_Only",
+        "CtrlSize_float": "4",
+        "Help_string": "Will crete cheek rig system"
+    }
+}

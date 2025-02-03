@@ -1,0 +1,776 @@
+{
+    "Cero_Animation":{
+        "t_values": "",
+        "r_values": "",
+        "input_key":1,
+        "controls": ""
+                   },
+    "R_Brow_05_Ctrl.ty1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":2,
+        "controls": {"R_Brow_05_Ctrl":{
+                                "values":1,
+                                "axis":"ty"}
+                    }
+                },
+    "R_Brow_05_Ctrl.ty-1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":3,
+        "controls": {"R_Brow_05_Ctrl":{
+                                "values":-1,
+                                "axis":"ty"}
+                    }
+                },
+    "R_Brow_04_Ctrl.ty1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":4,
+        "controls": {"R_Brow_04_Ctrl":{
+                                "values":1,
+                                "axis":"ty"}
+                    }
+                },
+    "R_Brow_04_Ctrl.ty-1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":5,
+        "controls": {"R_Brow_04_Ctrl":{
+                                "values":-1,
+                                "axis":"ty"}
+                    }
+                },
+    "R_Brow_03_Ctrl.ty1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":6,
+        "controls": {"R_Brow_03_Ctrl":{
+                                "values":1,
+                                "axis":"ty"}
+                    }
+                },
+    "R_Brow_03_Ctrl.ty-1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":7,
+        "controls": {"R_Brow_03_Ctrl":{
+                                "values":-1,
+                                "axis":"ty"}
+                    }
+                },
+    "R_Brow_02_Ctrl.ty1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":8,
+        "controls": {"R_Brow_02_Ctrl":{
+                                "values":1,
+                                "axis":"ty"}
+                    }
+                },
+    "R_Brow_02_Ctrl.ty-1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":9,
+        "controls": {"R_Brow_02_Ctrl":{
+                                "values":-1,
+                                "axis":"ty"}
+                    }
+                },
+    "R_Brow_01_Ctrl.ty1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":10,
+        "controls": {"R_Brow_01_Ctrl":{
+                                "values":1,
+                                "axis":"ty"}
+                    }
+                },
+    "R_Brow_01_Ctrl.ty-1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":11,
+        "controls": {"R_Brow_01_Ctrl":{
+                                "values":-1,
+                                "axis":"ty"}
+                    }
+                },
+    "R_MainBrow_00_Ctrl.ty1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":12,
+        "controls": {"R_MainBrow_00_Ctrl":{
+                                "values":1,
+                                "axis":"ty"}
+                    }
+                },
+    "R_MainBrow_00_Ctrl.ty-1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":13,
+        "controls": {"R_MainBrow_00_Ctrl":{
+                                "values":-1,
+                                "axis":"ty"}
+                    }
+                },
+
+    "L_Brow_05_Ctrl.ty1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":14,
+        "controls": {"L_Brow_05_Ctrl":{
+                                "values":1,
+                                "axis":"ty"}
+                    }
+                },
+    "L_Brow_05_Ctrl.ty-1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":15,
+        "controls": {"L_Brow_05_Ctrl":{
+                                "values":-1,
+                                "axis":"ty"}
+                    }
+                },
+    "L_Brow_04_Ctrl.ty1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":16,
+        "controls": {"L_Brow_04_Ctrl":{
+                                "values":1,
+                                "axis":"ty"}
+                    }
+                },
+    "L_Brow_04_Ctrl.ty-1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":17,
+        "controls": {"L_Brow_04_Ctrl":{
+                                "values":-1,
+                                "axis":"ty"}
+                    }
+                },
+    "L_Brow_03_Ctrl.ty1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":18,
+        "controls": {"L_Brow_03_Ctrl":{
+                                "values":1,
+                                "axis":"ty"}
+                    }
+                },
+    "L_Brow_03_Ctrl.ty-1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":19,
+        "controls": {"L_Brow_03_Ctrl":{
+                                "values":-1,
+                                "axis":"ty"}
+                    }
+                },
+    "L_Brow_02_Ctrl.ty1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":20,
+        "controls": {"L_Brow_02_Ctrl":{
+                                "values":1,
+                                "axis":"ty"}
+                    }
+                },
+    "L_Brow_02_Ctrl.ty-1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":21,
+        "controls": {"L_Brow_02_Ctrl":{
+                                "values":-1,
+                                "axis":"ty"}
+                    }
+                },
+    "L_Brow_01_Ctrl.ty1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":22,
+        "controls": {"L_Brow_01_Ctrl":{
+                                "values":1,
+                                "axis":"ty"}
+                    }
+                },
+    "L_Brow_01_Ctrl.ty-1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":23,
+        "controls": {"L_Brow_01_Ctrl":{
+                                "values":-1,
+                                "axis":"ty"}
+                    }
+                },
+    "L_MainBrow_00_Ctrl.ty1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":24,
+        "controls": {"L_MainBrow_00_Ctrl":{
+                                "values":1,
+                                "axis":"ty"}
+                    }
+                },
+    "L_MainBrow_00_Ctrl.ty-1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":25,
+        "controls": {"L_MainBrow_00_Ctrl":{
+                                "values":-1,
+                                "axis":"ty"}
+                    }
+                },
+
+    "C_Primary_UpperLip_00_Ctrl.ty1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":32,
+        "controls": {"C_Primary_UpperLip_00_Ctrl":{
+                                "values":1,
+                                "axis":"ty"}
+                    }
+                },
+    "C_Primary_UpperLip_00_Ctrl.ty-1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":33,
+        "controls": {"C_Primary_UpperLip_00_Ctrl":{
+                                "values":-1,
+                                "axis":"ty"}
+                    }
+                },
+    "L_Primary_UpperLip_00_Ctrl.ty1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":38,
+        "controls": {"L_Primary_UpperLip_00_Ctrl":{
+                                "values":1,
+                                "axis":"ty"}
+                    }
+                },
+    "L_Primary_UpperLip_00_Ctrl.ty-1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":39,
+        "controls": {"L_Primary_UpperLip_00_Ctrl":{
+                                "values":-1,
+                                "axis":"ty"}
+                    }
+                },
+    "R_Primary_UpperLip_00_Ctrl.ty1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":42,
+        "controls": {"R_Primary_UpperLip_00_Ctrl":{
+                                "values":1,
+                                "axis":"ty"}
+                    }
+                },
+    "R_Primary_UpperLip_00_Ctrl.ty-1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":43,
+        "controls": {"R_Primary_UpperLip_00_Ctrl":{
+                                "values":-1,
+                                "axis":"ty"}
+                    }
+                },
+
+    "R_Primary_LowerLip_00_Ctrl.ty1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":40,
+        "controls": {"R_Primary_LowerLip_00_Ctrl":{
+                                "values":1,
+                                "axis":"ty"}
+                    }
+                },
+    "R_Primary_LowerLip_00_Ctrl.ty-1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":41,
+        "controls": {"R_Primary_LowerLip_00_Ctrl":{
+                                "values":-1,
+                                "axis":"ty"}
+                    }
+                },
+    "C_Primary_LowerLip_00_Ctrl.ty-1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":46,
+        "controls": {"C_Primary_LowerLip_00_Ctrl":{
+                                "values":-1,
+                                "axis":"ty"}
+                    }
+                },
+    "C_Primary_LowerLip_00_Ctrl.ty1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":47,
+        "controls": {"C_Primary_LowerLip_00_Ctrl":{
+                                "values":1,
+                                "axis":"ty"}
+                    }
+                },
+    "L_Primary_LowerLip_00_Ctrl.ty-1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":52,
+        "controls": {"L_Primary_LowerLip_00_Ctrl":{
+                                "values":-1,
+                                "axis":"ty"}
+                    }
+                },
+    "L_Primary_LowerLip_00_Ctrl.ty1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":53,
+        "controls": {"L_Primary_LowerLip_00_Ctrl":{
+                                "values":1,
+                                "axis":"ty"}
+                    }
+                },
+
+
+    "C_Jaw_01_Ctrl.rx-20":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":70,
+        "controls": {"C_Jaw_01_Ctrl":{
+                                "values":-20,
+                                "axis":"rx"}
+                    }
+                },
+    "C_Jaw_01_Ctrl.rx20":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":71,
+        "controls": {"C_Jaw_01_Ctrl":{
+                                "values":20,
+                                "axis":"rx"}
+                    }
+                },
+    "C_Jaw_01_Ctrl.rz-20":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":72,
+        "controls": {"C_Jaw_01_Ctrl":{
+                                "values":-20,
+                                "axis":"rz"}
+                    }
+                },
+    "C_Jaw_01_Ctrl.rz20":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":73,
+        "controls": {"C_Jaw_01_Ctrl":{
+                                "values":20,
+                                "axis":"rz"}
+                    }
+                },
+
+    "R_Brow_05_Ctrl.tz1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":74,
+        "controls": {"R_Brow_05_Ctrl":{
+                                "values":1,
+                                "axis":"tz"}
+                    }
+                },
+    "R_Brow_05_Ctrl.tz-1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":75,
+        "controls": {"R_Brow_05_Ctrl":{
+                                "values":-1,
+                                "axis":"tz"}
+                    }
+                },
+    "R_Brow_04_Ctrl.tz1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":76,
+        "controls": {"R_Brow_04_Ctrl":{
+                                "values":1,
+                                "axis":"tz"}
+                    }
+                },
+    "R_Brow_04_Ctrl.tz-1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":77,
+        "controls": {"R_Brow_04_Ctrl":{
+                                "values":-1,
+                                "axis":"tz"}
+                    }
+                },
+    "R_Brow_03_Ctrl.tz1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":78,
+        "controls": {"R_Brow_03_Ctrl":{
+                                "values":1,
+                                "axis":"tz"}
+                    }
+                },
+    "R_Brow_03_Ctrl.tz-1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":79,
+        "controls": {"R_Brow_03_Ctrl":{
+                                "values":-1,
+                                "axis":"tz"}
+                    }
+                },
+    "R_Brow_02_Ctrl.tz1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":80,
+        "controls": {"R_Brow_02_Ctrl":{
+                                "values":1,
+                                "axis":"tz"}
+                    }
+                },
+    "R_Brow_02_Ctrl.tz-1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":81,
+        "controls": {"R_Brow_02_Ctrl":{
+                                "values":-1,
+                                "axis":"tz"}
+                    }
+                },
+    "R_Brow_01_Ctrl.tz1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":82,
+        "controls": {"R_Brow_01_Ctrl":{
+                                "values":1,
+                                "axis":"tz"}
+                    }
+                },
+    "R_Brow_01_Ctrl.tz-1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":83,
+        "controls": {"R_Brow_01_Ctrl":{
+                                "values":-1,
+                                "axis":"tz"}
+                    }
+                },
+    "R_MainBrow_00_Ctrl.tz1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":84,
+        "controls": {"R_MainBrow_00_Ctrl":{
+                                "values":1,
+                                "axis":"tz"}
+                    }
+                },
+    "R_MainBrow_00_Ctrl.tz-1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":85,
+        "controls": {"R_MainBrow_00_Ctrl":{
+                                "values":-1,
+                                "axis":"tz"}
+                    }
+                },
+
+    "L_Brow_05_Ctrl.tz1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":86,
+        "controls": {"L_Brow_05_Ctrl":{
+                                "values":1,
+                                "axis":"tz"}
+                    }
+                },
+    "L_Brow_05_Ctrl.tz-1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":87,
+        "controls": {"L_Brow_05_Ctrl":{
+                                "values":-1,
+                                "axis":"tz"}
+                    }
+                },
+    "L_Brow_04_Ctrl.tz1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":88,
+        "controls": {"L_Brow_04_Ctrl":{
+                                "values":1,
+                                "axis":"tz"}
+                    }
+                },
+    "L_Brow_04_Ctrl.tz-1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":89,
+        "controls": {"L_Brow_04_Ctrl":{
+                                "values":-1,
+                                "axis":"tz"}
+                    }
+                },
+    "L_Brow_03_Ctrl.tz1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":90,
+        "controls": {"L_Brow_03_Ctrl":{
+                                "values":1,
+                                "axis":"tz"}
+                    }
+                },
+    "L_Brow_03_Ctrl.tz-1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":91,
+        "controls": {"L_Brow_03_Ctrl":{
+                                "values":-1,
+                                "axis":"tz"}
+                    }
+                },
+    "L_Brow_02_Ctrl.tz1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":92,
+        "controls": {"L_Brow_02_Ctrl":{
+                                "values":1,
+                                "axis":"tz"}
+                    }
+                },
+    "L_Brow_02_Ctrl.tz-1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":93,
+        "controls": {"L_Brow_02_Ctrl":{
+                                "values":-1,
+                                "axis":"tz"}
+                    }
+                },
+    "L_Brow_01_Ctrl.tz1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":94,
+        "controls": {"L_Brow_01_Ctrl":{
+                                "values":1,
+                                "axis":"tz"}
+                    }
+                },
+    "L_Brow_01_Ctrl.tz-1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":95,
+        "controls": {"L_Brow_01_Ctrl":{
+                                "values":-1,
+                                "axis":"tz"}
+                    }
+                },
+    "L_MainBrow_00_Ctrl.tz1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":96,
+        "controls": {"L_MainBrow_00_Ctrl":{
+                                "values":1,
+                                "axis":"tz"}
+                    }
+                },
+    "L_MainBrow_00_Ctrl.tz-1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":97,
+        "controls": {"L_MainBrow_00_Ctrl":{
+                                "values":-1,
+                                "axis":"tz"}
+                    }
+                },
+    "C_Primary_UpperLip_00_Ctrl.tz1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":104,
+        "controls": {"C_Primary_UpperLip_00_Ctrl":{
+                                "values":1,
+                                "axis":"tz"}
+                    }
+                },
+    "C_Primary_UpperLip_00_Ctrl.tz-1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":105,
+        "controls": {"C_Primary_UpperLip_00_Ctrl":{
+                                "values":-1,
+                                "axis":"tz"}
+                    }
+                },
+    "L_Primary_UpperLip_00_Ctrl.tz1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":110,
+        "controls": {"L_Primary_UpperLip_00_Ctrl":{
+                                "values":1,
+                                "axis":"tz"}
+                    }
+                },
+    "L_Primary_UpperLip_00_Ctrl.tz-1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":111,
+        "controls": {"L_Primary_UpperLip_00_Ctrl":{
+                                "values":-1,
+                                "axis":"tz"}
+                    }
+                },
+    "R_Primary_UpperLip_00_Ctrl.tz1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":44,
+        "controls": {"R_Primary_UpperLip_00_Ctrl":{
+                                "values":1,
+                                "axis":"tz"}
+                    }
+                },
+    "R_Primary_UpperLip_00_Ctrl.tz-1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":45,
+        "controls": {"R_Primary_UpperLip_00_Ctrl":{
+                                "values":-1,
+                                "axis":"tz"}
+                    }
+                },
+
+    "R_Primary_LowerLip_00_Ctrl.tz1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":112,
+        "controls": {"R_Primary_LowerLip_00_Ctrl":{
+                                "values":1,
+                                "axis":"tz"}
+                    }
+                },
+    "R_Primary_LowerLip_00_Ctrl.tz-1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":113,
+        "controls": {"R_Primary_LowerLip_00_Ctrl":{
+                                "values":-1,
+                                "axis":"tz"}
+                    }
+                },
+
+    "C_Primary_LowerLip_00_Ctrl.tz-1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":118,
+        "controls": {"C_Primary_LowerLip_00_Ctrl":{
+                                "values":-1,
+                                "axis":"tz"}
+                    }
+                },
+    "C_Primary_LowerLip_00_Ctrl.tz1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":119,
+        "controls": {"C_Primary_LowerLip_00_Ctrl":{
+                                "values":1,
+                                "axis":"tz"}
+                    }
+                },
+    "L_Primary_LowerLip_00_Ctrl.tz-1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":124,
+        "controls": {"L_Primary_LowerLip_00_Ctrl":{
+                                "values":-1,
+                                "axis":"tz"}
+                    }
+                },
+    "L_Primary_LowerLip_00_Ctrl.tz1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":125,
+        "controls": {"L_Primary_LowerLip_00_Ctrl":{
+                                "values":1,
+                                "axis":"tz"}
+                    }
+                },
+
+    "R_LipCorner_01_Ctrl.ty-1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":126,
+        "controls": {"R_LipCorner_01_Ctrl":{
+                                "values":-1,
+                                "axis":"ty"}
+                    }
+                },
+    "R_LipCorner_01_Ctrl.ty1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":127,
+        "controls": {"R_LipCorner_01_Ctrl":{
+                                "values":1,
+                                "axis":"ty"}
+                    }
+                },
+    "R_LipCorner_01_Ctrl.tx-1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":128,
+        "controls": {"R_LipCorner_01_Ctrl":{
+                                "values":-1,
+                                "axis":"tx"}
+                    }
+                },
+    "R_LipCorner_01_Ctrl.tx1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":129,
+        "controls": {"R_LipCorner_01_Ctrl":{
+                                "values":1,
+                                "axis":"tx"}
+                    }
+                },
+    "L_LipCorner_01_Ctrl.ty-1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":130,
+        "controls": {"L_LipCorner_01_Ctrl":{
+                                "values":-1,
+                                "axis":"ty"}
+                    }
+                },
+    "L_LipCorner_01_Ctrl.ty1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":131,
+        "controls": {"L_LipCorner_01_Ctrl":{
+                                "values":1,
+                                "axis":"ty"}
+                    }
+                },
+    "L_LipCorner_01_Ctrl.tx-1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":132,
+        "controls": {"L_Lips_Main_Ctrl":{
+                                "values":-1,
+                                "axis":"tx"}
+                    }
+                },
+    "L_LipCorner_01_Ctrl.tx1":{
+        "t_values":"",
+        "r_values":"",
+        "input_key":133,
+        "controls": {"L_LipCorner_01_Ctrl":{
+                                "values":1,
+                                "axis":"tx"}
+                    }
+                }
+
+                
+    }

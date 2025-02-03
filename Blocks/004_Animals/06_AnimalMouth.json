@@ -1,0 +1,16 @@
+{
+    "Name": "Lips",
+    "Description": "Animal Lips System",
+    "Icon": "AnimalMouth.png",
+    "Enable": "True",
+    "python_file": "exec_animalmouth.py",
+    "import": "import exec_animalmouth",
+    "imp.reload": "reload(exec_animalmouth)",
+    "exec_command": "exec_animalmouth.create_animalmouth_block()",
+    "build_command": "exec_animalmouth.build_animalmouth_block()",
+    "attrs": {
+        "SetParent_string": "new_locator",
+        "SetGeo_string": "",
+        "Help_string": "Will Create a mouth for animal system, you can change the amount of guides in outliner"
+    }
+}

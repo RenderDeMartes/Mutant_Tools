@@ -7,7 +7,7 @@
 
     "python_file" : "Exec_Block.py",
     "import":"import Exec_Block ",
-    "imp.reload":"imp.reload(Exec_Block)",
+    "imp.reload":"reload(Exec_Block)",
     "exec_command" : "Exec_Block.create_limb_block()",    
     "build_command":"Exec_Block.build_limb_block()",
 

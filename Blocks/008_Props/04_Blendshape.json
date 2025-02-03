@@ -1,0 +1,16 @@
+{
+    "Name": "BlendShape",
+    "Description": "This will create blendshapes for the selected geo",
+    "Icon": "Blendshape.png",
+    "Enable": "True",
+    "python_file": "exec_blendshape.py",
+    "import": "import exec_blendshape",
+    "imp.reload": "reload(exec_blendshape)",
+    "exec_command": "exec_blendshape.create_blendshape_block()",
+    "build_command": "exec_blendshape.build_blendshape_block()",
+    "attrs": {
+        "SetGeo_string": "",
+        "NewNames_string": "ShapeA,ShapeB,ShapeC",
+        "Help_string": "Create Shapes for nain Geo and connect them via BlendShape, separate names with comas ','"
+    }
+}

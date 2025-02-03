@@ -1,0 +1,902 @@
+{
+    "Head_Center_Jnt": {
+        "translation": [
+            0.0,
+            173.5832977294922,
+            -2.9365828037261963
+        ],
+        "rotation": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "scale": [
+            1.0,
+            1.0,
+            1.0
+        ],
+        "parent": null
+    },
+    "L_Ear_Jnt": {
+        "translation": [
+            7.102374076843262,
+            173.5832977294922,
+            -2.9365828037261963
+        ],
+        "rotation": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "scale": [
+            1.0,
+            1.0,
+            1.0
+        ],
+        "parent": "Head_Center_Jnt"
+    },
+    "R_Ear_Jnt": {
+        "translation": [
+            -7.10237,
+            173.583,
+            -2.93658
+        ],
+        "rotation": [
+            -180.0,
+            0.0,
+            0.0
+        ],
+        "scale": [
+            1.0,
+            1.0,
+            1.0
+        ],
+        "parent": "Head_Center_Jnt"
+    },
+    "R_Brow_01_Jnt": {
+        "translation": [
+            -0.736928,
+            178.33,
+            7.9697
+        ],
+        "rotation": [
+            -180.0,
+            0.0,
+            0.0
+        ],
+        "scale": [
+            1.0,
+            1.0,
+            1.0
+        ],
+        "parent": "Head_Center_Jnt"
+    },
+    "R_Brow_02_Jnt": {
+        "translation": [
+            -1.87588,
+            178.358,
+            7.664089999999998
+        ],
+        "rotation": [
+            -180.0,
+            0.0,
+            0.0
+        ],
+        "scale": [
+            1.0,
+            1.0,
+            1.0
+        ],
+        "parent": "Head_Center_Jnt"
+    },
+    "R_Brow_03_Jnt": {
+        "translation": [
+            -3.43329,
+            178.534,
+            7.00573
+        ],
+        "rotation": [
+            -180.0,
+            0.0,
+            0.0
+        ],
+        "scale": [
+            1.0,
+            1.0,
+            1.0
+        ],
+        "parent": "Head_Center_Jnt"
+    },
+    "R_Brow_04_Jnt": {
+        "translation": [
+            -5.00026,
+            178.606,
+            6.067070000000001
+        ],
+        "rotation": [
+            -180.0,
+            0.0,
+            0.0
+        ],
+        "scale": [
+            1.0,
+            1.0,
+            1.0
+        ],
+        "parent": "Head_Center_Jnt"
+    },
+    "L_Brow_01_Jnt": {
+        "translation": [
+            0.7369277477264404,
+            178.3304443359375,
+            7.969700336456299
+        ],
+        "rotation": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "scale": [
+            1.0,
+            1.0,
+            1.0
+        ],
+        "parent": "Head_Center_Jnt"
+    },
+    "L_Brow_02_Jnt": {
+        "translation": [
+            1.8758811950683594,
+            178.35809326171875,
+            7.66409158706665
+        ],
+        "rotation": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "scale": [
+            1.0,
+            1.0,
+            1.0
+        ],
+        "parent": "Head_Center_Jnt"
+    },
+    "L_Brow_03_Jnt": {
+        "translation": [
+            3.4332947731018066,
+            178.5340118408203,
+            7.005734443664551
+        ],
+        "rotation": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "scale": [
+            1.0,
+            1.0,
+            1.0
+        ],
+        "parent": "Head_Center_Jnt"
+    },
+    "L_Brow_04_Jnt": {
+        "translation": [
+            5.00025749206543,
+            178.6055450439453,
+            6.0670695304870605
+        ],
+        "rotation": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "scale": [
+            1.0,
+            1.0,
+            1.0
+        ],
+        "parent": "Head_Center_Jnt"
+    },
+    "L_Eye_Pivot_Jnt": {
+        "translation": [
+            3.039553999900818,
+            176.25634765625,
+            3.623704671859741
+        ],
+        "rotation": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "scale": [
+            1.0,
+            1.0,
+            1.0
+        ],
+        "parent": "Head_Center_Jnt"
+    },
+    "L_Eye_Inner_Corner_Jnt": {
+        "translation": [
+            1.7321226596832275,
+            176.04852294921875,
+            5.4767680168151855
+        ],
+        "rotation": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "scale": [
+            1.0,
+            1.0,
+            1.0
+        ],
+        "parent": "L_Eye_Pivot_Jnt"
+    },
+    "L_Eye_Outter_Corner_Jnt": {
+        "translation": [
+            4.771358966827393,
+            176.07176208496094,
+            4.908827781677246
+        ],
+        "rotation": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "scale": [
+            1.0,
+            1.0,
+            1.0
+        ],
+        "parent": "L_Eye_Pivot_Jnt"
+    },
+    "L_Dw_Eye_Inner_Jnt": {
+        "translation": [
+            2.2372124195098877,
+            175.90028381347656,
+            5.379729270935059
+        ],
+        "rotation": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "scale": [
+            1.0,
+            1.0,
+            1.0
+        ],
+        "parent": "L_Eye_Pivot_Jnt"
+    },
+    "L_Up_Eye_Jnt": {
+        "translation": [
+            3.4811348915100098,
+            177.0177001953125,
+            5.611017227172852
+        ],
+        "rotation": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "scale": [
+            1.0,
+            1.0,
+            1.0
+        ],
+        "parent": "L_Eye_Pivot_Jnt"
+    },
+    "L_Up_Eye_Inner_Jnt": {
+        "translation": [
+            2.2814462184906006,
+            176.88365173339844,
+            5.501564025878906
+        ],
+        "rotation": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "scale": [
+            1.0,
+            1.0,
+            1.0
+        ],
+        "parent": "L_Eye_Pivot_Jnt"
+    },
+    "L_Up_Eye_Outter_Jnt": {
+        "translation": [
+            4.367399215698242,
+            176.705078125,
+            5.257396221160889
+        ],
+        "rotation": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "scale": [
+            1.0,
+            1.0,
+            1.0
+        ],
+        "parent": "L_Eye_Pivot_Jnt"
+    },
+    "L_Dw_Eye_Outter_Jnt": {
+        "translation": [
+            4.295923233032227,
+            175.7215576171875,
+            5.378912448883057
+        ],
+        "rotation": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "scale": [
+            1.0,
+            1.0,
+            1.0
+        ],
+        "parent": "L_Eye_Pivot_Jnt"
+    },
+    "L_Dw_Eye_Jnt": {
+        "translation": [
+            3.3165433406829834,
+            175.69253540039062,
+            5.788285255432129
+        ],
+        "rotation": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "scale": [
+            1.0,
+            1.0,
+            1.0
+        ],
+        "parent": "L_Eye_Pivot_Jnt"
+    },
+    "R_Eye_Pivot_Jnt": {
+        "translation": [
+            -3.03955,
+            176.256,
+            3.6237000000000004
+        ],
+        "rotation": [
+            -180.0,
+            0.0,
+            0.0
+        ],
+        "scale": [
+            1.0,
+            1.0,
+            1.0
+        ],
+        "parent": "Head_Center_Jnt"
+    },
+    "R_Eye_Inner_Corner_Jnt": {
+        "translation": [
+            -1.73212,
+            176.049,
+            5.476770000000001
+        ],
+        "rotation": [
+            -180.0,
+            0.0,
+            0.0
+        ],
+        "scale": [
+            1.0,
+            1.0,
+            1.0
+        ],
+        "parent": "R_Eye_Pivot_Jnt"
+    },
+    "R_Eye_Outter_Corner_Jnt": {
+        "translation": [
+            -4.77136,
+            176.072,
+            4.908830000000001
+        ],
+        "rotation": [
+            -180.0,
+            0.0,
+            0.0
+        ],
+        "scale": [
+            1.0,
+            1.0,
+            1.0
+        ],
+        "parent": "R_Eye_Pivot_Jnt"
+    },
+    "R_Dw_Eye_Inner_Jnt": {
+        "translation": [
+            -2.23721,
+            175.9,
+            5.379730000000001
+        ],
+        "rotation": [
+            -180.0,
+            0.0,
+            0.0
+        ],
+        "scale": [
+            1.0,
+            1.0,
+            1.0
+        ],
+        "parent": "R_Eye_Pivot_Jnt"
+    },
+    "R_Up_Eye_Jnt": {
+        "translation": [
+            -3.48113,
+            177.018,
+            5.611020000000001
+        ],
+        "rotation": [
+            -180.0,
+            0.0,
+            0.0
+        ],
+        "scale": [
+            1.0,
+            1.0,
+            1.0
+        ],
+        "parent": "R_Eye_Pivot_Jnt"
+    },
+    "R_Up_Eye_Inner_Jnt": {
+        "translation": [
+            -2.28145,
+            176.884,
+            5.5015600000000004
+        ],
+        "rotation": [
+            -180.0,
+            0.0,
+            0.0
+        ],
+        "scale": [
+            1.0,
+            1.0,
+            1.0
+        ],
+        "parent": "R_Eye_Pivot_Jnt"
+    },
+    "R_Up_Eye_Outter_Jnt": {
+        "translation": [
+            -4.3674,
+            176.705,
+            5.2574000000000005
+        ],
+        "rotation": [
+            -180.0,
+            0.0,
+            0.0
+        ],
+        "scale": [
+            1.0,
+            1.0,
+            1.0
+        ],
+        "parent": "R_Eye_Pivot_Jnt"
+    },
+    "R_Dw_Eye_Outter_Jnt": {
+        "translation": [
+            -4.29592,
+            175.722,
+            5.378910000000001
+        ],
+        "rotation": [
+            -180.0,
+            0.0,
+            0.0
+        ],
+        "scale": [
+            1.0,
+            1.0,
+            1.0
+        ],
+        "parent": "R_Eye_Pivot_Jnt"
+    },
+    "R_Dw_Eye_Jnt": {
+        "translation": [
+            -3.31654,
+            175.693,
+            5.788290000000001
+        ],
+        "rotation": [
+            -180.0,
+            0.0,
+            0.0
+        ],
+        "scale": [
+            1.0,
+            1.0,
+            1.0
+        ],
+        "parent": "R_Eye_Pivot_Jnt"
+    },
+    "Nose_Jnt": {
+        "translation": [
+            0.0,
+            173.1931043619315,
+            8.296705965016207
+        ],
+        "rotation": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "scale": [
+            1.0,
+            1.0,
+            1.0
+        ],
+        "parent": "Head_Center_Jnt"
+    },
+    "L_Nose_Jnt": {
+        "translation": [
+            0.8829023987054825,
+            171.85568237304688,
+            8.460424661636353
+        ],
+        "rotation": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "scale": [
+            1.0,
+            1.0,
+            1.0
+        ],
+        "parent": "Nose_Jnt"
+    },
+    "R_Nose_Jnt": {
+        "translation": [
+            -0.882902,
+            171.856,
+            8.46042
+        ],
+        "rotation": [
+            -180.0,
+            0.0,
+            0.0
+        ],
+        "scale": [
+            1.0,
+            1.0,
+            1.0
+        ],
+        "parent": "Nose_Jnt"
+    },
+    "Jaw_Jnt": {
+        "translation": [
+            0.0,
+            171.9329258067335,
+            -0.37632609305774967
+        ],
+        "rotation": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "scale": [
+            1.0,
+            1.0,
+            1.0
+        ],
+        "parent": "Head_Center_Jnt"
+    },
+    "Chin_Jnt": {
+        "translation": [
+            -0.00035993513301946223,
+            166.49874877929688,
+            7.825243473052978
+        ],
+        "rotation": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "scale": [
+            1.0,
+            1.0,
+            1.0
+        ],
+        "parent": "Jaw_Jnt"
+    },
+    "L_Lips_Corner_Jnt": {
+        "translation": [
+            2.2678306102752686,
+            169.38784790039062,
+            6.867959022521973
+        ],
+        "rotation": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "scale": [
+            1.0,
+            1.0,
+            1.0
+        ],
+        "parent": "Jaw_Jnt"
+    },
+    "L_Dw_Lips_Center_Jnt": {
+        "translation": [
+            -0.00014898605877533555,
+            169.37799072265625,
+            8.049383163452148
+        ],
+        "rotation": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "scale": [
+            1.0,
+            1.0,
+            1.0
+        ],
+        "parent": "Jaw_Jnt"
+    },
+    "L_Dw_Mid_Corner_Lips_Jnt": {
+        "translation": [
+            1.925559639930725,
+            169.21255493164062,
+            7.250243186950684
+        ],
+        "rotation": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "scale": [
+            1.0,
+            1.0,
+            1.0
+        ],
+        "parent": "Jaw_Jnt"
+    },
+    "L_Dw_Mid_Lips_Jnt": {
+        "translation": [
+            1.1002750396728516,
+            169.2225799560547,
+            7.837284088134765
+        ],
+        "rotation": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "scale": [
+            1.0,
+            1.0,
+            1.0
+        ],
+        "parent": "Jaw_Jnt"
+    },
+    "R_Dw_Mid_Lips_Jnt": {
+        "translation": [
+            -1.10028,
+            169.223,
+            7.837279999999999
+        ],
+        "rotation": [
+            -180.0,
+            0.0,
+            0.0
+        ],
+        "scale": [
+            1.0,
+            1.0,
+            1.0
+        ],
+        "parent": "Jaw_Jnt"
+    },
+    "R_Dw_Mid_Corner_Lips_Jnt": {
+        "translation": [
+            -1.92556,
+            169.213,
+            7.25024
+        ],
+        "rotation": [
+            -180.0,
+            0.0,
+            0.0
+        ],
+        "scale": [
+            1.0,
+            1.0,
+            1.0
+        ],
+        "parent": "Jaw_Jnt"
+    },
+    "R_Lips_Corner_Jnt": {
+        "translation": [
+            -2.26783,
+            169.388,
+            6.86796
+        ],
+        "rotation": [
+            -180.0,
+            0.0,
+            0.0
+        ],
+        "scale": [
+            1.0,
+            1.0,
+            1.0
+        ],
+        "parent": "Jaw_Jnt"
+    },
+    "L_CheeckBone_Jnt": {
+        "translation": [
+            3.926878745307725,
+            173.4690704345703,
+            5.269960247281048
+        ],
+        "rotation": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "scale": [
+            1.0,
+            1.0,
+            1.0
+        ],
+        "parent": "Head_Center_Jnt"
+    },
+    "L_Cheeck_Jnt": {
+        "translation": [
+            3.926878745307725,
+            170.93696961876168,
+            4.557607610427617
+        ],
+        "rotation": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "scale": [
+            1.0,
+            1.0,
+            1.0
+        ],
+        "parent": "Head_Center_Jnt"
+    },
+    "R_CheeckBone_Jnt": {
+        "translation": [
+            -3.92688,
+            173.469,
+            5.269960000000001
+        ],
+        "rotation": [
+            -180.0,
+            0.0,
+            0.0
+        ],
+        "scale": [
+            1.0,
+            1.0,
+            1.0
+        ],
+        "parent": "Head_Center_Jnt"
+    },
+    "R_Cheeck_Jnt": {
+        "translation": [
+            -3.92688,
+            170.937,
+            4.55761
+        ],
+        "rotation": [
+            -180.0,
+            0.0,
+            0.0
+        ],
+        "scale": [
+            1.0,
+            1.0,
+            1.0
+        ],
+        "parent": "Head_Center_Jnt"
+    },
+    "R_Up_Mid_Corner_Lips_Jnt": {
+        "translation": [
+            -1.951,
+            169.576,
+            7.374980000000001
+        ],
+        "rotation": [
+            -180.0,
+            0.0,
+            0.0
+        ],
+        "scale": [
+            1.0,
+            1.0,
+            1.0
+        ],
+        "parent": "Head_Center_Jnt"
+    },
+    "R_Up_Mid_Lips_Jnt": {
+        "translation": [
+            -1.09982,
+            169.734,
+            7.93909
+        ],
+        "rotation": [
+            -180.0,
+            0.0,
+            0.0
+        ],
+        "scale": [
+            1.0,
+            1.0,
+            1.0
+        ],
+        "parent": "Head_Center_Jnt"
+    },
+    "L_Up_Lips_Center_Jnt": {
+        "translation": [
+            -0.0002843991678673774,
+            169.6790313720703,
+            8.292351722717285
+        ],
+        "rotation": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "scale": [
+            1.0,
+            1.0,
+            1.0
+        ],
+        "parent": "Head_Center_Jnt"
+    },
+    "L_Up_Mid_Lips_Jnt": {
+        "translation": [
+            1.0998202562332153,
+            169.73422241210938,
+            7.939094066619873
+        ],
+        "rotation": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "scale": [
+            1.0,
+            1.0,
+            1.0
+        ],
+        "parent": "Head_Center_Jnt"
+    },
+    "L_Up_Mid_Corner_Lips_Jnt": {
+        "translation": [
+            1.9509990215301514,
+            169.57598876953125,
+            7.374975204467773
+        ],
+        "rotation": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "scale": [
+            1.0,
+            1.0,
+            1.0
+        ],
+        "parent": "Head_Center_Jnt"
+    }
+}

@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 '''
 version: 1.0.0
 date: 21/04/2020
@@ -8,10 +9,14 @@ content:
 #----------------
 how to:
 
-import imp
+try:
+    import importlib;from importlib import reload
+except:
+    import imp;from imp import reload
+
 import Mutant_Tools
 from Mutant_Tools.UI.FolderName import load_pyname
-imp.reload(load_pyname)
+reload(load_pyname)
 
 try:cMutantUI.close()
 except:pass
@@ -45,43 +50,37 @@ import maya.cmds as cmds
 import maya.mel as mel
 
 import os
-import imp
+try:
+    import importlib;from importlib import reload
+except:
+    import imp;from imp import reload
+
 import sys
 import json
 import glob
 import pprint
 from pathlib import Path
+from Mutant_Tools.Utils.Helpers.decorators import undo
 
 
 # -------------------------------------------------------------------
 
 # QT WIndow!
-FOLDER_NAME = 'folder_name_here'
+FOLDER_NAME = 'Folder Name'
+Title = 'Title'
+UI_File = 'UI_FILE_NAME.ui'
+
+# QT WIndow!
 PATH = os.path.dirname(__file__)
-BLOCKS_PATH = PATH.replace('\\UI\\{}'.format(FOLDER_NAME), '//Blocks')  # get Blocks paths to write files
+PATH = Path(PATH)
+PATH_PARTS = PATH.parts[:-2]
+FOLDER=''
+for f in PATH_PARTS:
+	FOLDER = os.path.join(FOLDER, f)
 
-Title = 'Mutant || Mutant'
-Folder = PATH.replace('\\UI\\{}'.format(FOLDER_NAME), '')
-UI_File = 'FILE_NAME_HERE.ui'
-IconsPath = Folder + '//Icons//'
+IconsPath = os.path.join(FOLDER, 'Icons')
 
-# -------------------------------------------------------------------
 
-# Read name conventions as nc[''] and setup as seup['']
-PATH = os.path.dirname(__file__)
-PATH = PATH.replace('\\UI\\{}'.format(FOLDER_NAME), '//Config')  # change this path depending of the folder
-
-JSON_FILE = (PATH + '/name_conventions.json')
-with open(JSON_FILE) as json_file:
-	nc = json.load(json_file)
-# Read curve shapes info
-CURVE_FILE = (PATH + '/curves.json')
-with open(CURVE_FILE) as curve_file:
-	curve_data = json.load(curve_file)
-# setup File
-SETUP_FILE = (PATH + '/rig_setup.json')
-with open(SETUP_FILE) as setup_file:
-	setup = json.load(setup_file)
 
 # -------------------------------------------------------------------
 
@@ -89,14 +88,13 @@ import Mutant_Tools
 import Mutant_Tools.Utils
 from Mutant_Tools.Utils.Rigging import main_mutant
 
-imp.reload(Mutant_Tools.Utils.Rigging.main_mutant)
+reload(Mutant_Tools.Utils.Rigging.main_mutant)
 mt = main_mutant.Mutant()
 
 import Mutant_Tools.UI
 from Mutant_Tools.UI import QtMutantWindow
-imp.reload(QtMutantWindow)
+reload(QtMutantWindow)
 Qt_Mutant = QtMutantWindow.Qt_Mutant()
-
 
 # -------------------------------------------------------------------
 
@@ -113,7 +111,7 @@ class MutantUI(QtMutantWindow.Qt_Mutant):
 
 		self.setWindowTitle(Title)
 
-		self.designer_loader_child(path=Folder + '/UI/{}/'.format(FOLDER_NAME), ui_file=UI_File)
+		self.designer_loader_child(path=os.path.join(FOLDER, 'UI', FOLDER_NAME), ui_file=UI_File)
 		self.set_title(Title)
 
 		self.create_layout()

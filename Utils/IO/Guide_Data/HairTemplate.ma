@@ -1,0 +1,5305 @@
+//Maya ASCII 2022 scene
+//Name: HairTemplate.ma
+//Last modified: Wed, Nov 02, 2022 08:39:32 AM
+//Codeset: UTF-8
+requires maya "2022";
+requires "stereoCamera" "10.0";
+requires "mtoa" "4.2.4";
+currentUnit -l centimeter -a degree -t film;
+fileInfo "application" "maya";
+fileInfo "product" "Maya 2022";
+fileInfo "version" "2022";
+fileInfo "cutIdentifier" "202110272215-ad32f8f1e6";
+fileInfo "osv" "Linux 3.10.0-1160.66.1.el7.x86_64 #1 SMP Wed May 18 16:02:34 UTC 2022 x86_64";
+fileInfo "UUID" "60AE4D80-0000-01EB-6362-8F3400005ED1";
+createNode transform -n "Mutant_Build";
+	rename -uid "3F4A4D80-0000-6ACA-62A7-C5D2000003E2";
+createNode transform -n "Init" -p "Mutant_Build";
+	rename -uid "3F4A4D80-0000-6ACA-62A7-C5D2000003E3";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/Guide_Data";
+createNode dagContainer -n "BaseA_Block" -p "Init";
+	rename -uid "3F4A4D80-0000-6ACA-62A7-C5D2000003E4";
+	setAttr ".isc" yes;
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/BaseA.png";
+	setAttr ".ctor" -type "string" "PC";
+	setAttr ".cdat" -type "string" "2021/09/17 18:07:43";
+	setAttr -l on -k off ".v";
+	setAttr -l on -k off ".tx";
+	setAttr -l on -k off ".ty";
+	setAttr -l on -k off ".tz";
+	setAttr -l on -k off ".rx";
+	setAttr -l on -k off ".ry";
+	setAttr -l on -k off ".rz";
+	setAttr -l on -k off ".sx";
+	setAttr -l on -k off ".sy";
+	setAttr -l on -k off ".sz";
+createNode dagContainer -n "ImportMT_Block" -p "Init";
+	rename -uid "3F4A4D80-0000-6ACA-62A7-C5D2000003E9";
+	setAttr ".isc" yes;
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/CODE.png";
+	setAttr ".ctor" -type "string" "esteban.rodriguez";
+	setAttr ".cdat" -type "string" "2022/03/14 14:28:22";
+	setAttr -l on -k off ".v";
+	setAttr -l on -k off ".tx";
+	setAttr -l on -k off ".ty";
+	setAttr -l on -k off ".tz";
+	setAttr -l on -k off ".rx";
+	setAttr -l on -k off ".ry";
+	setAttr -l on -k off ".rz";
+	setAttr -l on -k off ".sx";
+	setAttr -l on -k off ".sy";
+	setAttr -l on -k off ".sz";
+createNode transform -n "Hair" -p "Mutant_Build";
+	rename -uid "3F4A4D80-0000-6ACA-62A7-C62200000408";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+createNode dagContainer -n "ForDeltas_BSP_Block" -p "Hair";
+	rename -uid "A848BD80-0000-3E5D-62B0-AD8A00002CCD";
+	setAttr ".isc" yes;
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/CODE.png";
+	setAttr ".ctor" -type "string" "esteban.rodriguez";
+	setAttr ".cdat" -type "string" "2022/06/20 10:25:30";
+	setAttr -l on -k off ".v";
+	setAttr -l on -k off ".tx";
+	setAttr -l on -k off ".ty";
+	setAttr -l on -k off ".tz";
+	setAttr -l on -k off ".rx";
+	setAttr -l on -k off ".ry";
+	setAttr -l on -k off ".rz";
+	setAttr -l on -k off ".sx";
+	setAttr -l on -k off ".sy";
+	setAttr -l on -k off ".sz";
+createNode transform -n "Deltas" -p "ForDeltas_BSP_Block";
+	rename -uid "4A5BFD80-0000-157A-62B1-EE960000D4D3";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+createNode transform -n "DELTAS_HERE" -p "Deltas";
+	rename -uid "60AE4D80-0000-01EB-6362-8EF300005ED0";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+createNode dagContainer -n "Hair_Block" -p "Hair";
+	rename -uid "3F4A4D80-0000-6ACA-62A7-C61E00000402";
+	setAttr ".isc" yes;
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/Ribbon.png";
+	setAttr ".ctor" -type "string" "esteban.rodriguez";
+	setAttr ".cdat" -type "string" "2022/06/13 16:19:58";
+	setAttr -l on -k off ".v";
+	setAttr -l on -k off ".tx";
+	setAttr -l on -k off ".ty";
+	setAttr -l on -k off ".tz";
+	setAttr -l on -k off ".rx";
+	setAttr -l on -k off ".ry";
+	setAttr -l on -k off ".rz";
+	setAttr -l on -k off ".sx";
+	setAttr -l on -k off ".sy";
+	setAttr -l on -k off ".sz";
+createNode transform -n "Hair_01_Guide" -p "Hair_Block";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BB000026F1";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" -17.638971149921417 150.44277191162109 -11.221077553927898 ;
+	setAttr ".r" -type "double3" 1.6329934263059107 28.085593027915355 -159.00172018196943 ;
+	setAttr ".s" -type "double3" 8 3.2732432106843068 8 ;
+createNode nurbsSurface -n "Hair_01_GuideShape" -p "Hair_01_Guide";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BB000026F2";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr -k off ".v";
+	setAttr ".vir" yes;
+	setAttr ".vif" yes;
+	setAttr ".covm[0]"  0 1 1;
+	setAttr ".cdvm[0]"  0 1 1;
+	setAttr ".dvu" 0;
+	setAttr ".dvv" 0;
+	setAttr ".cpr" 4;
+	setAttr ".cps" 4;
+	setAttr ".cc" -type "nurbsSurface" 
+		3 3 0 0 no 
+		10 0 0 0 0.20000000000000001 0.40000000000000002 0.60000000000000009 0.80000000000000004 1 1 1
+		6 0 0 0 1 1 1
+		
+		32
+		-2.5 -0.5 0
+		-2.5 -0.16666666666666669 0
+		-2.5 0.16666666666666663 0
+		-2.5 0.5 0
+		-2.1666666666666665 -0.5 0
+		-2.1666666666666665 -0.16666666666666669 0
+		-2.1666666666666665 0.16666666666666663 0
+		-2.1666666666666665 0.5 0
+		-1.4999999999999998 -0.5 0
+		-1.4999999999999998 -0.16666666666666669 0
+		-1.4999999999999998 0.16666666666666663 0
+		-1.4999999999999998 0.5 0
+		-0.49999999999999961 -0.5 0
+		-0.49999999999999961 -0.16666666666666669 0
+		-0.49999999999999961 0.16666666666666663 0
+		-0.49999999999999961 0.5 0
+		0.50000000000000044 -0.5 0
+		0.50000000000000044 -0.16666666666666669 0
+		0.50000000000000044 0.16666666666666663 0
+		0.50000000000000044 0.5 0
+		1.5000000000000004 -0.5 0
+		1.5000000000000004 -0.16666666666666669 0
+		1.5000000000000004 0.16666666666666663 0
+		1.5000000000000004 0.5 0
+		2.166666666666667 -0.5 0
+		2.166666666666667 -0.16666666666666669 0
+		2.166666666666667 0.16666666666666663 0
+		2.166666666666667 0.5 0
+		2.5 -0.5 0
+		2.5 -0.16666666666666669 0
+		2.5 0.16666666666666663 0
+		2.5 0.5 0
+		
+		;
+	setAttr ".nufa" 4.5;
+	setAttr ".nvfa" 4.5;
+createNode transform -n "Hair_02_Guide" -p "Hair_Block";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BB00002704";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" -6.1603465257078831 157.78428838709274 -23.48086937249963 ;
+	setAttr ".r" -type "double3" 32.90542009330364 70.907605289160458 184.88965365290827 ;
+	setAttr ".s" -type "double3" 7.1849847258406019 8 8 ;
+createNode nurbsSurface -n "Hair_02_GuideShape" -p "Hair_02_Guide";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BB00002705";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr -k off ".v";
+	setAttr ".vir" yes;
+	setAttr ".vif" yes;
+	setAttr ".covm[0]"  0 1 1;
+	setAttr ".cdvm[0]"  0 1 1;
+	setAttr ".dvu" 0;
+	setAttr ".dvv" 0;
+	setAttr ".cpr" 4;
+	setAttr ".cps" 4;
+	setAttr ".cc" -type "nurbsSurface" 
+		3 3 0 0 no 
+		10 0 0 0 0.20000000000000001 0.40000000000000002 0.60000000000000009 0.80000000000000004 1 1 1
+		6 0 0 0 1 1 1
+		
+		32
+		-2.5 -0.5 0
+		-2.5 -0.16666666666666669 0
+		-2.5 0.16666666666666663 0
+		-2.5 0.5 0
+		-2.1666666666666665 -0.5 0
+		-2.1666666666666665 -0.16666666666666669 0
+		-2.1666666666666665 0.16666666666666663 0
+		-2.1666666666666665 0.5 0
+		-1.4999999999999998 -0.5 0
+		-1.4999999999999998 -0.16666666666666669 0
+		-1.4999999999999998 0.16666666666666663 0
+		-1.4999999999999998 0.5 0
+		-0.49999999999999961 -0.5 0
+		-0.49999999999999961 -0.16666666666666669 0
+		-0.49999999999999961 0.16666666666666663 0
+		-0.49999999999999961 0.5 0
+		0.50000000000000044 -0.5 0
+		0.50000000000000044 -0.16666666666666669 0
+		0.50000000000000044 0.16666666666666663 0
+		0.50000000000000044 0.5 0
+		1.5000000000000004 -0.5 0
+		1.5000000000000004 -0.16666666666666669 0
+		1.5000000000000004 0.16666666666666663 0
+		1.5000000000000004 0.5 0
+		2.166666666666667 -0.5 0
+		2.166666666666667 -0.16666666666666669 0
+		2.166666666666667 0.16666666666666663 0
+		2.166666666666667 0.5 0
+		2.5 -0.5 0
+		2.5 -0.16666666666666669 0
+		2.5 0.16666666666666663 0
+		2.5 0.5 0
+		
+		;
+	setAttr ".nufa" 4.5;
+	setAttr ".nvfa" 4.5;
+createNode transform -n "Hair_03_Guide" -p "Hair_Block";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BB00002717";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" 10.256961782777436 170.43679005760345 -31.843228096807017 ;
+	setAttr ".r" -type "double3" -55.814512775501008 59.799018862090854 46.363221878987417 ;
+	setAttr ".s" -type "double3" 10.457794167124081 5.8027422665544108 8 ;
+createNode nurbsSurface -n "Hair_03_GuideShape" -p "Hair_03_Guide";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BB00002718";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr -k off ".v";
+	setAttr ".vir" yes;
+	setAttr ".vif" yes;
+	setAttr ".covm[0]"  0 1 1;
+	setAttr ".cdvm[0]"  0 1 1;
+	setAttr ".dvu" 0;
+	setAttr ".dvv" 0;
+	setAttr ".cpr" 4;
+	setAttr ".cps" 4;
+	setAttr ".cc" -type "nurbsSurface" 
+		3 3 0 0 no 
+		10 0 0 0 0.20000000000000001 0.40000000000000002 0.60000000000000009 0.80000000000000004 1 1 1
+		6 0 0 0 1 1 1
+		
+		32
+		-2.5 -0.5 0
+		-2.5 -0.16666666666666669 0
+		-2.5 0.16666666666666663 0
+		-2.5 0.5 0
+		-2.1666666666666665 -0.5 0
+		-2.1666666666666665 -0.16666666666666669 0
+		-2.1666666666666665 0.16666666666666663 0
+		-2.1666666666666665 0.5 0
+		-1.4999999999999998 -0.5 0
+		-1.4999999999999998 -0.16666666666666669 0
+		-1.4999999999999998 0.16666666666666663 0
+		-1.4999999999999998 0.5 0
+		-0.49999999999999961 -0.5 0
+		-0.49999999999999961 -0.16666666666666669 0
+		-0.49999999999999961 0.16666666666666663 0
+		-0.49999999999999961 0.5 0
+		0.50000000000000044 -0.5 0
+		0.50000000000000044 -0.16666666666666669 0
+		0.50000000000000044 0.16666666666666663 0
+		0.50000000000000044 0.5 0
+		1.5000000000000004 -0.5 0
+		1.5000000000000004 -0.16666666666666669 0
+		1.5000000000000004 0.16666666666666663 0
+		1.5000000000000004 0.5 0
+		2.166666666666667 -0.5 0
+		2.166666666666667 -0.16666666666666669 0
+		2.166666666666667 0.16666666666666663 0
+		2.166666666666667 0.5 0
+		2.5 -0.5 0
+		2.5 -0.16666666666666669 0
+		2.5 0.16666666666666663 0
+		2.5 0.5 0
+		
+		;
+	setAttr ".nufa" 4.5;
+	setAttr ".nvfa" 4.5;
+createNode transform -n "Hair_04_Guide" -p "Hair_Block";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BB0000272A";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" -26.05449914932251 161.01049041748047 1.1939128151406102 ;
+	setAttr ".r" -type "double3" 1.9421307225355202e-19 -1.7191780635658258 179.93400653793037 ;
+	setAttr ".s" -type "double3" 8 4.1876605003341147 8 ;
+createNode nurbsSurface -n "Hair_04_GuideShape" -p "Hair_04_Guide";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BB0000272B";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr -k off ".v";
+	setAttr ".vir" yes;
+	setAttr ".vif" yes;
+	setAttr ".covm[0]"  0 1 1;
+	setAttr ".cdvm[0]"  0 1 1;
+	setAttr ".dvu" 0;
+	setAttr ".dvv" 0;
+	setAttr ".cpr" 4;
+	setAttr ".cps" 4;
+	setAttr ".cc" -type "nurbsSurface" 
+		3 3 0 0 no 
+		10 0 0 0 0.20000000000000001 0.40000000000000002 0.60000000000000009 0.80000000000000004 1 1 1
+		6 0 0 0 1 1 1
+		
+		32
+		-2.5 -0.5 0
+		-2.5 -0.16666666666666669 0
+		-2.5 0.16666666666666663 0
+		-2.5 0.5 0
+		-2.1666666666666665 -0.5 0
+		-2.1666666666666665 -0.16666666666666669 0
+		-2.1666666666666665 0.16666666666666663 0
+		-2.1666666666666665 0.5 0
+		-1.4999999999999998 -0.5 0
+		-1.4999999999999998 -0.16666666666666669 0
+		-1.4999999999999998 0.16666666666666663 0
+		-1.4999999999999998 0.5 0
+		-0.49999999999999961 -0.5 0
+		-0.49999999999999961 -0.16666666666666669 0
+		-0.49999999999999961 0.16666666666666663 0
+		-0.49999999999999961 0.5 0
+		0.50000000000000044 -0.5 0
+		0.50000000000000044 -0.16666666666666669 0
+		0.50000000000000044 0.16666666666666663 0
+		0.50000000000000044 0.5 0
+		1.5000000000000004 -0.5 0
+		1.5000000000000004 -0.16666666666666669 0
+		1.5000000000000004 0.16666666666666663 0
+		1.5000000000000004 0.5 0
+		2.166666666666667 -0.5 0
+		2.166666666666667 -0.16666666666666669 0
+		2.166666666666667 0.16666666666666663 0
+		2.166666666666667 0.5 0
+		2.5 -0.5 0
+		2.5 -0.16666666666666669 0
+		2.5 0.16666666666666663 0
+		2.5 0.5 0
+		
+		;
+	setAttr ".nufa" 4.5;
+	setAttr ".nvfa" 4.5;
+createNode transform -n "Hair_05_Guide" -p "Hair_Block";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BB0000273D";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" 26.788957834243774 161.06419372558594 0.88856041431427002 ;
+	setAttr ".s" -type "double3" 8 4.857578402788989 8 ;
+createNode nurbsSurface -n "Hair_05_GuideShape" -p "Hair_05_Guide";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BB0000273E";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr -k off ".v";
+	setAttr ".vir" yes;
+	setAttr ".vif" yes;
+	setAttr ".covm[0]"  0 1 1;
+	setAttr ".cdvm[0]"  0 1 1;
+	setAttr ".dvu" 0;
+	setAttr ".dvv" 0;
+	setAttr ".cpr" 4;
+	setAttr ".cps" 4;
+	setAttr ".cc" -type "nurbsSurface" 
+		3 3 0 0 no 
+		10 0 0 0 0.20000000000000001 0.40000000000000002 0.60000000000000009 0.80000000000000004 1 1 1
+		6 0 0 0 1 1 1
+		
+		32
+		-2.5 -0.5 0
+		-2.5 -0.16666666666666669 0
+		-2.5 0.16666666666666663 0
+		-2.5 0.5 0
+		-2.1666666666666665 -0.5 0
+		-2.1666666666666665 -0.16666666666666669 0
+		-2.1666666666666665 0.16666666666666663 0
+		-2.1666666666666665 0.5 0
+		-1.4999999999999998 -0.5 0
+		-1.4999999999999998 -0.16666666666666669 0
+		-1.4999999999999998 0.16666666666666663 0
+		-1.4999999999999998 0.5 0
+		-0.49999999999999961 -0.5 0
+		-0.49999999999999961 -0.16666666666666669 0
+		-0.49999999999999961 0.16666666666666663 0
+		-0.49999999999999961 0.5 0
+		0.50000000000000044 -0.5 0
+		0.50000000000000044 -0.16666666666666669 0
+		0.50000000000000044 0.16666666666666663 0
+		0.50000000000000044 0.5 0
+		1.5000000000000004 -0.5 0
+		1.5000000000000004 -0.16666666666666669 0
+		1.5000000000000004 0.16666666666666663 0
+		1.5000000000000004 0.5 0
+		2.166666666666667 -0.5 0
+		2.166666666666667 -0.16666666666666669 0
+		2.166666666666667 0.16666666666666663 0
+		2.166666666666667 0.5 0
+		2.5 -0.5 0
+		2.5 -0.16666666666666669 0
+		2.5 0.16666666666666663 0
+		2.5 0.5 0
+		
+		;
+	setAttr ".nufa" 4.5;
+	setAttr ".nvfa" 4.5;
+createNode transform -n "Hair_06_Guide" -p "Hair_Block";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BB00002750";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" -29.341740115626688 165.25664760480268 -1.706338584423065 ;
+	setAttr ".r" -type "double3" 0 -2.7591534979269636 174.92332585649859 ;
+	setAttr ".s" -type "double3" 9.6997031172791601 5.2223634935184435 8 ;
+createNode nurbsSurface -n "Hair_06_GuideShape" -p "Hair_06_Guide";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BB00002751";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr -k off ".v";
+	setAttr ".vir" yes;
+	setAttr ".vif" yes;
+	setAttr ".covm[0]"  0 1 1;
+	setAttr ".cdvm[0]"  0 1 1;
+	setAttr ".dvu" 0;
+	setAttr ".dvv" 0;
+	setAttr ".cpr" 4;
+	setAttr ".cps" 4;
+	setAttr ".cc" -type "nurbsSurface" 
+		3 3 0 0 no 
+		10 0 0 0 0.20000000000000001 0.40000000000000002 0.60000000000000009 0.80000000000000004 1 1 1
+		6 0 0 0 1 1 1
+		
+		32
+		-2.5 -0.5 0
+		-2.5 -0.16666666666666669 0
+		-2.5 0.16666666666666663 0
+		-2.5 0.5 0
+		-2.1666666666666665 -0.5 0
+		-2.1666666666666665 -0.16666666666666669 0
+		-2.1666666666666665 0.16666666666666663 0
+		-2.1666666666666665 0.5 0
+		-1.4999999999999998 -0.5 0
+		-1.4999999999999998 -0.16666666666666669 0
+		-1.4999999999999998 0.16666666666666663 0
+		-1.4999999999999998 0.5 0
+		-0.49999999999999961 -0.5 0
+		-0.49999999999999961 -0.16666666666666669 0
+		-0.49999999999999961 0.16666666666666663 0
+		-0.49999999999999961 0.5 0
+		0.50000000000000044 -0.5 0
+		0.50000000000000044 -0.16666666666666669 0
+		0.50000000000000044 0.16666666666666663 0
+		0.50000000000000044 0.5 0
+		1.5000000000000004 -0.5 0
+		1.5000000000000004 -0.16666666666666669 0
+		1.5000000000000004 0.16666666666666663 0
+		1.5000000000000004 0.5 0
+		2.166666666666667 -0.5 0
+		2.166666666666667 -0.16666666666666669 0
+		2.166666666666667 0.16666666666666663 0
+		2.166666666666667 0.5 0
+		2.5 -0.5 0
+		2.5 -0.16666666666666669 0
+		2.5 0.16666666666666663 0
+		2.5 0.5 0
+		
+		;
+	setAttr ".nufa" 4.5;
+	setAttr ".nvfa" 4.5;
+createNode transform -n "Hair_07_Guide" -p "Hair_Block";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BB00002763";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" 29.798549078895373 166.02340034905438 -1.7198495512606164 ;
+	setAttr ".r" -type "double3" 2.4897628345675118e-17 -3.615181858058341 6.5739203323704034 ;
+	setAttr ".s" -type "double3" 9.4915598150015441 6.0444800021007694 8 ;
+createNode nurbsSurface -n "Hair_07_GuideShape" -p "Hair_07_Guide";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BB00002764";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr -k off ".v";
+	setAttr ".vir" yes;
+	setAttr ".vif" yes;
+	setAttr ".covm[0]"  0 1 1;
+	setAttr ".cdvm[0]"  0 1 1;
+	setAttr ".dvu" 0;
+	setAttr ".dvv" 0;
+	setAttr ".cpr" 4;
+	setAttr ".cps" 4;
+	setAttr ".cc" -type "nurbsSurface" 
+		3 3 0 0 no 
+		10 0 0 0 0.20000000000000001 0.40000000000000002 0.60000000000000009 0.80000000000000004 1 1 1
+		6 0 0 0 1 1 1
+		
+		32
+		-2.5 -0.5 0
+		-2.5 -0.16666666666666669 0
+		-2.5 0.16666666666666663 0
+		-2.5 0.5 0
+		-2.1666666666666665 -0.5 0
+		-2.1666666666666665 -0.16666666666666669 0
+		-2.1666666666666665 0.16666666666666663 0
+		-2.1666666666666665 0.5 0
+		-1.4999999999999998 -0.5 0
+		-1.4999999999999998 -0.16666666666666669 0
+		-1.4999999999999998 0.16666666666666663 0
+		-1.4999999999999998 0.5 0
+		-0.49999999999999961 -0.5 0
+		-0.49999999999999961 -0.16666666666666669 0
+		-0.49999999999999961 0.16666666666666663 0
+		-0.49999999999999961 0.5 0
+		0.50000000000000044 -0.5 0
+		0.50000000000000044 -0.16666666666666669 0
+		0.50000000000000044 0.16666666666666663 0
+		0.50000000000000044 0.5 0
+		1.5000000000000004 -0.5 0
+		1.5000000000000004 -0.16666666666666669 0
+		1.5000000000000004 0.16666666666666663 0
+		1.5000000000000004 0.5 0
+		2.166666666666667 -0.5 0
+		2.166666666666667 -0.16666666666666669 0
+		2.166666666666667 0.16666666666666663 0
+		2.166666666666667 0.5 0
+		2.5 -0.5 0
+		2.5 -0.16666666666666669 0
+		2.5 0.16666666666666663 0
+		2.5 0.5 0
+		
+		;
+	setAttr ".nufa" 4.5;
+	setAttr ".nvfa" 4.5;
+createNode transform -n "Hair_08_Guide" -p "Hair_Block";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BB00002776";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" -17.228662448730667 180.18242272510906 11.728566972862774 ;
+	setAttr ".r" -type "double3" 2.1762299506148706 -22.140760544641566 137.2274206306958 ;
+	setAttr ".s" -type "double3" 10.164202917330899 3.9147140172523582 8 ;
+createNode nurbsSurface -n "Hair_08_GuideShape" -p "Hair_08_Guide";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BB00002777";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr -k off ".v";
+	setAttr ".vir" yes;
+	setAttr ".vif" yes;
+	setAttr ".covm[0]"  0 1 1;
+	setAttr ".cdvm[0]"  0 1 1;
+	setAttr ".dvu" 0;
+	setAttr ".dvv" 0;
+	setAttr ".cpr" 4;
+	setAttr ".cps" 4;
+	setAttr ".cc" -type "nurbsSurface" 
+		3 3 0 0 no 
+		10 0 0 0 0.20000000000000001 0.40000000000000002 0.60000000000000009 0.80000000000000004 1 1 1
+		6 0 0 0 1 1 1
+		
+		32
+		-2.5 -0.5 0
+		-2.5 -0.16666666666666669 0
+		-2.5 0.16666666666666663 0
+		-2.5 0.5 0
+		-2.1666666666666665 -0.5 0
+		-2.1666666666666665 -0.16666666666666669 0
+		-2.1666666666666665 0.16666666666666663 0
+		-2.1666666666666665 0.5 0
+		-1.4999999999999998 -0.5 0
+		-1.4999999999999998 -0.16666666666666669 0
+		-1.4999999999999998 0.16666666666666663 0
+		-1.4999999999999998 0.5 0
+		-0.49999999999999961 -0.5 0
+		-0.49999999999999961 -0.16666666666666669 0
+		-0.49999999999999961 0.16666666666666663 0
+		-0.49999999999999961 0.5 0
+		0.50000000000000044 -0.5 0
+		0.50000000000000044 -0.16666666666666669 0
+		0.50000000000000044 0.16666666666666663 0
+		0.50000000000000044 0.5 0
+		1.5000000000000004 -0.5 0
+		1.5000000000000004 -0.16666666666666669 0
+		1.5000000000000004 0.16666666666666663 0
+		1.5000000000000004 0.5 0
+		2.166666666666667 -0.5 0
+		2.166666666666667 -0.16666666666666669 0
+		2.166666666666667 0.16666666666666663 0
+		2.166666666666667 0.5 0
+		2.5 -0.5 0
+		2.5 -0.16666666666666669 0
+		2.5 0.16666666666666663 0
+		2.5 0.5 0
+		
+		;
+	setAttr ".nufa" 4.5;
+	setAttr ".nvfa" 4.5;
+createNode transform -n "Hair_09_Guide" -p "Hair_Block";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BB00002789";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" -7.6074072504734369 183.61797056565209 9.193284429720519 ;
+	setAttr ".r" -type "double3" -0.42411964152136805 -19.311358630326776 111.62499169236028 ;
+	setAttr ".s" -type "double3" 8.7576206177793647 3.9147140172523582 8 ;
+createNode nurbsSurface -n "Hair_09_GuideShape" -p "Hair_09_Guide";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BB0000278A";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr -k off ".v";
+	setAttr ".vir" yes;
+	setAttr ".vif" yes;
+	setAttr ".covm[0]"  0 1 1;
+	setAttr ".cdvm[0]"  0 1 1;
+	setAttr ".dvu" 0;
+	setAttr ".dvv" 0;
+	setAttr ".cpr" 4;
+	setAttr ".cps" 4;
+	setAttr ".cc" -type "nurbsSurface" 
+		3 3 0 0 no 
+		10 0 0 0 0.20000000000000001 0.40000000000000002 0.60000000000000009 0.80000000000000004 1 1 1
+		6 0 0 0 1 1 1
+		
+		32
+		-2.5 -0.5 0
+		-2.5 -0.16666666666666669 0
+		-2.5 0.16666666666666663 0
+		-2.5 0.5 0
+		-2.1666666666666665 -0.5 0
+		-2.1666666666666665 -0.16666666666666669 0
+		-2.1666666666666665 0.16666666666666663 0
+		-2.1666666666666665 0.5 0
+		-1.4999999999999998 -0.5 0
+		-1.4999999999999998 -0.16666666666666669 0
+		-1.4999999999999998 0.16666666666666663 0
+		-1.4999999999999998 0.5 0
+		-0.49999999999999961 -0.5 0
+		-0.49999999999999961 -0.16666666666666669 0
+		-0.49999999999999961 0.16666666666666663 0
+		-0.49999999999999961 0.5 0
+		0.50000000000000044 -0.5 0
+		0.50000000000000044 -0.16666666666666669 0
+		0.50000000000000044 0.16666666666666663 0
+		0.50000000000000044 0.5 0
+		1.5000000000000004 -0.5 0
+		1.5000000000000004 -0.16666666666666669 0
+		1.5000000000000004 0.16666666666666663 0
+		1.5000000000000004 0.5 0
+		2.166666666666667 -0.5 0
+		2.166666666666667 -0.16666666666666669 0
+		2.166666666666667 0.16666666666666663 0
+		2.166666666666667 0.5 0
+		2.5 -0.5 0
+		2.5 -0.16666666666666669 0
+		2.5 0.16666666666666663 0
+		2.5 0.5 0
+		
+		;
+	setAttr ".nufa" 4.5;
+	setAttr ".nvfa" 4.5;
+createNode transform -n "Hair_10_Guide" -p "Hair_Block";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BB0000279C";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" 11.948582510349796 186.00860030111193 10.440114292249548 ;
+	setAttr ".r" -type "double3" 0.72613804350351496 -17.328958950769294 60.483113883284254 ;
+	setAttr ".s" -type "double3" 10.440771539165123 3.9147140172523582 8 ;
+createNode nurbsSurface -n "Hair_10_GuideShape" -p "Hair_10_Guide";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BB0000279D";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr -k off ".v";
+	setAttr ".vir" yes;
+	setAttr ".vif" yes;
+	setAttr ".covm[0]"  0 1 1;
+	setAttr ".cdvm[0]"  0 1 1;
+	setAttr ".dvu" 0;
+	setAttr ".dvv" 0;
+	setAttr ".cpr" 4;
+	setAttr ".cps" 4;
+	setAttr ".cc" -type "nurbsSurface" 
+		3 3 0 0 no 
+		10 0 0 0 0.20000000000000001 0.40000000000000002 0.60000000000000009 0.80000000000000004 1 1 1
+		6 0 0 0 1 1 1
+		
+		32
+		-2.5 -0.5 0
+		-2.5 -0.16666666666666669 0
+		-2.5 0.16666666666666663 0
+		-2.5 0.5 0
+		-2.1666666666666665 -0.5 0
+		-2.1666666666666665 -0.16666666666666669 0
+		-2.1666666666666665 0.16666666666666663 0
+		-2.1666666666666665 0.5 0
+		-1.4999999999999998 -0.5 0
+		-1.4999999999999998 -0.16666666666666669 0
+		-1.4999999999999998 0.16666666666666663 0
+		-1.4999999999999998 0.5 0
+		-0.49999999999999961 -0.5 0
+		-0.49999999999999961 -0.16666666666666669 0
+		-0.49999999999999961 0.16666666666666663 0
+		-0.49999999999999961 0.5 0
+		0.50000000000000044 -0.5 0
+		0.50000000000000044 -0.16666666666666669 0
+		0.50000000000000044 0.16666666666666663 0
+		0.50000000000000044 0.5 0
+		1.5000000000000004 -0.5 0
+		1.5000000000000004 -0.16666666666666669 0
+		1.5000000000000004 0.16666666666666663 0
+		1.5000000000000004 0.5 0
+		2.166666666666667 -0.5 0
+		2.166666666666667 -0.16666666666666669 0
+		2.166666666666667 0.16666666666666663 0
+		2.166666666666667 0.5 0
+		2.5 -0.5 0
+		2.5 -0.16666666666666669 0
+		2.5 0.16666666666666663 0
+		2.5 0.5 0
+		
+		;
+	setAttr ".nufa" 4.5;
+	setAttr ".nvfa" 4.5;
+createNode transform -n "Hair_11_Guide" -p "Hair_Block";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BB000027AF";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" 16.84857465326786 150.22344970703125 -10.618408292531967 ;
+	setAttr ".r" -type "double3" -9.4451051718054444 27.034314334582621 -23.025639680734756 ;
+	setAttr ".s" -type "double3" 8 4.4865008095573513 8 ;
+createNode nurbsSurface -n "Hair_11_GuideShape" -p "Hair_11_Guide";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BB000027B0";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr -k off ".v";
+	setAttr ".vir" yes;
+	setAttr ".vif" yes;
+	setAttr ".covm[0]"  0 1 1;
+	setAttr ".cdvm[0]"  0 1 1;
+	setAttr ".dvu" 0;
+	setAttr ".dvv" 0;
+	setAttr ".cpr" 4;
+	setAttr ".cps" 4;
+	setAttr ".cc" -type "nurbsSurface" 
+		3 3 0 0 no 
+		10 0 0 0 0.20000000000000001 0.40000000000000002 0.60000000000000009 0.80000000000000004 1 1 1
+		6 0 0 0 1 1 1
+		
+		32
+		-2.5 -0.5 0
+		-2.5 -0.16666666666666669 0
+		-2.5 0.16666666666666663 0
+		-2.5 0.5 0
+		-2.1666666666666665 -0.5 0
+		-2.1666666666666665 -0.16666666666666669 0
+		-2.1666666666666665 0.16666666666666663 0
+		-2.1666666666666665 0.5 0
+		-1.4999999999999998 -0.5 0
+		-1.4999999999999998 -0.16666666666666669 0
+		-1.4999999999999998 0.16666666666666663 0
+		-1.4999999999999998 0.5 0
+		-0.49999999999999961 -0.5 0
+		-0.49999999999999961 -0.16666666666666669 0
+		-0.49999999999999961 0.16666666666666663 0
+		-0.49999999999999961 0.5 0
+		0.50000000000000044 -0.5 0
+		0.50000000000000044 -0.16666666666666669 0
+		0.50000000000000044 0.16666666666666663 0
+		0.50000000000000044 0.5 0
+		1.5000000000000004 -0.5 0
+		1.5000000000000004 -0.16666666666666669 0
+		1.5000000000000004 0.16666666666666663 0
+		1.5000000000000004 0.5 0
+		2.166666666666667 -0.5 0
+		2.166666666666667 -0.16666666666666669 0
+		2.166666666666667 0.16666666666666663 0
+		2.166666666666667 0.5 0
+		2.5 -0.5 0
+		2.5 -0.16666666666666669 0
+		2.5 0.16666666666666663 0
+		2.5 0.5 0
+		
+		;
+	setAttr ".nufa" 4.5;
+	setAttr ".nvfa" 4.5;
+createNode transform -n "Hair_12_Guide" -p "Hair_Block";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BB000027C2";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" 17.239445149898529 178.36207580566406 10.382977306842804 ;
+	setAttr ".r" -type "double3" -2.3536204351200598 -18.487645673705824 41.795942372432378 ;
+	setAttr ".s" -type "double3" 8 4.4865008095573513 8 ;
+createNode nurbsSurface -n "Hair_12_GuideShape" -p "Hair_12_Guide";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BB000027C3";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr -k off ".v";
+	setAttr ".vir" yes;
+	setAttr ".vif" yes;
+	setAttr ".covm[0]"  0 1 1;
+	setAttr ".cdvm[0]"  0 1 1;
+	setAttr ".dvu" 0;
+	setAttr ".dvv" 0;
+	setAttr ".cpr" 4;
+	setAttr ".cps" 4;
+	setAttr ".cc" -type "nurbsSurface" 
+		3 3 0 0 no 
+		10 0 0 0 0.20000000000000001 0.40000000000000002 0.60000000000000009 0.80000000000000004 1 1 1
+		6 0 0 0 1 1 1
+		
+		32
+		-2.5 -0.5 0
+		-2.5 -0.16666666666666669 0
+		-2.5 0.16666666666666663 0
+		-2.5 0.5 0
+		-2.1666666666666665 -0.5 0
+		-2.1666666666666665 -0.16666666666666669 0
+		-2.1666666666666665 0.16666666666666663 0
+		-2.1666666666666665 0.5 0
+		-1.4999999999999998 -0.5 0
+		-1.4999999999999998 -0.16666666666666669 0
+		-1.4999999999999998 0.16666666666666663 0
+		-1.4999999999999998 0.5 0
+		-0.49999999999999961 -0.5 0
+		-0.49999999999999961 -0.16666666666666669 0
+		-0.49999999999999961 0.16666666666666663 0
+		-0.49999999999999961 0.5 0
+		0.50000000000000044 -0.5 0
+		0.50000000000000044 -0.16666666666666669 0
+		0.50000000000000044 0.16666666666666663 0
+		0.50000000000000044 0.5 0
+		1.5000000000000004 -0.5 0
+		1.5000000000000004 -0.16666666666666669 0
+		1.5000000000000004 0.16666666666666663 0
+		1.5000000000000004 0.5 0
+		2.166666666666667 -0.5 0
+		2.166666666666667 -0.16666666666666669 0
+		2.166666666666667 0.16666666666666663 0
+		2.166666666666667 0.5 0
+		2.5 -0.5 0
+		2.5 -0.16666666666666669 0
+		2.5 0.16666666666666663 0
+		2.5 0.5 0
+		
+		;
+	setAttr ".nufa" 4.5;
+	setAttr ".nvfa" 4.5;
+createNode transform -n "Hair_13_Guide" -p "Hair_Block";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BB000027D5";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" -7.1599094023447298 150.78617847130013 -24.77324250601853 ;
+	setAttr ".r" -type "double3" 39.535980789783501 110.6277689408238 39.414930241117872 ;
+	setAttr ".s" -type "double3" 8 4.4865008095573513 8 ;
+createNode nurbsSurface -n "Hair_13_GuideShape" -p "Hair_13_Guide";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BB000027D6";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr -k off ".v";
+	setAttr ".vir" yes;
+	setAttr ".vif" yes;
+	setAttr ".covm[0]"  0 1 1;
+	setAttr ".cdvm[0]"  0 1 1;
+	setAttr ".dvu" 0;
+	setAttr ".dvv" 0;
+	setAttr ".cpr" 4;
+	setAttr ".cps" 4;
+	setAttr ".cc" -type "nurbsSurface" 
+		3 3 0 0 no 
+		10 0 0 0 0.20000000000000001 0.40000000000000002 0.60000000000000009 0.80000000000000004 1 1 1
+		6 0 0 0 1 1 1
+		
+		32
+		-2.5 -0.5 0
+		-2.5 -0.16666666666666669 0
+		-2.5 0.16666666666666663 0
+		-2.5 0.5 0
+		-2.1666666666666665 -0.5 0
+		-2.1666666666666665 -0.16666666666666669 0
+		-2.1666666666666665 0.16666666666666663 0
+		-2.1666666666666665 0.5 0
+		-1.4999999999999998 -0.5 0
+		-1.4999999999999998 -0.16666666666666669 0
+		-1.4999999999999998 0.16666666666666663 0
+		-1.4999999999999998 0.5 0
+		-0.49999999999999961 -0.5 0
+		-0.49999999999999961 -0.16666666666666669 0
+		-0.49999999999999961 0.16666666666666663 0
+		-0.49999999999999961 0.5 0
+		0.50000000000000044 -0.5 0
+		0.50000000000000044 -0.16666666666666669 0
+		0.50000000000000044 0.16666666666666663 0
+		0.50000000000000044 0.5 0
+		1.5000000000000004 -0.5 0
+		1.5000000000000004 -0.16666666666666669 0
+		1.5000000000000004 0.16666666666666663 0
+		1.5000000000000004 0.5 0
+		2.166666666666667 -0.5 0
+		2.166666666666667 -0.16666666666666669 0
+		2.166666666666667 0.16666666666666663 0
+		2.166666666666667 0.5 0
+		2.5 -0.5 0
+		2.5 -0.16666666666666669 0
+		2.5 0.16666666666666663 0
+		2.5 0.5 0
+		
+		;
+	setAttr ".nufa" 4.5;
+	setAttr ".nvfa" 4.5;
+createNode transform -n "Hair_14_Guide" -p "Hair_Block";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BB000027E8";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" 7.8735350599890852 150.02175642662721 -24.546222272699925 ;
+	setAttr ".r" -type "double3" -30.71611896580178 69.717267226949872 -32.300949510053023 ;
+	setAttr ".s" -type "double3" 8 4.6709380235348883 8 ;
+createNode nurbsSurface -n "Hair_14_GuideShape" -p "Hair_14_Guide";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BB000027E9";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr -k off ".v";
+	setAttr ".vir" yes;
+	setAttr ".vif" yes;
+	setAttr ".covm[0]"  0 1 1;
+	setAttr ".cdvm[0]"  0 1 1;
+	setAttr ".dvu" 0;
+	setAttr ".dvv" 0;
+	setAttr ".cpr" 4;
+	setAttr ".cps" 4;
+	setAttr ".cc" -type "nurbsSurface" 
+		3 3 0 0 no 
+		10 0 0 0 0.20000000000000001 0.40000000000000002 0.60000000000000009 0.80000000000000004 1 1 1
+		6 0 0 0 1 1 1
+		
+		32
+		-2.5 -0.5 0
+		-2.5 -0.16666666666666669 0
+		-2.5 0.16666666666666663 0
+		-2.5 0.5 0
+		-2.1666666666666665 -0.5 0
+		-2.1666666666666665 -0.16666666666666669 0
+		-2.1666666666666665 0.16666666666666663 0
+		-2.1666666666666665 0.5 0
+		-1.4999999999999998 -0.5 0
+		-1.4999999999999998 -0.16666666666666669 0
+		-1.4999999999999998 0.16666666666666663 0
+		-1.4999999999999998 0.5 0
+		-0.49999999999999961 -0.5 0
+		-0.49999999999999961 -0.16666666666666669 0
+		-0.49999999999999961 0.16666666666666663 0
+		-0.49999999999999961 0.5 0
+		0.50000000000000044 -0.5 0
+		0.50000000000000044 -0.16666666666666669 0
+		0.50000000000000044 0.16666666666666663 0
+		0.50000000000000044 0.5 0
+		1.5000000000000004 -0.5 0
+		1.5000000000000004 -0.16666666666666669 0
+		1.5000000000000004 0.16666666666666663 0
+		1.5000000000000004 0.5 0
+		2.166666666666667 -0.5 0
+		2.166666666666667 -0.16666666666666669 0
+		2.166666666666667 0.16666666666666663 0
+		2.166666666666667 0.5 0
+		2.5 -0.5 0
+		2.5 -0.16666666666666669 0
+		2.5 0.16666666666666663 0
+		2.5 0.5 0
+		
+		;
+	setAttr ".nufa" 4.5;
+	setAttr ".nvfa" 4.5;
+createNode transform -n "Hair_15_Guide" -p "Hair_Block";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BB000027FB";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" -11.702495327078324 156.3126395670871 -22.018582059663558 ;
+	setAttr ".r" -type "double3" 4.8936255575624639 61.855254375180323 185.08616923464839 ;
+	setAttr ".s" -type "double3" 8 5.1146384919446932 8 ;
+createNode nurbsSurface -n "Hair_15_GuideShape" -p "Hair_15_Guide";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BB000027FC";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr -k off ".v";
+	setAttr ".vir" yes;
+	setAttr ".vif" yes;
+	setAttr ".covm[0]"  0 1 1;
+	setAttr ".cdvm[0]"  0 1 1;
+	setAttr ".dvu" 0;
+	setAttr ".dvv" 0;
+	setAttr ".cpr" 4;
+	setAttr ".cps" 4;
+	setAttr ".cc" -type "nurbsSurface" 
+		3 3 0 0 no 
+		10 0 0 0 0.20000000000000001 0.40000000000000002 0.60000000000000009 0.80000000000000004 1 1 1
+		6 0 0 0 1 1 1
+		
+		32
+		-2.5 -0.5 0
+		-2.5 -0.16666666666666669 0
+		-2.5 0.16666666666666663 0
+		-2.5 0.5 0
+		-2.1666666666666665 -0.5 0
+		-2.1666666666666665 -0.16666666666666669 0
+		-2.1666666666666665 0.16666666666666663 0
+		-2.1666666666666665 0.5 0
+		-1.4999999999999998 -0.5 0
+		-1.4999999999999998 -0.16666666666666669 0
+		-1.4999999999999998 0.16666666666666663 0
+		-1.4999999999999998 0.5 0
+		-0.49999999999999961 -0.5 0
+		-0.49999999999999961 -0.16666666666666669 0
+		-0.49999999999999961 0.16666666666666663 0
+		-0.49999999999999961 0.5 0
+		0.50000000000000044 -0.5 0
+		0.50000000000000044 -0.16666666666666669 0
+		0.50000000000000044 0.16666666666666663 0
+		0.50000000000000044 0.5 0
+		1.5000000000000004 -0.5 0
+		1.5000000000000004 -0.16666666666666669 0
+		1.5000000000000004 0.16666666666666663 0
+		1.5000000000000004 0.5 0
+		2.166666666666667 -0.5 0
+		2.166666666666667 -0.16666666666666669 0
+		2.166666666666667 0.16666666666666663 0
+		2.166666666666667 0.5 0
+		2.5 -0.5 0
+		2.5 -0.16666666666666669 0
+		2.5 0.16666666666666663 0
+		2.5 0.5 0
+		
+		;
+	setAttr ".nufa" 4.5;
+	setAttr ".nvfa" 4.5;
+createNode transform -n "Hair_16_Guide" -p "Hair_Block";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BB0000280E";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" -22.00899064540863 153.92552185058594 -17.574699997901917 ;
+	setAttr ".r" -type "double3" 3.8645002887051016 36.074375979939823 190.33797339259246 ;
+	setAttr ".s" -type "double3" 9.2997247096503717 4.4865008095573513 8 ;
+createNode nurbsSurface -n "Hair_16_GuideShape" -p "Hair_16_Guide";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BB0000280F";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr -k off ".v";
+	setAttr ".vir" yes;
+	setAttr ".vif" yes;
+	setAttr ".covm[0]"  0 1 1;
+	setAttr ".cdvm[0]"  0 1 1;
+	setAttr ".dvu" 0;
+	setAttr ".dvv" 0;
+	setAttr ".cpr" 4;
+	setAttr ".cps" 4;
+	setAttr ".cc" -type "nurbsSurface" 
+		3 3 0 0 no 
+		10 0 0 0 0.20000000000000001 0.40000000000000002 0.60000000000000009 0.80000000000000004 1 1 1
+		6 0 0 0 1 1 1
+		
+		32
+		-2.5 -0.5 0
+		-2.5 -0.16666666666666669 0
+		-2.5 0.16666666666666663 0
+		-2.5 0.5 0
+		-2.1666666666666665 -0.5 0
+		-2.1666666666666665 -0.16666666666666669 0
+		-2.1666666666666665 0.16666666666666663 0
+		-2.1666666666666665 0.5 0
+		-1.4999999999999998 -0.5 0
+		-1.4999999999999998 -0.16666666666666669 0
+		-1.4999999999999998 0.16666666666666663 0
+		-1.4999999999999998 0.5 0
+		-0.49999999999999961 -0.5 0
+		-0.49999999999999961 -0.16666666666666669 0
+		-0.49999999999999961 0.16666666666666663 0
+		-0.49999999999999961 0.5 0
+		0.50000000000000044 -0.5 0
+		0.50000000000000044 -0.16666666666666669 0
+		0.50000000000000044 0.16666666666666663 0
+		0.50000000000000044 0.5 0
+		1.5000000000000004 -0.5 0
+		1.5000000000000004 -0.16666666666666669 0
+		1.5000000000000004 0.16666666666666663 0
+		1.5000000000000004 0.5 0
+		2.166666666666667 -0.5 0
+		2.166666666666667 -0.16666666666666669 0
+		2.166666666666667 0.16666666666666663 0
+		2.166666666666667 0.5 0
+		2.5 -0.5 0
+		2.5 -0.16666666666666669 0
+		2.5 0.16666666666666663 0
+		2.5 0.5 0
+		
+		;
+	setAttr ".nufa" 4.5;
+	setAttr ".nvfa" 4.5;
+createNode transform -n "Hair_17_Guide" -p "Hair_Block";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BB00002821";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" 3.414297342300415 154.56584167480469 -26.057059049606323 ;
+	setAttr ".r" -type "double3" -42.159077634322813 74.31653088841486 -43.753150715327614 ;
+	setAttr ".s" -type "double3" 8 4.4865008095573513 8 ;
+createNode nurbsSurface -n "Hair_17_GuideShape" -p "Hair_17_Guide";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BB00002822";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr -k off ".v";
+	setAttr ".vir" yes;
+	setAttr ".vif" yes;
+	setAttr ".covm[0]"  0 1 1;
+	setAttr ".cdvm[0]"  0 1 1;
+	setAttr ".dvu" 0;
+	setAttr ".dvv" 0;
+	setAttr ".cpr" 4;
+	setAttr ".cps" 4;
+	setAttr ".cc" -type "nurbsSurface" 
+		3 3 0 0 no 
+		10 0 0 0 0.20000000000000001 0.40000000000000002 0.60000000000000009 0.80000000000000004 1 1 1
+		6 0 0 0 1 1 1
+		
+		32
+		-2.5 -0.5 0
+		-2.5 -0.16666666666666669 0
+		-2.5 0.16666666666666663 0
+		-2.5 0.5 0
+		-2.1666666666666665 -0.5 0
+		-2.1666666666666665 -0.16666666666666669 0
+		-2.1666666666666665 0.16666666666666663 0
+		-2.1666666666666665 0.5 0
+		-1.4999999999999998 -0.5 0
+		-1.4999999999999998 -0.16666666666666669 0
+		-1.4999999999999998 0.16666666666666663 0
+		-1.4999999999999998 0.5 0
+		-0.49999999999999961 -0.5 0
+		-0.49999999999999961 -0.16666666666666669 0
+		-0.49999999999999961 0.16666666666666663 0
+		-0.49999999999999961 0.5 0
+		0.50000000000000044 -0.5 0
+		0.50000000000000044 -0.16666666666666669 0
+		0.50000000000000044 0.16666666666666663 0
+		0.50000000000000044 0.5 0
+		1.5000000000000004 -0.5 0
+		1.5000000000000004 -0.16666666666666669 0
+		1.5000000000000004 0.16666666666666663 0
+		1.5000000000000004 0.5 0
+		2.166666666666667 -0.5 0
+		2.166666666666667 -0.16666666666666669 0
+		2.166666666666667 0.16666666666666663 0
+		2.166666666666667 0.5 0
+		2.5 -0.5 0
+		2.5 -0.16666666666666669 0
+		2.5 0.16666666666666663 0
+		2.5 0.5 0
+		
+		;
+	setAttr ".nufa" 4.5;
+	setAttr ".nvfa" 4.5;
+createNode transform -n "Hair_18_Guide" -p "Hair_Block";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BB00002834";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" 12.093382415504896 160.34584045410156 -31.219556042220507 ;
+	setAttr ".r" -type "double3" -1.347226085135351 66.614073051371633 -1.4549856796371328 ;
+	setAttr ".s" -type "double3" 10.729907510570426 5.8293493821286209 8 ;
+createNode nurbsSurface -n "Hair_18_GuideShape" -p "Hair_18_Guide";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BB00002835";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr -k off ".v";
+	setAttr ".vir" yes;
+	setAttr ".vif" yes;
+	setAttr ".covm[0]"  0 1 1;
+	setAttr ".cdvm[0]"  0 1 1;
+	setAttr ".dvu" 0;
+	setAttr ".dvv" 0;
+	setAttr ".cpr" 4;
+	setAttr ".cps" 4;
+	setAttr ".cc" -type "nurbsSurface" 
+		3 3 0 0 no 
+		10 0 0 0 0.20000000000000001 0.40000000000000002 0.60000000000000009 0.80000000000000004 1 1 1
+		6 0 0 0 1 1 1
+		
+		32
+		-2.5 -0.5 0
+		-2.5 -0.16666666666666669 0
+		-2.5 0.16666666666666663 0
+		-2.5 0.5 0
+		-2.1666666666666665 -0.5 0
+		-2.1666666666666665 -0.16666666666666669 0
+		-2.1666666666666665 0.16666666666666663 0
+		-2.1666666666666665 0.5 0
+		-1.4999999999999998 -0.5 0
+		-1.4999999999999998 -0.16666666666666669 0
+		-1.4999999999999998 0.16666666666666663 0
+		-1.4999999999999998 0.5 0
+		-0.49999999999999961 -0.5 0
+		-0.49999999999999961 -0.16666666666666669 0
+		-0.49999999999999961 0.16666666666666663 0
+		-0.49999999999999961 0.5 0
+		0.50000000000000044 -0.5 0
+		0.50000000000000044 -0.16666666666666669 0
+		0.50000000000000044 0.16666666666666663 0
+		0.50000000000000044 0.5 0
+		1.5000000000000004 -0.5 0
+		1.5000000000000004 -0.16666666666666669 0
+		1.5000000000000004 0.16666666666666663 0
+		1.5000000000000004 0.5 0
+		2.166666666666667 -0.5 0
+		2.166666666666667 -0.16666666666666669 0
+		2.166666666666667 0.16666666666666663 0
+		2.166666666666667 0.5 0
+		2.5 -0.5 0
+		2.5 -0.16666666666666669 0
+		2.5 0.16666666666666663 0
+		2.5 0.5 0
+		
+		;
+	setAttr ".nufa" 4.5;
+	setAttr ".nvfa" 4.5;
+createNode transform -n "Hair_19_Guide" -p "Hair_Block";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BB00002847";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" -8.0528368523761458 162.32107972213913 -33.438573321866571 ;
+	setAttr ".r" -type "double3" -14.668668851457159 74.831786100525633 165.04560487831057 ;
+	setAttr ".s" -type "double3" 10.418686752130244 7.0423361169207368 8 ;
+createNode nurbsSurface -n "Hair_19_GuideShape" -p "Hair_19_Guide";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BB00002848";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr -k off ".v";
+	setAttr ".vir" yes;
+	setAttr ".vif" yes;
+	setAttr ".covm[0]"  0 1 1;
+	setAttr ".cdvm[0]"  0 1 1;
+	setAttr ".dvu" 0;
+	setAttr ".dvv" 0;
+	setAttr ".cpr" 4;
+	setAttr ".cps" 4;
+	setAttr ".cc" -type "nurbsSurface" 
+		3 3 0 0 no 
+		10 0 0 0 0.20000000000000001 0.40000000000000002 0.60000000000000009 0.80000000000000004 1 1 1
+		6 0 0 0 1 1 1
+		
+		32
+		-2.5 -0.5 0
+		-2.5 -0.16666666666666669 0
+		-2.5 0.16666666666666663 0
+		-2.5 0.5 0
+		-2.1666666666666665 -0.5 0
+		-2.1666666666666665 -0.16666666666666669 0
+		-2.1666666666666665 0.16666666666666663 0
+		-2.1666666666666665 0.5 0
+		-1.4999999999999998 -0.5 0
+		-1.4999999999999998 -0.16666666666666669 0
+		-1.4999999999999998 0.16666666666666663 0
+		-1.4999999999999998 0.5 0
+		-0.49999999999999961 -0.5 0
+		-0.49999999999999961 -0.16666666666666669 0
+		-0.49999999999999961 0.16666666666666663 0
+		-0.49999999999999961 0.5 0
+		0.50000000000000044 -0.5 0
+		0.50000000000000044 -0.16666666666666669 0
+		0.50000000000000044 0.16666666666666663 0
+		0.50000000000000044 0.5 0
+		1.5000000000000004 -0.5 0
+		1.5000000000000004 -0.16666666666666669 0
+		1.5000000000000004 0.16666666666666663 0
+		1.5000000000000004 0.5 0
+		2.166666666666667 -0.5 0
+		2.166666666666667 -0.16666666666666669 0
+		2.166666666666667 0.16666666666666663 0
+		2.166666666666667 0.5 0
+		2.5 -0.5 0
+		2.5 -0.16666666666666669 0
+		2.5 0.16666666666666663 0
+		2.5 0.5 0
+		
+		;
+	setAttr ".nufa" 4.5;
+	setAttr ".nvfa" 4.5;
+createNode transform -n "Hair_20_Guide" -p "Hair_Block";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BB0000285A";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" -23.341536374192589 167.50167282405283 -22.629021762537707 ;
+	setAttr ".r" -type "double3" -1.7358239528099837 41.158066662029952 163.69078406310913 ;
+	setAttr ".s" -type "double3" 10.874956726384301 6.8121404169992132 8 ;
+createNode nurbsSurface -n "Hair_20_GuideShape" -p "Hair_20_Guide";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BB0000285B";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr -k off ".v";
+	setAttr ".vir" yes;
+	setAttr ".vif" yes;
+	setAttr ".covm[0]"  0 1 1;
+	setAttr ".cdvm[0]"  0 1 1;
+	setAttr ".dvu" 0;
+	setAttr ".dvv" 0;
+	setAttr ".cpr" 4;
+	setAttr ".cps" 4;
+	setAttr ".cc" -type "nurbsSurface" 
+		3 3 0 0 no 
+		10 0 0 0 0.20000000000000001 0.40000000000000002 0.60000000000000009 0.80000000000000004 1 1 1
+		6 0 0 0 1 1 1
+		
+		32
+		-2.5 -0.5 0
+		-2.5 -0.16666666666666669 0
+		-2.5 0.16666666666666663 0
+		-2.5 0.5 0
+		-2.1666666666666665 -0.5 0
+		-2.1666666666666665 -0.16666666666666669 0
+		-2.1666666666666665 0.16666666666666663 0
+		-2.1666666666666665 0.5 0
+		-1.4999999999999998 -0.5 0
+		-1.4999999999999998 -0.16666666666666669 0
+		-1.4999999999999998 0.16666666666666663 0
+		-1.4999999999999998 0.5 0
+		-0.49999999999999961 -0.5 0
+		-0.49999999999999961 -0.16666666666666669 0
+		-0.49999999999999961 0.16666666666666663 0
+		-0.49999999999999961 0.5 0
+		0.50000000000000044 -0.5 0
+		0.50000000000000044 -0.16666666666666669 0
+		0.50000000000000044 0.16666666666666663 0
+		0.50000000000000044 0.5 0
+		1.5000000000000004 -0.5 0
+		1.5000000000000004 -0.16666666666666669 0
+		1.5000000000000004 0.16666666666666663 0
+		1.5000000000000004 0.5 0
+		2.166666666666667 -0.5 0
+		2.166666666666667 -0.16666666666666669 0
+		2.166666666666667 0.16666666666666663 0
+		2.166666666666667 0.5 0
+		2.5 -0.5 0
+		2.5 -0.16666666666666669 0
+		2.5 0.16666666666666663 0
+		2.5 0.5 0
+		
+		;
+	setAttr ".nufa" 4.5;
+	setAttr ".nvfa" 4.5;
+createNode transform -n "Hair_21_Guide" -p "Hair_Block";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BB0000286D";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" -4.013941901993145 172.99039910240921 -32.088027434788344 ;
+	setAttr ".r" -type "double3" 20.506774233689004 63.171727270442005 108.51347717984751 ;
+	setAttr ".s" -type "double3" 10.745118532548913 6.927955313394583 8 ;
+createNode nurbsSurface -n "Hair_21_GuideShape" -p "Hair_21_Guide";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BB0000286E";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr -k off ".v";
+	setAttr ".vir" yes;
+	setAttr ".vif" yes;
+	setAttr ".covm[0]"  0 1 1;
+	setAttr ".cdvm[0]"  0 1 1;
+	setAttr ".dvu" 0;
+	setAttr ".dvv" 0;
+	setAttr ".cpr" 4;
+	setAttr ".cps" 4;
+	setAttr ".cc" -type "nurbsSurface" 
+		3 3 0 0 no 
+		10 0 0 0 0.20000000000000001 0.40000000000000002 0.60000000000000009 0.80000000000000004 1 1 1
+		6 0 0 0 1 1 1
+		
+		32
+		-2.5 -0.5 0
+		-2.5 -0.16666666666666669 0
+		-2.5 0.16666666666666663 0
+		-2.5 0.5 0
+		-2.1666666666666665 -0.5 0
+		-2.1666666666666665 -0.16666666666666669 0
+		-2.1666666666666665 0.16666666666666663 0
+		-2.1666666666666665 0.5 0
+		-1.4999999999999998 -0.5 0
+		-1.4999999999999998 -0.16666666666666669 0
+		-1.4999999999999998 0.16666666666666663 0
+		-1.4999999999999998 0.5 0
+		-0.49999999999999961 -0.5 0
+		-0.49999999999999961 -0.16666666666666669 0
+		-0.49999999999999961 0.16666666666666663 0
+		-0.49999999999999961 0.5 0
+		0.50000000000000044 -0.5 0
+		0.50000000000000044 -0.16666666666666669 0
+		0.50000000000000044 0.16666666666666663 0
+		0.50000000000000044 0.5 0
+		1.5000000000000004 -0.5 0
+		1.5000000000000004 -0.16666666666666669 0
+		1.5000000000000004 0.16666666666666663 0
+		1.5000000000000004 0.5 0
+		2.166666666666667 -0.5 0
+		2.166666666666667 -0.16666666666666669 0
+		2.166666666666667 0.16666666666666663 0
+		2.166666666666667 0.5 0
+		2.5 -0.5 0
+		2.5 -0.16666666666666669 0
+		2.5 0.16666666666666663 0
+		2.5 0.5 0
+		
+		;
+	setAttr ".nufa" 4.5;
+	setAttr ".nvfa" 4.5;
+createNode transform -n "Hair_22_Guide" -p "Hair_Block";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BB00002880";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" -3.0921733096699797 182.96191438329026 -24.770832572405062 ;
+	setAttr ".r" -type "double3" 13.233882216995575 47.631359693329401 100.44155111951287 ;
+	setAttr ".s" -type "double3" 10.606707263879418 8.3191586529728738 8 ;
+createNode nurbsSurface -n "Hair_22_GuideShape" -p "Hair_22_Guide";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BB00002881";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr -k off ".v";
+	setAttr ".vir" yes;
+	setAttr ".vif" yes;
+	setAttr ".covm[0]"  0 1 1;
+	setAttr ".cdvm[0]"  0 1 1;
+	setAttr ".dvu" 0;
+	setAttr ".dvv" 0;
+	setAttr ".cpr" 4;
+	setAttr ".cps" 4;
+	setAttr ".cc" -type "nurbsSurface" 
+		3 3 0 0 no 
+		10 0 0 0 0.20000000000000001 0.40000000000000002 0.60000000000000009 0.80000000000000004 1 1 1
+		6 0 0 0 1 1 1
+		
+		32
+		-2.5 -0.5 0
+		-2.5 -0.16666666666666669 0
+		-2.5 0.16666666666666663 0
+		-2.5 0.5 0
+		-2.1666666666666665 -0.5 0
+		-2.1666666666666665 -0.16666666666666669 0
+		-2.1666666666666665 0.16666666666666663 0
+		-2.1666666666666665 0.5 0
+		-1.4999999999999998 -0.5 0
+		-1.4999999999999998 -0.16666666666666669 0
+		-1.4999999999999998 0.16666666666666663 0
+		-1.4999999999999998 0.5 0
+		-0.49999999999999961 -0.5 0
+		-0.49999999999999961 -0.16666666666666669 0
+		-0.49999999999999961 0.16666666666666663 0
+		-0.49999999999999961 0.5 0
+		0.50000000000000044 -0.5 0
+		0.50000000000000044 -0.16666666666666669 0
+		0.50000000000000044 0.16666666666666663 0
+		0.50000000000000044 0.5 0
+		1.5000000000000004 -0.5 0
+		1.5000000000000004 -0.16666666666666669 0
+		1.5000000000000004 0.16666666666666663 0
+		1.5000000000000004 0.5 0
+		2.166666666666667 -0.5 0
+		2.166666666666667 -0.16666666666666669 0
+		2.166666666666667 0.16666666666666663 0
+		2.166666666666667 0.5 0
+		2.5 -0.5 0
+		2.5 -0.16666666666666669 0
+		2.5 0.16666666666666663 0
+		2.5 0.5 0
+		
+		;
+	setAttr ".nufa" 4.5;
+	setAttr ".nvfa" 4.5;
+createNode transform -n "Hair_23_Guide" -p "Hair_Block";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BB00002893";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" -18.187172210616865 179.82862826322886 -11.669179020709466 ;
+	setAttr ".r" -type "double3" 2.3383353045163284 16.921432437168956 134.83542095405704 ;
+	setAttr ".s" -type "double3" 10.338509705544011 4.4803243847575072 8 ;
+createNode nurbsSurface -n "Hair_23_GuideShape" -p "Hair_23_Guide";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BB00002894";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr -k off ".v";
+	setAttr ".vir" yes;
+	setAttr ".vif" yes;
+	setAttr ".covm[0]"  0 1 1;
+	setAttr ".cdvm[0]"  0 1 1;
+	setAttr ".dvu" 0;
+	setAttr ".dvv" 0;
+	setAttr ".cpr" 4;
+	setAttr ".cps" 4;
+	setAttr ".cc" -type "nurbsSurface" 
+		3 3 0 0 no 
+		10 0 0 0 0.20000000000000001 0.40000000000000002 0.60000000000000009 0.80000000000000004 1 1 1
+		6 0 0 0 1 1 1
+		
+		32
+		-2.5 -0.5 0
+		-2.5 -0.16666666666666669 0
+		-2.5 0.16666666666666663 0
+		-2.5 0.5 0
+		-2.1666666666666665 -0.5 0
+		-2.1666666666666665 -0.16666666666666669 0
+		-2.1666666666666665 0.16666666666666663 0
+		-2.1666666666666665 0.5 0
+		-1.4999999999999998 -0.5 0
+		-1.4999999999999998 -0.16666666666666669 0
+		-1.4999999999999998 0.16666666666666663 0
+		-1.4999999999999998 0.5 0
+		-0.49999999999999961 -0.5 0
+		-0.49999999999999961 -0.16666666666666669 0
+		-0.49999999999999961 0.16666666666666663 0
+		-0.49999999999999961 0.5 0
+		0.50000000000000044 -0.5 0
+		0.50000000000000044 -0.16666666666666669 0
+		0.50000000000000044 0.16666666666666663 0
+		0.50000000000000044 0.5 0
+		1.5000000000000004 -0.5 0
+		1.5000000000000004 -0.16666666666666669 0
+		1.5000000000000004 0.16666666666666663 0
+		1.5000000000000004 0.5 0
+		2.166666666666667 -0.5 0
+		2.166666666666667 -0.16666666666666669 0
+		2.166666666666667 0.16666666666666663 0
+		2.166666666666667 0.5 0
+		2.5 -0.5 0
+		2.5 -0.16666666666666669 0
+		2.5 0.16666666666666663 0
+		2.5 0.5 0
+		
+		;
+	setAttr ".nufa" 4.5;
+	setAttr ".nvfa" 4.5;
+createNode transform -n "Hair_24_Guide" -p "Hair_Block";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BB000028A6";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" 19.45440265692584 178.77096736232482 -8.666071559162086 ;
+	setAttr ".r" -type "double3" -4.8579249538430265 18.406321350377539 42.08930347182848 ;
+	setAttr ".s" -type "double3" 10.582972034129559 4.4803243847575072 8 ;
+createNode nurbsSurface -n "Hair_24_GuideShape" -p "Hair_24_Guide";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BB000028A7";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr -k off ".v";
+	setAttr ".vir" yes;
+	setAttr ".vif" yes;
+	setAttr ".covm[0]"  0 1 1;
+	setAttr ".cdvm[0]"  0 1 1;
+	setAttr ".dvu" 0;
+	setAttr ".dvv" 0;
+	setAttr ".cpr" 4;
+	setAttr ".cps" 4;
+	setAttr ".cc" -type "nurbsSurface" 
+		3 3 0 0 no 
+		10 0 0 0 0.20000000000000001 0.40000000000000002 0.60000000000000009 0.80000000000000004 1 1 1
+		6 0 0 0 1 1 1
+		
+		32
+		-2.5 -0.5 0
+		-2.5 -0.16666666666666669 0
+		-2.5 0.16666666666666663 0
+		-2.5 0.5 0
+		-2.1666666666666665 -0.5 0
+		-2.1666666666666665 -0.16666666666666669 0
+		-2.1666666666666665 0.16666666666666663 0
+		-2.1666666666666665 0.5 0
+		-1.4999999999999998 -0.5 0
+		-1.4999999999999998 -0.16666666666666669 0
+		-1.4999999999999998 0.16666666666666663 0
+		-1.4999999999999998 0.5 0
+		-0.49999999999999961 -0.5 0
+		-0.49999999999999961 -0.16666666666666669 0
+		-0.49999999999999961 0.16666666666666663 0
+		-0.49999999999999961 0.5 0
+		0.50000000000000044 -0.5 0
+		0.50000000000000044 -0.16666666666666669 0
+		0.50000000000000044 0.16666666666666663 0
+		0.50000000000000044 0.5 0
+		1.5000000000000004 -0.5 0
+		1.5000000000000004 -0.16666666666666669 0
+		1.5000000000000004 0.16666666666666663 0
+		1.5000000000000004 0.5 0
+		2.166666666666667 -0.5 0
+		2.166666666666667 -0.16666666666666669 0
+		2.166666666666667 0.16666666666666663 0
+		2.166666666666667 0.5 0
+		2.5 -0.5 0
+		2.5 -0.16666666666666669 0
+		2.5 0.16666666666666663 0
+		2.5 0.5 0
+		
+		;
+	setAttr ".nufa" 4.5;
+	setAttr ".nvfa" 4.5;
+createNode transform -n "Hair_25_Guide" -p "Hair_Block";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BB000028B9";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" -26.477225260650425 171.10616834865729 -4.405077735690849 ;
+	setAttr ".r" -type "double3" -2.2368108866720617 3.2619512025437998 164.2736608616031 ;
+	setAttr ".s" -type "double3" 10.656704538524728 4.4803243847575072 8 ;
+createNode nurbsSurface -n "Hair_25_GuideShape" -p "Hair_25_Guide";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BB000028BA";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr -k off ".v";
+	setAttr ".vir" yes;
+	setAttr ".vif" yes;
+	setAttr ".covm[0]"  0 1 1;
+	setAttr ".cdvm[0]"  0 1 1;
+	setAttr ".dvu" 0;
+	setAttr ".dvv" 0;
+	setAttr ".cpr" 4;
+	setAttr ".cps" 4;
+	setAttr ".cc" -type "nurbsSurface" 
+		3 3 0 0 no 
+		10 0 0 0 0.20000000000000001 0.40000000000000002 0.60000000000000009 0.80000000000000004 1 1 1
+		6 0 0 0 1 1 1
+		
+		32
+		-2.5 -0.5 0
+		-2.5 -0.16666666666666669 0
+		-2.5 0.16666666666666663 0
+		-2.5 0.5 0
+		-2.1666666666666665 -0.5 0
+		-2.1666666666666665 -0.16666666666666669 0
+		-2.1666666666666665 0.16666666666666663 0
+		-2.1666666666666665 0.5 0
+		-1.4999999999999998 -0.5 0
+		-1.4999999999999998 -0.16666666666666669 0
+		-1.4999999999999998 0.16666666666666663 0
+		-1.4999999999999998 0.5 0
+		-0.49999999999999961 -0.5 0
+		-0.49999999999999961 -0.16666666666666669 0
+		-0.49999999999999961 0.16666666666666663 0
+		-0.49999999999999961 0.5 0
+		0.50000000000000044 -0.5 0
+		0.50000000000000044 -0.16666666666666669 0
+		0.50000000000000044 0.16666666666666663 0
+		0.50000000000000044 0.5 0
+		1.5000000000000004 -0.5 0
+		1.5000000000000004 -0.16666666666666669 0
+		1.5000000000000004 0.16666666666666663 0
+		1.5000000000000004 0.5 0
+		2.166666666666667 -0.5 0
+		2.166666666666667 -0.16666666666666669 0
+		2.166666666666667 0.16666666666666663 0
+		2.166666666666667 0.5 0
+		2.5 -0.5 0
+		2.5 -0.16666666666666669 0
+		2.5 0.16666666666666663 0
+		2.5 0.5 0
+		
+		;
+	setAttr ".nufa" 4.5;
+	setAttr ".nvfa" 4.5;
+createNode transform -n "Hair_26_Guide" -p "Hair_Block";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BB000028CC";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" -25.117730856955117 171.26008032889749 4.7875151038169834 ;
+	setAttr ".r" -type "double3" 2.0319304260091444e-16 -11.95668554519634 164.57793898342311 ;
+	setAttr ".s" -type "double3" 10.036182498776913 4.4803243847575072 8 ;
+createNode nurbsSurface -n "Hair_26_GuideShape" -p "Hair_26_Guide";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BB000028CD";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr -k off ".v";
+	setAttr ".vir" yes;
+	setAttr ".vif" yes;
+	setAttr ".covm[0]"  0 1 1;
+	setAttr ".cdvm[0]"  0 1 1;
+	setAttr ".dvu" 0;
+	setAttr ".dvv" 0;
+	setAttr ".cpr" 4;
+	setAttr ".cps" 4;
+	setAttr ".cc" -type "nurbsSurface" 
+		3 3 0 0 no 
+		10 0 0 0 0.20000000000000001 0.40000000000000002 0.60000000000000009 0.80000000000000004 1 1 1
+		6 0 0 0 1 1 1
+		
+		32
+		-2.5 -0.5 0
+		-2.5 -0.16666666666666669 0
+		-2.5 0.16666666666666663 0
+		-2.5 0.5 0
+		-2.1666666666666665 -0.5 0
+		-2.1666666666666665 -0.16666666666666669 0
+		-2.1666666666666665 0.16666666666666663 0
+		-2.1666666666666665 0.5 0
+		-1.4999999999999998 -0.5 0
+		-1.4999999999999998 -0.16666666666666669 0
+		-1.4999999999999998 0.16666666666666663 0
+		-1.4999999999999998 0.5 0
+		-0.49999999999999961 -0.5 0
+		-0.49999999999999961 -0.16666666666666669 0
+		-0.49999999999999961 0.16666666666666663 0
+		-0.49999999999999961 0.5 0
+		0.50000000000000044 -0.5 0
+		0.50000000000000044 -0.16666666666666669 0
+		0.50000000000000044 0.16666666666666663 0
+		0.50000000000000044 0.5 0
+		1.5000000000000004 -0.5 0
+		1.5000000000000004 -0.16666666666666669 0
+		1.5000000000000004 0.16666666666666663 0
+		1.5000000000000004 0.5 0
+		2.166666666666667 -0.5 0
+		2.166666666666667 -0.16666666666666669 0
+		2.166666666666667 0.16666666666666663 0
+		2.166666666666667 0.5 0
+		2.5 -0.5 0
+		2.5 -0.16666666666666669 0
+		2.5 0.16666666666666663 0
+		2.5 0.5 0
+		
+		;
+	setAttr ".nufa" 4.5;
+	setAttr ".nvfa" 4.5;
+createNode transform -n "Hair_27_Guide" -p "Hair_Block";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BB000028DF";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" 25.662306515063566 171.01117629090106 4.7935956544187848 ;
+	setAttr ".r" -type "double3" -0.13091355169224714 -12.587888814774065 15.278002893234273 ;
+	setAttr ".s" -type "double3" 10.036182498776913 4.4803243847575072 8 ;
+createNode nurbsSurface -n "Hair_27_GuideShape" -p "Hair_27_Guide";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BB000028E0";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr -k off ".v";
+	setAttr ".vir" yes;
+	setAttr ".vif" yes;
+	setAttr ".covm[0]"  0 1 1;
+	setAttr ".cdvm[0]"  0 1 1;
+	setAttr ".dvu" 0;
+	setAttr ".dvv" 0;
+	setAttr ".cpr" 4;
+	setAttr ".cps" 4;
+	setAttr ".cc" -type "nurbsSurface" 
+		3 3 0 0 no 
+		10 0 0 0 0.20000000000000001 0.40000000000000002 0.60000000000000009 0.80000000000000004 1 1 1
+		6 0 0 0 1 1 1
+		
+		32
+		-2.5 -0.5 0
+		-2.5 -0.16666666666666669 0
+		-2.5 0.16666666666666663 0
+		-2.5 0.5 0
+		-2.1666666666666665 -0.5 0
+		-2.1666666666666665 -0.16666666666666669 0
+		-2.1666666666666665 0.16666666666666663 0
+		-2.1666666666666665 0.5 0
+		-1.4999999999999998 -0.5 0
+		-1.4999999999999998 -0.16666666666666669 0
+		-1.4999999999999998 0.16666666666666663 0
+		-1.4999999999999998 0.5 0
+		-0.49999999999999961 -0.5 0
+		-0.49999999999999961 -0.16666666666666669 0
+		-0.49999999999999961 0.16666666666666663 0
+		-0.49999999999999961 0.5 0
+		0.50000000000000044 -0.5 0
+		0.50000000000000044 -0.16666666666666669 0
+		0.50000000000000044 0.16666666666666663 0
+		0.50000000000000044 0.5 0
+		1.5000000000000004 -0.5 0
+		1.5000000000000004 -0.16666666666666669 0
+		1.5000000000000004 0.16666666666666663 0
+		1.5000000000000004 0.5 0
+		2.166666666666667 -0.5 0
+		2.166666666666667 -0.16666666666666669 0
+		2.166666666666667 0.16666666666666663 0
+		2.166666666666667 0.5 0
+		2.5 -0.5 0
+		2.5 -0.16666666666666669 0
+		2.5 0.16666666666666663 0
+		2.5 0.5 0
+		
+		;
+	setAttr ".nufa" 4.5;
+	setAttr ".nvfa" 4.5;
+createNode transform -n "Hair_28_Guide" -p "Hair_Block";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BB000028F2";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" -27.090909743301168 165.61923558925182 3.6993118524551383 ;
+	setAttr ".r" -type "double3" -1.0138316354165666e-16 -11.373261357472224 173.29361696331674 ;
+	setAttr ".s" -type "double3" 10.036182498776913 4.4803243847575072 8 ;
+createNode nurbsSurface -n "Hair_28_GuideShape" -p "Hair_28_Guide";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BB000028F3";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr -k off ".v";
+	setAttr ".vir" yes;
+	setAttr ".vif" yes;
+	setAttr ".covm[0]"  0 1 1;
+	setAttr ".cdvm[0]"  0 1 1;
+	setAttr ".dvu" 0;
+	setAttr ".dvv" 0;
+	setAttr ".cpr" 4;
+	setAttr ".cps" 4;
+	setAttr ".cc" -type "nurbsSurface" 
+		3 3 0 0 no 
+		10 0 0 0 0.20000000000000001 0.40000000000000002 0.60000000000000009 0.80000000000000004 1 1 1
+		6 0 0 0 1 1 1
+		
+		32
+		-2.5 -0.5 0
+		-2.5 -0.16666666666666669 0
+		-2.5 0.16666666666666663 0
+		-2.5 0.5 0
+		-2.1666666666666665 -0.5 0
+		-2.1666666666666665 -0.16666666666666669 0
+		-2.1666666666666665 0.16666666666666663 0
+		-2.1666666666666665 0.5 0
+		-1.4999999999999998 -0.5 0
+		-1.4999999999999998 -0.16666666666666669 0
+		-1.4999999999999998 0.16666666666666663 0
+		-1.4999999999999998 0.5 0
+		-0.49999999999999961 -0.5 0
+		-0.49999999999999961 -0.16666666666666669 0
+		-0.49999999999999961 0.16666666666666663 0
+		-0.49999999999999961 0.5 0
+		0.50000000000000044 -0.5 0
+		0.50000000000000044 -0.16666666666666669 0
+		0.50000000000000044 0.16666666666666663 0
+		0.50000000000000044 0.5 0
+		1.5000000000000004 -0.5 0
+		1.5000000000000004 -0.16666666666666669 0
+		1.5000000000000004 0.16666666666666663 0
+		1.5000000000000004 0.5 0
+		2.166666666666667 -0.5 0
+		2.166666666666667 -0.16666666666666669 0
+		2.166666666666667 0.16666666666666663 0
+		2.166666666666667 0.5 0
+		2.5 -0.5 0
+		2.5 -0.16666666666666669 0
+		2.5 0.16666666666666663 0
+		2.5 0.5 0
+		
+		;
+	setAttr ".nufa" 4.5;
+	setAttr ".nvfa" 4.5;
+createNode transform -n "Hair_29_Guide" -p "Hair_Block";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BB00002905";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" 27.451364860747731 165.54150433097868 4.1349786813445428 ;
+	setAttr ".r" -type "double3" -0.11624446237226277 -10.706940820133163 5.4905414379756809 ;
+	setAttr ".s" -type "double3" 10.036182498776913 4.4803243847575072 8 ;
+createNode nurbsSurface -n "Hair_29_GuideShape" -p "Hair_29_Guide";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BB00002906";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr -k off ".v";
+	setAttr ".vir" yes;
+	setAttr ".vif" yes;
+	setAttr ".covm[0]"  0 1 1;
+	setAttr ".cdvm[0]"  0 1 1;
+	setAttr ".dvu" 0;
+	setAttr ".dvv" 0;
+	setAttr ".cpr" 4;
+	setAttr ".cps" 4;
+	setAttr ".cc" -type "nurbsSurface" 
+		3 3 0 0 no 
+		10 0 0 0 0.20000000000000001 0.40000000000000002 0.60000000000000009 0.80000000000000004 1 1 1
+		6 0 0 0 1 1 1
+		
+		32
+		-2.5 -0.5 0
+		-2.5 -0.16666666666666669 0
+		-2.5 0.16666666666666663 0
+		-2.5 0.5 0
+		-2.1666666666666665 -0.5 0
+		-2.1666666666666665 -0.16666666666666669 0
+		-2.1666666666666665 0.16666666666666663 0
+		-2.1666666666666665 0.5 0
+		-1.4999999999999998 -0.5 0
+		-1.4999999999999998 -0.16666666666666669 0
+		-1.4999999999999998 0.16666666666666663 0
+		-1.4999999999999998 0.5 0
+		-0.49999999999999961 -0.5 0
+		-0.49999999999999961 -0.16666666666666669 0
+		-0.49999999999999961 0.16666666666666663 0
+		-0.49999999999999961 0.5 0
+		0.50000000000000044 -0.5 0
+		0.50000000000000044 -0.16666666666666669 0
+		0.50000000000000044 0.16666666666666663 0
+		0.50000000000000044 0.5 0
+		1.5000000000000004 -0.5 0
+		1.5000000000000004 -0.16666666666666669 0
+		1.5000000000000004 0.16666666666666663 0
+		1.5000000000000004 0.5 0
+		2.166666666666667 -0.5 0
+		2.166666666666667 -0.16666666666666669 0
+		2.166666666666667 0.16666666666666663 0
+		2.166666666666667 0.5 0
+		2.5 -0.5 0
+		2.5 -0.16666666666666669 0
+		2.5 0.16666666666666663 0
+		2.5 0.5 0
+		
+		;
+	setAttr ".nufa" 4.5;
+	setAttr ".nvfa" 4.5;
+createNode transform -n "Hair_30_Guide" -p "Hair_Block";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BB00002918";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" -21.556602537631989 183.62393951416016 -2.4538842439651489 ;
+	setAttr ".r" -type "double3" 4.9704216304154917e-17 1.0311665119130706 138.65787661740347 ;
+	setAttr ".s" -type "double3" 10.803690795017577 4.4803243847575072 8 ;
+createNode nurbsSurface -n "Hair_30_GuideShape" -p "Hair_30_Guide";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BB00002919";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr -k off ".v";
+	setAttr ".vir" yes;
+	setAttr ".vif" yes;
+	setAttr ".covm[0]"  0 1 1;
+	setAttr ".cdvm[0]"  0 1 1;
+	setAttr ".dvu" 0;
+	setAttr ".dvv" 0;
+	setAttr ".cpr" 4;
+	setAttr ".cps" 4;
+	setAttr ".cc" -type "nurbsSurface" 
+		3 3 0 0 no 
+		10 0 0 0 0.20000000000000001 0.40000000000000002 0.60000000000000009 0.80000000000000004 1 1 1
+		6 0 0 0 1 1 1
+		
+		32
+		-2.5 -0.5 0
+		-2.5 -0.16666666666666669 0
+		-2.5 0.16666666666666663 0
+		-2.5 0.5 0
+		-2.1666666666666665 -0.5 0
+		-2.1666666666666665 -0.16666666666666669 0
+		-2.1666666666666665 0.16666666666666663 0
+		-2.1666666666666665 0.5 0
+		-1.4999999999999998 -0.5 0
+		-1.4999999999999998 -0.16666666666666669 0
+		-1.4999999999999998 0.16666666666666663 0
+		-1.4999999999999998 0.5 0
+		-0.49999999999999961 -0.5 0
+		-0.49999999999999961 -0.16666666666666669 0
+		-0.49999999999999961 0.16666666666666663 0
+		-0.49999999999999961 0.5 0
+		0.50000000000000044 -0.5 0
+		0.50000000000000044 -0.16666666666666669 0
+		0.50000000000000044 0.16666666666666663 0
+		0.50000000000000044 0.5 0
+		1.5000000000000004 -0.5 0
+		1.5000000000000004 -0.16666666666666669 0
+		1.5000000000000004 0.16666666666666663 0
+		1.5000000000000004 0.5 0
+		2.166666666666667 -0.5 0
+		2.166666666666667 -0.16666666666666669 0
+		2.166666666666667 0.16666666666666663 0
+		2.166666666666667 0.5 0
+		2.5 -0.5 0
+		2.5 -0.16666666666666669 0
+		2.5 0.16666666666666663 0
+		2.5 0.5 0
+		
+		;
+	setAttr ".nufa" 4.5;
+	setAttr ".nvfa" 4.5;
+createNode transform -n "Hair_31_Guide" -p "Hair_Block";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BB0000292B";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" 15.580742448902887 183.14384403914715 -6.3640671200178458 ;
+	setAttr ".r" -type "double3" 0 11.456235992567867 48.857401935522333 ;
+	setAttr ".s" -type "double3" 8.8436229016654 8 8 ;
+createNode nurbsSurface -n "Hair_31_GuideShape" -p "Hair_31_Guide";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BB0000292C";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr -k off ".v";
+	setAttr ".vir" yes;
+	setAttr ".vif" yes;
+	setAttr ".covm[0]"  0 1 1;
+	setAttr ".cdvm[0]"  0 1 1;
+	setAttr ".dvu" 0;
+	setAttr ".dvv" 0;
+	setAttr ".cpr" 4;
+	setAttr ".cps" 4;
+	setAttr ".cc" -type "nurbsSurface" 
+		3 3 0 0 no 
+		10 0 0 0 0.20000000000000001 0.40000000000000002 0.60000000000000009 0.80000000000000004 1 1 1
+		6 0 0 0 1 1 1
+		
+		32
+		-2.5 -0.5 0
+		-2.5 -0.16666666666666669 0
+		-2.5 0.16666666666666663 0
+		-2.5 0.5 0
+		-2.1666666666666665 -0.5 0
+		-2.1666666666666665 -0.16666666666666669 0
+		-2.1666666666666665 0.16666666666666663 0
+		-2.1666666666666665 0.5 0
+		-1.4999999999999998 -0.5 0
+		-1.4999999999999998 -0.16666666666666669 0
+		-1.4999999999999998 0.16666666666666663 0
+		-1.4999999999999998 0.5 0
+		-0.49999999999999961 -0.5 0
+		-0.49999999999999961 -0.16666666666666669 0
+		-0.49999999999999961 0.16666666666666663 0
+		-0.49999999999999961 0.5 0
+		0.50000000000000044 -0.5 0
+		0.50000000000000044 -0.16666666666666669 0
+		0.50000000000000044 0.16666666666666663 0
+		0.50000000000000044 0.5 0
+		1.5000000000000004 -0.5 0
+		1.5000000000000004 -0.16666666666666669 0
+		1.5000000000000004 0.16666666666666663 0
+		1.5000000000000004 0.5 0
+		2.166666666666667 -0.5 0
+		2.166666666666667 -0.16666666666666669 0
+		2.166666666666667 0.16666666666666663 0
+		2.166666666666667 0.5 0
+		2.5 -0.5 0
+		2.5 -0.16666666666666669 0
+		2.5 0.16666666666666663 0
+		2.5 0.5 0
+		
+		;
+	setAttr ".nufa" 4.5;
+	setAttr ".nvfa" 4.5;
+createNode transform -n "Hair_32_Guide" -p "Hair_Block";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BB0000293E";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" -18.601807714495816 171.40663458740514 4.4111114092947137 ;
+	setAttr ".r" -type "double3" 4.0549652535866549e-16 -11.347854638976816 158.8142368790264 ;
+	setAttr ".s" -type "double3" 7.6836707853272443 8 8 ;
+createNode nurbsSurface -n "Hair_32_GuideShape" -p "Hair_32_Guide";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BB0000293F";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr -k off ".v";
+	setAttr ".vir" yes;
+	setAttr ".vif" yes;
+	setAttr ".covm[0]"  0 1 1;
+	setAttr ".cdvm[0]"  0 1 1;
+	setAttr ".dvu" 0;
+	setAttr ".dvv" 0;
+	setAttr ".cpr" 4;
+	setAttr ".cps" 4;
+	setAttr ".cc" -type "nurbsSurface" 
+		3 3 0 0 no 
+		10 0 0 0 0.20000000000000001 0.40000000000000002 0.60000000000000009 0.80000000000000004 1 1 1
+		6 0 0 0 1 1 1
+		
+		32
+		-2.5 -0.5 0
+		-2.5 -0.16666666666666669 0
+		-2.5 0.16666666666666663 0
+		-2.5 0.5 0
+		-2.1666666666666665 -0.5 0
+		-2.1666666666666665 -0.16666666666666669 0
+		-2.1666666666666665 0.16666666666666663 0
+		-2.1666666666666665 0.5 0
+		-1.4999999999999998 -0.5 0
+		-1.4999999999999998 -0.16666666666666669 0
+		-1.4999999999999998 0.16666666666666663 0
+		-1.4999999999999998 0.5 0
+		-0.49999999999999961 -0.5 0
+		-0.49999999999999961 -0.16666666666666669 0
+		-0.49999999999999961 0.16666666666666663 0
+		-0.49999999999999961 0.5 0
+		0.50000000000000044 -0.5 0
+		0.50000000000000044 -0.16666666666666669 0
+		0.50000000000000044 0.16666666666666663 0
+		0.50000000000000044 0.5 0
+		1.5000000000000004 -0.5 0
+		1.5000000000000004 -0.16666666666666669 0
+		1.5000000000000004 0.16666666666666663 0
+		1.5000000000000004 0.5 0
+		2.166666666666667 -0.5 0
+		2.166666666666667 -0.16666666666666669 0
+		2.166666666666667 0.16666666666666663 0
+		2.166666666666667 0.5 0
+		2.5 -0.5 0
+		2.5 -0.16666666666666669 0
+		2.5 0.16666666666666663 0
+		2.5 0.5 0
+		
+		;
+	setAttr ".nufa" 4.5;
+	setAttr ".nvfa" 4.5;
+createNode transform -n "Hair_33_Guide" -p "Hair_Block";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BB00002951";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" -13.110731376029559 181.83149033822488 2.1213047681104302 ;
+	setAttr ".r" -type "double3" 0.13714017825754304 -4.9578054430880973 130.74769888711182 ;
+	setAttr ".s" -type "double3" 8 8 8 ;
+createNode nurbsSurface -n "Hair_33_GuideShape" -p "Hair_33_Guide";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BB00002952";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr -k off ".v";
+	setAttr ".vir" yes;
+	setAttr ".vif" yes;
+	setAttr ".covm[0]"  0 1 1;
+	setAttr ".cdvm[0]"  0 1 1;
+	setAttr ".dvu" 0;
+	setAttr ".dvv" 0;
+	setAttr ".cpr" 4;
+	setAttr ".cps" 4;
+	setAttr ".cc" -type "nurbsSurface" 
+		3 3 0 0 no 
+		10 0 0 0 0.20000000000000001 0.40000000000000002 0.60000000000000009 0.80000000000000004 1 1 1
+		6 0 0 0 1 1 1
+		
+		32
+		-2.5 -0.5 0
+		-2.5 -0.16666666666666669 0
+		-2.5 0.16666666666666663 0
+		-2.5 0.5 0
+		-2.1666666666666665 -0.5 0
+		-2.1666666666666665 -0.16666666666666669 0
+		-2.1666666666666665 0.16666666666666663 0
+		-2.1666666666666665 0.5 0
+		-1.4999999999999998 -0.5 0
+		-1.4999999999999998 -0.16666666666666669 0
+		-1.4999999999999998 0.16666666666666663 0
+		-1.4999999999999998 0.5 0
+		-0.49999999999999961 -0.5 0
+		-0.49999999999999961 -0.16666666666666669 0
+		-0.49999999999999961 0.16666666666666663 0
+		-0.49999999999999961 0.5 0
+		0.50000000000000044 -0.5 0
+		0.50000000000000044 -0.16666666666666669 0
+		0.50000000000000044 0.16666666666666663 0
+		0.50000000000000044 0.5 0
+		1.5000000000000004 -0.5 0
+		1.5000000000000004 -0.16666666666666669 0
+		1.5000000000000004 0.16666666666666663 0
+		1.5000000000000004 0.5 0
+		2.166666666666667 -0.5 0
+		2.166666666666667 -0.16666666666666669 0
+		2.166666666666667 0.16666666666666663 0
+		2.166666666666667 0.5 0
+		2.5 -0.5 0
+		2.5 -0.16666666666666669 0
+		2.5 0.16666666666666663 0
+		2.5 0.5 0
+		
+		;
+	setAttr ".nufa" 4.5;
+	setAttr ".nvfa" 4.5;
+createNode transform -n "Hair_34_Guide" -p "Hair_Block";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BB00002964";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" 14.436188742578832 179.6489874434325 1.738885806231665 ;
+	setAttr ".r" -type "double3" 0 -5.898681710798888 44.650100097923527 ;
+	setAttr ".s" -type "double3" 8 8 8 ;
+createNode nurbsSurface -n "Hair_34_GuideShape" -p "Hair_34_Guide";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BB00002965";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr -k off ".v";
+	setAttr ".vir" yes;
+	setAttr ".vif" yes;
+	setAttr ".covm[0]"  0 1 1;
+	setAttr ".cdvm[0]"  0 1 1;
+	setAttr ".dvu" 0;
+	setAttr ".dvv" 0;
+	setAttr ".cpr" 4;
+	setAttr ".cps" 4;
+	setAttr ".cc" -type "nurbsSurface" 
+		3 3 0 0 no 
+		10 0 0 0 0.20000000000000001 0.40000000000000002 0.60000000000000009 0.80000000000000004 1 1 1
+		6 0 0 0 1 1 1
+		
+		32
+		-2.5 -0.5 0
+		-2.5 -0.16666666666666669 0
+		-2.5 0.16666666666666663 0
+		-2.5 0.5 0
+		-2.1666666666666665 -0.5 0
+		-2.1666666666666665 -0.16666666666666669 0
+		-2.1666666666666665 0.16666666666666663 0
+		-2.1666666666666665 0.5 0
+		-1.4999999999999998 -0.5 0
+		-1.4999999999999998 -0.16666666666666669 0
+		-1.4999999999999998 0.16666666666666663 0
+		-1.4999999999999998 0.5 0
+		-0.49999999999999961 -0.5 0
+		-0.49999999999999961 -0.16666666666666669 0
+		-0.49999999999999961 0.16666666666666663 0
+		-0.49999999999999961 0.5 0
+		0.50000000000000044 -0.5 0
+		0.50000000000000044 -0.16666666666666669 0
+		0.50000000000000044 0.16666666666666663 0
+		0.50000000000000044 0.5 0
+		1.5000000000000004 -0.5 0
+		1.5000000000000004 -0.16666666666666669 0
+		1.5000000000000004 0.16666666666666663 0
+		1.5000000000000004 0.5 0
+		2.166666666666667 -0.5 0
+		2.166666666666667 -0.16666666666666669 0
+		2.166666666666667 0.16666666666666663 0
+		2.166666666666667 0.5 0
+		2.5 -0.5 0
+		2.5 -0.16666666666666669 0
+		2.5 0.16666666666666663 0
+		2.5 0.5 0
+		
+		;
+	setAttr ".nufa" 4.5;
+	setAttr ".nvfa" 4.5;
+createNode transform -n "Hair_35_Guide" -p "Hair_Block";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BC00002977";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" 19.77147963538609 168.49586284861402 -31.165444590985626 ;
+	setAttr ".r" -type "double3" 16.813310031328612 53.593915777268862 16.259814032308466 ;
+	setAttr ".s" -type "double3" 11.849084417335586 8 8 ;
+createNode nurbsSurface -n "Hair_35_GuideShape" -p "Hair_35_Guide";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BC00002978";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr -k off ".v";
+	setAttr ".vir" yes;
+	setAttr ".vif" yes;
+	setAttr ".covm[0]"  0 1 1;
+	setAttr ".cdvm[0]"  0 1 1;
+	setAttr ".dvu" 0;
+	setAttr ".dvv" 0;
+	setAttr ".cpr" 4;
+	setAttr ".cps" 4;
+	setAttr ".cc" -type "nurbsSurface" 
+		3 3 0 0 no 
+		10 0 0 0 0.20000000000000001 0.40000000000000002 0.60000000000000009 0.80000000000000004 1 1 1
+		6 0 0 0 1 1 1
+		
+		32
+		-2.5 -0.5 0
+		-2.5 -0.16666666666666669 0
+		-2.5 0.16666666666666663 0
+		-2.5 0.5 0
+		-2.1666666666666665 -0.5 0
+		-2.1666666666666665 -0.16666666666666669 0
+		-2.1666666666666665 0.16666666666666663 0
+		-2.1666666666666665 0.5 0
+		-1.4999999999999998 -0.5 0
+		-1.4999999999999998 -0.16666666666666669 0
+		-1.4999999999999998 0.16666666666666663 0
+		-1.4999999999999998 0.5 0
+		-0.49999999999999961 -0.5 0
+		-0.49999999999999961 -0.16666666666666669 0
+		-0.49999999999999961 0.16666666666666663 0
+		-0.49999999999999961 0.5 0
+		0.50000000000000044 -0.5 0
+		0.50000000000000044 -0.16666666666666669 0
+		0.50000000000000044 0.16666666666666663 0
+		0.50000000000000044 0.5 0
+		1.5000000000000004 -0.5 0
+		1.5000000000000004 -0.16666666666666669 0
+		1.5000000000000004 0.16666666666666663 0
+		1.5000000000000004 0.5 0
+		2.166666666666667 -0.5 0
+		2.166666666666667 -0.16666666666666669 0
+		2.166666666666667 0.16666666666666663 0
+		2.166666666666667 0.5 0
+		2.5 -0.5 0
+		2.5 -0.16666666666666669 0
+		2.5 0.16666666666666663 0
+		2.5 0.5 0
+		
+		;
+	setAttr ".nufa" 4.5;
+	setAttr ".nvfa" 4.5;
+createNode transform -n "Hair_36_Guide" -p "Hair_Block";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BC0000298A";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" -28.118801300391052 161.34266228171407 -16.704186569474466 ;
+	setAttr ".r" -type "double3" -1.7529529809206055 30.210030955169998 176.58517431207207 ;
+	setAttr ".s" -type "double3" 10.466171416542274 8 8 ;
+createNode nurbsSurface -n "Hair_36_GuideShape" -p "Hair_36_Guide";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BC0000298B";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr -k off ".v";
+	setAttr ".vir" yes;
+	setAttr ".vif" yes;
+	setAttr ".covm[0]"  0 1 1;
+	setAttr ".cdvm[0]"  0 1 1;
+	setAttr ".dvu" 0;
+	setAttr ".dvv" 0;
+	setAttr ".cpr" 4;
+	setAttr ".cps" 4;
+	setAttr ".cc" -type "nurbsSurface" 
+		3 3 0 0 no 
+		10 0 0 0 0.20000000000000001 0.40000000000000002 0.60000000000000009 0.80000000000000004 1 1 1
+		6 0 0 0 1 1 1
+		
+		32
+		-2.5 -0.5 0
+		-2.5 -0.16666666666666669 0
+		-2.5 0.16666666666666663 0
+		-2.5 0.5 0
+		-2.1666666666666665 -0.5 0
+		-2.1666666666666665 -0.16666666666666669 0
+		-2.1666666666666665 0.16666666666666663 0
+		-2.1666666666666665 0.5 0
+		-1.4999999999999998 -0.5 0
+		-1.4999999999999998 -0.16666666666666669 0
+		-1.4999999999999998 0.16666666666666663 0
+		-1.4999999999999998 0.5 0
+		-0.49999999999999961 -0.5 0
+		-0.49999999999999961 -0.16666666666666669 0
+		-0.49999999999999961 0.16666666666666663 0
+		-0.49999999999999961 0.5 0
+		0.50000000000000044 -0.5 0
+		0.50000000000000044 -0.16666666666666669 0
+		0.50000000000000044 0.16666666666666663 0
+		0.50000000000000044 0.5 0
+		1.5000000000000004 -0.5 0
+		1.5000000000000004 -0.16666666666666669 0
+		1.5000000000000004 0.16666666666666663 0
+		1.5000000000000004 0.5 0
+		2.166666666666667 -0.5 0
+		2.166666666666667 -0.16666666666666669 0
+		2.166666666666667 0.16666666666666663 0
+		2.166666666666667 0.5 0
+		2.5 -0.5 0
+		2.5 -0.16666666666666669 0
+		2.5 0.16666666666666663 0
+		2.5 0.5 0
+		
+		;
+	setAttr ".nufa" 4.5;
+	setAttr ".nvfa" 4.5;
+createNode transform -n "Hair_37_Guide" -p "Hair_Block";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BC0000299D";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" -32.517973335913162 157.48788512895888 -4.1016490636774723 ;
+	setAttr ".r" -type "double3" -7.1683249757173648 7.5403362153296216 184.61519926305226 ;
+	setAttr ".s" -type "double3" 10.63784446557159 8 8 ;
+createNode nurbsSurface -n "Hair_37_GuideShape" -p "Hair_37_Guide";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BC0000299E";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr -k off ".v";
+	setAttr ".vir" yes;
+	setAttr ".vif" yes;
+	setAttr ".covm[0]"  0 1 1;
+	setAttr ".cdvm[0]"  0 1 1;
+	setAttr ".dvu" 0;
+	setAttr ".dvv" 0;
+	setAttr ".cpr" 4;
+	setAttr ".cps" 4;
+	setAttr ".cc" -type "nurbsSurface" 
+		3 3 0 0 no 
+		10 0 0 0 0.20000000000000001 0.40000000000000002 0.60000000000000009 0.80000000000000004 1 1 1
+		6 0 0 0 1 1 1
+		
+		32
+		-2.5 -0.5 0
+		-2.5 -0.16666666666666669 0
+		-2.5 0.16666666666666663 0
+		-2.5 0.5 0
+		-2.1666666666666665 -0.5 0
+		-2.1666666666666665 -0.16666666666666669 0
+		-2.1666666666666665 0.16666666666666663 0
+		-2.1666666666666665 0.5 0
+		-1.4999999999999998 -0.5 0
+		-1.4999999999999998 -0.16666666666666669 0
+		-1.4999999999999998 0.16666666666666663 0
+		-1.4999999999999998 0.5 0
+		-0.49999999999999961 -0.5 0
+		-0.49999999999999961 -0.16666666666666669 0
+		-0.49999999999999961 0.16666666666666663 0
+		-0.49999999999999961 0.5 0
+		0.50000000000000044 -0.5 0
+		0.50000000000000044 -0.16666666666666669 0
+		0.50000000000000044 0.16666666666666663 0
+		0.50000000000000044 0.5 0
+		1.5000000000000004 -0.5 0
+		1.5000000000000004 -0.16666666666666669 0
+		1.5000000000000004 0.16666666666666663 0
+		1.5000000000000004 0.5 0
+		2.166666666666667 -0.5 0
+		2.166666666666667 -0.16666666666666669 0
+		2.166666666666667 0.16666666666666663 0
+		2.166666666666667 0.5 0
+		2.5 -0.5 0
+		2.5 -0.16666666666666669 0
+		2.5 0.16666666666666663 0
+		2.5 0.5 0
+		
+		;
+	setAttr ".nufa" 4.5;
+	setAttr ".nvfa" 4.5;
+createNode transform -n "Hair_38_Guide" -p "Hair_Block";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BC000029B0";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" 32.875145650061846 156.86092217368798 -4.2635402679130951 ;
+	setAttr ".r" -type "double3" 0.75117285684341828 8.0307402535423709 -7.3401600792422297 ;
+	setAttr ".s" -type "double3" 10.521201749784293 8 8 ;
+createNode nurbsSurface -n "Hair_38_GuideShape" -p "Hair_38_Guide";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BC000029B1";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr -k off ".v";
+	setAttr ".vir" yes;
+	setAttr ".vif" yes;
+	setAttr ".covm[0]"  0 1 1;
+	setAttr ".cdvm[0]"  0 1 1;
+	setAttr ".dvu" 0;
+	setAttr ".dvv" 0;
+	setAttr ".cpr" 4;
+	setAttr ".cps" 4;
+	setAttr ".cc" -type "nurbsSurface" 
+		3 3 0 0 no 
+		10 0 0 0 0.20000000000000001 0.40000000000000002 0.60000000000000009 0.80000000000000004 1 1 1
+		6 0 0 0 1 1 1
+		
+		32
+		-2.5 -0.5 0
+		-2.5 -0.16666666666666669 0
+		-2.5 0.16666666666666663 0
+		-2.5 0.5 0
+		-2.1666666666666665 -0.5 0
+		-2.1666666666666665 -0.16666666666666669 0
+		-2.1666666666666665 0.16666666666666663 0
+		-2.1666666666666665 0.5 0
+		-1.4999999999999998 -0.5 0
+		-1.4999999999999998 -0.16666666666666669 0
+		-1.4999999999999998 0.16666666666666663 0
+		-1.4999999999999998 0.5 0
+		-0.49999999999999961 -0.5 0
+		-0.49999999999999961 -0.16666666666666669 0
+		-0.49999999999999961 0.16666666666666663 0
+		-0.49999999999999961 0.5 0
+		0.50000000000000044 -0.5 0
+		0.50000000000000044 -0.16666666666666669 0
+		0.50000000000000044 0.16666666666666663 0
+		0.50000000000000044 0.5 0
+		1.5000000000000004 -0.5 0
+		1.5000000000000004 -0.16666666666666669 0
+		1.5000000000000004 0.16666666666666663 0
+		1.5000000000000004 0.5 0
+		2.166666666666667 -0.5 0
+		2.166666666666667 -0.16666666666666669 0
+		2.166666666666667 0.16666666666666663 0
+		2.166666666666667 0.5 0
+		2.5 -0.5 0
+		2.5 -0.16666666666666669 0
+		2.5 0.16666666666666663 0
+		2.5 0.5 0
+		
+		;
+	setAttr ".nufa" 4.5;
+	setAttr ".nvfa" 4.5;
+createNode transform -n "Hair_39_Guide" -p "Hair_Block";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BC000029C3";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" 25.06096638624442 163.01275684124957 -21.432556448546471 ;
+	setAttr ".r" -type "double3" 1.9783635807072886 45.768707663036054 4.9274469304390456 ;
+	setAttr ".s" -type "double3" 10.401169332821151 8 8 ;
+createNode nurbsSurface -n "Hair_39_GuideShape" -p "Hair_39_Guide";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BC000029C4";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr -k off ".v";
+	setAttr ".vir" yes;
+	setAttr ".vif" yes;
+	setAttr ".covm[0]"  0 1 1;
+	setAttr ".cdvm[0]"  0 1 1;
+	setAttr ".dvu" 0;
+	setAttr ".dvv" 0;
+	setAttr ".cpr" 4;
+	setAttr ".cps" 4;
+	setAttr ".cc" -type "nurbsSurface" 
+		3 3 0 0 no 
+		10 0 0 0 0.20000000000000001 0.40000000000000002 0.60000000000000009 0.80000000000000004 1 1 1
+		6 0 0 0 1 1 1
+		
+		32
+		-2.5 -0.5 0
+		-2.5 -0.16666666666666669 0
+		-2.5 0.16666666666666663 0
+		-2.5 0.5 0
+		-2.1666666666666665 -0.5 0
+		-2.1666666666666665 -0.16666666666666669 0
+		-2.1666666666666665 0.16666666666666663 0
+		-2.1666666666666665 0.5 0
+		-1.4999999999999998 -0.5 0
+		-1.4999999999999998 -0.16666666666666669 0
+		-1.4999999999999998 0.16666666666666663 0
+		-1.4999999999999998 0.5 0
+		-0.49999999999999961 -0.5 0
+		-0.49999999999999961 -0.16666666666666669 0
+		-0.49999999999999961 0.16666666666666663 0
+		-0.49999999999999961 0.5 0
+		0.50000000000000044 -0.5 0
+		0.50000000000000044 -0.16666666666666669 0
+		0.50000000000000044 0.16666666666666663 0
+		0.50000000000000044 0.5 0
+		1.5000000000000004 -0.5 0
+		1.5000000000000004 -0.16666666666666669 0
+		1.5000000000000004 0.16666666666666663 0
+		1.5000000000000004 0.5 0
+		2.166666666666667 -0.5 0
+		2.166666666666667 -0.16666666666666669 0
+		2.166666666666667 0.16666666666666663 0
+		2.166666666666667 0.5 0
+		2.5 -0.5 0
+		2.5 -0.16666666666666669 0
+		2.5 0.16666666666666663 0
+		2.5 0.5 0
+		
+		;
+	setAttr ".nufa" 4.5;
+	setAttr ".nvfa" 4.5;
+createNode transform -n "Hair_40_Guide" -p "Hair_Block";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BC000029D6";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" 21.75401765719419 154.1901195833253 -13.466920593851611 ;
+	setAttr ".r" -type "double3" -4.668622396910898 24.707076971756539 -11.284438768938017 ;
+	setAttr ".s" -type "double3" 8.5227207833587695 8 8 ;
+createNode nurbsSurface -n "Hair_40_GuideShape" -p "Hair_40_Guide";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BC000029D7";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr -k off ".v";
+	setAttr ".vir" yes;
+	setAttr ".vif" yes;
+	setAttr ".covm[0]"  0 1 1;
+	setAttr ".cdvm[0]"  0 1 1;
+	setAttr ".dvu" 0;
+	setAttr ".dvv" 0;
+	setAttr ".cpr" 4;
+	setAttr ".cps" 4;
+	setAttr ".cc" -type "nurbsSurface" 
+		3 3 0 0 no 
+		10 0 0 0 0.20000000000000001 0.40000000000000002 0.60000000000000009 0.80000000000000004 1 1 1
+		6 0 0 0 1 1 1
+		
+		32
+		-2.5 -0.5 0
+		-2.5 -0.16666666666666669 0
+		-2.5 0.16666666666666663 0
+		-2.5 0.5 0
+		-2.1666666666666665 -0.5 0
+		-2.1666666666666665 -0.16666666666666669 0
+		-2.1666666666666665 0.16666666666666663 0
+		-2.1666666666666665 0.5 0
+		-1.4999999999999998 -0.5 0
+		-1.4999999999999998 -0.16666666666666669 0
+		-1.4999999999999998 0.16666666666666663 0
+		-1.4999999999999998 0.5 0
+		-0.49999999999999961 -0.5 0
+		-0.49999999999999961 -0.16666666666666669 0
+		-0.49999999999999961 0.16666666666666663 0
+		-0.49999999999999961 0.5 0
+		0.50000000000000044 -0.5 0
+		0.50000000000000044 -0.16666666666666669 0
+		0.50000000000000044 0.16666666666666663 0
+		0.50000000000000044 0.5 0
+		1.5000000000000004 -0.5 0
+		1.5000000000000004 -0.16666666666666669 0
+		1.5000000000000004 0.16666666666666663 0
+		1.5000000000000004 0.5 0
+		2.166666666666667 -0.5 0
+		2.166666666666667 -0.16666666666666669 0
+		2.166666666666667 0.16666666666666663 0
+		2.166666666666667 0.5 0
+		2.5 -0.5 0
+		2.5 -0.16666666666666669 0
+		2.5 0.16666666666666663 0
+		2.5 0.5 0
+		
+		;
+	setAttr ".nufa" 4.5;
+	setAttr ".nvfa" 4.5;
+createNode transform -n "Hair_41_Guide" -p "Hair_Block";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BC000029E9";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" 14.153355109808981 150.74062610247444 -21.16703139252121 ;
+	setAttr ".r" -type "double3" -100.17045563206187 52.324435631870585 -22.851974869397395 ;
+	setAttr ".s" -type "double3" 8 8 8 ;
+createNode nurbsSurface -n "Hair_41_GuideShape" -p "Hair_41_Guide";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BC000029EA";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr -k off ".v";
+	setAttr ".vir" yes;
+	setAttr ".vif" yes;
+	setAttr ".covm[0]"  0 1 1;
+	setAttr ".cdvm[0]"  0 1 1;
+	setAttr ".dvu" 0;
+	setAttr ".dvv" 0;
+	setAttr ".cpr" 4;
+	setAttr ".cps" 4;
+	setAttr ".cc" -type "nurbsSurface" 
+		3 3 0 0 no 
+		10 0 0 0 0.20000000000000001 0.40000000000000002 0.60000000000000009 0.80000000000000004 1 1 1
+		6 0 0 0 1 1 1
+		
+		32
+		-2.5 -0.5 0
+		-2.5 -0.16666666666666669 0
+		-2.5 0.16666666666666663 0
+		-2.5 0.5 0
+		-2.1666666666666665 -0.5 0
+		-2.1666666666666665 -0.16666666666666669 0
+		-2.1666666666666665 0.16666666666666663 0
+		-2.1666666666666665 0.5 0
+		-1.4999999999999998 -0.5 0
+		-1.4999999999999998 -0.16666666666666669 0
+		-1.4999999999999998 0.16666666666666663 0
+		-1.4999999999999998 0.5 0
+		-0.49999999999999961 -0.5 0
+		-0.49999999999999961 -0.16666666666666669 0
+		-0.49999999999999961 0.16666666666666663 0
+		-0.49999999999999961 0.5 0
+		0.50000000000000044 -0.5 0
+		0.50000000000000044 -0.16666666666666669 0
+		0.50000000000000044 0.16666666666666663 0
+		0.50000000000000044 0.5 0
+		1.5000000000000004 -0.5 0
+		1.5000000000000004 -0.16666666666666669 0
+		1.5000000000000004 0.16666666666666663 0
+		1.5000000000000004 0.5 0
+		2.166666666666667 -0.5 0
+		2.166666666666667 -0.16666666666666669 0
+		2.166666666666667 0.16666666666666663 0
+		2.166666666666667 0.5 0
+		2.5 -0.5 0
+		2.5 -0.16666666666666669 0
+		2.5 0.16666666666666663 0
+		2.5 0.5 0
+		
+		;
+	setAttr ".nufa" 4.5;
+	setAttr ".nvfa" 4.5;
+createNode transform -n "Hair_42_Guide" -p "Hair_Block";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BC000029FC";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" -1.5245634317398071 182.79362487792969 12.010545253753662 ;
+	setAttr ".r" -type "double3" -0.27580646789909147 -17.802769166006758 96.141391381567942 ;
+	setAttr ".s" -type "double3" 8 3.0595134170515874 8 ;
+createNode nurbsSurface -n "Hair_42_GuideShape" -p "Hair_42_Guide";
+	rename -uid "F01A2D80-0000-467F-62A8-A8BC000029FD";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr -k off ".v";
+	setAttr ".vir" yes;
+	setAttr ".vif" yes;
+	setAttr ".covm[0]"  0 1 1;
+	setAttr ".cdvm[0]"  0 1 1;
+	setAttr ".dvu" 0;
+	setAttr ".dvv" 0;
+	setAttr ".cpr" 4;
+	setAttr ".cps" 4;
+	setAttr ".cc" -type "nurbsSurface" 
+		3 3 0 0 no 
+		10 0 0 0 0.20000000000000001 0.40000000000000002 0.60000000000000009 0.80000000000000004 1 1 1
+		6 0 0 0 1 1 1
+		
+		32
+		-2.5 -0.5 0
+		-2.5 -0.16666666666666669 0
+		-2.5 0.16666666666666663 0
+		-2.5 0.5 0
+		-2.1666666666666665 -0.5 0
+		-2.1666666666666665 -0.16666666666666669 0
+		-2.1666666666666665 0.16666666666666663 0
+		-2.1666666666666665 0.5 0
+		-1.4999999999999998 -0.5 0
+		-1.4999999999999998 -0.16666666666666669 0
+		-1.4999999999999998 0.16666666666666663 0
+		-1.4999999999999998 0.5 0
+		-0.49999999999999961 -0.5 0
+		-0.49999999999999961 -0.16666666666666669 0
+		-0.49999999999999961 0.16666666666666663 0
+		-0.49999999999999961 0.5 0
+		0.50000000000000044 -0.5 0
+		0.50000000000000044 -0.16666666666666669 0
+		0.50000000000000044 0.16666666666666663 0
+		0.50000000000000044 0.5 0
+		1.5000000000000004 -0.5 0
+		1.5000000000000004 -0.16666666666666669 0
+		1.5000000000000004 0.16666666666666663 0
+		1.5000000000000004 0.5 0
+		2.166666666666667 -0.5 0
+		2.166666666666667 -0.16666666666666669 0
+		2.166666666666667 0.16666666666666663 0
+		2.166666666666667 0.5 0
+		2.5 -0.5 0
+		2.5 -0.16666666666666669 0
+		2.5 0.16666666666666663 0
+		2.5 0.5 0
+		
+		;
+	setAttr ".nufa" 4.5;
+	setAttr ".nvfa" 4.5;
+createNode dagContainer -n "SineAttrs_Ctrl_Block" -p "Hair";
+	rename -uid "F01A2D80-0000-467F-62A9-0E5C0003AC66";
+	setAttr ".isc" yes;
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/CODE.png";
+	setAttr ".ctor" -type "string" "esteban.rodriguez";
+	setAttr ".cdat" -type "string" "2022/06/14 15:40:28";
+	setAttr -l on -k off ".v";
+	setAttr -l on -k off ".tx";
+	setAttr -l on -k off ".ty";
+	setAttr -l on -k off ".tz";
+	setAttr -l on -k off ".rx";
+	setAttr -l on -k off ".ry";
+	setAttr -l on -k off ".rz";
+	setAttr -l on -k off ".sx";
+	setAttr -l on -k off ".sy";
+	setAttr -l on -k off ".sz";
+createNode transform -n "SineAttrs_Ctrl_Loc" -p "SineAttrs_Ctrl_Block";
+	rename -uid "F01A2D80-0000-467F-62A9-0E5C0003AC75";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".t" -type "double3" 0 219.06732048576458 0 ;
+	setAttr ".r" -type "double3" -90.000000000000028 0 0 ;
+createNode locator -n "SineAttrs_Ctrl_LocShape" -p "SineAttrs_Ctrl_Loc";
+	rename -uid "F01A2D80-0000-467F-62A9-0E5C0003AC76";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr -k off ".v";
+createNode dagContainer -n "FixPivots_Block" -p "Hair";
+	rename -uid "F01A2D80-0000-467F-62A8-B8EF00008F9D";
+	setAttr ".isc" yes;
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/CODE.png";
+	setAttr ".ctor" -type "string" "esteban.rodriguez";
+	setAttr ".cdat" -type "string" "2022/06/14 09:35:59";
+	setAttr -l on -k off ".v";
+	setAttr -l on -k off ".tx";
+	setAttr -l on -k off ".ty";
+	setAttr -l on -k off ".tz";
+	setAttr -l on -k off ".rx";
+	setAttr -l on -k off ".ry";
+	setAttr -l on -k off ".rz";
+	setAttr -l on -k off ".sx";
+	setAttr -l on -k off ".sy";
+	setAttr -l on -k off ".sz";
+createNode dagContainer -n "HairSkinning_Block" -p "Hair";
+	rename -uid "F01A2D80-0000-467F-62A8-C9A300022D61";
+	setAttr ".isc" yes;
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/CODE.png";
+	setAttr ".ctor" -type "string" "esteban.rodriguez";
+	setAttr ".cdat" -type "string" "2022/06/14 10:47:15";
+	setAttr -l on -k off ".v";
+	setAttr -l on -k off ".tx";
+	setAttr -l on -k off ".ty";
+	setAttr -l on -k off ".tz";
+	setAttr -l on -k off ".rx";
+	setAttr -l on -k off ".ry";
+	setAttr -l on -k off ".rz";
+	setAttr -l on -k off ".sx";
+	setAttr -l on -k off ".sy";
+	setAttr -l on -k off ".sz";
+createNode dagContainer -n "SineDeformers_Block" -p "Hair";
+	rename -uid "F01A2D80-0000-467F-62A8-EF470002F7F3";
+	setAttr ".isc" yes;
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/CODE.png";
+	setAttr ".ctor" -type "string" "esteban.rodriguez";
+	setAttr ".cdat" -type "string" "2022/06/14 13:27:51";
+	setAttr -l on -k off ".v";
+	setAttr -l on -k off ".tx";
+	setAttr -l on -k off ".ty";
+	setAttr -l on -k off ".tz";
+	setAttr -l on -k off ".rx";
+	setAttr -l on -k off ".ry";
+	setAttr -l on -k off ".rz";
+	setAttr -l on -k off ".sx";
+	setAttr -l on -k off ".sy";
+	setAttr -l on -k off ".sz";
+createNode dagContainer -n "DeltaMush_Block" -p "Hair";
+	rename -uid "F75E4D80-0000-6AA1-62AA-1BAD0000ED34";
+	setAttr ".isc" yes;
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/CODE.png";
+	setAttr ".ctor" -type "string" "esteban.rodriguez";
+	setAttr ".cdat" -type "string" "2022/06/15 10:49:33";
+	setAttr -l on -k off ".v";
+	setAttr -l on -k off ".tx";
+	setAttr -l on -k off ".ty";
+	setAttr -l on -k off ".tz";
+	setAttr -l on -k off ".rx";
+	setAttr -l on -k off ".ry";
+	setAttr -l on -k off ".rz";
+	setAttr -l on -k off ".sx";
+	setAttr -l on -k off ".sy";
+	setAttr -l on -k off ".sz";
+createNode transform -n "DeltaMush_Loc" -p "DeltaMush_Block";
+	rename -uid "F75E4D80-0000-6AA1-62AA-1BAD0000ED43";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+createNode locator -n "DeltaMush_LocShape" -p "DeltaMush_Loc";
+	rename -uid "F75E4D80-0000-6AA1-62AA-1BAD0000ED44";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr -k off ".v";
+createNode dagContainer -n "SkinSine_Block" -p "Hair";
+	rename -uid "B780CD80-0000-5333-62AB-825600003414";
+	setAttr ".isc" yes;
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/CODE.png";
+	setAttr ".ctor" -type "string" "esteban.rodriguez";
+	setAttr ".cdat" -type "string" "2022/06/16 12:19:50";
+	setAttr -l on -k off ".v";
+	setAttr -l on -k off ".tx";
+	setAttr -l on -k off ".ty";
+	setAttr -l on -k off ".tz";
+	setAttr -l on -k off ".rx";
+	setAttr -l on -k off ".ry";
+	setAttr -l on -k off ".rz";
+	setAttr -l on -k off ".sx";
+	setAttr -l on -k off ".sy";
+	setAttr -l on -k off ".sz";
+createNode transform -n "SkinSine_Loc" -p "SkinSine_Block";
+	rename -uid "B780CD80-0000-5333-62AB-825600003417";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+createNode locator -n "SkinSine_LocShape" -p "SkinSine_Loc";
+	rename -uid "B780CD80-0000-5333-62AB-825600003418";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr -k off ".v";
+createNode transform -n "Animation" -p "Mutant_Build";
+	rename -uid "4A5BFD80-0000-157A-62B2-055B000222D2";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+createNode dagContainer -n "LoadAnimation_Block" -p "Animation";
+	rename -uid "4A5BFD80-0000-157A-62B2-0570000222D3";
+	setAttr ".isc" yes;
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/CODE.png";
+	setAttr ".ctor" -type "string" "esteban.rodriguez";
+	setAttr ".cdat" -type "string" "2022/06/21 10:52:48";
+	setAttr -l on -k off ".v";
+	setAttr -l on -k off ".tx";
+	setAttr -l on -k off ".ty";
+	setAttr -l on -k off ".tz";
+	setAttr -l on -k off ".rx";
+	setAttr -l on -k off ".ry";
+	setAttr -l on -k off ".rz";
+	setAttr -l on -k off ".sx";
+	setAttr -l on -k off ".sy";
+	setAttr -l on -k off ".sz";
+createNode transform -n "LoadAnimation_Loc" -p "LoadAnimation_Block";
+	rename -uid "4A5BFD80-0000-157A-62B2-0570000222D6";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+createNode locator -n "LoadAnimation_LocShape" -p "LoadAnimation_Loc";
+	rename -uid "4A5BFD80-0000-157A-62B2-0570000222D7";
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr -k off ".v";
+createNode dagContainer -n "PoseToAttr1_Block" -p "Animation";
+	rename -uid "F40B2D80-0000-1D93-630E-7A1A0000D3CC";
+	setAttr ".isc" yes;
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/AnimToAttr.png";
+	setAttr ".ctor" -type "string" "esteban.rodriguez";
+	setAttr ".cdat" -type "string" "2022/08/30 13:59:06";
+	setAttr -l on -k off ".v";
+	setAttr -l on -k off ".tx";
+	setAttr -l on -k off ".ty";
+	setAttr -l on -k off ".tz";
+	setAttr -l on -k off ".rx";
+	setAttr -l on -k off ".ry";
+	setAttr -l on -k off ".rz";
+	setAttr -l on -k off ".sx";
+	setAttr -l on -k off ".sy";
+	setAttr -l on -k off ".sz";
+createNode dagContainer -n "PoseToAttr2_Block" -p "Animation";
+	rename -uid "F40B2D80-0000-1D93-630E-7A200000D3CF";
+	setAttr ".isc" yes;
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/AnimToAttr.png";
+	setAttr ".ctor" -type "string" "esteban.rodriguez";
+	setAttr ".cdat" -type "string" "2022/08/30 13:59:12";
+	setAttr -l on -k off ".v";
+	setAttr -l on -k off ".tx";
+	setAttr -l on -k off ".ty";
+	setAttr -l on -k off ".tz";
+	setAttr -l on -k off ".rx";
+	setAttr -l on -k off ".ry";
+	setAttr -l on -k off ".rz";
+	setAttr -l on -k off ".sx";
+	setAttr -l on -k off ".sy";
+	setAttr -l on -k off ".sz";
+createNode dagContainer -n "PoseToAttr3_Block" -p "Animation";
+	rename -uid "F40B2D80-0000-1D93-630E-7A240000D3D2";
+	setAttr ".isc" yes;
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/AnimToAttr.png";
+	setAttr ".ctor" -type "string" "esteban.rodriguez";
+	setAttr ".cdat" -type "string" "2022/08/30 13:59:16";
+	setAttr -l on -k off ".v";
+	setAttr -l on -k off ".tx";
+	setAttr -l on -k off ".ty";
+	setAttr -l on -k off ".tz";
+	setAttr -l on -k off ".rx";
+	setAttr -l on -k off ".ry";
+	setAttr -l on -k off ".rz";
+	setAttr -l on -k off ".sx";
+	setAttr -l on -k off ".sy";
+	setAttr -l on -k off ".sz";
+createNode dagContainer -n "PoseToAttr4_Block" -p "Animation";
+	rename -uid "F40B2D80-0000-1D93-630E-7A270000D3D5";
+	setAttr ".isc" yes;
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/AnimToAttr.png";
+	setAttr ".ctor" -type "string" "esteban.rodriguez";
+	setAttr ".cdat" -type "string" "2022/08/30 13:59:19";
+	setAttr -l on -k off ".v";
+	setAttr -l on -k off ".tx";
+	setAttr -l on -k off ".ty";
+	setAttr -l on -k off ".tz";
+	setAttr -l on -k off ".rx";
+	setAttr -l on -k off ".ry";
+	setAttr -l on -k off ".rz";
+	setAttr -l on -k off ".sx";
+	setAttr -l on -k off ".sy";
+	setAttr -l on -k off ".sz";
+createNode dagContainer -n "PoseToAttr5_Block" -p "Animation";
+	rename -uid "F40B2D80-0000-1D93-630E-7A2A0000D3D8";
+	setAttr ".isc" yes;
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/AnimToAttr.png";
+	setAttr ".ctor" -type "string" "esteban.rodriguez";
+	setAttr ".cdat" -type "string" "2022/08/30 13:59:22";
+	setAttr -l on -k off ".v";
+	setAttr -l on -k off ".tx";
+	setAttr -l on -k off ".ty";
+	setAttr -l on -k off ".tz";
+	setAttr -l on -k off ".rx";
+	setAttr -l on -k off ".ry";
+	setAttr -l on -k off ".rz";
+	setAttr -l on -k off ".sx";
+	setAttr -l on -k off ".sy";
+	setAttr -l on -k off ".sz";
+createNode dagContainer -n "PoseToAttr6_Block" -p "Animation";
+	rename -uid "F40B2D80-0000-1D93-630E-7A2D0000D3DB";
+	setAttr ".isc" yes;
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/AnimToAttr.png";
+	setAttr ".ctor" -type "string" "esteban.rodriguez";
+	setAttr ".cdat" -type "string" "2022/08/30 13:59:25";
+	setAttr -l on -k off ".v";
+	setAttr -l on -k off ".tx";
+	setAttr -l on -k off ".ty";
+	setAttr -l on -k off ".tz";
+	setAttr -l on -k off ".rx";
+	setAttr -l on -k off ".ry";
+	setAttr -l on -k off ".rz";
+	setAttr -l on -k off ".sx";
+	setAttr -l on -k off ".sy";
+	setAttr -l on -k off ".sz";
+createNode dagContainer -n "PoseToAttr7_Block" -p "Animation";
+	rename -uid "F40B2D80-0000-1D93-630E-7A330000D3DE";
+	setAttr ".isc" yes;
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/AnimToAttr.png";
+	setAttr ".ctor" -type "string" "esteban.rodriguez";
+	setAttr ".cdat" -type "string" "2022/08/30 13:59:31";
+	setAttr -l on -k off ".v";
+	setAttr -l on -k off ".tx";
+	setAttr -l on -k off ".ty";
+	setAttr -l on -k off ".tz";
+	setAttr -l on -k off ".rx";
+	setAttr -l on -k off ".ry";
+	setAttr -l on -k off ".rz";
+	setAttr -l on -k off ".sx";
+	setAttr -l on -k off ".sy";
+	setAttr -l on -k off ".sz";
+createNode dagContainer -n "PoseToAttr8_Block" -p "Animation";
+	rename -uid "F40B2D80-0000-1D93-630E-7A360000D3E1";
+	setAttr ".isc" yes;
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/AnimToAttr.png";
+	setAttr ".ctor" -type "string" "esteban.rodriguez";
+	setAttr ".cdat" -type "string" "2022/08/30 13:59:34";
+	setAttr -l on -k off ".v";
+	setAttr -l on -k off ".tx";
+	setAttr -l on -k off ".ty";
+	setAttr -l on -k off ".tz";
+	setAttr -l on -k off ".rx";
+	setAttr -l on -k off ".ry";
+	setAttr -l on -k off ".rz";
+	setAttr -l on -k off ".sx";
+	setAttr -l on -k off ".sy";
+	setAttr -l on -k off ".sz";
+createNode dagContainer -n "PoseToAttr9_Block" -p "Animation";
+	rename -uid "F40B2D80-0000-1D93-630E-7A390000D3E4";
+	setAttr ".isc" yes;
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/AnimToAttr.png";
+	setAttr ".ctor" -type "string" "esteban.rodriguez";
+	setAttr ".cdat" -type "string" "2022/08/30 13:59:37";
+	setAttr -l on -k off ".v";
+	setAttr -l on -k off ".tx";
+	setAttr -l on -k off ".ty";
+	setAttr -l on -k off ".tz";
+	setAttr -l on -k off ".rx";
+	setAttr -l on -k off ".ry";
+	setAttr -l on -k off ".rz";
+	setAttr -l on -k off ".sx";
+	setAttr -l on -k off ".sy";
+	setAttr -l on -k off ".sz";
+createNode dagContainer -n "PoseToAttr10_Block" -p "Animation";
+	rename -uid "F40B2D80-0000-1D93-630E-7A3D0000D3E7";
+	setAttr ".isc" yes;
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/AnimToAttr.png";
+	setAttr ".ctor" -type "string" "esteban.rodriguez";
+	setAttr ".cdat" -type "string" "2022/08/30 13:59:41";
+	setAttr -l on -k off ".v";
+	setAttr -l on -k off ".tx";
+	setAttr -l on -k off ".ty";
+	setAttr -l on -k off ".tz";
+	setAttr -l on -k off ".rx";
+	setAttr -l on -k off ".ry";
+	setAttr -l on -k off ".rz";
+	setAttr -l on -k off ".sx";
+	setAttr -l on -k off ".sy";
+	setAttr -l on -k off ".sz";
+createNode dagContainer -n "PoseToAttr11_Block" -p "Animation";
+	rename -uid "F40B2D80-0000-1D93-630E-7A3F0000D3EA";
+	setAttr ".isc" yes;
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/AnimToAttr.png";
+	setAttr ".ctor" -type "string" "esteban.rodriguez";
+	setAttr ".cdat" -type "string" "2022/08/30 13:59:43";
+	setAttr -l on -k off ".v";
+	setAttr -l on -k off ".tx";
+	setAttr -l on -k off ".ty";
+	setAttr -l on -k off ".tz";
+	setAttr -l on -k off ".rx";
+	setAttr -l on -k off ".ry";
+	setAttr -l on -k off ".rz";
+	setAttr -l on -k off ".sx";
+	setAttr -l on -k off ".sy";
+	setAttr -l on -k off ".sz";
+createNode dagContainer -n "PoseToAttr12_Block" -p "Animation";
+	rename -uid "F40B2D80-0000-1D93-630E-7A420000D3ED";
+	setAttr ".isc" yes;
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/AnimToAttr.png";
+	setAttr ".ctor" -type "string" "esteban.rodriguez";
+	setAttr ".cdat" -type "string" "2022/08/30 13:59:46";
+	setAttr -l on -k off ".v";
+	setAttr -l on -k off ".tx";
+	setAttr -l on -k off ".ty";
+	setAttr -l on -k off ".tz";
+	setAttr -l on -k off ".rx";
+	setAttr -l on -k off ".ry";
+	setAttr -l on -k off ".rz";
+	setAttr -l on -k off ".sx";
+	setAttr -l on -k off ".sy";
+	setAttr -l on -k off ".sz";
+createNode dagContainer -n "PoseToAttr13_Block" -p "Animation";
+	rename -uid "F40B2D80-0000-1D93-630E-7A460000D3F0";
+	setAttr ".isc" yes;
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/AnimToAttr.png";
+	setAttr ".ctor" -type "string" "esteban.rodriguez";
+	setAttr ".cdat" -type "string" "2022/08/30 13:59:50";
+	setAttr -l on -k off ".v";
+	setAttr -l on -k off ".tx";
+	setAttr -l on -k off ".ty";
+	setAttr -l on -k off ".tz";
+	setAttr -l on -k off ".rx";
+	setAttr -l on -k off ".ry";
+	setAttr -l on -k off ".rz";
+	setAttr -l on -k off ".sx";
+	setAttr -l on -k off ".sy";
+	setAttr -l on -k off ".sz";
+createNode dagContainer -n "PoseToAttr14_Block" -p "Animation";
+	rename -uid "F40B2D80-0000-1D93-630E-7DC30001499C";
+	setAttr ".isc" yes;
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/AnimToAttr.png";
+	setAttr ".ctor" -type "string" "esteban.rodriguez";
+	setAttr ".cdat" -type "string" "2022/08/30 14:14:43";
+	setAttr -l on -k off ".v";
+	setAttr -l on -k off ".tx";
+	setAttr -l on -k off ".ty";
+	setAttr -l on -k off ".tz";
+	setAttr -l on -k off ".rx";
+	setAttr -l on -k off ".ry";
+	setAttr -l on -k off ".rz";
+	setAttr -l on -k off ".sx";
+	setAttr -l on -k off ".sy";
+	setAttr -l on -k off ".sz";
+createNode dagContainer -n "PoseToAttr15_Block" -p "Animation";
+	rename -uid "F40B2D80-0000-1D93-630E-7DDD000149B7";
+	setAttr ".isc" yes;
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/AnimToAttr.png";
+	setAttr ".ctor" -type "string" "esteban.rodriguez";
+	setAttr ".cdat" -type "string" "2022/08/30 14:15:09";
+	setAttr -l on -k off ".v";
+	setAttr -l on -k off ".tx";
+	setAttr -l on -k off ".ty";
+	setAttr -l on -k off ".tz";
+	setAttr -l on -k off ".rx";
+	setAttr -l on -k off ".ry";
+	setAttr -l on -k off ".rz";
+	setAttr -l on -k off ".sx";
+	setAttr -l on -k off ".sy";
+	setAttr -l on -k off ".sz";
+createNode dagContainer -n "PoseToAttr16_Block" -p "Animation";
+	rename -uid "F40B2D80-0000-1D93-630E-7DE7000149F9";
+	setAttr ".isc" yes;
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/AnimToAttr.png";
+	setAttr ".ctor" -type "string" "esteban.rodriguez";
+	setAttr ".cdat" -type "string" "2022/08/30 14:15:19";
+	setAttr -l on -k off ".v";
+	setAttr -l on -k off ".tx";
+	setAttr -l on -k off ".ty";
+	setAttr -l on -k off ".tz";
+	setAttr -l on -k off ".rx";
+	setAttr -l on -k off ".ry";
+	setAttr -l on -k off ".rz";
+	setAttr -l on -k off ".sx";
+	setAttr -l on -k off ".sy";
+	setAttr -l on -k off ".sz";
+createNode dagContainer -n "PoseToAttr17_Block" -p "Animation";
+	rename -uid "F40B2D80-0000-1D93-630E-7DEB00014A14";
+	setAttr ".isc" yes;
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/AnimToAttr.png";
+	setAttr ".ctor" -type "string" "esteban.rodriguez";
+	setAttr ".cdat" -type "string" "2022/08/30 14:15:23";
+	setAttr -l on -k off ".v";
+	setAttr -l on -k off ".tx";
+	setAttr -l on -k off ".ty";
+	setAttr -l on -k off ".tz";
+	setAttr -l on -k off ".rx";
+	setAttr -l on -k off ".ry";
+	setAttr -l on -k off ".rz";
+	setAttr -l on -k off ".sx";
+	setAttr -l on -k off ".sy";
+	setAttr -l on -k off ".sz";
+createNode dagContainer -n "PoseToAttr18_Block" -p "Animation";
+	rename -uid "F40B2D80-0000-1D93-630E-7DEF00014A2F";
+	setAttr ".isc" yes;
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/AnimToAttr.png";
+	setAttr ".ctor" -type "string" "esteban.rodriguez";
+	setAttr ".cdat" -type "string" "2022/08/30 14:15:27";
+	setAttr -l on -k off ".v";
+	setAttr -l on -k off ".tx";
+	setAttr -l on -k off ".ty";
+	setAttr -l on -k off ".tz";
+	setAttr -l on -k off ".rx";
+	setAttr -l on -k off ".ry";
+	setAttr -l on -k off ".rz";
+	setAttr -l on -k off ".sx";
+	setAttr -l on -k off ".sy";
+	setAttr -l on -k off ".sz";
+createNode dagContainer -n "PoseToAttr19_Block" -p "Animation";
+	rename -uid "F40B2D80-0000-1D93-630E-7DF300014A4A";
+	setAttr ".isc" yes;
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/AnimToAttr.png";
+	setAttr ".ctor" -type "string" "esteban.rodriguez";
+	setAttr ".cdat" -type "string" "2022/08/30 14:15:31";
+	setAttr -l on -k off ".v";
+	setAttr -l on -k off ".tx";
+	setAttr -l on -k off ".ty";
+	setAttr -l on -k off ".tz";
+	setAttr -l on -k off ".rx";
+	setAttr -l on -k off ".ry";
+	setAttr -l on -k off ".rz";
+	setAttr -l on -k off ".sx";
+	setAttr -l on -k off ".sy";
+	setAttr -l on -k off ".sz";
+createNode dagContainer -n "PoseToAttr20_Block" -p "Animation";
+	rename -uid "F40B2D80-0000-1D93-630E-7DF600014A65";
+	setAttr ".isc" yes;
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/AnimToAttr.png";
+	setAttr ".ctor" -type "string" "esteban.rodriguez";
+	setAttr ".cdat" -type "string" "2022/08/30 14:15:34";
+	setAttr -l on -k off ".v";
+	setAttr -l on -k off ".tx";
+	setAttr -l on -k off ".ty";
+	setAttr -l on -k off ".tz";
+	setAttr -l on -k off ".rx";
+	setAttr -l on -k off ".ry";
+	setAttr -l on -k off ".rz";
+	setAttr -l on -k off ".sx";
+	setAttr -l on -k off ".sy";
+	setAttr -l on -k off ".sz";
+createNode dagContainer -n "PoseToAttr21_Block" -p "Animation";
+	rename -uid "F40B2D80-0000-1D93-630E-7DFB00014A80";
+	setAttr ".isc" yes;
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/AnimToAttr.png";
+	setAttr ".ctor" -type "string" "esteban.rodriguez";
+	setAttr ".cdat" -type "string" "2022/08/30 14:15:39";
+	setAttr -l on -k off ".v";
+	setAttr -l on -k off ".tx";
+	setAttr -l on -k off ".ty";
+	setAttr -l on -k off ".tz";
+	setAttr -l on -k off ".rx";
+	setAttr -l on -k off ".ry";
+	setAttr -l on -k off ".rz";
+	setAttr -l on -k off ".sx";
+	setAttr -l on -k off ".sy";
+	setAttr -l on -k off ".sz";
+createNode dagContainer -n "PoseToAttr22_Block" -p "Animation";
+	rename -uid "F40B2D80-0000-1D93-630E-7DFE00014A9B";
+	setAttr ".isc" yes;
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/AnimToAttr.png";
+	setAttr ".ctor" -type "string" "esteban.rodriguez";
+	setAttr ".cdat" -type "string" "2022/08/30 14:15:42";
+	setAttr -l on -k off ".v";
+	setAttr -l on -k off ".tx";
+	setAttr -l on -k off ".ty";
+	setAttr -l on -k off ".tz";
+	setAttr -l on -k off ".rx";
+	setAttr -l on -k off ".ry";
+	setAttr -l on -k off ".rz";
+	setAttr -l on -k off ".sx";
+	setAttr -l on -k off ".sy";
+	setAttr -l on -k off ".sz";
+createNode dagContainer -n "PoseToAttr23_Block" -p "Animation";
+	rename -uid "F40B2D80-0000-1D93-630E-7E0400014AB6";
+	setAttr ".isc" yes;
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/AnimToAttr.png";
+	setAttr ".ctor" -type "string" "esteban.rodriguez";
+	setAttr ".cdat" -type "string" "2022/08/30 14:15:48";
+	setAttr -l on -k off ".v";
+	setAttr -l on -k off ".tx";
+	setAttr -l on -k off ".ty";
+	setAttr -l on -k off ".tz";
+	setAttr -l on -k off ".rx";
+	setAttr -l on -k off ".ry";
+	setAttr -l on -k off ".rz";
+	setAttr -l on -k off ".sx";
+	setAttr -l on -k off ".sy";
+	setAttr -l on -k off ".sz";
+createNode dagContainer -n "PoseToAttr24_Block" -p "Animation";
+	rename -uid "F40B2D80-0000-1D93-630E-7E1200014AD1";
+	setAttr ".isc" yes;
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/AnimToAttr.png";
+	setAttr ".ctor" -type "string" "esteban.rodriguez";
+	setAttr ".cdat" -type "string" "2022/08/30 14:16:02";
+	setAttr -l on -k off ".v";
+	setAttr -l on -k off ".tx";
+	setAttr -l on -k off ".ty";
+	setAttr -l on -k off ".tz";
+	setAttr -l on -k off ".rx";
+	setAttr -l on -k off ".ry";
+	setAttr -l on -k off ".rz";
+	setAttr -l on -k off ".sx";
+	setAttr -l on -k off ".sy";
+	setAttr -l on -k off ".sz";
+createNode dagContainer -n "PoseToAttr25_Block" -p "Animation";
+	rename -uid "F40B2D80-0000-1D93-630E-7E1700014AEC";
+	setAttr ".isc" yes;
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/AnimToAttr.png";
+	setAttr ".ctor" -type "string" "esteban.rodriguez";
+	setAttr ".cdat" -type "string" "2022/08/30 14:16:07";
+	setAttr -l on -k off ".v";
+	setAttr -l on -k off ".tx";
+	setAttr -l on -k off ".ty";
+	setAttr -l on -k off ".tz";
+	setAttr -l on -k off ".rx";
+	setAttr -l on -k off ".ry";
+	setAttr -l on -k off ".rz";
+	setAttr -l on -k off ".sx";
+	setAttr -l on -k off ".sy";
+	setAttr -l on -k off ".sz";
+createNode dagContainer -n "PoseToAttr26_Block" -p "Animation";
+	rename -uid "F40B2D80-0000-1D93-630E-7E1C00014B07";
+	setAttr ".isc" yes;
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/AnimToAttr.png";
+	setAttr ".ctor" -type "string" "esteban.rodriguez";
+	setAttr ".cdat" -type "string" "2022/08/30 14:16:12";
+	setAttr -l on -k off ".v";
+	setAttr -l on -k off ".tx";
+	setAttr -l on -k off ".ty";
+	setAttr -l on -k off ".tz";
+	setAttr -l on -k off ".rx";
+	setAttr -l on -k off ".ry";
+	setAttr -l on -k off ".rz";
+	setAttr -l on -k off ".sx";
+	setAttr -l on -k off ".sy";
+	setAttr -l on -k off ".sz";
+createNode dagContainer -n "PoseToAttr27_Block" -p "Animation";
+	rename -uid "F40B2D80-0000-1D93-630E-7E1F00014B22";
+	setAttr ".isc" yes;
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/AnimToAttr.png";
+	setAttr ".ctor" -type "string" "esteban.rodriguez";
+	setAttr ".cdat" -type "string" "2022/08/30 14:16:15";
+	setAttr -l on -k off ".v";
+	setAttr -l on -k off ".tx";
+	setAttr -l on -k off ".ty";
+	setAttr -l on -k off ".tz";
+	setAttr -l on -k off ".rx";
+	setAttr -l on -k off ".ry";
+	setAttr -l on -k off ".rz";
+	setAttr -l on -k off ".sx";
+	setAttr -l on -k off ".sy";
+	setAttr -l on -k off ".sz";
+createNode dagContainer -n "PoseToAttr28_Block" -p "Animation";
+	rename -uid "F40B2D80-0000-1D93-630E-7E2700014B3D";
+	setAttr ".isc" yes;
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/AnimToAttr.png";
+	setAttr ".ctor" -type "string" "esteban.rodriguez";
+	setAttr ".cdat" -type "string" "2022/08/30 14:16:23";
+	setAttr -l on -k off ".v";
+	setAttr -l on -k off ".tx";
+	setAttr -l on -k off ".ty";
+	setAttr -l on -k off ".tz";
+	setAttr -l on -k off ".rx";
+	setAttr -l on -k off ".ry";
+	setAttr -l on -k off ".rz";
+	setAttr -l on -k off ".sx";
+	setAttr -l on -k off ".sy";
+	setAttr -l on -k off ".sz";
+createNode dagContainer -n "PoseToAttr29_Block" -p "Animation";
+	rename -uid "F40B2D80-0000-1D93-630E-7E2B00014B58";
+	setAttr ".isc" yes;
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/AnimToAttr.png";
+	setAttr ".ctor" -type "string" "esteban.rodriguez";
+	setAttr ".cdat" -type "string" "2022/08/30 14:16:27";
+	setAttr -l on -k off ".v";
+	setAttr -l on -k off ".tx";
+	setAttr -l on -k off ".ty";
+	setAttr -l on -k off ".tz";
+	setAttr -l on -k off ".rx";
+	setAttr -l on -k off ".ry";
+	setAttr -l on -k off ".rz";
+	setAttr -l on -k off ".sx";
+	setAttr -l on -k off ".sy";
+	setAttr -l on -k off ".sz";
+createNode dagContainer -n "PoseToAttr30_Block" -p "Animation";
+	rename -uid "F40B2D80-0000-1D93-630E-7E2F00014B73";
+	setAttr ".isc" yes;
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/AnimToAttr.png";
+	setAttr ".ctor" -type "string" "esteban.rodriguez";
+	setAttr ".cdat" -type "string" "2022/08/30 14:16:31";
+	setAttr -l on -k off ".v";
+	setAttr -l on -k off ".tx";
+	setAttr -l on -k off ".ty";
+	setAttr -l on -k off ".tz";
+	setAttr -l on -k off ".rx";
+	setAttr -l on -k off ".ry";
+	setAttr -l on -k off ".rz";
+	setAttr -l on -k off ".sx";
+	setAttr -l on -k off ".sy";
+	setAttr -l on -k off ".sz";
+createNode dagContainer -n "PoseToAttr31_Block" -p "Animation";
+	rename -uid "F40B2D80-0000-1D93-630E-7E3300014B8E";
+	setAttr ".isc" yes;
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/AnimToAttr.png";
+	setAttr ".ctor" -type "string" "esteban.rodriguez";
+	setAttr ".cdat" -type "string" "2022/08/30 14:16:35";
+	setAttr -l on -k off ".v";
+	setAttr -l on -k off ".tx";
+	setAttr -l on -k off ".ty";
+	setAttr -l on -k off ".tz";
+	setAttr -l on -k off ".rx";
+	setAttr -l on -k off ".ry";
+	setAttr -l on -k off ".rz";
+	setAttr -l on -k off ".sx";
+	setAttr -l on -k off ".sy";
+	setAttr -l on -k off ".sz";
+createNode dagContainer -n "PoseToAttr32_Block" -p "Animation";
+	rename -uid "F40B2D80-0000-1D93-630E-7E3800014BA9";
+	setAttr ".isc" yes;
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/AnimToAttr.png";
+	setAttr ".ctor" -type "string" "esteban.rodriguez";
+	setAttr ".cdat" -type "string" "2022/08/30 14:16:40";
+	setAttr -l on -k off ".v";
+	setAttr -l on -k off ".tx";
+	setAttr -l on -k off ".ty";
+	setAttr -l on -k off ".tz";
+	setAttr -l on -k off ".rx";
+	setAttr -l on -k off ".ry";
+	setAttr -l on -k off ".rz";
+	setAttr -l on -k off ".sx";
+	setAttr -l on -k off ".sy";
+	setAttr -l on -k off ".sz";
+createNode dagContainer -n "PoseToAttr33_Block" -p "Animation";
+	rename -uid "F40B2D80-0000-1D93-630E-7E3B00014BC4";
+	setAttr ".isc" yes;
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/AnimToAttr.png";
+	setAttr ".ctor" -type "string" "esteban.rodriguez";
+	setAttr ".cdat" -type "string" "2022/08/30 14:16:43";
+	setAttr -l on -k off ".v";
+	setAttr -l on -k off ".tx";
+	setAttr -l on -k off ".ty";
+	setAttr -l on -k off ".tz";
+	setAttr -l on -k off ".rx";
+	setAttr -l on -k off ".ry";
+	setAttr -l on -k off ".rz";
+	setAttr -l on -k off ".sx";
+	setAttr -l on -k off ".sy";
+	setAttr -l on -k off ".sz";
+createNode dagContainer -n "PoseToAttr34_Block" -p "Animation";
+	rename -uid "F40B2D80-0000-1D93-630E-7E3F00014BDF";
+	setAttr ".isc" yes;
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/AnimToAttr.png";
+	setAttr ".ctor" -type "string" "esteban.rodriguez";
+	setAttr ".cdat" -type "string" "2022/08/30 14:16:47";
+	setAttr -l on -k off ".v";
+	setAttr -l on -k off ".tx";
+	setAttr -l on -k off ".ty";
+	setAttr -l on -k off ".tz";
+	setAttr -l on -k off ".rx";
+	setAttr -l on -k off ".ry";
+	setAttr -l on -k off ".rz";
+	setAttr -l on -k off ".sx";
+	setAttr -l on -k off ".sy";
+	setAttr -l on -k off ".sz";
+createNode dagContainer -n "PoseToAttr35_Block" -p "Animation";
+	rename -uid "F40B2D80-0000-1D93-630E-7E5000014C12";
+	setAttr ".isc" yes;
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/AnimToAttr.png";
+	setAttr ".ctor" -type "string" "esteban.rodriguez";
+	setAttr ".cdat" -type "string" "2022/08/30 14:17:04";
+	setAttr -l on -k off ".v";
+	setAttr -l on -k off ".tx";
+	setAttr -l on -k off ".ty";
+	setAttr -l on -k off ".tz";
+	setAttr -l on -k off ".rx";
+	setAttr -l on -k off ".ry";
+	setAttr -l on -k off ".rz";
+	setAttr -l on -k off ".sx";
+	setAttr -l on -k off ".sy";
+	setAttr -l on -k off ".sz";
+createNode dagContainer -n "PoseToAttr36_Block" -p "Animation";
+	rename -uid "F40B2D80-0000-1D93-630E-7F1200015055";
+	setAttr ".isc" yes;
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/AnimToAttr.png";
+	setAttr ".ctor" -type "string" "esteban.rodriguez";
+	setAttr ".cdat" -type "string" "2022/08/30 14:20:18";
+	setAttr -l on -k off ".v";
+	setAttr -l on -k off ".tx";
+	setAttr -l on -k off ".ty";
+	setAttr -l on -k off ".tz";
+	setAttr -l on -k off ".rx";
+	setAttr -l on -k off ".ry";
+	setAttr -l on -k off ".rz";
+	setAttr -l on -k off ".sx";
+	setAttr -l on -k off ".sy";
+	setAttr -l on -k off ".sz";
+createNode dagContainer -n "PoseToAttr37_Block" -p "Animation";
+	rename -uid "F40B2D80-0000-1D93-630E-7E5E00014C64";
+	setAttr ".isc" yes;
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/AnimToAttr.png";
+	setAttr ".ctor" -type "string" "esteban.rodriguez";
+	setAttr ".cdat" -type "string" "2022/08/30 14:17:18";
+	setAttr -l on -k off ".v";
+	setAttr -l on -k off ".tx";
+	setAttr -l on -k off ".ty";
+	setAttr -l on -k off ".tz";
+	setAttr -l on -k off ".rx";
+	setAttr -l on -k off ".ry";
+	setAttr -l on -k off ".rz";
+	setAttr -l on -k off ".sx";
+	setAttr -l on -k off ".sy";
+	setAttr -l on -k off ".sz";
+createNode dagContainer -n "PoseToAttr38_Block" -p "Animation";
+	rename -uid "F40B2D80-0000-1D93-630E-7E6200014C7F";
+	setAttr ".isc" yes;
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/AnimToAttr.png";
+	setAttr ".ctor" -type "string" "esteban.rodriguez";
+	setAttr ".cdat" -type "string" "2022/08/30 14:17:22";
+	setAttr -l on -k off ".v";
+	setAttr -l on -k off ".tx";
+	setAttr -l on -k off ".ty";
+	setAttr -l on -k off ".tz";
+	setAttr -l on -k off ".rx";
+	setAttr -l on -k off ".ry";
+	setAttr -l on -k off ".rz";
+	setAttr -l on -k off ".sx";
+	setAttr -l on -k off ".sy";
+	setAttr -l on -k off ".sz";
+createNode dagContainer -n "PoseToAttr39_Block" -p "Animation";
+	rename -uid "F40B2D80-0000-1D93-630E-7E6600014C9A";
+	setAttr ".isc" yes;
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/AnimToAttr.png";
+	setAttr ".ctor" -type "string" "esteban.rodriguez";
+	setAttr ".cdat" -type "string" "2022/08/30 14:17:26";
+	setAttr -l on -k off ".v";
+	setAttr -l on -k off ".tx";
+	setAttr -l on -k off ".ty";
+	setAttr -l on -k off ".tz";
+	setAttr -l on -k off ".rx";
+	setAttr -l on -k off ".ry";
+	setAttr -l on -k off ".rz";
+	setAttr -l on -k off ".sx";
+	setAttr -l on -k off ".sy";
+	setAttr -l on -k off ".sz";
+createNode dagContainer -n "PoseToAttr40_Block" -p "Animation";
+	rename -uid "F40B2D80-0000-1D93-630E-7E6A00014CB5";
+	setAttr ".isc" yes;
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/AnimToAttr.png";
+	setAttr ".ctor" -type "string" "esteban.rodriguez";
+	setAttr ".cdat" -type "string" "2022/08/30 14:17:30";
+	setAttr -l on -k off ".v";
+	setAttr -l on -k off ".tx";
+	setAttr -l on -k off ".ty";
+	setAttr -l on -k off ".tz";
+	setAttr -l on -k off ".rx";
+	setAttr -l on -k off ".ry";
+	setAttr -l on -k off ".rz";
+	setAttr -l on -k off ".sx";
+	setAttr -l on -k off ".sy";
+	setAttr -l on -k off ".sz";
+createNode dagContainer -n "PoseToAttr41_Block" -p "Animation";
+	rename -uid "F40B2D80-0000-1D93-630E-7E7900014CDC";
+	setAttr ".isc" yes;
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/AnimToAttr.png";
+	setAttr ".ctor" -type "string" "esteban.rodriguez";
+	setAttr ".cdat" -type "string" "2022/08/30 14:17:45";
+	setAttr -l on -k off ".v";
+	setAttr -l on -k off ".tx";
+	setAttr -l on -k off ".ty";
+	setAttr -l on -k off ".tz";
+	setAttr -l on -k off ".rx";
+	setAttr -l on -k off ".ry";
+	setAttr -l on -k off ".rz";
+	setAttr -l on -k off ".sx";
+	setAttr -l on -k off ".sy";
+	setAttr -l on -k off ".sz";
+createNode dagContainer -n "PoseToAttr42_Block" -p "Animation";
+	rename -uid "F40B2D80-0000-1D93-630E-7E7D00014CF7";
+	setAttr ".isc" yes;
+	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/AnimToAttr.png";
+	setAttr ".ctor" -type "string" "esteban.rodriguez";
+	setAttr ".cdat" -type "string" "2022/08/30 14:17:49";
+	setAttr -l on -k off ".v";
+	setAttr -l on -k off ".tx";
+	setAttr -l on -k off ".ty";
+	setAttr -l on -k off ".tz";
+	setAttr -l on -k off ".rx";
+	setAttr -l on -k off ".ry";
+	setAttr -l on -k off ".rz";
+	setAttr -l on -k off ".sx";
+	setAttr -l on -k off ".sy";
+	setAttr -l on -k off ".sz";
+createNode hyperLayout -n "hyperLayout13";
+	rename -uid "3F4A4D80-0000-6ACA-62A7-C5D2000003F2";
+	setAttr ".ihi" 0;
+createNode network -n "BaseA_Config";
+	rename -uid "3F4A4D80-0000-6ACA-62A7-C5D2000003F3";
+	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
+	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
+	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "Name" -ln "Name" -dt "string";
+	addAttr -ci true -sn "CtrlScale" -ln "CtrlScale" -dv 4 -min 1 -max 20 -at "long";
+	addAttr -ci true -sn "CtrlColor" -ln "CtrlColor" -min 0 -max 7 -en "lightBlue:blue:white:purple:green:red:yellow:grey" 
+		-at "enum";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	setAttr ".precode" -type "string" "";
+	setAttr -l on ".Build_Command" -type "string" "exec_baseA.build_baseA_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_baseA ";
+	setAttr ".Name" -type "string" "Mutant_Tools";
+	setAttr -k on ".CtrlScale";
+	setAttr -cb on ".CtrlColor";
+	setAttr ".postcode" -type "string" "";
+createNode hyperLayout -n "hyperLayout34";
+	rename -uid "3F4A4D80-0000-6ACA-62A7-C5D2000003F8";
+	setAttr ".ihi" 0;
+createNode network -n "ImportMT_Config";
+	rename -uid "3F4A4D80-0000-6ACA-62A7-C5D2000003F9";
+	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
+	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
+	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "Exec" -ln "Exec" -min 0 -max 1 -en "Python:Mel" -at "enum";
+	addAttr -ci true -sn "Code" -ln "Code" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	setAttr ".precode" -type "string" "";
+	setAttr -l on ".Build_Command" -type "string" "exec_code.build_code_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_code";
+	setAttr -cb on ".Exec";
+	setAttr ".Code" -type "string" "import Mutant_Tools\nimport Mutant_Tools.Utils\nfrom Mutant_Tools.Utils.Rigging import main_mutant\nreload(Mutant_Tools.Utils.Rigging.main_mutant)\n\nmt = main_mutant.Mutant()";
+	setAttr ".postcode" -type "string" "";
+createNode hyperLayout -n "hyperLayout42";
+	rename -uid "A848BD80-0000-3E5D-62B0-AD8A00002CCE";
+	setAttr ".ihi" 0;
+	setAttr -s 128 ".hyp";
+createNode network -n "ForDeltas_BSP_Config";
+	rename -uid "A848BD80-0000-3E5D-62B0-AD8A00002CCF";
+	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
+	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
+	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "Exec" -ln "Exec" -min 0 -max 1 -en "Python:Mel" -at "enum";
+	addAttr -ci true -sn "Code" -ln "Code" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	setAttr ".precode" -type "string" "";
+	setAttr -l on ".Build_Command" -type "string" "exec_code.build_code_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_code";
+	setAttr -cb on ".Exec";
+	setAttr ".Code" -type "string" "for i in cmds.listRelatives('C_HairOriginal_grp', c=True):\n    cmds.select(i.replace('_hi','_Delta'), i)\n    cmds.blendShape(n='{}_BSP'.format(i))";
+	setAttr ".postcode" -type "string" "";
+createNode hyperLayout -n "hyperLayout35";
+	rename -uid "3F4A4D80-0000-6ACA-62A7-C61E00000403";
+	setAttr ".ihi" 0;
+	setAttr -s 84 ".hyp";
+createNode network -n "Hair_Config";
+	rename -uid "3F4A4D80-0000-6ACA-62A7-C61E00000404";
+	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
+	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
+	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "SetParent" -ln "SetParent" -dt "string";
+	addAttr -ci true -sn "Joints" -ln "Joints" -dv 5 -min 1 -max 20 -at "long";
+	addAttr -ci true -sn "AddFk" -ln "AddFk" -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
+	addAttr -ci true -sn "Equal" -ln "Equal" -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "Ctrls" -ln "Ctrls" -dv 5 -min 1 -max 20 -at "long";
+	addAttr -ci true -sn "Constraint" -ln "Constraint" -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "Wire" -ln "Wire" -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	setAttr ".precode" -type "string" "";
+	setAttr -l on ".Build_Command" -type "string" "exec_ribbonizer.build_ribbonizer_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_ribbonizer";
+	setAttr ".SetParent" -type "string" "new_locator";
+	setAttr -k on ".Joints";
+	setAttr -cb on ".AddFk" yes;
+	setAttr ".Help" -type "string" "Remove constraint for a local system.";
+	setAttr -cb on ".Equal" yes;
+	setAttr -k on ".Ctrls";
+	setAttr -cb on ".Constraint" yes;
+	setAttr -cb on ".Wire";
+	setAttr ".postcode" -type "string" "";
+createNode hyperLayout -n "hyperLayout39";
+	rename -uid "F01A2D80-0000-467F-62A9-0E5C0003AC67";
+	setAttr ".ihi" 0;
+	setAttr -s 2 ".hyp";
+createNode network -n "SineAttrs_Ctrl_Config";
+	rename -uid "F01A2D80-0000-467F-62A9-0E5C0003AC74";
+	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
+	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
+	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "Exec" -ln "Exec" -min 0 -max 1 -en "Python:Mel" -at "enum";
+	addAttr -ci true -sn "Code" -ln "Code" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	setAttr ".precode" -type "string" "";
+	setAttr -l on ".Build_Command" -type "string" "exec_code.build_code_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_code";
+	setAttr -cb on ".Exec";
+	setAttr ".Code" -type "string" (
+		"import Mutant_Tools\nimport Mutant_Tools.Utils\nfrom Mutant_Tools.Utils.Rigging import main_mutant\nreload(Mutant_Tools.Utils.Rigging.main_mutant)\n\nmt = main_mutant.Mutant()\n\n#Create main ctrl\nctrl = mt.curve(  input='SineAttrs_Ctrl_Loc',\n                  type='sun',\n                  rename=True,\n                  custom_name=True,\n                  name='Sine_Main_Ctrl',\n                  size=10)\nmt.assign_color(color='grey')\nroot = root_grp = mt.root_grp()[0]\n\nmt.line_attr(input=ctrl, name='Sine')\nsine_attrs = ['amplitude','wavelength','offset','dropoff','lowBound','highBound']\namplitude_attr = mt.new_attr(input=ctrl, name =sine_attrs[0], min = 0 , max = 5, default = 0)\nwavelength_attr = mt.new_attr(input=ctrl, name =sine_attrs[1], min = 0, max = 10, default = 0)\noffset_attr = mt.new_attr(input=ctrl, name =sine_attrs[2], min = -200 , max = 200, default = 0)\ndropoff_attr = mt.new_attr(input=ctrl, name =sine_attrs[3], min = 0 , max = 1, default = 0)\nlowBound_attr = mt.new_attr(input=ctrl, name =sine_attrs[4], min = -10 , max = 0, default = 0)\n"
+		+ "highBound_attr = mt.new_attr(input=ctrl, name =sine_attrs[5], min = 0 , max = 10, default = 0)\n\ncmds.delete(cmds.parentConstraint('SineAttrs_Ctrl_Loc', root))\ncmds.parent(root, 'Ctrl_Grp')");
+	setAttr ".postcode" -type "string" "";
+createNode hyperLayout -n "hyperLayout36";
+	rename -uid "F01A2D80-0000-467F-62A8-B8EF00008F9E";
+	setAttr ".ihi" 0;
+createNode network -n "FixPivots_Config";
+	rename -uid "F01A2D80-0000-467F-62A8-B8EF00008FAB";
+	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
+	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
+	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "Exec" -ln "Exec" -min 0 -max 1 -en "Python:Mel" -at "enum";
+	addAttr -ci true -sn "Code" -ln "Code" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	setAttr ".precode" -type "string" "";
+	setAttr -l on ".Build_Command" -type "string" "exec_code.build_code_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_code";
+	setAttr -cb on ".Exec";
+	setAttr ".Code" -type "string" "'''\nfor i in range(1, 43):\n    print(i)\n    main_ctrl = 'Hair_{}_Main_Ctrl'.format(i)\n    pivot_ctrl = 'Hair_{}_01_Ctrl'.format(i)\n    child_grp = 'Hair_{}_Ctrls_Grp'.format(i)\n    offset_grp = 'Hair_{}_Ctrl_Main_Offset_Grp'.format(i)\n    pivot_pos = cmds.xform(pivot_ctrl, q=True, t=True, ws=True)\n    cmds.move(pivot_pos[0], pivot_pos[1], pivot_pos[2], \"{}.scalePivot\".format(main_ctrl),\"{}.rotatePivot\".format(main_ctrl), absolute=True)\n    #cmds.parent(child_grp, w=True)\n    #cmds.delete(cmds.parentConstraint(pivot_ctrl, offset_grp))\n    #cmds.parent(child_grp, main_ctrl)\n'''";
+	setAttr ".postcode" -type "string" "";
+createNode hyperLayout -n "hyperLayout37";
+	rename -uid "F01A2D80-0000-467F-62A8-C9A300022D62";
+	setAttr ".ihi" 0;
+createNode network -n "HairSkinning_Config";
+	rename -uid "F01A2D80-0000-467F-62A8-C9A300022D63";
+	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
+	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
+	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "Exec" -ln "Exec" -min 0 -max 1 -en "Python:Mel" -at "enum";
+	addAttr -ci true -sn "Code" -ln "Code" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	setAttr ".precode" -type "string" "";
+	setAttr -l on ".Build_Command" -type "string" "exec_code.build_code_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_code";
+	setAttr -cb on ".Exec";
+	setAttr ".Code" -type "string" "for i in range(1, 43):\n    print('Skinning:', i)\n    skin_joints = []\n    for num in range(99):\n        if cmds.objExists('Hair_{}_Bind_0{}_Bnd'.format(i, num+1)):\n            skin_joints.append('Hair_{}_Bind_0{}_Bnd'.format(i, num+1))\n        else:\n            break\n    try:\n        cmds.select(skin_joints, 'C_Hair_{}_hi'.format(i))\n    except:\n        cmds.select(skin_joints, 'C_Hair_0{}_hi'.format(i))\n    \n    print(cmds.ls(sl=True))\n    cmds.skinCluster(tsb=True)";
+	setAttr ".postcode" -type "string" "";
+createNode hyperLayout -n "hyperLayout38";
+	rename -uid "F01A2D80-0000-467F-62A8-EF470002F7F4";
+	setAttr ".ihi" 0;
+createNode network -n "SineDeformers_Config";
+	rename -uid "F01A2D80-0000-467F-62A8-EF470002F7F5";
+	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
+	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
+	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "Exec" -ln "Exec" -min 0 -max 1 -en "Python:Mel" -at "enum";
+	addAttr -ci true -sn "Code" -ln "Code" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	setAttr ".precode" -type "string" "";
+	setAttr -l on ".Build_Command" -type "string" "exec_code.build_code_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_code";
+	setAttr -cb on ".Exec";
+	setAttr ".Code" -type "string" (
+		"from maya import mel\nimport Mutant_Tools\nimport Mutant_Tools.Utils\nfrom Mutant_Tools.Utils.Rigging import main_mutant\nreload(Mutant_Tools.Utils.Rigging.main_mutant)\n\nmt = main_mutant.Mutant()\n\nsines_wrp = cmds.group(n= 'Wanda_Hair_Sines_Grp', em=True)\ncmds.parent(sines_wrp, 'Miscellaneous_Grp')\n\nfor i in range(1, 43):\n    #get the nurb to orient the sine\n    print(i)\n    if cmds.objExists('Hair_{}_Guide'.format(i)):\n        nurb = 'Hair_{}_Guide'.format(i)\n    else:\n        nurb = 'Hair_0{}_Guide'.format(i)\n    #create the deformers\n    cmds.select('Hair_{}_ribbon_surface'.format(i))\n    mel.eval('Sine;')\n    sine = cmds.ls(sl=True)[0]\n    cmds.select('Hair_{}_ribbon_surface'.format(i))\n    cmds.reorderDeformers('Hair_{}_skinCluster'.format(i), sine.replace('Handle', ''))\n    cmds.parent(sine, sines_wrp)\n    #Orient the sine\n    cmds.delete(cmds.orientConstraint(nurb, sine))\n    #change the pivot and a aim\n    main_ctrl = 'Hair_{}_Main_Ctrl'.format(i)\n    pivot_ctrl = 'Hair_{}_01_Ctrl'.format(i)\n    child_grp = 'Hair_{}_Ctrls_Grp'.format(i)\n"
+		+ "    offset_grp = 'Hair_{}_Ctrl_Main_Offset_Grp'.format(i)\n    attrs_ctrl = 'Sine_Main_Ctrl'\n    #pivot_pos = cmds.xform(pivot_ctrl, q=True, t=True, ws=True)\n    #cmds.move(pivot_pos[0], pivot_pos[1], pivot_pos[2], \"{}.scalePivot\".format(sine),\"{}.rotatePivot\".format(sine), absolute=True)\n    cmds.delete(cmds.aimConstraint('Hair_{}_04_Ctrl'.format(i), sine, aimVector=[0,1,0], upVector=[1,0,0], worldUpType='vector', mo =False))\n    #Add attr and connect to it\n    mt.line_attr(input=main_ctrl, name='Sine')\n    sine_attrs = ['amplitude','wavelength','offset','dropoff','lowBound','highBound']\n    amplitude_attr = mt.new_attr(input=main_ctrl, name =sine_attrs[0], min = 0 , max = 5, default = 0)\n    wavelength_attr = mt.new_attr(input=main_ctrl, name =sine_attrs[1], min = 0.1 , max = 10, default = 2)\n    offset_attr = mt.new_attr(input=main_ctrl, name =sine_attrs[2], min = -200 , max = 200, default = 0)\n    dropoff_attr = mt.new_attr(input=main_ctrl, name =sine_attrs[3], min = 0 , max = 1, default = 0.7)\n    lowBound_attr = mt.new_attr(input=main_ctrl, name =sine_attrs[4], min = -10 , max = 0, default = 0)\n"
+		+ "    highBound_attr = mt.new_attr(input=main_ctrl, name =sine_attrs[5], min = 0 , max = 10, default = 1)\n    \n    for attr in sine_attrs:\n        #Create double linear\n        dl = cmds.createNode('addDoubleLinear',n='Sine_{}_{}_DL'.format(i, attr))\n        if cmds.objExists('Mutant_Rig'):\n            cmds.container('Mutant_Rig', edit=True, addNode=dl)\n        #Connect both attrs to double linear\n        cmds.connectAttr('{}.{}'.format(main_ctrl, attr), '{}.input1'.format(dl))\n        cmds.connectAttr('{}.{}'.format(attrs_ctrl, attr), '{}.input2'.format(dl))\n\n        #Connect to sine deformer\n        cmds.connectAttr('{}.output'.format(dl), '{}.{}'.format(sine.replace('Handle', ''), attr))\n    \n    \n    \n    ");
+	setAttr ".postcode" -type "string" "";
+createNode hyperLayout -n "hyperLayout40";
+	rename -uid "F75E4D80-0000-6AA1-62AA-1BAD0000ED35";
+	setAttr ".ihi" 0;
+	setAttr -s 2 ".hyp";
+createNode network -n "DeltaMush_Config";
+	rename -uid "F75E4D80-0000-6AA1-62AA-1BAD0000ED42";
+	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
+	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
+	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "Exec" -ln "Exec" -min 0 -max 1 -en "Python:Mel" -at "enum";
+	addAttr -ci true -sn "Code" -ln "Code" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	setAttr ".precode" -type "string" "";
+	setAttr -l on ".Build_Command" -type "string" "exec_code.build_code_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_code";
+	setAttr -cb on ".Exec";
+	setAttr ".Code" -type "string" "delta = cmds.deltaMush('C_HairOriginal_grp', n='WandasDeltaMush')[0]\n\ncmds.setAttr(delta+'.displacement', 0.5)\ncmds.setAttr(delta+'.distanceWeight', 1)";
+	setAttr ".postcode" -type "string" "";
+createNode hyperLayout -n "hyperLayout41";
+	rename -uid "B780CD80-0000-5333-62AB-825600003415";
+	setAttr ".ihi" 0;
+	setAttr -s 2 ".hyp";
+createNode network -n "SkinSine_Config";
+	rename -uid "B780CD80-0000-5333-62AB-825600003416";
+	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
+	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
+	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "Exec" -ln "Exec" -min 0 -max 1 -en "Python:Mel" -at "enum";
+	addAttr -ci true -sn "Code" -ln "Code" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	setAttr ".precode" -type "string" "";
+	setAttr -l on ".Build_Command" -type "string" "exec_code.build_code_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_code";
+	setAttr -cb on ".Exec";
+	setAttr ".Code" -type "string" (
+		"for num in range(1, 43):\n    cmds.percent('sine{}'.format(num), 'Hair_{}_ribbon_surface.cv[0][0]'.format(num), v=0)\n    cmds.percent('sine{}'.format(num), 'Hair_{}_ribbon_surface.cv[0][1]'.format(num), v=0)\n    cmds.percent('sine{}'.format(num), 'Hair_{}_ribbon_surface.cv[0][2]'.format(num), v=0)\n    cmds.percent('sine{}'.format(num), 'Hair_{}_ribbon_surface.cv[0][3]'.format(num), v=0)\n    cmds.percent('sine{}'.format(num), 'Hair_{}_ribbon_surface.cv[1][0]'.format(num), v=0)\n    cmds.percent('sine{}'.format(num), 'Hair_{}_ribbon_surface.cv[1][1]'.format(num), v=0)\n    cmds.percent('sine{}'.format(num), 'Hair_{}_ribbon_surface.cv[1][2]'.format(num), v=0)\n    cmds.percent('sine{}'.format(num), 'Hair_{}_ribbon_surface.cv[1][3]'.format(num), v=0)\n\n    cmds.percent('sine{}'.format(num), 'Hair_{}_ribbon_surface.cv[2][1]'.format(num), v=0.5)\n    cmds.percent('sine{}'.format(num), 'Hair_{}_ribbon_surface.cv[2][1]'.format(num), v=0.5)\n    cmds.percent('sine{}'.format(num), 'Hair_{}_ribbon_surface.cv[2][2]'.format(num), v=0.5)\n"
+		+ "    cmds.percent('sine{}'.format(num), 'Hair_{}_ribbon_surface.cv[2][3]'.format(num), v=0.5)");
+	setAttr ".postcode" -type "string" "";
+createNode hyperLayout -n "hyperLayout43";
+	rename -uid "4A5BFD80-0000-157A-62B2-0570000222D4";
+	setAttr ".ihi" 0;
+	setAttr -s 2 ".hyp";
+createNode network -n "LoadAnimation_Config";
+	rename -uid "4A5BFD80-0000-157A-62B2-0570000222D5";
+	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
+	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
+	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "Exec" -ln "Exec" -min 0 -max 1 -en "Python:Mel" -at "enum";
+	addAttr -ci true -sn "Code" -ln "Code" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	setAttr ".precode" -type "string" "";
+	setAttr -l on ".Build_Command" -type "string" "exec_code.build_code_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_code";
+	setAttr -cb on ".Exec";
+	setAttr ".Code" -type "string" "from Mutant_Tools.Utils.Animation import studio_library_utils, animation_utils\nreload(studio_library_utils)\nreload(animation_utils)\n\nstudio_library_utils.load_rom(path_animation = '.anim path here', objects = 'controllers', start = 1, end = 30)";
+	setAttr ".postcode" -type "string" "";
+createNode hyperLayout -n "hyperLayout46";
+	rename -uid "F40B2D80-0000-1D93-630E-7A1A0000D3CD";
+	setAttr ".ihi" 0;
+createNode network -n "PoseToAttr1_Config";
+	rename -uid "F40B2D80-0000-1D93-630E-7A1A0000D3CE";
+	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
+	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
+	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "NewAttrName" -ln "NewAttrName" -dt "string";
+	addAttr -ci true -sn "SetNewAttrNode" -ln "SetNewAttrNode" -dt "string";
+	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
+	addAttr -ci true -sn "SetObject" -ln "SetObject" -dt "string";
+	addAttr -ci true -sn "AnimStep" -ln "AnimStep" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	setAttr ".precode" -type "string" "";
+	setAttr -l on ".Build_Command" -type "string" "exec_anim_to_attr.build_animtoattr_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_anim_to_attr";
+	setAttr ".NewAttrName" -type "string" "Pose";
+	setAttr ".SetNewAttrNode" -type "string" "new_locator";
+	setAttr ".Help" -type "string" "Select object to save the current pose to an attr, will save it using SDK, Anim Step is the amount the sdk will move after each pose, add should be == 1, You can set objects with Name_*";
+	setAttr ".SetObject" -type "string" "Hair_1_*Ctrl\n";
+	setAttr ".AnimStep" -type "string" "1";
+	setAttr ".postcode" -type "string" "";
+createNode hyperLayout -n "hyperLayout47";
+	rename -uid "F40B2D80-0000-1D93-630E-7A200000D3D0";
+	setAttr ".ihi" 0;
+createNode network -n "PoseToAttr2_Config";
+	rename -uid "F40B2D80-0000-1D93-630E-7A200000D3D1";
+	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
+	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
+	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "NewAttrName" -ln "NewAttrName" -dt "string";
+	addAttr -ci true -sn "SetNewAttrNode" -ln "SetNewAttrNode" -dt "string";
+	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
+	addAttr -ci true -sn "SetObject" -ln "SetObject" -dt "string";
+	addAttr -ci true -sn "AnimStep" -ln "AnimStep" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	setAttr ".precode" -type "string" "";
+	setAttr -l on ".Build_Command" -type "string" "exec_anim_to_attr.build_animtoattr_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_anim_to_attr";
+	setAttr ".NewAttrName" -type "string" "Pose";
+	setAttr ".SetNewAttrNode" -type "string" "new_locator";
+	setAttr ".Help" -type "string" "Select object to save the current pose to an attr, will save it using SDK, Anim Step is the amount the sdk will move after each pose, add should be == 1, You can set objects with Name_*";
+	setAttr ".SetObject" -type "string" "Hair_2_*Ctrl\n";
+	setAttr ".AnimStep" -type "string" "1";
+	setAttr ".postcode" -type "string" "";
+createNode hyperLayout -n "hyperLayout48";
+	rename -uid "F40B2D80-0000-1D93-630E-7A240000D3D3";
+	setAttr ".ihi" 0;
+createNode network -n "PoseToAttr3_Config";
+	rename -uid "F40B2D80-0000-1D93-630E-7A240000D3D4";
+	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
+	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
+	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "NewAttrName" -ln "NewAttrName" -dt "string";
+	addAttr -ci true -sn "SetNewAttrNode" -ln "SetNewAttrNode" -dt "string";
+	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
+	addAttr -ci true -sn "SetObject" -ln "SetObject" -dt "string";
+	addAttr -ci true -sn "AnimStep" -ln "AnimStep" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	setAttr ".precode" -type "string" "";
+	setAttr -l on ".Build_Command" -type "string" "exec_anim_to_attr.build_animtoattr_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_anim_to_attr";
+	setAttr ".NewAttrName" -type "string" "Pose";
+	setAttr ".SetNewAttrNode" -type "string" "new_locator";
+	setAttr ".Help" -type "string" "Select object to save the current pose to an attr, will save it using SDK, Anim Step is the amount the sdk will move after each pose, add should be == 1, You can set objects with Name_*";
+	setAttr ".SetObject" -type "string" "Hair_3_*Ctrl\n";
+	setAttr ".AnimStep" -type "string" "1";
+	setAttr ".postcode" -type "string" "";
+createNode hyperLayout -n "hyperLayout49";
+	rename -uid "F40B2D80-0000-1D93-630E-7A270000D3D6";
+	setAttr ".ihi" 0;
+createNode network -n "PoseToAttr4_Config";
+	rename -uid "F40B2D80-0000-1D93-630E-7A270000D3D7";
+	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
+	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
+	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "NewAttrName" -ln "NewAttrName" -dt "string";
+	addAttr -ci true -sn "SetNewAttrNode" -ln "SetNewAttrNode" -dt "string";
+	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
+	addAttr -ci true -sn "SetObject" -ln "SetObject" -dt "string";
+	addAttr -ci true -sn "AnimStep" -ln "AnimStep" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	setAttr ".precode" -type "string" "";
+	setAttr -l on ".Build_Command" -type "string" "exec_anim_to_attr.build_animtoattr_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_anim_to_attr";
+	setAttr ".NewAttrName" -type "string" "Pose";
+	setAttr ".SetNewAttrNode" -type "string" "new_locator";
+	setAttr ".Help" -type "string" "Select object to save the current pose to an attr, will save it using SDK, Anim Step is the amount the sdk will move after each pose, add should be == 1, You can set objects with Name_*";
+	setAttr ".SetObject" -type "string" "Hair_4_*Ctrl\n";
+	setAttr ".AnimStep" -type "string" "1";
+	setAttr ".postcode" -type "string" "";
+createNode hyperLayout -n "hyperLayout50";
+	rename -uid "F40B2D80-0000-1D93-630E-7A2A0000D3D9";
+	setAttr ".ihi" 0;
+createNode network -n "PoseToAttr5_Config";
+	rename -uid "F40B2D80-0000-1D93-630E-7A2A0000D3DA";
+	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
+	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
+	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "NewAttrName" -ln "NewAttrName" -dt "string";
+	addAttr -ci true -sn "SetNewAttrNode" -ln "SetNewAttrNode" -dt "string";
+	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
+	addAttr -ci true -sn "SetObject" -ln "SetObject" -dt "string";
+	addAttr -ci true -sn "AnimStep" -ln "AnimStep" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	setAttr ".precode" -type "string" "";
+	setAttr -l on ".Build_Command" -type "string" "exec_anim_to_attr.build_animtoattr_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_anim_to_attr";
+	setAttr ".NewAttrName" -type "string" "Pose";
+	setAttr ".SetNewAttrNode" -type "string" "new_locator";
+	setAttr ".Help" -type "string" "Select object to save the current pose to an attr, will save it using SDK, Anim Step is the amount the sdk will move after each pose, add should be == 1, You can set objects with Name_*";
+	setAttr ".SetObject" -type "string" "Hair_5_*Ctrl\n";
+	setAttr ".AnimStep" -type "string" "1";
+	setAttr ".postcode" -type "string" "";
+createNode hyperLayout -n "hyperLayout51";
+	rename -uid "F40B2D80-0000-1D93-630E-7A2D0000D3DC";
+	setAttr ".ihi" 0;
+createNode network -n "PoseToAttr6_Config";
+	rename -uid "F40B2D80-0000-1D93-630E-7A2D0000D3DD";
+	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
+	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
+	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "NewAttrName" -ln "NewAttrName" -dt "string";
+	addAttr -ci true -sn "SetNewAttrNode" -ln "SetNewAttrNode" -dt "string";
+	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
+	addAttr -ci true -sn "SetObject" -ln "SetObject" -dt "string";
+	addAttr -ci true -sn "AnimStep" -ln "AnimStep" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	setAttr ".precode" -type "string" "";
+	setAttr -l on ".Build_Command" -type "string" "exec_anim_to_attr.build_animtoattr_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_anim_to_attr";
+	setAttr ".NewAttrName" -type "string" "Pose";
+	setAttr ".SetNewAttrNode" -type "string" "new_locator";
+	setAttr ".Help" -type "string" "Select object to save the current pose to an attr, will save it using SDK, Anim Step is the amount the sdk will move after each pose, add should be == 1, You can set objects with Name_*";
+	setAttr ".SetObject" -type "string" "Hair_6_*Ctrl\n";
+	setAttr ".AnimStep" -type "string" "1";
+	setAttr ".postcode" -type "string" "";
+createNode hyperLayout -n "hyperLayout52";
+	rename -uid "F40B2D80-0000-1D93-630E-7A330000D3DF";
+	setAttr ".ihi" 0;
+createNode network -n "PoseToAttr7_Config";
+	rename -uid "F40B2D80-0000-1D93-630E-7A330000D3E0";
+	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
+	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
+	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "NewAttrName" -ln "NewAttrName" -dt "string";
+	addAttr -ci true -sn "SetNewAttrNode" -ln "SetNewAttrNode" -dt "string";
+	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
+	addAttr -ci true -sn "SetObject" -ln "SetObject" -dt "string";
+	addAttr -ci true -sn "AnimStep" -ln "AnimStep" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	setAttr ".precode" -type "string" "";
+	setAttr -l on ".Build_Command" -type "string" "exec_anim_to_attr.build_animtoattr_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_anim_to_attr";
+	setAttr ".NewAttrName" -type "string" "Pose";
+	setAttr ".SetNewAttrNode" -type "string" "new_locator";
+	setAttr ".Help" -type "string" "Select object to save the current pose to an attr, will save it using SDK, Anim Step is the amount the sdk will move after each pose, add should be == 1, You can set objects with Name_*";
+	setAttr ".SetObject" -type "string" "Hair_7_*Ctrl\n";
+	setAttr ".AnimStep" -type "string" "1";
+	setAttr ".postcode" -type "string" "";
+createNode hyperLayout -n "hyperLayout53";
+	rename -uid "F40B2D80-0000-1D93-630E-7A360000D3E2";
+	setAttr ".ihi" 0;
+createNode network -n "PoseToAttr8_Config";
+	rename -uid "F40B2D80-0000-1D93-630E-7A360000D3E3";
+	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
+	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
+	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "NewAttrName" -ln "NewAttrName" -dt "string";
+	addAttr -ci true -sn "SetNewAttrNode" -ln "SetNewAttrNode" -dt "string";
+	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
+	addAttr -ci true -sn "SetObject" -ln "SetObject" -dt "string";
+	addAttr -ci true -sn "AnimStep" -ln "AnimStep" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	setAttr ".precode" -type "string" "";
+	setAttr -l on ".Build_Command" -type "string" "exec_anim_to_attr.build_animtoattr_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_anim_to_attr";
+	setAttr ".NewAttrName" -type "string" "Pose";
+	setAttr ".SetNewAttrNode" -type "string" "new_locator";
+	setAttr ".Help" -type "string" "Select object to save the current pose to an attr, will save it using SDK, Anim Step is the amount the sdk will move after each pose, add should be == 1, You can set objects with Name_*";
+	setAttr ".SetObject" -type "string" "Hair_8_*Ctrl\n";
+	setAttr ".AnimStep" -type "string" "1";
+	setAttr ".postcode" -type "string" "";
+createNode hyperLayout -n "hyperLayout54";
+	rename -uid "F40B2D80-0000-1D93-630E-7A390000D3E5";
+	setAttr ".ihi" 0;
+createNode network -n "PoseToAttr9_Config";
+	rename -uid "F40B2D80-0000-1D93-630E-7A390000D3E6";
+	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
+	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
+	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "NewAttrName" -ln "NewAttrName" -dt "string";
+	addAttr -ci true -sn "SetNewAttrNode" -ln "SetNewAttrNode" -dt "string";
+	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
+	addAttr -ci true -sn "SetObject" -ln "SetObject" -dt "string";
+	addAttr -ci true -sn "AnimStep" -ln "AnimStep" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	setAttr ".precode" -type "string" "";
+	setAttr -l on ".Build_Command" -type "string" "exec_anim_to_attr.build_animtoattr_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_anim_to_attr";
+	setAttr ".NewAttrName" -type "string" "Pose";
+	setAttr ".SetNewAttrNode" -type "string" "new_locator";
+	setAttr ".Help" -type "string" "Select object to save the current pose to an attr, will save it using SDK, Anim Step is the amount the sdk will move after each pose, add should be == 1, You can set objects with Name_*";
+	setAttr ".SetObject" -type "string" "Hair_9_*Ctrl\n";
+	setAttr ".AnimStep" -type "string" "1";
+	setAttr ".postcode" -type "string" "";
+createNode hyperLayout -n "hyperLayout55";
+	rename -uid "F40B2D80-0000-1D93-630E-7A3D0000D3E8";
+	setAttr ".ihi" 0;
+createNode network -n "PoseToAttr10_Config";
+	rename -uid "F40B2D80-0000-1D93-630E-7A3D0000D3E9";
+	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
+	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
+	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "NewAttrName" -ln "NewAttrName" -dt "string";
+	addAttr -ci true -sn "SetNewAttrNode" -ln "SetNewAttrNode" -dt "string";
+	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
+	addAttr -ci true -sn "SetObject" -ln "SetObject" -dt "string";
+	addAttr -ci true -sn "AnimStep" -ln "AnimStep" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	setAttr ".precode" -type "string" "";
+	setAttr -l on ".Build_Command" -type "string" "exec_anim_to_attr.build_animtoattr_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_anim_to_attr";
+	setAttr ".NewAttrName" -type "string" "Pose";
+	setAttr ".SetNewAttrNode" -type "string" "new_locator";
+	setAttr ".Help" -type "string" "Select object to save the current pose to an attr, will save it using SDK, Anim Step is the amount the sdk will move after each pose, add should be == 1, You can set objects with Name_*";
+	setAttr ".SetObject" -type "string" "Hair_10_*Ctrl\n";
+	setAttr ".AnimStep" -type "string" "1";
+	setAttr ".postcode" -type "string" "";
+createNode hyperLayout -n "hyperLayout56";
+	rename -uid "F40B2D80-0000-1D93-630E-7A3F0000D3EB";
+	setAttr ".ihi" 0;
+createNode network -n "PoseToAttr11_Config";
+	rename -uid "F40B2D80-0000-1D93-630E-7A3F0000D3EC";
+	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
+	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
+	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "NewAttrName" -ln "NewAttrName" -dt "string";
+	addAttr -ci true -sn "SetNewAttrNode" -ln "SetNewAttrNode" -dt "string";
+	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
+	addAttr -ci true -sn "SetObject" -ln "SetObject" -dt "string";
+	addAttr -ci true -sn "AnimStep" -ln "AnimStep" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	setAttr ".precode" -type "string" "";
+	setAttr -l on ".Build_Command" -type "string" "exec_anim_to_attr.build_animtoattr_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_anim_to_attr";
+	setAttr ".NewAttrName" -type "string" "Pose";
+	setAttr ".SetNewAttrNode" -type "string" "new_locator";
+	setAttr ".Help" -type "string" "Select object to save the current pose to an attr, will save it using SDK, Anim Step is the amount the sdk will move after each pose, add should be == 1, You can set objects with Name_*";
+	setAttr ".SetObject" -type "string" "Hair_11_*Ctrl\n";
+	setAttr ".AnimStep" -type "string" "1";
+	setAttr ".postcode" -type "string" "";
+createNode hyperLayout -n "hyperLayout57";
+	rename -uid "F40B2D80-0000-1D93-630E-7A420000D3EE";
+	setAttr ".ihi" 0;
+createNode network -n "PoseToAttr12_Config";
+	rename -uid "F40B2D80-0000-1D93-630E-7A420000D3EF";
+	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
+	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
+	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "NewAttrName" -ln "NewAttrName" -dt "string";
+	addAttr -ci true -sn "SetNewAttrNode" -ln "SetNewAttrNode" -dt "string";
+	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
+	addAttr -ci true -sn "SetObject" -ln "SetObject" -dt "string";
+	addAttr -ci true -sn "AnimStep" -ln "AnimStep" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	setAttr ".precode" -type "string" "";
+	setAttr -l on ".Build_Command" -type "string" "exec_anim_to_attr.build_animtoattr_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_anim_to_attr";
+	setAttr ".NewAttrName" -type "string" "Pose";
+	setAttr ".SetNewAttrNode" -type "string" "new_locator";
+	setAttr ".Help" -type "string" "Select object to save the current pose to an attr, will save it using SDK, Anim Step is the amount the sdk will move after each pose, add should be == 1, You can set objects with Name_*";
+	setAttr ".SetObject" -type "string" "Hair_12_*Ctrl\n";
+	setAttr ".AnimStep" -type "string" "1";
+	setAttr ".postcode" -type "string" "";
+createNode hyperLayout -n "hyperLayout58";
+	rename -uid "F40B2D80-0000-1D93-630E-7A460000D3F1";
+	setAttr ".ihi" 0;
+createNode network -n "PoseToAttr13_Config";
+	rename -uid "F40B2D80-0000-1D93-630E-7A460000D3F2";
+	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
+	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
+	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "NewAttrName" -ln "NewAttrName" -dt "string";
+	addAttr -ci true -sn "SetNewAttrNode" -ln "SetNewAttrNode" -dt "string";
+	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
+	addAttr -ci true -sn "SetObject" -ln "SetObject" -dt "string";
+	addAttr -ci true -sn "AnimStep" -ln "AnimStep" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	setAttr ".precode" -type "string" "";
+	setAttr -l on ".Build_Command" -type "string" "exec_anim_to_attr.build_animtoattr_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_anim_to_attr";
+	setAttr ".NewAttrName" -type "string" "Pose";
+	setAttr ".SetNewAttrNode" -type "string" "new_locator";
+	setAttr ".Help" -type "string" "Select object to save the current pose to an attr, will save it using SDK, Anim Step is the amount the sdk will move after each pose, add should be == 1, You can set objects with Name_*";
+	setAttr ".SetObject" -type "string" "Hair_13_*Ctrl\n";
+	setAttr ".AnimStep" -type "string" "1";
+	setAttr ".postcode" -type "string" "";
+createNode hyperLayout -n "hyperLayout59";
+	rename -uid "F40B2D80-0000-1D93-630E-7DC30001499D";
+	setAttr ".ihi" 0;
+createNode network -n "PoseToAttr14_Config";
+	rename -uid "F40B2D80-0000-1D93-630E-7DC3000149AA";
+	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
+	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
+	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "NewAttrName" -ln "NewAttrName" -dt "string";
+	addAttr -ci true -sn "SetNewAttrNode" -ln "SetNewAttrNode" -dt "string";
+	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
+	addAttr -ci true -sn "SetObject" -ln "SetObject" -dt "string";
+	addAttr -ci true -sn "AnimStep" -ln "AnimStep" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	setAttr ".precode" -type "string" "";
+	setAttr -l on ".Build_Command" -type "string" "exec_anim_to_attr.build_animtoattr_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_anim_to_attr";
+	setAttr ".NewAttrName" -type "string" "Pose";
+	setAttr ".SetNewAttrNode" -type "string" "new_locator";
+	setAttr ".Help" -type "string" "Select object to save the current pose to an attr, will save it using SDK, Anim Step is the amount the sdk will move after each pose, add should be == 1, You can set objects with Name_*";
+	setAttr ".SetObject" -type "string" "Hair_14_*Ctrl\n";
+	setAttr ".AnimStep" -type "string" "1";
+	setAttr ".postcode" -type "string" "";
+createNode hyperLayout -n "hyperLayout60";
+	rename -uid "F40B2D80-0000-1D93-630E-7DDD000149B8";
+	setAttr ".ihi" 0;
+createNode network -n "PoseToAttr15_Config";
+	rename -uid "F40B2D80-0000-1D93-630E-7DDD000149C5";
+	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
+	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
+	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "NewAttrName" -ln "NewAttrName" -dt "string";
+	addAttr -ci true -sn "SetNewAttrNode" -ln "SetNewAttrNode" -dt "string";
+	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
+	addAttr -ci true -sn "SetObject" -ln "SetObject" -dt "string";
+	addAttr -ci true -sn "AnimStep" -ln "AnimStep" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	setAttr ".precode" -type "string" "";
+	setAttr -l on ".Build_Command" -type "string" "exec_anim_to_attr.build_animtoattr_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_anim_to_attr";
+	setAttr ".NewAttrName" -type "string" "Pose";
+	setAttr ".SetNewAttrNode" -type "string" "new_locator";
+	setAttr ".Help" -type "string" "Select object to save the current pose to an attr, will save it using SDK, Anim Step is the amount the sdk will move after each pose, add should be == 1, You can set objects with Name_*";
+	setAttr ".SetObject" -type "string" "Hair_15_*Ctrl\n";
+	setAttr ".AnimStep" -type "string" "1";
+	setAttr ".postcode" -type "string" "";
+createNode hyperLayout -n "hyperLayout61";
+	rename -uid "F40B2D80-0000-1D93-630E-7DE7000149FA";
+	setAttr ".ihi" 0;
+createNode network -n "PoseToAttr16_Config";
+	rename -uid "F40B2D80-0000-1D93-630E-7DE700014A07";
+	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
+	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
+	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "NewAttrName" -ln "NewAttrName" -dt "string";
+	addAttr -ci true -sn "SetNewAttrNode" -ln "SetNewAttrNode" -dt "string";
+	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
+	addAttr -ci true -sn "SetObject" -ln "SetObject" -dt "string";
+	addAttr -ci true -sn "AnimStep" -ln "AnimStep" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	setAttr ".precode" -type "string" "";
+	setAttr -l on ".Build_Command" -type "string" "exec_anim_to_attr.build_animtoattr_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_anim_to_attr";
+	setAttr ".NewAttrName" -type "string" "Pose";
+	setAttr ".SetNewAttrNode" -type "string" "new_locator";
+	setAttr ".Help" -type "string" "Select object to save the current pose to an attr, will save it using SDK, Anim Step is the amount the sdk will move after each pose, add should be == 1, You can set objects with Name_*";
+	setAttr ".SetObject" -type "string" "Hair_16_*Ctrl\n";
+	setAttr ".AnimStep" -type "string" "1";
+	setAttr ".postcode" -type "string" "";
+createNode hyperLayout -n "hyperLayout62";
+	rename -uid "F40B2D80-0000-1D93-630E-7DEB00014A15";
+	setAttr ".ihi" 0;
+createNode network -n "PoseToAttr17_Config";
+	rename -uid "F40B2D80-0000-1D93-630E-7DEB00014A22";
+	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
+	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
+	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "NewAttrName" -ln "NewAttrName" -dt "string";
+	addAttr -ci true -sn "SetNewAttrNode" -ln "SetNewAttrNode" -dt "string";
+	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
+	addAttr -ci true -sn "SetObject" -ln "SetObject" -dt "string";
+	addAttr -ci true -sn "AnimStep" -ln "AnimStep" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	setAttr ".precode" -type "string" "";
+	setAttr -l on ".Build_Command" -type "string" "exec_anim_to_attr.build_animtoattr_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_anim_to_attr";
+	setAttr ".NewAttrName" -type "string" "Pose";
+	setAttr ".SetNewAttrNode" -type "string" "new_locator";
+	setAttr ".Help" -type "string" "Select object to save the current pose to an attr, will save it using SDK, Anim Step is the amount the sdk will move after each pose, add should be == 1, You can set objects with Name_*";
+	setAttr ".SetObject" -type "string" "Hair_17_*Ctrl\n";
+	setAttr ".AnimStep" -type "string" "1";
+	setAttr ".postcode" -type "string" "";
+createNode hyperLayout -n "hyperLayout63";
+	rename -uid "F40B2D80-0000-1D93-630E-7DEF00014A30";
+	setAttr ".ihi" 0;
+createNode network -n "PoseToAttr18_Config";
+	rename -uid "F40B2D80-0000-1D93-630E-7DEF00014A3D";
+	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
+	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
+	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "NewAttrName" -ln "NewAttrName" -dt "string";
+	addAttr -ci true -sn "SetNewAttrNode" -ln "SetNewAttrNode" -dt "string";
+	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
+	addAttr -ci true -sn "SetObject" -ln "SetObject" -dt "string";
+	addAttr -ci true -sn "AnimStep" -ln "AnimStep" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	setAttr ".precode" -type "string" "";
+	setAttr -l on ".Build_Command" -type "string" "exec_anim_to_attr.build_animtoattr_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_anim_to_attr";
+	setAttr ".NewAttrName" -type "string" "Pose";
+	setAttr ".SetNewAttrNode" -type "string" "new_locator";
+	setAttr ".Help" -type "string" "Select object to save the current pose to an attr, will save it using SDK, Anim Step is the amount the sdk will move after each pose, add should be == 1, You can set objects with Name_*";
+	setAttr ".SetObject" -type "string" "Hair_18_*Ctrl\n";
+	setAttr ".AnimStep" -type "string" "1";
+	setAttr ".postcode" -type "string" "";
+createNode hyperLayout -n "hyperLayout64";
+	rename -uid "F40B2D80-0000-1D93-630E-7DF300014A4B";
+	setAttr ".ihi" 0;
+createNode network -n "PoseToAttr19_Config";
+	rename -uid "F40B2D80-0000-1D93-630E-7DF300014A58";
+	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
+	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
+	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "NewAttrName" -ln "NewAttrName" -dt "string";
+	addAttr -ci true -sn "SetNewAttrNode" -ln "SetNewAttrNode" -dt "string";
+	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
+	addAttr -ci true -sn "SetObject" -ln "SetObject" -dt "string";
+	addAttr -ci true -sn "AnimStep" -ln "AnimStep" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	setAttr ".precode" -type "string" "";
+	setAttr -l on ".Build_Command" -type "string" "exec_anim_to_attr.build_animtoattr_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_anim_to_attr";
+	setAttr ".NewAttrName" -type "string" "Pose";
+	setAttr ".SetNewAttrNode" -type "string" "new_locator";
+	setAttr ".Help" -type "string" "Select object to save the current pose to an attr, will save it using SDK, Anim Step is the amount the sdk will move after each pose, add should be == 1, You can set objects with Name_*";
+	setAttr ".SetObject" -type "string" "Hair_19_*Ctrl\n";
+	setAttr ".AnimStep" -type "string" "1";
+	setAttr ".postcode" -type "string" "";
+createNode hyperLayout -n "hyperLayout65";
+	rename -uid "F40B2D80-0000-1D93-630E-7DF600014A66";
+	setAttr ".ihi" 0;
+createNode network -n "PoseToAttr20_Config";
+	rename -uid "F40B2D80-0000-1D93-630E-7DF600014A73";
+	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
+	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
+	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "NewAttrName" -ln "NewAttrName" -dt "string";
+	addAttr -ci true -sn "SetNewAttrNode" -ln "SetNewAttrNode" -dt "string";
+	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
+	addAttr -ci true -sn "SetObject" -ln "SetObject" -dt "string";
+	addAttr -ci true -sn "AnimStep" -ln "AnimStep" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	setAttr ".precode" -type "string" "";
+	setAttr -l on ".Build_Command" -type "string" "exec_anim_to_attr.build_animtoattr_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_anim_to_attr";
+	setAttr ".NewAttrName" -type "string" "Pose";
+	setAttr ".SetNewAttrNode" -type "string" "new_locator";
+	setAttr ".Help" -type "string" "Select object to save the current pose to an attr, will save it using SDK, Anim Step is the amount the sdk will move after each pose, add should be == 1, You can set objects with Name_*";
+	setAttr ".SetObject" -type "string" "Hair_20_*Ctrl\n";
+	setAttr ".AnimStep" -type "string" "1";
+	setAttr ".postcode" -type "string" "";
+createNode hyperLayout -n "hyperLayout66";
+	rename -uid "F40B2D80-0000-1D93-630E-7DFB00014A81";
+	setAttr ".ihi" 0;
+createNode network -n "PoseToAttr21_Config";
+	rename -uid "F40B2D80-0000-1D93-630E-7DFB00014A8E";
+	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
+	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
+	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "NewAttrName" -ln "NewAttrName" -dt "string";
+	addAttr -ci true -sn "SetNewAttrNode" -ln "SetNewAttrNode" -dt "string";
+	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
+	addAttr -ci true -sn "SetObject" -ln "SetObject" -dt "string";
+	addAttr -ci true -sn "AnimStep" -ln "AnimStep" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	setAttr ".precode" -type "string" "";
+	setAttr -l on ".Build_Command" -type "string" "exec_anim_to_attr.build_animtoattr_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_anim_to_attr";
+	setAttr ".NewAttrName" -type "string" "Pose";
+	setAttr ".SetNewAttrNode" -type "string" "new_locator";
+	setAttr ".Help" -type "string" "Select object to save the current pose to an attr, will save it using SDK, Anim Step is the amount the sdk will move after each pose, add should be == 1, You can set objects with Name_*";
+	setAttr ".SetObject" -type "string" "Hair_21_*Ctrl\n";
+	setAttr ".AnimStep" -type "string" "1";
+	setAttr ".postcode" -type "string" "";
+createNode hyperLayout -n "hyperLayout67";
+	rename -uid "F40B2D80-0000-1D93-630E-7DFE00014A9C";
+	setAttr ".ihi" 0;
+createNode network -n "PoseToAttr22_Config";
+	rename -uid "F40B2D80-0000-1D93-630E-7DFE00014AA9";
+	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
+	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
+	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "NewAttrName" -ln "NewAttrName" -dt "string";
+	addAttr -ci true -sn "SetNewAttrNode" -ln "SetNewAttrNode" -dt "string";
+	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
+	addAttr -ci true -sn "SetObject" -ln "SetObject" -dt "string";
+	addAttr -ci true -sn "AnimStep" -ln "AnimStep" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	setAttr ".precode" -type "string" "";
+	setAttr -l on ".Build_Command" -type "string" "exec_anim_to_attr.build_animtoattr_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_anim_to_attr";
+	setAttr ".NewAttrName" -type "string" "Pose";
+	setAttr ".SetNewAttrNode" -type "string" "new_locator";
+	setAttr ".Help" -type "string" "Select object to save the current pose to an attr, will save it using SDK, Anim Step is the amount the sdk will move after each pose, add should be == 1, You can set objects with Name_*";
+	setAttr ".SetObject" -type "string" "Hair_22_*Ctrl\n";
+	setAttr ".AnimStep" -type "string" "1";
+	setAttr ".postcode" -type "string" "";
+createNode hyperLayout -n "hyperLayout68";
+	rename -uid "F40B2D80-0000-1D93-630E-7E0400014AB7";
+	setAttr ".ihi" 0;
+createNode network -n "PoseToAttr23_Config";
+	rename -uid "F40B2D80-0000-1D93-630E-7E0400014AC4";
+	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
+	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
+	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "NewAttrName" -ln "NewAttrName" -dt "string";
+	addAttr -ci true -sn "SetNewAttrNode" -ln "SetNewAttrNode" -dt "string";
+	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
+	addAttr -ci true -sn "SetObject" -ln "SetObject" -dt "string";
+	addAttr -ci true -sn "AnimStep" -ln "AnimStep" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	setAttr ".precode" -type "string" "";
+	setAttr -l on ".Build_Command" -type "string" "exec_anim_to_attr.build_animtoattr_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_anim_to_attr";
+	setAttr ".NewAttrName" -type "string" "Pose";
+	setAttr ".SetNewAttrNode" -type "string" "new_locator";
+	setAttr ".Help" -type "string" "Select object to save the current pose to an attr, will save it using SDK, Anim Step is the amount the sdk will move after each pose, add should be == 1, You can set objects with Name_*";
+	setAttr ".SetObject" -type "string" "Hair_23_*Ctrl\n";
+	setAttr ".AnimStep" -type "string" "1";
+	setAttr ".postcode" -type "string" "";
+createNode hyperLayout -n "hyperLayout69";
+	rename -uid "F40B2D80-0000-1D93-630E-7E1200014AD2";
+	setAttr ".ihi" 0;
+createNode network -n "PoseToAttr24_Config";
+	rename -uid "F40B2D80-0000-1D93-630E-7E1200014ADF";
+	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
+	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
+	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "NewAttrName" -ln "NewAttrName" -dt "string";
+	addAttr -ci true -sn "SetNewAttrNode" -ln "SetNewAttrNode" -dt "string";
+	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
+	addAttr -ci true -sn "SetObject" -ln "SetObject" -dt "string";
+	addAttr -ci true -sn "AnimStep" -ln "AnimStep" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	setAttr ".precode" -type "string" "";
+	setAttr -l on ".Build_Command" -type "string" "exec_anim_to_attr.build_animtoattr_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_anim_to_attr";
+	setAttr ".NewAttrName" -type "string" "Pose";
+	setAttr ".SetNewAttrNode" -type "string" "new_locator";
+	setAttr ".Help" -type "string" "Select object to save the current pose to an attr, will save it using SDK, Anim Step is the amount the sdk will move after each pose, add should be == 1, You can set objects with Name_*";
+	setAttr ".SetObject" -type "string" "Hair_24_*Ctrl\n";
+	setAttr ".AnimStep" -type "string" "1";
+	setAttr ".postcode" -type "string" "";
+createNode hyperLayout -n "hyperLayout70";
+	rename -uid "F40B2D80-0000-1D93-630E-7E1700014AED";
+	setAttr ".ihi" 0;
+createNode network -n "PoseToAttr25_Config";
+	rename -uid "F40B2D80-0000-1D93-630E-7E1700014AFA";
+	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
+	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
+	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "NewAttrName" -ln "NewAttrName" -dt "string";
+	addAttr -ci true -sn "SetNewAttrNode" -ln "SetNewAttrNode" -dt "string";
+	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
+	addAttr -ci true -sn "SetObject" -ln "SetObject" -dt "string";
+	addAttr -ci true -sn "AnimStep" -ln "AnimStep" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	setAttr ".precode" -type "string" "";
+	setAttr -l on ".Build_Command" -type "string" "exec_anim_to_attr.build_animtoattr_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_anim_to_attr";
+	setAttr ".NewAttrName" -type "string" "Pose";
+	setAttr ".SetNewAttrNode" -type "string" "new_locator";
+	setAttr ".Help" -type "string" "Select object to save the current pose to an attr, will save it using SDK, Anim Step is the amount the sdk will move after each pose, add should be == 1, You can set objects with Name_*";
+	setAttr ".SetObject" -type "string" "Hair_25_*Ctrl\n";
+	setAttr ".AnimStep" -type "string" "1";
+	setAttr ".postcode" -type "string" "";
+createNode hyperLayout -n "hyperLayout71";
+	rename -uid "F40B2D80-0000-1D93-630E-7E1C00014B08";
+	setAttr ".ihi" 0;
+createNode network -n "PoseToAttr26_Config";
+	rename -uid "F40B2D80-0000-1D93-630E-7E1C00014B15";
+	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
+	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
+	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "NewAttrName" -ln "NewAttrName" -dt "string";
+	addAttr -ci true -sn "SetNewAttrNode" -ln "SetNewAttrNode" -dt "string";
+	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
+	addAttr -ci true -sn "SetObject" -ln "SetObject" -dt "string";
+	addAttr -ci true -sn "AnimStep" -ln "AnimStep" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	setAttr ".precode" -type "string" "";
+	setAttr -l on ".Build_Command" -type "string" "exec_anim_to_attr.build_animtoattr_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_anim_to_attr";
+	setAttr ".NewAttrName" -type "string" "Pose";
+	setAttr ".SetNewAttrNode" -type "string" "new_locator";
+	setAttr ".Help" -type "string" "Select object to save the current pose to an attr, will save it using SDK, Anim Step is the amount the sdk will move after each pose, add should be == 1, You can set objects with Name_*";
+	setAttr ".SetObject" -type "string" "Hair_26_*Ctrl\n";
+	setAttr ".AnimStep" -type "string" "1";
+	setAttr ".postcode" -type "string" "";
+createNode hyperLayout -n "hyperLayout72";
+	rename -uid "F40B2D80-0000-1D93-630E-7E1F00014B23";
+	setAttr ".ihi" 0;
+createNode network -n "PoseToAttr27_Config";
+	rename -uid "F40B2D80-0000-1D93-630E-7E1F00014B30";
+	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
+	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
+	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "NewAttrName" -ln "NewAttrName" -dt "string";
+	addAttr -ci true -sn "SetNewAttrNode" -ln "SetNewAttrNode" -dt "string";
+	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
+	addAttr -ci true -sn "SetObject" -ln "SetObject" -dt "string";
+	addAttr -ci true -sn "AnimStep" -ln "AnimStep" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	setAttr ".precode" -type "string" "";
+	setAttr -l on ".Build_Command" -type "string" "exec_anim_to_attr.build_animtoattr_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_anim_to_attr";
+	setAttr ".NewAttrName" -type "string" "Pose";
+	setAttr ".SetNewAttrNode" -type "string" "new_locator";
+	setAttr ".Help" -type "string" "Select object to save the current pose to an attr, will save it using SDK, Anim Step is the amount the sdk will move after each pose, add should be == 1, You can set objects with Name_*";
+	setAttr ".SetObject" -type "string" "Hair_27_*Ctrl\n";
+	setAttr ".AnimStep" -type "string" "1";
+	setAttr ".postcode" -type "string" "";
+createNode hyperLayout -n "hyperLayout73";
+	rename -uid "F40B2D80-0000-1D93-630E-7E2700014B3E";
+	setAttr ".ihi" 0;
+createNode network -n "PoseToAttr28_Config";
+	rename -uid "F40B2D80-0000-1D93-630E-7E2700014B4B";
+	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
+	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
+	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "NewAttrName" -ln "NewAttrName" -dt "string";
+	addAttr -ci true -sn "SetNewAttrNode" -ln "SetNewAttrNode" -dt "string";
+	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
+	addAttr -ci true -sn "SetObject" -ln "SetObject" -dt "string";
+	addAttr -ci true -sn "AnimStep" -ln "AnimStep" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	setAttr ".precode" -type "string" "";
+	setAttr -l on ".Build_Command" -type "string" "exec_anim_to_attr.build_animtoattr_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_anim_to_attr";
+	setAttr ".NewAttrName" -type "string" "Pose";
+	setAttr ".SetNewAttrNode" -type "string" "new_locator";
+	setAttr ".Help" -type "string" "Select object to save the current pose to an attr, will save it using SDK, Anim Step is the amount the sdk will move after each pose, add should be == 1, You can set objects with Name_*";
+	setAttr ".SetObject" -type "string" "Hair_28_*Ctrl\n";
+	setAttr ".AnimStep" -type "string" "1";
+	setAttr ".postcode" -type "string" "";
+createNode hyperLayout -n "hyperLayout74";
+	rename -uid "F40B2D80-0000-1D93-630E-7E2B00014B59";
+	setAttr ".ihi" 0;
+createNode network -n "PoseToAttr29_Config";
+	rename -uid "F40B2D80-0000-1D93-630E-7E2B00014B66";
+	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
+	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
+	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "NewAttrName" -ln "NewAttrName" -dt "string";
+	addAttr -ci true -sn "SetNewAttrNode" -ln "SetNewAttrNode" -dt "string";
+	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
+	addAttr -ci true -sn "SetObject" -ln "SetObject" -dt "string";
+	addAttr -ci true -sn "AnimStep" -ln "AnimStep" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	setAttr ".precode" -type "string" "";
+	setAttr -l on ".Build_Command" -type "string" "exec_anim_to_attr.build_animtoattr_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_anim_to_attr";
+	setAttr ".NewAttrName" -type "string" "Pose";
+	setAttr ".SetNewAttrNode" -type "string" "new_locator";
+	setAttr ".Help" -type "string" "Select object to save the current pose to an attr, will save it using SDK, Anim Step is the amount the sdk will move after each pose, add should be == 1, You can set objects with Name_*";
+	setAttr ".SetObject" -type "string" "Hair_29_*Ctrl\n";
+	setAttr ".AnimStep" -type "string" "1";
+	setAttr ".postcode" -type "string" "";
+createNode hyperLayout -n "hyperLayout75";
+	rename -uid "F40B2D80-0000-1D93-630E-7E2F00014B74";
+	setAttr ".ihi" 0;
+createNode network -n "PoseToAttr30_Config";
+	rename -uid "F40B2D80-0000-1D93-630E-7E2F00014B81";
+	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
+	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
+	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "NewAttrName" -ln "NewAttrName" -dt "string";
+	addAttr -ci true -sn "SetNewAttrNode" -ln "SetNewAttrNode" -dt "string";
+	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
+	addAttr -ci true -sn "SetObject" -ln "SetObject" -dt "string";
+	addAttr -ci true -sn "AnimStep" -ln "AnimStep" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	setAttr ".precode" -type "string" "";
+	setAttr -l on ".Build_Command" -type "string" "exec_anim_to_attr.build_animtoattr_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_anim_to_attr";
+	setAttr ".NewAttrName" -type "string" "Pose";
+	setAttr ".SetNewAttrNode" -type "string" "new_locator";
+	setAttr ".Help" -type "string" "Select object to save the current pose to an attr, will save it using SDK, Anim Step is the amount the sdk will move after each pose, add should be == 1, You can set objects with Name_*";
+	setAttr ".SetObject" -type "string" "Hair_30_*Ctrl\n";
+	setAttr ".AnimStep" -type "string" "1";
+	setAttr ".postcode" -type "string" "";
+createNode hyperLayout -n "hyperLayout76";
+	rename -uid "F40B2D80-0000-1D93-630E-7E3300014B8F";
+	setAttr ".ihi" 0;
+createNode network -n "PoseToAttr31_Config";
+	rename -uid "F40B2D80-0000-1D93-630E-7E3300014B9C";
+	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
+	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
+	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "NewAttrName" -ln "NewAttrName" -dt "string";
+	addAttr -ci true -sn "SetNewAttrNode" -ln "SetNewAttrNode" -dt "string";
+	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
+	addAttr -ci true -sn "SetObject" -ln "SetObject" -dt "string";
+	addAttr -ci true -sn "AnimStep" -ln "AnimStep" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	setAttr ".precode" -type "string" "";
+	setAttr -l on ".Build_Command" -type "string" "exec_anim_to_attr.build_animtoattr_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_anim_to_attr";
+	setAttr ".NewAttrName" -type "string" "Pose";
+	setAttr ".SetNewAttrNode" -type "string" "new_locator";
+	setAttr ".Help" -type "string" "Select object to save the current pose to an attr, will save it using SDK, Anim Step is the amount the sdk will move after each pose, add should be == 1, You can set objects with Name_*";
+	setAttr ".SetObject" -type "string" "Hair_31_*Ctrl\n";
+	setAttr ".AnimStep" -type "string" "1";
+	setAttr ".postcode" -type "string" "";
+createNode hyperLayout -n "hyperLayout77";
+	rename -uid "F40B2D80-0000-1D93-630E-7E3800014BAA";
+	setAttr ".ihi" 0;
+createNode network -n "PoseToAttr32_Config";
+	rename -uid "F40B2D80-0000-1D93-630E-7E3800014BB7";
+	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
+	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
+	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "NewAttrName" -ln "NewAttrName" -dt "string";
+	addAttr -ci true -sn "SetNewAttrNode" -ln "SetNewAttrNode" -dt "string";
+	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
+	addAttr -ci true -sn "SetObject" -ln "SetObject" -dt "string";
+	addAttr -ci true -sn "AnimStep" -ln "AnimStep" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	setAttr ".precode" -type "string" "";
+	setAttr -l on ".Build_Command" -type "string" "exec_anim_to_attr.build_animtoattr_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_anim_to_attr";
+	setAttr ".NewAttrName" -type "string" "Pose";
+	setAttr ".SetNewAttrNode" -type "string" "new_locator";
+	setAttr ".Help" -type "string" "Select object to save the current pose to an attr, will save it using SDK, Anim Step is the amount the sdk will move after each pose, add should be == 1, You can set objects with Name_*";
+	setAttr ".SetObject" -type "string" "Hair_32_*Ctrl\n";
+	setAttr ".AnimStep" -type "string" "1";
+	setAttr ".postcode" -type "string" "";
+createNode hyperLayout -n "hyperLayout78";
+	rename -uid "F40B2D80-0000-1D93-630E-7E3B00014BC5";
+	setAttr ".ihi" 0;
+createNode network -n "PoseToAttr33_Config";
+	rename -uid "F40B2D80-0000-1D93-630E-7E3B00014BD2";
+	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
+	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
+	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "NewAttrName" -ln "NewAttrName" -dt "string";
+	addAttr -ci true -sn "SetNewAttrNode" -ln "SetNewAttrNode" -dt "string";
+	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
+	addAttr -ci true -sn "SetObject" -ln "SetObject" -dt "string";
+	addAttr -ci true -sn "AnimStep" -ln "AnimStep" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	setAttr ".precode" -type "string" "";
+	setAttr -l on ".Build_Command" -type "string" "exec_anim_to_attr.build_animtoattr_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_anim_to_attr";
+	setAttr ".NewAttrName" -type "string" "Pose";
+	setAttr ".SetNewAttrNode" -type "string" "new_locator";
+	setAttr ".Help" -type "string" "Select object to save the current pose to an attr, will save it using SDK, Anim Step is the amount the sdk will move after each pose, add should be == 1, You can set objects with Name_*";
+	setAttr ".SetObject" -type "string" "Hair_33_*Ctrl\n";
+	setAttr ".AnimStep" -type "string" "1";
+	setAttr ".postcode" -type "string" "";
+createNode hyperLayout -n "hyperLayout79";
+	rename -uid "F40B2D80-0000-1D93-630E-7E3F00014BE0";
+	setAttr ".ihi" 0;
+createNode network -n "PoseToAttr34_Config";
+	rename -uid "F40B2D80-0000-1D93-630E-7E3F00014BED";
+	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
+	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
+	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "NewAttrName" -ln "NewAttrName" -dt "string";
+	addAttr -ci true -sn "SetNewAttrNode" -ln "SetNewAttrNode" -dt "string";
+	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
+	addAttr -ci true -sn "SetObject" -ln "SetObject" -dt "string";
+	addAttr -ci true -sn "AnimStep" -ln "AnimStep" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	setAttr ".precode" -type "string" "";
+	setAttr -l on ".Build_Command" -type "string" "exec_anim_to_attr.build_animtoattr_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_anim_to_attr";
+	setAttr ".NewAttrName" -type "string" "Pose";
+	setAttr ".SetNewAttrNode" -type "string" "new_locator";
+	setAttr ".Help" -type "string" "Select object to save the current pose to an attr, will save it using SDK, Anim Step is the amount the sdk will move after each pose, add should be == 1, You can set objects with Name_*";
+	setAttr ".SetObject" -type "string" "Hair_34_*Ctrl\n";
+	setAttr ".AnimStep" -type "string" "1";
+	setAttr ".postcode" -type "string" "";
+createNode hyperLayout -n "hyperLayout80";
+	rename -uid "F40B2D80-0000-1D93-630E-7E5000014C13";
+	setAttr ".ihi" 0;
+createNode network -n "PoseToAttr35_Config";
+	rename -uid "F40B2D80-0000-1D93-630E-7E5000014C20";
+	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
+	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
+	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "NewAttrName" -ln "NewAttrName" -dt "string";
+	addAttr -ci true -sn "SetNewAttrNode" -ln "SetNewAttrNode" -dt "string";
+	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
+	addAttr -ci true -sn "SetObject" -ln "SetObject" -dt "string";
+	addAttr -ci true -sn "AnimStep" -ln "AnimStep" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	setAttr ".precode" -type "string" "";
+	setAttr -l on ".Build_Command" -type "string" "exec_anim_to_attr.build_animtoattr_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_anim_to_attr";
+	setAttr ".NewAttrName" -type "string" "Pose";
+	setAttr ".SetNewAttrNode" -type "string" "new_locator";
+	setAttr ".Help" -type "string" "Select object to save the current pose to an attr, will save it using SDK, Anim Step is the amount the sdk will move after each pose, add should be == 1, You can set objects with Name_*";
+	setAttr ".SetObject" -type "string" "Hair_35_*Ctrl\n";
+	setAttr ".AnimStep" -type "string" "1";
+	setAttr ".postcode" -type "string" "";
+createNode hyperLayout -n "hyperLayout87";
+	rename -uid "F40B2D80-0000-1D93-630E-7F1200015056";
+	setAttr ".ihi" 0;
+createNode network -n "PoseToAttr36_Config";
+	rename -uid "F40B2D80-0000-1D93-630E-7F1200015063";
+	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
+	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
+	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "NewAttrName" -ln "NewAttrName" -dt "string";
+	addAttr -ci true -sn "SetNewAttrNode" -ln "SetNewAttrNode" -dt "string";
+	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
+	addAttr -ci true -sn "SetObject" -ln "SetObject" -dt "string";
+	addAttr -ci true -sn "AnimStep" -ln "AnimStep" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	setAttr ".precode" -type "string" "";
+	setAttr -l on ".Build_Command" -type "string" "exec_anim_to_attr.build_animtoattr_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_anim_to_attr";
+	setAttr ".NewAttrName" -type "string" "Pose";
+	setAttr ".SetNewAttrNode" -type "string" "new_locator";
+	setAttr ".Help" -type "string" "Select object to save the current pose to an attr, will save it using SDK, Anim Step is the amount the sdk will move after each pose, add should be == 1, You can set objects with Name_*";
+	setAttr ".SetObject" -type "string" "Hair_36_*Ctrl\n";
+	setAttr ".AnimStep" -type "string" "1";
+	setAttr ".postcode" -type "string" "";
+createNode hyperLayout -n "hyperLayout81";
+	rename -uid "F40B2D80-0000-1D93-630E-7E5E00014C65";
+	setAttr ".ihi" 0;
+createNode network -n "PoseToAttr37_Config";
+	rename -uid "F40B2D80-0000-1D93-630E-7E5E00014C72";
+	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
+	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
+	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "NewAttrName" -ln "NewAttrName" -dt "string";
+	addAttr -ci true -sn "SetNewAttrNode" -ln "SetNewAttrNode" -dt "string";
+	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
+	addAttr -ci true -sn "SetObject" -ln "SetObject" -dt "string";
+	addAttr -ci true -sn "AnimStep" -ln "AnimStep" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	setAttr ".precode" -type "string" "";
+	setAttr -l on ".Build_Command" -type "string" "exec_anim_to_attr.build_animtoattr_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_anim_to_attr";
+	setAttr ".NewAttrName" -type "string" "Pose";
+	setAttr ".SetNewAttrNode" -type "string" "new_locator";
+	setAttr ".Help" -type "string" "Select object to save the current pose to an attr, will save it using SDK, Anim Step is the amount the sdk will move after each pose, add should be == 1, You can set objects with Name_*";
+	setAttr ".SetObject" -type "string" "Hair_37_*Ctrl\n";
+	setAttr ".AnimStep" -type "string" "1";
+	setAttr ".postcode" -type "string" "";
+createNode hyperLayout -n "hyperLayout82";
+	rename -uid "F40B2D80-0000-1D93-630E-7E6200014C80";
+	setAttr ".ihi" 0;
+createNode network -n "PoseToAttr38_Config";
+	rename -uid "F40B2D80-0000-1D93-630E-7E6200014C8D";
+	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
+	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
+	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "NewAttrName" -ln "NewAttrName" -dt "string";
+	addAttr -ci true -sn "SetNewAttrNode" -ln "SetNewAttrNode" -dt "string";
+	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
+	addAttr -ci true -sn "SetObject" -ln "SetObject" -dt "string";
+	addAttr -ci true -sn "AnimStep" -ln "AnimStep" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	setAttr ".precode" -type "string" "";
+	setAttr -l on ".Build_Command" -type "string" "exec_anim_to_attr.build_animtoattr_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_anim_to_attr";
+	setAttr ".NewAttrName" -type "string" "Pose";
+	setAttr ".SetNewAttrNode" -type "string" "new_locator";
+	setAttr ".Help" -type "string" "Select object to save the current pose to an attr, will save it using SDK, Anim Step is the amount the sdk will move after each pose, add should be == 1, You can set objects with Name_*";
+	setAttr ".SetObject" -type "string" "Hair_38_*Ctrl\n";
+	setAttr ".AnimStep" -type "string" "1";
+	setAttr ".postcode" -type "string" "";
+createNode hyperLayout -n "hyperLayout83";
+	rename -uid "F40B2D80-0000-1D93-630E-7E6600014C9B";
+	setAttr ".ihi" 0;
+createNode network -n "PoseToAttr39_Config";
+	rename -uid "F40B2D80-0000-1D93-630E-7E6600014CA8";
+	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
+	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
+	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "NewAttrName" -ln "NewAttrName" -dt "string";
+	addAttr -ci true -sn "SetNewAttrNode" -ln "SetNewAttrNode" -dt "string";
+	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
+	addAttr -ci true -sn "SetObject" -ln "SetObject" -dt "string";
+	addAttr -ci true -sn "AnimStep" -ln "AnimStep" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	setAttr ".precode" -type "string" "";
+	setAttr -l on ".Build_Command" -type "string" "exec_anim_to_attr.build_animtoattr_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_anim_to_attr";
+	setAttr ".NewAttrName" -type "string" "Pose";
+	setAttr ".SetNewAttrNode" -type "string" "new_locator";
+	setAttr ".Help" -type "string" "Select object to save the current pose to an attr, will save it using SDK, Anim Step is the amount the sdk will move after each pose, add should be == 1, You can set objects with Name_*";
+	setAttr ".SetObject" -type "string" "Hair_39_*Ctrl\n";
+	setAttr ".AnimStep" -type "string" "1";
+	setAttr ".postcode" -type "string" "";
+createNode hyperLayout -n "hyperLayout84";
+	rename -uid "F40B2D80-0000-1D93-630E-7E6A00014CB6";
+	setAttr ".ihi" 0;
+createNode network -n "PoseToAttr40_Config";
+	rename -uid "F40B2D80-0000-1D93-630E-7E6A00014CC3";
+	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
+	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
+	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "NewAttrName" -ln "NewAttrName" -dt "string";
+	addAttr -ci true -sn "SetNewAttrNode" -ln "SetNewAttrNode" -dt "string";
+	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
+	addAttr -ci true -sn "SetObject" -ln "SetObject" -dt "string";
+	addAttr -ci true -sn "AnimStep" -ln "AnimStep" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	setAttr ".precode" -type "string" "";
+	setAttr -l on ".Build_Command" -type "string" "exec_anim_to_attr.build_animtoattr_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_anim_to_attr";
+	setAttr ".NewAttrName" -type "string" "Pose";
+	setAttr ".SetNewAttrNode" -type "string" "new_locator";
+	setAttr ".Help" -type "string" "Select object to save the current pose to an attr, will save it using SDK, Anim Step is the amount the sdk will move after each pose, add should be == 1, You can set objects with Name_*";
+	setAttr ".SetObject" -type "string" "Hair_40_*Ctrl\n";
+	setAttr ".AnimStep" -type "string" "1";
+	setAttr ".postcode" -type "string" "";
+createNode hyperLayout -n "hyperLayout85";
+	rename -uid "F40B2D80-0000-1D93-630E-7E7900014CDD";
+	setAttr ".ihi" 0;
+createNode network -n "PoseToAttr41_Config";
+	rename -uid "F40B2D80-0000-1D93-630E-7E7900014CEA";
+	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
+	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
+	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "NewAttrName" -ln "NewAttrName" -dt "string";
+	addAttr -ci true -sn "SetNewAttrNode" -ln "SetNewAttrNode" -dt "string";
+	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
+	addAttr -ci true -sn "SetObject" -ln "SetObject" -dt "string";
+	addAttr -ci true -sn "AnimStep" -ln "AnimStep" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	setAttr ".precode" -type "string" "";
+	setAttr -l on ".Build_Command" -type "string" "exec_anim_to_attr.build_animtoattr_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_anim_to_attr";
+	setAttr ".NewAttrName" -type "string" "Pose";
+	setAttr ".SetNewAttrNode" -type "string" "new_locator";
+	setAttr ".Help" -type "string" "Select object to save the current pose to an attr, will save it using SDK, Anim Step is the amount the sdk will move after each pose, add should be == 1, You can set objects with Name_*";
+	setAttr ".SetObject" -type "string" "Hair_41_*Ctrl\n";
+	setAttr ".AnimStep" -type "string" "1";
+	setAttr ".postcode" -type "string" "";
+createNode hyperLayout -n "hyperLayout86";
+	rename -uid "F40B2D80-0000-1D93-630E-7E7D00014CF8";
+	setAttr ".ihi" 0;
+createNode network -n "PoseToAttr42_Config";
+	rename -uid "F40B2D80-0000-1D93-630E-7E7D00014D05";
+	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
+	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
+	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "NewAttrName" -ln "NewAttrName" -dt "string";
+	addAttr -ci true -sn "SetNewAttrNode" -ln "SetNewAttrNode" -dt "string";
+	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
+	addAttr -ci true -sn "SetObject" -ln "SetObject" -dt "string";
+	addAttr -ci true -sn "AnimStep" -ln "AnimStep" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	setAttr ".precode" -type "string" "";
+	setAttr -l on ".Build_Command" -type "string" "exec_anim_to_attr.build_animtoattr_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_anim_to_attr";
+	setAttr ".NewAttrName" -type "string" "Pose";
+	setAttr ".SetNewAttrNode" -type "string" "new_locator";
+	setAttr ".Help" -type "string" "Select object to save the current pose to an attr, will save it using SDK, Anim Step is the amount the sdk will move after each pose, add should be == 1, You can set objects with Name_*";
+	setAttr ".SetObject" -type "string" "Hair_42_*Ctrl\n";
+	setAttr ".AnimStep" -type "string" "1";
+	setAttr ".postcode" -type "string" "";
+select -ne :time1;
+	setAttr -av -k on ".cch";
+	setAttr -k on ".fzn";
+	setAttr -av -cb on ".ihi";
+	setAttr -av -k on ".nds";
+	setAttr -cb on ".bnm";
+	setAttr -k on ".o" 1;
+	setAttr -av -k on ".unw" 1;
+	setAttr -av -k on ".etw";
+	setAttr -av -k on ".tps";
+	setAttr -av -k on ".tms";
+select -ne :hardwareRenderingGlobals;
+	setAttr -av -k on ".cch";
+	setAttr -k on ".fzn";
+	setAttr -av -k on ".ihi";
+	setAttr -av -k on ".nds";
+	setAttr -cb on ".bnm";
+	setAttr -k on ".rm";
+	setAttr -k on ".lm";
+	setAttr ".otfna" -type "stringArray" 22 "NURBS Curves" "NURBS Surfaces" "Polygons" "Subdiv Surface" "Particles" "Particle Instance" "Fluids" "Strokes" "Image Planes" "UI" "Lights" "Cameras" "Locators" "Joints" "IK Handles" "Deformers" "Motion Trails" "Components" "Hair Systems" "Follicles" "Misc. UI" "Ornaments"  ;
+	setAttr ".otfva" -type "Int32Array" 22 0 1 1 1 1 1
+		 1 1 1 0 0 0 0 0 0 0 0 0
+		 0 0 0 0 ;
+	setAttr -k on ".hom";
+	setAttr -k on ".hodm";
+	setAttr -k on ".xry";
+	setAttr -k on ".jxr";
+	setAttr -k on ".sslt";
+	setAttr -k on ".cbr";
+	setAttr -k on ".bbr";
+	setAttr -k on ".mhl";
+	setAttr -k on ".cons";
+	setAttr -k on ".vac";
+	setAttr -k on ".hwi";
+	setAttr -k on ".csvd";
+	setAttr -av -k on ".ta";
+	setAttr -av -k on ".tq";
+	setAttr -k on ".ts";
+	setAttr -av -k on ".etmr";
+	setAttr -av -k on ".tmr";
+	setAttr -av -k on ".aoon";
+	setAttr -av -k on ".aoam";
+	setAttr -av -k on ".aora";
+	setAttr -k on ".aofr";
+	setAttr -k on ".aosm";
+	setAttr -k on ".hff";
+	setAttr -av -k on ".hfd";
+	setAttr -av -k on ".hfs";
+	setAttr -av -k on ".hfe";
+	setAttr -av ".hfc";
+	setAttr -av -k on ".hfcr";
+	setAttr -av -k on ".hfcg";
+	setAttr -av -k on ".hfcb";
+	setAttr -av -k on ".hfa";
+	setAttr -av -k on ".mbe";
+	setAttr -k on ".mbt";
+	setAttr -av -k on ".mbsof";
+	setAttr -k on ".mbsc";
+	setAttr -k on ".mbc";
+	setAttr -k on ".mbfa";
+	setAttr -k on ".mbftb";
+	setAttr -k on ".mbftg";
+	setAttr -k on ".mbftr";
+	setAttr -k on ".mbfta";
+	setAttr -k on ".mbfe";
+	setAttr -k on ".mbme";
+	setAttr -k on ".mbcsx";
+	setAttr -k on ".mbcsy";
+	setAttr -k on ".mbasx";
+	setAttr -k on ".mbasy";
+	setAttr -k on ".blen";
+	setAttr -k on ".blth";
+	setAttr -k on ".blfr";
+	setAttr -k on ".blfa";
+	setAttr -k on ".blat";
+	setAttr -av -k on ".msaa";
+	setAttr -k on ".aasc";
+	setAttr -k on ".aasq";
+	setAttr -k on ".laa";
+	setAttr -k on ".fprt" yes;
+	setAttr -k on ".rtfm";
+select -ne :renderPartition;
+	setAttr -av -k on ".cch";
+	setAttr -cb on ".ihi";
+	setAttr -av -k on ".nds";
+	setAttr -cb on ".bnm";
+	setAttr -s 5 ".st";
+	setAttr -cb on ".an";
+	setAttr -cb on ".pt";
+select -ne :renderGlobalsList1;
+	setAttr -k on ".cch";
+	setAttr -cb on ".ihi";
+	setAttr -k on ".nds";
+	setAttr -cb on ".bnm";
+select -ne :defaultShaderList1;
+	setAttr -k on ".cch";
+	setAttr -cb on ".ihi";
+	setAttr -k on ".nds";
+	setAttr -cb on ".bnm";
+	setAttr -s 12 ".s";
+select -ne :postProcessList1;
+	setAttr -k on ".cch";
+	setAttr -cb on ".ihi";
+	setAttr -k on ".nds";
+	setAttr -cb on ".bnm";
+	setAttr -s 2 ".p";
+select -ne :defaultRenderUtilityList1;
+	setAttr -k on ".cch";
+	setAttr -cb on ".ihi";
+	setAttr -av -k on ".nds";
+	setAttr -cb on ".bnm";
+	setAttr -s 16 ".u";
+select -ne :defaultRenderingList1;
+	setAttr -k on ".ihi";
+select -ne :defaultTextureList1;
+	setAttr -k on ".cch";
+	setAttr -cb on ".ihi";
+	setAttr -k on ".nds";
+	setAttr -cb on ".bnm";
+	setAttr -s 4 ".tx";
+select -ne :initialShadingGroup;
+	setAttr -av -k on ".cch";
+	setAttr -k on ".fzn";
+	setAttr -cb on ".ihi";
+	setAttr -av -k on ".nds";
+	setAttr -cb on ".bnm";
+	setAttr -k on ".bbx";
+	setAttr -k on ".vwm";
+	setAttr -k on ".tpv";
+	setAttr -k on ".uit";
+	setAttr -s 191 ".dsm";
+	setAttr -k on ".mwc";
+	setAttr -av -cb on ".an";
+	setAttr -cb on ".il";
+	setAttr -cb on ".vo";
+	setAttr -cb on ".eo";
+	setAttr -cb on ".fo";
+	setAttr -cb on ".epo";
+	setAttr -k on ".ro" yes;
+	setAttr -s 3 ".gn";
+	setAttr -cb on ".ai_override";
+	setAttr -k on ".ai_surface_shader";
+	setAttr -cb on ".ai_surface_shaderr";
+	setAttr -cb on ".ai_surface_shaderg";
+	setAttr -cb on ".ai_surface_shaderb";
+	setAttr -k on ".ai_volume_shader";
+	setAttr -cb on ".ai_volume_shaderr";
+	setAttr -cb on ".ai_volume_shaderg";
+	setAttr -cb on ".ai_volume_shaderb";
+select -ne :initialParticleSE;
+	setAttr -av -k on ".cch";
+	setAttr -cb on ".ihi";
+	setAttr -av -k on ".nds";
+	setAttr -cb on ".bnm";
+	setAttr -k on ".mwc";
+	setAttr -cb on ".an";
+	setAttr -cb on ".il";
+	setAttr -cb on ".vo";
+	setAttr -cb on ".eo";
+	setAttr -cb on ".fo";
+	setAttr -cb on ".epo";
+	setAttr -k on ".ro" yes;
+	setAttr -cb on ".ai_override";
+	setAttr -k on ".ai_surface_shader";
+	setAttr -cb on ".ai_surface_shaderr";
+	setAttr -cb on ".ai_surface_shaderg";
+	setAttr -cb on ".ai_surface_shaderb";
+	setAttr -k on ".ai_volume_shader";
+	setAttr -cb on ".ai_volume_shaderr";
+	setAttr -cb on ".ai_volume_shaderg";
+	setAttr -cb on ".ai_volume_shaderb";
+lockNode -l 0 -lu 1;
+select -ne :defaultRenderGlobals;
+	addAttr -ci true -sn "auto_pipeline" -ln "auto_pipeline" -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "auto_pipeline_task_id" -ln "auto_pipeline_task_id" -at "long";
+	addAttr -ci true -sn "auto_pipeline_preset_id" -ln "auto_pipeline_preset_id" -at "long";
+	addAttr -ci true -h true -sn "dss" -ln "defaultSurfaceShader" -dt "string";
+	setAttr -av -k on ".cch";
+	setAttr -cb on ".ihi";
+	setAttr -av -k on ".nds";
+	setAttr -cb on ".bnm";
+	setAttr -av -k on ".macc";
+	setAttr -av -k on ".macd";
+	setAttr -av -k on ".macq";
+	setAttr -av -k on ".mcfr";
+	setAttr -cb on ".ifg";
+	setAttr -av -k on ".clip";
+	setAttr -av -k on ".edm";
+	setAttr -av -k on ".edl";
+	setAttr -av -cb on ".ren" -type "string" "arnold";
+	setAttr -av -k on ".esr";
+	setAttr -av -k on ".ors";
+	setAttr -cb on ".sdf";
+	setAttr -av -k on ".outf" 3;
+	setAttr -av -cb on ".imfkey";
+	setAttr -av -k on ".gama";
+	setAttr -k on ".exrc" 3;
+	setAttr -k on ".expt";
+	setAttr -av -k on ".an" yes;
+	setAttr -cb on ".ar";
+	setAttr -av -k on ".fs";
+	setAttr -av -k on ".ef";
+	setAttr -av -k on ".bfs";
+	setAttr -av -cb on ".me";
+	setAttr -cb on ".se";
+	setAttr -av -k on ".be";
+	setAttr -av -cb on ".ep";
+	setAttr -av -k on ".fec";
+	setAttr -av -k on ".ofc";
+	setAttr -cb on ".ofe";
+	setAttr -cb on ".efe";
+	setAttr -cb on ".oft";
+	setAttr -cb on ".umfn";
+	setAttr -cb on ".ufe";
+	setAttr -av -k on ".pff" yes;
+	setAttr -av -cb on ".peie";
+	setAttr -av -cb on ".ifp" -type "string" "MutantBuild/<RenderLayer>/<Version>/<RenderLayer>_<Version>";
+	setAttr -k on ".rv" -type "string" "v001";
+	setAttr -av -k on ".comp";
+	setAttr -av -k on ".cth";
+	setAttr -av -k on ".soll";
+	setAttr -cb on ".sosl";
+	setAttr -av -k on ".rd";
+	setAttr -av -k on ".lp";
+	setAttr -av -k on ".sp";
+	setAttr -av -k on ".shs";
+	setAttr -av -k on ".lpr";
+	setAttr -cb on ".gv";
+	setAttr -cb on ".sv";
+	setAttr -av -k on ".mm";
+	setAttr -av -k on ".npu";
+	setAttr -av -k on ".itf";
+	setAttr -av -k on ".shp";
+	setAttr -cb on ".isp";
+	setAttr -av -k on ".uf";
+	setAttr -av -k on ".oi";
+	setAttr -av -k on ".rut";
+	setAttr -av -k on ".mot";
+	setAttr -av -cb on ".mb";
+	setAttr -av -k on ".mbf";
+	setAttr -av -k on ".mbso";
+	setAttr -av -k on ".mbsc";
+	setAttr -av -k on ".afp";
+	setAttr -av -k on ".pfb";
+	setAttr -av -k on ".pram";
+	setAttr -av -k on ".poam";
+	setAttr -av -k on ".prlm";
+	setAttr -av -k on ".polm";
+	setAttr -av -cb on ".prm";
+	setAttr -av -cb on ".pom";
+	setAttr -cb on ".pfrm";
+	setAttr -cb on ".pfom";
+	setAttr -av -k on ".bll";
+	setAttr -av -k on ".bls";
+	setAttr -av -k on ".smv";
+	setAttr -av -k on ".ubc";
+	setAttr -av -k on ".mbc";
+	setAttr -cb on ".mbt";
+	setAttr -av -k on ".udbx";
+	setAttr -av -k on ".smc";
+	setAttr -av -k on ".kmv";
+	setAttr -cb on ".isl";
+	setAttr -cb on ".ism";
+	setAttr -cb on ".imb";
+	setAttr -av -k on ".rlen";
+	setAttr -av -k on ".frts";
+	setAttr -av -k on ".tlwd";
+	setAttr -av -k on ".tlht";
+	setAttr -av -k on ".jfc";
+	setAttr -cb on ".rsb";
+	setAttr -av -k on ".ope";
+	setAttr -av -k on ".oppf";
+	setAttr -av -k on ".rcp";
+	setAttr -av -k on ".icp";
+	setAttr -av -k on ".ocp";
+	setAttr -cb on ".hbl";
+	setAttr ".auto_pipeline" yes;
+	setAttr ".auto_pipeline_task_id" 117634;
+	setAttr ".auto_pipeline_preset_id" 24;
+	setAttr ".dss" -type "string" "lambert1";
+select -ne :defaultResolution;
+	setAttr -av -k on ".cch";
+	setAttr -av -k on ".ihi";
+	setAttr -av -k on ".nds";
+	setAttr -k on ".bnm";
+	setAttr -av -k on ".w" 2022;
+	setAttr -av -k on ".h" 920;
+	setAttr -av -k on ".pa" 1;
+	setAttr -av -k on ".al";
+	setAttr -av -k on ".dar" 2.1978261470794678;
+	setAttr -av -k on ".ldar";
+	setAttr -av -k on ".dpi";
+	setAttr -av -k on ".off";
+	setAttr -av -k on ".fld";
+	setAttr -av -k on ".zsl";
+	setAttr -av -k on ".isu";
+	setAttr -av -k on ".pdu";
+select -ne :defaultColorMgtGlobals;
+	setAttr ".cfe" yes;
+	setAttr ".cfp" -type "string" "/net/pipeline/common/media/ocio/config/aces_1.1/config.ocio";
+	setAttr ".vtn" -type "string" "sRGB (ACES)";
+	setAttr ".vn" -type "string" "sRGB";
+	setAttr ".dn" -type "string" "ACES";
+	setAttr ".wsn" -type "string" "ACES - ACEScg";
+	setAttr ".otn" -type "string" "sRGB (ACES)";
+	setAttr ".potn" -type "string" "sRGB (ACES)";
+select -ne :hardwareRenderGlobals;
+	setAttr -av -k on ".cch";
+	setAttr -av -cb on ".ihi";
+	setAttr -av -k on ".nds";
+	setAttr -cb on ".bnm";
+	setAttr -av -k off -cb on ".ctrs" 256;
+	setAttr -av -k off -cb on ".btrs" 512;
+	setAttr -av -k off -cb on ".fbfm";
+	setAttr -av -k off -cb on ".ehql";
+	setAttr -av -k off -cb on ".eams";
+	setAttr -av -k off -cb on ".eeaa";
+	setAttr -av -k off -cb on ".engm";
+	setAttr -av -k off -cb on ".mes";
+	setAttr -av -k off -cb on ".emb";
+	setAttr -av -k off -cb on ".mbbf";
+	setAttr -av -k off -cb on ".mbs";
+	setAttr -av -k off -cb on ".trm";
+	setAttr -av -k off -cb on ".tshc";
+	setAttr -av -k off -cb on ".enpt";
+	setAttr -av -k off -cb on ".clmt";
+	setAttr -av -k off -cb on ".tcov";
+	setAttr -av -k off -cb on ".lith";
+	setAttr -av -k off -cb on ".sobc";
+	setAttr -av -k off -cb on ".cuth";
+	setAttr -av -k off -cb on ".hgcd";
+	setAttr -av -k off -cb on ".hgci";
+	setAttr -av -k off -cb on ".mgcs";
+	setAttr -av -k off -cb on ".twa";
+	setAttr -av -k off -cb on ".twz";
+	setAttr -av -k on ".hwcc";
+	setAttr -av -k on ".hwdp";
+	setAttr -av -k on ".hwql";
+	setAttr -av -k on ".hwfr";
+	setAttr -av -k on ".soll";
+	setAttr -av -k on ".sosl";
+	setAttr -av -k on ".bswa";
+	setAttr -av -k on ".shml";
+	setAttr -av -k on ".hwel";
+connectAttr "hyperLayout13.msg" "BaseA_Block.hl";
+connectAttr "BaseA_Config.nds" "BaseA_Block.nds";
+connectAttr "hyperLayout34.msg" "ImportMT_Block.hl";
+connectAttr "ImportMT_Config.nds" "ImportMT_Block.nds";
+connectAttr "hyperLayout42.msg" "ForDeltas_BSP_Block.hl";
+connectAttr "ForDeltas_BSP_Config.nds" "ForDeltas_BSP_Block.nds";
+connectAttr "hyperLayout35.msg" "Hair_Block.hl";
+connectAttr "Hair_Config.nds" "Hair_Block.nds";
+connectAttr "hyperLayout39.msg" "SineAttrs_Ctrl_Block.hl";
+connectAttr "SineAttrs_Ctrl_Config.nds" "SineAttrs_Ctrl_Block.nds";
+connectAttr "hyperLayout36.msg" "FixPivots_Block.hl";
+connectAttr "FixPivots_Config.nds" "FixPivots_Block.nds";
+connectAttr "hyperLayout37.msg" "HairSkinning_Block.hl";
+connectAttr "HairSkinning_Config.nds" "HairSkinning_Block.nds";
+connectAttr "hyperLayout38.msg" "SineDeformers_Block.hl";
+connectAttr "SineDeformers_Config.nds" "SineDeformers_Block.nds";
+connectAttr "hyperLayout40.msg" "DeltaMush_Block.hl";
+connectAttr "DeltaMush_Config.nds" "DeltaMush_Block.nds";
+connectAttr "hyperLayout41.msg" "SkinSine_Block.hl";
+connectAttr "SkinSine_Config.nds" "SkinSine_Block.nds";
+connectAttr "hyperLayout43.msg" "LoadAnimation_Block.hl";
+connectAttr "LoadAnimation_Config.nds" "LoadAnimation_Block.nds";
+connectAttr "hyperLayout46.msg" "PoseToAttr1_Block.hl";
+connectAttr "PoseToAttr1_Config.nds" "PoseToAttr1_Block.nds";
+connectAttr "hyperLayout47.msg" "PoseToAttr2_Block.hl";
+connectAttr "PoseToAttr2_Config.nds" "PoseToAttr2_Block.nds";
+connectAttr "hyperLayout48.msg" "PoseToAttr3_Block.hl";
+connectAttr "PoseToAttr3_Config.nds" "PoseToAttr3_Block.nds";
+connectAttr "hyperLayout49.msg" "PoseToAttr4_Block.hl";
+connectAttr "PoseToAttr4_Config.nds" "PoseToAttr4_Block.nds";
+connectAttr "hyperLayout50.msg" "PoseToAttr5_Block.hl";
+connectAttr "PoseToAttr5_Config.nds" "PoseToAttr5_Block.nds";
+connectAttr "hyperLayout51.msg" "PoseToAttr6_Block.hl";
+connectAttr "PoseToAttr6_Config.nds" "PoseToAttr6_Block.nds";
+connectAttr "hyperLayout52.msg" "PoseToAttr7_Block.hl";
+connectAttr "PoseToAttr7_Config.nds" "PoseToAttr7_Block.nds";
+connectAttr "hyperLayout53.msg" "PoseToAttr8_Block.hl";
+connectAttr "PoseToAttr8_Config.nds" "PoseToAttr8_Block.nds";
+connectAttr "hyperLayout54.msg" "PoseToAttr9_Block.hl";
+connectAttr "PoseToAttr9_Config.nds" "PoseToAttr9_Block.nds";
+connectAttr "hyperLayout55.msg" "PoseToAttr10_Block.hl";
+connectAttr "PoseToAttr10_Config.nds" "PoseToAttr10_Block.nds";
+connectAttr "hyperLayout56.msg" "PoseToAttr11_Block.hl";
+connectAttr "PoseToAttr11_Config.nds" "PoseToAttr11_Block.nds";
+connectAttr "hyperLayout57.msg" "PoseToAttr12_Block.hl";
+connectAttr "PoseToAttr12_Config.nds" "PoseToAttr12_Block.nds";
+connectAttr "hyperLayout58.msg" "PoseToAttr13_Block.hl";
+connectAttr "PoseToAttr13_Config.nds" "PoseToAttr13_Block.nds";
+connectAttr "hyperLayout59.msg" "PoseToAttr14_Block.hl";
+connectAttr "PoseToAttr14_Config.nds" "PoseToAttr14_Block.nds";
+connectAttr "hyperLayout60.msg" "PoseToAttr15_Block.hl";
+connectAttr "PoseToAttr15_Config.nds" "PoseToAttr15_Block.nds";
+connectAttr "hyperLayout61.msg" "PoseToAttr16_Block.hl";
+connectAttr "PoseToAttr16_Config.nds" "PoseToAttr16_Block.nds";
+connectAttr "hyperLayout62.msg" "PoseToAttr17_Block.hl";
+connectAttr "PoseToAttr17_Config.nds" "PoseToAttr17_Block.nds";
+connectAttr "hyperLayout63.msg" "PoseToAttr18_Block.hl";
+connectAttr "PoseToAttr18_Config.nds" "PoseToAttr18_Block.nds";
+connectAttr "hyperLayout64.msg" "PoseToAttr19_Block.hl";
+connectAttr "PoseToAttr19_Config.nds" "PoseToAttr19_Block.nds";
+connectAttr "hyperLayout65.msg" "PoseToAttr20_Block.hl";
+connectAttr "PoseToAttr20_Config.nds" "PoseToAttr20_Block.nds";
+connectAttr "hyperLayout66.msg" "PoseToAttr21_Block.hl";
+connectAttr "PoseToAttr21_Config.nds" "PoseToAttr21_Block.nds";
+connectAttr "hyperLayout67.msg" "PoseToAttr22_Block.hl";
+connectAttr "PoseToAttr22_Config.nds" "PoseToAttr22_Block.nds";
+connectAttr "hyperLayout68.msg" "PoseToAttr23_Block.hl";
+connectAttr "PoseToAttr23_Config.nds" "PoseToAttr23_Block.nds";
+connectAttr "hyperLayout69.msg" "PoseToAttr24_Block.hl";
+connectAttr "PoseToAttr24_Config.nds" "PoseToAttr24_Block.nds";
+connectAttr "hyperLayout70.msg" "PoseToAttr25_Block.hl";
+connectAttr "PoseToAttr25_Config.nds" "PoseToAttr25_Block.nds";
+connectAttr "hyperLayout71.msg" "PoseToAttr26_Block.hl";
+connectAttr "PoseToAttr26_Config.nds" "PoseToAttr26_Block.nds";
+connectAttr "hyperLayout72.msg" "PoseToAttr27_Block.hl";
+connectAttr "PoseToAttr27_Config.nds" "PoseToAttr27_Block.nds";
+connectAttr "hyperLayout73.msg" "PoseToAttr28_Block.hl";
+connectAttr "PoseToAttr28_Config.nds" "PoseToAttr28_Block.nds";
+connectAttr "hyperLayout74.msg" "PoseToAttr29_Block.hl";
+connectAttr "PoseToAttr29_Config.nds" "PoseToAttr29_Block.nds";
+connectAttr "hyperLayout75.msg" "PoseToAttr30_Block.hl";
+connectAttr "PoseToAttr30_Config.nds" "PoseToAttr30_Block.nds";
+connectAttr "hyperLayout76.msg" "PoseToAttr31_Block.hl";
+connectAttr "PoseToAttr31_Config.nds" "PoseToAttr31_Block.nds";
+connectAttr "hyperLayout77.msg" "PoseToAttr32_Block.hl";
+connectAttr "PoseToAttr32_Config.nds" "PoseToAttr32_Block.nds";
+connectAttr "hyperLayout78.msg" "PoseToAttr33_Block.hl";
+connectAttr "PoseToAttr33_Config.nds" "PoseToAttr33_Block.nds";
+connectAttr "hyperLayout79.msg" "PoseToAttr34_Block.hl";
+connectAttr "PoseToAttr34_Config.nds" "PoseToAttr34_Block.nds";
+connectAttr "hyperLayout80.msg" "PoseToAttr35_Block.hl";
+connectAttr "PoseToAttr35_Config.nds" "PoseToAttr35_Block.nds";
+connectAttr "hyperLayout87.msg" "PoseToAttr36_Block.hl";
+connectAttr "PoseToAttr36_Config.nds" "PoseToAttr36_Block.nds";
+connectAttr "hyperLayout81.msg" "PoseToAttr37_Block.hl";
+connectAttr "PoseToAttr37_Config.nds" "PoseToAttr37_Block.nds";
+connectAttr "hyperLayout82.msg" "PoseToAttr38_Block.hl";
+connectAttr "PoseToAttr38_Config.nds" "PoseToAttr38_Block.nds";
+connectAttr "hyperLayout83.msg" "PoseToAttr39_Block.hl";
+connectAttr "PoseToAttr39_Config.nds" "PoseToAttr39_Block.nds";
+connectAttr "hyperLayout84.msg" "PoseToAttr40_Block.hl";
+connectAttr "PoseToAttr40_Config.nds" "PoseToAttr40_Block.nds";
+connectAttr "hyperLayout85.msg" "PoseToAttr41_Block.hl";
+connectAttr "PoseToAttr41_Config.nds" "PoseToAttr41_Block.nds";
+connectAttr "hyperLayout86.msg" "PoseToAttr42_Block.hl";
+connectAttr "PoseToAttr42_Config.nds" "PoseToAttr42_Block.nds";
+connectAttr "Deltas.msg" "hyperLayout42.hyp[2].dn";
+connectAttr "DELTAS_HERE.msg" "hyperLayout42.hyp[129].dn";
+connectAttr "Hair_01_Guide.msg" "hyperLayout35.hyp[333].dn";
+connectAttr "Hair_01_GuideShape.msg" "hyperLayout35.hyp[334].dn";
+connectAttr "Hair_02_Guide.msg" "hyperLayout35.hyp[336].dn";
+connectAttr "Hair_02_GuideShape.msg" "hyperLayout35.hyp[337].dn";
+connectAttr "Hair_03_Guide.msg" "hyperLayout35.hyp[339].dn";
+connectAttr "Hair_03_GuideShape.msg" "hyperLayout35.hyp[340].dn";
+connectAttr "Hair_04_Guide.msg" "hyperLayout35.hyp[342].dn";
+connectAttr "Hair_04_GuideShape.msg" "hyperLayout35.hyp[343].dn";
+connectAttr "Hair_05_Guide.msg" "hyperLayout35.hyp[345].dn";
+connectAttr "Hair_05_GuideShape.msg" "hyperLayout35.hyp[346].dn";
+connectAttr "Hair_06_Guide.msg" "hyperLayout35.hyp[348].dn";
+connectAttr "Hair_06_GuideShape.msg" "hyperLayout35.hyp[349].dn";
+connectAttr "Hair_07_Guide.msg" "hyperLayout35.hyp[351].dn";
+connectAttr "Hair_07_GuideShape.msg" "hyperLayout35.hyp[352].dn";
+connectAttr "Hair_08_Guide.msg" "hyperLayout35.hyp[354].dn";
+connectAttr "Hair_08_GuideShape.msg" "hyperLayout35.hyp[355].dn";
+connectAttr "Hair_09_Guide.msg" "hyperLayout35.hyp[357].dn";
+connectAttr "Hair_09_GuideShape.msg" "hyperLayout35.hyp[358].dn";
+connectAttr "Hair_10_Guide.msg" "hyperLayout35.hyp[360].dn";
+connectAttr "Hair_10_GuideShape.msg" "hyperLayout35.hyp[361].dn";
+connectAttr "Hair_11_Guide.msg" "hyperLayout35.hyp[363].dn";
+connectAttr "Hair_11_GuideShape.msg" "hyperLayout35.hyp[364].dn";
+connectAttr "Hair_12_Guide.msg" "hyperLayout35.hyp[366].dn";
+connectAttr "Hair_12_GuideShape.msg" "hyperLayout35.hyp[367].dn";
+connectAttr "Hair_13_Guide.msg" "hyperLayout35.hyp[369].dn";
+connectAttr "Hair_13_GuideShape.msg" "hyperLayout35.hyp[370].dn";
+connectAttr "Hair_14_Guide.msg" "hyperLayout35.hyp[372].dn";
+connectAttr "Hair_14_GuideShape.msg" "hyperLayout35.hyp[373].dn";
+connectAttr "Hair_15_Guide.msg" "hyperLayout35.hyp[375].dn";
+connectAttr "Hair_15_GuideShape.msg" "hyperLayout35.hyp[376].dn";
+connectAttr "Hair_16_Guide.msg" "hyperLayout35.hyp[378].dn";
+connectAttr "Hair_16_GuideShape.msg" "hyperLayout35.hyp[379].dn";
+connectAttr "Hair_17_Guide.msg" "hyperLayout35.hyp[381].dn";
+connectAttr "Hair_17_GuideShape.msg" "hyperLayout35.hyp[382].dn";
+connectAttr "Hair_18_Guide.msg" "hyperLayout35.hyp[384].dn";
+connectAttr "Hair_18_GuideShape.msg" "hyperLayout35.hyp[385].dn";
+connectAttr "Hair_19_Guide.msg" "hyperLayout35.hyp[387].dn";
+connectAttr "Hair_19_GuideShape.msg" "hyperLayout35.hyp[388].dn";
+connectAttr "Hair_20_Guide.msg" "hyperLayout35.hyp[390].dn";
+connectAttr "Hair_20_GuideShape.msg" "hyperLayout35.hyp[391].dn";
+connectAttr "Hair_21_Guide.msg" "hyperLayout35.hyp[393].dn";
+connectAttr "Hair_21_GuideShape.msg" "hyperLayout35.hyp[394].dn";
+connectAttr "Hair_22_Guide.msg" "hyperLayout35.hyp[396].dn";
+connectAttr "Hair_22_GuideShape.msg" "hyperLayout35.hyp[397].dn";
+connectAttr "Hair_23_Guide.msg" "hyperLayout35.hyp[399].dn";
+connectAttr "Hair_23_GuideShape.msg" "hyperLayout35.hyp[400].dn";
+connectAttr "Hair_24_Guide.msg" "hyperLayout35.hyp[402].dn";
+connectAttr "Hair_24_GuideShape.msg" "hyperLayout35.hyp[403].dn";
+connectAttr "Hair_25_Guide.msg" "hyperLayout35.hyp[405].dn";
+connectAttr "Hair_25_GuideShape.msg" "hyperLayout35.hyp[406].dn";
+connectAttr "Hair_26_Guide.msg" "hyperLayout35.hyp[408].dn";
+connectAttr "Hair_26_GuideShape.msg" "hyperLayout35.hyp[409].dn";
+connectAttr "Hair_27_Guide.msg" "hyperLayout35.hyp[411].dn";
+connectAttr "Hair_27_GuideShape.msg" "hyperLayout35.hyp[412].dn";
+connectAttr "Hair_28_Guide.msg" "hyperLayout35.hyp[414].dn";
+connectAttr "Hair_28_GuideShape.msg" "hyperLayout35.hyp[415].dn";
+connectAttr "Hair_29_Guide.msg" "hyperLayout35.hyp[417].dn";
+connectAttr "Hair_29_GuideShape.msg" "hyperLayout35.hyp[418].dn";
+connectAttr "Hair_30_Guide.msg" "hyperLayout35.hyp[420].dn";
+connectAttr "Hair_30_GuideShape.msg" "hyperLayout35.hyp[421].dn";
+connectAttr "Hair_31_Guide.msg" "hyperLayout35.hyp[423].dn";
+connectAttr "Hair_31_GuideShape.msg" "hyperLayout35.hyp[424].dn";
+connectAttr "Hair_32_Guide.msg" "hyperLayout35.hyp[426].dn";
+connectAttr "Hair_32_GuideShape.msg" "hyperLayout35.hyp[427].dn";
+connectAttr "Hair_33_Guide.msg" "hyperLayout35.hyp[429].dn";
+connectAttr "Hair_33_GuideShape.msg" "hyperLayout35.hyp[430].dn";
+connectAttr "Hair_34_Guide.msg" "hyperLayout35.hyp[432].dn";
+connectAttr "Hair_34_GuideShape.msg" "hyperLayout35.hyp[433].dn";
+connectAttr "Hair_35_Guide.msg" "hyperLayout35.hyp[435].dn";
+connectAttr "Hair_35_GuideShape.msg" "hyperLayout35.hyp[436].dn";
+connectAttr "Hair_36_Guide.msg" "hyperLayout35.hyp[438].dn";
+connectAttr "Hair_36_GuideShape.msg" "hyperLayout35.hyp[439].dn";
+connectAttr "Hair_37_Guide.msg" "hyperLayout35.hyp[441].dn";
+connectAttr "Hair_37_GuideShape.msg" "hyperLayout35.hyp[442].dn";
+connectAttr "Hair_38_Guide.msg" "hyperLayout35.hyp[444].dn";
+connectAttr "Hair_38_GuideShape.msg" "hyperLayout35.hyp[445].dn";
+connectAttr "Hair_39_Guide.msg" "hyperLayout35.hyp[447].dn";
+connectAttr "Hair_39_GuideShape.msg" "hyperLayout35.hyp[448].dn";
+connectAttr "Hair_40_Guide.msg" "hyperLayout35.hyp[450].dn";
+connectAttr "Hair_40_GuideShape.msg" "hyperLayout35.hyp[451].dn";
+connectAttr "Hair_41_Guide.msg" "hyperLayout35.hyp[453].dn";
+connectAttr "Hair_41_GuideShape.msg" "hyperLayout35.hyp[454].dn";
+connectAttr "Hair_42_Guide.msg" "hyperLayout35.hyp[456].dn";
+connectAttr "Hair_42_GuideShape.msg" "hyperLayout35.hyp[457].dn";
+connectAttr "SineAttrs_Ctrl_Loc.msg" "hyperLayout39.hyp[0].dn";
+connectAttr "SineAttrs_Ctrl_LocShape.msg" "hyperLayout39.hyp[1].dn";
+connectAttr "DeltaMush_Loc.msg" "hyperLayout40.hyp[0].dn";
+connectAttr "DeltaMush_LocShape.msg" "hyperLayout40.hyp[1].dn";
+connectAttr "SkinSine_Loc.msg" "hyperLayout41.hyp[0].dn";
+connectAttr "SkinSine_LocShape.msg" "hyperLayout41.hyp[1].dn";
+connectAttr "LoadAnimation_Loc.msg" "hyperLayout43.hyp[0].dn";
+connectAttr "LoadAnimation_LocShape.msg" "hyperLayout43.hyp[1].dn";
+connectAttr "Hair_01_GuideShape.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "Hair_02_GuideShape.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "Hair_03_GuideShape.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "Hair_04_GuideShape.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "Hair_05_GuideShape.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "Hair_06_GuideShape.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "Hair_07_GuideShape.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "Hair_08_GuideShape.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "Hair_09_GuideShape.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "Hair_10_GuideShape.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "Hair_11_GuideShape.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "Hair_12_GuideShape.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "Hair_13_GuideShape.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "Hair_14_GuideShape.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "Hair_15_GuideShape.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "Hair_16_GuideShape.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "Hair_17_GuideShape.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "Hair_18_GuideShape.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "Hair_19_GuideShape.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "Hair_20_GuideShape.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "Hair_21_GuideShape.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "Hair_22_GuideShape.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "Hair_23_GuideShape.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "Hair_24_GuideShape.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "Hair_25_GuideShape.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "Hair_26_GuideShape.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "Hair_27_GuideShape.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "Hair_28_GuideShape.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "Hair_29_GuideShape.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "Hair_30_GuideShape.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "Hair_31_GuideShape.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "Hair_32_GuideShape.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "Hair_33_GuideShape.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "Hair_34_GuideShape.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "Hair_35_GuideShape.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "Hair_36_GuideShape.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "Hair_37_GuideShape.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "Hair_38_GuideShape.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "Hair_39_GuideShape.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "Hair_40_GuideShape.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "Hair_41_GuideShape.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "Hair_42_GuideShape.iog" ":initialShadingGroup.dsm" -na;
+dataStructure -fmt "raw" -as "name=notes_pPlane3:string=value";
+dataStructure -fmt "raw" -as "name=notes_bushes_parShape:string=value";
+dataStructure -fmt "raw" -as "name=mapManager_slopesGroundGrassD_Combined:string=value";
+dataStructure -fmt "raw" -as "name=notes_slopes_parShape:string=value";
+dataStructure -fmt "raw" -as "name=notes_right_parShape:string=value";
+dataStructure -fmt "raw" -as "name=notes_wildPatchD_parShape:string=value";
+dataStructure -fmt "raw" -as "name=mapManager_ground_c_geo:string=value";
+dataStructure -fmt "raw" -as "name=notes_wildPatchE_parShape:string=value";
+dataStructure -fmt "raw" -as "name=notes_wildPatchC_parShape:string=value";
+dataStructure -fmt "raw" -as "name=notes_ground_c_geo:string=value";
+dataStructure -fmt "raw" -as "name=notes_suelo:string=value";
+dataStructure -fmt "raw" -as "name=notes_decayLeavesCarousel_parShape:string=value";
+dataStructure -fmt "raw" -as "name=mapManager_grass_c_geo:string=value";
+dataStructure -fmt "raw" -as "name=notes_groundD_parShape:string=value";
+dataStructure -fmt "raw" -as "name=mapManager_base_hojas:string=value";
+dataStructure -fmt "raw" -as "name=mapManager_pPlane3:string=value";
+dataStructure -fmt "raw" -as "name=idStructure:int32=ID";
+dataStructure -fmt "raw" -as "name=mapManager_slopesMountainsGrass_Combined:string=value";
+dataStructure -fmt "raw" -as "name=mapManager_slopesGroundGrassB_Combined:string=value";
+dataStructure -fmt "raw" -as "name=notes_slopesGroundGrassA_Combined:string=value";
+dataStructure -fmt "raw" -as "name=notes_widlPatchB_parShape:string=value";
+dataStructure -fmt "raw" -as "name=OrgStruct:float[3]=Origin Point";
+dataStructure -fmt "raw" -as "name=f_3:float[3]=value";
+dataStructure -fmt "raw" -as "name=mapManager_baseScatter:string=value";
+dataStructure -fmt "raw" -as "name=notes_grass_c_geo:string=value";
+dataStructure -fmt "raw" -as "name=DiffArea:float=value";
+dataStructure -fmt "raw" -as "name=notes_snapshot_floor:string=value";
+dataStructure -fmt "raw" -as "name=mapManager_degraded:string=value";
+dataStructure -fmt "raw" -as "name=mapManager_snapshot_CombinedGrass:string=value";
+dataStructure -fmt "raw" -as "name=notes_slopesGroundGrassB_Combined:string=value";
+dataStructure -fmt "raw" -as "name=notes_decayGrassPatchC_parShape:string=value";
+dataStructure -fmt "raw" -as "name=notes_pPlane5:string=value";
+dataStructure -fmt "raw" -as "name=notes_pPlane4:string=value";
+dataStructure -fmt "raw" -as "name=notes_polySurface56:string=value";
+dataStructure -fmt "raw" -as "name=notes_mountains_parShape:string=value";
+dataStructure -fmt "raw" -as "name=Blur3dMetaData:string=Blur3dValue";
+dataStructure -fmt "raw" -as "name=notes_groundWoods_c_geo1:string=value";
+dataStructure -fmt "raw" -as "name=mapManager_pPlane1:string=value";
+dataStructure -fmt "raw" -as "name=notes_decayLeaves_parShape:string=value";
+dataStructure -fmt "raw" -as "name=keyValueStructure:string=value";
+dataStructure -fmt "raw" -as "name=notes_grassBase:string=value";
+dataStructure -fmt "raw" -as "name=mapManager_juneBackYard:string=value";
+dataStructure -fmt "raw" -as "name=NameAndID:string=name:int32=ID";
+dataStructure -fmt "raw" -as "name=mapManager_groundWoods_c_geo1:string=value";
+dataStructure -fmt "raw" -as "name=notes_wildPatchF_parShape:string=value";
+dataStructure -fmt "raw" -as "name=notes_wildPatchH_parShape:string=value";
+dataStructure -fmt "raw" -as "name=mapManager_pPlane4:string=value";
+dataStructure -fmt "raw" -as "name=notes_juneBackYard:string=value";
+dataStructure -fmt "raw" -as "name=mapManager_suelo:string=value";
+dataStructure -fmt "raw" -as "name=notes_slopesGroundGrassD_Combined:string=value";
+dataStructure -fmt "raw" -as "name=mapManager_pPlane2:string=value";
+dataStructure -fmt "raw" -as "name=IdStruct:int32=ID";
+dataStructure -fmt "raw" -as "name=mapManager_base_right:string=value";
+dataStructure -fmt "raw" -as "name=mapManager_snapshot_Combined:string=value";
+dataStructure -fmt "raw" -as "name=mapManager_trees_left:string=value";
+dataStructure -fmt "raw" -as "name=notes_slopesMountainsGrass_Combined:string=value";
+dataStructure -fmt "raw" -as "name=notes_floorOrangeConcrete_c_geo:string=value";
+dataStructure -fmt "raw" -as "name=notes_decayGrassPatchA_parShape:string=value";
+dataStructure -fmt "raw" -as "name=notes_grass_c_geo1:string=value";
+dataStructure -fmt "raw" -as "name=mapManager_baseScatt:string=value";
+dataStructure -fmt "raw" -as "name=mapManager_pPlane6:string=value";
+dataStructure -fmt "raw" -as "name=Curvature:float=mean:float=gaussian:float=ABS:float=RMS";
+dataStructure -fmt "raw" -as "name=notes_trees_left:string=value";
+dataStructure -fmt "raw" -as "name=notes_groundB_parShape:string=value";
+dataStructure -fmt "raw" -as "name=notes_wildPatchA_parShape:string=value";
+dataStructure -fmt "raw" -as "name=mapManager_grassBase:string=value";
+dataStructure -fmt "raw" -as "name=notes_baseLeaves:string=value";
+dataStructure -fmt "raw" -as "name=Offset:float[3]=value";
+dataStructure -fmt "raw" -as "name=mapManager_pPlane5:string=value";
+dataStructure -fmt "raw" -as "name=notes_left_parShape:string=value";
+dataStructure -fmt "raw" -as "name=mapManager_base_left:string=value";
+dataStructure -fmt "raw" -as "name=DiffEdge:float=value";
+dataStructure -fmt "raw" -as "name=mapManager_slopesGroundGrassC_Combined:string=value";
+dataStructure -fmt "raw" -as "name=mapManager_polySurface56:string=value";
+dataStructure -fmt "raw" -as "name=notes_wildPatchG_parShape:string=value";
+dataStructure -fmt "raw" -as "name=mapManager_trees_left1:string=value";
+dataStructure -fmt "raw" -as "name=mapManager_baseLeaves:string=value";
+dataStructure -fmt "raw" -as "name=notes_base_left:string=value";
+dataStructure -fmt "raw" -as "name=notes_base_hojas:string=value";
+dataStructure -fmt "raw" -as "name=notes_trees_parShape:string=value";
+dataStructure -fmt "raw" -as "name=mapManager_floorOrangeConcrete_c_geo:string=value";
+dataStructure -fmt "raw" -as "name=notes_ferns_parShape:string=value";
+dataStructure -fmt "raw" -as "name=faceConnectOutputStructure:bool=faceConnectOutput:string[200]=faceConnectOutputAttributes:string[200]=faceConnectOutputGroups";
+dataStructure -fmt "raw" -as "name=notes_baseScatter:string=value";
+dataStructure -fmt "raw" -as "name=notes_pPlane1:string=value";
+dataStructure -fmt "raw" -as "name=faceConnectMarkerStructure:bool=faceConnectMarker:string[200]=faceConnectOutputGroups";
+dataStructure -fmt "raw" -as "name=notes_decayGrassPatchD_parShape:string=value";
+dataStructure -fmt "raw" -as "name=mapManager_slopesGroundGrassA_Combined:string=value";
+dataStructure -fmt "raw" -as "name=notes_slopesGroundGrassC_Combined:string=value";
+dataStructure -fmt "raw" -as "name=OffStruct:float=Offset";
+dataStructure -fmt "raw" -as "name=notes_groundC_parShape:string=value";
+dataStructure -fmt "raw" -as "name=notes_pPlane2:string=value";
+dataStructure -fmt "raw" -as "name=notes_pPlane6:string=value";
+dataStructure -fmt "raw" -as "name=notes_wildPatchDegraded_parShape:string=value";
+dataStructure -fmt "raw" -as "name=notes_trees_left1:string=value";
+dataStructure -fmt "raw" -as "name=mapManager_ground:string=value";
+dataStructure -fmt "raw" -as "name=mapManager_grass_c_geo1:string=value";
+dataStructure -fmt "raw" -as "name=notes_grassJuneBackYard_parShape:string=value";
+dataStructure -fmt "raw" -as "name=f_1:float=value";
+dataStructure -fmt "raw" -as "name=notes_baseScatt:string=value";
+dataStructure -fmt "raw" -as "name=notes_decayGrassPatchB_parShape:string=value";
+dataStructure -fmt "raw" -as "name=mapManager_snapshot_floor:string=value";
+dataStructure -fmt "raw" -as "name=notes_base_right:string=value";
+dataStructure -fmt "raw" -as "name=notes_degraded:string=value";
+dataStructure -fmt "raw" -as "name=notes_ground:string=value";
+dataStructure -fmt "raw" -as "name=notes_snapshot_Combined:string=value";
+dataStructure -fmt "raw" -as "name=notes_decayGrassesCenter_parShape:string=value";
+dataStructure -fmt "raw" -as "name=notes_snapshot_CombinedGrass:string=value";
+dataStructure -fmt "raw" -as "name=notes_groundA_parShape:string=value";
+// End of HairTemplate.ma

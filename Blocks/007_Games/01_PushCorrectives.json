@@ -1,0 +1,16 @@
+{
+    "Name": "PushCorrectives", 
+    "Description": "Block dedicated to create Push Correctives System ", 
+    "Icon": "PushCorrectives.png", 
+    "Enable": "True", 
+    "python_file": "exec_pushcorrectives.py", 
+    "import": "import exec_pushcorrectives", 
+    "imp.reload": "reload(exec_pushcorrectives)", 
+    "exec_command": "exec_pushcorrectives.create_pushcorrectives_block()", 
+    "build_command": "exec_pushcorrectives.build_pushcorrectives_block()", 
+    "attrs": {
+        "SetParent_string": "Spine_Base_Bnd", 
+        "Direction_string": "front,back,inner,outer",
+        "Help_string": "Provide a Bnd joint as Parent, separate the space switches with a ','"
+    }
+}

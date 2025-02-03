@@ -1,0 +1,16 @@
+{
+    "Name": "AutoWheel",
+    "Description": "AutoWheel Block",
+    "Icon": "AutoWheel.png",
+    "Enable": "True",
+    "python_file": "exec_autowheel.py",
+    "import": "import exec_autowheel",
+    "imp.reload": "reload(exec_autowheel)",
+    "exec_command": "exec_autowheel.create_autowheel_block()",
+    "build_command": "exec_autowheel.build_autowheel_block()",
+    "attrs": {
+        "SetMoverCtrls_string" : "",
+        "SetWheelsName_string" : "",
+        "Help_string": "Will create a AutoWheel System"
+    }
+}

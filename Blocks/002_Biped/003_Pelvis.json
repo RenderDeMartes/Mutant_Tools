@@ -1,0 +1,24 @@
+{
+    "Name": "L_Pelvis",
+    "Description": "This will create a Pelvis System to connect your legs",
+
+    "Icon": "Pelvis.png",
+
+    "Enable": "True",
+
+    "python_file": "exec_pelvis.py",
+    "import": "import exec_pelvis",
+    "imp.reload": "reload(exec_pelvis)",
+    "exec_command": "exec_pelvis.create_pelvis_block()",
+    "build_command": "exec_pelvis.build_pelvis_block()",
+
+    "attrs": {
+        "SetParent_string": "new_locator",
+        "Mirror_enum": "True:False:Right_Only",
+        "CtrlType_enum": "hexagon:sphere:cube:square:octagon:pringle:feet:hand:circleY:circleX:circleZ:3dArrow:2dArrow:mover:2dArrow:root:cog",
+        "CtrlSize_float": "4",
+        "SetGameParent_string": "",
+
+        "Help_string" : "Possible parent: L_Pelvis_Jnt\n"
+    }
+}

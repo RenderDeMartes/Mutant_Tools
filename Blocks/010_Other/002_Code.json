@@ -1,0 +1,19 @@
+{
+    "Name": "Code",
+    "Description": "Execute custom code",
+
+    "Icon": "CODE.png",
+
+    "Enable": "True",
+    "python_file": "exec_code.py",
+
+    "import": "import exec_code",
+    "imp.reload": "reload(exec_code)",
+    "exec_command": "exec_code.create_code_block()",
+    "build_command": "exec_code.build_code_block()",
+
+    "attrs": {
+        "Exec_enum": "Python:Mel",
+        "Code_string": ""
+    }
+}
