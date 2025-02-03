@@ -1,16 +1,29 @@
-#Mutant Tools
+# Mutant Tools 🦾
 
-Discord server: https://discord.gg/R8ThuGH3
+## 🚀 Overview
+Mutant Tools is a **block-based modular rigging system** designed for **speed, stability, and efficiency** in Maya. Developed by **Blue Tape Rigging Studios**, it offers an optimized workflow for **animators and riggers** who demand the best performance without compromising flexibility.
 
-Licence: https://www.eulatemplate.com/live.php?token=FGISW7ApRfgywum6murbBmLcusKONzkv 
+## 🎯 Features
+- 🏎 **Blazing Fast Viewport Performance** – Optimized for large-scale productions.
+- 🔧 **Modular & Flexible** – Easily create, modify, and extend rigs with a non-destructive system.
+- 🎭 **Animator-Friendly Controls** – Designed for seamless interaction and efficient animation workflows.
+- 🛠 **Customizable Deformation System** – Supports various deformation techniques for **realistic & cartoony** styles.
+- 🤖 **Automation Ready** – Scriptable in Python for further customization and pipeline integration.
 
-Author:  Esteban Rodriguez <info@mutanttools.com>
+## 🔗 Integrations
+Mutant Tools works seamlessly with:
+- **Autodesk Maya** (2022+ recommended)
+- **Unreal Engine & Unity** for game-ready rigs
+- **Studio Pipelines** via Python API
 
-Documentation: 
-https://mutanttools.com/
+## 📜 Installation
+1. Clone the repository or download the latest release.
+2. Add Mutant Tools to your Maya environment.
+3. Start building modular, production-ready rigs!
 
-Riggers how to use:  https://mutanttools.com/riggers/
-Developers Commands: https://mutanttools.com/mt_commands/
-Developers how to create a block : https://mutanttools.com/block-creator/
+## 📫 Get in Touch
+- 🌐 [Website](https://renderdemartes.com)
+- 💼 [LinkedIn](https://www.linkedin.com/in/esteban-rodriguez-488a68147/)
 
-DONATE: https://mutanttools.com/donate/
+🚀 Elevate your rigging pipeline with **Mutant Tools** today!
+
