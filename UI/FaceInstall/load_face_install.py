@@ -594,7 +594,8 @@ class FaceInstallUI(QtMutantWindow.Qt_Mutant):
 
     def add_to_face_sns(self):
 
-        sel = cmds.ls(sl=True)mt.mirror_group(input=cmds.ls(sl=True), world=False)
+        sel = cmds.ls(sl=True)
+        mt.mirror_group(input=cmds.ls(sl=True), world=False)
         for each in sel:
             cmds.deformer("SS_Head_Bend_Side", e=True, g=each)
             cmds.deformer("SS_Head_Bend_Front_Back", e=True, g=each)
