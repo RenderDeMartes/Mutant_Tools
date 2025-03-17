@@ -106,8 +106,10 @@ def build_single_fk_block():
         cmds.delete(cmds.parentConstraint(loc_guide,jnt , mo=False ))
 
         #cmds.delete(loc_guide)
-
-        try:cmds.parent(jnt, cmds.getAttr('{}.SetJointParent'.format(config)))
+        clean_rig_grp = cmds.group(em=True, name=name + '_Rig' + nc['group'])
+        cmds.parent(clean_ctrl_grp, setup['base_groups']['control'] + nc['group'])
+        try:
+            cmds.parent(jnt, clean_rig_grp)
         except:pass
 
         #parent to ctlr or tr gimbal
