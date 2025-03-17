@@ -167,7 +167,7 @@ def build_hand_block():
     #if mirror is set only to right we need to build on left for mirror behavior then putt it back to righ side
     if cmds.getAttr('{}.Mirror'.format(config), asString = True) == 'Right_Only':
         miror_grp = mt.mirror_group(new_guide, world = True)
-        cmds.makeIdentity(miror_grp, a=True, t=True, r=True, s=True)
+        #cmds.makeIdentity(miror_grp, a=True, t=True, r=True, s=True)
         cmds.parent(new_guide, w = True)
         cmds.delete(miror_grp)
         #mt.orient_joint(input = new_guide)

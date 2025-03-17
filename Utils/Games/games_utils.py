@@ -535,25 +535,49 @@ class Games(object):
 
 		for jnt in reparent_map:
 			print(jnt, reparent_map[jnt])
-			cmds.parent(jnt, reparent_map[jnt])
-			if jnt.startswith(('L_')):
-				cmds.parent(jnt.replace('L_', 'R_'), reparent_map[jnt].replace('L_', 'R_'))
+			if cmds.objExists(jnt) and cmds.objExists(reparent_map[jnt]):
+				try:
+					cmds.parent(jnt, reparent_map[jnt])
+				except:
+					pass
+			elif cmds.objExists(jnt):
+				cmds.parent(jnt, "Root_Skl")
+
+
+			if jnt.startswith('L_'):
+				if cmds.objExists(jnt.replace('L_', 'R_')) and cmds.objExists(reparent_map[jnt].replace('L_', 'R_')):
+					try:
+						cmds.parent(jnt.replace('L_', 'R_'), reparent_map[jnt].replace('L_', 'R_'))
+					except:
+						pass
+				elif cmds.objExists(jnt.replace('L_', 'R_')):
+					cmds.parent(jnt.replace('L_', 'R_'), "Root_Skl")
 
 		for jnt in delete_joints:
-			cmds.delete(jnt)
-			if jnt.startswith(('L_')):
-				cmds.delete(jnt.replace('L_', 'R_'))
+			if cmds.objExists(jnt):
+				cmds.delete(jnt)
+			if jnt.startswith('L_'):
+				if cmds.objExists(jnt.replace('L_', 'R_')):
+					cmds.delete(jnt.replace('L_', 'R_'))
 
 		#rename some joints
-		cmds.rename('L_Knee_Skl_2_Skl','L_Knee_Skl_1_Skl')
-		cmds.rename('R_Knee_Skl_2_Skl','R_Knee_Skl_1_Skl')
-		cmds.rename('L_Hip_Skl_2_Skl','L_Hip_Skl_1_Skl')
-		cmds.rename('R_Hip_Skl_2_Skl','R_Hip_Skl_1_Skl')
+		if cmds.objExists('L_Knee_Skl_2_Skl'):
+			cmds.rename('L_Knee_Skl_2_Skl','L_Knee_Skl_1_Skl')
+		if cmds.objExists('R_Knee_Skl_2_Skl'):
+			cmds.rename('R_Knee_Skl_2_Skl','R_Knee_Skl_1_Skl')
+		if cmds.objExists('L_Hip_Skl_2_Skl'):
+			cmds.rename('L_Hip_Skl_2_Skl','L_Hip_Skl_1_Skl')
+		if cmds.objExists('R_Hip_Skl_2_Skl'):
+			cmds.rename('R_Hip_Skl_2_Skl','R_Hip_Skl_1_Skl')
 
-		cmds.rename('L_Shoulder_Skl_2_Skl','L_Shoulder_Skl_1_Skl')
-		cmds.rename('R_Shoulder_Skl_2_Skl','R_Shoulder_Skl_1_Skl')
-		cmds.rename('L_Elbow_Skl_2_Skl','L_Elbow_Skl_1_Skl')
-		cmds.rename('R_Elbow_Skl_2_Skl','R_Elbow_Skl_1_Skl')
+		if cmds.objExists('L_Shoulder_Skl_2_Skl'):
+			cmds.rename('L_Shoulder_Skl_2_Skl','L_Shoulder_Skl_1_Skl')
+		if cmds.objExists('R_Shoulder_Skl_2_Skl'):
+			cmds.rename('R_Shoulder_Skl_2_Skl','R_Shoulder_Skl_1_Skl')
+		if cmds.objExists('L_Elbow_Skl_2_Skl'):
+			cmds.rename('L_Elbow_Skl_2_Skl','L_Elbow_Skl_1_Skl')
+		if cmds.objExists('R_Elbow_Skl_2_Skl'):
+			cmds.rename('R_Elbow_Skl_2_Skl','R_Elbow_Skl_1_Skl')
 
 
 #------------------------------------------------------
