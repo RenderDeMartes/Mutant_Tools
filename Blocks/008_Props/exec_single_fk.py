@@ -108,8 +108,8 @@ def build_single_fk_block():
         cmds.delete(cmds.parentConstraint(loc_guide,jnt , mo=False ))
 
         #cmds.delete(loc_guide)
-        clean_ctrl_grp = cmds.group(em=True, name=name + nc['ctrl'] + nc['group'])
-        cmds.parent(clean_ctrl_grp, setup['base_groups']['control'] + nc['group'])
+        clean_rig_grp = cmds.group(em=True, name=name + '_Rig' + nc['group'])
+        cmds.parent(clean_rig_grp, '{}{}'.format(setup['rig_groups']['misc'], nc['group']))
         try:
             cmds.parent(jnt, clean_rig_grp)
         except:pass
