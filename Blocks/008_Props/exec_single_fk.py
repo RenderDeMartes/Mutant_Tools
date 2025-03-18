@@ -67,8 +67,10 @@ def build_single_fk_block():
     mt.check_is_there_is_base()
 
     nc, curve_data, setup = mt.import_configs()
-
     block = cmds.ls(sl=True)
+
+    name = block[0].replace(nc['module'], '')
+
     config = cmds.listConnections(block)[1]
     loc_guide = cmds.listRelatives(block, c=True)[0]
     print(loc_guide)
@@ -106,7 +108,7 @@ def build_single_fk_block():
         cmds.delete(cmds.parentConstraint(loc_guide,jnt , mo=False ))
 
         #cmds.delete(loc_guide)
-        clean_rig_grp = cmds.group(em=True, name=name + '_Rig' + nc['group'])
+        clean_ctrl_grp = cmds.group(em=True, name=name + nc['ctrl'] + nc['group'])
         cmds.parent(clean_ctrl_grp, setup['base_groups']['control'] + nc['group'])
         try:
             cmds.parent(jnt, clean_rig_grp)
