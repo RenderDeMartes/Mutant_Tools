@@ -542,9 +542,9 @@ class Skinning(MayaNode):
                 continue
             # Check that all the influences exist
             missing = [i for i in data[INFLUENCE_KEY] if not cmds.objExists(i)]
-            for i in missing:
-                cmds.select(cl=True)
-                cmds.joint(n=i)
+            # for i in missing:
+            #     cmds.select(cl=True)
+            #     cmds.joint(n=i)
             if missing and not namespace:
                 print('Influences for {} are missing \n {}'.format(geo, missing))
                 fails.append(geo)
