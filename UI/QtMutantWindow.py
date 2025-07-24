@@ -228,8 +228,11 @@ class Qt_Mutant(QtWidgets.QMainWindow):
 	def make_frameless(self):
 		"""Make the main UI frameless."""
 		self.oldPos = self.pos()
-		self.setWindowFlags(QtCore.Qt.Window | QtCore.Qt.FramelessWindowHint | QtCore.Qt.CustomizeWindowHint)
-
+		if sys.platform == 'darwin':  # macOS
+			flags = QtCore.Qt.Window | QtCore.Qt.FramelessWindowHint | QtCore.Qt.CustomizeWindowHint | QtCore.Qt.WindowStaysOnTopHint
+		else:  # Windows and Linux
+			flags = QtCore.Qt.Window | QtCore.Qt.FramelessWindowHint | QtCore.Qt.CustomizeWindowHint
+		self.setWindowFlags(flags)
 		return
 
 	# ------------------------------------------------
