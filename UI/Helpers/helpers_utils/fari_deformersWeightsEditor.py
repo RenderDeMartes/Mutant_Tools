@@ -1,4 +1,4 @@
-from __future__ import absolute_import
+from __future__ import absolute_import, division, print_function
 '''
     SCRIPT NAME:
         fari_deformersWeightsEditor
@@ -35,8 +35,6 @@ from __future__ import absolute_import
         - Mirror, flip and copy operations now work much faster
           (True only in Maya supporting newer versions of the api)
 '''
-
-from __future__ import absolute_import, division, print_function
 from builtins import ascii, bytes, chr, dict, filter, hex, input, int, map, next, oct, open, pow, range, round, str, \
     super, zip
 from builtins import object as builtin_object
