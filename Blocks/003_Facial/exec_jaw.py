@@ -97,6 +97,13 @@ def build_jaw_block():
     ctrl_size = cmds.getAttr('{}.CtrlSize'.format(config))
     ctrl_type = cmds.getAttr('{}.CtrlType'.format(config), asString = True)
 
+    # Game Attrs Compatibility
+    if cmds.attributeQuery('GameMode', n=config, exists=True):
+        game_mode = cmds.getAttr(config + '.GameMode')
+    else:
+        game_mode = False
+
+    #Build
     new_guide = mt.duplicate_and_remove_guides(guide)
     #mt.orient_joint(input=new_guide)
     cmds.select(new_guide)
@@ -182,12 +189,15 @@ def build_jaw_block():
         cmds.parent(bind_joint, bind_jnt_grp)
 
 
-    #Parent system
-    cmds.parentConstraint(block_parent, jaw_ctrl_root, mo=True)
-
     #Clean
     clean_ctrl_grp = cmds.group(em=True, name = name + nc['ctrl'] + nc['group'])
     clean_rig_grp = cmds.group(em=True, name = name + '_Rig' + nc['group'])
+
+    #Parent system
+    cmds.parentConstraint(block_parent, jaw_ctrl_root, mo=True)
+    if game_mode:
+        cmds.parentConstraint(block_parent, clean_rig_grp, mo=True)
+        cmds.scaleConstraint(block_parent, clean_rig_grp, mo=True)
 
     cmds.parent(jaw_ctrl_root, clean_ctrl_grp)
     cmds.parent(jaw_jnt_root, upper_root, global_locator_root, clean_rig_grp)

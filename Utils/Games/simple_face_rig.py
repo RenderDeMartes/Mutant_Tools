@@ -25,7 +25,8 @@ import Mutant_Tools.Utils.Games.simple_face_rig as simple_face_rig
 reload(simple_face_rig)
 
 cSimple_Face_Rig = simple_face_rig.Simple_Face_Rig()
-cSimple_Face_Rig.create_mouth_setup()
+cSimple_Face_Rig.create_brows_setup()
+cSimple_Face_Rig.create_eyes_setup()
 
 
 
@@ -556,3 +557,34 @@ def create_eye_blink_slider(name, color, ctrl_size, limit=True):
     cmds.scale(1,1,1, blink_rectangle_root)
 
     return [blink_rectangle, upr_blink_triangle, lwr_blink_triangle]
+''' Mirror'''
+"""
+import maya.cmds as cmds
+
+def mirror_joint_translations():
+    # Get the currently selected joints
+    selected_joints = cmds.ls(selection=True, type='joint')
+    
+    if not selected_joints:
+        cmds.error("Please select joints to mirror.")
+    
+    for left_joint in selected_joints:
+        if left_joint.startswith("L_"):
+            # Construct the corresponding right joint name
+            right_joint = left_joint.replace("L_", "R_", 1)
+            
+            if cmds.objExists(right_joint):
+                # Get the translation of the left joint
+                left_translation = cmds.xform(left_joint, query=True, translation=True, worldSpace=True)
+                
+                # Apply translation to the right joint with X mirrored
+                mirrored_translation = [-left_translation[0], left_translation[1], left_translation[2]]
+                cmds.xform(right_joint, translation=mirrored_translation, worldSpace=True)
+            else:
+                cmds.warning(f"{right_joint} does not exist.")
+        else:
+            cmds.warning(f"{left_joint} is not a valid L_ joint.")
+
+# Run the function
+mirror_joint_translations()
+"""

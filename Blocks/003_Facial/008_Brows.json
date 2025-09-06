@@ -13,6 +13,7 @@
         "Mirror_enum": "True:False:Right_Only",
         "SetAttrsPosition_string": "new_locator",
         "CtrlSize_float": "4",
+        "GameMode_bool": "False",
         "Help_string": "Will crete brows rig system"
     }
 }

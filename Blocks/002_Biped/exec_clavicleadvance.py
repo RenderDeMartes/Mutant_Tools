@@ -55,16 +55,29 @@ def create_clavicleadvance_block(name = 'ClavicleAdvance'):
         cmds.warning('Name already exists.')
         return ''
 
-    block = mt.create_block(name = name, icon = 'ClavicleAdvance',  attrs = module['attrs'], build_command = module['build_command'], import_command = module['import'])
+    block = mt.create_block(name=name, icon='ClavicleAdvance',  attrs=module['attrs'], build_command=module['build_command'], import_command=module['import'])
     config = block[1]
     block = block[0]
     name = block.replace(nc['module'],'')
 
-    #cmds.getAttr('{}.AttrName'.format(config)) #get attrs from config
-    #cmds.getAttr('{}.AttrName'.format(config), asString = True) #for enums
-    #joint_one = mt.create_joint_guide(name = name) #guide base with shapes
+    cmds.select(cl=True)
+    back_clav_guide = mt.create_joint_guide(name=name+'_Back')
+    cmds.move(5,0,0)
+    side_clav_guide = mt.create_joint_guide(name=name+'_Side')
+    cmds.move(6,0,0)
+    front_clav_guide = mt.create_joint_guide(name=name+'_Front')
+    cmds.move(6,0,0)
+    front_clav_guide_end = mt.create_joint_guide(name=name + '_Front')
+    cmds.move(15,0,0)
+
+    cmds.parent(front_clav_guide_end, front_clav_guide)
+    cmds.parent(front_clav_guide, side_clav_guide)
+    cmds.parent(side_clav_guide, back_clav_guide)
+    cmds.parent(back_clav_guide, block)
 
     cmds.select(block)
+
+    mt.orient_joint(input=back_clav_guide)
 
     print('{} Created Successfully'.format(name))
 

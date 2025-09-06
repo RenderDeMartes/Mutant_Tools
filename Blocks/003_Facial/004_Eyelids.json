@@ -21,6 +21,8 @@
         "SetEyePivot_string": "",
         "CtrlSize_float": 4,
         "LimitCtrl_bool": "True",
+        "GameMode_bool": "False",
+        "BindJoints_enum": "PerVtx:3:1",
         "Help_string" : "Create eyelids rig, based on Marco Giordano tutorial\n"
     }
 }

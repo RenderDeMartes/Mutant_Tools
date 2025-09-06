@@ -103,6 +103,16 @@ def build_eyelids_block():
     else:
         limit_ctrls=True
 
+    # Game Attrs Compatibility
+    if cmds.attributeQuery('GameMode', n=config, exists=True):
+        game_mode = cmds.getAttr(config + '.GameMode')
+    else:
+        game_mode = False
+
+    if cmds.attributeQuery('BindJoints', n=config, exists=True):
+        game_bind_joints = cmds.getAttr(config + '.BindJoints', asString=True)
+    else:
+        game_bind_joints = 'PerVtx'
 
     to_build = [name]
     if mirror_attr == 'True':
@@ -499,19 +509,6 @@ def build_eyelids_block():
         cmds.connectAttr(scale_ctrl + '.rotate', scale_jnt + '.rotate')
         cmds.connectAttr(scale_ctrl + '.translate', scale_jnt + '.translate')
 
-        #Create Secundary mode:
-        #get geo attr,
-         #if no geo attr dont create wire
-        #duplicate curve
-        #create wire if geo face
-        #md in between the main system joints
-        #clusters on new curve
-        # md for move those clsuters
-        #create switch attr
-        #Connnect an inverse to one md for it to work inverted as the other
-        #conncet attrs to both md to have a swtich
-
-
         #Clean a bit
         clean_ctrl_grp = cmds.group(em=True, name=name + nc['ctrl'] + nc['group'])
         clean_rig_grp = cmds.group(em=True, name=name + '_Rig' + nc['group'])
@@ -535,16 +532,95 @@ def build_eyelids_block():
             cmds.parent(rig_mirror, '{}{}'.format(setup['rig_groups']['misc'], nc['group']))
             cmds.parent(ctrl_mirror, setup['base_groups']['control'] + nc['group'])
 
+        # ----------------------------------------------------------------
+        # ----------------------------------------------------------------
+        # --------------------------Game  Mode ---------------------------
+        # ----------------------------------------------------------------
+        # ----------------------------------------------------------------
+        # Game Extra stuff
+        if game_mode:
+            cmds.scaleConstraint(block_parent, clean_ctrl_grp, mo=True)
+            cmds.parentConstraint(block_parent, clean_rig_grp, mo=True)
+            cmds.scaleConstraint(block_parent, clean_rig_grp, mo=True)
 
-        #create bind joints
+            # remove inherit where needed
+            rig_components = cmds.listRelatives(clean_rig_grp, c=True)
+            for rc in rig_components:
+                print(rc)
+                if nc['curve'] in rc or 'AimLocators' in rc:
+                    cmds.setAttr(f"{rc}.inheritsTransform", 0)
+
+        #----------------------------------------------------------------
+        #----------------------------------------------------------------
+        #--------------------------Bind Joints---------------------------
+        #----------------------------------------------------------------
+        #----------------------------------------------------------------
+
+        # Create bind joints depending on game_bind_joints option
         bind_jnt_grp = '{}{}'.format(setup['rig_groups']['bind_joints'], nc['group'])
-        for jnt in upper_system['tweek_joints']+lower_system['tweek_joints']+[scale_jnt]:
+
+        upper_joints = upper_system['tweek_joints']
+        lower_joints = lower_system['tweek_joints']
+        source_joints = upper_joints + lower_joints + [scale_jnt]
+
+        def create_bind_joint(source):
             cmds.select(cl=True)
-            bind_joint = cmds.joint(n=jnt.replace(nc['joint'], nc['joint_bind']))
-            cmds.parentConstraint(jnt, bind_joint)
-            cmds.scaleConstraint(jnt, bind_joint)
+            bind_joint = cmds.joint(n=source.replace(nc['joint'], nc['joint_bind']))
+            cmds.parentConstraint(source, bind_joint)
+            cmds.scaleConstraint(source, bind_joint)
             cmds.setAttr('{}.radius'.format(bind_joint), 1.5)
             cmds.parent(bind_joint, bind_jnt_grp)
+            return bind_joint
+
+        def get_closest_joint(joint_list, target_pos):
+            """Return the closest joint in joint_list to target_pos (world space)."""
+            closest = None
+            min_dist = float("inf")
+            for jnt in joint_list:
+                pos = cmds.xform(jnt, q=True, ws=True, t=True)
+                dist = sum([(pos[i] - target_pos[i]) ** 2 for i in range(3)])  # squared distance
+                if dist < min_dist:
+                    min_dist = dist
+                    closest = jnt
+            return closest
+
+        def create_joint_at_cv(curve, cv_index, source_joints, name_suffix="_Bnd"):
+            """Create a joint at the position of a curve CV using a temp cluster."""
+            cv = "{}.cv[{}]".format(curve, cv_index)
+            cluster, handle = cmds.cluster(cv)
+
+            cmds.select(cl=True)
+            bind_joint = cmds.joint(n="{}_cv{}{}".format(curve.split('WireDriver')[0], cv_index, name_suffix))
+
+            cmds.setAttr('{}.radius'.format(bind_joint), 1.5)
+            cmds.parent(bind_joint, bind_jnt_grp)
+
+            cmds.delete(cmds.parentConstraint(handle, bind_joint))
+            cmds.delete(cluster)
+
+            # Find closest tweek joint and constrain
+            pos = cmds.xform(bind_joint, q=True, ws=True, t=True)
+            closest = get_closest_joint(source_joints, pos)
+            if closest:
+                cmds.parentConstraint(closest, bind_joint, mo=True)
+                cmds.scaleConstraint(closest, bind_joint, mo=True)
+
+            return bind_joint
+
+        # Decide bind mode
+        if game_bind_joints == "1":
+            create_joint_at_cv(upr_curve, 3, upper_joints)
+            create_joint_at_cv(lwr_curve, 3, lower_joints)
+
+        elif game_bind_joints == "3":
+            for idx in [2, 3, 4]:
+                print('Using Curves:', upr_curve, lwr_curve)
+                create_joint_at_cv(upr_curve, idx, upper_joints)
+                create_joint_at_cv(lwr_curve, idx, lower_joints)
+
+        else:
+            for jnt in source_joints:
+                create_bind_joint(jnt)
 
         #parent to block_parent
         cmds.parentConstraint(block_parent, clean_ctrl_grp, mo=True)
@@ -579,7 +655,7 @@ def build_eyelids_block():
             cmds.connectAttr(scale_ctrl_attr, '{}.v'.format(ctrl))
 
 
-    if cmds.objExists('BodyEyes'):
+    if cmds.objExists('BodyEyes') and not game_mode:
         postbuilds_faceinstall.update_eyes(mirror=mirror_attr)
 
 

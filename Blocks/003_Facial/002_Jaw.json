@@ -13,6 +13,7 @@
         "SetAttrsPosition_string": "new_locator",
         "CtrlType_enum": "circleY:circleX:circleZ:square",
         "CtrlSize_float": "4",
+        "GameMode_bool": "False",
         "Help_string": "Possible parent: JawEnd_Jnt "
     }
 }

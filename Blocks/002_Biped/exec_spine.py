@@ -229,6 +229,31 @@ def build_spine_block():
     mt.assign_color(chest_ctrl, 'purple')
     mt.match(chest_ctrl_root, spine_joints[3], r=False)
 
+    fix_spine_orients = False
+    if fix_spine_orients:
+        #FIX ORIENTS ONLY WHEN NEEDED TO MATCH GUIDE
+        # --- Orientation pass (AFTER creation) ---
+
+        # 1. Aim offsets Y+ toward the next ctrl
+        aim_pairs = [
+            (base_ik_ctrl_root[0], base_ctrl_root[0]),  # Bottom Ik → Base FK
+            (base_ctrl_root[0], belly_ctrl_root[0]),  # Base FK → Belly FK
+            (belly_ctrl_root[0], chest_fk_ctrl_root[0]),  # Belly FK → Chest FK
+        ]
+
+        cmds.delete(cmds.aimConstraint(belly_ctrl, base_ik_ctrl_root,
+            aimVector=(0, 1, 0), upVector=(0, 0, -1), worldUpType="scene")[0])
+        cmds.delete(cmds.aimConstraint(belly_ctrl, base_ctrl_root,
+                                       aimVector=(0, 1, 0), upVector=(0, 0, -1), worldUpType="scene")[0])
+        cmds.delete(cmds.aimConstraint(chest_fk_ctrl_root, belly_ctrl_root,
+                                       aimVector=(0, 1, 0), upVector=(0, 0, -1), worldUpType="scene")[0])
+        cmds.delete(cmds.aimConstraint(belly_ctrl_root, chest_fk_ctrl_root,
+                                       aimVector=(0, -1, 0), upVector=(0, 0, -1), worldUpType="scene")[0])
+        cmds.delete(cmds.aimConstraint(belly_ctrl_root, chest_ctrl_root,
+                                       aimVector=(0, -1, 0), upVector=(0, 0, -1), worldUpType="scene")[0])
+
+    #Back to normal Build
+
     # Create hierarchy
     cmds.parent(belly_ctrl_root, base_ctrl)
     cmds.parent(chest_fk_ctrl_root, belly_ctrl)

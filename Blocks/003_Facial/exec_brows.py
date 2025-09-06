@@ -112,6 +112,12 @@ def build_brows_block():
     else:
         guide_attrs_position = attrs_position
 
+    # Game Attrs Compatibility
+    if cmds.attributeQuery('GameMode', n=config, exists=True):
+        game_mode = cmds.getAttr(config + '.GameMode')
+    else:
+        game_mode = False
+
     all_ctrls = []
     for name in to_build:
 
@@ -283,29 +289,48 @@ def build_brows_block():
             yes_rot_locators.append(yes_rot)
             cmds.parent(no_rot_root, yes_rot_root, yes_no_loc_grp)
 
-        #Create mid parentConstraints
-        pc = cmds.parentConstraint(driver_joints[0], driver_joints[2], driver_joints_roots[1], mo=True)[0]
-        cmds.setAttr('{}.interpType'.format(pc), 2)
-        pc = cmds.parentConstraint(driver_joints[4], driver_joints[2], driver_joints_roots[3], mo=True)[0]
-        cmds.setAttr('{}.interpType'.format(pc), 2)
+        # --- Create mid parentConstraints ---
+        pc1 = cmds.parentConstraint(driver_joints[0], driver_joints[2], driver_joints_roots[1],
+                                    mo=True, n=f"{driver_joints_roots[1]}_PC")[0]
+        cmds.setAttr(f"{pc1}.interpType", 2)
 
-        pc = cmds.parentConstraint(main_ctrls[0], main_ctrls[1], sec_ctrls_roots[0], mo=True)[0]
-        cmds.setAttr('{}.interpType'.format(pc), 2)
-        pc = cmds.parentConstraint(main_ctrls[2], main_ctrls[1], sec_ctrls_roots[1], mo=True)[0]
-        cmds.setAttr('{}.interpType'.format(pc), 2)
+        pc2 = cmds.parentConstraint(driver_joints[4], driver_joints[2], driver_joints_roots[3],
+                                    mo=True, n=f"{driver_joints_roots[3]}_PC")[0]
+        cmds.setAttr(f"{pc2}.interpType", 2)
 
+        pc3 = cmds.parentConstraint(main_ctrls[0], main_ctrls[1], sec_ctrls_roots[0],
+                                    mo=True, n=f"{sec_ctrls_roots[0]}_PC")[0]
+        cmds.setAttr(f"{pc3}.interpType", 2)
+
+        pc4 = cmds.parentConstraint(main_ctrls[2], main_ctrls[1], sec_ctrls_roots[1],
+                                    mo=True, n=f"{sec_ctrls_roots[1]}_PC")[0]
+        cmds.setAttr(f"{pc4}.interpType", 2)
+
+        # --- SkinCluster ---
         cmds.skinCluster(driver_joints, surface, sm=0, bm=1, tsb=True)
-        # sm = 0 - classical linear skinning (default). 1 - dual quaternion (volume preserving), 2 - a weighted blend between the two
-        # bm = 1 - Closest distance between a joint, considering the skeleton hierarchy, and a point of the geometry. 2 - Surface heat map diffusion. 3 - Geodesic voxel binding. geomBind
+        # sm = 0 - classical linear, 1 - dual quaternion, 2 - blend
+        # bm = 1 - Closest distance, 2 - Heat Map, 3 - Geodesic voxel
 
-        pc = cmds.parentConstraint(driver_joints[0], driver_joints[2], cmds.listRelatives(no_rot_locators[0],p=True)[0], mo=True)[0]
-        cmds.setAttr('{}.interpType'.format(pc), 2)
-        pc = cmds.parentConstraint(driver_joints[2], driver_joints[4], cmds.listRelatives(no_rot_locators[1],p=True)[0], mo=True)[0]
-        cmds.setAttr('{}.interpType'.format(pc), 2)
-        pc = cmds.parentConstraint(driver_joints[0], driver_joints[2], cmds.listRelatives(yes_rot_locators[0],p=True)[0], mo=True)[0]
-        cmds.setAttr('{}.interpType'.format(pc), 2)
-        pc = cmds.parentConstraint(driver_joints[2], driver_joints[4], cmds.listRelatives(yes_rot_locators[1],p=True)[0], mo=True)[0]
-        cmds.setAttr('{}.interpType'.format(pc), 2)
+        # --- Locator parentConstraints ---
+        pc5 = cmds.parentConstraint(driver_joints[0], driver_joints[2],
+                                    cmds.listRelatives(no_rot_locators[0], p=True)[0],
+                                    mo=True, n=f"{no_rot_locators[0]}_noRot_PC")[0]
+        cmds.setAttr(f"{pc5}.interpType", 2)
+
+        pc6 = cmds.parentConstraint(driver_joints[2], driver_joints[4],
+                                    cmds.listRelatives(no_rot_locators[1], p=True)[0],
+                                    mo=True, n=f"{no_rot_locators[1]}_noRot_PC")[0]
+        cmds.setAttr(f"{pc6}.interpType", 2)
+
+        pc7 = cmds.parentConstraint(driver_joints[0], driver_joints[2],
+                                    cmds.listRelatives(yes_rot_locators[0], p=True)[0],
+                                    mo=True, n=f"{yes_rot_locators[0]}_yesRot_PC")[0]
+        cmds.setAttr(f"{pc7}.interpType", 2)
+
+        pc8 = cmds.parentConstraint(driver_joints[2], driver_joints[4],
+                                    cmds.listRelatives(yes_rot_locators[1], p=True)[0],
+                                    mo=True, n=f"{yes_rot_locators[1]}_yesRot_PC")[0]
+        cmds.setAttr(f"{pc8}.interpType", 2)
 
 
         #Orient constraint to aim to center
@@ -386,8 +411,27 @@ def build_brows_block():
         cmds.connectAttr('{}.output.outputR'.format(blend_node), '{}.rotate.rotateZ'.format(cmds.listRelatives(driver_joints[3], p=True)[0]), f=1)
         cmds.connectAttr('{}.output.outputR'.format(blend_node), '{}.rotate.rotateZ'.format(cmds.listRelatives(sec_ctrls[1], p=True)[0]), f=1)
 
-        #Switches vis
+        # #Mids Blends
+        # mid_blend_start_attr = mt.new_attr(input=brow_ctrl,
+        #                                    name='MidBlendStart',
+        #                                    min=0,
+        #                                    max=1,
+        #                                    default=1)
+        #
+        # mid_blend_end_attr = mt.new_attr(input=brow_ctrl,
+        #                                  name='MidBlendEnd',
+        #                                  min=0,
+        #                                  max=1,
+        #                                  default=0.5)
 
+        # --- MidBlendStart connections ---
+        print('#'*20)
+        print(pc1, pc2, pc3, pc4)
+        print('#'*20)
+        print(pc5, pc6, pc7, pc8)
+        print('#'*20)
+
+        #Switches vis
         if brow_ctrl.startswith(nc['right']) and guide_attrs_position.startswith(nc['left']):
             guide_attrs_position = guide_attrs_position.replace(nc['left'], nc['right'])
 
@@ -472,63 +516,71 @@ def build_brows_block():
         #Block Parent
         cmds.parentConstraint(block_parent, clean_ctrl_grp, mo=True)
 
-    #Create extra brow ctrl in the Middle
+        if game_mode:
+            cmds.scaleConstraint(block_parent, clean_ctrl_grp, mo=True)
 
-    if cmds.objExists('L_Brow_Driver0_Main_Ctrl') and cmds.objExists('R_Brow_Driver0_Main_Ctrl'):
+            cmds.parentConstraint(block_parent, clean_rig_grp, mo=True)
+            cmds.scaleConstraint(block_parent, clean_rig_grp, mo=True)
 
-        drivers = cmds.ls('*_Driver0_Main_Ctrl')
+            cmds.setAttr(surface + ".inheritsTransform", 0)
+            cmds.setAttr(tweek_joints_grp + ".inheritsTransform", 0)
 
-        cmds.select(cl=True)
-        curve = mt.curve(type='sphere', custom_name=True, name=name.replace(nc['right'], nc['center']) + nc['ctrl'])
-        root = mt.root_grp()
-        shape = cmds.listRelatives(curve, s=True)[0]
-        cmds.connectAttr(main_ctrl_attr, '{}.v'.format(shape))
-
-        center_brow_loc = cmds.spaceLocator(n=name.replace(nc['right'], nc['center']) + nc['locator'])[0]
-        root_loc = mt.root_grp()
-        null_loc = cmds.spaceLocator(n=name.replace(nc['right'], nc['center'])+'_Null' + nc['locator'])[0]
-
-        cmds.select(cl=True)
-        center_brow_jnt = cmds.joint(n=name.replace(nc['right'], nc['center']) + nc['joint'])
-        root_joint = mt.root_grp()
-
-
-        cmds.delete(cmds.pointConstraint(drivers, root))
-        cmds.delete(cmds.pointConstraint(drivers, root_loc))
-        cmds.delete(cmds.pointConstraint(drivers, root_joint))
-        cmds.delete(cmds.pointConstraint(drivers, null_loc))
-
-        cmds.pointConstraint(null_loc, 'L_Brow_Driver0_Main_Ctrl', 'R_Brow_Driver0_Main_Ctrl', root, mo=True)
-        cmds.pointConstraint(null_loc, 'L_Brow_Driver0_Jnt', 'R_Brow_Driver0_Jnt', root_loc, mo=True)
-
-        cmds.parentConstraint(center_brow_loc, center_brow_jnt)
-        cmds.scaleConstraint(center_brow_loc, center_brow_jnt)
-
-        cmds.connectAttr('{}.rotate'.format(curve), '{}.rotate'.format(center_brow_loc))
-        cmds.connectAttr('{}.translate'.format(curve), '{}.translate'.format(center_brow_loc))
-        cmds.connectAttr('{}.scale'.format(curve), '{}.scale'.format(center_brow_loc))
-
-        for jnt in [center_brow_jnt]:
-            cmds.select(cl=True)
-            bind_joint = cmds.joint(n=jnt.replace(nc['joint'], nc['joint_bind']))
-            cmds.parentConstraint(jnt, bind_joint)
-            cmds.scaleConstraint(jnt, bind_joint)
-            cmds.setAttr('{}.radius'.format(bind_joint), 1.5)
-            cmds.parent(bind_joint, bind_jnt_grp)
-
-        cmds.parent(null_loc, root_joint, root_loc, clean_rig_grp)
-        cmds.parent(root, clean_ctrl_grp)
-
-        mult_attr = mt.new_attr(curve, name='FollowSides', default=0)
-        reverse_node = cmds.shadingNode('reverse', asUtility=True, name="{}_Reverse".format(curve))
-        cmds.connectAttr(mult_attr, "{}.inputX".format(reverse_node), f=True)
-        cmds.connectAttr("{}.output.outputX".format(reverse_node),  "C_Brow_Ctrl_Offset_Grp_pointConstraint1.C_Brow_Null_LocW0", f=True)
-        cmds.connectAttr(mult_attr,  "C_Brow_Ctrl_Offset_Grp_pointConstraint1.L_Brow_Driver0_Main_CtrlW1", f=True)
-        cmds.connectAttr(mult_attr,  "C_Brow_Ctrl_Offset_Grp_pointConstraint1.R_Brow_Driver0_Main_CtrlW2", f=True)
-
-        reverse_node = cmds.shadingNode('reverse', asUtility=True, name="{}_Reverse".format(center_brow_loc))
-        cmds.connectAttr(mult_attr, "{}.inputX".format(reverse_node), f=True)
-        cmds.connectAttr("{}.output.outputX".format(reverse_node),
-                         "C_Brow_Loc_Offset_Grp_pointConstraint1.C_Brow_Null_LocW0", f=True)
-        cmds.connectAttr(mult_attr, "C_Brow_Loc_Offset_Grp_pointConstraint1.L_Brow_Driver0_JntW1", f=True)
-        cmds.connectAttr(mult_attr, "C_Brow_Loc_Offset_Grp_pointConstraint1.R_Brow_Driver0_JntW2", f=True)
+    # #Create extra brow ctrl in the Middle
+    # if cmds.objExists('L_Brow_Driver0_Main_Ctrl') and cmds.objExists('R_Brow_Driver0_Main_Ctrl'):
+    #
+    #     drivers = cmds.ls('*_Driver0_Main_Ctrl')
+    #
+    #     cmds.select(cl=True)
+    #     curve = mt.curve(type='sphere', custom_name=True, name=name.replace(nc['right'], nc['center']) + nc['ctrl'])
+    #     root = mt.root_grp()
+    #     shape = cmds.listRelatives(curve, s=True)[0]
+    #     cmds.connectAttr(main_ctrl_attr, '{}.v'.format(shape))
+    #
+    #     center_brow_loc = cmds.spaceLocator(n=name.replace(nc['right'], nc['center']) + nc['locator'])[0]
+    #     root_loc = mt.root_grp()
+    #     null_loc = cmds.spaceLocator(n=name.replace(nc['right'], nc['center'])+'_Null' + nc['locator'])[0]
+    #
+    #     cmds.select(cl=True)
+    #     center_brow_jnt = cmds.joint(n=name.replace(nc['right'], nc['center']) + nc['joint'])
+    #     root_joint = mt.root_grp()
+    #
+    #
+    #     cmds.delete(cmds.pointConstraint(drivers, root))
+    #     cmds.delete(cmds.pointConstraint(drivers, root_loc))
+    #     cmds.delete(cmds.pointConstraint(drivers, root_joint))
+    #     cmds.delete(cmds.pointConstraint(drivers, null_loc))
+    #
+    #     cmds.pointConstraint(null_loc, 'L_Brow_Driver0_Main_Ctrl', 'R_Brow_Driver0_Main_Ctrl', root, mo=True)
+    #     cmds.pointConstraint(null_loc, 'L_Brow_Driver0_Jnt', 'R_Brow_Driver0_Jnt', root_loc, mo=True)
+    #
+    #     cmds.parentConstraint(center_brow_loc, center_brow_jnt)
+    #     cmds.scaleConstraint(center_brow_loc, center_brow_jnt)
+    #
+    #     cmds.connectAttr('{}.rotate'.format(curve), '{}.rotate'.format(center_brow_loc))
+    #     cmds.connectAttr('{}.translate'.format(curve), '{}.translate'.format(center_brow_loc))
+    #     cmds.connectAttr('{}.scale'.format(curve), '{}.scale'.format(center_brow_loc))
+    #
+    #     for jnt in [center_brow_jnt]:
+    #         cmds.select(cl=True)
+    #         bind_joint = cmds.joint(n=jnt.replace(nc['joint'], nc['joint_bind']))
+    #         cmds.parentConstraint(jnt, bind_joint)
+    #         cmds.scaleConstraint(jnt, bind_joint)
+    #         cmds.setAttr('{}.radius'.format(bind_joint), 1.5)
+    #         cmds.parent(bind_joint, bind_jnt_grp)
+    #
+    #     cmds.parent(null_loc, root_joint, root_loc, clean_rig_grp)
+    #     cmds.parent(root, clean_ctrl_grp)
+    #
+    #     mult_attr = mt.new_attr(curve, name='FollowSides', default=0)
+    #     reverse_node = cmds.shadingNode('reverse', asUtility=True, name="{}_Reverse".format(curve))
+    #     cmds.connectAttr(mult_attr, "{}.inputX".format(reverse_node), f=True)
+    #     cmds.connectAttr("{}.output.outputX".format(reverse_node),  "C_Brow_Ctrl_Offset_Grp_pointConstraint1.C_Brow_Null_LocW0", f=True)
+    #     cmds.connectAttr(mult_attr,  "C_Brow_Ctrl_Offset_Grp_pointConstraint1.L_Brow_Driver0_Main_CtrlW1", f=True)
+    #     cmds.connectAttr(mult_attr,  "C_Brow_Ctrl_Offset_Grp_pointConstraint1.R_Brow_Driver0_Main_CtrlW2", f=True)
+    #
+    #     reverse_node = cmds.shadingNode('reverse', asUtility=True, name="{}_Reverse".format(center_brow_loc))
+    #     cmds.connectAttr(mult_attr, "{}.inputX".format(reverse_node), f=True)
+    #     cmds.connectAttr("{}.output.outputX".format(reverse_node),
+    #                      "C_Brow_Loc_Offset_Grp_pointConstraint1.C_Brow_Null_LocW0", f=True)
+    #     cmds.connectAttr(mult_attr, "C_Brow_Loc_Offset_Grp_pointConstraint1.L_Brow_Driver0_JntW1", f=True)
+    #     cmds.connectAttr(mult_attr, "C_Brow_Loc_Offset_Grp_pointConstraint1.R_Brow_Driver0_JntW2", f=True)
