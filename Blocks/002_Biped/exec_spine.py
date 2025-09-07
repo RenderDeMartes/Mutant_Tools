@@ -229,8 +229,13 @@ def build_spine_block():
     mt.assign_color(chest_ctrl, 'purple')
     mt.match(chest_ctrl_root, spine_joints[3], r=False)
 
-    fix_spine_orients = False
-    if fix_spine_orients:
+    # Game Attrs Compatibility
+    if cmds.attributeQuery('OrientToWorld', n=config, exists=True):
+        orient_to_world = cmds.getAttr(config + '.OrientToWorld')
+    else:
+        orient_to_world = True
+
+    if not orient_to_world:
         #FIX ORIENTS ONLY WHEN NEEDED TO MATCH GUIDE
         # --- Orientation pass (AFTER creation) ---
 

@@ -17,6 +17,7 @@
         "CtrlSize_float": "4",
         "SetGameParent_string": "",
         "Breath_bool" : "False",
+        "OrientToWorld_bool" : "True",
         "Help_string" : "Possible parent: Spine_End_Jnt or Spine_Inv_Jnt"
     }
 }
