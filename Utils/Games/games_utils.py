@@ -209,7 +209,7 @@ class Games(object):
 			if 'Face_Bind_Joints_Grp' in long_path:
 				continue
 			cmds.select(cl=True)
-			game_joint = self.create_game_joint_based_on_bnd(bnd_joint=jnt, do_scale=False, scale_constraint=False, segmentScaleCompensate=False)
+			game_joint = self.create_game_joint_based_on_bnd(bnd_joint=jnt, do_scale=True, scale_constraint=True, segmentScaleCompensate=False)
 			game_joints.append(game_joint)
 
 		#reparent

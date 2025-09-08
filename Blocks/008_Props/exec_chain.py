@@ -179,6 +179,7 @@ def build_chain_block():
                 if is_right_side:
                     block_parent = block_parent.replace(nc['left'], nc['right'])
                 cmds.parentConstraint(block_parent, ctrl_root, maintainOffset=1)
+                cmds.scaleConstraint(block_parent, ctrl_root, maintainOffset=1)
 
 
             # auto rotate
