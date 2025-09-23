@@ -42,16 +42,28 @@ author:  Esteban Rodriguez <info@renderdemartes.com>
 
 '''
 # -------------------------------------------------------------------
-from shiboken2 import wrapInstance
-from PySide2 import QtGui, QtCore
-from PySide2 import QtUiTools
-from PySide2 import QtWidgets
-from PySide2.QtWidgets import *
-from PySide2.QtGui import *
-from PySide2.QtCore import *
-from PySide2.QtUiTools import *
-from PySide2.QtWebEngineWidgets import *
-from PySide2.QtCore import QUrl
+try:
+    from shiboken6 import wrapInstance
+    from PySide6 import QtGui, QtCore
+    from PySide6 import QtUiTools
+    from PySide6 import QtWidgets
+    from PySide6.QtWidgets import *
+    from PySide6.QtGui import *
+    from PySide6.QtCore import *
+    from PySide6.QtUiTools import *
+    from PySide6.QtWebEngineWidgets import *
+    from PySide6.QtCore import QUrl
+except: 
+    from shiboken2 import wrapInstance #Compatibility pre 2026
+    from PySide2 import QtGui, QtCore
+    from PySide2 import QtUiTools
+    from PySide2 import QtWidgets
+    from PySide2.QtWidgets import *
+    from PySide2.QtGui import *
+    from PySide2.QtCore import *
+    from PySide2.QtUiTools import *
+    from PySide2.QtWebEngineWidgets import *
+    from PySide2.QtCore import QUrl
 
 
 import maya.OpenMayaUI as omui

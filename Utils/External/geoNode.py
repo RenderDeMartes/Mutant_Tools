@@ -3,8 +3,6 @@ from __future__ import absolute_import, division, print_function
 
 import math
 
-from six.moves import range
-
 import maya.api.OpenMaya as om2
 import maya.OpenMaya as om
 from maya import cmds

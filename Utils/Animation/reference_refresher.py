@@ -37,7 +37,6 @@ try:
 except:
     import imp;from imp import reload
 
-import six
 import os
 import uuid
 import tempfile
@@ -324,7 +323,7 @@ class Refresher(object):
         return data
 
     def apply_shared_locs_anim(self, data):
-        for k, v in six.iteritems(data):
+        for k, v in data.items():
             for t, x in v:
                 o, a = k.split('.')
                 cmds.setKeyframe(o, time=t, attribute=a, value=x)

@@ -39,7 +39,6 @@ licence: https://www.eulatemplate.com/live.php?token=FGISW7ApRfgywum6murbBmLcusK
 author:  Esteban Rodriguez <info@mutanttools.com>
 
 '''
-import six
 import os
 import json
 try:
@@ -517,7 +516,7 @@ class Skinning(MayaNode):
         loaded = list()
         fails = list()
 
-        for geo, data in six.iteritems(all_data):
+        for geo, data in all_data.items():
             if not cmds.objExists(geo):
                 continue
             if geo not in geometry:
@@ -600,15 +599,15 @@ class Skinning(MayaNode):
         # Get the name to id influence map
         current_ids, current_names = self.get_influences_index_map()
         attr_str = '{}.weightList[{}].weights[{}]'
-        for vertex, data in six.iteritems(weights):
+        for vertex, data in weights.items():
             valid_data = dict()
-            for inf_name, values in six.iteritems(data):
+            for inf_name, values in data.items():
                 cmds.select(inf_name)
                 if namespace:
                     valid_data[current_names[inf_name.replace('{}:'.format(namespace), '')]] = values
                 else:
                     valid_data[current_names[inf_name]] = values
-            for inf_id, value in six.iteritems(valid_data):
+            for inf_id, value in valid_data.items():
                 cmds.setAttr(attr_str.format(skin, vertex, inf_id), value)
 
         self.set_normalize(1, skin)

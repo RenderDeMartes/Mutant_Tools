@@ -18,7 +18,6 @@ Maya's API documentation:
 
 
 '''
-import six
 
 import maya.OpenMaya as om
 from maya import cmds
@@ -57,7 +56,7 @@ class MayaNode(object):
             self.handle = node
             self.dependnode = om.MFnDependencyNode(node.object())
 
-        elif isinstance(node, six.string_types):
+        elif isinstance(node, str):
             selList = om.MSelectionList()
             try:
                 selList.add(node)
@@ -98,10 +97,10 @@ class MayaNode(object):
         return '{}("{}")'.format(self.__class__.__name__, self.name)
 
     def __unicode__(self):
-        return six.ensure_text(self.name)
+        return str(self.name)
 
     def __str__(self):
-        return six.ensure_str(self.name)
+        return str(self.name)
 
     def __hash__(self):
         '''Returns a hash code for the internal Maya object referenced by
@@ -115,8 +114,8 @@ class MayaNode(object):
         '''
         if isinstance(other, MayaNode):
             return self.obj == other.obj
-        elif isinstance(other, six.string_types):
-            other = MayaNode(six.text_type(other))
+        elif isinstance(other, str):
+            other = MayaNode(str(other))
             return self == other
 
         return NotImplemented
@@ -124,8 +123,8 @@ class MayaNode(object):
     def __ne__(self, other):
         if isinstance(other, MayaNode):
             return self.obj != other.obj
-        elif isinstance(other, six.string_types):
-            other = MayaNode(six.text_type(other))
+        elif isinstance(other, str):
+            other = MayaNode(str(other))
             return self != other
 
         return NotImplemented
@@ -277,7 +276,7 @@ class MayaNode(object):
 
         if traverse_type:
             assert (traverse_type in TRAVERSE_MAP), 'valid values are {}'.format(list(TRAVERSE_MAP.keys()))
-            assert ([t for t in traverse_type if isinstance(t, six.string_types)]), 'currently only string types are supported.'
+            assert ([t for t in traverse_type if isinstance(t, str)]), 'currently only string types are supported.'
         traverse = TRAVERSE_MAP[traverse_type]
 
         # Bilbo journey begins
@@ -301,7 +300,7 @@ class MayaNode(object):
                 for ftype in filter_types:
 
                     # Compare to string type ('transform', 'mesh')
-                    if isinstance(ftype, six.string_types) and node.typeName() == ftype:
+                    if isinstance(ftype, str) and node.typeName() == ftype:
                         yield MayaNode(dag_path)
 
                     # Compare to om.Mfn type (om.MFn.kGeometric)
@@ -356,7 +355,7 @@ class MayaNode(object):
             elif filter_types:
                 for filter_type in filter_types:
                     # Compare to string type ('transform', 'mesh')
-                    if isinstance(filter_type, six.string_types) and node.typeName() == filter_type:
+                    if isinstance(filter_type, str) and node.typeName() == filter_type:
                         yield MayaNode(obj)
 
                     # Compare to om.Mfn type (om.MFn.kGeometric)
@@ -545,7 +544,7 @@ class MayaPlug(om.MPlug):
             plug = _get_plug(obj, attribute)
         elif isinstance(obj, MayaNode):
             plug = _get_plug(obj, attribute)
-        elif isinstance(obj, six.string_types):
+        elif isinstance(obj, str):
             sel = om.MSelectionList()
             sel.add(obj)
             mplug = om.MPlug()
@@ -571,10 +570,10 @@ class MayaPlug(om.MPlug):
         return '{}("{}")'.format(self.__class__.__name__, self.name())
 
     def __unicode__(self):
-        return six.ensure_text(self.name())
+        return str(self.name())
 
     def __str__(self):
-        return six.ensure_str(self.name())
+        return str(self.name())
 
     def node(self):
         return MayaNode(super(MayaPlug, self).node())
@@ -675,7 +674,7 @@ def _get_plug(node, attribute):
 
     node = MayaNode(node)
 
-    if isinstance(attribute, six.string_types):
+    if isinstance(attribute, str):
         return node.dependnode.findPlug(attribute, True)
     elif isinstance(attribute, om.MObject) and attribute.hasFn(om.MFn.kAttribute):
         return node.dependnode.findPlug(attribute, True)

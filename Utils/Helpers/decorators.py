@@ -1,6 +1,5 @@
 from __future__ import absolute_import
 from functools import wraps
-from six.moves import map
 from maya import cmds, mel
 
 
@@ -62,17 +61,3 @@ def undo(func):
     return wrap
 
 
-def keep_selection(func):
-    '''Restore the original Maya selection when exiting the function.'''
-
-    @wraps(func)
-    def wrap(*args, **kwargs):
-        sel = list(map(MayaNode, cmds.ls(selection=True)))
-        try:
-            return func(*args, **kwargs)
-        finally:
-            if sel:
-                cmds.select([x for x in sel if cmds.objExists(x)])
-            else:
-                cmds.select(deselect=True)
-    return wrap

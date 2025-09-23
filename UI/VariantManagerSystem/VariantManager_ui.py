@@ -8,8 +8,12 @@ import sys
 import os
 from pathlib import Path
 
-from PySide2 import QtGui, QtWidgets, QtCore
-from shiboken2 import wrapInstance
+try:
+    from shiboken6 import wrapInstance
+    from PySide6 import QtGui, QtWidgets, QtCore
+except: 
+    from shiboken2 import wrapInstance #Compatibility pre 2026
+    from PySide2 import QtGui, QtWidgets, QtCore
 
 import maya.cmds as cmds
 import maya.OpenMayaUI as omui

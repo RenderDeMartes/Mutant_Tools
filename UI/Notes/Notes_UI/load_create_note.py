@@ -1,9 +1,14 @@
 from __future__ import absolute_import
-from PySide2 import QtGui,QtCore
-from PySide2 import QtUiTools
-from PySide2 import QtWidgets
-from shiboken2 import wrapInstance
-
+try:
+    from shiboken6 import wrapInstance
+    from PySide6 import QtGui, QtCore
+    from PySide6 import QtUiTools
+    from PySide6 import QtWidgets
+except: 
+    from shiboken2 import wrapInstance #Compatibility pre 2026
+    from PySide2 import QtGui, QtCore
+    from PySide2 import QtUiTools
+    from PySide2 import QtWidgets
 import maya.cmds as cmds
 import maya.OpenMayaUI as omui
 import maya.mel as mel

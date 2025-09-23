@@ -12,7 +12,10 @@ with open(myPY, 'w') as thePython:
 import os
 from maya import cmds
 import maya.OpenMayaUI as omui
-from shiboken2 import wrapInstance
+try:
+    from shiboken6 import wrapInstance
+except: 
+    from shiboken2 import wrapInstance #Compatibility pre 2026
 
 
 

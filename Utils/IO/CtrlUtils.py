@@ -30,7 +30,6 @@ licence: https://www.eulatemplate.com/live.php?token=FGISW7ApRfgywum6murbBmLcusK
 author:  Esteban Rodriguez <info@mutanttools.com>
 
 '''
-import six
 import os
 try:
     import importlib;from importlib import reload

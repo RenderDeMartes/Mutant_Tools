@@ -39,12 +39,22 @@ author:  Esteban Rodriguez <info@renderdemartes.com>
 import os
 from maya import cmds
 from maya import mel
-import PySide2
-from PySide2 import QtUiTools
-from PySide2 import QtWidgets
-from PySide2.QtWidgets import *
-from PySide2 import QtGui,QtCore
-from shiboken2 import wrapInstance
+try:
+    import PySide6
+    from PySide6 import QtUiTools
+    from PySide6 import QtWidgets
+    from PySide6.QtWidgets import *
+    from PySide6 import QtGui,QtCore
+except:
+    import PySide2
+    from PySide2 import QtUiTools
+    from PySide2 import QtWidgets
+    from PySide2.QtWidgets import *
+    from PySide2 import QtGui, QtCore
+try:
+    from shiboken6 import wrapInstance
+except: 
+    from shiboken2 import wrapInstance #Compatibility pre 2026
 
 from maya.app.general.mayaMixin import MayaQWidgetDockableMixin
 import maya.OpenMayaUI as omui
