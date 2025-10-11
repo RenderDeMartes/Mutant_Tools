@@ -169,7 +169,7 @@ class Games(object):
 
 		return new_joints
 
-	def create_biped_game_joints(self, do_skins=True, map='reparent_bnd_map.json'):
+	def create_biped_game_joints(self, do_skins=True, map='reparent_bnd_map.json', do_scale=True, scale_constraint=True, segmentScaleCompensate=False):
 
 		map = mh.read_json(path=os.path.join(FOLDER, 'Utils', 'Games', 'maps'), json_file=map)
 		joints_in_map = []
@@ -209,7 +209,7 @@ class Games(object):
 			if 'Face_Bind_Joints_Grp' in long_path:
 				continue
 			cmds.select(cl=True)
-			game_joint = self.create_game_joint_based_on_bnd(bnd_joint=jnt, do_scale=True, scale_constraint=True, segmentScaleCompensate=False)
+			game_joint = self.create_game_joint_based_on_bnd(bnd_joint=jnt, do_scale=do_scale, scale_constraint=scale_constraint, segmentScaleCompensate=segmentScaleCompensate)
 			game_joints.append(game_joint)
 
 		#reparent

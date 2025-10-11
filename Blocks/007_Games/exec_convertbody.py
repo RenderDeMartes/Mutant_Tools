@@ -83,7 +83,7 @@ def build_convertbody_block():
     import Mutant_Tools.Utils.Games.games_utils as games_utils
     reload(games_utils)
     cGames = games_utils.Games()
-    cGames.create_biped_game_joints(do_skins=False)
+    cGames.create_biped_game_joints(do_skins=False, map='reparent_bnd_map.json', do_scale=True, scale_constraint=False, segmentScaleCompensate=False)
 
     print ('Build {} Success'.format(block))
 
