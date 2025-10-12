@@ -38,17 +38,17 @@ author:  Esteban Rodriguez <info@renderdemartes.com>
 '''
 # -------------------------------------------------------------------
 try:
-    from shiboken6 import wrapInstance
-    from PySide6 import QtGui, QtCore
-    from PySide6 import QtUiTools
-    from PySide6 import QtWidgets
-    from PySide6.QtWidgets import *
+	from shiboken6 import wrapInstance
+	from PySide6 import QtGui, QtCore
+	from PySide6 import QtUiTools
+	from PySide6 import QtWidgets
+	from PySide6.QtWidgets import *
 except: 
-    from shiboken2 import wrapInstance #Compatibility pre 2026
-    from PySide2 import QtGui, QtCore
-    from PySide2 import QtUiTools
-    from PySide2 import QtWidgets
-    from PySide2.QtWidgets import *
+	from shiboken2 import wrapInstance #Compatibility pre 2026
+	from PySide2 import QtGui, QtCore
+	from PySide2 import QtUiTools
+	from PySide2 import QtWidgets
+	from PySide2.QtWidgets import *
 
 import maya.OpenMayaUI as omui
 from functools import partial
@@ -246,7 +246,7 @@ class HelperUI(QtMutantWindow.Qt_Mutant):
 		self.ui.fix_cog.clicked.connect(self.fix_cog)
 
 		self.ui.shoe_to_guides.clicked.connect(self.shoe_to_guides)
-
+		self.ui.skin_to_other_button.clicked.connect(self.copy_skin_from_first_to_rest)
 
 		self.ui.remove_duplicate_names.clicked.connect(self.remove_dup_names)
 		self.ui.studio_tag_ctrls.clicked.connect(self.tag_controllers)
@@ -401,7 +401,7 @@ class HelperUI(QtMutantWindow.Qt_Mutant):
 		sid = validate_sid(sid)
 		sid.create_default_groups(kind='rig-hi')
 
-		# get rigging task 
+		# get rigging task
 
 		rig_task = ''
 
@@ -796,6 +796,56 @@ class HelperUI(QtMutantWindow.Qt_Mutant):
 
 		#Reorient joints
 		self.fix_foot()
+
+	@undo
+	def copy_skin_from_first_to_rest(self):
+		sel = cmds.ls(sl=True, long=True)
+		if len(sel) < 2:
+			cmds.error("Please select at least two geometries (source first, then targets).")
+			return
+
+		source = sel[0]
+		targets = sel[1:]
+
+		# Get the skinCluster of the source
+		skin_clusters = cmds.ls(cmds.listHistory(source), type='skinCluster')
+		if not skin_clusters:
+			cmds.error("No skinCluster found on the first selected geometry.")
+			return
+
+		source_skin = skin_clusters[0]
+
+		# Get the joints influencing the source skin
+		joints = cmds.skinCluster(source_skin, q=True, inf=True)
+
+		print("Source skinCluster:", source_skin)
+		print("Influences:", joints)
+
+		# For each target geo, create a skinCluster and copy weights
+		for target in targets:
+			print("Processing:", target)
+
+			# Check for existing skin cluster and remove if needed
+			existing_skin = cmds.ls(cmds.listHistory(target), type='skinCluster')
+			if existing_skin:
+				cmds.delete(existing_skin)
+
+			# Create new skin cluster using the same joints
+			new_skin = cmds.skinCluster(joints, target, toSelectedBones=True, maximumInfluences=4, normalizeWeights=1)[0]
+			print("Created:", new_skin)
+
+			# Copy the weights from source to target
+			cmds.copySkinWeights(
+				ss=source_skin,
+				ds=new_skin,
+				noMirror=True,
+				surfaceAssociation='closestPoint',
+				influenceAssociation=['closestJoint', 'closestBone', 'oneToOne']
+			)
+			print(f"Copied weights from {source} → {target}")
+
+		print("✅ Skinning copied successfully from first geometry to all others.")
+
 
 	def unreferece_geo(self):
 		for geo in cmds.listRelatives('geo',ad=True):
@@ -1211,7 +1261,7 @@ class HelperUI(QtMutantWindow.Qt_Mutant):
 	def create_skirt_rigmeshes(self):
 		from Mutant_Tools.UI.Helpers.helpers_utils import skirt_helpers
 		reload(skirt_helpers)
-		skirt_helpers.create_skirt_rigmeshes(prefix=self.ui.skirt_name.text(), dup_levels= self.ui.dup_number.value(), 
+		skirt_helpers.create_skirt_rigmeshes(prefix=self.ui.skirt_name.text(), dup_levels= self.ui.dup_number.value(),
 		skirt_bind_geos=[], open=self.ui.open_check.isChecked())
 
 	@undo

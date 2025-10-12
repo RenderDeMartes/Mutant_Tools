@@ -268,9 +268,9 @@
               <property name="geometry">
                <rect>
                 <x>0</x>
-                <y>0</y>
-                <width>184</width>
-                <height>777</height>
+                <y>-173</y>
+                <width>198</width>
+                <height>813</height>
                </rect>
               </property>
               <layout class="QGridLayout" name="gridLayout_3">
@@ -789,6 +789,19 @@
                   </widget>
                  </item>
                  <item>
+                  <widget class="QPushButton" name="skin_to_other_button">
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>30</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>Copy Skin to Other Geo</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
                   <widget class="QPushButton" name="remove_duplicate_names">
                    <property name="minimumSize">
                     <size>
@@ -884,8 +897,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>208</width>
-                <height>805</height>
+                <width>276</width>
+                <height>827</height>
                </rect>
               </property>
               <layout class="QGridLayout" name="gridLayout_5">
@@ -1524,7 +1537,7 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>98</width>
+                <width>84</width>
                 <height>40</height>
                </rect>
               </property>
@@ -1607,7 +1620,7 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>98</width>
+                <width>82</width>
                 <height>314</height>
                </rect>
               </property>
@@ -1879,8 +1892,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>134</width>
-                <height>831</height>
+                <width>176</width>
+                <height>837</height>
                </rect>
               </property>
               <layout class="QGridLayout" name="gridLayout_16">
@@ -2256,7 +2269,7 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>150</width>
+                <width>209</width>
                 <height>294</height>
                </rect>
               </property>
