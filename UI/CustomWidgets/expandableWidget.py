@@ -28,7 +28,7 @@ dependencies:
 
 
 #----------------
-licence: https://www.eulatemplate.com/live.php?token=FGISW7ApRfgywum6murbBmLcusKONzkv
+www.mutanttools.com
 author:  Esteban Rodriguez <info@renderdemartes.com>
 
 '''
