@@ -1,0 +1,338 @@
+global proc shelf_Bluetape_Rigging () {
+    global string $gBuffStr;
+    global string $gBuffStr0;
+    global string $gBuffStr1;
+
+
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
+        -enable 1
+        -width 39
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Open the Asset Browser." 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "Browse" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -imageOverlayLabel "Browse" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "blueFolder.png" 
+        -image1 "blueFolder.png" 
+        -style "iconOnly" 
+        -marginWidth 0
+        -marginHeight 1
+        -command "try:\n    import importlib;from importlib import reload\nexcept:\n    import imp;from imp import reload\n\nimport Blue_Pipeline\nfrom Blue_Pipeline.UI.assets_manager import load_asset_manager\nreload(load_asset_manager)\n\ntry:cAssetsManagerUI.close()\nexcept:pass\ncAssetsManagerUI = load_asset_manager.AssetsManagerUI()\ncAssetsManagerUI.show()" 
+        -sourceType "python" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    separator
+        -enable 1
+        -width 32
+        -height 33
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -style "shelf" 
+        -horizontal 0
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
+        -enable 1
+        -width 39
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Load MutantTools Menu." 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.294118 0.431373 0.686275 
+        -align "center" 
+        -label "Load MutantTools Menu." 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -imageOverlayLabel "Menu" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "MutantTools.png" 
+        -image1 "MutantTools.png" 
+        -style "iconOnly" 
+        -marginWidth 0
+        -marginHeight 1
+        -command "import os\nimport sys\nmutant_path = os.path.join(cmds.internalVar(usd=True), 'rigging')\nif mutant_path not in sys.path:\n    sys.path.append(mutant_path)\n    \nimport Mutant_Tools; from Mutant_Tools.Utils import mt_menu; mt_menu.create_mutant_menu()" 
+        -sourceType "python" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
+        -enable 1
+        -width 39
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Open MutantTools Autorig UI." 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "Open MutantTools Autorig UI" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -imageOverlayLabel "Rig" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "MutantTools.png" 
+        -image1 "MutantTools.png" 
+        -style "iconOnly" 
+        -marginWidth 0
+        -marginHeight 1
+        -command "reload = __import__('importlib').reload if hasattr(__import__('importlib'), 'reload') else __import__('imp').reload;import Mutant_Tools;from Mutant_Tools.UI.AutoRigger import load_autoRigger;reload(load_autoRigger);AutoRigger = load_autoRigger.AutoRigger();AutoRigger.show();" 
+        -sourceType "python" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
+        -enable 1
+        -width 39
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Open Mutant Tools UI." 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.294118 0.431373 0.686275 
+        -align "center" 
+        -label "Open Mutant Tools UI" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -imageOverlayLabel "Tools" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "MutantTools.png" 
+        -image1 "MutantTools.png" 
+        -style "iconOnly" 
+        -marginWidth 0
+        -marginHeight 1
+        -command "reload = __import__('importlib').reload if hasattr(__import__('importlib'), 'reload') else __import__('imp').reload;import Mutant_Tools;from Mutant_Tools.UI.RigTools import load_RigTools;reload(load_RigTools);cRigToolsUI = load_RigTools.RigTools_UI();cRigToolsUI.show();" 
+        -sourceType "python" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
+        -enable 1
+        -width 39
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Open Helper UI." 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.294118 0.431373 0.686275 
+        -align "center" 
+        -label "Open Helper UI" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -imageOverlayLabel "Help" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "MutantTools.png" 
+        -image1 "MutantTools.png" 
+        -style "iconOnly" 
+        -marginWidth 0
+        -marginHeight 1
+        -command "reload = __import__('importlib').reload if hasattr(__import__('importlib'), 'reload') else __import__('imp').reload;from Mutant_Tools.UI.Helpers import load_helpers;reload(load_helpers);cHelperUI = load_helpers.HelperUI();cHelperUI.show()" 
+        -sourceType "python" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
+        -enable 1
+        -width 39
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Face Install UI." 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.294118 0.431373 0.686275 
+        -align "center" 
+        -label "Open Face Install UI" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -imageOverlayLabel "Install" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "MutantTools.png" 
+        -image1 "MutantTools.png" 
+        -style "iconOnly" 
+        -marginWidth 0
+        -marginHeight 1
+        -command "reload = __import__('importlib').reload if hasattr(__import__('importlib'), 'reload') else __import__('imp').reload;import Mutant_Tools;from Mutant_Tools.UI.FaceInstall import load_face_install;reload(load_face_install);cFaceInstallUI = load_face_install.FaceInstallUI();cFaceInstallUI.show()" 
+        -sourceType "python" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
+        -enable 1
+        -width 39
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Zombinator." 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.294118 0.431373 0.686275 
+        -align "center" 
+        -label "Zombinator" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "zombie.png" 
+        -image1 "zombie.png" 
+        -style "iconOnly" 
+        -marginWidth 0
+        -marginHeight 1
+        -command "reload = __import__('importlib').reload if hasattr(__import__('importlib'), 'reload') else __import__('imp').reload;import Mutant_Tools;from Mutant_Tools.UI.Zombinator import load_zombinator;reload(load_zombinator);cZombinator = load_zombinator.Zombinator();cZombinator.show()" 
+        -sourceType "python" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
+        -enable 1
+        -width 39
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "CROWD." 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.294118 0.431373 0.686275 
+        -align "center" 
+        -label "CROWD" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -imageOverlayLabel "Crowd" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "MutantTools.png" 
+        -image1 "MutantTools.png" 
+        -style "iconOnly" 
+        -marginWidth 0
+        -marginHeight 1
+        -command "reload = __import__('importlib').reload if hasattr(__import__('importlib'), 'reload') else __import__('imp').reload;import Mutant_Tools;from Mutant_Tools.UI.GamesCrowds import load_games_crowds;reload(load_games_crowds);cGamesCrowds = load_games_crowds.GamesCrowds();cGamesCrowds.show();" 
+        -sourceType "python" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    separator
+        -enable 1
+        -width 32
+        -height 33
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -style "shelf" 
+        -horizontal 0
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
+        -enable 1
+        -width 35
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "ngSkinTools" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.294118 0.431373 0.686275 
+        -align "center" 
+        -label "ngSkinTools" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "ngSkinTools2ShelfIcon.png" 
+        -image1 "ngSkinTools2ShelfIcon.png" 
+        -style "iconOnly" 
+        -marginWidth 0
+        -marginHeight 1
+        -command "import ngSkinTools2; ngSkinTools2.open_ui()" 
+        -sourceType "python" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+
+} 

@@ -1,0 +1,31 @@
+Hi and welcome to Mutant Tools!
+
+Installing tools can be annoying sometimes, but here are a couple of videos to make your life easy:
+https://mutanttools.com/installation-guide/
+
+Basically, just copy and paste the Mutant_Tools folder into your Maya scripts folder:
+/home/user_name/maya/202X/scripts/Mutant_Tools
+
+You can also drag and drop the easy_install.py file into the viewport to install automatically.
+Sometimes it fails, so we usually recommend doing it manually.
+
+We also include a useful shelf file: shelf_Bluetape_Rigging.mel
+Copy and paste it into your shelf prefs folder (make sure Maya is closed):
+/home/user_name/maya/202X/prefs/shelves
+
+Cheers
+Esteban.
+
+#-------------------------------------------------------
+
+Mutant Tools Website:
+https://mutanttools.com/
+
+Mutant Commands Wiki:
+https://mutanttools.com/docs/_build/html/index.html
+
+Personal Website:
+https://renderdemartes.com/
+
+Freelance Website:
+https://bluetaperigging.com/

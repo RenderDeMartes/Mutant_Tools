@@ -21,11 +21,11 @@ reload(PushCorrectives)
 #---------------------------------------------
 
 TAB_FOLDER = '007_Games'
-PYBLOCK_NAME = 'exec_pushcorrectives'
+PYBLOCK_NAME = 'exec_slidepushcorrectives'
 
 #---------------------------------------------
 
-def create_pushcorrectives_block(name = 'PushCorrectives'):
+def create_slidepushcorrectives_block(name = 'slidePushCorrectives'):
     """
     Create a push correctives block with the specified name.
 
@@ -39,7 +39,7 @@ def create_pushcorrectives_block(name = 'PushCorrectives'):
         RuntimeError: If the specified name or direction already exists.
 
     Example:
-        >>> create_pushcorrectives_block(name='MyPushCorrectivesBlock')
+        >>> create_slidepushcorrectives_block(name='MyPushCorrectivesBlock')
         'MyPushCorrectivesBlock'
     """
     # Read name conventions as nc[''] and setup as seup['']
@@ -50,7 +50,7 @@ def create_pushcorrectives_block(name = 'PushCorrectives'):
     for f in PATH_PARTS:
         FOLDER = os.path.join(FOLDER, f)
 
-    MODULE_FILE = os.path.join(os.path.dirname(__file__), '01_PushCorrectives.json')
+    MODULE_FILE = os.path.join(os.path.dirname(__file__), '01_SlidePushCorrectives.json')
     with open(MODULE_FILE) as module_file:
         module = json.load(module_file)
 
@@ -72,7 +72,7 @@ def create_pushcorrectives_block(name = 'PushCorrectives'):
         cmds.warning('Directions already defined.')
         return ''
 
-    block = mt.create_block(name = name, icon = 'PushCorrectives',  attrs = module['attrs'], build_command = module['build_command'], import_command = module['import'])
+    block = mt.create_block(name = name, icon = 'SlidePushCorrectives',  attrs = module['attrs'], build_command = module['build_command'], import_command = module['import'])
     config = cmds.listConnections(block)[1]
     #cmds.getAttr('{}.AttrName'.format(config)) #get attrs from config
     #cmds.getAttr('{}.AttrName'.format(config), asString = True) #for enums
@@ -98,7 +98,7 @@ def create_pushcorrectives_block(name = 'PushCorrectives'):
 
 #-------------------------
 
-def build_pushcorrectives_block():
+def build_slidepushcorrectives_block():
     """
     Build the push correctives block based on the selected block.
 

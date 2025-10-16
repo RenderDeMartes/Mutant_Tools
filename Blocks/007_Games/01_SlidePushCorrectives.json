@@ -1,0 +1,16 @@
+{
+    "Name": "SlidePushCorrectives",
+    "Description": "Block dedicated to create Slide Push Correctives System ",
+    "Icon": "PushCorrectives.png",
+    "Enable": "True", 
+    "python_file": "exec_slidepushcorrectives.py",
+    "import": "import exec_slidepushcorrectives",
+    "imp.reload": "reload(exec_slidepushcorrectives)",
+    "exec_command": "exec_slidepushcorrectives.create_slidepushcorrectives_block()",
+    "build_command": "exec_slidepushcorrectives.build_slidepushcorrectives_block()",
+    "attrs": {
+        "SetParent_string": "Spine_Base_Bnd", 
+        "Direction_string": "front,back,inner,outer",
+        "Help_string": "Provide a Bnd joint as Parent, separate the space switches with a ','"
+    }
+}

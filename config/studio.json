@@ -1,24 +1,3 @@
-{ "shows":
-          {"AG":[
-               "ricardo",
-               "sebastian",
-               "alejandra",
-               "brisa",
-               "luis"
-                ],
+{ "shows": ""
 
-          "SP":[
-               "carlos",
-               "cesar",
-               "gaston",
-               "alejandro",
-               "jean",
-               "max"
-
-               ],
-
-            "Duck":[
-               "esteban"
-               ]
-          }
 }
