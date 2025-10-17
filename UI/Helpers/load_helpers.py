@@ -896,7 +896,7 @@ class HelperUI(QtMutantWindow.Qt_Mutant):
 	def show_this(self, show_list, local_grp=None):
 		match_found = False
 		for i in show_list:
-			ad = cmds.listRelatives(i, ad=True)
+			ad = cmds.listRelatives(i, ad=True) or []
 			cmds.select(i)
 			sel = cmds.ls(sl=True)
 			for s in sel+ad:
