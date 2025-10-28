@@ -191,6 +191,8 @@ def build_quadspine_block():
     ik_clusters = []
     ik_ctrls = []
     ik_roots = []
+    ik_clusters_root = []
+    ik_clusters_auto = []
 
     for num in range(len(ik_nums)):
         if num == 0 or num+1 == len(ik_nums):
@@ -201,6 +203,9 @@ def build_quadspine_block():
             size = ctrl_size*0.75
         cmds.select('{}.cv[{}]'.format(spine_cv, num))
         cluster = cmds.cluster(n='{}_{}{}'.format(name, num, nc['cluster']))[1]
+        root, auto = mt.root_grp(input=cluster, autoRoot=True)
+        ik_clusters_root.append(root)
+        ik_clusters_auto.append(auto)
         ik_clusters.append(cluster)
         ctrl = mt.curve(input=cluster,
                         type=ctrl_shape,
@@ -211,7 +216,12 @@ def build_quadspine_block():
 
         mt.assign_color(color=ik_color)
         root_grp = mt.root_grp()[0]
-        mt.match(root_grp, cluster, r=True, t=True)
+        if num == 0:
+            mt.match(root_grp, spine_joints[1], r=True, t=True)
+        elif num+1 == len(ik_nums):
+            mt.match(root_grp, spine_joints[-2], r=True, t=True)
+        else:
+            mt.match(root_grp, cluster, r=True, t=True)
         cmds.parentConstraint(ctrl, cluster, mo=True)
         ik_ctrls.append(ctrl)
         ik_roots.append(root_grp)
@@ -453,7 +463,7 @@ def build_quadspine_block():
     cmds.parent(clean_ctrl_grp, setup['base_groups']['control'] + nc['group'])
 
     spine_root_main_chain = mt.root_grp(input=spine_joints[0])[0]
-    cmds.parent(spine_root_main_chain, twist_start_joint_root, twist_end_joint_root, ik_spline,spine_cv, ik_clusters,
+    cmds.parent(spine_root_main_chain, twist_start_joint_root, twist_end_joint_root, ik_spline,spine_cv, ik_clusters_root,
                 clean_rig_grp)
     cmds.parent(ik_roots[1], ik_roots[2], cmds.listRelatives(forward_ctrls[0], p=True)[0], cmds.listRelatives(backwards_ctrls[0], p=True)[0],
                 clean_ctrl_grp)
