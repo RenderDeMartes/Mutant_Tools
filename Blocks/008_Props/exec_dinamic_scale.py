@@ -149,7 +149,16 @@ def build_dinamic_scale_block():
         cmds.setAttr('{}.input2Y'.format(inv), -1)
         cmds.setAttr('{}.input2Z'.format(inv), -1)
         cmds.connectAttr('{}.translate'.format(node), '{}.input1'.format(inv))
-        mt.text_curves(name_text=str(i + 1), font='Arial', color='purple')
+        try:
+            mt.text_curves(name_text=str(i + 1), font='Arial', color='purple')
+        except:
+            cmds.select(cl=True)
+            mt.curve(input='',
+                     type='rectangle',
+                     rename=True,
+                     custom_name=True,
+                     name='_{}_Ctrl'.format(i + 1),
+                     size=1)
         shape = cmds.listRelatives('_{}_Ctrl'.format(i + 1), s=True)
 
         for e in shape:
