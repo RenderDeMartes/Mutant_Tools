@@ -30,9 +30,9 @@ author:  Esteban Rodriguez <info@mutanttools.com>
 '''
 import os
 try:
-    import importlib;from importlib import reload
+	import importlib;from importlib import reload
 except:
-    import imp;from imp import reload
+	import imp;from imp import reload
 
 import json
 from pathlib import Path
@@ -102,7 +102,7 @@ class Tools_class(object):
 	def import_configs(self):
 		return import_configs(nc=True, curves=True, setup=True)
 
-	#----------------------------------------------------------------------------------------------------------------			
+	#----------------------------------------------------------------------------------------------------------------
 
 	def check_input(self, func = '', print_input = False):
 		"""	if input is empty uses selection instead, i used to use this but stop becouse != usefull... sorry :)
@@ -117,153 +117,153 @@ class Tools_class(object):
 		"""
 
 		if self.input == '':
-						
+
 			self.input = cmds.ls(sl = True)
 			if (print_input):
 				print ('{} input is selection: {}'.format(func, self.input))
-			
+
 		else:
 			if (print_input):
 				print ('{} input is argument: {}'.format(func, self.input))
 
 		return None
-	
-	#----------------------------------------------------------------------------------------------------------------			
+
+	#----------------------------------------------------------------------------------------------------------------
 	def root_grp(self, input = '', custom = False, custom_name = 'customName', autoRoot = False, replace_nc = False):
 		"""
 		Create groups.
 
 		Args:
-		    input (str): Input string representing the selection. If not specified, the current selection will be used.
-		    custom (bool): Specify if the new group should have a custom name.
-		    custom_name (str): Name of the custom group (requires `custom` to be True).
-		    autoRoot (bool): If True, create two groups instead of one: Root Grp and Auto Grp.
-		    replace_nc (bool): Try to replace the namespace to match the groups' namespace.
+			input (str): Input string representing the selection. If not specified, the current selection will be used.
+			custom (bool): Specify if the new group should have a custom name.
+			custom_name (str): Name of the custom group (requires `custom` to be True).
+			autoRoot (bool): If True, create two groups instead of one: Root Grp and Auto Grp.
+			replace_nc (bool): Try to replace the namespace to match the groups' namespace.
 
 		Returns:
-		    list: List of strings representing the new groups.
+			list: List of strings representing the new groups.
 
 		Notes:
-		    - This method creates groups based on the specified arguments.
-		    - It can create either one group or two groups (Root Grp and Auto Grp).
-		    - If `custom` is True, the group(s) will have a custom name specified by `custom_name`.
-		    - The method handles parenting and constraints to create the groups.
-		    - If `replace_nc` is True, it will attempt to replace the namespace with the groups' namespace.
+			- This method creates groups based on the specified arguments.
+			- It can create either one group or two groups (Root Grp and Auto Grp).
+			- If `custom` is True, the group(s) will have a custom name specified by `custom_name`.
+			- The method handles parenting and constraints to create the groups.
+			- If `replace_nc` is True, it will attempt to replace the namespace with the groups' namespace.
 
 		Examples:
-		    # Create a single group using the current selection
-		    root_grp()
+			# Create a single group using the current selection
+			root_grp()
 
-		    # Create a single group with a custom name
-		    root_grp(custom=True, custom_name='MyGroup')
+			# Create a single group with a custom name
+			root_grp(custom=True, custom_name='MyGroup')
 
-		    # Create two groups (Root Grp and Auto Grp) using the current selection
-		    root_grp(autoRoot=True)
+			# Create two groups (Root Grp and Auto Grp) using the current selection
+			root_grp(autoRoot=True)
 
-		    # Create two groups with a custom name
-		    root_grp(custom=True, custom_name='MyGroup', autoRoot=True)
+			# Create two groups with a custom name
+			root_grp(custom=True, custom_name='MyGroup', autoRoot=True)
 
-		    # Create groups and replace the namespace
-		    root_grp(replace_nc=True)
+			# Create groups and replace the namespace
+			root_grp(replace_nc=True)
 		"""
 
 		#Check input
 		if input != '':
 			self.input = [input]
-			
-		else:	
+
+		else:
 			self.input = input
 
 		self.check_input('root_grp')
 
 		#Group to have something to work after the command
 		groups = []
-		
+
 		for i in self.input:
-			
-			if autoRoot == True:           
+
+			if autoRoot == True:
 				group_names = [self.nc['root'], self.nc['auto']]
 			else:
-				group_names = [self.nc['offset']]				
+				group_names = [self.nc['offset']]
 
 			if custom == True:
-				group_names = [custom_name]      
+				group_names = [custom_name]
 
 			if custom and autoRoot:
 				group_names = [self.nc['root'], self.nc['auto'],custom_name]
-				
+
 			for name in group_names:
-				
+
 				cmds.select(i)
 				father = cmds.listRelatives(i, p =1)
-				
+
 				#Null group as parent in same xform
 				group_zero = cmds.group(em=1, n = '{}{}'.format(i,name) + self.nc['group'])
 				cmds.delete(cmds.parentConstraint(i,group_zero, mo =0))
-			  
+
 				cmds.parent(i,group_zero)
-				
+
 				#if they have upper nodes, put them inside
-				if father :cmds.parent(group_zero, father) 
+				if father :cmds.parent(group_zero, father)
 				cmds.select(group_zero)
-				
-				#Remove Nameconventions		
+
+				#Remove Nameconventions
 				if (replace_nc):
 					try:group_zero = self.replace_name(input = '', search = self.nc['ctrl'], replace = '', hi = False)
 					except:pass
-					
-					try:group_zero = self.replace_name(input = '', search = self.nc['joint'], replace = '', hi = False)
-					except:pass	
-				
-				#return this groups				
-				groups.append(group_zero)     
-				
-		return groups    
 
-	#----------------------------------------------------------------------------------------------------------------		
-	
+					try:group_zero = self.replace_name(input = '', search = self.nc['joint'], replace = '', hi = False)
+					except:pass
+
+				#return this groups
+				groups.append(group_zero)
+
+		return groups
+
+	#----------------------------------------------------------------------------------------------------------------
+
 	def replace_name(self, input = '', search = '', replace = '', hi = False):
 		"""
 		Replace names in the selection. Works nicely to change names in hierarchies.
 
 		Args:
-		    input (str): Input string representing the selection. If not specified, the current selection will be used.
-		    search (str): String to search for in the names.
-		    replace (str): String to replace the matched search string with.
-		    hi (bool): True if the change should be applied to the entire hierarchy.
+			input (str): Input string representing the selection. If not specified, the current selection will be used.
+			search (str): String to search for in the names.
+			replace (str): String to replace the matched search string with.
+			hi (bool): True if the change should be applied to the entire hierarchy.
 
 		Returns:
-		    list: List of new names.
+			list: List of new names.
 
 		Notes:
-		    - This function replaces occurrences of the `search` string with the `replace` string in the selection.
-		    - If `input` != specified, it will use the current selection.
-		    - If `hi` is True, the replacement will be applied to the entire hierarchy under each selected item.
+			- This function replaces occurrences of the `search` string with the `replace` string in the selection.
+			- If `input` != specified, it will use the current selection.
+			- If `hi` is True, the replacement will be applied to the entire hierarchy under each selected item.
 
 		Examples:
-		    # Replace 'old' with 'new' in the current selection
-		    replace_name(search='old', replace='new')
+			# Replace 'old' with 'new' in the current selection
+			replace_name(search='old', replace='new')
 
-		    # Replace 'old' with 'new' in a specific item
-		    replace_name(input='item1', search='old', replace='new')
+			# Replace 'old' with 'new' in a specific item
+			replace_name(input='item1', search='old', replace='new')
 
-		    # Replace 'old' with 'new' in the entire hierarchy under each selected item
-		    replace_name(search='old', replace='new', hi=True)
+			# Replace 'old' with 'new' in the entire hierarchy under each selected item
+			replace_name(search='old', replace='new', hi=True)
 		"""
 
 		if hi ==True:
 
 			mel.eval( 'searchReplaceNames {} {} "hierarchy"'.format(search, replace))
 			cmds.select(hi = True)
-	
+
 		else:
 			mel.eval( 'searchReplaceNames {} {} "selected"'.format(search, replace))
-	
-	
+
+
 		return cmds.ls(sl = True)
 
 	#----------------------------------------------------------------------------------------------------------------
-	
+
 	def assign_color(self, input = '', color = 'lightBlue'):
 		"""
 		Assign a color to the desired transform.
@@ -295,17 +295,17 @@ class Tools_class(object):
 
 		if input != '':
 			self.input = [input]
-			
-		else:	
-			self.input = input	
-			
-		self.check_input('assing_color')		
-		
+
+		else:
+			self.input = input
+
+		self.check_input('assing_color')
+
 		colors = {  'red':       13,
 					'blue':       6,
 					'white':     16,
 					'purple':     9,
-					'green':     14, 
+					'green':     14,
 					'lightBlue': 18,
 					'yellow':    17,
 					'pink':      20,
@@ -313,7 +313,7 @@ class Tools_class(object):
 					'orange':    21 }
 
 		color_num = colors[color]
-		
+
 		for obj in self.input:
 			cmds.setAttr ('{}.overrideEnabled'.format(obj), 1)
 			cmds.setAttr('{}.overrideRGBColors'.format(obj), 0)
@@ -325,29 +325,29 @@ class Tools_class(object):
 		Assign an RGB color or HSV color to the desired transform(s).
 
 		Args:
-		    input (str or list): Input string or list representing the selection. If not specified, the current selection
-		                         will be used.
-		    color (list): List of RGB or HSV values representing the color to assign.
-		    hsv (bool): True if the color values are in HSV format, False if they are in RGB format.
+			input (str or list): Input string or list representing the selection. If not specified, the current selection
+								 will be used.
+			color (list): List of RGB or HSV values representing the color to assign.
+			hsv (bool): True if the color values are in HSV format, False if they are in RGB format.
 
 		Returns:
-		    None
+			None
 
 		Notes:
-		    - This function assigns an RGB or HSV color to the transform(s) specified in the input.
-		    - If `input` != specified, it will use the current selection.
-		    - The `color` parameter should be a list of three values representing the color channels (R, G, B or H, S, V).
-		    - If `hsv` is True, the `color` parameter is interpreted as HSV values. Otherwise, it is interpreted as RGB values.
+			- This function assigns an RGB or HSV color to the transform(s) specified in the input.
+			- If `input` != specified, it will use the current selection.
+			- The `color` parameter should be a list of three values representing the color channels (R, G, B or H, S, V).
+			- If `hsv` is True, the `color` parameter is interpreted as HSV values. Otherwise, it is interpreted as RGB values.
 
 		Examples:
-		    # Example 1: Assign an RGB color to the current selection
-		    assign_color(color=[1, 0, 0])
+			# Example 1: Assign an RGB color to the current selection
+			assign_color(color=[1, 0, 0])
 
-		    # Example 2: Assign an HSV color to a specific transform
-		    assign_color(input='transform1', color=[0.5, 1, 1], hsv=True)
+			# Example 2: Assign an HSV color to a specific transform
+			assign_color(input='transform1', color=[0.5, 1, 1], hsv=True)
 
-		    # Example 3: Assign an RGB color to multiple transforms
-		    assign_color(input=['transform1', 'transform2'], color=[0, 1, 0.5])
+			# Example 3: Assign an RGB color to multiple transforms
+			assign_color(input=['transform1', 'transform2'], color=[0, 1, 0.5])
 		"""
 
 		if not input:
@@ -370,31 +370,31 @@ class Tools_class(object):
 
 	def smart_assign_color(self, input=''):
 		"""
-        Smartly assign predefined colors based on the input.
+		Smartly assign predefined colors based on the input.
 
-        Args:
-            input (str or list): Input string or list representing the selection. If not specified, the current selection
-                                 will be used.
+		Args:
+			input (str or list): Input string or list representing the selection. If not specified, the current selection
+								 will be used.
 
-        Returns:
-            None
+		Returns:
+			None
 
-        Notes:
-            - This function automatically assigns predefined colors based on the input string.
-            - If `input` != specified, it will use the current selection.
-            - The color assignment is determined based on the prefix of the input string.
-            - If the input starts with the left prefix, it will assign the left color.
-            - If the input starts with the right prefix, it will assign the right color.
-            - Otherwise, it will assign the main color.
+		Notes:
+			- This function automatically assigns predefined colors based on the input string.
+			- If `input` != specified, it will use the current selection.
+			- The color assignment is determined based on the prefix of the input string.
+			- If the input starts with the left prefix, it will assign the left color.
+			- If the input starts with the right prefix, it will assign the right color.
+			- Otherwise, it will assign the main color.
 
-        Examples:
-            # Example 1: Smartly assign color to the current selection
-            smart_assign_color()
+		Examples:
+			# Example 1: Smartly assign color to the current selection
+			smart_assign_color()
 
-            # Example 2: Smartly assign color to a specific transform
-            smart_assign_color(input='transform1')
+			# Example 2: Smartly assign color to a specific transform
+			smart_assign_color(input='transform1')
 
-        """
+		"""
 		if not input:
 			input = cmds.ls(sl=True)
 
@@ -407,7 +407,7 @@ class Tools_class(object):
 
 		self.assign_color(input, color)
 
-	#----------------------------------------------------------------------------------------------------------------					
+	#----------------------------------------------------------------------------------------------------------------
 	def hide_attr(self, input = '', t= False, r = False, s = False, v = False, rotate_order = False, show = False):
 		"""
 		Hide selected attributes or display all attributes if show is True.
@@ -444,15 +444,15 @@ class Tools_class(object):
 
 		if input != '':
 			self.input = [input]
-			
-		else:	
+
+		else:
 			self.input = input
 
 		self.check_input('hide_attr')
-		
+
 		#Axis to hide in selection input
 		axis_to_hide = ['X','Y','Z']
-		
+
 		#hide selected attrs
 		for i in self.input:
 			cmds.select(i)
@@ -460,7 +460,7 @@ class Tools_class(object):
 				for T in self.input:
 					for axis in axis_to_hide:
 						cmds.setAttr('{}.translate{}'.format(T, axis),lock = True, keyable = False, channelBox = False)
-		
+
 			if (r):
 				for R in self.input:
 					for axis in axis_to_hide:
@@ -472,28 +472,28 @@ class Tools_class(object):
 				for S in self.input:
 					for axis in axis_to_hide:
 						cmds.setAttr('{}.scale{}'.format(S, axis),lock = True, keyable = False, channelBox = False)
-		
-				
+
+
 			if (v):
 				for V in self.input:
-					cmds.setAttr('{}.visibility'.format(V),lock = True, keyable = False, channelBox = False)        
+					cmds.setAttr('{}.visibility'.format(V),lock = True, keyable = False, channelBox = False)
 			if (rotate_order):
 				for ro in self.input:
-					cmds.setAttr('{}.RotateOrder'.format(ro),lock = True, keyable = False, channelBox = False)        
-								
-			
+					cmds.setAttr('{}.RotateOrder'.format(ro),lock = True, keyable = False, channelBox = False)
+
+
 			#show and unlock everything
 			if (show):
 				sel=cmds.ls(long=1, sl=1)
 				attrs = ['.tx','.ty','.tz','.rx','.ry','.rz','.sx','.sy','.sz','.v']
-				
+
 				for eachObj in sel:
-					for attr in attrs:	        
+					for attr in attrs:
 						cmds.listAttr(eachObj, ud=1)
 						cmds.setAttr('{}{}'.format(eachObj, attr), k=True)
 						cmds.setAttr('{}{}'.format(eachObj,attr), l=False)
 
-	#----------------------------------------------------------------------------------------------------------------					
+	#----------------------------------------------------------------------------------------------------------------
 
 	def curve(self, input = '', type = 'cube', rename = True, custom_name = False, name = '', size = 1, tag=True, playback=True):
 		"""
@@ -561,10 +561,10 @@ class Tools_class(object):
 		cmds.select(dumb_transform)
 		ctrl = cmds.ls(sl=True)[0]
 		#set name of the curve
-		if (rename): 
+		if (rename):
 			ctrl = cmds.rename(ctrl, '{}{}'.format(sel,self.nc['ctrl']))
-		
-		else:      
+
+		else:
 			ctrl = cmds.rename(ctrl, '{}{}'.format(type,self.nc['ctrl']))
 
 		if (custom_name):
@@ -611,7 +611,7 @@ class Tools_class(object):
 					for shape in shapes:
 						if cmds.attributeQuery('hideOnPlayback', node=shape, exists=True) and cmds.attributeQuery('CtrlPlayback', node=global_ctrl, exists=True):
 							cmds.connectAttr(global_ctrl + '.CtrlPlayback',
-						 					cmds.listRelatives(ctrl, shapes=True)[0] + '.hideOnPlayback')
+											cmds.listRelatives(ctrl, shapes=True)[0] + '.hideOnPlayback')
 
 
 		return ctrl
@@ -621,19 +621,19 @@ class Tools_class(object):
 		Create all curves to generate icons or images quickly.
 
 		Args:
-		    None
+			None
 
 		Returns:
-		    None
+			None
 
 		Notes:
-		    - This function iterates over the `curve_data` list to create all the curves.
-		    - Each curve is created using the `curve` function with the specified type.
-		    - The curve is then renamed to match its type.
+			- This function iterates over the `curve_data` list to create all the curves.
+			- Each curve is created using the `curve` function with the specified type.
+			- The curve is then renamed to match its type.
 
 		Examples:
-		    # Creates all the curves specified in the `curve_data` list.
-		    build_all_curves()
+			# Creates all the curves specified in the `curve_data` list.
+			build_all_curves()
 		"""
 
 		for curve in curve_data:
@@ -646,30 +646,30 @@ class Tools_class(object):
 		"""Change the shape of a curve.
 
 		Args:
-		    input (str): Name of the curve object to modify. If not provided, the currently selected object will be used.
-		    new_shape (str): The new shape type to be applied to the curve.
-		    size (float): Size of the new shape.
+			input (str): Name of the curve object to modify. If not provided, the currently selected object will be used.
+			new_shape (str): The new shape type to be applied to the curve.
+			size (float): Size of the new shape.
 
 		Returns:
-		    bool: False if the new shape or input != specified or if the shapes cannot be retrieved.
-		    bool: True if the curve shape is successfully changed.
+			bool: False if the new shape or input != specified or if the shapes cannot be retrieved.
+			bool: True if the curve shape is successfully changed.
 
 		Raises:
-		    None
+			None
 
 		Notes:
-		    - This function changes the shape of a curve by creating a new curve with the specified `new_shape` and `size`.
-		    - The original curve's shape is replaced with the new shape.
-		    - The `input` parameter specifies the name of the curve object to modify. If not provided, the currently selected object is used.
-		    - The `new_shape` parameter specifies the type of shape to be applied to the curve.
-		    - The `size` parameter specifies the size of the new shape.
+			- This function changes the shape of a curve by creating a new curve with the specified `new_shape` and `size`.
+			- The original curve's shape is replaced with the new shape.
+			- The `input` parameter specifies the name of the curve object to modify. If not provided, the currently selected object is used.
+			- The `new_shape` parameter specifies the type of shape to be applied to the curve.
+			- The `size` parameter specifies the size of the new shape.
 
 		Examples:
-		    # Change the shape of the selected curve to a cube shape with a size of 1.
-		    change_curve_shape(new_shape='cube', size=1)
+			# Change the shape of the selected curve to a cube shape with a size of 1.
+			change_curve_shape(new_shape='cube', size=1)
 
-		    # Change the shape of the curve named 'curve1' to a circle shape with a size of 0.5.
-		    change_curve_shape(input='curve1', new_shape='circle', size=0.5)
+			# Change the shape of the curve named 'curve1' to a circle shape with a size of 0.5.
+			change_curve_shape(input='curve1', new_shape='circle', size=0.5)
 		"""
 
 		if not input:
@@ -708,37 +708,37 @@ class Tools_class(object):
 		"""Create a controller.
 
 		Args:
-		    input (str): Name of the input object. If None, the controller will be created in the world.
-		    name (str): Desired name for the controller. If None, the input name will be used.
-		    shape (str): Desired shape of the controller. See curves.json in the config for available shapes.
-		    color (str): Desired color of the controller.
-		    size (int): Desired size of the controller.
-		    gimbal (bool): If True, creates a gimbal controller under the main controller.
-		    world (bool): If True, creates a world control oriented to the world.
+			input (str): Name of the input object. If None, the controller will be created in the world.
+			name (str): Desired name for the controller. If None, the input name will be used.
+			shape (str): Desired shape of the controller. See curves.json in the config for available shapes.
+			color (str): Desired color of the controller.
+			size (int): Desired size of the controller.
+			gimbal (bool): If True, creates a gimbal controller under the main controller.
+			world (bool): If True, creates a world control oriented to the world.
 
 		Returns:
-		    dict: Dictionary containing the created controllers:
-		        - 'ctrl': Main controller
-		        - 'root': Root group
-		        - 'world': World controller (if world is True)
-		        - 'gimbal': Gimbal controller (if gimbal is True)
+			dict: Dictionary containing the created controllers:
+				- 'ctrl': Main controller
+				- 'root': Root group
+				- 'world': World controller (if world is True)
+				- 'gimbal': Gimbal controller (if gimbal is True)
 
 		Notes:
-		    - This function creates a controller with the specified parameters.
-		    - The 'input' parameter specifies the name of the object where the controller will be created. If None, it will be created in the world.
-		    - The 'name' parameter specifies the desired name for the controller. If None, the input name will be used.
-		    - The 'shape' parameter specifies the desired shape of the controller.
-		    - The 'color' parameter specifies the desired color of the controller.
-		    - The 'size' parameter specifies the desired size of the controller.
-		    - The 'gimbal' parameter determines whether a gimbal controller should be created under the main controller.
-		    - The 'world' parameter determines whether a world controller should be created oriented to the world.
+			- This function creates a controller with the specified parameters.
+			- The 'input' parameter specifies the name of the object where the controller will be created. If None, it will be created in the world.
+			- The 'name' parameter specifies the desired name for the controller. If None, the input name will be used.
+			- The 'shape' parameter specifies the desired shape of the controller.
+			- The 'color' parameter specifies the desired color of the controller.
+			- The 'size' parameter specifies the desired size of the controller.
+			- The 'gimbal' parameter determines whether a gimbal controller should be created under the main controller.
+			- The 'world' parameter determines whether a world controller should be created oriented to the world.
 
 		Examples:
-		    # Create a cube-shaped controller named 'ctrl1' with the default color, size of 1, and gimbal and world controllers.
-		    controller(input='object1', name='ctrl1', shape='cube', color=setup['main_color'], size=1, gimbal=True, world=True)
+			# Create a cube-shaped controller named 'ctrl1' with the default color, size of 1, and gimbal and world controllers.
+			controller(input='object1', name='ctrl1', shape='cube', color=setup['main_color'], size=1, gimbal=True, world=True)
 
-		    # Create a sphere-shaped controller in the world with the default color, size of 2, and no gimbal or world controllers.
-		    controller(shape='sphere', color=setup['main_color'], size=2, gimbal=False, world=False)
+			# Create a sphere-shaped controller in the world with the default color, size of 2, and no gimbal or world controllers.
+			controller(shape='sphere', color=setup['main_color'], size=2, gimbal=False, world=False)
 		"""
 
 		if not input:
@@ -851,34 +851,34 @@ class Tools_class(object):
 		"""Create a switch between 3 chains for IK/FK setups.
 
 		Args:
-		    this (str): IK joint (can be any transform).
-		    that (str): FK joint (can be any transform).
-		    main (str): Main joint that switches between.
-		    attr (str): Attribute to use as a switch parent.
+			this (str): IK joint (can be any transform).
+			that (str): FK joint (can be any transform).
+			main (str): Main joint that switches between.
+			attr (str): Attribute to use as a switch parent.
 
 		Returns:
-		    None
+			None
 
 		Notes:
-		    - This function creates a switch between IK and FK chains in an IK/FK setup.
-		    - The 'this' parameter represents the IK joint.
-		    - The 'that' parameter represents the FK joint.
-		    - The 'main' parameter represents the IK main joint that switches between IK and FK.
-		    - The 'attr' parameter specifies the attribute to use as a switch parent.
-		    - The function creates a parent constraint and a scale constraint for the 'main' joint, and connects them to the switch attribute.
-		    - It also creates a reverse node to invert the switch attribute's value for the parent constraint.
-		    - The resulting setup allows switching between IK and FK by controlling the 'attr' attribute.
+			- This function creates a switch between IK and FK chains in an IK/FK setup.
+			- The 'this' parameter represents the IK joint.
+			- The 'that' parameter represents the FK joint.
+			- The 'main' parameter represents the IK main joint that switches between IK and FK.
+			- The 'attr' parameter specifies the attribute to use as a switch parent.
+			- The function creates a parent constraint and a scale constraint for the 'main' joint, and connects them to the switch attribute.
+			- It also creates a reverse node to invert the switch attribute's value for the parent constraint.
+			- The resulting setup allows switching between IK and FK by controlling the 'attr' attribute.
 
 		Examples:
-		    # Create a switch between IK and FK chains using 'switchAttr' as the switch parent attribute.
-		    switch_constraints(this='ikJoint', that='fkJoint', main='ikMainJoint', attr='switchAttr')
+			# Create a switch between IK and FK chains using 'switchAttr' as the switch parent attribute.
+			switch_constraints(this='ikJoint', that='fkJoint', main='ikMainJoint', attr='switchAttr')
 		"""
 
 
 		#create shortest parentContraint
 		contraint = cmds.parentConstraint(this,that, main, mo =True)[0]
 		cmds.setAttr('{}.interpType'.format(contraint), 2)
-		
+
 		#Create nodes and connect to switch
 		reverse= cmds.shadingNode('reverse', asUtility = True, n = '{}_Reverse'.format(this))
 
@@ -889,7 +889,7 @@ class Tools_class(object):
 
 		#connect scale
 		cmds.scaleConstraint(this,that, main, mo =True)[0]
-		
+
 		#Create nodes and connect to switch
 		reverse2 = cmds.shadingNode('reverse', asUtility = True, n = '{}_Reverse'.format(this))
 
@@ -904,27 +904,27 @@ class Tools_class(object):
 		"""Create a switch between 3 chains for IK/FK setups using color blending.
 
 		Args:
-		    this (str): IK joint (can be any transform).
-		    that (str): FK joint (can be any transform).
-		    main (str): Main joint that switches between.
-		    attr (str): Attribute to use as a switch parent.
+			this (str): IK joint (can be any transform).
+			that (str): FK joint (can be any transform).
+			main (str): Main joint that switches between.
+			attr (str): Attribute to use as a switch parent.
 
 		Returns:
-		    None
+			None
 
 		Notes:
-		    - This function creates a switch between IK and FK chains in an IK/FK setup using color blending.
-		    - The 'this' parameter represents the IK joint.
-		    - The 'that' parameter represents the FK joint.
-		    - The 'main' parameter represents the IK main joint that switches between IK and FK.
-		    - The 'attr' parameter specifies the attribute to use as a switch parent.
-		    - The function creates blendColors nodes to blend the transform attributes of 'this' and 'that' based on the switch attribute.
-		    - It connects the blended color outputs to the corresponding transform attributes of the 'main' joint.
-		    - The resulting setup allows switching between IK and FK by controlling the 'attr' attribute.
+			- This function creates a switch between IK and FK chains in an IK/FK setup using color blending.
+			- The 'this' parameter represents the IK joint.
+			- The 'that' parameter represents the FK joint.
+			- The 'main' parameter represents the IK main joint that switches between IK and FK.
+			- The 'attr' parameter specifies the attribute to use as a switch parent.
+			- The function creates blendColors nodes to blend the transform attributes of 'this' and 'that' based on the switch attribute.
+			- It connects the blended color outputs to the corresponding transform attributes of the 'main' joint.
+			- The resulting setup allows switching between IK and FK by controlling the 'attr' attribute.
 
 		Examples:
-		    # Create a switch between IK and FK chains using 'switchAttr' as the switch parent attribute.
-		    switch_blend_colors(this='ikJoint', that='fkJoint', main='MainJoint', attr='switchAttr')
+			# Create a switch between IK and FK chains using 'switchAttr' as the switch parent attribute.
+			switch_blend_colors(this='ikJoint', that='fkJoint', main='MainJoint', attr='switchAttr')
 		"""
 
 		attrs = ['translate', 'rotate', 'scale']
@@ -1018,41 +1018,41 @@ class Tools_class(object):
 		return '{}.{}'.format(input, name)
 
 	#----------------------------------------------------------------------------------------------------------------
-	
+
 	def new_enum(self, input= '', name = 'switch', enums = 'Hide:Show', keyable=True, long_name=False, default=0):
 		"""Create a new enum attribute on a transform.
 
 		Args:
-		    input (str): Name of the transform to add the attribute to. If not specified, it will use the currently selected object.
-		    name (str): Name of the new attribute.
-		    enums (str): Enumerated values separated by a colon (':').
-		    keyable (bool): Specifies if the attribute should be keyable (True by default).
-		    long_name (bool): Specifies if the attribute name should include the full path (False by default).
-		    default: Default value for the attribute.
+			input (str): Name of the transform to add the attribute to. If not specified, it will use the currently selected object.
+			name (str): Name of the new attribute.
+			enums (str): Enumerated values separated by a colon (':').
+			keyable (bool): Specifies if the attribute should be keyable (True by default).
+			long_name (bool): Specifies if the attribute name should include the full path (False by default).
+			default: Default value for the attribute.
 
 		Returns:
-		    str: Name of the created attribute.
+			str: Name of the created attribute.
 
 		Notes:
-		    - This function adds a new enum attribute to the specified transform.
-		    - If 'input' != specified, the function will use the currently selected object.
-		    - The 'name' parameter specifies the name of the new attribute.
-		    - The 'enums' parameter defines the enumerated values for the attribute, separated by a colon (':').
-		    - The 'keyable' parameter determines if the attribute is keyable or not.
-		    - The 'long_name' parameter specifies if the attribute name should include the full path or not.
-		    - The 'default' parameter sets the default value of the attribute.
-		    - The function sets the added attribute as a channel box attribute.
-		    - If 'keyable' is set to True, the attribute is also set as keyable.
+			- This function adds a new enum attribute to the specified transform.
+			- If 'input' != specified, the function will use the currently selected object.
+			- The 'name' parameter specifies the name of the new attribute.
+			- The 'enums' parameter defines the enumerated values for the attribute, separated by a colon (':').
+			- The 'keyable' parameter determines if the attribute is keyable or not.
+			- The 'long_name' parameter specifies if the attribute name should include the full path or not.
+			- The 'default' parameter sets the default value of the attribute.
+			- The function sets the added attribute as a channel box attribute.
+			- If 'keyable' is set to True, the attribute is also set as keyable.
 
 		Examples:
-		    # Create a new enum attribute named 'switch' with values 'Hide' and 'Show'.
-		    new_enum(input='myObject', name='switch', enums='Hide:Show')
+			# Create a new enum attribute named 'switch' with values 'Hide' and 'Show'.
+			new_enum(input='myObject', name='switch', enums='Hide:Show')
 
-		    # Create a new enum attribute named 'status' with values 'Pending', 'Processing', and 'Completed',
-		    # and make it keyable and a long name attribute.
-		    new_enum(input='myObject', name='status', enums='Pending:Processing:Completed', keyable=True, long_name=True)
+			# Create a new enum attribute named 'status' with values 'Pending', 'Processing', and 'Completed',
+			# and make it keyable and a long name attribute.
+			new_enum(input='myObject', name='status', enums='Pending:Processing:Completed', keyable=True, long_name=True)
 		"""
-		
+
 		#add new attr as float
 		cmds.select(input)
 		cmds.addAttr(input, ln = name, at = 'enum', en = enums, dv=default)
@@ -1070,7 +1070,7 @@ class Tools_class(object):
 		return '{}.{}'.format(input, name)
 
 	#----------------------------------------------------------------------------------------------------------------
-	
+
 	def new_boolean(self, input= '', name = 'bool', dv = 'True'):
 		"""Create a new boolean attribute on a transform.
 
@@ -1149,26 +1149,26 @@ class Tools_class(object):
 		"""Create a string attribute to store information.
 
 		Args:
-		    input (str): Name of the transform to add the attribute to. If not specified, it will use the currently selected object.
-		    name (str): Name of the attribute.
-		    string (str): Initial string value for the attribute.
+			input (str): Name of the transform to add the attribute to. If not specified, it will use the currently selected object.
+			name (str): Name of the attribute.
+			string (str): Initial string value for the attribute.
 
 		Returns:
-		    str: Name of the created attribute.
+			str: Name of the created attribute.
 
 		Notes:
-		    - This function creates a string attribute that can be used to store information.
-		    - If 'input' != specified, the function will use the currently selected object.
-		    - The 'name' parameter specifies the name of the attribute.
-		    - The 'string' parameter sets the initial string value for the attribute.
-		    - The function returns the name of the created attribute.
+			- This function creates a string attribute that can be used to store information.
+			- If 'input' != specified, the function will use the currently selected object.
+			- The 'name' parameter specifies the name of the attribute.
+			- The 'string' parameter sets the initial string value for the attribute.
+			- The function returns the name of the created attribute.
 
 		Examples:
-		    # Create a string attribute named 'name' with the initial value 'John'.
-		    string_attr(input='myObject', name='name', string='John')
+			# Create a string attribute named 'name' with the initial value 'John'.
+			string_attr(input='myObject', name='name', string='John')
 
-		    # Create a string attribute named 'description' with the initial value 'Object description'.
-		    string_attr(input='myObject', name='description', string='Object description')
+			# Create a string attribute named 'description' with the initial value 'Object description'.
+			string_attr(input='myObject', name='description', string='Object description')
 		"""
 
 		cmds.addAttr(input, ln=name, dt="string")
@@ -1182,36 +1182,36 @@ class Tools_class(object):
 		"""Connect the rotate order attribute of the input object(s) to an attribute in the controller object.
 
 		Args:
-		    input (str or list): Name of the transform(s) to connect the rotate order attribute. If not specified, it will use the currently selected object(s).
-		    object (str): Name of the controller object where the rotate order attribute will be connected.
+			input (str or list): Name of the transform(s) to connect the rotate order attribute. If not specified, it will use the currently selected object(s).
+			object (str): Name of the controller object where the rotate order attribute will be connected.
 
 		Returns:
-		    str: Name of the rotate order attribute in the controller object.
+			str: Name of the rotate order attribute in the controller object.
 
 		Notes:
-		    - This function connects the rotate order attribute of the input object(s) to an attribute in the controller object.
-		    - If 'input' != specified, the function will use the currently selected object(s).
-		    - The 'object' parameter specifies the name of the controller object where the rotate order attribute will be connected.
-		    - If the rotate order attribute already exists in the controller object, it will be made keyable.
-		    - If the rotate order attribute doesn't exist in the controller object, it will be created as an enum attribute with the rotate order values.
-		    - The function returns the name of the rotate order attribute in the controller object.
+			- This function connects the rotate order attribute of the input object(s) to an attribute in the controller object.
+			- If 'input' != specified, the function will use the currently selected object(s).
+			- The 'object' parameter specifies the name of the controller object where the rotate order attribute will be connected.
+			- If the rotate order attribute already exists in the controller object, it will be made keyable.
+			- If the rotate order attribute doesn't exist in the controller object, it will be created as an enum attribute with the rotate order values.
+			- The function returns the name of the rotate order attribute in the controller object.
 
 		Examples:
-		    # Connect the rotate order attribute of 'object1' to the 'RotateOrder' attribute of 'controller'.
-		    connect_rotate_order(input='object1', object='controller')
+			# Connect the rotate order attribute of 'object1' to the 'RotateOrder' attribute of 'controller'.
+			connect_rotate_order(input='object1', object='controller')
 
-		    # Connect the rotate order attribute of multiple objects to the 'RotationOrder' attribute of 'controller'.
-		    connect_rotate_order(input=['object1', 'object2', 'object3'], object='controller')
+			# Connect the rotate order attribute of multiple objects to the 'RotationOrder' attribute of 'controller'.
+			connect_rotate_order(input=['object1', 'object2', 'object3'], object='controller')
 		"""
 
 
 		if input != '':
 			self.input = [input]
-			
-		else:	
+
+		else:
 			self.input = input
 
-		self.check_input('connect_rotate_order')	
+		self.check_input('connect_rotate_order')
 
 		#create the attr if it doesnt exists
 		'''
@@ -1238,34 +1238,34 @@ class Tools_class(object):
 		"""Duplicate the hierarchy with clean names, ensuring no duplicated names in the duplicated hierarchy.
 
 		Args:
-		    input (str or list): Name of the transform(s) to duplicate. If not specified, it will use the currently selected object(s).
-		    hi (bool): If True, duplicate the entire hierarchy. If False, duplicate only the selected object(s).
-		    search (str): String to search for in the names of the duplicated objects.
-		    replace (str): String to replace the search string with in the names of the duplicated objects.
+			input (str or list): Name of the transform(s) to duplicate. If not specified, it will use the currently selected object(s).
+			hi (bool): If True, duplicate the entire hierarchy. If False, duplicate only the selected object(s).
+			search (str): String to search for in the names of the duplicated objects.
+			replace (str): String to replace the search string with in the names of the duplicated objects.
 
 		Returns:
-		    str: Name of the duplicated[0] transform.
+			str: Name of the duplicated[0] transform.
 
 		Notes:
-		    - This function duplicates the specified hierarchy or selected objects.
-		    - The duplicated objects have their names cleaned to ensure no duplicated names in the duplicated hierarchy.
-		    - The 'input' parameter specifies the name of the transform(s) to duplicate. If not specified, it will use the currently selected object(s).
-		    - The 'hi' parameter controls whether to duplicate the entire hierarchy (hi=True) or only the selected objects (hi=False).
-		    - The 'search' parameter is used to find the string to be replaced in the names of the duplicated objects.
-		    - The 'replace' parameter is the string that will replace the search string in the names of the duplicated objects.
-		    - The function returns the name of the duplicated[0] transform.
+			- This function duplicates the specified hierarchy or selected objects.
+			- The duplicated objects have their names cleaned to ensure no duplicated names in the duplicated hierarchy.
+			- The 'input' parameter specifies the name of the transform(s) to duplicate. If not specified, it will use the currently selected object(s).
+			- The 'hi' parameter controls whether to duplicate the entire hierarchy (hi=True) or only the selected objects (hi=False).
+			- The 'search' parameter is used to find the string to be replaced in the names of the duplicated objects.
+			- The 'replace' parameter is the string that will replace the search string in the names of the duplicated objects.
+			- The function returns the name of the duplicated[0] transform.
 
 		Examples:
-		    # Duplicate the hierarchy with clean names, replacing '_Jnt' with '_dup'.
-		    duplicate_change_names(input='rootJoint', hi=True, search='_Jnt', replace='_dup')
+			# Duplicate the hierarchy with clean names, replacing '_Jnt' with '_dup'.
+			duplicate_change_names(input='rootJoint', hi=True, search='_Jnt', replace='_dup')
 
-		    # Duplicate the selected objects with clean names, replacing '_Ctrl' with '_Copy'.
-		    duplicate_change_names(input=['ctrl1', 'ctrl2', 'ctrl3'], hi=False, search='_Ctrl', replace='_Copy')
+			# Duplicate the selected objects with clean names, replacing '_Ctrl' with '_Copy'.
+			duplicate_change_names(input=['ctrl1', 'ctrl2', 'ctrl3'], hi=False, search='_Ctrl', replace='_Copy')
 		"""
-		
+
 		if input == '':
 			self.input = cmds.ls(sl=True)
-		
+
 		else:
 			self.input = input
 
@@ -1279,7 +1279,7 @@ class Tools_class(object):
 		new_transforms = cmds.duplicate()
 
 		return_list = []
-		
+
 		new_name = self.replace_name(new_transforms,search, replace, hi)
 		return_list.append(new_name)
 
@@ -1340,11 +1340,11 @@ class Tools_class(object):
 		#get correct input
 		if input != '':
 			self.input = [input]
-			
-		else:	
+
+		else:
 			self.input = input
 
-		self.check_input('bounding_cube')	
+		self.check_input('bounding_cube')
 
 		# get children of input
 		original = self.input[0]
@@ -1360,7 +1360,7 @@ class Tools_class(object):
 		#move vertex to start and move vertex to finish
 		#input_position = cmds.xform(original, q = True, m= True, ws = True)
 		#input_child_position = cmds.xform(children, q = True, m= True, ws = True)
-		
+
 		#createl cluster per side to locate them
 		#make sure it works on any axis
 		if axis == 'X':
@@ -1372,12 +1372,12 @@ class Tools_class(object):
 			cmds.select('{}.cv[5:6]'.format(cube),'{}.cv[9:14]'.format(cube))
 			up_side = cmds.cluster()
 			cmds.select('{}.cv[0:4]'.format(cube),'{}.cv[7:8]'.format(cube),'{}.cv[15]'.format(cube))
-			down_side = cmds.cluster()			
-		else: 
+			down_side = cmds.cluster()
+		else:
 			cmds.select('{}.cv[2:3]'.format(cube),'{}.cv[8:9]'.format(cube),'{}.cv[11:12]'.format(cube), '{}.cv[12:15]'.format(cube))
 			up_side = cmds.cluster()
 			cmds.select('{}.cv[0:1]'.format(cube),'{}.cv[4:7]'.format(cube),'{}.cv[10:11]'.format(cube))
-			down_side = cmds.cluster()	
+			down_side = cmds.cluster()
 
 		#move locator to correct pos
 		self.match(up_side, original, r = False)
@@ -1426,11 +1426,11 @@ class Tools_class(object):
 		#get correct input as list
 		if input != '':
 			self.input = [input]
-			
-		else:	
+
+		else:
 			self.input = input
 
-		self.check_input('shape_with_attr')	
+		self.check_input('shape_with_attr')
 
 		#print initial statement
 		print ('adding loc to {}'.format(self.input))
@@ -1476,32 +1476,32 @@ class Tools_class(object):
 		return obj_name + self.nc['locator'] + '.' + attr_name
 
 
-	#----------------------------------------------------------------------------------------------------------------				
+	#----------------------------------------------------------------------------------------------------------------
 	def text_curves(self, name_text = 'Name', font = 'Arial', color = setup['main_color']):
 		"""Create text curves.
 
 		This function creates text curves based on the specified parameters.
 
 		Args:
-		    name_text (str): Text to be curved.
-		    font (str): Desired font.
-		    color (str): Color of the curves.
+			name_text (str): Text to be curved.
+			font (str): Desired font.
+			color (str): Color of the curves.
 
 		Returns:
-		    str: Name of the created curve.
+			str: Name of the created curve.
 
 		Notes:
-		    - The 'name_text' parameter specifies the text to be curved.
-		    - The 'font' parameter determines the desired font.
-		    - The 'color' parameter specifies the color of the curves.
-		    - The function returns the name of the created curve.
+			- The 'name_text' parameter specifies the text to be curved.
+			- The 'font' parameter determines the desired font.
+			- The 'color' parameter specifies the color of the curves.
+			- The function returns the name of the created curve.
 
 		Examples:
-		    # Create text curves with the specified name, font, and color.
-		    text_curves(name_text='Hello', font='Arial', color='red')
+			# Create text curves with the specified name, font, and color.
+			text_curves(name_text='Hello', font='Arial', color='red')
 
-		    # Create text curves with default parameters.
-		    text_curves()
+			# Create text curves with default parameters.
+			text_curves()
 		"""
 
 		#BASED ON OLD ONE in RDM Tools V1 (Sorry for the spanish i just copy paste it)
@@ -1522,7 +1522,8 @@ class Tools_class(object):
 		#print Lista
 		Shape = Lista[1]
 		#print Shape
-		cmds.delete ('makeTextCurves1')
+		if cmds.objExists('makeTextCurves1'):
+			cmds.delete ('makeTextCurves1')
 		for Curva in Lista:
 			if cmds.objectType(str(Curva), isType='nurbsCurve'):
 				#print Curva
@@ -1572,9 +1573,9 @@ class Tools_class(object):
 		#cmds.rename(name_text + self.nc['curve'])
 
 		return name_text + self.nc['curve']
-			
 
-	#----------------------------------------------------------------------------------------------------------------		
+
+	#----------------------------------------------------------------------------------------------------------------
 
 	def curve_between(self, start, end):
 		"""Create a 1D curve between two transforms.
@@ -1597,43 +1598,43 @@ class Tools_class(object):
 			curve_between('joint1', 'joint2')
 		"""
 
-		#create a simple linear curve between 2 joints 
-	   
+		#create a simple linear curve between 2 joints
+
 		pos_a = cmds.xform(start, q=True,t=True, ws=True)
-		pos_b = cmds.xform(end, q=True,t=True, ws=True) 
-	   
+		pos_b = cmds.xform(end, q=True,t=True, ws=True)
+
 		crv = cmds.curve(d=1, p=[pos_a,pos_b], k=[0,1], n = '{}{}'.format(start, self.nc['curve']))
-	   
+
 		return crv
 
-	#----------------------------------------------------------------------------------------------------------------		
-	
+	#----------------------------------------------------------------------------------------------------------------
+
 	def nurbs_between(self, start, end):
 		"""Create a NURBS plane between two transforms.
 
 		This function creates a NURBS plane between two transforms.
 
 		Args:
-		    start (str): Name of the start transform.
-		    end (str): Name of the end transform.
+			start (str): Name of the start transform.
+			end (str): Name of the end transform.
 
 		Returns:
-		    str: Name of the created NURBS plane.
+			str: Name of the created NURBS plane.
 
 		Notes:
-		    - The created NURBS plane is a single-span surface.
-		    - The NURBS plane is created with a degree of 1 (linear).
-		    - The surface is created without construction history.
-		    - Two clusters are created to control the surface CVs and are positioned on the start and end transforms.
+			- The created NURBS plane is a single-span surface.
+			- The NURBS plane is created with a degree of 1 (linear).
+			- The surface is created without construction history.
+			- Two clusters are created to control the surface CVs and are positioned on the start and end transforms.
 
 		Examples:
-		    # Create a NURBS plane between two transforms.
-		    nurbs_between('joint1', 'joint2')
+			# Create a NURBS plane between two transforms.
+			nurbs_between('joint1', 'joint2')
 		"""
 
 		#creates a nurbs plane between 2 transforms
-		
-		name = start.replace(self.nc['joint'], '') +'_'+ end.replace(self.nc['joint'], '')+ self.nc['nurb']  
+
+		name = start.replace(self.nc['joint'], '') +'_'+ end.replace(self.nc['joint'], '')+ self.nc['nurb']
 		surface = cmds.nurbsPlane(d = 1, ch = False, n = name)[0]
 		temp_cluster1 = cmds.cluster('{}.cv[0:1][0]'.format(surface))
 		temp_cluster2 = cmds.cluster('{}.cv[0:1][1]'.format(surface))
@@ -1641,11 +1642,11 @@ class Tools_class(object):
 		cmds.delete(cmds.parentConstraint(start,temp_cluster1, mo =False))
 		cmds.delete(cmds.parentConstraint(end,temp_cluster2, mo =False))
 		cmds.delete(surface, constructionHistory = True)
-		
-		return surface
-		
 
-	#----------------------------------------------------------------------------------------------------------------		
+		return surface
+
+
+	#----------------------------------------------------------------------------------------------------------------
 
 	def nurbs_between_trio(self, start, mid, end):
 		"""Create a NURBS plane between three transforms.
@@ -1653,22 +1654,22 @@ class Tools_class(object):
 		This function creates a NURBS plane between three transforms.
 
 		Args:
-		    start (str): Name of the start transform.
-		    mid (str): Name of the mid transform.
-		    end (str): Name of the end transform.
+			start (str): Name of the start transform.
+			mid (str): Name of the mid transform.
+			end (str): Name of the end transform.
 
 		Returns:
-		    str: Name of the created NURBS plane.
+			str: Name of the created NURBS plane.
 
 		Notes:
-		    - The created NURBS plane is a single-span surface.
-		    - The NURBS plane is created with a degree of 1 (linear).
-		    - The surface is created without construction history.
-		    - Three clusters are created to control the surface CVs, positioned on the start, mid, and end transforms.
+			- The created NURBS plane is a single-span surface.
+			- The NURBS plane is created with a degree of 1 (linear).
+			- The surface is created without construction history.
+			- Three clusters are created to control the surface CVs, positioned on the start, mid, and end transforms.
 
 		Examples:
-		    # Create a NURBS plane between three transforms.
-		    nurbs_between_trio('joint1', 'joint2', 'joint3')
+			# Create a NURBS plane between three transforms.
+			nurbs_between_trio('joint1', 'joint2', 'joint3')
 		"""
 		#creates a nurbs plane between 3 transforms
 
@@ -1685,7 +1686,7 @@ class Tools_class(object):
 
 		return surface
 
-	#----------------------------------------------------------------------------------------------------------------		
+	#----------------------------------------------------------------------------------------------------------------
 
 	def create_ik_spline_twist(self, start, end, curve):
 		"""Create an IK spline based on two joints and one curve.
@@ -1694,20 +1695,20 @@ class Tools_class(object):
 		and a curve as the spline shape.
 
 		Args:
-		    start (str): Name of the first joint.
-		    end (str): Name of the last joint.
-		    curve (str): Name of the curve to be used as the spline shape.
+			start (str): Name of the first joint.
+			end (str): Name of the last joint.
+			curve (str): Name of the curve to be used as the spline shape.
 
 		Returns:
-		    dict: A dictionary containing the names of the IK handle, effector, and curve.
+			dict: A dictionary containing the names of the IK handle, effector, and curve.
 
 		Notes:
-		    - The IK handle is created using the 'ikSplineSolver' solver type.
-		    - The created IK handle, effector, and curve are renamed using the specified naming conventions.
+			- The IK handle is created using the 'ikSplineSolver' solver type.
+			- The created IK handle, effector, and curve are renamed using the specified naming conventions.
 
 		Examples:
-		    # Create an IK spline handle between two joints using a curve.
-		    create_ik_spline_twist('joint1', 'joint2', 'curve1')
+			# Create an IK spline handle between two joints using a curve.
+			create_ik_spline_twist('joint1', 'joint2', 'curve1')
 		"""
 
 		# ik spline solver
@@ -1725,7 +1726,7 @@ class Tools_class(object):
 
 		return {'ikHandle': ikSpline, 'effector': effector_spline, 'curve': spline_curve}
 
-	#----------------------------------------------------------------------------------------------------------------		
+	#----------------------------------------------------------------------------------------------------------------
 
 	def connect_md_node(self, in_x1 = '', in_x2 = 1.0, out_x = '', mode = 'mult', name = '', force = False, vector = False):
 		"""Create a multiplyDivide node to connect inputs and outputs.
@@ -1843,18 +1844,18 @@ class Tools_class(object):
 		If no transform node is specified, it will create a joint.
 
 		Args:
-		    transform (str): Name of the transform node to position (optional).
-		    name (str): Name of the transform node or joint (default: 'Temp').
+			transform (str): Name of the transform node to position (optional).
+			name (str): Name of the transform node or joint (default: 'Temp').
 
 		Returns:
-		    None
+			None
 
 		Notes:
-		    - If no transform node is specified, it will create a joint with the given name.
-		    - The transform node will be positioned based on the selected objects.
+			- If no transform node is specified, it will create a joint with the given name.
+			- The transform node will be positioned based on the selected objects.
 		"""
 
-		
+
 		cluster = cmds.cluster(n='temp'+self.nc['cluster'])
 		print (cluster)
 		#cluster = cmds.rename(cluster,str(cluster[1]).replace('Handle', self.nc['cluster_handle']))
@@ -1863,7 +1864,7 @@ class Tools_class(object):
 		if transform == '':
 			cmds.select(cl=True)
 			transform = cmds.joint(n=name+self.nc['joint'])
-		
+
 		#put input in desire location
 		cmds.delete(cmds.parentConstraint(cluster[1], transform, mo=False))
 
@@ -1898,7 +1899,7 @@ class Tools_class(object):
 			start = sel[0]
 			end = sel[1]
 
-		#create line 
+		#create line
 		cv = self.curve_between(start=start, end=end)
 		cv = cmds.rename(cv, '{}_{}{}{}'.format(start,end,self.nc['connected'], self.nc['curve']))
 
@@ -1934,28 +1935,28 @@ class Tools_class(object):
 		This function allows you to lock or unlock nodes. If no input is specified, it will use the currently selected nodes.
 
 		Args:
-		    input (str or List[str]): Node or list of nodes to lock or unlock (optional).
-		    unlock (bool): True to unlock nodes, False to lock nodes.
+			input (str or List[str]): Node or list of nodes to lock or unlock (optional).
+			unlock (bool): True to unlock nodes, False to lock nodes.
 
 		Returns:
-		    None
+			None
 
 		Notes:
-		    - If no input is specified, it will use the currently selected nodes.
-		    - When unlocking nodes, the `lockNode` command is called with `lock=False`.
-		    - When locking nodes, the `lockNode` command is called with `lock=True`.
+			- If no input is specified, it will use the currently selected nodes.
+			- When unlocking nodes, the `lockNode` command is called with `lock=False`.
+			- When locking nodes, the `lockNode` command is called with `lock=True`.
 
 		Example:
-		    # Lock selected nodes
-		    lock_node()
+			# Lock selected nodes
+			lock_node()
 
-		    # Unlock specified nodes
-		    lock_node(['node1', 'node2'], unlock=True)
+			# Unlock specified nodes
+			lock_node(['node1', 'node2'], unlock=True)
 		"""
 
 		if input == '':
 			input = cmds.ls(sl=True)
-		
+
 		for node in input:
 			if unlock ==True:
 				cmds.lockNode(node, lock=False)
@@ -1971,27 +1972,27 @@ class Tools_class(object):
 		This function adds a double linear node between two nodes to replace an existing connection.
 
 		Args:
-		    input (str): Node or attribute to replace the connection (optional).
-		    attr (str): Attribute to connect the double linear node (optional).
-		    name (str): Name of the double linear node (optional).
+			input (str): Node or attribute to replace the connection (optional).
+			attr (str): Attribute to connect the double linear node (optional).
+			name (str): Name of the double linear node (optional).
 
 		Returns:
-		    str: Name of the double linear node.
+			str: Name of the double linear node.
 
 		Notes:
-		    - If no input is specified, it will use the selection.
-		    - The function creates a double linear node using the 'addDoubleLinear' shading node.
-		    - It retrieves the connection to replace based on the input node and attribute.
-		    - The connection is established between the retrieved connection and the input of the double linear node.
-		    - The output of the double linear node is connected to the specified attribute of the input node.
-		    - The double linear node is added to the rig container.
+			- If no input is specified, it will use the selection.
+			- The function creates a double linear node using the 'addDoubleLinear' shading node.
+			- It retrieves the connection to replace based on the input node and attribute.
+			- The connection is established between the retrieved connection and the input of the double linear node.
+			- The output of the double linear node is connected to the specified attribute of the input node.
+			- The double linear node is added to the rig container.
 
 		Example:
-		    # Replace connection with a double linear node
-		    replace_connection_with_doublelinear()
+			# Replace connection with a double linear node
+			replace_connection_with_doublelinear()
 
-		    # Replace connection with a double linear node on a specific attribute
-		    replace_connection_with_doublelinear(input='node1', attr='translateX', name='DLNode')
+			# Replace connection with a double linear node on a specific attribute
+			replace_connection_with_doublelinear(input='node1', attr='translateX', name='DLNode')
 		"""
 
 		double_linear = cmds.shadingNode('addDoubleLinear', asUtility=True, name = name)
@@ -2011,23 +2012,23 @@ class Tools_class(object):
 		This function writes the specified data to a JSON file.
 
 		Args:
-		    path (str): Path to the folder where the JSON file will be located (use '\\' to define folders).
-		    json_file (str): Name of the JSON file.
-		    data (dict): Data to be saved in the JSON file.
+			path (str): Path to the folder where the JSON file will be located (use '\\' to define folders).
+			json_file (str): Name of the JSON file.
+			data (dict): Data to be saved in the JSON file.
 
 		Returns:
-		    str: Full path of the JSON file.
+			str: Full path of the JSON file.
 
 		Notes:
-		    - The function uses the `os.path.join()` function to construct the full path of the JSON file.
-		    - The data is written to the file using the `json.dump()` function.
-		    - The `ensure_ascii`, `indent`, and `sort_keys` parameters are set to `False`, `4`, and `False` respectively
-		      for better formatting and readability of the JSON file.
-		    - The full path of the JSON file is returned.
+			- The function uses the `os.path.join()` function to construct the full path of the JSON file.
+			- The data is written to the file using the `json.dump()` function.
+			- The `ensure_ascii`, `indent`, and `sort_keys` parameters are set to `False`, `4`, and `False` respectively
+			  for better formatting and readability of the JSON file.
+			- The full path of the JSON file is returned.
 
 		Example:
-		    # Write data to a JSON file
-		    write_json("C:\\data", "output.json", {"name": "John", "age": 30})
+			# Write data to a JSON file
+			write_json("C:\\data", "output.json", {"name": "John", "age": 30})
 		"""
 		write_json = os.path.join(path, json_file)
 
@@ -2239,36 +2240,36 @@ class Tools_class(object):
 			cmds.addAttr(ctrl, ln=attr_name, proxy="{}.{}".format(attrs_from, attr), at="enum",
 						 en=cmds.attributeQuery(attr, node=attrs_from, listEnum=True)[0],
 						 )
-	
+
 	def create_softmod(self, vertex, name='soft_mod'):
 
 		"""Creates a softMod deformer and adds a custom control structure for controlling the strength, radius, and falloff directions.
 
-		    Args:
-		        vertex (str): Vertex that the softMod will be created on.
-		        name (str, optional): Name for the softMod. Defaults to 'soft_mod'.
+			Args:
+				vertex (str): Vertex that the softMod will be created on.
+				name (str, optional): Name for the softMod. Defaults to 'soft_mod'.
 
-		    Returns:
-		        list: SoftMod, SoftMod handle, control, pivot control offset.
+			Returns:
+				list: SoftMod, SoftMod handle, control, pivot control offset.
 
-		    Notes:
-		        - The softMod deformer is created on the specified vertex.
-		        - A custom control structure is added to control the softMod's attributes.
-		        - The control structure includes a main control, a pivot control, and a locator.
-		        - Additional attributes are added to the main control to control the strength, radius, and falloff directions.
+			Notes:
+				- The softMod deformer is created on the specified vertex.
+				- A custom control structure is added to control the softMod's attributes.
+				- The control structure includes a main control, a pivot control, and a locator.
+				- Additional attributes are added to the main control to control the strength, radius, and falloff directions.
 
-		    Examples:
-		        1. Create a basic softMod:
-		            soft_mod, soft_mod_handle, ctrl, pivot_ctrl_offset = create_softmod("pSphere1.vtx[0]", name="sphere_softMod")
+			Examples:
+				1. Create a basic softMod:
+					soft_mod, soft_mod_handle, ctrl, pivot_ctrl_offset = create_softmod("pSphere1.vtx[0]", name="sphere_softMod")
 
-		        2. Create a softMod with custom attributes:
-		            soft_mod, soft_mod_handle, ctrl, pivot_ctrl_offset = create_softmod("pSphere1.vtx[0]", name="sphere_softMod")
-		            # Add custom attributes
-		            self.new_attr(ctrl, 'customAttr1', 0, 1, 1)
-		            self.new_attr(ctrl, 'customAttr2', -10, 10, 0)
-		            self.new_boolean(ctrl, 'customAttr3', 'True')
-		    """
-		
+				2. Create a softMod with custom attributes:
+					soft_mod, soft_mod_handle, ctrl, pivot_ctrl_offset = create_softmod("pSphere1.vtx[0]", name="sphere_softMod")
+					# Add custom attributes
+					self.new_attr(ctrl, 'customAttr1', 0, 1, 1)
+					self.new_attr(ctrl, 'customAttr2', -10, 10, 0)
+					self.new_boolean(ctrl, 'customAttr3', 'True')
+			"""
+
 
 		cmds.select(vertex)
 		soft_mod, soft_mod_handle = cmds.softMod(vertex, n=name+self.nc['softMod'], falloffMasking=0, falloffAroundSelection=0)
@@ -2276,7 +2277,7 @@ class Tools_class(object):
 		cmds.setAttr('{}.visibility'.format(soft_mod_handle), 0)
 
 		# prepare controller structure
-		
+
 		ctrl = self.controller(soft_mod_handle, name, 'cube', world=False, gimbal=False)
 		offset = ctrl['root'][0]
 		ctrl = ctrl['ctrl']
@@ -2377,7 +2378,7 @@ class Tools_class(object):
 			position = get_position('pSphere1')
 		"""
 		return cmds.xform(obj,ws=True,q=True,t=True)
-	
+
 	def get_orient(self, obj):
 		"""Returns the world space orientation of the specified object.
 
@@ -2520,22 +2521,22 @@ class Tools_class(object):
 		"""Applies a rivet constraint to the specified faces.
 
 		Args:
-		    faces (list[str]): Optional. The faces to which the rivet constraint should be applied.
-		        If not specified, an error is raised.
+			faces (list[str]): Optional. The faces to which the rivet constraint should be applied.
+				If not specified, an error is raised.
 
 		Returns:
-		    list[str]: A list of the rivets objects after applying the rivet constraint.
+			list[str]: A list of the rivets objects after applying the rivet constraint.
 
 		Raises:
-		    RuntimeError: If no faces are provided.
+			RuntimeError: If no faces are provided.
 
 		Notes:
-		    This function applies a rivet constraint to the specified faces in Maya. It uses the
-		    Maya internal nodes and the uvpin.node_interface module to create the rivet.
+			This function applies a rivet constraint to the specified faces in Maya. It uses the
+			Maya internal nodes and the uvpin.node_interface module to create the rivet.
 
 		Example:
-		    >>> rivet_constraint(['pCube1.f[0]', 'pCube1.f[1]'])
-		    ['pCube1.f[0]', 'pCube1.f[1]']
+			>>> rivet_constraint(['pCube1.f[0]', 'pCube1.f[1]'])
+			['pCube1.f[0]', 'pCube1.f[1]']
 
 		"""
 		if not faces:
@@ -2618,16 +2619,16 @@ class Tools_class(object):
 				grp = grps
 			"""
 
-			#Connecting selected parameters. 
+			#Connecting selected parameters.
 			if rotation:
 				cmds.connectAttr('{}.r'.format(driver_ctrl),'{}.r'.format(grp),f=True)
 			if translation:
 				cmds.connectAttr('{}.t'.format(driver_ctrl),'{}.t'.format(grp),f=True)
 			if scaling:
 				cmds.connectAttr('{}.s'.format(driver_ctrl),'{}.s'.format(grp),f=True)
-			
+
 			offset_grps.append(grps)
-		
+
 		return offset_grps
 
 #tool = Tools_class()
