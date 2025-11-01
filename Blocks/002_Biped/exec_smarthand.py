@@ -91,6 +91,23 @@ def build_smarthand_block():
     #build ------------------------------------------------------
     for side_guide in to_build:
 
+        #prefix for right hand
+        if str(side_guide).startswith(nc['right']):
+            hand_grp = f'{side_guide}_Palm_Jnt_Ctrl_Grp'
+
+            constraint = cmds.listRelatives(hand_grp, type='constraint', children=True)
+            targets = cmds.parentConstraint(constraint, query=True, targetList=True)
+            restore_parent_contraint = targets[0]
+
+            cmds.delete(constraint)
+
+            guide_parent = cmds.listRelatives(hand_grp, parent=True)[0]
+            # Zero out rotation and scale on the parent
+            for attr in ['rx', 'ry', 'rz', 'sx', 'sy', 'sz']:
+                if cmds.objExists(f'{guide_parent}.{attr}'):
+                    cmds.setAttr(f'{guide_parent}.{attr}', 0 if 'r' in attr else 1)
+
+
         #smart select the colors
         if str(side_guide).startswith(nc['left']):
             color = setup['left_color']
@@ -115,14 +132,10 @@ def build_smarthand_block():
         root_grp, auto_grp = mt.root_grp(autoRoot=True)
         mt.match(root_grp, '{}_Middle_03_Ctrl'.format(side_guide), r=True, t=True)
         cmds.parent(root_grp, setup['base_groups']['control'] + nc['group'])
-        if side_guide.startswith(nc['right']):
-            cmds.move(-5,0,0, auto_grp, r=True)
-        else:
-            cmds.move(5,0,0, auto_grp, r=True)
+        cmds.move(5,0,0, auto_grp, r=True)
 
 
         mt.hide_attr(main_ctrl, t=True, s=True, rotate_order=True)
-        cmds.parentConstraint('{}_Wrist_Ctrl'.format(side_guide), root_grp, mo=True)
 
         for finger in fingers:
             for num in range(1, 4):
@@ -163,18 +176,24 @@ def build_smarthand_block():
 
                 mt.connect_md_node(in_x1=main_ctrl + '.rotateX',
                                    in_x2=value,
-                                   out_x=spread + '.rotateZ'
-                                   , mode='mult', name='', force=True)
+                                   out_x=spread + '.rotateZ',
+                                   mode='mult', name='', force=True)
 
-                #Reset Right Roots
-                for grp in [curl_root, spread_root, side_to_side_root]:
-                    if grp.startswith(nc['right']):
-                        cmds.setAttr('{}.rx'.format(grp), 0)
-                        cmds.setAttr('{}.ry'.format(grp), 0)
-                        cmds.setAttr('{}.rz'.format(grp), 0)
-                        cmds.setAttr('{}.sx'.format(grp), 1)
+        # prefix for right hand
+        if str(side_guide).startswith(nc['right']):
+            # Zero out rotation and scale on the parent
+            for attr in ['rx', 'sx', 'sy', 'sz']:
+                if cmds.objExists(f'{guide_parent}.{attr}'):
+                    cmds.setAttr(f'{guide_parent}.{attr}', 180 if 'r' in attr else -1)
+            cmds.parentConstraint(restore_parent_contraint, hand_grp, mo=True)
 
-    # build complete ----------------------------------------------------    
+            miror_jnt_grp = mt.mirror_group(root_grp, world=True)
+            cmds.parent(miror_jnt_grp, setup['base_groups']['control'] + nc['group'])
+
+        cmds.parentConstraint('{}_Wrist_Ctrl'.format(side_guide), root_grp, mo=True)
+
+
+    # build complete ----------------------------------------------------
     print ('Build {} Success'.format(block))
 
 
