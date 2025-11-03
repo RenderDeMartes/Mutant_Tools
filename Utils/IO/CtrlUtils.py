@@ -581,6 +581,9 @@ class Ctrls(object):
             for shape in ctrl_shapes:
                 shape_info_dict = {}
 
+                #Add alwaysDrawOnTop
+                shape_info_dict["alwaysDrawOnTop"] = cmds.getAttr("{}.alwaysDrawOnTop".format(shape))
+
                 # 5) For each shape get if they have color override and if they do record which color it is.
                 if cmds.getAttr("{}.overrideEnabled".format(shape)) == 0:
                     shape_info_dict["shapeOverrideEnabled"] = False
@@ -671,6 +674,14 @@ class Ctrls(object):
                                 shape_info = shape_dict[shape]
 
                                 # Checking if the transform's drawing override is on.
+                                try:
+                                    if shape_info["alwaysDrawOnTop"]:
+                                        cmds.setAttr(
+                                            "{}.alwaysDrawOnTop".format(current_ctrl_shapes[current_shape_number]),
+                                            True)
+                                except Exception as e:
+                                    cmds.warning(e)
+
                                 if shape_info["shapeOverrideEnabled"]:
                                     # If Yes then turn it on.
                                     cmds.setAttr("{}.overrideEnabled".format(current_ctrl_shapes[current_shape_number]), True)
