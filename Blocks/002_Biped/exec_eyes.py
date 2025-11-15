@@ -84,7 +84,7 @@ def build_eyes_block():
     #cmds.getAttr('{}.AttrName'.format(config), asString = True)
 
     #orient the joints
-    mt.orient_joint(input = guide)
+    #mt.orient_joint(input = guide)
     new_guide = mt.duplicate_and_remove_guides(guide)
     name = guide.replace(nc['guide'], '')
     if nc['left'] in name:
