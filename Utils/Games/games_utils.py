@@ -260,6 +260,19 @@ class Games(object):
 		cmds.parentConstraint('Global_Ctrl', 'Root_Bnd', mo=True)
 		cmds.scaleConstraint('Global_Ctrl', 'Root_Skl', mo=True)
 
+		# check if any skl still without parent
+		skl_joints = cmds.ls('*_Skl')
+		for skl in skl_joints:
+			if skl == 'Root_Skl':
+				continue
+			game_parent = cmds.listRelatives(skl, p=True)[0]
+			if 'transform' in game_parent:
+				cmds.select(game_parent)
+				try:
+					mel.eval("ungroup;")
+				except:
+					pass
+
 		print('Finish Creating Base Game Skeleton')
 
 	def create_skeleton_grp(self):

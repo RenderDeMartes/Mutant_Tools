@@ -80,10 +80,18 @@ def build_convertbody_block():
     block = block[0]
     name = block.replace(nc['module'],'')
 
+    try:
+        attr_constraint = cmds.getAttr('{}.Constraint'.format(config))
+    except:
+        attr_constraint = True
+
     import Mutant_Tools.Utils.Games.games_utils as games_utils
     reload(games_utils)
     cGames = games_utils.Games()
-    cGames.create_biped_game_joints(do_skins=False, map='reparent_bnd_map.json', do_scale=True, scale_constraint=False, segmentScaleCompensate=False)
+    cGames.create_biped_game_joints(do_skins=False, map='reparent_bnd_map.json',
+                                    do_scale=True,
+                                    scale_constraint=attr_constraint,
+                                    segmentScaleCompensate=False)
 
     print ('Build {} Success'.format(block))
 

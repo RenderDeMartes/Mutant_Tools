@@ -10,6 +10,7 @@
     "build_command": "exec_convertbody.build_convertbody_block()",
     "attrs": {
         "Engine_enum": "unity:unreal",
+        "Constraint_bool": "True",
         "Help_string": "Will convert Mutant Body Template to Games"
     }
 }
