@@ -153,7 +153,8 @@ def build_chain_block():
                                     curve_type=cmds.getAttr('{}.CtrlType'.format(config), asString=True),
                                     scale=True,
                                     twist_axis=cmds.getAttr('{}.TwistAxis'.format(config), asString=True),
-                                    world_orient=False)
+                                    world_orient=False,
+                                    direct_connect=True)
 
             if is_right_side:
                 name = name.replace(nc['left'], nc['right'])
@@ -163,7 +164,14 @@ def build_chain_block():
             ctrl_root = cmds.listRelatives(fk_system[0], p=1)[0]
             cmds.parent(ctrl_root, clean_ctrl_grp)
             print('fk system = {}'.format(fk_system))
-            cmds.parent(guide, clean_rig_grp)
+
+            guide_parent = cmds.listRelatives(guide,p=True)
+            if guide_parent:
+                parent_of_guide_parent = cmds.listRelatives(guide_parent[0],p=True)
+                if parent_of_guide_parent:
+                    cmds.parent(parent_of_guide_parent, clean_rig_grp)
+            else:
+                cmds.parent(guide, clean_rig_grp)
 
             #use this locator in case parent is set to new locator
             if cmds.getAttr('{}.SetParent'.format(config)) == 'new_locator':
@@ -173,14 +181,17 @@ def build_chain_block():
                     loc_name = loc_name.replace(nc['left'], nc['right'])
 
                 block_parent = cmds.spaceLocator( n = loc_name)
-                cmds.parentConstraint(block_parent, ctrl_root, maintainOffset=1)
+
             else:
                 block_parent = cmds.getAttr('{}.SetParent'.format(config))
                 if is_right_side:
                     block_parent = block_parent.replace(nc['left'], nc['right'])
-                cmds.parentConstraint(block_parent, ctrl_root, maintainOffset=1)
-                cmds.scaleConstraint(block_parent, ctrl_root, maintainOffset=1)
 
+
+            cmds.parentConstraint(block_parent, ctrl_root, maintainOffset=1)
+            cmds.scaleConstraint(block_parent, ctrl_root, maintainOffset=1)
+            cmds.parentConstraint(block_parent, clean_rig_grp, maintainOffset=1)
+            cmds.scaleConstraint(block_parent, clean_rig_grp, maintainOffset=1)
 
             # auto rotate
 
@@ -190,9 +201,10 @@ def build_chain_block():
             # bind joints
             bind_joints = []
             for i, joint in enumerate(guide_hierarchy):
-                bind_joint = cmds.duplicate(joint, n=joint.replace(nc['joint'], nc['joint_bind']), parentOnly=1)[0]
+                bind_joint = cmds.joint(n=joint.replace(nc['joint'], nc['joint_bind']))
                 cmds.parentConstraint(joint, bind_joint)
-                cmds.scaleConstraint(joint, bind_joint)
+                cmds.scaleConstraint(joint, bind_joint, mo=True)
+                #cmds.connectAttr(f"{joint}.scale", f"{bind_joint}.scale")
                 bind_joints.append(bind_joint)
                 if i > 0:
                     cmds.parent(bind_joint, bind_joints[i-1])

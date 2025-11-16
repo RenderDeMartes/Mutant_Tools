@@ -260,6 +260,22 @@ class Games(object):
 		cmds.parentConstraint('Global_Ctrl', 'Root_Bnd', mo=True)
 		cmds.scaleConstraint('Global_Ctrl', 'Root_Skl', mo=True)
 
+		# check if any skl still without parent
+		skl_joints = cmds.ls('*_Skl')
+		for skl in skl_joints:
+			if skl == 'Root_Skl':
+				continue
+			game_parent = cmds.listRelatives(skl, p=True)[0]
+			if 'transform' in game_parent:
+				cmds.select(game_parent)
+				try:
+					mel.eval("ungroup;")
+				except:
+					pass
+
+		if not scale_constraint:
+			status = check_if_negative_scales()
+
 		print('Finish Creating Base Game Skeleton')
 
 	def create_skeleton_grp(self):
@@ -1060,6 +1076,68 @@ def create_game_joint_based_on_bnd(bnd_joint, do_scale, scale_constraint=True, s
 
 
 	return game_joint
+
+
+def check_if_negative_scales():
+	axes = ['X', 'Y', 'Z']
+	joints = cmds.ls('*_Skl', type='joint')
+
+	changed = True  # we will loop until no more changes happen
+
+	while changed:
+		changed = False
+
+		for joint in joints:
+			# Check if this joint has any negative scale
+			neg_axes = []
+			for axis in axes:
+				val = cmds.getAttr(f"{joint}.scale{axis}")
+				if val < 0:
+					neg_axes.append(axis)
+
+			# If it has no negatives, skip
+			if not neg_axes:
+				continue
+
+			# Find input connections to scale
+			input_conn = cmds.listConnections(f"{joint}.scale", plugs=True) or []
+
+			# If no connection, skip (or unlock attributes first if needed)
+			if not input_conn:
+				print(f"[WARNING] {joint} has negative scale but no incoming connections.")
+				continue
+			else:
+				input_conn = input_conn[0]
+
+			print(f"Fixing: {joint}, axes: {neg_axes}")
+			print(f"Input connections: {input_conn}")
+
+			# Build multiplier vector (1, 1, 1 but flip the axes)
+			# Example: if negative on Z → [1,1,-1]
+			mult = [1, 1, 1]
+			for axis in neg_axes:
+				if axis == 'X': mult[0] = -1 * mult[0]
+				if axis == 'Y': mult[1] = -1 * mult[1]
+				if axis == 'Z': mult[2] = -1 * mult[2]
+
+			md_node = cmds.shadingNode('multiplyDivide', asUtility=1)
+			cmds.setAttr(str(md_node) + '.operation', 1)
+
+			cmds.connectAttr(input_conn+'X', '{}.input1X'.format(md_node), f=True)
+			cmds.connectAttr(input_conn+'Y', '{}.input1Y'.format(md_node), f=True)
+			cmds.connectAttr(input_conn+'Z', '{}.input1Z'.format(md_node), f=True)
+
+			cmds.connectAttr('{}.output.outputX'.format(md_node), f"{joint}.scaleX")
+			cmds.connectAttr('{}.output.outputY'.format(md_node), f"{joint}.scaleY")
+			cmds.connectAttr('{}.output.outputZ'.format(md_node), f"{joint}.scaleZ")
+
+			cmds.setAttr('{}.input2.input2X'.format(md_node), mult[0])
+			cmds.setAttr('{}.input2.input2Y'.format(md_node), mult[1])
+			cmds.setAttr('{}.input2.input2Z'.format(md_node), mult[2])
+
+			changed = True  # run loop again because children may now flip
+
+	print("✔ All negative scales fixed!")
 
 
 def disconnect_attrs(obj=""):
