@@ -90,7 +90,7 @@ class Kinematics_class(tools.Tools_class):
 	def __init__(self):
 		super(Kinematics_class, self).__init__()
 	
-	def fk_chain(self, input = '', size = 1, color = setup['main_color'], curve_type = setup['fk_ctrl'], scale = True, twist_axis = setup['twist_axis'], world_orient=False, direct_connect = False) :
+	def fk_chain(self, input = '', size = 1, color = setup['main_color'], curve_type = setup['fk_ctrl'], scale = True, twist_axis = setup['twist_axis'], world_orient=False, direct_connect = False, direct_scale=False) :
 		"""
 		Create a FK Chain with selected joints.
 
@@ -183,7 +183,10 @@ class Kinematics_class(tools.Tools_class):
 			else:
 				cmds.parentConstraint(fk_controller,bone, mo=True) #parent Ctrl to Bone
 				if scale == True:
-					cmds.scaleConstraint(fk_controller,bone, mo=True) #parent Ctrl to Bone
+					if direct_scale:
+						cmds.connectAttr('{}.scale'.format(fk_controller), '{}.scale'.format(bone))
+					else:
+						cmds.scaleConstraint(fk_controller,bone, mo=True) #parent Ctrl to Bone
 
 			#Organize a bit
 			self.assign_color(fk_controller, color)
