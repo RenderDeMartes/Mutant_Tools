@@ -66,7 +66,7 @@ def create_chain_block(name = 'Chain'):
     jnt=None
     for i in range(int(amount)):
         parent = jnt
-        jnt = mt.create_joint_guide(name=name+'_'+letters[i]+nc['guide'])
+        jnt = mt.create_joint_guide(name=name+'_'+letters[i])
         cmds.move(i,0,0)
         if parent:
             cmds.parent(jnt, parent)
