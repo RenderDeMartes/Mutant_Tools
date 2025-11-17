@@ -154,7 +154,7 @@ def build_chain_block():
                                     scale=True,
                                     twist_axis=cmds.getAttr('{}.TwistAxis'.format(config), asString=True),
                                     world_orient=False,
-                                    direct_connect=True)
+                                    direct_scale=True)
 
             if is_right_side:
                 name = name.replace(nc['left'], nc['right'])
