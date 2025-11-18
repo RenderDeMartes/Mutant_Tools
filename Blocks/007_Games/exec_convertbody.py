@@ -83,7 +83,7 @@ def build_convertbody_block():
     try:
         attr_constraint = cmds.getAttr('{}.Constraint'.format(config))
     except:
-        attr_constraint = True
+        attr_constraint = False
 
     import Mutant_Tools.Utils.Games.games_utils as games_utils
     reload(games_utils)
