@@ -342,7 +342,7 @@ def build_spine_block():
                        worldUpObject=twist_locators[4])
 
     # Share attrs locator
-    all_controllers = [chest_ctrl, belly_ctrl, base_ctrl, base_ik_ctrl] + spine_ik_ctrls
+    all_controllers = [chest_ctrl_fk, chest_ctrl, belly_ctrl, base_ctrl, base_ik_ctrl] + spine_ik_ctrls
     for ctrl in all_controllers:
         cmds.select(ctrl)
         if cmds.objectType(ctrl) == 'transform':
@@ -362,7 +362,7 @@ def build_spine_block():
     for ctrl in [spine_ik_ctrls[0], spine_ik_ctrls[-1], spine_ik_ctrls[1], spine_ik_ctrls[-2]]:
         shape = cmds.listRelatives(ctrl, s=True)[0]
         cmds.connectAttr(show_extra_ik_ctrls_attr, '{}.v'.format(shape), f=True)
-    for ctrl in [belly_ctrl, base_ctrl]:
+    for ctrl in [belly_ctrl, base_ctrl, chest_ctrl_fk]:
         shape = cmds.listRelatives(ctrl, s=True)[0]
         cmds.connectAttr(show_fk_ctrls_attr, '{}.v'.format(shape))
 

@@ -327,7 +327,7 @@ def build_spine_block():
                        worldUpObject=twist_locators[4])
 
     # Share attrs locator
-    all_controllers = [chest_ctrl, belly_ctrl, base_ctrl, base_ik_ctrl] + spine_ik_ctrls
+    all_controllers = [chest_ctrl_fk, chest_ctrl, belly_ctrl, base_ctrl, base_ik_ctrl] + spine_ik_ctrls
     for ctrl in all_controllers:
         cmds.select(ctrl)
         if cmds.objectType(ctrl) == 'transform':

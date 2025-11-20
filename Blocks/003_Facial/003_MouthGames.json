@@ -1,0 +1,20 @@
+{
+    "Name": "Mouth",
+    "Description": "Create Jan and Lips System for Games",
+    "Icon": "MouthGames.png",
+    "Enable": "True",
+    "python_file": "exec_mouthgames.py",
+    "import": "import exec_mouthgames",
+    "imp.reload": "reload(exec_mouthgames)",
+    "exec_command": "exec_mouthgames.create_mouthgames_block()",
+    "build_command": "exec_mouthgames.build_mouthgames_block()",
+    "attrs": {
+        "SetParent_string": "new_locator",
+        "SetAttrsPosition_string": "new_locator",
+        "Mirror_enum": "True:False:Right_Only",
+        "SetUpperEdge_string": "",
+        "SetLowerEdge_string": "",
+        "CtrlSize_float": 4,
+        "Help_string" : "Create Jaw and Lips Mouth Rig\n"
+    }
+}
