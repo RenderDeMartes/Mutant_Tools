@@ -11,7 +11,6 @@
     "attrs": {
         "SetParent_string": "new_locator",
         "SetAttrsPosition_string": "new_locator",
-        "Mirror_enum": "True:False:Right_Only",
         "SetUpperEdge_string": "",
         "SetLowerEdge_string": "",
         "TweakCtrlsAmount_float": 7,
