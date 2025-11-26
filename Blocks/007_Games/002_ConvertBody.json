@@ -11,6 +11,6 @@
     "attrs": {
         "Engine_enum": "unity:unreal",
         "scale_enum": "None:Direct:Constraints",
-        "Help_string": "Will convert Mutant Body Template to Games"
+        "Help_string": "Will convert Mutant Bnd Joints to Games Skeleton Joints"
     }
 }

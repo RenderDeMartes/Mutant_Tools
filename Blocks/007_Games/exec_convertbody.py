@@ -80,7 +80,11 @@ def build_convertbody_block():
     block = block[0]
     name = block.replace(nc['module'],'')
 
-    scale_attr = cmds.getAttr('{}.scale'.format(config), asString=True)
+
+    if cmds.attributeQuery('scale', n=config, exists=True):
+        scale_attr = cmds.getAttr('{}.scale'.format(config), asString=True)
+    else:
+        scale_attr = False
 
     if scale_attr == 'None':
         do_scale = False

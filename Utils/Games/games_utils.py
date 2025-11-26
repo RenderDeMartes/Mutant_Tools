@@ -228,8 +228,14 @@ class Games(object):
 				bnd_parent = cmds.listRelatives(bnd_parent, p=True)[0]
 			if not bnd_parent.endswith('_Bnd'):
 				continue
-			if cmds.objExists(bnd_parent.replace('_Bnd', '_Skl')):
-				cmds.parent(jnt, bnd_parent.replace('_Bnd', '_Skl'))
+
+			expected_parent = bnd_parent.replace('_Bnd', '_Skl')
+			if cmds.objExists(expected_parent):
+				# get current parent safely
+				current_parent = cmds.listRelatives(jnt, p=True)
+				# if no parent OR parent is different → parent it
+				if not current_parent or current_parent[0] != expected_parent:
+					cmds.parent(jnt, expected_parent)
 
 		#cmds.parent('Root_Skl', w=True)
 
@@ -279,10 +285,12 @@ class Games(object):
 		print('Finish Creating Base Game Skeleton')
 
 	def create_skeleton_grp(self):
+		if cmds.objExists('Skeleton'):
+			return 'Skeleton'
 		skeleton_grp = cmds.group(em=True, n='Skeleton')
 		cmds.parent('Root_Skl', skeleton_grp)
 		cmds.parent(skeleton_grp, 'Mutant_Tools_Grp')
-
+		return skeleton_grp
 
 	def create_game_joint_based_on_bnd(self, bnd_joint, do_scale=True, scale_constraint=True, segmentScaleCompensate=False):
 		return create_game_joint_based_on_bnd(bnd_joint, do_scale, scale_constraint, segmentScaleCompensate)
@@ -1050,6 +1058,10 @@ def convert_lips_to_global(head_parent_target="Head_Bnd"):
 
 
 def create_game_joint_based_on_bnd(bnd_joint, do_scale, scale_constraint=True, segmentScaleCompensate=False):
+
+	if cmds.objExists(bnd_joint.replace('_Bnd', '_Skl')):
+		return bnd_joint.replace('_Bnd', '_Skl')
+
 	game_joint = cmds.joint(
 		n=bnd_joint.replace('_Bnd', '_Skl'))
 	mt.match(game_joint, bnd_joint, t=True, r=True, s=False)
