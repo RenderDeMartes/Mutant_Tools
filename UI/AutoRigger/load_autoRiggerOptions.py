@@ -283,7 +283,7 @@ class AutoRiggerOptions(QtMutantWindow.Qt_Mutant):
 		for j in jsons:
 			with open(j) as block_data:
 				block_data = json.load(block_data)
-			if block_data['import'] == import_cmds:
+			if block_data.get('import') == import_cmds:
 				desire_json = os.path.basename(j)
 				desire_json = desire_json.replace('.json', '')
 				break

@@ -103,15 +103,15 @@ def build_mouthgames_block():
             mouth_center = child
 
         elif 'Jaw' in child:
-            jaw = child
+            jaw_guide = child
 
         elif 'LipUp' in child:
-            lip_up = child
+            lip_up_guide = child
 
         elif 'LipDown' in child:
-            lip_down = child
+            lip_down_guide = child
 
-    for g in [left_orient_lip, mouth_center, jaw, lip_up, lip_down]:
+    for g in [left_orient_lip, mouth_center, jaw_guide, lip_up_guide, lip_down_guide]:
         print("  -", g)
 
     # use this locator in case parent is set to new locator
@@ -133,6 +133,9 @@ def build_mouthgames_block():
         to_build = [name, name.replace(nc['left'], nc['right'])]
 
     def create_lips_system(name, edge, check_curve=True, color ='yellow'):
+
+        num_joints = int(cmds.getAttr('{}.TweakCtrlsAmount'.format(config)))
+        num_ctrls = int(cmds.getAttr('{}.MidCtrlsAmount'.format(config)))
 
         #
         cmds.select(edge)
@@ -169,8 +172,6 @@ def build_mouthgames_block():
         main_ctrl_grp = cmds.group(em=True, n='{}{}{}'.format(name, nc['ctrl'], nc['group']))
         cmds.parent(tweek_ctrl_grp, main_ctrl_grp)
 
-        num_joints = 7
-
         # --- Create symmetrical names ---
         main_ctrl_names = []
         mid_index = num_joints // 2
@@ -181,7 +182,7 @@ def build_mouthgames_block():
             elif 0 < i <= mid_index:
                 main_ctrl_names.append(f"R_Mid_{str(i).zfill(2)}_")
             elif i == mid_index + 1:
-                main_ctrl_names.append('Mid')
+                main_ctrl_names.append('Mid_')
             elif mid_index + 1 < i < num_joints + 1:
                 main_ctrl_names.append(f"L_Mid_{str(num_joints - i + 1).zfill(2)}_")
             else:
@@ -192,13 +193,16 @@ def build_mouthgames_block():
 
             # Place joint at pivot and on vertex
             cmds.select(cl=True)
-            vtx_jnt = cmds.joint(n=f"{ctrl_name}{name}_Tweek_{nc['joint']}")
+            vtx_jnt = cmds.joint(n=f"{ctrl_name}{name}_Tweek{nc['joint']}")
             vtx_joints.append(vtx_jnt)
 
             # Locator
-            end_locator = cmds.spaceLocator(n=f"{name}_{ctrl_name}{nc['locator']}")[0]
+            end_locator = cmds.spaceLocator(n=f"{name}_{ctrl_name}{nc['locator'].replace('_','')}")[0]
+            up_end_locator = cmds.spaceLocator(n=f"{name}_VectorUp_{ctrl_name}{nc['locator'].replace('_','')}")[0]
+
             vtx_locators.append(end_locator)
             cmds.parent(end_locator, locators_grp)
+            cmds.parent(up_end_locator, locators_grp)
 
             # pointOnCurveInfo setup
             poci = cmds.createNode('pointOnCurveInfo', n=f"{name}_{ctrl_name}_POCI")
@@ -218,18 +222,63 @@ def build_mouthgames_block():
             #----------------------------------------------
 
 
-            create_tangent_orient_setup(
+            four_by_four, decompose = create_tangent_orient_setup(
                 base_name=f"{name}_{num}",
                 poci=poci,
-                loc=end_locator,
-                up_vector_curve=up_vector_curve,
-                linear_curve=linear_curve
+                loc=end_locator
             )
 
             if percentage not in (0, 0.5, 1):
                 cmds.delete(cmds.parentConstraint(end_locator, vtx_jnt))
             else:
                 cmds.delete(cmds.pointConstraint(end_locator, vtx_jnt))
+
+            if percentage == 1:
+                cmds.delete(cmds.orientConstraint(left_orient_lip, vtx_jnt))
+
+            # Fix up vector
+            # connect_tangent_system(
+            #     param_node=poci,
+            #     param_attr="parameter",
+            #     input_curve=up_vector_curve,
+            #     tangent_matrix_node=four_by_four
+            # )
+
+            # Do the same but for the up locator
+            # pointOnCurveInfo setup
+            poci = cmds.createNode('pointOnCurveInfo', n=f"{name}_UpVector_{ctrl_name}_POCI")
+            cmds.connectAttr(f'{up_vector_curve}.worldSpace[0]', f'{poci}.inputCurve')
+            cmds.connectAttr(f'{poci}.position', f'{up_end_locator}.translate')
+
+            # Use percentage-based parameter (evenly distributed)
+            if num_joints > 1:
+                percentage = float(num) / (num_joints + 1)
+            else:
+                percentage = 0.0
+            cmds.setAttr(f'{poci}.turnOnPercentage', True)
+            cmds.setAttr(f'{poci}.parameter', percentage)
+
+            # ----------------------------------------------
+            # ----------------------------------------------
+
+            four_by_four, decompose = create_tangent_orient_setup(
+                base_name=f"{name}_UpVector_{num}",
+                poci=poci,
+                loc=up_end_locator
+            )
+
+            if percentage not in (0, 0.5, 1):
+                cmds.delete(cmds.parentConstraint(end_locator, vtx_jnt))
+            else:
+                cmds.delete(cmds.pointConstraint(end_locator, vtx_jnt))
+
+            if percentage == 1:
+                cmds.delete(cmds.orientConstraint(left_orient_lip, vtx_jnt))
+
+
+            #Do the dotproduct stuff
+
+
 
 
         #do only left and middle
@@ -300,7 +349,7 @@ def build_mouthgames_block():
 
         #Create controller for main controllers
         #7 is default
-        num_ctrls = 5
+
         if num_ctrls % 2 == 0:
             num_ctrls += 1
         spans = num_ctrls - 1
@@ -321,10 +370,10 @@ def build_mouthgames_block():
 
         #Wire up vector curve and move up
         wire_up = mel.eval(
-            'wire -n "{}_UpWire" -gw false -en 1.000000 -ce 0.000000 -li 0.000000 -w {} {};'.format(name, five_curve,
+            'wire -n "{}_UpWire" -gw false -en 1.000000 -ce 0.000000 -li 0.000000 -w {} {};'.format(name+'_Up', five_curve,
                                                                                                   up_vector_curve))
         cmds.setAttr('{}.dropoffDistance[0]'.format(wire_up[0]), 999)
-        wire_base_up = wire_up[1] + 'BaseWire'
+        wire_base_up = wire_up[1] + 'BaseWire1'
 
         cmds.move(0,1,0,up_vector_curve, r=True)
 
@@ -340,15 +389,15 @@ def build_mouthgames_block():
         mid_index = num_ctrls // 2
         main_ctrl_names = []
 
-        for i in range(num_joints + 2):  # +2 for R_ and L_
+        for i in range(num_ctrls + 2):  # +2 for R_ and L_
             if i == 0:
                 main_ctrl_names.append('R_')
             elif 0 < i <= mid_index:
                 main_ctrl_names.append(f"R_Mid_{str(i).zfill(2)}_")
             elif i == mid_index + 1:
                 main_ctrl_names.append('Mid_')
-            elif mid_index + 1 < i < num_joints + 1:
-                main_ctrl_names.append(f"L_Mid_{str(num_joints - i + 1).zfill(2)}_")
+            elif mid_index + 1 < i < num_ctrls + 1:
+                main_ctrl_names.append(f"L_Mid_{str(num_ctrls - i + 1).zfill(2)}_")
             else:
                 main_ctrl_names.append('L_')
 
@@ -362,6 +411,8 @@ def build_mouthgames_block():
         sec_ctrls_roots = []
         left_sec_ctrls = []
 
+        left_controllers = []
+        left_controllers_roots = []
 
         sec_jnts = []
         sec_jnts_roots = []
@@ -390,6 +441,10 @@ def build_mouthgames_block():
             mt.assign_color(color=color)
             ctrl_root = mt.root_grp()[0]
             sec_ctrls_roots.append(ctrl_root)
+            if ctrl.startswith(nc['left']):
+                left_controllers.append(ctrl)
+                left_controllers_roots.append(ctrl_root)
+
             cmds.parent(ctrl_root, main_ctrl_grp)
             mt.match(ctrl_root, temp_cls, r=True, t=True)
 
@@ -409,7 +464,7 @@ def build_mouthgames_block():
             # *--------- Aims or Orients -------------
             # *----------------------------
 
-            if 'L_' in ctrl:
+            if ctrl.startswith(nc['left']):
                 left_sec_ctrls.append(ctrl)
 
                 #Near to curve to move on top of curve
@@ -465,6 +520,9 @@ def build_mouthgames_block():
         cmds.delete(cmds.parentConstraint(left_orient_lip,ctrl_root))
 
         #Do Right side now...
+        right_controllers = []
+        right_controllers_roots = []
+
         for left_ctrl in left_sec_ctrls:
             temp_loc = cmds.spaceLocator()
             cmds.delete(cmds.parentConstraint(left_ctrl, temp_loc))
@@ -478,10 +536,11 @@ def build_mouthgames_block():
                 size=ctrl_size / 2
             )
             sec_ctrls.append(ctrl)
-
+            right_controllers.append(ctrl)
             mt.assign_color(color=color)
             ctrl_root = mt.root_grp()[0]
             sec_ctrls_roots.append(ctrl_root)
+            right_controllers_roots.append(ctrl)
             cmds.parent(ctrl_root, main_ctrl_grp)
             mt.match(ctrl_root, left_ctrl, r=True, t=True)
 
@@ -500,9 +559,17 @@ def build_mouthgames_block():
             miror_ctrl_grp = mt.mirror_group(ctrl_root, world=True)
             cmds.parent(miror_ctrl_grp, main_ctrl_grp)
 
+            cmds.delete(temp_loc)
 
         cmds.skinCluster(sec_jnts, five_curve, sm=0, bm=1, tsb=True)
 
+
+        mid_ctrl = False
+        for ctrl in sec_ctrls:
+            if ctrl.startswith('Mid_'):
+                mid_ctrl = ctrl
+        if not mid_ctrl:
+            cmds.error('Naming error, sorry...')
 
         #-----------------------------
         #-----------------------------
@@ -511,128 +578,95 @@ def build_mouthgames_block():
         #Create Main Controller
         main_loc = cmds.spaceLocator(n = name + '_Main' + nc['locator'])[0]
         main_loc_root, main_loc_auto = mt.root_grp(autoRoot=True)
-        cmds.delete(cmds.parentConstraint(sec_ctrls, main_loc_root))
+        cmds.delete(cmds.parentConstraint(mid_ctrl, main_loc_root))
         cmds.select(main_loc_auto)
         cmds.select(main_loc)
         main_ctrl = mt.curve(input='',
-                        type='square',
+                        type='rectangle',
                         rename=True,
                         custom_name=True,
                         name=name + '_Main' + nc['ctrl'],
                         size=ctrl_size)
 
         mt.assign_color(color=color)
-        main_ctrl_root = mt.root_grp()[0]
+        main_ctrl_root, main_ctrl_auto = mt.root_grp(main_ctrl, autoRoot=True)
         cmds.parent(main_ctrl_root, main_ctrl_grp)
 
-        cmds.connectAttr('{}.rotate'.format(main_ctrl), '{}.rotate'.format(main_loc))
-        cmds.connectAttr('{}.translate'.format(main_ctrl), '{}.translate'.format(main_loc))
-        cmds.connectAttr('{}.scale'.format(main_ctrl), '{}.scale'.format(main_loc))
+        if '_Up' in name:
+            cmds.delete(cmds.parentConstraint(lip_up_guide, main_ctrl_root))
+        else:
+            cmds.delete(cmds.parentConstraint(lip_down_guide, main_ctrl_root))
 
-        cmds.select(
-        '{}.cv[0:1]'.format(main_ctrl),
-        '{}.cv[4]'.format(main_ctrl)
+        #Corner Pullers
+        left_puller_loc = cmds.spaceLocator(n=nc['left']+name + '_Puller' + nc['locator'])[0]
+        right_puller_loc = cmds.spaceLocator(n=nc['right']+name + '_Puller' + nc['locator'])[0]
+
+        mt.match(left_puller_loc, left_controllers[-1])
+        mt.match(right_puller_loc, right_controllers[-1])
+
+        print('*'*50)
+        print('*'*50)
+        print('*'*50)
+        print('right_controllers', right_controllers)
+        print('-'*50)
+        print('left_controllers', left_controllers)
+        print('*'*50)
+        print('*'*50)
+        print('*'*50)
+
+        auto_cache = {}
+
+        def get_auto(ctrl):
+            """Return auto for ctrl, creating it only once."""
+            if ctrl not in auto_cache:
+                root = cmds.listRelatives(ctrl, p=True)[0]
+                auto_cache[ctrl] = root
+            return auto_cache[ctrl]
+
+        def apply_linear_weights(side_ctrls, start_obj, end_obj):
+            """
+            Keeps the controller order untouched, but flips weight logic so:
+            - last ctrl in list gets the strongest weight to start_obj (puller)
+            - first ctrl in list gets weakest
+            """
+
+            forward = list(enumerate(side_ctrls))
+            backward = list(reversed(forward))
+
+            for num, ctrl in enumerate(side_ctrls):
+
+                auto = get_auto(ctrl)
+
+                pc = cmds.parentConstraint(
+                    start_obj,  # puller
+                    end_obj,  # mid
+                    auto,
+                    skipRotate=('x', 'y', 'z'),
+                    mo=True
+                )[0]
+
+                cmds.setAttr(f"{pc}.{start_obj}W0", backward[num][0])
+                cmds.setAttr(f"{pc}.{end_obj}W1", forward[num][0])
+                cmds.setAttr(pc + ".interpType", 2)
+
+        # LEFT
+        apply_linear_weights(
+            [mid_ctrl]+left_controllers,
+            start_obj=main_ctrl,
+            end_obj=left_puller_loc
         )
-        cmds.rotate(90,0,0,r=True)
-        cmds.move(0,0,ctrl_size*1.5,r=True)
-        temp_clusterB=cmds.cluster()
-        cmds.delete(cmds.pointConstraint(sec_jnts[4],temp_clusterB))
-        cmds.delete(main_ctrl, ch=True)
 
-        cmds.select(
-        '{}.cv[2:3]'.format(main_ctrl)
+        # RIGHT
+        apply_linear_weights(
+            [mid_ctrl]+right_controllers,
+            start_obj=main_ctrl,
+            end_obj=right_puller_loc
         )
-        cmds.rotate(90,0,0,r=True)
-        cmds.move(0,0,ctrl_size*1.5,r=True)
-        temp_clusterB=cmds.cluster()
-        cmds.delete(cmds.pointConstraint(sec_jnts[2],temp_clusterB))
-        cmds.delete(main_ctrl, ch=True)
 
-        aa
+        #Mid controller
+        # mid_root, mid_auto = mt.root_grp(mid_ctrl, autoRoot=True)
+        # cmds.parentConstraint(main_ctrl, mid_auto, mo=True)
 
-        #----------------------------
-        #----------------------------
-        #----------------------------
-        #Create lip rolls
-        def findMiddle(input_list):
-            middle = float(len(input_list)) / 2
-            if middle % 2 != 0:
-                return input_list[int(middle - .5)]
-            else:
-                return (input_list[int(middle)], input_list[int(middle - 1)])
-
-        middle_joint = findMiddle(vtx_locators)
-
-        def split(a, n):
-            k, m = divmod(len(a), n)
-            return (a[i * k + min(i, m):(i + 1) * k + min(i + 1, m)] for i in range(n))
-
-        right_side_list, left_side_list = list(split(vtx_locators, 2))
-
-        if not type(middle_joint) == type(()):
-            left_side_list.insert(0, middle_joint)
-        print(middle_joint, right_side_list, left_side_list)
-
-
-        for num, loc in enumerate(reversed(left_side_list)):
-            lip_grp = cmds.group(loc, name = loc.replace(nc['locator'],'_Roll'+nc['group']))
-            md = mt.connect_md_node(in_x1=main_ctrl+'.rotateX', in_x2=num*0.1, out_x= lip_grp+'.rotateX', mode='multiply')
-            cmds.connectAttr("{}.rotatePivot".format(main_ctrl), "{}.rotatePivot".format(lip_grp), f=True)
-            cmds.connectAttr("{}.scalePivot".format(main_ctrl), "{}.scalePivot".format(lip_grp), f=True)
-            cmds.connectAttr('{}.translate'.format(loc), "{}.rotatePivot".format(lip_grp), f=True)
-            cmds.connectAttr('{}.translate'.format(loc), "{}.scalePivot".format(lip_grp), f=True)
-
-        for num, loc in enumerate(right_side_list):
-            if cmds.objExists(loc.replace(nc['locator'], '_Roll' + nc['group'])):
-                continue
-            lip_grp = cmds.group(loc, name=loc.replace(nc['locator'], '_Roll' + nc['group']))
-            # Lips_Dw_0_Locq
-            md = mt.connect_md_node(in_x1=main_ctrl+'.rotateX', in_x2=num*0.1, out_x= lip_grp+'.rotateX', mode='multiply')
-
-            cmds.connectAttr('{}.translate'.format(loc), "{}.rotatePivot".format(lip_grp), f=True)
-            cmds.connectAttr('{}.translate'.format(loc), "{}.scalePivot".format(lip_grp), f=True)
-
-        #----------------------------
-        #----------------------------
-        #----------------------------
-        search_amount = (len(vtx_locators) // len(sec_ctrls)) + 2
-
-        def get_closest(ctrl, locators, amount):
-
-            distances=[]
-            for loc in locators:
-                distance = mt.get_distance_between(ctrl, loc)
-                distances.append(distance)
-
-            distances.sort()
-
-            distances = distances[:amount]
-            return_list = []
-            for d in distances:
-                for loc in locators:
-                    distance = mt.get_distance_between(ctrl, loc)
-                    if d == distance:
-                        return_list.append(loc)
-
-            return return_list
-
-
-        print('#'*50)
-        for ctrl in sec_ctrls[1:-1]:
-            closest = get_closest(ctrl, vtx_locators, search_amount)
-            print(ctrl, closest)
-            for loc in closest:
-                lip_grp = cmds.group(loc, name=loc.replace(nc['locator'], '_Roll_{}'.format(ctrl) + nc['group']))
-                # Lips_Dw_0_Loc
-                md = mt.connect_md_node(in_x1=ctrl + '.rotateX', in_x2=mt.get_distance_between(ctrl, loc)+0.01, out_x=lip_grp+'.rotateX',
-                                        mode='divide')
-                md = mt.connect_md_node(in_x1=ctrl + '.rotateY', in_x2=mt.get_distance_between(ctrl, loc)+0.01, out_x=lip_grp+'.rotateY',
-                                        mode='divide')
-                md = mt.connect_md_node(in_x1=ctrl + '.rotateZ', in_x2=mt.get_distance_between(ctrl, loc)+0.01, out_x=lip_grp+'.rotateZ',
-                                        mode='divide')
-                #relocate the pivotrs
-                cmds.connectAttr('{}.translate'.format(loc), "{}.rotatePivot".format(lip_grp), f=True)
-                cmds.connectAttr('{}.translate'.format(loc), "{}.scalePivot".format(lip_grp), f=True)
 
         #----------------------------
         #----------------------------
@@ -647,6 +681,8 @@ def build_mouthgames_block():
                 'linear_curve' : linear_curve,
                 'smooth_curve' : five_curve,
                 'wire_base' : wire_base,
+                'up_curve': up_vector_curve,
+                'wire_base_up': wire_base_up,
                 'follow_locs_grp' : locators_grp,
                 'tweek_joints_groups' : vtx_joints_grp,
                 'sec_joints': sec_jnts,
@@ -656,7 +692,8 @@ def build_mouthgames_block():
                 'main_locator_root': main_loc_root,
                 'aim_locators':vtx_locators,
                 'tweek_joints': vtx_joints,
-                'tweek_ctrls':tweek_controllers
+                'tweek_ctrls':tweek_controllers,
+                'corner_pullers':[left_puller_loc, right_puller_loc]
                 }
 
     #---------------------------------------------------------------------
@@ -671,16 +708,382 @@ def build_mouthgames_block():
                                      edge=lower_edge,
                                      color = 'purple')
 
+    ######################################################
+    ######################################################
+    ######################################################
+
+    # Clean Groups
+    clean_ctrl_grp = cmds.group(em=True, name=name + nc['ctrl'] + nc['group'])
+    clean_rig_grp = cmds.group(em=True, name=name + '_Rig' + nc['group'])
+
+    # Main Mouth Controller
+    center_grp = cmds.group(em=True, n=name + '_Center' + nc['group'])
+    cmds.delete(cmds.parentConstraint(mouth_center, center_grp))
+    center_root = mt.root_grp()[0]
+    center_lips_grp = cmds.group(em=True, n=name + '_Centerlips' + nc['group'])
+    cmds.delete(cmds.parentConstraint(center_grp, center_lips_grp))
+    center_lips_root = mt.root_grp()[0]
+    cmds.parent(center_lips_root, center_grp)
+
+    center_ctrl = mt.curve(input=center_grp,
+                           type='octagon',
+                           rename=True,
+                           custom_name=True,
+                           name=name + '_Center' + nc['ctrl'],
+                           size=ctrl_size)
+    mt.assign_color(color='lightBlue')
+    center_ctrl_root = mt.root_grp()[0]
+    cmds.delete(cmds.parentConstraint(mouth_center, center_ctrl_root))
+    cmds.select(center_ctrl + '.cv[0:8]')
+    cmds.rotate(90, 0, 0)
+    center_cluster = cmds.cluster()
+    cmds.delete(cmds.parentConstraint(upper_system['main_ctrl'], center_cluster))
+    cmds.delete(center_ctrl, ch=True)
+
+    cmds.connectAttr('{}.translate'.format(center_ctrl), '{}.translate'.format(center_grp))
+    cmds.connectAttr('{}.rotate'.format(center_ctrl), '{}.rotate'.format(center_grp))
+    cmds.connectAttr('{}.scale'.format(center_ctrl), '{}.scale'.format(center_grp))
+
+    center_lips_ctrl = mt.curve(input=center_grp,
+                                type='octagon',
+                                rename=True,
+                                custom_name=True,
+                                name=name + '_Centerlips' + nc['ctrl'],
+                                size=ctrl_size * 0.75)
+    mt.assign_color(color='lightBlue')
+    center_lips_ctrl_root = mt.root_grp()[0]
+    cmds.delete(cmds.parentConstraint(mouth_center, center_lips_ctrl_root))
+    cmds.select(center_lips_ctrl + '.cv[0:8]')
+    cmds.rotate(90, 0, 0)
+    center_cluster = cmds.cluster()
+    cmds.delete(cmds.parentConstraint(upper_system['main_ctrl'], center_cluster))
+    cmds.delete(center_lips_ctrl, ch=True)
+
+    cmds.connectAttr('{}.translate'.format(center_lips_ctrl), '{}.translate'.format(center_lips_grp))
+    cmds.connectAttr('{}.rotate'.format(center_lips_ctrl), '{}.rotate'.format(center_lips_grp))
+    cmds.connectAttr('{}.scale'.format(center_lips_ctrl), '{}.scale'.format(center_lips_grp))
+
+    cmds.parent(center_lips_ctrl_root, center_ctrl)
+
+    #--------------------------------------------------------
+    #------------------------Main Sides----------------------
+    #--------------------------------------------------------
+
+    # Create Side Controllers
+    # Create Main Controller
+    side_controllers = []
+    side_controllers_root = []
+    side_locators = []
+    sub_side_controllers = []
+
+    for side in [nc['left'], nc['right']]:
+        loc = cmds.spaceLocator(n=side + name + '_Main' + nc['locator'])[0]
+        loc_root, loc_auto = mt.root_grp(autoRoot=True)
+        cmds.delete(cmds.parentConstraint(left_orient_lip, loc_root))
+
+        side_main_ctrl = mt.curve(input='',
+                                  type='square',
+                                  rename=True,
+                                  custom_name=True,
+                                  name=side + name + '_Main' + nc['ctrl'],
+                                  size=ctrl_size)
+        side_controllers.append(side_main_ctrl)
+
+        if side == nc['right']:
+            mt.assign_color(color='red')
+        else:
+            mt.assign_color(color='blue')
+        left_main_ctrl_root, left_main_ctrl_auto = mt.root_grp(autoRoot=True)
+        side_controllers_root.append(left_main_ctrl_root)
+
+        # Attrs
+        mt.line_attr(input=side_main_ctrl, name='Lips')
+        mode_attr = mt.new_enum(input=side_main_ctrl, name='mode', enums='BSP:RIG')
+        move_mult_attr = mt.new_attr(input=side_main_ctrl, name='MovementMult', min=0.1, max=10, default=1)
+        sub_move_mult_attr = mt.new_attr(input=side_main_ctrl, name='SubMovementMult', min=0.1, max=10, default=1)
+
+        # Make pretty
+        cmds.select('{}.cv[0:4]'.format(side_main_ctrl))
+        cmds.rotate(90, 0, 0, r=True)
+        # cmds.select('{}.cv[2:3]'.format(side_main_ctrl))
+        # cmds.scale(0,ctrl_size/3,0,r=True)
+        # cmds.move(ctrl_size/2,0,0,r=True)
+        mt.hide_attr(side_main_ctrl, s=True)
+
+        side_locators.append(loc)
+
+        # ----------SUB-----------------------------------------
+        # create sub controller with modes in case we dont use BS
+        sub_main_ctrl = mt.curve(input='',
+                                 type='square',
+                                 rename=True,
+                                 custom_name=True,
+                                 name=side + name + '_Sub' + nc['ctrl'],
+                                 size=ctrl_size / 3)
+        sub_side_controllers.append(sub_main_ctrl)
+        if side == nc['right']:
+            mt.assign_color(color='red')
+        else:
+            mt.assign_color(color='blue')
+        left_sub_ctrl_root = mt.root_grp()[0]
+
+        cmds.select('{}.cv[0:4]'.format(sub_main_ctrl))
+        cmds.rotate(90, 0, 0, r=True)
+        # cmds.select('{}.cv[2:3]'.format(sub_main_ctrl))
+        # cmds.scale(0,ctrl_size/4,0,r=True)
+        # cmds.move(ctrl_size/2,0,0,r=True)
+        mt.hide_attr(sub_main_ctrl, s=True)
+        # cmds.select('{}.cv[0:4]'.format(sub_main_ctrl))
+        # cmds.scale(ctrl_size/4,ctrl_size/4,ctrl_size/4,r=True)
+
+        cmds.parent(left_sub_ctrl_root, side_main_ctrl)
+
+        # Flip
+        if side == nc['right']:
+            loc_root = mt.mirror_group(loc_root, world=True)
+            left_main_ctrl_root = mt.mirror_group(left_main_ctrl_root, world=True)
+
+        # cmds.parent(loc_root, clean_rig_grp)
+        cmds.parent(loc_root, center_grp)
+        # cmds.parent(left_main_ctrl_root, clean_ctrl_grp)
+        cmds.parent(left_main_ctrl_root, center_ctrl)
+
+    #--------------------------------------
+    cmds.select(cl=True)
+    jaw_ctrl = mt.curve(input='',
+                      type='circleY',
+                      rename=True,
+                      custom_name=True,
+                      name=name + '_Jaw' + nc['ctrl'],
+                      size=ctrl_size*2)
+
+
+    mt.assign_color(color='purple')
+    jaw_ctrl_root = mt.root_grp()[0]
+    cmds.parent(jaw_ctrl_root, clean_ctrl_grp)
+    cmds.delete(cmds.parentConstraint(jaw_guide, jaw_ctrl_root))
+
+
+    #aim to upr and lwr lip guides
+    aim_temp_loc = cmds.spaceLocator()
+    cmds.delete(cmds.parentConstraint(lip_up_guide, lip_down_guide, aim_temp_loc))
+    cmds.delete(cmds.aimConstraint(aim_temp_loc,jaw_ctrl_root, aimVector=(0, 0, 1), upVector=(0, 1, 0),
+                                   worldUpType='vector', mo=False))
+    cmds.delete(aim_temp_loc)
+
+    #Automations time
+    left_ctrl = side_controllers[0]
+    right_ctrl = side_controllers[1]
+
+    left_sub_ctrl = sub_side_controllers[0]
+    right_sub_ctrl = sub_side_controllers[1]
+
+    #jaw top to collide
+    jaw_top_locator = cmds.spaceLocator(n=name + '_TopJaw' + nc['locator'])[0]
+    cmds.parent(jaw_top_locator, clean_rig_grp)
+
+    #Jaw to main lower and up jaw to main upper
+    cmds.parentConstraint(jaw_ctrl, lower_system['main_ctrl_root'], mo=True)
+    cmds.parentConstraint(jaw_top_locator, upper_system['main_ctrl_root'], mo=True)
+
+    #Corner controllers stay between loc and jaw
+    left_corner_pc=cmds.parentConstraint(jaw_ctrl, jaw_top_locator, side_controllers_root[0], mo=True)[0]
+    cmds.setAttr(left_corner_pc + ".interpType", 2)
+    right_corner_pc=cmds.parentConstraint(jaw_ctrl, jaw_top_locator, side_controllers_root[1], mo=True)[0]
+    cmds.setAttr(right_corner_pc + ".interpType", 2)
+
+    #Corner controller move pullers
+    cmds.parentConstraint(left_sub_ctrl, upper_system['corner_pullers'][0], mo=True)
+    cmds.parentConstraint(right_sub_ctrl, upper_system['corner_pullers'][1], mo=True)
+    cmds.parentConstraint(left_sub_ctrl, lower_system['corner_pullers'][0], mo=True)
+    cmds.parentConstraint(right_sub_ctrl, lower_system['corner_pullers'][1], mo=True)
+
+    # Automation for corner pc to move up or down
+    left_follow_attr = mt.new_attr(input=left_ctrl,
+                                   name='Follow',
+                                   min=-0, max=1, default=0.5)
+
+    cmds.connectAttr(left_follow_attr, "{}.{}W0".format(left_corner_pc, jaw_ctrl), f=True)
+
+    reverse_node = cmds.shadingNode('reverse', asUtility=True, name="{}_reverse".format(left_corner_pc))
+    cmds.connectAttr(left_follow_attr, "{}.inputX".format(reverse_node), f=True)
+    cmds.connectAttr("{}.output.outputX".format(reverse_node),
+                     "{}.{}W1".format(left_corner_pc, jaw_top_locator), f=True)
+
+
+    right_follow_attr = mt.new_attr(input=right_ctrl,
+                                   name='Follow',
+                                   min=-0, max=1, default=0.5)
+    cmds.connectAttr(right_follow_attr, "{}.{}W0".format(right_corner_pc, jaw_ctrl), f=True)
+
+    reverse_node = cmds.shadingNode('reverse', asUtility=True, name="{}_reverse".format(right_corner_pc))
+    cmds.connectAttr(right_follow_attr, "{}.inputX".format(reverse_node), f=True)
+    cmds.connectAttr("{}.output.outputX".format(reverse_node),
+                     "{}.{}W1".format(right_corner_pc, jaw_top_locator), f=True)
+
+
+    #Jaw up Logic
+    up_main_auto = cmds.listRelatives(upper_system['main_ctrl'], p=True)[0]
+    up_main_ctrl_root = upper_system['main_ctrl_root']
+    pc = cmds.parentConstraint(
+        jaw_ctrl,
+        up_main_ctrl_root,
+        up_main_auto,
+        mo=True,
+        skipTranslate=['x', 'z'],
+        skipRotate=['x', 'y', 'z']
+    )[0]
+
+    lt = cmds.createNode("lessThan", name=name+"_jaw_lessThan")
+    bc = cmds.createNode("blendColors", name=name+"_jaw_blendColors")
+    rev = cmds.createNode("reverse", name=name+"_jaw_reverse")
+    cmds.setAttr(bc + ".color1R", 1)  # Been 1R = 1
+    cmds.setAttr(bc + ".color2R", 0)  # 2R = 0
+
+    cmds.connectAttr(jaw_ctrl + ".rotateX", lt + ".input1", force=True)
+    cmds.connectAttr(lt + ".output", bc + ".blender", force=True)
+    cmds.connectAttr(bc + ".output", rev + ".input", force=True)
+
+    weights = cmds.parentConstraint(pc, q=True, wal=True)
+    w0, w1 = [f"{pc}.{w}" for w in weights]
+
+    cmds.connectAttr(bc + ".outputR", w0, f=True)
+    cmds.connectAttr(rev + ".outputX", w1, f=True)
+
+    #--------------------------------------------------
+    #--Make the whole mouth and center mouth works-----
+    #--------------------------------------------------
+
+    cmds.parentConstraint(center_ctrl, jaw_top_locator, mo=True)
+
+    #custom groups at center
+    lwr_rotate_offset = mt.root_grp(input = lower_system['main_ctrl'], custom = True, custom_name = 'CenterRotateOffset', autoRoot = False, replace_nc = False)[0]
+    lwr_rotate_grp = mt.root_grp(input = lower_system['main_ctrl'], custom = True, custom_name = 'CenterRotate', autoRoot = False, replace_nc = False)[0]
+
+    lwr_rotate_lipsoffset = mt.root_grp(input = lower_system['main_ctrl'], custom = True, custom_name = 'CenterRotateLipsOffset', autoRoot = False, replace_nc = False)[0]
+    lwr_rotate_lips_grp = mt.root_grp(input = lower_system['main_ctrl'], custom = True, custom_name = 'CenterRotateLips', autoRoot = False, replace_nc = False)[0]
+    upr_rotate_lipsoffset = mt.root_grp(input = upper_system['main_ctrl'], custom = True, custom_name = 'CenterRotateLipsOffset', autoRoot = False, replace_nc = False)[0]
+    upr_rotate_lipsgrp = mt.root_grp(input = upper_system['main_ctrl'], custom = True, custom_name = 'CenterRotateLips', autoRoot = False, replace_nc = False)[0]
+
+    def match_pivot_to_mouth_center(mouth_center, *groups):
+        pivot = cmds.xform(mouth_center, q=True, ws=True, rp=True)
+        for grp in groups:
+            cmds.xform(grp, ws=True, rp=pivot)
+            cmds.xform(grp, ws=True, sp=pivot)
+
+        print("Pivots matched to:", pivot)
+
+    match_pivot_to_mouth_center(
+        mouth_center,
+        lwr_rotate_lipsoffset,
+        upr_rotate_lipsoffset,
+        lwr_rotate_offset
+    )
+
+    cmds.connectAttr(f"{center_ctrl}.rotate", f"{lwr_rotate_offset}.rotate")
+    cmds.connectAttr(f"{center_ctrl}.translate", f"{lwr_rotate_offset}.translate")
+
+    cmds.connectAttr(f"{center_lips_ctrl}.rotate", f"{lwr_rotate_lipsoffset}.rotate")
+    cmds.connectAttr(f"{center_lips_ctrl}.rotate", f"{upr_rotate_lipsoffset}.rotate")
+
+    cmds.connectAttr(f"{center_lips_ctrl}.translate", f"{lwr_rotate_lipsoffset}.translate")
+    cmds.connectAttr(f"{center_lips_ctrl}.translate", f"{upr_rotate_lipsoffset}.translate")
+
+
+    #*---------------------------------------------------
+    #*---------------------------------------------------
+    #Clean
+    #*---------------------------------------------------
+    #*---------------------------------------------------
+
+    # Visibility switches
+    # hide ctrls
+    if attrs_position == 'new_locator':
+        guide_attrs_position = cmds.spaceLocator(n=name + '_Attrs' + nc['locator'])[0]
+    else:
+        guide_attrs_position = attrs_position
+    mt.line_attr(input=guide_attrs_position, name='Mouth_Vis')
+    main_ctrl_attr = mt.new_enum(input=guide_attrs_position, name='lipsMainCtrls', enums='Hide:Show', keyable=False)
+    center_ctrl_attr = mt.new_enum(input=guide_attrs_position, name='lipsCenterCtrls', enums='Hide:Show', keyable=False)
+    mid_ctrl_attr = mt.new_enum(input=guide_attrs_position, name='lipsMidCtrls', enums='Hide:Show', keyable=False)
+    show_tweeks_attr = mt.new_enum(input=guide_attrs_position, name='lipsTweekCtrls', enums='Hide:Show', keyable=False)
+
+    cmds.setAttr(main_ctrl_attr, 1)
+
+    for system in [upper_system, lower_system]:
+        for ctrl in system['sec_controllers']:
+            shape = cmds.listRelatives(ctrl, s=True)[0]
+            cmds.connectAttr(mid_ctrl_attr, '{}.v'.format(shape))
+        for ctrl in system['tweek_ctrls']:
+            shape = cmds.listRelatives(ctrl, s=True)[0]
+            cmds.connectAttr(show_tweeks_attr, '{}.v'.format(shape))
+        for ctrl in [system['main_ctrl']] + [center_ctrl] + sub_side_controllers:
+            shape = cmds.listRelatives(ctrl, s=True)[0]
+            cmds.connectAttr(main_ctrl_attr, '{}.v'.format(shape), f=True)
+        for ctrl in [center_ctrl, center_lips_ctrl]:
+            shape = cmds.listRelatives(ctrl, s=True)[0]
+            cmds.connectAttr(center_ctrl_attr, '{}.v'.format(shape), f=True)
+
+    for ctrl in [left_ctrl, right_ctrl]:
+        shape = cmds.listRelatives(ctrl, s=True)[0]
+        cmds.connectAttr(main_ctrl_attr, '{}.v'.format(shape), f=True)
+
+    # parent ctrls to block parent
+    cmds.parentConstraint(block_parent, clean_ctrl_grp, mo=True)
+    cmds.scaleConstraint(block_parent, clean_ctrl_grp, mo=True)
+
+    # Clean a bit
+    cmds.parent(clean_rig_grp, '{}{}'.format(setup['rig_groups']['misc'], nc['group']))
+    cmds.parent(clean_ctrl_grp, setup['base_groups']['control'] + nc['group'])
+
+    for system in [upper_system, lower_system]:
+        cmds.parent(system['linear_curve'], system['smooth_curve'], system['up_curve'],
+                    system['wire_base'], system['wire_base_up'], system['follow_locs_grp'],
+                    system['tweek_joints_groups'], system['sec_joints_group'],
+                    system['corner_pullers'],
+                    # system['main_locator_root'],
+                    clean_rig_grp)
+        cmds.parent(system['main_controllers_grp'], center_ctrl)
+        cmds.parent(system['main_locator_root'], center_lips_grp)
+
+    cmds.parent(center_ctrl_root, clean_ctrl_grp)
+    cmds.parent(center_root, clean_rig_grp)
+
+    # create bind joints
+    bind_jnt_grp = '{}{}'.format(setup['rig_groups']['bind_joints'], nc['group'])
+    for jnt in upper_system['tweek_joints'] + lower_system['tweek_joints']:
+        cmds.select(cl=True)
+        bind_joint = cmds.joint(n=jnt.replace(nc['joint'], nc['joint_bind']))
+        cmds.parentConstraint(jnt, bind_joint)
+        cmds.scaleConstraint(jnt, bind_joint)
+        cmds.setAttr('{}.radius'.format(bind_joint), 1.5)
+        cmds.parent(bind_joint, bind_jnt_grp)
+
+    # Create Jaw Bind Joint
+    cmds.select(cl=True)
+    bind_joint = cmds.joint(n=jaw_ctrl.replace(nc['ctrl'], nc['joint_bind']))
+    cmds.parentConstraint(jaw_ctrl, bind_joint)
+    cmds.scaleConstraint(jaw_ctrl, bind_joint)
+    cmds.setAttr('{}.radius'.format(bind_joint), 1.5)
+    cmds.parent(bind_joint, bind_jnt_grp)
+
 
 
     # build complete ----------------------------------------------------
     print ('Build {} Success'.format(block))
 
-
 #build_mouthgames_block()
 
+#------------------------------------
+#------------------------------------
+#------------------------------------
+#-----------Extra Functions----------
+#------------------------------------
+#------------------------------------
+#------------------------------------
+
 #Fix Orients of Locators
-def create_tangent_orient_setup(base_name, poci, loc, up_vector_curve, linear_curve):
+def create_tangent_orient_setup(base_name, poci, loc):
     """
     Creates a fourByFourMatrix + decomposeMatrix setup that drives
     the rotation of a locator based on a POCI's tangent.
@@ -710,3 +1113,43 @@ def create_tangent_orient_setup(base_name, poci, loc, up_vector_curve, linear_cu
 
     print(f"✅ Created tangent orientation setup for {base_name}")
     return four_by_four, decompose
+
+def connect_tangent_system(param_node, param_attr, input_curve, tangent_matrix_node):
+    """
+    param_node: name of node that has .parameter and .position outputs (your *_POCI)
+    param_attr: attribute name that stores the parameter (e.g. "parameter")
+    input_curve: curve that drives the tangent (the up-vector curve)
+    tangent_matrix_node: your existing matrix to plug into (like "Mouth_Dw_7_TangentMatrix")
+    """
+
+    # 1. Create pointOnCurveInfo
+    poci = cmds.createNode("pointOnCurveInfo")
+
+    # 2. Connect parameter node → POCI.parameter
+    cmds.connectAttr(f"{param_node}.{param_attr}", f"{poci}.parameter", f=True)
+    cmds.setAttr(f'{poci}.turnOnPercentage', True)
+
+    # 3. Connect curveShape.worldSpace → POCI.inputCurve
+    shape = cmds.listRelatives(input_curve, shapes=True)[0]
+    cmds.connectAttr(f"{shape}.worldSpace[0]", f"{poci}.inputCurve", f=True)
+
+    # 4. Create plusMinusAverage (subtract)
+    pma = cmds.createNode("plusMinusAverage")
+    cmds.setAttr(f"{pma}.operation", 2)  # 2 = subtract
+
+    # 5. Connect parameterNode.position → pma.input3D[0]
+    cmds.connectAttr(f"{param_node}.position", f"{pma}.input3D[0]", f=True)
+
+    # 6. Connect pointOnCurveInfo.position → pma.input3D[1]
+    cmds.connectAttr(f"{poci}.position", f"{pma}.input3D[1]", f=True)
+
+    # 7. Connect pma.output3D → TangentMatrix in10/11/12
+    cmds.connectAttr(f"{pma}.output3Dx", f"{tangent_matrix_node}.in10", f=True)
+    cmds.connectAttr(f"{pma}.output3Dy", f"{tangent_matrix_node}.in11", f=True)
+    cmds.connectAttr(f"{pma}.output3Dz", f"{tangent_matrix_node}.in12", f=True)
+
+    print("Tangent system connected:")
+    print(" POCI:", poci)
+    print(" PMA:", pma)
+
+    return poci, pma

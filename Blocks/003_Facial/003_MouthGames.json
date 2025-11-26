@@ -1,6 +1,6 @@
 {
     "Name": "Mouth",
-    "Description": "Create Jan and Lips System for Games",
+    "Description": "Create JaW and Lips System for Games",
     "Icon": "MouthGames.png",
     "Enable": "True",
     "python_file": "exec_mouthgames.py",
