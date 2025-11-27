@@ -126,12 +126,6 @@ def build_mouthgames_block():
     lower_edge = cmds.getAttr('{}.SetLowerEdge'.format(config), asString=True).split(',')
     attrs_position = cmds.getAttr('{}.SetAttrsPosition'.format(config), asString=True)
 
-    mirror_attr = cmds.getAttr('{}.Mirror'.format(config), asString=True)
-
-    to_build = [name]
-    if mirror_attr == 'True':
-        to_build = [name, name.replace(nc['left'], nc['right'])]
-
     def create_lips_system(name, edge, check_curve=True, color ='yellow'):
 
         num_joints = int(cmds.getAttr('{}.TweakCtrlsAmount'.format(config)))
