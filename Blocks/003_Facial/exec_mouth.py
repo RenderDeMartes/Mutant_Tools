@@ -488,7 +488,7 @@ def build_mouth_block():
     cmds.connectAttr('{}.rotate'.format(center_ctrl), '{}.rotate'.format(center_grp))
     cmds.connectAttr('{}.scale'.format(center_ctrl), '{}.scale'.format(center_grp))
 
-    qw =  mt.curve(input=center_grp,
+    center_lips_ctrl =  mt.curve(input=center_grp,
                             type='octagon',
                             rename=True,
                             custom_name=True,
