@@ -745,7 +745,7 @@ class Tools_class(object):
 			input = 'Mt'
 
 		if not name:
-			cmds.warning('No name in mt.controller(), using input')
+			cmds.warning('No name in self.controller(), using input')
 			name = input
 
 		ctrl = mel.eval(self.curve_data[shape])
@@ -2208,7 +2208,7 @@ class Tools_class(object):
 		cmds.select(attrs_from)
 		print(attrs_from, attr)
 		if '___' in attr:
-			mt.line_attr(input=ctrl, name=cmds.getAttr("{}.{}".format(attrs_from, attr_name), asString=True))
+			self.line_attr(input=ctrl, name=cmds.getAttr("{}.{}".format(attrs_from, attr_name), asString=True))
 			return
 
 		print('{}.{}'.format(attrs_from, attr))
@@ -2563,7 +2563,7 @@ class Tools_class(object):
 			It returns the name of the joint in the target_list that is closest to the given joint.
 
 		Example:
-			mt.find_closest_joint('joint1', ['joint2', 'joint3', 'joint4'])
+			self.find_closest_joint('joint1', ['joint2', 'joint3', 'joint4'])
 			'joint2'
 
 		"""
@@ -2631,6 +2631,256 @@ class Tools_class(object):
 
 		return offset_grps
 
-#tool = Tools_class()
+
+	#-------------------------------------------------------------------------------
+	def create_quad_locator(self, locator, push_joint_name):
+		"""
+        Creates a secondary locator (quad) to receive clean rotation data using euler-quaternion conversion.
+
+        This process improves rotational interpolation by converting from euler to quaternion and back.
+
+        Args:
+            locator (str): The name of the locator to base the quad on (usually the reader).
+            push_joint_name (str): Base name used to name the utility nodes and quad locator.
+
+        Returns:
+            str: The name of the created quad locator.
+        """
+		# Create quad locator
+		quad_loc = cmds.spaceLocator(n=locator + '_Quad')[0]
+
+		# Parent it under the same parent as the original locator
+		parent = cmds.listRelatives(locator, p=True)
+		if parent:
+			cmds.parent(quad_loc, parent[0])
+
+		# Match position and rotation
+		cmds.delete(cmds.parentConstraint(locator, quad_loc))
+
+		# Create utility nodes
+		e2q = cmds.createNode('eulerToQuat', n=push_joint_name + '_' + locator + '_e2q')
+		q2e = cmds.createNode('quatToEuler', n=push_joint_name + '_' + locator + '_q2e')
+
+		# Connect rotation chain
+		cmds.connectAttr(locator + '.rotate', e2q + '.inputRotate', f=True)
+		cmds.connectAttr(e2q + '.outputQuat', q2e + '.inputQuat', f=True)
+		cmds.connectAttr(q2e + '.outputRotate', quad_loc + '.rotate', f=True)
+
+		return quad_loc
+
+	def create_joint_reader(self, joint, push_joint_name):
+		"""
+        Creates a reader locator for a given joint and organizes it under a reader group.
+
+        This function sets up a locator to track a joint’s motion. It creates a root/auto hierarchy
+        using `self.root_grp`, constraints it to the joint, and optionally creates a quad locator for
+        rotation smoothing.
+
+        Args:
+            joint (str): The name of the joint to read motion from.
+            push_joint_name (str): The base name used to name the reader locator and group.
+
+        Returns:
+            str: The name of the created reader locator.
+        """
+		reader = cmds.spaceLocator(n=push_joint_name + '_Reader_Loc')[0]
+		root, auto = self.root_grp(input=reader, autoRoot=True)
+
+		reader_grp = push_joint_name + 'PushReaders_Grp'
+		if not cmds.objExists(reader_grp):
+			cmds.group(em=True, n=reader_grp)
+
+		cmds.parentConstraint(cmds.listRelatives(joint, p=True)[0], root)
+		cmds.delete(cmds.parentConstraint(joint, auto))
+		cmds.parentConstraint(joint, reader, mo=True)
+
+		cmds.parent(root, reader_grp)
+
+		# Create and connect the quad locator
+		self.create_quad_locator(reader, push_joint_name)
+
+		return reader
+
+	def create_push_joint(self, joint_parent=None, reader=None, push_joint_name='Test', custom_position=None):
+		"""
+        Creates a push driver system consisting of:
+          - a control object,
+          - a driver joint with root/auto hierarchy,
+          - and a bind (skl) joint.
+
+        These are aligned to a reader locator and optionally positioned using a custom transform.
+
+        Args:
+            joint_parent (str, optional): The parent joint for the bind joint. If None, it's parented to world.
+            reader (str, optional): The name of the reader locator used for positioning. Required.
+            push_joint_name (str, optional): Base name for naming the joints. Default is 'Test'.
+            custom_position (str, optional): An object to use for custom positioning. Overrides the reader if provided.
+
+        Returns:
+            tuple: A tuple containing the control name, driver joint name, and bind joint name.
+        """
+		if not reader or not cmds.objExists(reader):
+			cmds.warning("Reader locator not found or not provided.")
+			return None
+
+		ctrl = self.curve(input=None,
+						type='sphere',
+						rename=True,
+						custom_name=True,
+						name=reader.replace('_Reader_Loc', '_Ctrl'),
+						size=2)
+
+		self.assign_color(color='yellow')
+		root_grp, quto_grp = self.root_grp(autoRoot=True)
+
+		# Create driver joint and its hierarchy
+		driver_joint = cmds.joint(n=reader.replace('_Reader_Loc', '_Drv_Jnt'))
+		root, auto = self.root_grp(input=driver_joint, autoRoot=True)
+
+		# Get world position/rotation from reader
+		if not custom_position:
+			cmds.delete(cmds.parentConstraint(reader, root))
+			cmds.delete(cmds.parentConstraint(custom_position, root_grp))
+		else:
+			cmds.delete(cmds.parentConstraint(custom_position, root))
+			cmds.delete(cmds.parentConstraint(custom_position, root_grp))
+
+		# Parent driver under reader (keeps it clean)
+		cmds.parent(root, cmds.listRelatives(reader, p=True))
+
+		# Create skl joint
+		skl_joint = cmds.joint(n=push_joint_name)
+
+		# Parent logic
+		if joint_parent and cmds.objExists(joint_parent):
+			cmds.parent(skl_joint, joint_parent)
+		else:
+			cmds.parent(skl_joint, w=True)
+
+		cmds.parentConstraint(reader, root_grp, mo=True)
+		cmds.parentConstraint(ctrl, root)
+		cmds.parentConstraint(driver_joint, skl_joint)
+
+		return ctrl, driver_joint, skl_joint
+
+	def create_push_connections(self,
+			driver_attr,
+			driven,
+			start_val,
+			end_val,
+			start_t=(0, 0, 0), end_t=(0, 0, 0),
+			start_r=(0, 0, 0), end_r=(0, 0, 0),
+			start_s=(1, 1, 1), end_s=(1, 1, 1),
+			attrs_position=None):
+		"""
+        Creates a matrix-based blending system to drive translation, rotation, and scale
+        of a target object based on an input driver attribute (e.g., rotation).
+
+        A remapValue normalizes the input driver range (start_val to end_val) to 0-1,
+        and uses that to blend between two sets of transform values using blendMatrix.
+
+        Args:
+            driver_attr (str): Full attribute name (e.g., "Some_Ctrl.rotateZ") to drive the blend.
+            driven (str): The object to apply the blended transform to.
+            start_val (float): The driver value at which to apply the start transform.
+            end_val (float): The driver value at which to apply the end transform.
+            start_t (tuple): Translation at start_val as (x, y, z).
+            end_t (tuple): Translation at end_val as (x, y, z).
+            start_r (tuple): Rotation at start_val as (x, y, z).
+            end_r (tuple): Rotation at end_val as (x, y, z).
+            start_s (tuple): Scale at start_val as (x, y, z).
+            end_s (tuple): Scale at end_val as (x, y, z).
+            attrs_position (str, optional): Object (typically a locator) where control attributes
+                for start/end transforms will be stored. If None, a new locator is created.
+
+        Returns:
+            dict: A dictionary of created node names for reference.
+        """
+		if '.' not in driver_attr:
+			cmds.error("driver_attr must be a full attribute (e.g. 'L_Knee_Fk_Ctrl.rotateZ')")
+			return
+
+		if not cmds.objExists(driver_attr.split('.')[0]):
+			cmds.warning("Driver object doesn't exist: %s" % driver_attr.split('.')[0])
+			return
+
+		if not cmds.objExists(driven):
+			cmds.warning("Driven object doesn't exist: %s" % driven)
+			return
+
+		if not attrs_position:
+			attrs_position = cmds.spaceLocator(n='PushAttrs')[0]
+
+		# add start/end attrs
+		def add_ctrl_attr(name, default):
+			if not cmds.attributeQuery(name, node=attrs_position, exists=True):
+				cmds.addAttr(attrs_position, ln=name, at='double', k=True, dv=default)
+
+		# translate, rotate, scale start/end attributes
+		for axis, s, e in zip("XYZ", start_t, end_t):
+			add_ctrl_attr(f"start_translate{axis}", s)
+			add_ctrl_attr(f"end_translate{axis}", e)
+		for axis, s, e in zip("XYZ", start_r, end_r):
+			add_ctrl_attr(f"start_rotate{axis}", s)
+			add_ctrl_attr(f"end_rotate{axis}", e)
+		for axis, s, e in zip("XYZ", start_s, end_s):
+			add_ctrl_attr(f"start_scale{axis}", s)
+			add_ctrl_attr(f"end_scale{axis}", e)
+
+		# create remapValue (normalize driver to 0..1)
+		remap = cmds.createNode("remapValue", n=f"{driven}_remapValue")
+		# set input min/max to driver range
+		cmds.setAttr(f"{remap}.inputMin", start_val)
+		cmds.setAttr(f"{remap}.inputMax", end_val)
+		cmds.setAttr(f"{remap}.outputMin", 0.0)
+		cmds.setAttr(f"{remap}.outputMax", 1.0)
+		cmds.connectAttr(driver_attr, f"{remap}.inputValue", f=True)
+
+		comp_start = cmds.createNode("composeMatrix", n=f"{driven}_compose_start")
+		comp_end = cmds.createNode("composeMatrix", n=f"{driven}_compose_end")
+
+		# connect ctrl attrs to composeMatrix inputs (clean readable connections)
+		self.connect_compose_matrix(attrs_position, comp_start, "start")
+		self.connect_compose_matrix(attrs_position, comp_end, "end")
+
+		# composeMatrix outputs (outputMatrix) -> connect into blendMatrix inputs
+		# create blendMatrix node
+		blend = cmds.createNode("blendMatrix", n=f"{driven}_blendMatrix")
+		# Connect matrices properly
+		cmds.connectAttr(f"{comp_start}.outputMatrix", f"{blend}.inputMatrix", f=True)
+		cmds.connectAttr(f"{comp_end}.outputMatrix", f"{blend}.target[0].targetMatrix", f=True)
+
+		# Blend weight control just tocheck if working
+		cmds.addAttr(attrs_position, ln="blendWeight", at="double", min=0, max=1, dv=0, k=True)
+
+		# Connect remap outValue to blend envelope so outValue 0 => start, 1 => end
+		cmds.connectAttr(f"{remap}.outValue", f"{blend}.envelope", f=True)
+		cmds.connectAttr(f"{remap}.outValue", f"{attrs_position}.blendWeight", f=True)
+
+		# create decomposeMatrix and connect blend output into it
+		decomp = cmds.createNode("decomposeMatrix", n=f"{driven}_decomposeMatrix")
+		cmds.connectAttr(f"{blend}.outputMatrix", f"{decomp}.inputMatrix", f=True)
+
+		cmds.connectAttr(f"{decomp}.outputTranslate", f"{driven}.translate", f=True)
+		cmds.connectAttr(f"{decomp}.outputRotate", f"{driven}.rotate", f=True)
+		cmds.connectAttr(f"{decomp}.outputScale", f"{driven}.scale", f=True)
+
+	def connect_compose_matrix(self, ctrl, comp_node, prefix):
+		"""
+        Connects control object attributes (e.g., start_translateX) to a composeMatrix node.
+
+        Args:
+            ctrl (str): The control object containing the attributes.
+            comp_node (str): The name of the composeMatrix node to connect to.
+            prefix (str): Either "start" or "end" — determines attribute naming.
+        """
+		for attr_type in ["translate", "rotate", "scale"]:
+			for axis in "XYZ":
+				src = f"{ctrl}.{prefix}_{attr_type}{axis}"
+				dest = f"{comp_node}.input{attr_type.capitalize()}{axis}"
+				if cmds.objExists(src):
+					cmds.connectAttr(src, dest, f=True)
+
+				#tool = Tools_class()
 
 
