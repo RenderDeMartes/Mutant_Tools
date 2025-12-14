@@ -162,7 +162,7 @@ def buildWingsSystem(ScapAmount, ScaptBack, SecAmount, SecBack, PrimAmount, Prim
         x = x + 1
 
     # Wing Curve and Attrs to fold and fly
-    cmds.curve(n='L_Wing_CC',
+    wing_curve = cmds.curve(n='L_Wing_CC',
                p=[(0.181341, 2.609773, -0.0599978), (0.803078, 1.394147, -0.0599978), (1.738284, 0.480369, -0.0599978),
                   (2.851947, -0.00134716, -0.0599978), (3.005523, 0.762495, -0.0599978),
                   (3.537822, 0.476033, -0.0599978), (4.064058, 0.282399, -0.0599978), (4.599892, 0.252699, -0.0599978),
@@ -186,6 +186,8 @@ def buildWingsSystem(ScapAmount, ScaptBack, SecAmount, SecBack, PrimAmount, Prim
                k=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27,
                   28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52,
                   53, 54], d=1)
+    wing_shape = cmds.listRelatives(wing_curve, s=True, f=True)[0]
+    cmds.rename(wing_shape, wing_curve+'Shape')
     cmds.setAttr("L_Wing_CC.overrideEnabled", 1)
     cmds.setAttr("L_Wing_CC.overrideColor", 16)
     cmds.group(n='L_Wing_CC_Auto')
