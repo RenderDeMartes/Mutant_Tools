@@ -99,7 +99,7 @@ class Wrap3D(object):
         self.wrap_skin_file = os.path.join(FOLDER, 'Utils', 'Wrap', 'Skins', 'WrapBaseMesh.json')
         self.skin_file = self.wrap_skin_file
 
-        self.block_order = self.get_order_of_blocks()
+        self.block_order = {}
 
     #-----------------------------------------------------------------------------------------------------
     #-----------------------------------------------------------------------------------------------------
