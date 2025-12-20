@@ -70,5 +70,5 @@ ctrls = cmds.ls(sl=True)
 for ctrl in ctrls:
     print(ctrl)
     cmds.select(ctrl)
-    connect_material_to_shape(ctrl, "light_blue")
+    connect_material_to_shape(ctrl, "red")
 
