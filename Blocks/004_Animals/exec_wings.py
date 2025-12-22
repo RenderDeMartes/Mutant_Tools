@@ -237,8 +237,68 @@ def build_wings_block():
         for grp in scauplars_grp:
             cmds.connectAttr('R_Wing_Ctrl.ScapularsSwing', grp + '.rotateZ', f=True)
 
+        parent_feather_bends_chained()
+
+    clean_cc_names()
+
     print ('Build {} Success'.format(block))
 
 
 
 #build_wings_block()
+
+
+import maya.cmds as cmds
+
+def parent_feather_bends_chained(
+    sides=("L_", "R_"),
+    parts=("Secondaries", "Scapulars", "Primaries")
+):
+    """
+    Creates a chained hierarchy:
+    Base
+      └─ Bend01
+          └─ Bend02
+              └─ Bend03
+    """
+
+    for side in sides:
+        for part in parts:
+
+            feather_index = 0
+            while True:
+                num = str(feather_index).zfill(3)
+                base_joint = f"{side}{part}_JR_Fthr_{num}_Bnd"
+
+                if not cmds.objExists(base_joint):
+                    break
+
+                previous_parent = base_joint
+                bend_index = 1
+
+                while True:
+                    bend_num = str(bend_index).zfill(2)
+                    bend_joint = f"{side}{part}_JR_Fthr_{num}Bend{bend_num}_Bnd"
+
+                    if not cmds.objExists(bend_joint):
+                        break
+
+                    current_parent = cmds.listRelatives(bend_joint, parent=True)
+                    if current_parent != [previous_parent]:
+                        cmds.parent(bend_joint, previous_parent)
+
+                    previous_parent = bend_joint
+                    bend_index += 1
+
+                feather_index += 1
+
+    print("Feather bend chained parenting completed.")
+
+
+def clean_cc_names():
+    cc_names = cmds.ls('*_CC', type='transform', long=True)
+
+    for cc in cc_names:
+        new_name = cc.split('|')[-1].replace('_CC', '_Ctrl')
+        cmds.rename(cc, new_name)
+
