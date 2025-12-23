@@ -184,12 +184,6 @@ def build_wings_block():
     for c in cmds.listRelatives('R_Wing_AutoRig_Mirror_GRP', type='joint', ad=True):
         cmds.setAttr('{}.drawStyle'.format(c), 2)
 
-    #Block aprent connections
-    cmds.parentConstraint(block_parent, 'L_Clavicle_JC_Root', mo=True)
-    cmds.parentConstraint(block_parent, 'R_Clavicle_JC_Root', mo=True)
-    cmds.scaleConstraint(block_parent, 'L_Clavicle_JC_Root', mo=True)
-    cmds.scaleConstraint(block_parent, 'R_Clavicle_JC_Root', mo=True)
-
     #Update curves to be 2 line
     curves = cmds.ls('*_Ctrl')
     for c in curves:
@@ -211,8 +205,14 @@ def build_wings_block():
                 }
     bind_jnt_grp = '{}{}'.format(setup['rig_groups']['bind_joints'], nc['group'])
 
+    #Remove the flip
+    cmds.setAttr('R_Wing_AutoRig_Mirror_GRP.rotateX', 0)
+    cmds.setAttr('R_Wing_AutoRig_Mirror_GRP.scaleX', 1)
+    cmds.setAttr('R_Wing_AutoRig_Mirror_GRP.scaleY', 1)
+    cmds.setAttr('R_Wing_AutoRig_Mirror_GRP.scaleZ', 1)
+
     for f in feathers:
-        grp = cmds.group(em=True, n=f+'_Bnd'+'_Grp')
+        grp = cmds.group(em=True, n=f + '_Bnd' + '_Grp')
         cmds.parent(grp, bind_jnt_grp)
         joints = cmds.ls(feathers[f], type='joint')
         for jnt in joints:
@@ -220,8 +220,28 @@ def build_wings_block():
             if cmds.objExists(jnt + nc['joint_bind']):
                 continue
             bind_joint = cmds.joint(n=jnt + nc['joint_bind'])
-            cmds.parentConstraint(jnt, bind_joint)
-            cmds.scaleConstraint(jnt, bind_joint)
+            mt.match(bind_joint, jnt, s=False)
+            if 'Fthr' in jnt:
+                ctrl = mt.curve(input=jnt,
+                                type='pin_cube',
+                                rename=True,
+                                custom_name=True,
+                                name=jnt + '_Indiv' + nc['ctrl'],
+                                size=0.5)
+
+                root_grp = mt.root_grp()[0]
+                mt.match(root_grp, jnt, r=True, t=True)
+
+                child = cmds.listRelatives(jnt, c=True)
+                if child:
+                    cmds.parent(child, ctrl)
+                cmds.parent(root_grp, jnt)
+
+                cmds.parentConstraint(ctrl, bind_joint, mo=True)
+                cmds.scaleConstraint(ctrl, bind_joint, mo=True)
+            else:
+                cmds.parentConstraint(jnt, bind_joint, mo=True)
+                cmds.scaleConstraint(jnt, bind_joint, mo=True)
             cmds.setAttr('{}.radius'.format(bind_joint), 1.5)
             cmds.parent(bind_joint, grp)
 
@@ -238,6 +258,18 @@ def build_wings_block():
             cmds.connectAttr('R_Wing_Ctrl.ScapularsSwing', grp + '.rotateZ', f=True)
 
         parent_feather_bends_chained()
+
+    #Redo the flip
+    cmds.setAttr('R_Wing_AutoRig_Mirror_GRP.rotateX', 180)
+    cmds.setAttr('R_Wing_AutoRig_Mirror_GRP.scaleX', -1)
+    cmds.setAttr('R_Wing_AutoRig_Mirror_GRP.scaleY', -1)
+    cmds.setAttr('R_Wing_AutoRig_Mirror_GRP.scaleZ', -1)
+
+    # Block aprent connections
+    cmds.parentConstraint(block_parent, 'L_Clavicle_JC_Root', mo=True)
+    cmds.parentConstraint(block_parent, 'R_Clavicle_JC_Root', mo=True)
+    cmds.scaleConstraint(block_parent, 'L_Clavicle_JC_Root', mo=True)
+    cmds.scaleConstraint(block_parent, 'R_Clavicle_JC_Root', mo=True)
 
     clean_cc_names()
 
