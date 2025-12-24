@@ -120,10 +120,12 @@ def build_chain_block():
 
         to_build = [new_guide]
 
-        if cmds.getAttr('{}.Mirror'.format(config)):
+        mirror = cmds.getAttr('{}.Mirror'.format(config))
 
-            right_guide = cmds.mirrorJoint(new_guide, mirrorYZ = True, mirrorBehavior=True, searchReplace = (nc['left'],nc['right']))[0]
-            #right_guide = mt.duplicate_change_names(input=new_guide, hi=True, search=nc['left'], replace=nc['right'])[0]
+        if mirror:
+
+            #right_guide = cmds.mirrorJoint(new_guide, mirrorYZ = True, mirrorBehavior=True, searchReplace = (nc['left'],nc['right']))[0]
+            right_guide = mt.duplicate_change_names(input=new_guide, hi=True, search=nc['left'], replace=nc['right'])[0]
             #mt.orient_joint(input=right_guide)
             to_build.append(right_guide)
 
@@ -188,15 +190,22 @@ def build_chain_block():
                     block_parent = block_parent.replace(nc['left'], nc['right'])
 
 
+
+            # auto rotate
+            if cmds.getAttr('{}.AutoRotate'.format(config)):
+                mt.create_auto_rotate_fk(fk_system[0], ctrl_root, cmds.getAttr('{}.CtrlSize'.format(config)))
+
+            #Mirror System
+            if is_right_side and mirror:
+                mirror_ctrl_grp = mt.mirror_group(ctrl_root, world=True)
+                ctrl_root = mirror_ctrl_grp
+                cmds.parent(ctrl_root, clean_ctrl_grp)
+
+            #Constriant after mirror
             cmds.parentConstraint(block_parent, ctrl_root, maintainOffset=1)
             cmds.scaleConstraint(block_parent, ctrl_root, maintainOffset=1)
             cmds.parentConstraint(block_parent, clean_rig_grp, maintainOffset=1)
             cmds.scaleConstraint(block_parent, clean_rig_grp, maintainOffset=1)
-
-            # auto rotate
-
-            if cmds.getAttr('{}.AutoRotate'.format(config)):
-                mt.create_auto_rotate_fk(fk_system[0], ctrl_root, cmds.getAttr('{}.CtrlSize'.format(config)))
 
             # bind joints
             bind_joints = []
