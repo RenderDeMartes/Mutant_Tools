@@ -238,10 +238,10 @@ def build_wings_block():
                 cmds.parent(root_grp, jnt)
 
                 cmds.parentConstraint(ctrl, bind_joint, mo=True)
-                cmds.scaleConstraint(ctrl, bind_joint, mo=True)
+                #cmds.scaleConstraint(ctrl, bind_joint, mo=True)
             else:
                 cmds.parentConstraint(jnt, bind_joint, mo=True)
-                cmds.scaleConstraint(jnt, bind_joint, mo=True)
+                #cmds.scaleConstraint(jnt, bind_joint, mo=True)
             cmds.setAttr('{}.radius'.format(bind_joint), 1.5)
             cmds.parent(bind_joint, grp)
 
