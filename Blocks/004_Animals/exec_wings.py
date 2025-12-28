@@ -265,11 +265,15 @@ def build_wings_block():
     cmds.setAttr('R_Wing_AutoRig_Mirror_GRP.scaleY', -1)
     cmds.setAttr('R_Wing_AutoRig_Mirror_GRP.scaleZ', -1)
 
-    # Block aprent connections
+    # Block parent connections
     cmds.parentConstraint(block_parent, 'L_Clavicle_JC_Root', mo=True)
     cmds.parentConstraint(block_parent, 'R_Clavicle_JC_Root', mo=True)
     cmds.scaleConstraint(block_parent, 'L_Clavicle_JC_Root', mo=True)
     cmds.scaleConstraint(block_parent, 'R_Clavicle_JC_Root', mo=True)
+
+    cmds.scaleConstraint(block_parent, bind_jnt_grp, mo=True)
+    cmds.scaleConstraint(block_parent, 'L_Wing_CC_Auto', mo=True)
+    cmds.scaleConstraint(block_parent, 'R_Wing_CC_Auto', mo=True)
 
     clean_cc_names()
 
