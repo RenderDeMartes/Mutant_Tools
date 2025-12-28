@@ -328,6 +328,13 @@ def createWings(name1 = 'Null',
     InRoot, InAuto, InCube = spreadControllers(mode='In', cornerJoint = jointsSel[0], index = 0)
     OutRoot, OutAuto, OutCube = spreadControllers(mode='Out', cornerJoint = jointsSel[0], index = amount -1)
 
+    def normalized_weight(index, count):
+        if count <= 1:
+            return 1.0
+        return float(index) / float(count - 1)
+
+
+
     #Connect Spread to Joints
     #Save root position
   
@@ -335,49 +342,82 @@ def createWings(name1 = 'Null',
         cmds.select(jointsSel[0]+'_Fthr_00'+str(i)+'_SpreadAuto')
         rootAuto()
 
-    def connectAttrMult(input, output, value, nodeName):
+    def connect_mult(input_attr, output_attr, weight, name):
+        node = cmds.createNode('multiplyDivide', n=name)
+        cmds.setAttr(node + '.operation', 1)  # multiply
+        cmds.setAttr(node + '.input2X', weight)
+        cmds.connectAttr(input_attr, node + '.input1X', f=True)
+        cmds.connectAttr(node + '.outputX', output_attr, f=True)
+        return node
 
-        MultNode = cmds.shadingNode('multiplyDivide', asUtility=1, n = nodeName)
-        cmds.connectAttr(input, str(MultNode)+'.input1.input1X')
-        cmds.setAttr(str(MultNode)+'.input2.input2X', value)
-        cmds.connectAttr(str(MultNode)+'.output.outputX', output)
-        cmds.setAttr(MultNode+'.operation', 1)
-    
-    if amount > 9:
-        lotsVariable = 0.1
-        
-    elif 5 < amount < 10:
-        lotsVariable = 0.2
-                
-    elif amount == 5:
-        lotsVariable = 0.3
-        
-    elif amount < 5: 
-        lotsVariable = 0.5 
-    
-    #NormalSpread OUT Side
-    x = 0
+    #amount = len(jointsSel)
 
-    while cmds.objExists(jointsSel[0]+'_Fthr_00'+str(x)+'_SpreadCtrlGrp'):
-        connectAttrMult(input=jointsSel[0]+'_Spread_Out_Ctrl'+".ry", output = str(jointsSel[0])+'_Fthr_00'+str(x)+'_SpreadCtrlGrp.rotateY', value = (x + 1)* lotsVariable  , nodeName = str(jointsSel[0])+'_Fthr_00NodeSpread' + str(x))
-        connectAttrMult(input=jointsSel[0]+'_Spread_Out_Ctrl'+".rx", output = str(jointsSel[0])+'_Fthr_00'+str(x)+'_RootJnt.rotateX', value = (x + 1)* lotsVariable  , nodeName = str(jointsSel[0])+'_Fthr_00NodeSpread' + str(x))
-        connectAttrMult(input=jointsSel[0]+'_Spread_Out_Auto_Grp'+".ry", output = str(jointsSel[0])+'_Fthr_00'+str(x)+'_SpreadAuto_Auto.rotateY', value = (x + 1)* lotsVariable  , nodeName = str(jointsSel[0])+'_Fthr_00NodeSpread' + str(x))
-        connectAttrMult(input=jointsSel[0]+'_Spread_Out_Auto_Grp'+".rx", output = str(jointsSel[0])+'_Fthr_00'+str(x)+'_SpreadAuto_Auto.rotateX', value = (x + 1)* lotsVariable  , nodeName = str(jointsSel[0])+'_Fthr_00NodeSpread' + str(x))
+    for i in range(amount):
+        w = normalized_weight(i, amount)
 
+        prefix = jointsSel[0] + '_Fthr_00{}'.format(i)
 
-        x = x + 1
-        
-    #NormalSpread IN Side
-    x = amount - 1
-    y = 0
-    while cmds.objExists(jointsSel[0]+'_Fthr_00'+str(x)+'_SpreadCtrlGrp'):
-        connectAttrMult(input=jointsSel[0]+'_Spread_In_Ctrl'+".ry", output = str(jointsSel[0])+'_Fthr_00'+str(x)+'_RootJnt.rotateY', value = (y + 1) * lotsVariable  , nodeName = str(jointsSel[0])+'_Fthr_00NodeSpread' + str(x))
-        connectAttrMult(input=jointsSel[0]+'_Spread_In_Ctrl'+".rx", output = str(jointsSel[0])+'_Fthr_00'+str(x)+'_SpreadAuto.rotateX', value = (y + 1) * lotsVariable  , nodeName = str(jointsSel[0])+'_Fthr_00NodeSpread' + str(x))
-        connectAttrMult(input=jointsSel[0]+'_Spread_In_Auto_Grp'+".ry", output = str(jointsSel[0])+'_Fthr_00'+str(x)+'_SpreadAuto.rotateY', value = (y + 1) * lotsVariable  , nodeName = str(jointsSel[0])+'_Fthr_00NodeSpread' + str(x))
-        connectAttrMult(input=jointsSel[0]+'_Spread_In_Auto_Grp'+".rx", output = str(jointsSel[0])+'_Fthr_00'+str(x)+'_SpreadCtrlGrp.rotateX', value = (y + 1) * lotsVariable  , nodeName = str(jointsSel[0])+'_Fthr_00NodeSpread' + str(x))
+        connect_mult(
+            jointsSel[0] + '_Spread_Out_Ctrl.ry',
+            prefix + '_SpreadCtrlGrp.rotateY',
+            w,
+            prefix + '_Out_ry_MD'
+        )
 
-        x = x - 1
-        y = y + 1 
+        connect_mult(
+            jointsSel[0] + '_Spread_Out_Ctrl.rx',
+            prefix + '_RootJnt.rotateX',
+            w,
+            prefix + '_Out_rx_MD'
+        )
+
+        connect_mult(
+            jointsSel[0] + '_Spread_Out_Auto_Grp.ry',
+            prefix + '_SpreadAuto_Auto.rotateY',
+            w,
+            prefix + '_OutAuto_ry_MD'
+        )
+
+        connect_mult(
+            jointsSel[0] + '_Spread_Out_Auto_Grp.rx',
+            prefix + '_SpreadAuto_Auto.rotateX',
+            w,
+            prefix + '_OutAuto_rx_MD'
+        )
+
+    for i in range(amount):
+        rev_i = amount - 1 - i
+        w = normalized_weight(i, amount)
+
+        prefix = jointsSel[0] + '_Fthr_00{}'.format(rev_i)
+
+        connect_mult(
+            jointsSel[0] + '_Spread_In_Ctrl.ry',
+            prefix + '_RootJnt.rotateY',
+            w,
+            prefix + '_In_ry_MD'
+        )
+
+        connect_mult(
+            jointsSel[0] + '_Spread_In_Ctrl.rx',
+            prefix + '_SpreadAuto.rotateX',
+            w,
+            prefix + '_In_rx_MD'
+        )
+
+        connect_mult(
+            jointsSel[0] + '_Spread_In_Auto_Grp.ry',
+            prefix + '_SpreadAuto.rotateY',
+            w,
+            prefix + '_InAuto_ry_MD'
+        )
+
+        connect_mult(
+            jointsSel[0] + '_Spread_In_Auto_Grp.rx',
+            prefix + '_SpreadCtrlGrp.rotateX',
+            w,
+            prefix + '_InAuto_rx_MD'
+        )
 
     #***********************************************************************
     #Controllers for each Feather
