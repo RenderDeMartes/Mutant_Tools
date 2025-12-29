@@ -89,27 +89,39 @@ def build_load_ctrls_block():
 
     block = cmds.ls(sl=True)
     config = cmds.listConnections(block)[1]
-    file = cmds.getAttr('{}.File'.format(config), asString = True)
-    if not file:
+    file_value = cmds.getAttr('{}.File'.format(config), asString=True)
+    if not file_value:
         return False
+
+    CTRL_DATA_DIR = os.path.join(FOLDER, 'Utils', 'IO', 'Ctrl_Data')
+
+    # Preset name -> json file
+    PRESETS = {
+        'AG': 'AG.json',
+        'SP': 'SP.json',
+        'Quad': 'Quad.json',
+        'Simple': 'Simple.json',
+        'Game': 'Game.json',
+        'Pig': 'Pig.json',
+        'Shot': 'Shot.json',
+    }
+
     try:
-        if file == 'AG':
-            print('Loading From:', os.path.join(FOLDER,'Utils', 'IO', 'Ctrl_Data', 'AG.json'))
-            ctrls.load_all(path = os.path.join(FOLDER,'Utils', 'IO', 'Ctrl_Data', 'AG.json'))
-        elif file == 'SP':
-            print('Loading From:', os.path.join(FOLDER,'Utils', 'IO', 'Ctrl_Data', 'SP.json'))
-            ctrls.load_all(path = os.path.join(FOLDER,'Utils', 'IO', 'Ctrl_Data', 'SP.json'))
-        elif file == 'Quad':
-            print('Loading From:', os.path.join(FOLDER,'Utils', 'IO', 'Ctrl_Data', 'Quad.json'))
-            ctrls.load_all(path = os.path.join(FOLDER,'Utils', 'IO', 'Ctrl_Data', 'Quad.json'))
-        elif file == 'Simple':
-            print('Loading From:', os.path.join(FOLDER,'Utils', 'IO', 'Ctrl_Data', 'Simple.json'))
-            ctrls.load_all(path = os.path.join(FOLDER,'Utils', 'IO', 'Ctrl_Data', 'Simple.json'))
+        if file_value in PRESETS:
+            json_path = os.path.join(CTRL_DATA_DIR, PRESETS[file_value])
         else:
-            print('Loading From:', file)
-            ctrls.load_all(path = file)
-    except:
-        pass
+            # assume it's already a file path
+            json_path = file_value
+
+        if not os.path.exists(json_path):
+            cmds.warning('Ctrl preset not found: {}'.format(json_path))
+            return False
+
+        print('Loading From:', json_path)
+        ctrls.load_all(path=json_path)
+
+    except Exception as e:
+        cmds.warning('Failed loading ctrl data: {}'.format(e))
 
 
     print ('Build {} Success'.format(block))
