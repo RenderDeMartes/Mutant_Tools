@@ -198,8 +198,7 @@ def build_chain_block():
             #Mirror System
             if is_right_side and mirror:
                 mirror_ctrl_grp = mt.mirror_group(ctrl_root, world=True)
-                ctrl_root = mirror_ctrl_grp
-                cmds.parent(ctrl_root, clean_ctrl_grp)
+                cmds.parent(mirror_ctrl_grp, clean_ctrl_grp)
 
             #Constriant after mirror
             cmds.parentConstraint(block_parent, ctrl_root, maintainOffset=1)
