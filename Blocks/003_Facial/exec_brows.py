@@ -145,6 +145,7 @@ def build_brows_block():
 
         tweek_joints = []
         tweek_controllers = []
+        tweek_controllers_offsets = []
         follicles = []
 
         tweek_joints_grp = cmds.group(em=True, n='{}_TweekJnts{}'.format(name, nc['group']))
@@ -205,6 +206,7 @@ def build_brows_block():
             tweek_controllers.append(ctrl)
             mt.assign_color(color=color)
             ctrl_root = mt.root_grp()[0]
+            tweek_controllers_offsets.append(ctrl_root)
             mt.match(ctrl_root, jnt, r=False, t=True)
 
             cmds.parent(ctrl_root, tweek_ctrl_grp)
@@ -524,6 +526,10 @@ def build_brows_block():
 
             cmds.setAttr(surface + ".inheritsTransform", 0)
             cmds.setAttr(tweek_joints_grp + ".inheritsTransform", 0)
+
+            # Remove double transform in tweeks offsets
+            for grp in tweek_controllers_offsets:
+                cmds.setAttr(grp + '.inheritsTransform', 0)
 
     # #Create extra brow ctrl in the Middle
     # if cmds.objExists('L_Brow_Driver0_Main_Ctrl') and cmds.objExists('R_Brow_Driver0_Main_Ctrl'):
