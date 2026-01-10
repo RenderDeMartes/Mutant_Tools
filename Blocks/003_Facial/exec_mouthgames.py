@@ -1025,6 +1025,7 @@ def build_mouthgames_block():
     # parent ctrls to block parent
     cmds.parentConstraint(block_parent, clean_ctrl_grp, mo=True)
     cmds.scaleConstraint(block_parent, clean_ctrl_grp, mo=True)
+    cmds.scaleConstraint(block_parent, jaw_top_locator, mo=True)
 
     # Clean a bit
     cmds.parent(clean_rig_grp, '{}{}'.format(setup['rig_groups']['misc'], nc['group']))
