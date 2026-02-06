@@ -60,7 +60,7 @@ import json
 from pathlib import Path
 
 try: 
-	import tools
+	from . import tools
 	reload(tools)
 
 except:
@@ -80,7 +80,7 @@ for f in PATH_PARTS:
 	FOLDER = os.path.join(FOLDER, f)
 
 
-nc, curve_data, setup = tools.nc, tools.curve_data, tools.setup
+nc, curve_data, setup = tools.import_configs()
 
 
 #----------------------------------------------------------------------------------------------------------------

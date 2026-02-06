@@ -72,7 +72,7 @@ except:
 import Mutant_Tools.Utils.Wrap
 from Mutant_Tools.Utils.Wrap import wrap_utils
 import imp
-imp.reload(wrap_utils)
+reload(wrap_utils)
 cWrap = wrap_utils.Wrap3D()
 
 from Mutant_Tools.Utils.Wrap.Skeletor import Skeletor

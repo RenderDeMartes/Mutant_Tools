@@ -107,8 +107,7 @@ mt = main_mutant.Mutant()
 
 import Mutant_Tools.Utils.Wrap
 from Mutant_Tools.Utils.Wrap import wrap_utils
-import imp
-imp.reload(wrap_utils)
+reload(wrap_utils)
 cWrap = wrap_utils.Wrap3D()
 
 from Mutant_Tools.Utils.Wrap.Skeletor import Skeletor
@@ -320,7 +319,7 @@ class HelperUI(QtMutantWindow.Qt_Mutant):
 
 		import Mutant_Tools
 		from Mutant_Tools.UI.AutoRigger import load_autoRigger
-		imp.reload(load_autoRigger)
+		reload(load_autoRigger)
 		try:
 			AutoRigger.close()
 		except:
