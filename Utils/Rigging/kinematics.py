@@ -2341,6 +2341,15 @@ class Kinematics_class(tools.Tools_class):
 
 	#----------------------------------------------------------------------------------------------------------------
 
+	def create_mdl_compat(self, name):
+		try:
+			node = cmds.createNode("multDoubleLinear", n=name)
+			return node, "input1", "input2", "output"
+		except Exception:
+			node = cmds.createNode("multiplyDivide", n=name)
+			cmds.setAttr("{0}.operation".format(node), 1)
+			return node, "input1X", "input2X", "outputX"
+
 
 	def bend_and_squash_head(self, geo, parent_grp):
 		"""
@@ -2399,11 +2408,11 @@ class Kinematics_class(tools.Tools_class):
 
 			cmds.matchTransform(hdl, def_grp, pos=True, rot=False)
 
-			nolinear_mdl = cmds.createNode("multDoubleLinear", n="{0}_multD".format(hdl))
-			cmds.setAttr("{0}.input2".format(nolinear_mdl), n_mult)
+			nolinear_mdl, in1_attr, in2_attr, out_attr = self.create_mdl_compat("{0}_multD".format(hdl))
+			cmds.setAttr("{0}.{1}".format(nolinear_mdl, in2_attr), n_mult)
 
-			cmds.connectAttr("{0}.t{1}".format(ctrl, n_trans), "{0}.input1".format(nolinear_mdl))
-			cmds.connectAttr("{0}.output".format(nolinear_mdl), "{0}.{1}".format(dag, n_fac))
+			cmds.connectAttr("{0}.t{1}".format(ctrl, n_trans), "{0}.{1}".format(nolinear_mdl, in1_attr))
+			cmds.connectAttr("{0}.{1}".format(nolinear_mdl, out_attr), "{0}.{1}".format(dag, n_fac))
 
 		cmds.parentConstraint(parent_grp, off_def_grp, mo=False)
 		cmds.parent(ctrl_grp, parent_grp)
@@ -2475,11 +2484,11 @@ class Kinematics_class(tools.Tools_class):
 
 			cmds.matchTransform(hdl, def_grp, pos=True, rot=False)
 
-			nolinear_mdl = cmds.createNode("multDoubleLinear", n="{0}_multD".format(hdl))
-			cmds.setAttr("{0}.input2".format(nolinear_mdl), n_mult)
+			nolinear_mdl, in1_attr, in2_attr, out_attr = self.create_mdl_compat("{0}_multD".format(hdl))
+			cmds.setAttr("{0}.{1}".format(nolinear_mdl, in2_attr), n_mult)
 
-			cmds.connectAttr("{0}.t{1}".format(ctrl, n_trans), "{0}.input1".format(nolinear_mdl))
-			cmds.connectAttr("{0}.output".format(nolinear_mdl), "{0}.{1}".format(dag, n_fac))
+			cmds.connectAttr("{0}.t{1}".format(ctrl, n_trans), "{0}.{1}".format(nolinear_mdl, in1_attr))
+			cmds.connectAttr("{0}.{1}".format(nolinear_mdl, out_attr), "{0}.{1}".format(dag, n_fac))
 
 		cmds.parentConstraint(parent_grp, off_def_grp, mo=False)
 		cmds.delete(cmds.parentConstraint(parent_grp, ctrl_grp, mo=False))

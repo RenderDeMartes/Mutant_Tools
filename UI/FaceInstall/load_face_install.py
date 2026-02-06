@@ -161,6 +161,15 @@ class FaceInstallUI(QtMutantWindow.Qt_Mutant):
         except:
             pass
 
+    def create_mdl_compat(self, name):
+        try:
+            node = cmds.createNode('multDoubleLinear', n=name)
+            return node, 'input1', 'input2', 'output'
+        except Exception:
+            node = cmds.createNode('multiplyDivide', n=name)
+            cmds.setAttr('{}.operation'.format(node), 1)
+            return node, 'input1X', 'input2X', 'outputX'
+
     def create_connections(self):
         """
 
@@ -694,14 +703,18 @@ class FaceInstallUI(QtMutantWindow.Qt_Mutant):
             cmds.group('{}Eyelids_DwMid_Ctrl'.format(side), n = '{}Eyelids_DwMid_Ctrl_Blinks_Follow_Grp'.format(side))
             cmds.connectAttr('{}EyelidsUprBlink_Ctrl.tx'.format(side), '{}Eyelids_UpMid_Ctrl_Blinks_Follow_Grp.tx'.format(side))
             cmds.connectAttr('{}EyelidsLwrBlink_Ctrl.tx'.format(side), '{}Eyelids_DwMid_Ctrl_Blinks_Follow_Grp.tx'.format(side))
-            multD_LU = cmds.createNode('multDoubleLinear', n = '{}Eyelids_UpMid_Ctrl_Blinks_Follow_Grp_ty_mult'.format(side))
-            multD_LD = cmds.createNode('multDoubleLinear', n = '{}Eyelids_UpMid_Ctrl_Blinks_Follow_Grp_ty_mult'.format(side))
-            cmds.setAttr('{}.input2'.format(multD_LU), -1)
-            cmds.setAttr('{}.input2'.format(multD_LD), 0.5)
-            cmds.connectAttr('{}EyelidsUprBlink_Ctrl.ty'.format(side), '{}.input1'.format(multD_LU))
-            cmds.connectAttr('{}EyelidsLwrBlink_Ctrl.ty'.format(side), '{}.input1'.format(multD_LD))
-            cmds.connectAttr('{}.output'.format(multD_LU), '{}Eyelids_UpMid_Ctrl_Blinks_Follow_Grp.ty'.format(side), f = True)
-            cmds.connectAttr('{}.output'.format(multD_LD), '{}Eyelids_DwMid_Ctrl_Blinks_Follow_Grp.ty'.format(side), f = True)
+            multD_LU, in1_lu, in2_lu, out_lu = self.create_mdl_compat(
+                '{}Eyelids_UpMid_Ctrl_Blinks_Follow_Grp_ty_mult'.format(side)
+            )
+            multD_LD, in1_ld, in2_ld, out_ld = self.create_mdl_compat(
+                '{}Eyelids_UpMid_Ctrl_Blinks_Follow_Grp_ty_mult'.format(side)
+            )
+            cmds.setAttr('{}.{}'.format(multD_LU, in2_lu), -1)
+            cmds.setAttr('{}.{}'.format(multD_LD, in2_ld), 0.5)
+            cmds.connectAttr('{}EyelidsUprBlink_Ctrl.ty'.format(side), '{}.{}'.format(multD_LU, in1_lu))
+            cmds.connectAttr('{}EyelidsLwrBlink_Ctrl.ty'.format(side), '{}.{}'.format(multD_LD, in1_ld))
+            cmds.connectAttr('{}.{}'.format(multD_LU, out_lu), '{}Eyelids_UpMid_Ctrl_Blinks_Follow_Grp.ty'.format(side), f = True)
+            cmds.connectAttr('{}.{}'.format(multD_LD, out_ld), '{}Eyelids_DwMid_Ctrl_Blinks_Follow_Grp.ty'.format(side), f = True)
 
         print('Finished setting up rivet-less eyelids follow setup. ')
 

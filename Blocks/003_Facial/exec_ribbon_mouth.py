@@ -517,21 +517,23 @@ def build_mouth_block():
         for axis in ['X', 'Y', 'Z']:
             #---------Translate--------
 
-            double_linear = cmds.shadingNode('addDoubleLinear', asUtility=True, name=ctrl + '_DLOut')
+            double_linear = mt.create_add_double_linear(name=ctrl + '_DLOut')
+            input1_attr, input2_attr, output_attr = mt.get_add_double_linear_attrs(double_linear)
 
-            cmds.connectAttr('{}.translate{}'.format(sub_ctrl, axis), '{}.input1'.format(double_linear), f=True)
+            cmds.connectAttr('{}.translate{}'.format(sub_ctrl, axis), '{}.{}'.format(double_linear, input1_attr), f=True)
             mt.connect_md_node(in_x1=mode_attr, in_x2='{}.translate{}'.format(ctrl, axis),
-                               out_x='{}.input2'.format(double_linear), mode='multiply', vector=False)
-            cmds.connectAttr('{}.output'.format(double_linear), '{}.translate{}'.format(side_loc, axis), f=True)
+                               out_x='{}.{}'.format(double_linear, input2_attr), mode='multiply', vector=False)
+            cmds.connectAttr('{}.{}'.format(double_linear, output_attr), '{}.translate{}'.format(side_loc, axis), f=True)
 
             #---------Rotate--------
 
-            double_linear = cmds.shadingNode('addDoubleLinear', asUtility=True, name=ctrl + '_DLOut')
+            double_linear = mt.create_add_double_linear(name=ctrl + '_DLOut')
+            input1_attr, input2_attr, output_attr = mt.get_add_double_linear_attrs(double_linear)
 
-            cmds.connectAttr('{}.rotate{}'.format(sub_ctrl, axis), '{}.input1'.format(double_linear), f=True)
+            cmds.connectAttr('{}.rotate{}'.format(sub_ctrl, axis), '{}.{}'.format(double_linear, input1_attr), f=True)
             mt.connect_md_node(in_x1=mode_attr, in_x2='{}.rotate{}'.format(ctrl, axis),
-                               out_x='{}.input2'.format(double_linear), mode='multiply', vector=False)
-            cmds.connectAttr('{}.output'.format(double_linear), '{}.rotate{}'.format(side_loc, axis), f=True)
+                               out_x='{}.{}'.format(double_linear, input2_attr), mode='multiply', vector=False)
+            cmds.connectAttr('{}.{}'.format(double_linear, output_attr), '{}.rotate{}'.format(side_loc, axis), f=True)
 
 
         #mirror right

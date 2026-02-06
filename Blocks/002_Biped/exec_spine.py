@@ -443,11 +443,12 @@ def build_spine_block():
         mt.root_grp(input=chest_ctrl, custom=True, custom_name='{}_Chest_Breath_{}'.format(name, nc['group']))[0]
 
         def replace_connection_with_doublelinear(input='', attr='', name='DoubleLinear'):
-            double_linear = cmds.shadingNode('addDoubleLinear', asUtility=True, name=name)
+            double_linear = mt.create_add_double_linear(name=name)
+            input1_attr, input2_attr, output_attr = mt.get_add_double_linear_attrs(double_linear)
             # connection_to_replace = cmds.listConnections('{}.{}'.format(input, attr), p=True)[0]
             # print(connection_to_replace)
-            cmds.setAttr('{}.input1'.format(double_linear), 1)
-            cmds.connectAttr('{}.output'.format(double_linear), '{}.{}'.format(input, attr), f=True)
+            cmds.setAttr('{}.{}'.format(double_linear, input1_attr), 1)
+            cmds.connectAttr('{}.{}'.format(double_linear, output_attr), '{}.{}'.format(input, attr), f=True)
             # mt.put_inside_rig_container([double_linear])
             return double_linear
 
@@ -459,7 +460,8 @@ def build_spine_block():
                                                                attr='scaleY',
                                                                name='Belly_Breath_Add_YZ')
 
-        cmds.connectAttr('{}.output'.format(add_yz_belly), '{}_Belly{}'.format(name, nc['joint']) + '.scaleZ', f=True)
+        add_yz_belly_output = mt.get_add_double_linear_attrs(add_yz_belly)[2]
+        cmds.connectAttr('{}.{}'.format(add_yz_belly, add_yz_belly_output), '{}_Belly{}'.format(name, nc['joint']) + '.scaleZ', f=True)
 
         add_x_chest = replace_connection_with_doublelinear(input='{}_Chest{}'.format(name, nc['joint']),
                                                            attr='scaleX',
@@ -468,7 +470,13 @@ def build_spine_block():
         add_yz_chest = mt.replace_connection_with_doublelinear(input='{}_Chest{}'.format(name, nc['joint']),
                                                                attr='scaleY',
                                                                name='Chest_Breath_Add_YZ')
-        cmds.connectAttr('{}.output'.format(add_yz_chest), '{}_Chest{}'.format(name, nc['joint']) + '.scaleZ', f=True)
+        add_yz_chest_output = mt.get_add_double_linear_attrs(add_yz_chest)[2]
+        cmds.connectAttr('{}.{}'.format(add_yz_chest, add_yz_chest_output), '{}_Chest{}'.format(name, nc['joint']) + '.scaleZ', f=True)
+
+        add_x_belly_input2 = mt.get_add_double_linear_attrs(add_x_belly)[1]
+        add_yz_belly_input2 = mt.get_add_double_linear_attrs(add_yz_belly)[1]
+        add_x_chest_input2 = mt.get_add_double_linear_attrs(add_x_chest)[1]
+        add_yz_chest_input2 = mt.get_add_double_linear_attrs(add_yz_chest)[1]
 
         # breathing expression
         breath_exp = cmds.expression(n=name + '_breath' + nc['expression'],
@@ -477,18 +485,18 @@ def build_spine_block():
                                             $amount = {} * {};
                                             $breath = sin(time*$freq)*$amount;
                                             //Apply_it_to_the_nodes
-                                            {}.input2 = $breath * 0.07 *{};
-                                            {}.input2 = $breath * 0.07 *{};
-                                            {}.input2 = $breath * 0.07 *{};
-                                            {}.input2 = $breath * 0.07 *{};
+                                    {}.{} = $breath * 0.07 *{};
+                                    {}.{} = $breath * 0.07 *{};
+                                    {}.{} = $breath * 0.07 *{};
+                                    {}.{} = $breath * 0.07 *{};
                                             {}.rotateX = -1 * sin(time*$freq*$amount)*$amount*{}-{}/2;
                                             """.format(breath_frequency,
                                                        breath_amount,
                                                        breath_auto,
-                                                       add_x_belly, breath_belly,
-                                                       add_yz_belly, breath_belly,
-                                                       add_x_chest, breath_chest,
-                                                       add_yz_chest, breath_chest,
+                                                       add_x_belly, add_x_belly_input2, breath_belly,
+                                                       add_yz_belly, add_yz_belly_input2, breath_belly,
+                                                       add_x_chest, add_x_chest_input2, breath_chest,
+                                                       add_yz_chest, add_yz_chest_input2, breath_chest,
                                                        chest_offset, chest_rotate, chest_rotate
                                                        ).replace(' ', '')
                                      )
