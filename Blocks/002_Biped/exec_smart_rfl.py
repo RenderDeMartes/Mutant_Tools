@@ -146,18 +146,20 @@ def build_smart_rfl_block():
         #get connections of main one
         roll_out_connections = cmds.listConnections('{}.FootRoll'.format(side_guide), p=True)
         for c in roll_out_connections:
-            double_linear = cmds.shadingNode('addDoubleLinear', asUtility=True)
-            cmds.connectAttr('{}.FootRoll'.format(side_guide), '{}.input1'.format(double_linear), f=True)
-            cmds.connectAttr('{}.rotateX'.format(rfl_ctrl), '{}.input2'.format(double_linear), f=True)
-            cmds.connectAttr('{}.output'.format(double_linear), c, f=True)
+            double_linear = mt.create_add_double_linear()
+            input1_attr, input2_attr, output_attr = mt.get_add_double_linear_attrs(double_linear)
+            cmds.connectAttr('{}.FootRoll'.format(side_guide), '{}.{}'.format(double_linear, input1_attr), f=True)
+            cmds.connectAttr('{}.rotateX'.format(rfl_ctrl), '{}.{}'.format(double_linear, input2_attr), f=True)
+            cmds.connectAttr('{}.{}'.format(double_linear, output_attr), c, f=True)
 
 
         pivot_ball_connections = cmds.listConnections('{}.PivotBall'.format(side_guide), p=True)
         for c in pivot_ball_connections:
-            double_linear = cmds.shadingNode('addDoubleLinear', asUtility=True)
-            cmds.connectAttr('{}.PivotBall'.format(side_guide), '{}.input1'.format(double_linear), f=True)
-            cmds.connectAttr('{}.rotateY'.format(rfl_ctrl), '{}.input2'.format(double_linear), f=True)
-            cmds.connectAttr('{}.output'.format(double_linear), c, f=True)
+            double_linear = mt.create_add_double_linear()
+            input1_attr, input2_attr, output_attr = mt.get_add_double_linear_attrs(double_linear)
+            cmds.connectAttr('{}.PivotBall'.format(side_guide), '{}.{}'.format(double_linear, input1_attr), f=True)
+            cmds.connectAttr('{}.rotateY'.format(rfl_ctrl), '{}.{}'.format(double_linear, input2_attr), f=True)
+            cmds.connectAttr('{}.{}'.format(double_linear, output_attr), c, f=True)
 
         roll_out_connections = cmds.listConnections('{}.RollOut'.format(side_guide), p=True)
         roll_in_connections = cmds.listConnections('{}.RollIn'.format(side_guide), p=True)
@@ -171,10 +173,11 @@ def build_smart_rfl_block():
                 cmds.setAttr('{}.outputMin'.format(out_remap_node), 0)
                 cmds.setAttr('{}.outputMax'.format(out_remap_node), -180)
 
-                double_linear = cmds.shadingNode('addDoubleLinear', asUtility=True, name=name + '_DLOut')
-                cmds.connectAttr('{}.RollOut'.format(side_guide), '{}.input1'.format(double_linear), f=True)
-                cmds.connectAttr('{}.outValue'.format(out_remap_node), '{}.input2'.format(double_linear), f=True)
-                cmds.connectAttr('{}.output'.format(double_linear), c, f=True)
+                double_linear = mt.create_add_double_linear(name=name + '_DLOut')
+                input1_attr, input2_attr, output_attr = mt.get_add_double_linear_attrs(double_linear)
+                cmds.connectAttr('{}.RollOut'.format(side_guide), '{}.{}'.format(double_linear, input1_attr), f=True)
+                cmds.connectAttr('{}.outValue'.format(out_remap_node), '{}.{}'.format(double_linear, input2_attr), f=True)
+                cmds.connectAttr('{}.{}'.format(double_linear, output_attr), c, f=True)
 
         roll_in_connections = cmds.listConnections('{}.RollIn'.format(side_guide), p=True)
         for c in roll_in_connections:
@@ -186,10 +189,11 @@ def build_smart_rfl_block():
                 cmds.setAttr('{}.outputMin'.format(in_remap_node), 0)
                 cmds.setAttr('{}.outputMax'.format(in_remap_node), 180)
 
-                double_linear = cmds.shadingNode('addDoubleLinear', asUtility=True, name=name + '_DLIn')
-                cmds.connectAttr('{}.RollIn'.format(side_guide), '{}.input1'.format(double_linear), f=True)
-                cmds.connectAttr('{}.outValue'.format(in_remap_node), '{}.input2'.format(double_linear), f=True)
-                cmds.connectAttr('{}.output'.format(double_linear), c, f=True)
+                double_linear = mt.create_add_double_linear(name=name + '_DLIn')
+                input1_attr, input2_attr, output_attr = mt.get_add_double_linear_attrs(double_linear)
+                cmds.connectAttr('{}.RollIn'.format(side_guide), '{}.{}'.format(double_linear, input1_attr), f=True)
+                cmds.connectAttr('{}.outValue'.format(in_remap_node), '{}.{}'.format(double_linear, input2_attr), f=True)
+                cmds.connectAttr('{}.{}'.format(double_linear, output_attr), c, f=True)
                 #L_Foot_In_RFL_Grp_Auto_Grp.rotateZ
 
         if alt_mode:

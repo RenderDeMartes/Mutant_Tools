@@ -1965,6 +1965,37 @@ class Tools_class(object):
 
 
 	#----------------------------------------------------------------------------------------------------------------
+	def create_add_double_linear(self, name=None):
+		"""Create an add node compatible with multiple Maya versions.
+
+		Returns:
+			str: The created node name.
+		"""
+
+		if 'addDoubleLinear' in cmds.allNodeTypes():
+			if name:
+				return cmds.shadingNode('addDoubleLinear', asUtility=True, name=name)
+			return cmds.shadingNode('addDoubleLinear', asUtility=True)
+
+		if name:
+			node = cmds.createNode('plusMinusAverage', name=name)
+		else:
+			node = cmds.createNode('plusMinusAverage')
+		cmds.setAttr('{}.operation'.format(node), 1)
+		return node
+
+	#----------------------------------------------------------------------------------------------------------------
+	def get_add_double_linear_attrs(self, node):
+		"""Return input/output attr names for the add node type."""
+
+		node_type = cmds.nodeType(node)
+		if node_type == 'addDoubleLinear':
+			return 'input1', 'input2', 'output'
+		if node_type == 'plusMinusAverage':
+			return 'input1D[0]', 'input1D[1]', 'output1D'
+		return 'input1', 'input2', 'output'
+
+	#----------------------------------------------------------------------------------------------------------------
 
 	def replace_connection_with_doublelinear(self, input = '', attr = '', name = 'DoubleLinear'):
 		"""Add a double linear node between two nodes.
@@ -1995,11 +2026,12 @@ class Tools_class(object):
 			replace_connection_with_doublelinear(input='node1', attr='translateX', name='DLNode')
 		"""
 
-		double_linear = cmds.shadingNode('addDoubleLinear', asUtility=True, name = name)
+		double_linear = self.create_add_double_linear(name=name)
+		input1_attr, input2_attr, output_attr = self.get_add_double_linear_attrs(double_linear)
 		connection_to_replace = cmds.listConnections('{}.{}'.format(input,attr), p=True)[0]
 		print (connection_to_replace)
-		cmds.connectAttr('{}'.format(connection_to_replace), '{}.input1'.format(double_linear), f=True)
-		cmds.connectAttr('{}.output'.format(double_linear), '{}.{}'.format(input,attr), f=True)
+		cmds.connectAttr('{}'.format(connection_to_replace), '{}.{}'.format(double_linear, input1_attr), f=True)
+		cmds.connectAttr('{}.{}'.format(double_linear, output_attr), '{}.{}'.format(input,attr), f=True)
 		self.put_inside_rig_container([double_linear])
 
 		return double_linear

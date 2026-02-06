@@ -301,12 +301,14 @@ def build_brows_advance_block():
             dlu = mt.replace_connection_with_doublelinear(input=params_u[num][0].split('.')[0],
                                                          attr=params_u[num][0].split('.')[1],
                                                          name=tweek_joint+'_UFolMove_DL')
-            cmds.setAttr('{}.input2'.format(dlu), params_u[num][1])
+            input1_attr, input2_attr, output_attr = mt.get_add_double_linear_attrs(dlu)
+            cmds.setAttr('{}.{}'.format(dlu, input2_attr), params_u[num][1])
 
             dlv = mt.replace_connection_with_doublelinear(input=params_v[num][0].split('.')[0],
                                                          attr=params_v[num][0].split('.')[1],
                                                          name=tweek_joint+'_VFolMove_DL')
-            cmds.setAttr('{}.input2'.format(dlv), params_v[num][1])
+            input1_attr, input2_attr, output_attr = mt.get_add_double_linear_attrs(dlv)
+            cmds.setAttr('{}.{}'.format(dlv, input2_attr), params_v[num][1])
 
             #Create tweek controllers
             # Create controller
