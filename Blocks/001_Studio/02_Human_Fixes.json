@@ -9,6 +9,6 @@
     "exec_command": "exec_human_fixes.create_human_fixes_block()",
     "build_command": "exec_human_fixes.build_human_fixes_block()",
     "attrs": {
-        "Help_string": "Fixes for Bipeds"
+        "Help_string": "What this block does: Fixes for Human Template. How to use it: usually you can build directly with defaults, then adjust if needed."
     }
 }

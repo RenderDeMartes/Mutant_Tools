@@ -12,6 +12,6 @@
         "SetParent_string": "new_locator",
         "SetAttrsPosition_string": "new_locator",
         "CtrlSize_float": "4",
-        "Help_string": "Possible parent: "
+        "Help_string": "What this block does: Will create a local nose rig. How to use it: fill the key fields below before build. SetParent: set the target node name. If left as default, the tool uses placeholder behavior for setup. SetAttrsPosition: set the target node name. If left as default, the tool uses placeholder behavior for setup. CtrlSize: numeric value that controls size/amount/intensity (default 4). Tip: start with defaults, build once, then tweak only the fields you need. Template parent examples: Head_Jnt, Head_Ctrl, Jaw_Jnt. Template attrs-position examples: Nose_Base_Ctrl, Vis_Ctrl, L_Brow_Ctrl."
     }
 }

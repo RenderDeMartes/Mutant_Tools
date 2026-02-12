@@ -13,6 +13,6 @@
         "CtrlSize_float": "4",
         "CtrlColor_enum": "yellow:lightBlue:blue:white:purple:green:red:grey",
         "CtrlType_enum": "sphere:square:cube:octagon:hexagon:pringle:feet:hand:circleY:circleX:circleZ:3dArrow:2dArrow:mover:2dArrow:root:cog",
-        "Help_string": "For parent use: new_locator, new_locator_each or separate with a ','"
+        "Help_string": "What this block does: Will create multiple bones with controllers. How to use it: fill the key fields below before build. SetParents: set the target node name. If left as default, the tool uses placeholder behavior for setup. CtrlSize: numeric value that controls size/amount/intensity (default 4). CtrlColor: choose one option (for example: yellow, lightBlue, blue, white). CtrlType: choose one option (for example: sphere, square, cube, octagon). Tip: start with defaults, build once, then tweak only the fields you need. Template parent examples: Spine_End_Jnt, Head_Jnt, L_Wrist_Jnt."
     }
 }

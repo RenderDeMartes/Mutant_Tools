@@ -10,6 +10,6 @@
     "build_command": "exec_toon_fixes.build_toon_fixes_block()",
 
     "attrs": {
-        "Help_string": "Fixes for Toon Chars"
+        "Help_string": "What this block does: Fixes for Toon Chars. How to use it: usually you can build directly with defaults, then adjust if needed."
     }
 }

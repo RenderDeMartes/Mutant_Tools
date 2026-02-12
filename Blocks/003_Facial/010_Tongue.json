@@ -13,6 +13,6 @@
         "SetAttrsPosition_string": "new_locator",
         "CtrlSize_float": "4",
         "CtrlColor_enum": "lightBlue:blue:white:purple:green:red:yellow:grey",
-        "Help_string": "Create Tongue System"
+        "Help_string": "What this block does: create Tongue system. How to use it: fill the key fields below before build. SetParent: set the target node name. If left as default, the tool uses placeholder behavior for setup. SetAttrsPosition: set the target node name. If left as default, the tool uses placeholder behavior for setup. CtrlSize: numeric value that controls size/amount/intensity (default 4). CtrlColor: choose one option (for example: lightBlue, blue, white, purple). Tip: start with defaults, build once, then tweak only the fields you need. Template parent examples: Jaw_Jnt, Head_Jnt, Head_Ctrl. Template attrs-position examples: Vis_Ctrl, Lips_Center_Ctrl, Jaw_Ctrl."
     }
 }

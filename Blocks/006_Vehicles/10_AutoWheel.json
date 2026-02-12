@@ -11,6 +11,6 @@
     "attrs": {
         "SetMoverCtrls_string" : "",
         "SetWheelsName_string" : "",
-        "Help_string": "Will create a AutoWheel System"
+        "Help_string": "What this block does: AutoWheel Block. How to use it: fill the key fields below before build. SetMoverCtrls: set the node/object name this block should use. SetWheelsName: set the node/object name this block should use. Tip: start with defaults, build once, then tweak only the fields you need."
     }
 }

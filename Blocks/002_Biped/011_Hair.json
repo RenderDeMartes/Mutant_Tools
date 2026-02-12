@@ -20,6 +20,6 @@
         "SetLockPin_string": "",
         "SetLockGuides_string": "",
         "SetLockAttrs_string": "",
-        "Help_string": "Will create multiple FK chains for a hair setup.\nFor SetLockCtrls set the guide from each chain you want to lock. \nFor SetLockParent set what to lock the ctrls to. \nFor SetLockAttrs set ctrl to have the lock attrs."
+        "Help_string": "What this block does: Will create multiple FK chains for a hair setup. How to use it: fill the key fields below before build. SetParent: set the target node name. If left as default, the tool uses placeholder behavior for setup. Mirror: turn this ON/OFF depending on whether you want that feature. AutoRotate: turn this ON/OFF depending on whether you want that feature. SubAutoRotate: turn this ON/OFF depending on whether you want that feature. CtrlSize: numeric value that controls size/amount/intensity (default 1). CtrlColor: choose one option (for example: lightBlue, blue, white, purple). Tip: if a field says left/right or mirror, use it to generate the opposite side quickly. Template parent examples: Spine_End_Jnt, Head_Jnt, L_Wrist_Jnt."
     }
 }

@@ -21,7 +21,7 @@
         "Spaces_string":"Mutant_Tools_Grp, Mover_Gimbal_Ctrl",
         "Mirror_bool": "False",
 
-        "Help_string": "Separate the space switches with a ','"
+        "Help_string": "What this block does: This will add space switches to the target ctrl. How to use it: fill the key fields below before build. SetTargetCtrl: set the node/object name this block should use. SetAttrsHolder: set the node/object name this block should use. Spaces: enter names separated by commas (example format: nameA,nameB,nameC). Translate: turn this ON/OFF depending on whether you want that feature. Animbot: turn this ON/OFF depending on whether you want that feature. Rotate: turn this ON/OFF depending on whether you want that feature. Tip: if a field says left/right or mirror, use it to generate the opposite side quickly. Template target ctrl examples: Tail_1_Main_Ctrl, Eyes_Main_Ctrl, Head_Ctrl."
     }
 }
 

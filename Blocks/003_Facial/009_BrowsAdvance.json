@@ -13,6 +13,6 @@
         "Mirror_enum": "True:False:Right_Only",
         "SetAttrsPosition_string": "new_locator",
         "CtrlSize_float": "4",
-        "Help_string": "Will crete brows rig system"
+        "Help_string": "What this block does: Will create a local Advance Brows Rig. How to use it: fill the key fields below before build. SetParent: set the target node name. If left as default, the tool uses placeholder behavior for setup. SetAttrsPosition: set the target node name. If left as default, the tool uses placeholder behavior for setup. Mirror: choose one option (for example: True, False, Right_Only). CtrlSize: numeric value that controls size/amount/intensity (default 4). Tip: start with defaults, build once, then tweak only the fields you need. Template parent examples: Head_Jnt, Head_Ctrl, Spine_End_Jnt. Template attrs-position examples: L_Brow_Ctrl, Vis_Ctrl, L_Eyelids_Scale_Ctrl."
     }
 }

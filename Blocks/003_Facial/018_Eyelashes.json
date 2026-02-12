@@ -11,6 +11,6 @@
     "attrs": {
         "EyeName_string": "L_Eyelids",
         "SetAttrsPosition_string": "new_locator",
-        "Help_string": "This will create an eyelash system over the eye block"
+        "Help_string": "What this block does: This will create an eyelash system over the eye block. How to use it: fill the key fields below before build. SetAttrsPosition: set the target node name. If left as default, the tool uses placeholder behavior for setup. EyeName: set the node/object name this block should use. Tip: start with defaults, build once, then tweak only the fields you need. Template attrs-position examples: Vis_Ctrl, L_Brow_Ctrl, L_Eyelids_Scale_Ctrl."
     }
 }

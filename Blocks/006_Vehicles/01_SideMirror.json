@@ -13,6 +13,6 @@
         "Mirror_enum": "True:False:Right_Only", 
         "CtrlSize_float": "4",
         "CtrlType_enum": "circleX:bounding_cube",
-        "Help_string": "This will create a side mirror controller"
+        "Help_string": "What this block does: This will create side mirror controllers. How to use it: fill the key fields below before build. SetParent: set the target node name. If left as default, the tool uses placeholder behavior for setup. Mirror: choose one option (for example: True, False, Right_Only). CtrlSize: numeric value that controls size/amount/intensity (default 4). CtrlType: choose one option (for example: circleX, bounding_cube). Tip: start with defaults, build once, then tweak only the fields you need. Template parent examples: Spine_End_Jnt, Head_Jnt, L_Wrist_Jnt."
     }
 }

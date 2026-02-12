@@ -11,6 +11,6 @@
     "attrs": {
         "SetParent_string": "new_locator", 
         "Mirror_enum": "True:False:Right_Only",
-        "Help_string": "Possible parent: *_Jnt "
+        "Help_string": "What this block does: This will create a AntLeg System. How to use it: fill the key fields below before build. SetParent: set the target node name. If left as default, the tool uses placeholder behavior for setup. Mirror: choose one option (for example: True, False, Right_Only). Tip: start with defaults, build once, then tweak only the fields you need. Template parent examples: L_FrontDoor_Ctrl, Spine_End_Jnt, Head_Jnt."
     }
 }

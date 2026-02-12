@@ -25,6 +25,6 @@
   
         "SetGameParent_string": "",
 
-        "Help_string" : "Possible parent: L_Hand_Thumb_03_Jnt, L_Hand_Index_04_Jnt\n Vis attr is to hide the sun, And Fingers attrs is automations"
+        "Help_string" : "What this block does: Hand Block with 5 fingers or less. How to use it: fill the key fields below before build. SetParent: set the target node name. If left as default, the tool uses placeholder behavior for setup. SetAttrsCtrl: set the target node name. If left as default, the tool uses placeholder behavior for setup. CreateFingersAttrs: turn this ON/OFF depending on whether you want that feature. CtrlSize: numeric value that controls size/amount/intensity (default 4). CtrlType: choose one option (for example: circleX, circleY, circleZ, bounding_cube). Mirror: choose one option (for example: True, False, Right_Only). Tip: if a field says left/right or mirror, use it to generate the opposite side quickly. Template parent examples: L_Hand_Ankle_Jnt, L_Hand_Palm_Jnt, Spine_End_Jnt."
     }
 }

@@ -28,7 +28,7 @@
 
             "SetGameParent_string": "",
 
-            "Help_string" : "Possible parent: L_Wrist_Jnt\n"
+            "Help_string" : "What this block does: This will create a Limb System. How to use it: fill the key fields below before build. SetParent: set the target node name. If left as default, the tool uses placeholder behavior for setup. Mirror: choose one option (for example: True, False, Right_Only). Ribbons: turn this ON/OFF depending on whether you want that feature. CtrlSize: numeric value that controls size/amount/intensity (default 4). TwistAmount: numeric value that controls size/amount/intensity (default 4). IkCtrlType: choose one option (for example: cube, sphere). Tip: if a field says left/right or mirror, use it to generate the opposite side quickly. Template parent examples: L_Wrist_Jnt, L_Elbow_Bnd_2_Bnd, R_Elbow_Bnd_2_Bnd."
 
             }
 

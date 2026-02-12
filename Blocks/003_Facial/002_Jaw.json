@@ -14,6 +14,6 @@
         "CtrlType_enum": "circleY:circleX:circleZ:square",
         "CtrlSize_float": "4",
         "GameMode_bool": "False",
-        "Help_string": "Possible parent: JawEnd_Jnt "
+        "Help_string": "What this block does: Will create jaw rig. How to use it: fill the key fields below before build. SetParent: set the target node name. If left as default, the tool uses placeholder behavior for setup. SetAttrsPosition: set the target node name. If left as default, the tool uses placeholder behavior for setup. CtrlType: choose one option (for example: circleY, circleX, circleZ, square). CtrlSize: numeric value that controls size/amount/intensity (default 4). GameMode: turn this ON/OFF depending on whether you want that feature. Tip: if a field says left/right or mirror, use it to generate the opposite side quickly. Template parent examples: Jaw_Jnt, Head_Jnt, Head_Ctrl. Template attrs-position examples: Vis_Ctrl, Jaw_Ctrl, Lips_Center_Ctrl."
     }
 }

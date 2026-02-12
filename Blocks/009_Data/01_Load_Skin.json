@@ -11,6 +11,6 @@
 
     "attrs": {
         "Path_string": "",
-        "Help_string": "Load Skin Cluster Data from Folder"
+        "Help_string": "What this block does: Load SKin Cluster Data. How to use it: fill the key fields below before build. Path: enter the file/folder path to the data you want to load. Tip: start with defaults, build once, then tweak only the fields you need."
     }
 }

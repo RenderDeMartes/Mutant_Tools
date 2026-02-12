@@ -12,6 +12,6 @@
         "SetParent_string": "new_locator",
         "FkCtrls_float": "5",
         "Joints_float": "10",
-        "Help_string": "Create IK/FK Tail System"
+        "Help_string": "What this block does: Create IK/FK Tail System. How to use it: fill the key fields below before build. SetParent: set the target node name. If left as default, the tool uses placeholder behavior for setup. FkCtrls: numeric value that controls size/amount/intensity (default 5). Joints: numeric value that controls size/amount/intensity (default 10). Tip: start with defaults, build once, then tweak only the fields you need. Template parent examples: Spine_End_Jnt, Head_Jnt, L_Wrist_Jnt."
     }
 }

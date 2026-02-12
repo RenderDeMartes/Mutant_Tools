@@ -17,7 +17,7 @@
         "SetControlParent_string":"Ctrl_Grp",
         "Mirror_bool": "False",
 
-        "Help_string": "This will add a soft mod to a given vertex"
+        "Help_string": "What this block does: This will add a soft mod to a given vertex. How to use it: fill the key fields below before build. SetTargetVertex: set the node/object name this block should use. Mirror: turn this ON/OFF depending on whether you want that feature. SetControlParent: set the node/object name this block should use. Tip: if a field says left/right or mirror, use it to generate the opposite side quickly. Template parent examples: Spine_End_Jnt, Head_Jnt, L_Wrist_Jnt."
     }
 }
 

@@ -13,6 +13,6 @@
         "SetAttrsPosition_string": "new_locator",
         "Mirror_enum": "True:False:Right_Only",
         "CtrlSize_float": "4",
-        "Help_string": "Will crete cheek rig system"
+        "Help_string": "What this block does: Will create a local Cheeck rig. How to use it: fill the key fields below before build. SetParent: set the target node name. If left as default, the tool uses placeholder behavior for setup. SetAttrsPosition: set the target node name. If left as default, the tool uses placeholder behavior for setup. Mirror: choose one option (for example: True, False, Right_Only). CtrlSize: numeric value that controls size/amount/intensity (default 4). Tip: start with defaults, build once, then tweak only the fields you need. Template parent examples: Head_Jnt, Head_Ctrl, Spine_End_Jnt. Template attrs-position examples: L_Cheecks_Main_Ctrl, Vis_Ctrl, L_Brow_Ctrl."
     }
 }

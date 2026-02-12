@@ -15,6 +15,6 @@
         "Local_bool" : "False",
         "CtrlSize_float": "4",
         "CtrlColor_enum": "purple:lightBlue:blue:white:green:red:yellow:grey",
-        "Help_string": "Lattice Local Rig"
+        "Help_string": "What this block does: Lattice Local Rig. How to use it: fill the key fields below before build. SetGeo: set the target node name. If left as default, the tool uses placeholder behavior for setup. SetParent: set the target node name. If left as default, the tool uses placeholder behavior for setup. SetAttrsPosition: set the target node name. If left as default, the tool uses placeholder behavior for setup. Local: turn this ON/OFF depending on whether you want that feature. CtrlSize: numeric value that controls size/amount/intensity (default 4). CtrlColor: choose one option (for example: purple, lightBlue, blue, white). Tip: if a field says left/right or mirror, use it to generate the opposite side quickly. Template parent examples: Spine_End_Jnt, Head_Jnt, L_Wrist_Jnt. Template attrs-position examples: Vis_Ctrl, L_Eyelids_Scale_Ctrl, L_Brow_Ctrl."
     }
 }

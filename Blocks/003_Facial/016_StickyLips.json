@@ -14,6 +14,6 @@
         "SetLeftMouthCtrl_string" : "new_locator",
         "SetMouthEdge_string" : "",
         "SetFaceGeo_string" : "",
-        "Help_string": "StickyLips System for FaceBuilds"
+        "Help_string": "What this block does: StickyLips System. How to use it: fill the key fields below before build. SetJawBone: set the node/object name this block should use. SetNotJawBone: set the node/object name this block should use. SetLeftMouthCtrl: set the target node name. If left as default, the tool uses placeholder behavior for setup. SetMouthEdge: set the node/object name this block should use. SetFaceGeo: set the node/object name this block should use. Tip: start with defaults, build once, then tweak only the fields you need."
     }
 }

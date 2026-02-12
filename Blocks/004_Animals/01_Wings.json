@@ -10,6 +10,6 @@
     "build_command": "exec_wings.build_wings_block()",
     "attrs": {
         "SetParent_string": "new_locator",
-        "Help_string": "Create Wings System RdM Wings"
+        "Help_string": "What this block does: Create Wings System RdM Wings. How to use it: fill the key fields below before build. SetParent: set the target node name. If left as default, the tool uses placeholder behavior for setup. Tip: start with defaults, build once, then tweak only the fields you need. Template parent examples: Spine_End_Jnt, Head_Jnt, L_Wrist_Jnt."
     }
 }

@@ -10,6 +10,6 @@
     "build_command": "exec_load_ctrls.build_load_ctrls_block()",
     "attrs": {
         "File_string": "",
-        "Help_string": "Load Ctrls Data from File, you can put show keys to define the default ones."
+        "Help_string": "What this block does: Load Ctrls Data from File. How to use it: fill the key fields below before build. File: enter the file/folder path to the data you want to load. Tip: start with defaults, build once, then tweak only the fields you need."
     }
 }

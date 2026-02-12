@@ -13,6 +13,6 @@
         "AltMode_bool" : "False",
         "TransferAttrs_bool" : "True",
         "SetFootBlockName_string" : "",
-        "Help_string": "Will create a fancy RFL system for current Feet, Just put the name of the Feet name and the Attrs position "
+        "Help_string": "What this block does: Will create a fancy RFL system for current Feet. How to use it: fill the key fields below before build. AltMode: turn this ON/OFF depending on whether you want that feature. TransferAttrs: turn this ON/OFF depending on whether you want that feature. SetRFLAttrsPosition: set the node/object name this block should use. SetFootBlockName: set the node/object name this block should use. Tip: if a field says left/right or mirror, use it to generate the opposite side quickly."
     }
 }

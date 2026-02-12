@@ -12,6 +12,6 @@
         "SetParent_string": "new_locator",
         "SetGeo_string": "new_cube",
         "WireDropoff_float": "10",
-        "Help_string": "Shirt System, to add more geos: 'deformer -e -g GEO DEFORMER;"
+        "Help_string": "What this block does: Create a Shirt System. How to use it: fill the key fields below before build. SetParent: set the target node name. If left as default, the tool uses placeholder behavior for setup. SetGeo: set the target node name. If left as default, the tool uses placeholder behavior for setup. WireDropoff: numeric value that controls size/amount/intensity (default 10). Tip: start with defaults, build once, then tweak only the fields you need. Template parent examples: Spine_End_Jnt, Head_Jnt, L_Wrist_Jnt."
     }
 }

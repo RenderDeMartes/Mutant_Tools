@@ -15,6 +15,6 @@
         "SetBlendShapeNode_string": "new_blendshape_node",
         "SetTargetCtrl_string": "",
         "Mirror_bool": "True",
-        "Help_string": "Select edge ring from the middle of the eye to de center. "
+        "Help_string": "What this block does: Will create pupil dilation system. How to use it: fill the key fields below before build. SetTargetCtrl: set the node/object name this block should use. Mirror: turn this ON/OFF depending on whether you want that feature. SetEyeMesh: set the node/object name this block should use. SetEyeEdgeRing: set the node/object name this block should use. SetIrisEdgeLoop: set the node/object name this block should use. SetBlendShapeNode: set the target node name. If left as default, the tool uses placeholder behavior for setup. Tip: if a field says left/right or mirror, use it to generate the opposite side quickly. Template target ctrl examples: Eyes_Main_Ctrl, Head_Ctrl, Neck_Ctrl."
     }
 }

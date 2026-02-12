@@ -12,6 +12,6 @@
         "SetParent_string": "new_locator",
         "Amount_float": "5",
         "Mirror_bool": "True",
-        "Help_string": "Will Create Single Wing Module"
+        "Help_string": "What this block does: Will Create single Wing Module. How to use it: fill the key fields below before build. SetParent: set the target node name. If left as default, the tool uses placeholder behavior for setup. Amount: numeric value that controls size/amount/intensity (default 5). Mirror: turn this ON/OFF depending on whether you want that feature. Tip: if a field says left/right or mirror, use it to generate the opposite side quickly. Template parent examples: Spine_End_Jnt, Head_Jnt, L_Wrist_Jnt."
     }
 }

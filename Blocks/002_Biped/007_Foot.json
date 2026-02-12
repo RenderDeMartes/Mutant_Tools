@@ -26,6 +26,6 @@
         "CtrlSize_float": "1",
         "SetGameParent_string": "",
 
-        "Help_string" : "Possible parent: L_Foot_BallToes_Jnt\n"
+        "Help_string" : "What this block does: This will create a Foot System for FK and IK Legs. How to use it: fill the key fields below before build. Mirror: choose one option (for example: True, False, Right_Only). CtrlSize: numeric value that controls size/amount/intensity (default 1). SetIKCtrl: set the target node name. If left as default, the tool uses placeholder behavior for setup. SetFKCtrl: set the target node name. If left as default, the tool uses placeholder behavior for setup. SwitchIKFKAttr: set the target node name. If left as default, the tool uses placeholder behavior for setup. IkAttrsPosition: set the target node name. If left as default, the tool uses placeholder behavior for setup. Tip: start with defaults, build once, then tweak only the fields you need. Template parent examples: L_Hand_Ankle_Jnt, L_Foot_Ankle_Jnt, L_LegSlideSlideDriver_Loc."
     }
 }

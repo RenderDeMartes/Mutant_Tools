@@ -13,6 +13,6 @@
         "NewAttrName_string": "Pose",
         "SetNewAttrNode_string": "new_locator",
         "AnimStep_string": "0.5",
-        "Help_string": "Select object to save the current pose to an attr, will save it using SDK, Anim Step is the amount the sdk will move after each pose, add should be == 1, You can set objects with Name_*"
+        "Help_string": "What this block does: Will save current pose to an attr via SDK. How to use it: fill the key fields below before build. SetObject: set the node/object name this block should use. NewAttrName: set the node/object name this block should use. SetNewAttrNode: set the target node name. If left as default, the tool uses placeholder behavior for setup. AnimStep: set the node/object name this block should use. Tip: start with defaults, build once, then tweak only the fields you need."
     }
 }

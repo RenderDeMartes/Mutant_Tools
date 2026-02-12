@@ -25,5 +25,10 @@ Mutant Tools works seamlessly with:
 - 🌐 [Website](http://mutanttools.com/)
 - 💼 [LinkedIn](https://www.linkedin.com/in/esteban-rodriguez-488a68147/)
 
+## 🤖 AI Coding Guide
+- For AI-assisted coding standards and a copy/paste initial prompt, see:
+	- [Docs/AI_MT_COMMAND_RULES.md](Docs/AI_MT_COMMAND_RULES.md)
+	- [Docs/AI_MT_COMMAND_TUTORIAL.md](Docs/AI_MT_COMMAND_TUTORIAL.md)
+
 🚀 Elevate your rigging pipeline with **Mutant Tools** today!
 

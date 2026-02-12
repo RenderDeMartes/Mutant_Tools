@@ -23,7 +23,7 @@
         "CreateJoint_bool": "True",
         "SetJointParent_Hierarchy_string": "Miscellaneous_Grp",
 
-        "Help_string" : "Possible parent: Bone_Jnt\n"
+        "Help_string" : "What this block does: This will create a Single FK Ctrl + Joint, Like for COG or Single Needs. How to use it: fill the key fields below before build. CtrlType: choose one option (for example: sphere, cube, square, octagon). CtrlSize: numeric value that controls size/amount/intensity (default 4). CtrlColor: choose one option (for example: lightBlue, blue, white, purple). Gimbal: turn this ON/OFF depending on whether you want that feature. CreateJoint: turn this ON/OFF depending on whether you want that feature. SetCtrlParent_Hierarchy: set the node/object name this block should use. Tip: if a field says left/right or mirror, use it to generate the opposite side quickly."
         
     }
 }

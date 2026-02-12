@@ -11,6 +11,6 @@
     "attrs": {
         "SetGeo_string": "",
         "NewNames_string": "ShapeA,ShapeB,ShapeC",
-        "Help_string": "Create Shapes for nain Geo and connect them via BlendShape, separate names with comas ','"
+        "Help_string": "What this block does: This will create blendshapes for the selected geo. How to use it: fill the key fields below before build. SetGeo: set the node/object name this block should use. NewNames: enter names separated by commas (example format: nameA,nameB,nameC). Tip: start with defaults, build once, then tweak only the fields you need."
     }
 }

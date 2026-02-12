@@ -16,6 +16,6 @@
         "SetUpperEdge_string": "",
         "SetLowerEdge_string": "",
         "CtrlSize_float": 4,
-        "Help_string" : "Create mouth lips rig\n"
+        "Help_string" : "What this block does: Will create mouth system. How to use it: fill the key fields below before build. SetParent: set the target node name. If left as default, the tool uses placeholder behavior for setup. SetAttrsPosition: set the target node name. If left as default, the tool uses placeholder behavior for setup. Mirror: choose one option (for example: True, False, Right_Only). SetupOption: choose one option (for example: Curve, Bezier). CtrlSize: numeric value that controls size/amount/intensity (default 4). SetUpperEdge: set the node/object name this block should use. Tip: start with defaults, build once, then tweak only the fields you need. Template parent examples: Jaw_Jnt, Head_Jnt, Head_Ctrl. Template attrs-position examples: Lips_Center_Ctrl, Vis_Ctrl, Mouth_Jaw_Ctrl."
     }
 }

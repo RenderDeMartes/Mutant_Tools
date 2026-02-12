@@ -9,6 +9,6 @@
     "exec_command": "exec_dinamic_scale.create_dinamic_scale_block()",
     "build_command": "exec_dinamic_scale.build_dinamic_scale_block()",
     "attrs": {
-        "Help_string": "Add Size Attrs and Extra Scale to Base"
+        "Help_string": "What this block does: Add Size Attrs and Extra Scale to Base. How to use it: usually you can build directly with defaults, then adjust if needed."
     }
 }

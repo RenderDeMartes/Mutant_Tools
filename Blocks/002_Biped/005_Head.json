@@ -21,6 +21,6 @@
         "CtrlColor_enum": "yellow:lightBlue:blue:white:purple:green:red:grey",
         "SetGameParent_string": "",
 
-        "Help_string" : "Possible parent: Head_Jnt\n"
+        "Help_string" : "What this block does: This will create a Neck and a Head System. How to use it: fill the key fields below before build. SetParent: set the target node name. If left as default, the tool uses placeholder behavior for setup. HeadCtrlType: choose one option (for example: octagon, hexagon, square, sphere). Ribbon: turn this ON/OFF depending on whether you want that feature. SecundaryRibbon: numeric value that controls size/amount/intensity (default 3). CtrlSize: numeric value that controls size/amount/intensity (default 4). CtrlColor: choose one option (for example: yellow, lightBlue, blue, white). Tip: if a field says left/right or mirror, use it to generate the opposite side quickly. Template parent examples: Head_Jnt, L_Hand_Ankle_Jnt, Head_Ctrl."
     }
 }

@@ -11,6 +11,6 @@
     "attrs": {
         "SetParent_string": "Spine_Base_Bnd", 
         "Direction_string": "front,back,inner,outer",
-        "Help_string": "Provide a Bnd joint as Parent, separate the space switches with a ','"
+        "Help_string": "What this block does: Block dedicated to create Slide Push Correctives System. How to use it: fill the key fields below before build. SetParent: set the node/object name this block should use. Direction: enter names separated by commas (example format: nameA,nameB,nameC). Tip: start with defaults, build once, then tweak only the fields you need. Template parent examples: L_ArmSlideSlideDriver_Loc, L_LegSlideSlideDriver_Loc, Spine_End_Jnt."
     }
 }
