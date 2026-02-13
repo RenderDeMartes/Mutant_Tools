@@ -41,6 +41,10 @@ from pathlib import Path
 
 from maya import cmds as cmds
 from maya import OpenMaya as om
+try:
+    from maya.api import OpenMaya as om2
+except:
+    om2 = None
 from Mutant_Tools.Utils.Helpers.decorators import undo
 
 import Mutant_Tools
@@ -710,4 +714,114 @@ class Ctrls(object):
                     except:
                         color_problematic_ctrls.append(ctrl)
         if color_problematic_ctrls: print(color_problematic_ctrls)
+
+    #---------------------------------------------------------------------------
+
+    def store_ctrl_cvs_world(self, ctrls='All'):
+        data = {}
+
+        if ctrls == 'All':
+            all_ctrls = cmds.ls('*{}'.format(nc['ctrl']), type='transform')
+        elif ctrls == 'Selected':
+            all_ctrls = cmds.ls(sl=True, type='transform')
+        else:
+            all_ctrls = cmds.ls(ctrls, type='transform')
+
+        for ctrl in all_ctrls or []:
+            shapes = cmds.listRelatives(ctrl, shapes=True, type='nurbsCurve') or []
+            if not shapes:
+                continue
+
+            data[ctrl] = {}
+
+            for shape in shapes:
+                cvs = cmds.ls('{}.cv[*]'.format(shape), fl=True) or []
+                positions = []
+
+                for cv in cvs:
+                    pos = cmds.xform(cv, q=True, ws=True, t=True)
+                    positions.append(pos)
+
+                data[ctrl][shape] = positions
+
+        return data
+
+    #---------------------------------------------------------------------------
+
+    def restore_ctrl_cvs_world(self, data):
+        if not data:
+            return
+
+        if om2 is None:
+            cmds.warning('maya.api.OpenMaya not available. Cannot load world ctrl CVs.')
+            return
+
+        for ctrl, shapes in data.items():
+            if not cmds.objExists(ctrl):
+                continue
+
+            try:
+                selection_list = om2.MSelectionList()
+                selection_list.add(ctrl)
+                dag = selection_list.getDagPath(0)
+                world_matrix = dag.inclusiveMatrix()
+                inv_world_matrix = world_matrix.inverse()
+            except Exception as e:
+                print('Error getting world matrix for {}: {}'.format(ctrl, e))
+                continue
+
+            for shape, positions in shapes.items():
+                if not cmds.objExists(shape):
+                    continue
+
+                cvs = cmds.ls('{}.cv[*]'.format(shape), fl=True) or []
+
+                for index, pos in enumerate(positions):
+                    if index >= len(cvs):
+                        continue
+                    try:
+                        world_point = om2.MPoint(pos)
+                        object_point = world_point * inv_world_matrix
+                        cmds.xform(cvs[index], os=True, t=[object_point.x, object_point.y, object_point.z])
+                    except Exception as e:
+                        print('Error restoring {} {}: {}'.format(shape, index, e))
+
+    #---------------------------------------------------------------------------
+
+    def save_world_ctrls(self, ctrls='All', path=None, force_validate=False):
+        if not path:
+            path = mh.export_window(extension='.json')
+            if path:
+                path = path[0]
+
+        if not path:
+            return False
+
+        data = self.store_ctrl_cvs_world(ctrls=ctrls)
+        if not data:
+            cmds.warning('No controller curves found to save world positions.')
+            return False
+
+        self.saveData(path=path, data=data, force_validate=force_validate)
+        return True
+
+    #---------------------------------------------------------------------------
+
+    @undo
+    def load_world_ctrls(self, path=None):
+        if path is None:
+            path = mh.import_window(extension='.json')
+            if path:
+                path = path[0]
+
+        if not path:
+            return False
+
+        if not os.path.isfile(path):
+            cmds.warning('Path doesnt exists', path)
+            return False
+
+        data = self.loadData(path)
+        self.restore_ctrl_cvs_world(data)
+        return True
 

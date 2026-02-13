@@ -171,6 +171,10 @@ def build_custom_biped_orients_block():
 
                     cmds.setAttr('{}.translate'.format(ctrl), 0, 0, 0)
                     cmds.setAttr('{}.rotate'.format(ctrl), 0, 0, 0)
+                    try:
+                        cmds.setAttr('{}.scale'.format(ctrl), 1, 1, 1)
+                    except Exception as exc:
+                        print
                 except Exception as exc:
                     cmds.warning('Custom Biped Orients: could not force right-side attrs on {} ({})'.format(ctrl, exc))
 
@@ -288,14 +292,15 @@ def build_custom_biped_orients_block():
 
         four_fingers_tokens = ['_Index_', '_Middle_', '_Ring_', '_Pinky_']
 
-        hand_ctrls = cmds.ls('L_Hand_*_Ctrl', 'R_Hand_*_Ctrl', type='transform') or []
-        skipped_hand_ctrls = {'L_Hand_Palm_Ctrl', 'R_Hand_Palm_Ctrl'}
-        hand_ctrls = sorted(
-            set([
-                ctrl for ctrl in hand_ctrls
-                if ctrl.endswith('_Ctrl') and ctrl not in skipped_hand_ctrls
-            ])
-        )
+        hand_ctrls = []
+        for side in ['L', 'R']:
+            for finger in ['Thumb', 'Index', 'Middle', 'Ring', 'Pinky']:
+                for segment in range(1, 4):
+                    ctrl = '{}_Hand_{}_0{}_Ctrl'.format(side, finger, segment)
+                    if cmds.objExists(ctrl):
+                        hand_ctrls.append(ctrl)
+
+        hand_ctrls = sorted(set(hand_ctrls))
 
         if hand_ctrls:
             right_hand_ctrls = [ctrl for ctrl in hand_ctrls if ctrl.startswith('R_')]

@@ -201,12 +201,16 @@ class AutoRiggerMenu(QtWidgets.QDialog):
 
 		self.save_skin = self.fileMenu.addAction("Save All Skins")
 		self.load_skin = self.fileMenu.addAction("Load All Skins")
+		self.fast_save_skin = self.fileMenu.addAction("Fast Save Skin Pack")
+		self.fast_load_skin = self.fileMenu.addAction("Fast Load Skin Pack")
 		self.save_sel_skin = self.fileMenu.addAction("Save Selected Skins")
 		self.load_sel_skin = self.fileMenu.addAction("Load Selected Skins")
 		self.fileMenu.addSeparator()
 
 		self.save_ctrls = self.fileMenu.addAction("Save Ctrls")
 		self.load_ctrls = self.fileMenu.addAction("Load Ctrls")
+		self.save_world_ctrls = self.fileMenu.addAction("Save Ctrls World Position")
+		self.load_world_ctrls = self.fileMenu.addAction("Load Ctrls World Position")
 		self.save_selected_ctrls = self.fileMenu.addAction("Save Selected Ctrls")
 		self.load_selected_ctrls = self.fileMenu.addAction("Load Selected Ctrls")
 		self.mirror_ctrls = self.fileMenu.addAction("Mirror Ctrls")
@@ -268,11 +272,15 @@ class AutoRiggerMenu(QtWidgets.QDialog):
 		self.bind_selected.triggered.connect(lambda: skin.bind_to_bnd())
 		self.save_skin.triggered.connect(self.save_skins)
 		self.load_skin.triggered.connect(self.load_skins)
+		self.fast_save_skin.triggered.connect(self.fast_save_skins)
+		self.fast_load_skin.triggered.connect(self.fast_load_skins)
 		self.save_sel_skin.triggered.connect(self.save_sel_skins)
 		self.load_sel_skin.triggered.connect(self.load_sel_skins)
 
 		self.save_ctrls.triggered.connect(lambda: ctrls.save_all())
 		self.load_ctrls.triggered.connect(lambda: ctrls.load_all())
+		self.save_world_ctrls.triggered.connect(lambda: ctrls.save_world_ctrls())
+		self.load_world_ctrls.triggered.connect(lambda: ctrls.load_world_ctrls())
 		self.save_selected_ctrls.triggered.connect(lambda: ctrls.save_all(ctrls='Selected'))
 		self.load_selected_ctrls.triggered.connect(lambda: ctrls.load_selected())
 		self.mirror_ctrls.triggered.connect(lambda: ctrls.mirror_all_ctrl_shapes())
@@ -300,6 +308,24 @@ class AutoRiggerMenu(QtWidgets.QDialog):
 
 	def load_skins(self):
 		EasySkin.load_all_skins_from()
+
+	def fast_save_skins(self):
+		try:
+			from Mutant_Tools.Utils.IO import IOSkin
+			reload(Mutant_Tools.Utils.IO.IOSkin)
+			IOSkin.exportSkinPack()
+		except Exception as e:
+			cmds.warning('Fast Save Skin Pack unavailable ({}). Falling back to Save All Skins.'.format(e))
+			EasySkin.save_all_skins_to()
+
+	def fast_load_skins(self):
+		try:
+			from Mutant_Tools.Utils.IO import IOSkin
+			reload(Mutant_Tools.Utils.IO.IOSkin)
+			IOSkin.importSkinPack()
+		except Exception as e:
+			cmds.warning('Fast Load Skin Pack unavailable ({}). Falling back to Load All Skins.'.format(e))
+			EasySkin.load_all_skins_from()
 
 	def save_sel_skins(self):
 		EasySkin.save_selected_geos()
