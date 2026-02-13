@@ -103,6 +103,8 @@ class Qt_Mutant(QtWidgets.QMainWindow):
 
         self.designer_loader(path = PATH, ui_file = 'QtMutantWindow.ui')
 
+        self._centered_once = False
+
         self.add_size_grip(layout = self.master_ui.size_grip_layout)
         self.popup_mode = False
         self.make_frameless()
@@ -252,19 +254,45 @@ class Qt_Mutant(QtWidgets.QMainWindow):
 
     def move_to_center_screen(self):
         """Move the main UI to the center of the screen."""
-        qtRectangle = self.frameGeometry()
+        screen = None
 
         try:
-            # PySide6
-            app = QtWidgets.QApplication.instance() or QtWidgets.QApplication([])
-            screen = app.primaryScreen()  # get the main screen
-            centerPoint = screen.availableGeometry().center()
-        except AttributeError:
-            # PySide2
-            centerPoint = QtWidgets.QDesktopWidget().availableGeometry().center()
+            # Prefer the screen under mouse cursor (multi-monitor friendly)
+            screen = QtGui.QGuiApplication.screenAt(QtGui.QCursor.pos())
+        except:
+            screen = None
 
-        qtRectangle.moveCenter(centerPoint)
-        self.move(qtRectangle.topLeft())
+        if not screen:
+            app = QtWidgets.QApplication.instance() or QtWidgets.QApplication([])
+            screen = app.primaryScreen()
+
+        if not screen:
+            return
+
+        available_geo = screen.availableGeometry()
+
+        # Use final window size when visible, otherwise use best hint available
+        size = self.size()
+        if not self.isVisible() or size.width() <= 0 or size.height() <= 0:
+            hint = self.sizeHint()
+            if hint.isValid():
+                size = hint
+            else:
+                master_hint = self.master_ui.sizeHint()
+                if master_hint.isValid():
+                    size = master_hint
+
+        centered_x = available_geo.x() + int((available_geo.width() - size.width()) / 2)
+        x = centered_x - int(available_geo.width() / 4)
+        y = available_geo.y() + int((available_geo.height() - size.height()) / 2)
+        self.move(x, y)
+
+    def showEvent(self, event):
+        """Center once after first show so final size is used."""
+        QtWidgets.QMainWindow.showEvent(self, event)
+        if not self._centered_once:
+            self._centered_once = True
+            QtCore.QTimer.singleShot(0, self.move_to_center_screen)
 
     def mousePressEvent(self, event):
         """
