@@ -210,16 +210,18 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		if mt.check_dev_mode():
 			add_sys_folders_remove_compiled()
 		self.reload_ready = False
+
+		#009_Data init
+		self.current_block = None
+		self.current_block_folder = None
+		self.side_block_widgets = {}
+
 		self.designer_loader_child(path=os.path.join(FOLDER,'UI','AutoRigger'), ui_file=UI_File)
 
 		self.create_menus()
 		self.create_layout()
 		self.create_connections()
 		self.reload_blocks_if_isnt_working()
-
-		#009_Data init
-		self.current_block = None
-		self.current_block_folder = None
 
 		#update icons
 		mt.update_icons()
@@ -319,6 +321,9 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		self.ui.postbuild.setIcon(QtGui.QIcon(os.path.join(IconsPath ,'POSTCODE.png')))
 		self.ui.reload_ui.setIcon(QtGui.QIcon(os.path.join(IconsPath ,'RELOAD.png')))
 		self.ui.log.setIcon(QtGui.QIcon(os.path.join(IconsPath ,'LOG.png')))
+
+		if self.current_block:
+			self.scroll_side_panel_to_block(self.current_block)
 
 
 	def reload_ui(self):
@@ -642,8 +647,33 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		# this will clear the side layout so we can move stuff around
 		for i in reversed(range(self.ui.side_layout.count())):
 			self.ui.side_layout.itemAt(i).widget().setParent(None)
+		self.side_block_widgets = {}
 
 		self.ui.side_scroll.setWidgetResizable(True)
+
+	def scroll_side_panel_to_block(self, block):
+		if not block:
+			return
+
+		widget = self.side_block_widgets.get(block)
+		if not widget:
+			return
+
+		try:
+			scroll_widget = self.ui.side_scroll.widget()
+			if not scroll_widget:
+				return
+
+			top_y = widget.mapTo(scroll_widget, QtCore.QPoint(0, 0)).y()
+			scroll_bar = self.ui.side_scroll.verticalScrollBar()
+			top_y = max(0, min(top_y, scroll_bar.maximum()))
+			scroll_bar.setValue(top_y)
+		except Exception:
+			try:
+				scroll_bar = self.ui.side_scroll.verticalScrollBar()
+				scroll_bar.setValue(widget.pos().y())
+			except Exception:
+				pass
 
 	def options_side_buttonblock(self, block, layout):
 
@@ -674,6 +704,7 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 					build_group = 'Mutant_Build'
 
 		if cmds.objExists(build_group):
+			self.side_block_widgets = {}
 			for num, child in enumerate(cmds.listRelatives(build_group, c=True)):
 				if not child.endswith(nc['module']):
 					colapsable_box = expandableWidget.expandableWidget(parent=self.ui.side_layout, title=child.replace('_Build', ''))
@@ -708,6 +739,7 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 
 		side_hbox = QGroupBox()
 		block_parent.addWidget(side_hbox)
+		self.side_block_widgets[pack_name] = side_hbox
 
 		#up down buttons
 		up_button = QtWidgets.QPushButton()
@@ -777,6 +809,7 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		#side_hbox = QGroupBox(block)
 		side_hbox = QGroupBox()
 		self.ui.block_label.setText(block)
+		self.scroll_side_panel_to_block(block)
 
 		self.ui.properties_layout.addWidget(side_hbox)
 		v_layout = QtWidgets.QVBoxLayout()
