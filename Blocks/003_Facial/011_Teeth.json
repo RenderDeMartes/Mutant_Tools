@@ -1,21 +1,21 @@
 {
-    "Name": "Teeth",
-    "Description": "Will Create Teeth System",
-    "Icon": "Teeth.png",
-    "Enable": "True",
-    "python_file": "exec_teeth.py",
-    "import": "import exec_teeth",
-    "imp.reload": "reload(exec_teeth)",
-    "exec_command": "exec_teeth.create_teeth_block()",
-    "build_command": "exec_teeth.build_teeth_block()",
-    "attrs": {
-        "SetUprParent_string": "new_locator",
-        "SetLwrParent_string": "new_locator",
-        "SetAttrsPosition_string": "new_locator",
-        "SetJawJnt_string": "",
-        "UprTeeth_bool": "True",
-        "LwrTeeth_bool": "True",
-        "CtrlSize_float": "4",
-        "Help_string": "What this block does: Will Create Teeth System. How to use it: fill the key fields below before build. SetAttrsPosition: set the target node name. If left as default, the tool uses placeholder behavior for setup. UprTeeth: turn this ON/OFF depending on whether you want that feature. LwrTeeth: turn this ON/OFF depending on whether you want that feature. CtrlSize: numeric value that controls size/amount/intensity (default 4). SetUprParent: set the target node name. If left as default, the tool uses placeholder behavior for setup. SetLwrParent: set the target node name. If left as default, the tool uses placeholder behavior for setup. Tip: if a field says left/right or mirror, use it to generate the opposite side quickly. Template parent examples: Jaw_Jnt, Head_Jnt, Head_Ctrl. Template attrs-position examples: Vis_Ctrl, Lips_Center_Ctrl, Jaw_Ctrl."
-    }
+    "Name":  "Teeth",
+    "Description":  "Will Create Teeth System",
+    "Icon":  "Teeth.png",
+    "Enable":  "True",
+    "python_file":  "exec_teeth.py",
+    "import":  "import exec_teeth",
+    "imp.reload":  "reload(exec_teeth)",
+    "exec_command":  "exec_teeth.create_teeth_block()",
+    "build_command":  "exec_teeth.build_teeth_block()",
+    "attrs":  {
+                  "SetUprParent_string":  "new_locator",
+                  "SetLwrParent_string":  "new_locator",
+                  "SetAttrsPosition_string":  "new_locator",
+                  "SetJawJnt_string":  "",
+                  "UprTeeth_bool":  "True",
+                  "LwrTeeth_bool":  "True",
+                  "CtrlSize_float":  "4",
+                  "Help_string":  "Overview:\n  Will Create Teeth System.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetAttrsPosition: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- UprTeeth: turn this ON/OFF depending on whether you want that feature.\n- LwrTeeth: turn this ON/OFF depending on whether you want that feature.\n- CtrlSize: numeric value that controls size/amount/intensity (default 4).\n- SetUprParent: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- SetLwrParent: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- Template parent examples: Jaw_Jnt, Head_Jnt, Head_Ctrl.\n- Template attrs-position examples: Vis_Ctrl, Lips_Center_Ctrl, Jaw_Ctrl.\n\nTips:\n- if a field says left/right or mirror, use it to generate the opposite side quickly."
+              }
 }

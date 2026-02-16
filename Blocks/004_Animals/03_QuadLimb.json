@@ -1,20 +1,20 @@
 {
-    "Name": "L_Hip,L_Knee,L_Ankle,L_Ball",
-    "Description": "Create a Quadruped Leg",
-    "Icon": "Quad_Limb.png",
-    "Enable": "True",
-    "python_file": "exec_quadlimb.py",
-    "import": "import exec_quadlimb",
-    "imp.reload": "reload(exec_quadlimb)",
-    "exec_command": "exec_quadlimb.create_quadlimb_block()",
-    "build_command": "exec_quadlimb.build_quadlimb_block()",
-    "attrs": {
-        "SetParent_string": "new_locator",
-        "Mirror_enum": "True:False:Right_Only",
-        "DogMode_enum": "Back:Front",
-        "CtrlSize_float": "4",
-        "TwistAmount_float": "4",
-        "CreateRibbons_bool": "True",
-        "Help_string": "What this block does: Create a Quadruped Leg. How to use it: fill the key fields below before build. SetParent: set the target node name. If left as default, the tool uses placeholder behavior for setup. Mirror: choose one option (for example: True, False, Right_Only). DogMode: choose one option (for example: Back, Front). CtrlSize: numeric value that controls size/amount/intensity (default 4). TwistAmount: numeric value that controls size/amount/intensity (default 4). CreateRibbons: turn this ON/OFF depending on whether you want that feature. Tip: if a field says left/right or mirror, use it to generate the opposite side quickly. Template parent examples: L_Hand_Ankle_Jnt, L_Foot_Ankle_Jnt, L_FrAnkle_Jnt."
-    }
+    "Name":  "L_Hip,L_Knee,L_Ankle,L_Ball",
+    "Description":  "Create a Quadruped Leg",
+    "Icon":  "Quad_Limb.png",
+    "Enable":  "True",
+    "python_file":  "exec_quadlimb.py",
+    "import":  "import exec_quadlimb",
+    "imp.reload":  "reload(exec_quadlimb)",
+    "exec_command":  "exec_quadlimb.create_quadlimb_block()",
+    "build_command":  "exec_quadlimb.build_quadlimb_block()",
+    "attrs":  {
+                  "SetParent_string":  "new_locator",
+                  "Mirror_enum":  "True:False:Right_Only",
+                  "DogMode_enum":  "Back:Front",
+                  "CtrlSize_float":  "4",
+                  "TwistAmount_float":  "4",
+                  "CreateRibbons_bool":  "True",
+                  "Help_string":  "Overview:\n  Create a Quadruped Leg.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetParent: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- Mirror: choose one option (for example: True, False, Right_Only).\n- DogMode: choose one option (for example: Back, Front).\n- CtrlSize: numeric value that controls size/amount/intensity (default 4).\n- TwistAmount: numeric value that controls size/amount/intensity (default 4).\n- CreateRibbons: turn this ON/OFF depending on whether you want that feature.\n- Template parent examples: L_Hand_Ankle_Jnt, L_Foot_Ankle_Jnt, L_FrAnkle_Jnt.\n\nTips:\n- if a field says left/right or mirror, use it to generate the opposite side quickly."
+              }
 }

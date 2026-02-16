@@ -1,17 +1,17 @@
 {
-    "Name": "Nose",
-    "Description": "Will create a local nose rig",
-    "Icon": "Nose.png",
-    "Enable": "True",
-    "python_file": "exec_nose.py",
-    "import": "import exec_nose",
-    "imp.reload": "reload(exec_nose)",
-    "exec_command": "exec_nose.create_nose_block()",
-    "build_command": "exec_nose.build_nose_block()",
-    "attrs": {
-        "SetParent_string": "new_locator",
-        "SetAttrsPosition_string": "new_locator",
-        "CtrlSize_float": "4",
-        "Help_string": "What this block does: Will create a local nose rig. How to use it: fill the key fields below before build. SetParent: set the target node name. If left as default, the tool uses placeholder behavior for setup. SetAttrsPosition: set the target node name. If left as default, the tool uses placeholder behavior for setup. CtrlSize: numeric value that controls size/amount/intensity (default 4). Tip: start with defaults, build once, then tweak only the fields you need. Template parent examples: Head_Jnt, Head_Ctrl, Jaw_Jnt. Template attrs-position examples: Nose_Base_Ctrl, Vis_Ctrl, L_Brow_Ctrl."
-    }
+    "Name":  "Nose",
+    "Description":  "Will create a local nose rig",
+    "Icon":  "Nose.png",
+    "Enable":  "True",
+    "python_file":  "exec_nose.py",
+    "import":  "import exec_nose",
+    "imp.reload":  "reload(exec_nose)",
+    "exec_command":  "exec_nose.create_nose_block()",
+    "build_command":  "exec_nose.build_nose_block()",
+    "attrs":  {
+                  "SetParent_string":  "new_locator",
+                  "SetAttrsPosition_string":  "new_locator",
+                  "CtrlSize_float":  "4",
+                  "Help_string":  "Overview:\n  Will create a local nose rig.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetParent: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- SetAttrsPosition: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- CtrlSize: numeric value that controls size/amount/intensity (default 4).\n- Template parent examples: Head_Jnt, Head_Ctrl, Jaw_Jnt.\n- Template attrs-position examples: Nose_Base_Ctrl, Vis_Ctrl, L_Brow_Ctrl.\n\nTips:\n- start with defaults, build once, then tweak only the fields you need."
+              }
 }

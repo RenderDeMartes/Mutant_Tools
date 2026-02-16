@@ -1,19 +1,19 @@
 {
-    "Name": "Jaw",
-    "Description": "Will create jaw rig",
-    "Icon": "Jaw.png",
-    "Enable": "True",
-    "python_file": "exec_jaw.py",
-    "import": "import exec_jaw",
-    "imp.reload": "reload(exec_jaw)",
-    "exec_command": "exec_jaw.create_jaw_block()",
-    "build_command": "exec_jaw.build_jaw_block()",
-    "attrs": {
-        "SetParent_string": "new_locator",
-        "SetAttrsPosition_string": "new_locator",
-        "CtrlType_enum": "circleY:circleX:circleZ:square",
-        "CtrlSize_float": "4",
-        "GameMode_bool": "False",
-        "Help_string": "What this block does: Will create jaw rig. How to use it: fill the key fields below before build. SetParent: set the target node name. If left as default, the tool uses placeholder behavior for setup. SetAttrsPosition: set the target node name. If left as default, the tool uses placeholder behavior for setup. CtrlType: choose one option (for example: circleY, circleX, circleZ, square). CtrlSize: numeric value that controls size/amount/intensity (default 4). GameMode: turn this ON/OFF depending on whether you want that feature. Tip: if a field says left/right or mirror, use it to generate the opposite side quickly. Template parent examples: Jaw_Jnt, Head_Jnt, Head_Ctrl. Template attrs-position examples: Vis_Ctrl, Jaw_Ctrl, Lips_Center_Ctrl."
-    }
+    "Name":  "Jaw",
+    "Description":  "Will create jaw rig",
+    "Icon":  "Jaw.png",
+    "Enable":  "True",
+    "python_file":  "exec_jaw.py",
+    "import":  "import exec_jaw",
+    "imp.reload":  "reload(exec_jaw)",
+    "exec_command":  "exec_jaw.create_jaw_block()",
+    "build_command":  "exec_jaw.build_jaw_block()",
+    "attrs":  {
+                  "SetParent_string":  "new_locator",
+                  "SetAttrsPosition_string":  "new_locator",
+                  "CtrlType_enum":  "circleY:circleX:circleZ:square",
+                  "CtrlSize_float":  "4",
+                  "GameMode_bool":  "False",
+                  "Help_string":  "Overview:\n  Will create jaw rig.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetParent: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- SetAttrsPosition: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- CtrlType: choose one option (for example: circleY, circleX, circleZ, square).\n- CtrlSize: numeric value that controls size/amount/intensity (default 4).\n- GameMode: turn this ON/OFF depending on whether you want that feature.\n- Template parent examples: Jaw_Jnt, Head_Jnt, Head_Ctrl.\n- Template attrs-position examples: Vis_Ctrl, Jaw_Ctrl, Lips_Center_Ctrl.\n\nTips:\n- if a field says left/right or mirror, use it to generate the opposite side quickly."
+              }
 }

@@ -1,22 +1,22 @@
 {
-    "Name": "Ribbon",
-    "Description": "Creates a ribbon, Copyright (C) 2018 Orkhan Ashrafov\n",
-    "Icon": "Ribbon.png",
-    "Enable": "True",
-    "python_file": "exec_ribbonizer.py",
-    "import": "import exec_ribbonizer",
-    "imp.reload": "reload(exec_ribbonizer)",
-    "exec_command": "exec_ribbonizer.create_ribbonizer_block()",
-    "build_command": "exec_ribbonizer.build_ribbonizer_block()",
-    "attrs": {
-        "SetParent_string": "new_locator",
-        "Equal_bool": "True",
-        "Ctrls_float": "5",
-        "Joints_float": "5",
-        "Constraint_bool": "True",
-        "AddFk_bool": "True",
-        "Wire_bool": "False",
-        "MiddleCtrlPosition_enum": "Original:Start:End",
-        "Help_string": "What this block does: Creates a ribbon, Copyright (C) 2018 Orkhan Ashrafov. How to use it: fill the key fields below before build. SetParent: set the target node name. If left as default, the tool uses placeholder behavior for setup. Equal: turn this ON/OFF depending on whether you want that feature. Ctrls: numeric value that controls size/amount/intensity (default 5). Joints: numeric value that controls size/amount/intensity (default 5). Constraint: turn this ON/OFF depending on whether you want that feature. AddFk: turn this ON/OFF depending on whether you want that feature. Tip: if a field says left/right or mirror, use it to generate the opposite side quickly. Template parent examples: Spine_End_Jnt, Head_Jnt, L_Wrist_Jnt."
-    }
+    "Name":  "Ribbon",
+    "Description":  "Creates a ribbon, Copyright (C) 2018 Orkhan Ashrafov\n",
+    "Icon":  "Ribbon.png",
+    "Enable":  "True",
+    "python_file":  "exec_ribbonizer.py",
+    "import":  "import exec_ribbonizer",
+    "imp.reload":  "reload(exec_ribbonizer)",
+    "exec_command":  "exec_ribbonizer.create_ribbonizer_block()",
+    "build_command":  "exec_ribbonizer.build_ribbonizer_block()",
+    "attrs":  {
+                  "SetParent_string":  "new_locator",
+                  "Equal_bool":  "True",
+                  "Ctrls_float":  "5",
+                  "Joints_float":  "5",
+                  "Constraint_bool":  "True",
+                  "AddFk_bool":  "True",
+                  "Wire_bool":  "False",
+                  "MiddleCtrlPosition_enum":  "Original:Start:End",
+                  "Help_string":  "Overview:\n  Creates a ribbon, Copyright (C) 2018 Orkhan Ashrafov.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetParent: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- Equal: turn this ON/OFF depending on whether you want that feature.\n- Ctrls: numeric value that controls size/amount/intensity (default 5).\n- Joints: numeric value that controls size/amount/intensity (default 5).\n- Constraint: turn this ON/OFF depending on whether you want that feature.\n- AddFk: turn this ON/OFF depending on whether you want that feature.\n- Template parent examples: Spine_End_Jnt, Head_Jnt, L_Wrist_Jnt.\n\nTips:\n- if a field says left/right or mirror, use it to generate the opposite side quickly."
+              }
 }

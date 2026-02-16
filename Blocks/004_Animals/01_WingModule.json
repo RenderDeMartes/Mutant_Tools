@@ -1,17 +1,17 @@
 {
-    "Name": "L_WingExtra",
-    "Description": "Will Create single Wing Module",
-    "Icon": "WingModule.png",
-    "Enable": "True",
-    "python_file": "exec_wingmodule.py",
-    "import": "import exec_wingmodule",
-    "imp.reload": "reload(exec_wingmodule)",
-    "exec_command": "exec_wingmodule.create_wingmodule_block()",
-    "build_command": "exec_wingmodule.build_wingmodule_block()",
-    "attrs": {
-        "SetParent_string": "new_locator",
-        "Amount_float": "5",
-        "Mirror_bool": "True",
-        "Help_string": "What this block does: Will Create single Wing Module. How to use it: fill the key fields below before build. SetParent: set the target node name. If left as default, the tool uses placeholder behavior for setup. Amount: numeric value that controls size/amount/intensity (default 5). Mirror: turn this ON/OFF depending on whether you want that feature. Tip: if a field says left/right or mirror, use it to generate the opposite side quickly. Template parent examples: Spine_End_Jnt, Head_Jnt, L_Wrist_Jnt."
-    }
+    "Name":  "L_WingExtra",
+    "Description":  "Will Create single Wing Module",
+    "Icon":  "WingModule.png",
+    "Enable":  "True",
+    "python_file":  "exec_wingmodule.py",
+    "import":  "import exec_wingmodule",
+    "imp.reload":  "reload(exec_wingmodule)",
+    "exec_command":  "exec_wingmodule.create_wingmodule_block()",
+    "build_command":  "exec_wingmodule.build_wingmodule_block()",
+    "attrs":  {
+                  "SetParent_string":  "new_locator",
+                  "Amount_float":  "5",
+                  "Mirror_bool":  "True",
+                  "Help_string":  "Overview:\n  Will Create single Wing Module.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetParent: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- Amount: numeric value that controls size/amount/intensity (default 5).\n- Mirror: turn this ON/OFF depending on whether you want that feature.\n- Template parent examples: Spine_End_Jnt, Head_Jnt, L_Wrist_Jnt.\n\nTips:\n- if a field says left/right or mirror, use it to generate the opposite side quickly."
+              }
 }

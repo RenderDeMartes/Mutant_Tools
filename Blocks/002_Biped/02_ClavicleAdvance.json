@@ -1,19 +1,19 @@
 {
-    "Name": "ClavicleAdvance",
-    "Description": "This will create a Clavicle Advance system",
-    "Icon": "ClavicleAdvance.png",
-    "Enable": "True",
-    "python_file": "exec_clavicleadvance.py",
-    "import": "import exec_clavicleadvance",
-    "imp.reload": "reload(exec_clavicleadvance)",
-    "exec_command": "exec_clavicleadvance.create_clavicleadvance_block()",
-    "build_command": "exec_clavicleadvance.build_clavicleadvance_block()",
-    "attrs": {
-        "SetParent_string": "new_locator",
-        "Mirror_enum": "True:False:Right_Only",
-        "TwistAmount_float": "4",
-        "Ribbon_bool": "True",
-        "SetGameParent_string": "",
-        "Help_string": "What this block does: This will create a Clavicle Advance system. How to use it: fill the key fields below before build. SetParent: set the target node name. If left as default, the tool uses placeholder behavior for setup. Mirror: choose one option (for example: True, False, Right_Only). TwistAmount: numeric value that controls size/amount/intensity (default 4). Ribbon: turn this ON/OFF depending on whether you want that feature. SetGameParent: set the node/object name this block should use. Tip: if a field says left/right or mirror, use it to generate the opposite side quickly. Template parent examples: L_Clavicle_Jnt, L_Clavicle_Ctrl, StellarClavicle."
-    }
+    "Name":  "ClavicleAdvance",
+    "Description":  "This will create a Clavicle Advance system",
+    "Icon":  "ClavicleAdvance.png",
+    "Enable":  "True",
+    "python_file":  "exec_clavicleadvance.py",
+    "import":  "import exec_clavicleadvance",
+    "imp.reload":  "reload(exec_clavicleadvance)",
+    "exec_command":  "exec_clavicleadvance.create_clavicleadvance_block()",
+    "build_command":  "exec_clavicleadvance.build_clavicleadvance_block()",
+    "attrs":  {
+                  "SetParent_string":  "new_locator",
+                  "Mirror_enum":  "True:False:Right_Only",
+                  "TwistAmount_float":  "4",
+                  "Ribbon_bool":  "True",
+                  "SetGameParent_string":  "",
+                  "Help_string":  "Overview:\n  This will create a Clavicle Advance system.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetParent: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- Mirror: choose one option (for example: True, False, Right_Only).\n- TwistAmount: numeric value that controls size/amount/intensity (default 4).\n- Ribbon: turn this ON/OFF depending on whether you want that feature.\n- SetGameParent: set the node/object name this block should use.\n- Template parent examples: L_Clavicle_Jnt, L_Clavicle_Ctrl, StellarClavicle.\n\nTips:\n- if a field says left/right or mirror, use it to generate the opposite side quickly."
+              }
 }

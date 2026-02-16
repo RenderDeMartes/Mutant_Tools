@@ -1,16 +1,16 @@
 {
-    "Name": "Commissures",
-    "Description": "This will create a commissures systeam for the lips blendshapes",
-    "Icon": "Commissures.png",
-    "Enable": "True",
-    "python_file": "exec_commissures.py",
-    "import": "import exec_commissures",
-    "imp.reload": "reload(exec_commissures)",
-    "exec_command": "exec_commissures.create_commissures_block()",
-    "build_command": "exec_commissures.build_commissures_block()",
-    "attrs": {
-        "LeftCornerCtrl_string": "new_locator",
-        "RightCornerCtrl_string": "new_locator",
-        "Help_string": "What this block does: This will create a commissures systeam for the lips blendshapes. How to use it: fill the key fields below before build. LeftCornerCtrl: set the target node name. If left as default, the tool uses placeholder behavior for setup. RightCornerCtrl: set the target node name. If left as default, the tool uses placeholder behavior for setup. Tip: start with defaults, build once, then tweak only the fields you need."
-    }
+    "Name":  "Commissures",
+    "Description":  "This will create a commissures systeam for the lips blendshapes",
+    "Icon":  "Commissures.png",
+    "Enable":  "True",
+    "python_file":  "exec_commissures.py",
+    "import":  "import exec_commissures",
+    "imp.reload":  "reload(exec_commissures)",
+    "exec_command":  "exec_commissures.create_commissures_block()",
+    "build_command":  "exec_commissures.build_commissures_block()",
+    "attrs":  {
+                  "LeftCornerCtrl_string":  "new_locator",
+                  "RightCornerCtrl_string":  "new_locator",
+                  "Help_string":  "Overview:\n  This will create a commissures systeam for the lips blendshapes.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- LeftCornerCtrl: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- RightCornerCtrl: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n\nTips:\n- start with defaults, build once, then tweak only the fields you need."
+              }
 }

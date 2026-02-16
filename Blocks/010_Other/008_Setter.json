@@ -1,23 +1,23 @@
 {
-    "Name": "Setter",
-    "Description": "WIll set attrs",
-    "Icon": "Pose.png",
-    "Enable": "True",
-    "python_file": "exec_setter.py",
-    "import": "import exec_setter",
-    "imp.reload": "reload(exec_setter)",
-    "exec_command": "exec_setter.create_setter_block()",
-    "build_command": "exec_setter.build_setter_block()",
-    "attrs": {
-        "Pose0_string": "node,tx,ty,tz,rx,ry,rz,sx,sy,sz",
-        "Pose1_string": "",
-        "Pose2_string": "",
-        "Pose3_string": "",
-        "Pose4_string": "",
-        "Pose5_string": "",
-        "Pose6_string": "",
-        "Pose7_string": "",
-        "Pose8_string": "",
-        "Help_string": "What this block does: WIll set attrs. How to use it: fill the key fields below before build. Pose0: enter names separated by commas (example format: nameA,nameB,nameC). Pose1: set the node/object name this block should use. Pose2: set the node/object name this block should use. Pose3: set the node/object name this block should use. Pose4: set the node/object name this block should use. Pose5: set the node/object name this block should use. Tip: start with defaults, build once, then tweak only the fields you need."
-    }
+    "Name":  "Setter",
+    "Description":  "WIll set attrs",
+    "Icon":  "Pose.png",
+    "Enable":  "True",
+    "python_file":  "exec_setter.py",
+    "import":  "import exec_setter",
+    "imp.reload":  "reload(exec_setter)",
+    "exec_command":  "exec_setter.create_setter_block()",
+    "build_command":  "exec_setter.build_setter_block()",
+    "attrs":  {
+                  "Pose0_string":  "node,tx,ty,tz,rx,ry,rz,sx,sy,sz",
+                  "Pose1_string":  "",
+                  "Pose2_string":  "",
+                  "Pose3_string":  "",
+                  "Pose4_string":  "",
+                  "Pose5_string":  "",
+                  "Pose6_string":  "",
+                  "Pose7_string":  "",
+                  "Pose8_string":  "",
+                  "Help_string":  "Overview:\n  WIll set attrs.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- Pose0: enter names separated by commas (example format: nameA,nameB,nameC).\n- Pose1: set the node/object name this block should use.\n- Pose2: set the node/object name this block should use.\n- Pose3: set the node/object name this block should use.\n- Pose4: set the node/object name this block should use.\n- Pose5: set the node/object name this block should use.\n\nTips:\n- start with defaults, build once, then tweak only the fields you need."
+              }
 }

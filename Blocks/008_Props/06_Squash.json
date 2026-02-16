@@ -1,16 +1,16 @@
 {
-    "Name": "Squash",
-    "Description": "Create a Local Squash System",
-    "Icon": "Squash.png",
-    "Enable": "True",
-    "python_file": "exec_squash.py",
-    "import": "import exec_squash",
-    "imp.reload": "reload(exec_squash)",
-    "exec_command": "exec_squash.create_squash_block()",
-    "build_command": "exec_squash.build_squash_block()",
-    "attrs": {
-        "SetParent_string": "new_locator",
-        "SetGeo_string": "",
-        "Help_string": "What this block does: Create a Local Squash System. How to use it: fill the key fields below before build. SetParent: set the target node name. If left as default, the tool uses placeholder behavior for setup. SetGeo: set the node/object name this block should use. Tip: start with defaults, build once, then tweak only the fields you need. Template parent examples: Spine_End_Jnt, Head_Jnt, L_Wrist_Jnt."
-    }
+    "Name":  "Squash",
+    "Description":  "Create a Local Squash System",
+    "Icon":  "Squash.png",
+    "Enable":  "True",
+    "python_file":  "exec_squash.py",
+    "import":  "import exec_squash",
+    "imp.reload":  "reload(exec_squash)",
+    "exec_command":  "exec_squash.create_squash_block()",
+    "build_command":  "exec_squash.build_squash_block()",
+    "attrs":  {
+                  "SetParent_string":  "new_locator",
+                  "SetGeo_string":  "",
+                  "Help_string":  "Overview:\n  Create a Local Squash System.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetParent: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- SetGeo: set the node/object name this block should use.\n- Template parent examples: Spine_End_Jnt, Head_Jnt, L_Wrist_Jnt.\n\nTips:\n- start with defaults, build once, then tweak only the fields you need."
+              }
 }

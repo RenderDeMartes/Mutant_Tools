@@ -1,15 +1,15 @@
 {
-    "Name": "VisAttrs",
-    "Description": "This will create a ctrl to hold vis attrs",
-    "Icon": "VisAttrs.png",
-    "Enable": "True",
-    "python_file": "exec_visattrs.py",
-    "import": "import exec_visattrs",
-    "imp.reload": "reload(exec_visattrs)",
-    "exec_command": "exec_visattrs.create_visattrs_block()",
-    "build_command": "exec_visattrs.build_visattrs_block()",
-    "attrs": {
-        "SetParent_string": "new_locator",
-        "Help_string": "What this block does: This will create a ctrl to hold vis attrs. How to use it: fill the key fields below before build. SetParent: set the target node name. If left as default, the tool uses placeholder behavior for setup. Tip: start with defaults, build once, then tweak only the fields you need. Template parent examples: Head_Ctrl, Head_Jnt, Spine_End_Jnt."
-    }
+    "Name":  "VisAttrs",
+    "Description":  "This will create a ctrl to hold vis attrs",
+    "Icon":  "VisAttrs.png",
+    "Enable":  "True",
+    "python_file":  "exec_visattrs.py",
+    "import":  "import exec_visattrs",
+    "imp.reload":  "reload(exec_visattrs)",
+    "exec_command":  "exec_visattrs.create_visattrs_block()",
+    "build_command":  "exec_visattrs.build_visattrs_block()",
+    "attrs":  {
+                  "SetParent_string":  "new_locator",
+                  "Help_string":  "Overview:\n  This will create a ctrl to hold vis attrs.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetParent: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- Template parent examples: Head_Ctrl, Head_Jnt, Spine_End_Jnt.\n\nTips:\n- start with defaults, build once, then tweak only the fields you need."
+              }
 }

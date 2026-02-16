@@ -1,15 +1,15 @@
 {
-    "Name": "Load_Ctrls",
-    "Description": "Load Ctrls Data from File",
-    "Icon": "Controller.png",
-    "Enable": "True",
-    "python_file": "exec_load_ctrls.py",
-    "import": "import exec_load_ctrls",
-    "imp.reload": "reload(exec_load_ctrls)",
-    "exec_command": "exec_load_ctrls.create_load_ctrls_block()",
-    "build_command": "exec_load_ctrls.build_load_ctrls_block()",
-    "attrs": {
-        "File_string": "",
-        "Help_string": "What this block does: Load Ctrls Data from File. How to use it: fill the key fields below before build. File: enter the file/folder path to the data you want to load. Tip: start with defaults, build once, then tweak only the fields you need."
-    }
+    "Name":  "Load_Ctrls",
+    "Description":  "Load Ctrls Data from File",
+    "Icon":  "Controller.png",
+    "Enable":  "True",
+    "python_file":  "exec_load_ctrls.py",
+    "import":  "import exec_load_ctrls",
+    "imp.reload":  "reload(exec_load_ctrls)",
+    "exec_command":  "exec_load_ctrls.create_load_ctrls_block()",
+    "build_command":  "exec_load_ctrls.build_load_ctrls_block()",
+    "attrs":  {
+                  "File_string":  "",
+                  "Help_string":  "Overview:\n  Load Ctrls Data from File.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- File: enter the file/folder path to the data you want to load.\n\nTips:\n- start with defaults, build once, then tweak only the fields you need."
+              }
 }

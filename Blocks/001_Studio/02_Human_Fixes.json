@@ -1,14 +1,14 @@
 {
-    "Name": "Human_Fixes",
-    "Description": "Fixes for Human Template",
-    "Icon": "letter-a.png",
-    "Enable": "True",
-    "python_file": "exec_human_fixes.py",
-    "import": "import exec_human_fixes",
-    "imp.reload": "reload(exec_human_fixes)",
-    "exec_command": "exec_human_fixes.create_human_fixes_block()",
-    "build_command": "exec_human_fixes.build_human_fixes_block()",
-    "attrs": {
-        "Help_string": "What this block does: Fixes for Human Template. How to use it: usually you can build directly with defaults, then adjust if needed."
-    }
+    "Name":  "Human_Fixes",
+    "Description":  "Fixes for Human Template",
+    "Icon":  "letter-a.png",
+    "Enable":  "True",
+    "python_file":  "exec_human_fixes.py",
+    "import":  "import exec_human_fixes",
+    "imp.reload":  "reload(exec_human_fixes)",
+    "exec_command":  "exec_human_fixes.create_human_fixes_block()",
+    "build_command":  "exec_human_fixes.build_human_fixes_block()",
+    "attrs":  {
+                  "Help_string":  "Overview:\n  Fixes for Human Template.\n\nHow To Use:\n  usually you can build directly with defaults, then adjust if needed."
+              }
 }

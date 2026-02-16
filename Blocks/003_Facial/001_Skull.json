@@ -1,19 +1,19 @@
 {
-    "Name": "Skull",
-    "Description": "Create base structure for head rig",
-    "Icon": "Skull.png",
-    "Enable": "True",
-    "python_file": "exec_skull.py",
-    "import": "import exec_skull",
-    "imp.reload": "reload(exec_skull)",
-    "exec_command": "exec_skull.create_skull_block()",
-    "build_command": "exec_skull.build_skull_block()",
-    "attrs": {
-        "SetParent_string": "new_locator",
-        "SetAttrsPosition_string": "new_locator",
-        "CtrlType_enum": "cube:square:circleX:circleY:circleZ",
-        "CtrlSize_float": "4",
-        "CtrlColor_enum": "lightBlue:blue:white:purple:green:red:yellow:grey",
-        "Help_string": "What this block does: Create base structure for head rig. How to use it: fill the key fields below before build. SetParent: set the target node name. If left as default, the tool uses placeholder behavior for setup. SetAttrsPosition: set the target node name. If left as default, the tool uses placeholder behavior for setup. CtrlType: choose one option (for example: cube, square, circleX, circleY). CtrlSize: numeric value that controls size/amount/intensity (default 4). CtrlColor: choose one option (for example: lightBlue, blue, white, purple). Tip: start with defaults, build once, then tweak only the fields you need. Template parent examples: Head_Jnt, Head_Ctrl, Spine_End_Jnt. Template attrs-position examples: Nose_Base_Ctrl, Vis_Ctrl, L_Brow_Ctrl."
-    }
+    "Name":  "Skull",
+    "Description":  "Create base structure for head rig",
+    "Icon":  "Skull.png",
+    "Enable":  "True",
+    "python_file":  "exec_skull.py",
+    "import":  "import exec_skull",
+    "imp.reload":  "reload(exec_skull)",
+    "exec_command":  "exec_skull.create_skull_block()",
+    "build_command":  "exec_skull.build_skull_block()",
+    "attrs":  {
+                  "SetParent_string":  "new_locator",
+                  "SetAttrsPosition_string":  "new_locator",
+                  "CtrlType_enum":  "cube:square:circleX:circleY:circleZ",
+                  "CtrlSize_float":  "4",
+                  "CtrlColor_enum":  "lightBlue:blue:white:purple:green:red:yellow:grey",
+                  "Help_string":  "Overview:\n  Create base structure for head rig.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetParent: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- SetAttrsPosition: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- CtrlType: choose one option (for example: cube, square, circleX, circleY).\n- CtrlSize: numeric value that controls size/amount/intensity (default 4).\n- CtrlColor: choose one option (for example: lightBlue, blue, white, purple).\n- Template parent examples: Head_Jnt, Head_Ctrl, Spine_End_Jnt.\n- Template attrs-position examples: Nose_Base_Ctrl, Vis_Ctrl, L_Brow_Ctrl.\n\nTips:\n- start with defaults, build once, then tweak only the fields you need."
+              }
 }

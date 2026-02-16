@@ -1,29 +1,21 @@
 {
-    "Name": "Single_FK",
-    "Description": "This will create a Single FK Ctrl + Joint, Like for COG or Single Needs",
-    "Icon": "Bone.png",
-
-    "Enable": "True",
-
-    "python_file": "exec_single_fk.py",
-    "import": "import exec_single_fk",
-    "imp.reload": "reload(exec_single_fk)",
-    "exec_command": "exec_single_fk.create_single_fk_block()",
-    "build_command": "exec_single_fk.build_single_fk_block()",
-
-    "attrs": {
-        "SetCtrlParent_Hierarchy_string": "Rig_Ctrl_Grp",
-
-        "CtrlType_enum": "sphere:cube:square:octagon:hexagon:pringle:feet:hand:circleX:circleY:circleZ:3dArrow:2dArrow:mover:2dArrow:root:cog",
-        "CtrlSize_float": "4",
-        "CtrlColor_enum": "lightBlue:blue:white:purple:green:red:yellow:grey",
-
-        "Gimbal_bool": "True",
-        
-        "CreateJoint_bool": "True",
-        "SetJointParent_Hierarchy_string": "Miscellaneous_Grp",
-
-        "Help_string" : "What this block does: This will create a Single FK Ctrl + Joint, Like for COG or Single Needs. How to use it: fill the key fields below before build. CtrlType: choose one option (for example: sphere, cube, square, octagon). CtrlSize: numeric value that controls size/amount/intensity (default 4). CtrlColor: choose one option (for example: lightBlue, blue, white, purple). Gimbal: turn this ON/OFF depending on whether you want that feature. CreateJoint: turn this ON/OFF depending on whether you want that feature. SetCtrlParent_Hierarchy: set the node/object name this block should use. Tip: if a field says left/right or mirror, use it to generate the opposite side quickly."
-        
-    }
+    "Name":  "Single_FK",
+    "Description":  "This will create a Single FK Ctrl + Joint, Like for COG or Single Needs",
+    "Icon":  "Bone.png",
+    "Enable":  "True",
+    "python_file":  "exec_single_fk.py",
+    "import":  "import exec_single_fk",
+    "imp.reload":  "reload(exec_single_fk)",
+    "exec_command":  "exec_single_fk.create_single_fk_block()",
+    "build_command":  "exec_single_fk.build_single_fk_block()",
+    "attrs":  {
+                  "SetCtrlParent_Hierarchy_string":  "Rig_Ctrl_Grp",
+                  "CtrlType_enum":  "sphere:cube:square:octagon:hexagon:pringle:feet:hand:circleX:circleY:circleZ:3dArrow:2dArrow:mover:2dArrow:root:cog",
+                  "CtrlSize_float":  "4",
+                  "CtrlColor_enum":  "lightBlue:blue:white:purple:green:red:yellow:grey",
+                  "Gimbal_bool":  "True",
+                  "CreateJoint_bool":  "True",
+                  "SetJointParent_Hierarchy_string":  "Miscellaneous_Grp",
+                  "Help_string":  "Overview:\n  This will create a Single FK Ctrl + Joint, Like for COG or Single Needs.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- CtrlType: choose one option (for example: sphere, cube, square, octagon).\n- CtrlSize: numeric value that controls size/amount/intensity (default 4).\n- CtrlColor: choose one option (for example: lightBlue, blue, white, purple).\n- Gimbal: turn this ON/OFF depending on whether you want that feature.\n- CreateJoint: turn this ON/OFF depending on whether you want that feature.\n- SetCtrlParent_Hierarchy: set the node/object name this block should use.\n\nTips:\n- if a field says left/right or mirror, use it to generate the opposite side quickly."
+              }
 }

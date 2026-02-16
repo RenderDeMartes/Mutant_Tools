@@ -1,17 +1,17 @@
 {
-    "Name": "Proxy_Attr",
-    "Description": "Will duplicate and connect all proxy attrs from desire transform",
-    "Icon": "ProxyAttr.png",
-    "Enable": "True",
-    "python_file": "exec_proxy_attr.py",
-    "import": "import exec_proxy_attr",
-    "imp.reload": "reload(exec_proxy_attr)",
-    "exec_command": "exec_proxy_attr.create_proxy_attr_block()",
-    "build_command": "exec_proxy_attr.build_proxy_attr_block()",
-    "attrs": {
-        "SetParent_string": "new_locator",
-        "SetCopyAttrsFrom_string": "",
-        "CtrlShape_enum" : "cross:gear:hexagon:octagon:square:2dArrow",
-        "Help_string": "What this block does: Will duplicate and connect all proxy attrs from desire transform. How to use it: fill the key fields below before build. SetParent: set the target node name. If left as default, the tool uses placeholder behavior for setup. CtrlShape: choose one option (for example: cross, gear, hexagon, octagon). SetCopyAttrsFrom: set the node/object name this block should use. Tip: start with defaults, build once, then tweak only the fields you need. Template parent examples: L_Hand_Ankle_Jnt, L_Hand_Palm_Jnt, Spine_End_Jnt."
-    }
+    "Name":  "Proxy_Attr",
+    "Description":  "Will duplicate and connect all proxy attrs from desire transform",
+    "Icon":  "ProxyAttr.png",
+    "Enable":  "True",
+    "python_file":  "exec_proxy_attr.py",
+    "import":  "import exec_proxy_attr",
+    "imp.reload":  "reload(exec_proxy_attr)",
+    "exec_command":  "exec_proxy_attr.create_proxy_attr_block()",
+    "build_command":  "exec_proxy_attr.build_proxy_attr_block()",
+    "attrs":  {
+                  "SetParent_string":  "new_locator",
+                  "SetCopyAttrsFrom_string":  "",
+                  "CtrlShape_enum":  "cross:gear:hexagon:octagon:square:2dArrow",
+                  "Help_string":  "Overview:\n  Will duplicate and connect all proxy attrs from desire transform.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetParent: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- CtrlShape: choose one option (for example: cross, gear, hexagon, octagon).\n- SetCopyAttrsFrom: set the node/object name this block should use.\n- Template parent examples: L_Hand_Ankle_Jnt, L_Hand_Palm_Jnt, Spine_End_Jnt.\n\nTips:\n- start with defaults, build once, then tweak only the fields you need."
+              }
 }

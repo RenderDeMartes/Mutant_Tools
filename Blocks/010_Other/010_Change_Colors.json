@@ -1,23 +1,23 @@
 {
-    "Name": "ChangeColors",
-    "Description": "Change Colors",
-    "Icon": "ChangeColors.png",
-    "Enable": "True",
-    "python_file": "exec_change_colors.py",
-    "import": "import exec_change_colors",
-    "imp.reload": "reload(exec_change_colors)",
-    "exec_command": "exec_change_colors.create_change_colors_block()",
-    "build_command": "exec_change_colors.build_change_colors_block()",
-    "attrs": {
-        "ChangeColors1_string": "",
-        "ChangeColors2_string": "",
-        "ChangeColors3_string": "",
-        "ChangeColors4_string": "",
-        "ChangeColors5_string": "",
-        "ChangeColors6_string": "",
-        "ChangeColors7_string": "",
-        "ChangeColors8_string": "",
-        "ChangeColors9_string": "",
-        "Help_string": "What this block does: Change Colors. How to use it: fill the key fields below before build. ChangeColors1: set the node/object name this block should use. ChangeColors2: set the node/object name this block should use. ChangeColors3: set the node/object name this block should use. ChangeColors4: set the node/object name this block should use. ChangeColors5: set the node/object name this block should use. ChangeColors6: set the node/object name this block should use. Tip: start with defaults, build once, then tweak only the fields you need."
-    }
+    "Name":  "ChangeColors",
+    "Description":  "Change Colors",
+    "Icon":  "ChangeColors.png",
+    "Enable":  "True",
+    "python_file":  "exec_change_colors.py",
+    "import":  "import exec_change_colors",
+    "imp.reload":  "reload(exec_change_colors)",
+    "exec_command":  "exec_change_colors.create_change_colors_block()",
+    "build_command":  "exec_change_colors.build_change_colors_block()",
+    "attrs":  {
+                  "ChangeColors1_string":  "",
+                  "ChangeColors2_string":  "",
+                  "ChangeColors3_string":  "",
+                  "ChangeColors4_string":  "",
+                  "ChangeColors5_string":  "",
+                  "ChangeColors6_string":  "",
+                  "ChangeColors7_string":  "",
+                  "ChangeColors8_string":  "",
+                  "ChangeColors9_string":  "",
+                  "Help_string":  "Overview:\n  Change Colors.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- ChangeColors1: set the node/object name this block should use.\n- ChangeColors2: set the node/object name this block should use.\n- ChangeColors3: set the node/object name this block should use.\n- ChangeColors4: set the node/object name this block should use.\n- ChangeColors5: set the node/object name this block should use.\n- ChangeColors6: set the node/object name this block should use.\n\nTips:\n- start with defaults, build once, then tweak only the fields you need."
+              }
 }

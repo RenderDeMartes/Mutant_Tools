@@ -1,16 +1,16 @@
 {
-    "Name": "AutoWheel",
-    "Description": "AutoWheel Block",
-    "Icon": "AutoWheel.png",
-    "Enable": "True",
-    "python_file": "exec_autowheel.py",
-    "import": "import exec_autowheel",
-    "imp.reload": "reload(exec_autowheel)",
-    "exec_command": "exec_autowheel.create_autowheel_block()",
-    "build_command": "exec_autowheel.build_autowheel_block()",
-    "attrs": {
-        "SetMoverCtrls_string" : "",
-        "SetWheelsName_string" : "",
-        "Help_string": "What this block does: AutoWheel Block. How to use it: fill the key fields below before build. SetMoverCtrls: set the node/object name this block should use. SetWheelsName: set the node/object name this block should use. Tip: start with defaults, build once, then tweak only the fields you need."
-    }
+    "Name":  "AutoWheel",
+    "Description":  "AutoWheel Block",
+    "Icon":  "AutoWheel.png",
+    "Enable":  "True",
+    "python_file":  "exec_autowheel.py",
+    "import":  "import exec_autowheel",
+    "imp.reload":  "reload(exec_autowheel)",
+    "exec_command":  "exec_autowheel.create_autowheel_block()",
+    "build_command":  "exec_autowheel.build_autowheel_block()",
+    "attrs":  {
+                  "SetMoverCtrls_string":  "",
+                  "SetWheelsName_string":  "",
+                  "Help_string":  "Overview:\n  AutoWheel Block.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetMoverCtrls: set the node/object name this block should use.\n- SetWheelsName: set the node/object name this block should use.\n\nTips:\n- start with defaults, build once, then tweak only the fields you need."
+              }
 }

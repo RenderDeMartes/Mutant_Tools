@@ -1,28 +1,24 @@
 {
-    "Name": "L_Eyelids",
-    "Description": "Eyelids Setup by Marco Giordano video\n",
-
-    "Icon": "Eyes.png",
-
-    "Enable": "True",
-
-    "python_file": "exec_eyelids.py",
-    "import": "import exec_eyelids",
-    "imp.reload": "reload(exec_eyelids)",
-    "exec_command": "exec_eyelids.create_eyelids_block()",
-    "build_command": "exec_eyelids.build_eyelids_block()",
-
-    "attrs": {
-        "SetParent_string": "new_locator",
-        "SetAttrsPosition_string": "new_locator",
-        "Mirror_enum": "True:False:Right_Only",
-        "SetUpperEdge_string": "",
-        "SetLowerEdge_string": "",
-        "SetEyePivot_string": "",
-        "CtrlSize_float": 4,
-        "LimitCtrl_bool": "True",
-        "GameMode_bool": "False",
-        "BindJoints_enum": "PerVtx:3:1",
-        "Help_string" : "What this block does: Eyelids Setup by Marco Giordano video. How to use it: fill the key fields below before build. SetParent: set the target node name. If left as default, the tool uses placeholder behavior for setup. SetAttrsPosition: set the target node name. If left as default, the tool uses placeholder behavior for setup. Mirror: choose one option (for example: True, False, Right_Only). CtrlSize: numeric value that controls size/amount/intensity (default 4). LimitCtrl: turn this ON/OFF depending on whether you want that feature. GameMode: turn this ON/OFF depending on whether you want that feature. Tip: if a field says left/right or mirror, use it to generate the opposite side quickly. Template parent examples: Head_Jnt, Head_Ctrl, Spine_End_Jnt. Template attrs-position examples: L_Eyelids_Scale_Ctrl, Vis_Ctrl, L_Brow_Ctrl."
-    }
+    "Name":  "L_Eyelids",
+    "Description":  "Eyelids Setup by Marco Giordano video\n",
+    "Icon":  "Eyes.png",
+    "Enable":  "True",
+    "python_file":  "exec_eyelids.py",
+    "import":  "import exec_eyelids",
+    "imp.reload":  "reload(exec_eyelids)",
+    "exec_command":  "exec_eyelids.create_eyelids_block()",
+    "build_command":  "exec_eyelids.build_eyelids_block()",
+    "attrs":  {
+                  "SetParent_string":  "new_locator",
+                  "SetAttrsPosition_string":  "new_locator",
+                  "Mirror_enum":  "True:False:Right_Only",
+                  "SetUpperEdge_string":  "",
+                  "SetLowerEdge_string":  "",
+                  "SetEyePivot_string":  "",
+                  "CtrlSize_float":  4,
+                  "LimitCtrl_bool":  "True",
+                  "GameMode_bool":  "False",
+                  "BindJoints_enum":  "PerVtx:3:1",
+                  "Help_string":  "Overview:\n  Eyelids Setup by Marco Giordano video.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetParent: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- SetAttrsPosition: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- Mirror: choose one option (for example: True, False, Right_Only).\n- CtrlSize: numeric value that controls size/amount/intensity (default 4).\n- LimitCtrl: turn this ON/OFF depending on whether you want that feature.\n- GameMode: turn this ON/OFF depending on whether you want that feature.\n- Template parent examples: Head_Jnt, Head_Ctrl, Spine_End_Jnt.\n- Template attrs-position examples: L_Eyelids_Scale_Ctrl, Vis_Ctrl, L_Brow_Ctrl.\n\nTips:\n- if a field says left/right or mirror, use it to generate the opposite side quickly."
+              }
 }

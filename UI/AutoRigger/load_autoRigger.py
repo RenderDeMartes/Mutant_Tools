@@ -61,6 +61,8 @@ import maya.mel as mel
 import os
 import time
 import tempfile
+import re
+import html
 
 try:
     import importlib;from importlib import reload
@@ -398,6 +400,99 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		cProgressBarUI.close()
 
 	#-------------------------------------------------------------------
+	def _split_help_sentences(self, help_text):
+		if not help_text:
+			return []
+		clean_help = str(help_text).replace('\r\n', '\n').replace('\r', '\n').strip()
+		if not clean_help:
+			return []
+		if '\n' in clean_help:
+			parts = [part.strip() for part in clean_help.split('\n') if part.strip()]
+			if parts:
+				return parts
+		return [part.strip() for part in re.split(r'(?<=[.!?])\s+', clean_help) if part.strip()]
+
+	def _build_help_sections(self, help_text):
+		sentences = self._split_help_sentences(help_text)
+		overview = ''
+		how_to = ''
+		fields = []
+		tips = []
+
+		for sentence in sentences:
+			lower_sentence = sentence.lower()
+			if lower_sentence.startswith('what this block does:'):
+				overview = sentence.split(':', 1)[1].strip()
+			elif lower_sentence.startswith('how to use it:'):
+				how_to = sentence.split(':', 1)[1].strip()
+			elif lower_sentence.startswith('tip:') or lower_sentence.startswith('tips:'):
+				tips.append(sentence.split(':', 1)[1].strip())
+			else:
+				fields.append(sentence)
+
+		return overview, how_to, fields, tips
+
+	def _help_html(self, help_text, compact=False):
+		if not help_text:
+			return '<html><body><p style="margin:0;">No help available.</p></body></html>'
+
+		raw_help = str(help_text).strip()
+		if raw_help.startswith('<') and ('</' in raw_help or '<br' in raw_help):
+			return raw_help
+
+		overview, how_to, fields, tips = self._build_help_sections(raw_help)
+		if compact and len(fields) > 6:
+			fields = fields[:6] + ['More options are available in the block properties panel.']
+
+		field_items = []
+		for field in fields:
+			if ':' in field:
+				field_name, field_value = field.split(':', 1)
+				field_items.append('<li><b>{}</b>: {}</li>'.format(html.escape(field_name.strip()), html.escape(field_value.strip())))
+			else:
+				field_items.append('<li>{}</li>'.format(html.escape(field.strip())))
+
+		tip_items = ['<li>{}</li>'.format(html.escape(tip.strip())) for tip in tips if tip.strip()]
+
+		base_size = '11px' if compact else '12px'
+		heading_size = '12px' if compact else '13px'
+
+		html_parts = [
+			'<html><head>',
+			'<style>',
+			'body { font-family: Segoe UI, Arial, sans-serif; font-size: ' + base_size + '; color: #E8E8E8; margin: 0; padding: 0; background: transparent; }',
+			'.card { background: transparent; border: none; border-radius: 0; padding: 0; }',
+			'.title { font-size: ' + heading_size + '; font-weight: 600; color: #9CC7FF; margin: 0 0 4px 0; }',
+			'p { margin: 0 0 8px 0; }',
+			'ul { margin: 0 0 8px 16px; padding: 0; }',
+			'li { margin: 0 0 4px 0; }',
+			'</style>',
+			'</head><body><div class="card">'
+		]
+
+		if overview:
+			html_parts.append('<div class="title">Overview</div><p>{}</p>'.format(html.escape(overview)))
+		if how_to:
+			html_parts.append('<div class="title">How To Use</div><p>{}</p>'.format(html.escape(how_to)))
+		if field_items:
+			html_parts.append('<div class="title">Fields</div><ul>{}</ul>'.format(''.join(field_items)))
+		if tip_items:
+			html_parts.append('<div class="title">Tips</div><ul>{}</ul>'.format(''.join(tip_items)))
+
+		html_parts.append('</div></body></html>')
+		return ''.join(html_parts)
+
+	def _block_tooltip_html(self, block_data):
+		description = html.escape(str(block_data.get('Description', '')))
+		help_text = ''
+		if isinstance(block_data.get('attrs'), dict):
+			help_text = block_data['attrs'].get('Help_string', '')
+
+		if help_text:
+			return self._help_html(help_text, compact=True)
+		return '<html><body><p style="margin:0;"><b>{}</b></p></body></html>'.format(description)
+
+	#-------------------------------------------------------------------
 	def create_block_buttons(self):
 
 		if mt.check_dev_mode():
@@ -478,7 +573,8 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 					button = QPushButton()#give a nicer name
 					button.clicked.connect(partial (self.create_new_block, real_path))
 					button.clicked.connect(self.create_layout)
-					button.setToolTip(block['Description'])
+					button.setToolTip(self._block_tooltip_html(block))
+					button.setToolTipDuration(20000)
 					button.setFixedSize(40, 40)
 
 
@@ -766,11 +862,13 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 
 				if attr == 'Help':  # if non string do a code box but non editable
 					line_edit.setParent(None)
-					plainText_edit = QtWidgets.QPlainTextEdit(cmds.getAttr('{}.{}'.format(config, attr)))
-					plainText_edit.textChanged.connect(partial(self.lineEdit_update_attr,plainText_edit, edit_attr))
-					slider = QtWidgets.QSlider()
-					h_layout.addWidget(plainText_edit)
-					plainText_edit.setReadOnly(True)
+					help_browser = QtWidgets.QTextBrowser()
+					help_browser.setOpenExternalLinks(True)
+					help_browser.setReadOnly(True)
+					help_browser.setMinimumHeight(180)
+					help_browser.setFrameShape(QtWidgets.QFrame.NoFrame)
+					help_browser.setHtml(self._help_html(cmds.getAttr('{}.{}'.format(config, attr))))
+					h_layout.addWidget(help_browser)
 
 			#-----------------------------------------------------------------
 			elif attr_type == 'enum':

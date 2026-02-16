@@ -1,15 +1,15 @@
 {
-    "Name": "Rivet",
-    "Description": "Will Create a Rivet on Selecter Faces",
-    "Icon": "Rivet.png",
-    "Enable": "True",
-    "python_file": "exec_rivet.py",
-    "import": "import exec_rivet",
-    "imp.reload": "reload(exec_rivet)",
-    "exec_command": "exec_rivet.create_rivet_block()",
-    "build_command": "exec_rivet.build_rivet_block()",
-    "attrs": {
-        "SetFaces_string": "",
-        "Help_string": "What this block does: Will Create a Rivet on Selecter Faces. How to use it: fill the key fields below before build. SetFaces: set the node/object name this block should use. Tip: start with defaults, build once, then tweak only the fields you need."
-    }
+    "Name":  "Rivet",
+    "Description":  "Will Create a Rivet on Selecter Faces",
+    "Icon":  "Rivet.png",
+    "Enable":  "True",
+    "python_file":  "exec_rivet.py",
+    "import":  "import exec_rivet",
+    "imp.reload":  "reload(exec_rivet)",
+    "exec_command":  "exec_rivet.create_rivet_block()",
+    "build_command":  "exec_rivet.build_rivet_block()",
+    "attrs":  {
+                  "SetFaces_string":  "",
+                  "Help_string":  "Overview:\n  Will Create a Rivet on Selecter Faces.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetFaces: set the node/object name this block should use.\n\nTips:\n- start with defaults, build once, then tweak only the fields you need."
+              }
 }

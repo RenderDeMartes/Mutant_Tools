@@ -1,17 +1,17 @@
 {
-    "Name": "Drift",
-    "Description": "Drift Block",
-    "Icon": "Drift.png",
-    "Enable": "True",
-    "python_file": "exec_drift.py",
-    "import": "import exec_drift",
-    "imp.reload": "reload(exec_drift)",
-    "exec_command": "exec_drift.create_drift_block()",
-    "build_command": "exec_drift.build_drift_block()",
-    "attrs": {
-        "SetParent_string": "new_locator",
-        "SetFrontDrift_string": "",
-        "SetBackDrift_string": "",
-        "Help_string": "What this block does: Drift Block. How to use it: fill the key fields below before build. SetParent: set the target node name. If left as default, the tool uses placeholder behavior for setup. SetFrontDrift: set the node/object name this block should use. SetBackDrift: set the node/object name this block should use. Tip: start with defaults, build once, then tweak only the fields you need. Template parent examples: Spine_End_Jnt, Head_Jnt, L_Wrist_Jnt."
-    }
+    "Name":  "Drift",
+    "Description":  "Drift Block",
+    "Icon":  "Drift.png",
+    "Enable":  "True",
+    "python_file":  "exec_drift.py",
+    "import":  "import exec_drift",
+    "imp.reload":  "reload(exec_drift)",
+    "exec_command":  "exec_drift.create_drift_block()",
+    "build_command":  "exec_drift.build_drift_block()",
+    "attrs":  {
+                  "SetParent_string":  "new_locator",
+                  "SetFrontDrift_string":  "",
+                  "SetBackDrift_string":  "",
+                  "Help_string":  "Overview:\n  Drift Block.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetParent: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- SetFrontDrift: set the node/object name this block should use.\n- SetBackDrift: set the node/object name this block should use.\n- Template parent examples: Spine_End_Jnt, Head_Jnt, L_Wrist_Jnt.\n\nTips:\n- start with defaults, build once, then tweak only the fields you need."
+              }
 }
