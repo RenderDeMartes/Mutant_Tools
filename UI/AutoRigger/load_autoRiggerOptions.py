@@ -270,7 +270,7 @@ class AutoRiggerOptions(QtMutantWindow.Qt_Mutant):
 
 
 	@undo
-	def update_cmd(self, block=None):
+	def update_cmd(self, block=None, auto_match_only=False):
 		if not block:
 			block = self.block
 
@@ -288,17 +288,23 @@ class AutoRiggerOptions(QtMutantWindow.Qt_Mutant):
 				desire_json = desire_json.replace('.json', '')
 				break
 
-		json_name = mt.ask_name(text=desire_json,
-								ask_for='Block Name, Example: 04_Limb',
-								check_split=False, allow_name_exists=True)
-		if not json_name:
-			return False
+		if auto_match_only:
+			for file in jsons:
+				if desire_json and desire_json.lower() in file.lower():
+					desire_json = file
+					break
+		else:
+			json_name = mt.ask_name(text=desire_json,
+									ask_for='Block Name, Example: 04_Limb',
+									check_split=False, allow_name_exists=True)
+			if not json_name:
+				return False
 
-		#Find the correct json
-		desire_json = None
-		for file in jsons:
-			if json_name.lower() in file.lower():
-				desire_json = file
+			#Find the correct json
+			desire_json = None
+			for file in jsons:
+				if json_name.lower() in file.lower():
+					desire_json = file
 		print(desire_json)
 		if not desire_json:
 			cmds.error('No json found with that name')
@@ -315,13 +321,15 @@ class AutoRiggerOptions(QtMutantWindow.Qt_Mutant):
 
 	def update_config(self, block, config, module):
 		print(config)
-		attrs_in_json = module['attrs']
-		attrs_in_config = cmds.listAttr(config , ud=True)
+		attrs_in_json = module.get('attrs', {})
+		attrs_in_config = cmds.listAttr(config , ud=True) or []
 
 		print(attrs_in_config)
 		print(attrs_in_json)
 
 		skips = ['precode', 'postcode', 'Build_Command', 'Import_Command']
+		attrs_to_recreate = []
+		existing_values = {}
 
 		#if not in json delete
 		for attr in attrs_in_config:
@@ -329,19 +337,75 @@ class AutoRiggerOptions(QtMutantWindow.Qt_Mutant):
 				continue
 			clean_attr = self.get_mutant_config_attr(attr, config)
 			if clean_attr not in attrs_in_json:
+				if cmds.attributeQuery(attr, node=config, exists=True):
+					cmds.deleteAttr('{}.{}'.format(config, attr))
+			else:
+				attrs_to_recreate.append(attr)
+				existing_values[clean_attr] = self.get_config_attr_value(config=config, attr=attr, attr_key=clean_attr)
+
+		# Recreate custom attrs in JSON order so the UI/channel order matches the json file
+		for attr in attrs_to_recreate:
+			if cmds.attributeQuery(attr, node=config, exists=True):
 				cmds.deleteAttr('{}.{}'.format(config, attr))
 
 		for attr in attrs_in_json:
-			if cmds.attributeQuery(attr.split('_')[0], node=config, exists=True):
-				continue
+			attr_name = attr.split('_')[0]
 			if 'string' in attr:
-				mt.string_attr(input=config, name=attr.split('_')[0], string=module['attrs'][attr])
+				mt.string_attr(input=config, name=attr_name, string=module['attrs'][attr])
 			elif 'enum' in attr:
-				mt.new_enum(input=config, name=attr.split('_')[0], enums=module['attrs'][attr])
+				mt.new_enum(input=config, name=attr_name, enums=module['attrs'][attr])
 			elif 'float' in attr:
-				mt.new_attr_interger(input=config, name=attr.split('_')[0], min=1, max=20, default=int(module['attrs'][attr]))
+				mt.new_attr_interger(input=config, name=attr_name, min=1, max=20, default=int(module['attrs'][attr]))
 			elif 'bool' in attr:
-				mt.new_boolean(input=config, name=attr.split('_')[0], dv=module['attrs'][attr])
+				mt.new_boolean(input=config, name=attr_name, dv=module['attrs'][attr])
+
+			value_to_set = module['attrs'][attr]
+			if attr in existing_values:
+				value_to_set = existing_values[attr]
+
+			self.set_config_attr_value(config=config, attr=attr_name, attr_key=attr, value=value_to_set)
+
+	def set_config_attr_value(self, config, attr, attr_key, value):
+		attr_path = '{}.{}'.format(config, attr)
+		if not cmds.attributeQuery(attr, node=config, exists=True):
+			return
+
+		try:
+			if 'string' in attr_key:
+				cmds.setAttr(attr_path, str(value), type='string')
+			elif 'enum' in attr_key:
+				enums = cmds.attributeQuery(attr, node=config, listEnum=True)
+				if enums:
+					enum_values = enums[0].split(':')
+					if isinstance(value, str) and value in enum_values:
+						cmds.setAttr(attr_path, enum_values.index(value))
+					elif isinstance(value, int):
+						cmds.setAttr(attr_path, value)
+			elif 'float' in attr_key:
+				cmds.setAttr(attr_path, int(value))
+			elif 'bool' in attr_key:
+				cmds.setAttr(attr_path, bool(value))
+		except Exception as e:
+			print('Could not set {}: {}'.format(attr_path, e))
+
+	def get_config_attr_value(self, config, attr, attr_key):
+		attr_path = '{}.{}'.format(config, attr)
+		if not cmds.attributeQuery(attr, node=config, exists=True):
+			return None
+
+		try:
+			if 'enum' in attr_key:
+				current_index = cmds.getAttr(attr_path)
+				enums = cmds.attributeQuery(attr, node=config, listEnum=True)
+				if enums:
+					enum_values = enums[0].split(':')
+					if 0 <= int(current_index) < len(enum_values):
+						return enum_values[int(current_index)]
+				return current_index
+			return cmds.getAttr(attr_path)
+		except Exception as e:
+			print('Could not read {}: {}'.format(attr_path, e))
+			return None
 
 
 	def get_mutant_config_attr(self, attr, config):

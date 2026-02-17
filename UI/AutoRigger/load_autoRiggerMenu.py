@@ -218,6 +218,7 @@ class AutoRiggerMenu(QtWidgets.QDialog):
 		self.fileMenu.addSeparator()
 
 		self.dev_reload = self.fileMenu.addAction("Reload Blocks")
+		self.update_all_blocks = self.fileMenu.addAction("Update All Blocks")
 		self.toggle_dev = self.fileMenu.addAction("Toggle Dev Mode")
 
 		self.fileMenu.addSeparator()

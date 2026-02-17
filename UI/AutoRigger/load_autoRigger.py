@@ -300,6 +300,7 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 
 		#Relaod blocks connection in Menu
 		self.menu.dev_reload.triggered.connect(self.reload_all_blocks)
+		self.menu.update_all_blocks.triggered.connect(self.update_all_blocks_cmd)
 		
 
 	def create_layout(self):
@@ -403,6 +404,188 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 			# 			print('Importing error on {}'.format(block_file), e)
 
 		cProgressBarUI.close()
+
+	#-------------------------------------------------------------------
+	def get_all_jsons(self):
+		import glob
+		main_path = os.path.join(FOLDER, 'Blocks')
+		json_paths = os.path.join(main_path, '*', '*.json')
+		return glob.glob(json_paths)
+
+	def get_mutant_config_attr(self, attr, config):
+		attr_type = cmds.getAttr('{}.{}'.format(config, attr), type=True)
+
+		if attr_type == 'string':
+			attr = attr + '_string'
+		elif attr_type == 'enum':
+			attr = attr + '_enum'
+		elif attr_type == 'long':
+			attr = attr + '_float'
+		elif attr_type == 'bool':
+			attr = attr + '_bool'
+
+		return attr
+
+	def set_config_attr_value(self, config, attr, attr_key, value):
+		attr_path = '{}.{}'.format(config, attr)
+		if not cmds.attributeQuery(attr, node=config, exists=True):
+			return
+
+		try:
+			if 'string' in attr_key:
+				cmds.setAttr(attr_path, str(value), type='string')
+			elif 'enum' in attr_key:
+				enums = cmds.attributeQuery(attr, node=config, listEnum=True)
+				if enums:
+					enum_values = enums[0].split(':')
+					if isinstance(value, str) and value in enum_values:
+						cmds.setAttr(attr_path, enum_values.index(value))
+					elif isinstance(value, int):
+						cmds.setAttr(attr_path, value)
+			elif 'float' in attr_key:
+				cmds.setAttr(attr_path, int(value))
+			elif 'bool' in attr_key:
+				cmds.setAttr(attr_path, bool(value))
+		except Exception as e:
+			print('Could not set {}: {}'.format(attr_path, e))
+
+	def get_config_attr_value(self, config, attr, attr_key):
+		attr_path = '{}.{}'.format(config, attr)
+		if not cmds.attributeQuery(attr, node=config, exists=True):
+			return None
+
+		try:
+			if 'enum' in attr_key:
+				current_index = cmds.getAttr(attr_path)
+				enums = cmds.attributeQuery(attr, node=config, listEnum=True)
+				if enums:
+					enum_values = enums[0].split(':')
+					if 0 <= int(current_index) < len(enum_values):
+						return enum_values[int(current_index)]
+				return current_index
+			return cmds.getAttr(attr_path)
+		except Exception as e:
+			print('Could not read {}: {}'.format(attr_path, e))
+			return None
+
+	def update_config(self, block, config, module):
+		attrs_in_json = module.get('attrs', {})
+		attrs_in_config = cmds.listAttr(config, ud=True) or []
+
+		skips = ['precode', 'postcode', 'Build_Command', 'Import_Command']
+		attrs_to_recreate = []
+		existing_values = {}
+
+		for attr in attrs_in_config:
+			if attr in skips:
+				continue
+			clean_attr = self.get_mutant_config_attr(attr, config)
+			if clean_attr not in attrs_in_json:
+				if cmds.attributeQuery(attr, node=config, exists=True):
+					cmds.deleteAttr('{}.{}'.format(config, attr))
+			else:
+				attrs_to_recreate.append(attr)
+				existing_values[clean_attr] = self.get_config_attr_value(config=config, attr=attr, attr_key=clean_attr)
+
+		for attr in attrs_to_recreate:
+			if cmds.attributeQuery(attr, node=config, exists=True):
+				cmds.deleteAttr('{}.{}'.format(config, attr))
+
+		for attr in attrs_in_json:
+			attr_name = attr.split('_')[0]
+			if 'string' in attr:
+				mt.string_attr(input=config, name=attr_name, string=module['attrs'][attr])
+			elif 'enum' in attr:
+				mt.new_enum(input=config, name=attr_name, enums=module['attrs'][attr])
+			elif 'float' in attr:
+				mt.new_attr_interger(input=config, name=attr_name, min=1, max=20, default=int(module['attrs'][attr]))
+			elif 'bool' in attr:
+				mt.new_boolean(input=config, name=attr_name, dv=module['attrs'][attr])
+
+			value_to_set = module['attrs'][attr]
+			if attr in existing_values:
+				value_to_set = existing_values[attr]
+
+			self.set_config_attr_value(config=config, attr=attr_name, attr_key=attr, value=value_to_set)
+
+	def update_all_blocks_cmd(self):
+		if not cmds.objExists('Mutant_Build'):
+			cmds.warning('Mutant_Build was not found in scene.')
+			return
+
+		confirm = cmds.confirmDialog(
+			title='Update All Blocks',
+			message='Apply update_cmd to all blocks in the scene?',
+			button=['Update', 'Cancel'],
+			defaultButton='Update',
+			cancelButton='Cancel',
+			dismissString='Cancel')
+
+		if confirm != 'Update':
+			return
+
+		jsons = self.get_all_jsons()
+		json_modules = {}
+		for json_file in jsons:
+			if os.path.basename(json_file).lower() == 'order.json':
+				continue
+			try:
+				with open(json_file) as block_data:
+					module = json.load(block_data)
+				import_cmd = module.get('import')
+				if import_cmd:
+					json_modules[import_cmd] = module
+			except Exception:
+				continue
+
+		blocks = self.get_blocks_to_build(mode='Build Mutant Tools')
+		if not blocks:
+			cmds.warning('No blocks found under Mutant_Build.')
+			return
+
+		updated = 0
+		skipped = 0
+		failed = 0
+
+		cmds.undoInfo(openChunk=True)
+		for block in blocks:
+			if not cmds.objExists(block):
+				skipped += 1
+				continue
+
+			connections = cmds.listConnections(block) or []
+			if len(connections) < 2:
+				skipped += 1
+				continue
+
+			config = connections[1]
+			if not cmds.objExists(config):
+				skipped += 1
+				continue
+
+			try:
+				import_cmd = cmds.getAttr('{}.Import_Command'.format(config))
+			except Exception:
+				skipped += 1
+				continue
+
+			module = json_modules.get(import_cmd)
+			if not module:
+				skipped += 1
+				continue
+
+			try:
+				self.update_config(block, config, module)
+				updated += 1
+			except Exception as e:
+				print('Failed to update {}: {}'.format(block, e))
+				failed += 1
+		cmds.undoInfo(closeChunk=True)
+
+		msg = 'Update All Blocks -> Updated: {} | Skipped: {} | Failed: {}'.format(updated, skipped, failed)
+		print(msg)
+		cmds.inViewMessage(amg=msg, pos='midCenter', fade=True)
+		self.reload_ui()
 
 	#-------------------------------------------------------------------
 	def _split_help_sentences(self, help_text):
