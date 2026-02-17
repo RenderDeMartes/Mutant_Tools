@@ -1006,8 +1006,10 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		self.update_side_block_highlight()
 
 		#print (block)
-		self.ignore_next_selection_changed = True
-		cmds.select(self.current_block)
+		current_sel = cmds.ls(sl=True) or []
+		if len(current_sel) != 1 or current_sel[0] != self.current_block:
+			self.ignore_next_selection_changed = True
+			cmds.select(self.current_block)
 		config = cmds.listConnections(block)[1]
 		attrs =  cmds.listAttr(config , ud=True)
 
