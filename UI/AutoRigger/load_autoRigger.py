@@ -215,6 +215,7 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		self.current_block = None
 		self.current_block_folder = None
 		self.side_block_widgets = {}
+		self.side_block_edit_buttons = {}
 
 		self.designer_loader_child(path=os.path.join(FOLDER,'UI','AutoRigger'), ui_file=UI_File)
 
@@ -231,6 +232,7 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 
 		#load script job
 		self.current_selected_block = False
+		self.ignore_next_selection_changed = False
 		self.mutant_sj = cmds.scriptJob(event=["SelectionChanged", self.mutant_script_job])
 
 		self.recipes_dict = {}
@@ -267,6 +269,10 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 	#-------------------------------------------------------------------
 
 	def mutant_script_job(self):
+		if self.ignore_next_selection_changed:
+			self.ignore_next_selection_changed = False
+			return
+
 		sel = cmds.ls(sl=True)
 		if not sel:
 			return
@@ -275,7 +281,7 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 
 		try:
 			if str(sel[0]).endswith('_Block'):
-				self.create_properties_layout(block = cmds.ls(sl=True)[0])
+				self.create_properties_layout(block = cmds.ls(sl=True)[0], scroll_to_block=True)
 				self.current_selected_block = sel[0]
 		except:
 			pass
@@ -323,8 +329,7 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		self.ui.reload_ui.setIcon(QtGui.QIcon(os.path.join(IconsPath ,'RELOAD.png')))
 		self.ui.log.setIcon(QtGui.QIcon(os.path.join(IconsPath ,'LOG.png')))
 
-		if self.current_block:
-			self.scroll_side_panel_to_block(self.current_block)
+		# keep current scroll position on UI refresh; outliner changes handle scrolling via scriptJob
 
 
 	def reload_ui(self):
@@ -831,6 +836,7 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		for i in reversed(range(self.ui.side_layout.count())):
 			self.ui.side_layout.itemAt(i).widget().setParent(None)
 		self.side_block_widgets = {}
+		self.side_block_edit_buttons = {}
 
 		self.ui.side_scroll.setWidgetResizable(True)
 
@@ -935,6 +941,7 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		#propierties button
 		edit_button = QtWidgets.QPushButton(pack_name.replace(nc['module'],''))
 		edit_button.setFixedSize(75,50)
+		self.side_block_edit_buttons[pack_name] = edit_button
 
 		try:
 			edit_button.setIcon(QtGui.QIcon(cmds.getAttr('{}.iconName'.format(pack_name))))
@@ -971,8 +978,22 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		edit_button.clicked.connect(partial (self.create_properties_layout, pack_name))
 		options_button.clicked.connect(partial (self.options_side_buttonblock, pack_name, side_hbox))
 
+		self.update_side_block_highlight()
+
+	def update_side_block_highlight(self):
+		active_style = "QPushButton { color: #DDE2EA; border: 1px solid rgba(180, 190, 205, 90); border-radius: 3px; background-color: rgba(180, 190, 205, 20); }"
+		default_style = ""
+
+		for block_name, button in self.side_block_edit_buttons.items():
+			if not button:
+				continue
+			if self.current_block and block_name == self.current_block:
+				button.setStyleSheet(active_style)
+			else:
+				button.setStyleSheet(default_style)
+
 	#-------------------------------------------------------------------
-	def create_properties_layout(self, block):
+	def create_properties_layout(self, block, scroll_to_block=False):
 		#'Create All Properties Stuff'
 		#self.create_layout()
 
@@ -982,8 +1003,10 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 
 		#collect data for opening logs and codes
 		self.current_block = block
+		self.update_side_block_highlight()
 
 		#print (block)
+		self.ignore_next_selection_changed = True
 		cmds.select(self.current_block)
 		config = cmds.listConnections(block)[1]
 		attrs =  cmds.listAttr(config , ud=True)
@@ -992,7 +1015,8 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		#side_hbox = QGroupBox(block)
 		side_hbox = QGroupBox()
 		self.ui.block_label.setText(block)
-		self.scroll_side_panel_to_block(block)
+		if scroll_to_block:
+			self.scroll_side_panel_to_block(block)
 
 		self.ui.properties_layout.addWidget(side_hbox)
 		v_layout = QtWidgets.QVBoxLayout()
@@ -1006,6 +1030,24 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		self.current_block = block
 
 		#depending of the attr type create the UI
+		enable_row = QtWidgets.QHBoxLayout()
+		enable_row.setContentsMargins(3, 5, 3, 5)
+		enable_label = QtWidgets.QLabel('Enable Build: ')
+		enable_label.setFixedHeight(30)
+		enable_check = QtWidgets.QCheckBox()
+		enable_check.setChecked(self.get_block_lod_visibility(block))
+		enable_check.setToolTip('Uses {}.lodVisibility'.format(block))
+		enable_check.stateChanged.connect(partial(self.set_block_lod_visibility, block))
+		enable_row.addWidget(enable_label)
+		enable_row.addWidget(enable_check)
+		enable_row.addStretch()
+		v_layout.addLayout(enable_row)
+
+		# layout_separator = QtWidgets.QLabel()
+		# layout_separator.setStyleSheet("border : 5px solid grey; ")
+		# layout_separator.setFixedHeight(1)
+		# v_layout.addWidget(layout_separator)
+
 		for attr in attrs:
 
 			edit_attr =  '{}.{}'.format(config, attr)
@@ -1201,6 +1243,24 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		cmds.setAttr(attr, comboBox.currentIndex())
 
 	#-------------------------------------------------------------------
+	def get_block_lod_visibility(self, block):
+		attr = '{}.lodVisibility'.format(block)
+		if cmds.objExists(attr):
+			try:
+				return bool(cmds.getAttr(attr))
+			except:
+				return True
+		return True
+
+	def set_block_lod_visibility(self, block, state, *args):
+		attr = '{}.lodVisibility'.format(block)
+		if cmds.objExists(attr):
+			try:
+				cmds.setAttr(attr, bool(state))
+			except Exception as e:
+				print('Could not set {}: {}'.format(attr, e))
+
+	#-------------------------------------------------------------------
 
 	def get_blocks_to_build(self, mode='Build Mutant Tools'):
 
@@ -1222,9 +1282,15 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 				if not grand_childs:
 					continue
 				for grand_child in grand_childs:
-					to_build.append(grand_child)
+					if self.get_block_lod_visibility(grand_child):
+						to_build.append(grand_child)
+					else:
+						print('Skipped disabled block:', grand_child)
 			else:
-				to_build.append(block)
+				if self.get_block_lod_visibility(block):
+					to_build.append(block)
+				else:
+					print('Skipped disabled block:', block)
 
 		return to_build
 
