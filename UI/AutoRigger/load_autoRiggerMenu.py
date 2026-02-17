@@ -249,6 +249,11 @@ class AutoRiggerMenu(QtWidgets.QDialog):
 		self.open_in_maya.setCheckable(True)
 		self.open_in_maya.setChecked(True)
 
+		self.tutorialMenu.addSeparator()
+		self.use_mutant_hotkeys = self.tutorialMenu.addAction('Use Mutant Hotkeys')
+		self.use_mutant_hotkeys.setCheckable(True)
+		self.refresh_hotkeys_toggle_state()
+
 		# -------------------------------------------------------------------
 
 		#Donate
@@ -295,6 +300,7 @@ class AutoRiggerMenu(QtWidgets.QDialog):
 		self.riggers.triggered.connect(lambda: self.open_website('https://mutanttools.com/riggers/'))
 		self.developers.triggered.connect(lambda: self.open_website('https://mutanttools.com/mt_commands/'))
 		self.main_page.triggered.connect(lambda: self.open_website('https://mutanttools.com/'))
+		self.use_mutant_hotkeys.triggered.connect(self.toggle_mutant_hotkeys)
 
 		#DONATE MENU
 		self.paypal.triggered.connect(lambda: self.open_website('https://www.paypal.com/paypalme/renderdemartes'))
@@ -302,6 +308,32 @@ class AutoRiggerMenu(QtWidgets.QDialog):
 
 		#Dev Mode
 		self.toggle_dev.triggered.connect(lambda: mt.toggle_dev_mode())
+
+	# -------------------------------------------------------------------
+	def refresh_hotkeys_toggle_state(self):
+		try:
+			import Mutant_Tools.UI.QtMutantWindow as QtMutantWindow
+			reload(QtMutantWindow)
+			is_active = QtMutantWindow.is_mutant_hotkeys_active()
+		except:
+			is_active = False
+
+		self.use_mutant_hotkeys.setChecked(is_active)
+
+	def toggle_mutant_hotkeys(self, state):
+		try:
+			import Mutant_Tools.UI.QtMutantWindow as QtMutantWindow
+			reload(QtMutantWindow)
+			success = QtMutantWindow.set_mutant_hotkeys_enabled(state)
+			if not success:
+				self.refresh_hotkeys_toggle_state()
+				return
+		except Exception as e:
+			cmds.warning('Could not toggle Mutant hotkeys: {}'.format(e))
+			self.refresh_hotkeys_toggle_state()
+			return
+
+		self.refresh_hotkeys_toggle_state()
 
 	# -------------------------------------------------------------------
 	def save_skins(self):

@@ -76,6 +76,164 @@ ICONS_FOLDER = os.path.join(FOLDER,'Icons')
 #--------------------------------------------------------------------------------
 
 python_version = sys.version[0]
+
+MUTANT_HOTKEY_SET = 'Mutant_UI_Hotkeys'
+MUTANT_HOTKEY_RUNTIME_COMMAND = 'MutantResetCtrlsRuntimeCommand'
+MUTANT_HOTKEY_NAME_COMMAND = 'MutantResetCtrlsNameCommand'
+
+
+def _focus_is_text_editable():
+    focused_widget = QtWidgets.QApplication.focusWidget()
+    if not focused_widget:
+        return False
+
+    text_widgets = (
+        QtWidgets.QLineEdit,
+        QtWidgets.QTextEdit,
+        QtWidgets.QPlainTextEdit,
+        QtWidgets.QComboBox,
+        QtWidgets.QSpinBox,
+        QtWidgets.QDoubleSpinBox
+    )
+
+    if isinstance(focused_widget, text_widgets):
+        return True
+
+    if isinstance(focused_widget, QtWidgets.QAbstractSpinBox):
+        return True
+
+    return False
+
+
+def _set_attr_if_settable(node, attr, value):
+    attr_name = '{}.{}'.format(node, attr)
+    if not cmds.objExists(attr_name):
+        return
+
+    try:
+        if not cmds.getAttr(attr_name, settable=True):
+            return
+    except:
+        return
+
+    try:
+        cmds.setAttr(attr_name, value)
+    except:
+        pass
+
+
+def reset_mutant_ctrls_hotkey_action():
+    if _focus_is_text_editable():
+        return
+
+    controls = cmds.ls('*_Ctrl', type='transform') or []
+    namespaced_controls = cmds.ls('*:*_Ctrl', type='transform') or []
+    all_controls = sorted(set(controls + namespaced_controls))
+
+    if not all_controls:
+        cmds.warning('No *_Ctrl transforms found to reset.')
+        return
+
+    for control in all_controls:
+        _set_attr_if_settable(control, 'tx', 0)
+        _set_attr_if_settable(control, 'ty', 0)
+        _set_attr_if_settable(control, 'tz', 0)
+
+        _set_attr_if_settable(control, 'rx', 0)
+        _set_attr_if_settable(control, 'ry', 0)
+        _set_attr_if_settable(control, 'rz', 0)
+
+        _set_attr_if_settable(control, 'sx', 1)
+        _set_attr_if_settable(control, 'sy', 1)
+        _set_attr_if_settable(control, 'sz', 1)
+
+    print('Mutant: reset {} controls with suffix _Ctrl'.format(len(all_controls)))
+
+
+def _ensure_mutant_hotkey_command():
+    command_string = 'python("import Mutant_Tools.UI.QtMutantWindow as qmw;qmw.reset_mutant_ctrls_hotkey_action()")'
+
+    try:
+        if not cmds.runTimeCommand(MUTANT_HOTKEY_RUNTIME_COMMAND, exists=True):
+            cmds.runTimeCommand(MUTANT_HOTKEY_RUNTIME_COMMAND,
+                                annotation='Mutant reset all *_Ctrl transforms',
+                                category='Mutant Tools',
+                                commandLanguage='mel',
+                                command=command_string)
+    except:
+        pass
+
+    try:
+        if not cmds.nameCommand(MUTANT_HOTKEY_NAME_COMMAND, exists=True):
+            cmds.nameCommand(MUTANT_HOTKEY_NAME_COMMAND,
+                             annotation='Mutant reset all *_Ctrl transforms',
+                             command=MUTANT_HOTKEY_RUNTIME_COMMAND)
+    except:
+        try:
+            cmds.nameCommand(MUTANT_HOTKEY_NAME_COMMAND,
+                             annotation='Mutant reset all *_Ctrl transforms',
+                             command=MUTANT_HOTKEY_RUNTIME_COMMAND)
+        except:
+            pass
+
+
+def _ensure_mutant_hotkey_set(source_set):
+    try:
+        if not cmds.hotkeySet(MUTANT_HOTKEY_SET, exists=True):
+            if source_set:
+                cmds.hotkeySet(MUTANT_HOTKEY_SET, source=source_set)
+            else:
+                cmds.hotkeySet(MUTANT_HOTKEY_SET)
+    except:
+        return
+
+    _ensure_mutant_hotkey_command()
+
+    try:
+        cmds.hotkey(k='t', name=MUTANT_HOTKEY_NAME_COMMAND)
+    except:
+        pass
+
+    try:
+        cmds.hotkey(k='t', sht=True, name=MUTANT_HOTKEY_NAME_COMMAND)
+    except:
+        pass
+
+
+def is_mutant_hotkeys_active():
+    try:
+        return cmds.hotkeySet(query=True, current=True) == MUTANT_HOTKEY_SET
+    except:
+        return False
+
+
+def set_mutant_hotkeys_enabled(enabled=True):
+    if enabled:
+        current_set = None
+        try:
+            current_set = cmds.hotkeySet(query=True, current=True)
+        except:
+            current_set = None
+
+        _ensure_mutant_hotkey_set(current_set)
+
+        try:
+            cmds.hotkeySet(MUTANT_HOTKEY_SET, edit=True, current=True)
+            return True
+        except:
+            return False
+
+    try:
+        if cmds.hotkeySet('Maya_Default', exists=True):
+            cmds.hotkeySet('Maya_Default', edit=True, current=True)
+            return True
+    except:
+        pass
+
+    cmds.warning('Could not switch to Maya_Default hotkeys.')
+    return False
+
+
 def get_maya_main_window():
     main_window_ptr = omui.MQtUtil.mainWindow()
     return wrapInstance(int(main_window_ptr), QtWidgets.QWidget)
@@ -372,6 +530,7 @@ class Qt_Mutant(QtWidgets.QMainWindow):
             cmds.deleteUI('myToolDock')
         except:
             pass
+        QtWidgets.QMainWindow.closeEvent(self, event)
     # ------------------------------------------------
 
     def add_size_grip(self, layout):
