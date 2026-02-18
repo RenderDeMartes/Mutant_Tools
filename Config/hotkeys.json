@@ -1,0 +1,72 @@
+{
+  "mutant_hotkeys": {
+    "set_name": "Mutant_UI_Hotkeys",
+    "source_set": "Maya_Default",
+    "fallback_set": "Maya_Default",
+    "category": "Mutant Tools",
+    "actions": {
+      "reset_ctrls_zero": {
+        "annotation": "Mutant reset all *_Ctrl transforms to 0,0,0",
+        "command_language": "mel",
+        "command": "python(\"import Mutant_Tools.UI.QtMutantWindow as qmw;qmw.reset_mutant_ctrls_to_zero_hotkey_action()\")"
+      },
+      "reset_ctrls_default": {
+        "annotation": "Mutant reset all *_Ctrl transforms to default values",
+        "command_language": "mel",
+        "command": "python(\"import Mutant_Tools.UI.QtMutantWindow as qmw;qmw.reset_mutant_ctrls_to_default_hotkey_action()\")"
+      },
+      "copy_vertex_weights": {
+        "annotation": "Mutant copy vertex weights",
+        "command_language": "mel",
+        "command": "python(\"import Mutant_Tools.UI.QtMutantWindow as qmw;qmw.copy_vertex_weights_hotkey_action()\")"
+      },
+      "paste_vertex_weights": {
+        "annotation": "Mutant paste vertex weights",
+        "command_language": "mel",
+        "command": "python(\"import Mutant_Tools.UI.QtMutantWindow as qmw;qmw.paste_vertex_weights_hotkey_action()\")"
+      }
+    },
+    "bindings": [
+      {
+        "key": "t",
+        "shift": false,
+        "ctrl": false,
+        "alt": false,
+        "action": "reset_ctrls_zero",
+        "runtime_command": "MutantResetCtrlsRuntimeCommand",
+        "name_command": "MutantResetCtrlsNameCommand",
+        "description": "Reset all *_Ctrl transforms to 0,0,0"
+      },
+      {
+        "key": "t",
+        "shift": true,
+        "ctrl": false,
+        "alt": false,
+        "action": "reset_ctrls_default",
+        "runtime_command": "MutantResetCtrlsShiftRuntimeCommand",
+        "name_command": "MutantResetCtrlsShiftNameCommand",
+        "description": "Reset all *_Ctrl transforms to default values"
+      },
+      {
+        "key": "c",
+        "shift": false,
+        "ctrl": true,
+        "alt": false,
+        "action": "copy_vertex_weights",
+        "runtime_command": "MutantCopyVertexWeightsRuntimeCommand",
+        "name_command": "MutantCopyVertexWeightsNameCommand",
+        "description": "Copy vertex weights"
+      },
+      {
+        "key": "v",
+        "shift": false,
+        "ctrl": true,
+        "alt": false,
+        "action": "paste_vertex_weights",
+        "runtime_command": "MutantPasteVertexWeightsRuntimeCommand",
+        "name_command": "MutantPasteVertexWeightsNameCommand",
+        "description": "Paste vertex weights"
+      }
+    ]
+  }
+}

@@ -77,9 +77,169 @@ ICONS_FOLDER = os.path.join(FOLDER,'Icons')
 
 python_version = sys.version[0]
 
-MUTANT_HOTKEY_SET = 'Mutant_UI_Hotkeys'
-MUTANT_HOTKEY_RUNTIME_COMMAND = 'MutantResetCtrlsRuntimeCommand'
-MUTANT_HOTKEY_NAME_COMMAND = 'MutantResetCtrlsNameCommand'
+HOTKEYS_CONFIG_FILE = os.path.join(FOLDER, 'Config', 'hotkeys.json')
+
+
+def _default_mutant_hotkeys_config():
+    return {
+        'set_name': 'Mutant_UI_Hotkeys',
+        'source_set': 'Maya_Default',
+        'fallback_set': 'Maya_Default',
+        'category': 'Mutant Tools',
+        'actions': {
+            'reset_ctrls_zero': {
+                'annotation': 'Mutant reset all *_Ctrl transforms to 0,0,0',
+                'command_language': 'mel',
+                'command': 'python("import Mutant_Tools.UI.QtMutantWindow as qmw;qmw.reset_mutant_ctrls_to_zero_hotkey_action()")'
+            },
+            'reset_ctrls_default': {
+                'annotation': 'Mutant reset all *_Ctrl transforms to default values',
+                'command_language': 'mel',
+                'command': 'python("import Mutant_Tools.UI.QtMutantWindow as qmw;qmw.reset_mutant_ctrls_to_default_hotkey_action()")'
+            },
+            'copy_vertex_weights': {
+                'annotation': 'Mutant copy vertex weights',
+                'command_language': 'mel',
+                'command': 'python("import Mutant_Tools.UI.QtMutantWindow as qmw;qmw.copy_vertex_weights_hotkey_action()")'
+            },
+            'paste_vertex_weights': {
+                'annotation': 'Mutant paste vertex weights',
+                'command_language': 'mel',
+                'command': 'python("import Mutant_Tools.UI.QtMutantWindow as qmw;qmw.paste_vertex_weights_hotkey_action()")'
+            }
+        },
+        'bindings': [
+            {
+                'key': 't',
+                'shift': False,
+                'ctrl': False,
+                'alt': False,
+                'action': 'reset_ctrls_zero',
+                'runtime_command': 'MutantResetCtrlsRuntimeCommand',
+                'name_command': 'MutantResetCtrlsNameCommand',
+                'description': 'Reset all *_Ctrl transforms to 0,0,0'
+            },
+            {
+                'key': 't',
+                'shift': True,
+                'ctrl': False,
+                'alt': False,
+                'action': 'reset_ctrls_default',
+                'runtime_command': 'MutantResetCtrlsShiftRuntimeCommand',
+                'name_command': 'MutantResetCtrlsShiftNameCommand',
+                'description': 'Reset all *_Ctrl transforms to default values'
+            }
+        ]
+    }
+
+
+def _load_mutant_hotkeys_config():
+    config = _default_mutant_hotkeys_config()
+
+    if not os.path.exists(HOTKEYS_CONFIG_FILE):
+        return config
+
+    try:
+        with open(HOTKEYS_CONFIG_FILE, 'r') as json_file:
+            hotkeys_data = json.load(json_file)
+    except Exception as e:
+        cmds.warning('Mutant hotkeys config could not be read ({}). Using defaults.'.format(e))
+        return config
+
+    if not isinstance(hotkeys_data, dict):
+        return config
+
+    mutant_hotkeys = hotkeys_data.get('mutant_hotkeys', {})
+    if not isinstance(mutant_hotkeys, dict):
+        return config
+
+    string_fields = [
+        'set_name',
+        'source_set',
+        'fallback_set',
+        'category'
+    ]
+    for field in string_fields:
+        value = mutant_hotkeys.get(field)
+        if isinstance(value, str) and value:
+            config[field] = value
+
+    actions = mutant_hotkeys.get('actions')
+    if isinstance(actions, dict):
+        valid_actions = {}
+        for action_name, action_data in actions.items():
+            if not isinstance(action_name, str) or not action_name:
+                continue
+            if not isinstance(action_data, dict):
+                continue
+
+            command = action_data.get('command')
+            if not isinstance(command, str) or not command:
+                continue
+
+            valid_actions[action_name] = {
+                'annotation': str(action_data.get('annotation', action_name)),
+                'command_language': str(action_data.get('command_language', 'mel')),
+                'command': command
+            }
+
+        if valid_actions:
+            config['actions'] = valid_actions
+
+    legacy_command = mutant_hotkeys.get('command')
+    if isinstance(legacy_command, str) and legacy_command:
+        config['actions']['reset_ctrls_zero'] = {
+            'annotation': str(mutant_hotkeys.get('annotation', 'Mutant reset all *_Ctrl transforms')),
+            'command_language': str(mutant_hotkeys.get('command_language', 'mel')),
+            'command': legacy_command
+        }
+
+    bindings = mutant_hotkeys.get('bindings')
+    if isinstance(bindings, list):
+        valid_bindings = []
+        for binding in bindings:
+            if not isinstance(binding, dict):
+                continue
+
+            key = binding.get('key')
+            if not isinstance(key, str) or not key:
+                continue
+
+            action = binding.get('action', 'reset_ctrls_zero')
+            if not isinstance(action, str) or not action:
+                action = 'reset_ctrls_zero'
+
+            runtime_command = binding.get('runtime_command')
+            if not isinstance(runtime_command, str):
+                runtime_command = ''
+
+            name_command = binding.get('name_command')
+            if not isinstance(name_command, str):
+                name_command = ''
+
+            description = binding.get('description')
+            if not isinstance(description, str):
+                description = ''
+
+            valid_bindings.append({
+                'key': key,
+                'shift': bool(binding.get('shift', False)),
+                'ctrl': bool(binding.get('ctrl', False)),
+                'alt': bool(binding.get('alt', False)),
+                'action': action,
+                'runtime_command': runtime_command,
+                'name_command': name_command,
+                'description': description
+            })
+
+        if valid_bindings:
+            config['bindings'] = valid_bindings
+
+    return config
+
+
+MUTANT_HOTKEYS_CONFIG = _load_mutant_hotkeys_config()
+MUTANT_HOTKEY_SET = MUTANT_HOTKEYS_CONFIG['set_name']
 
 
 def _focus_is_text_editable():
@@ -122,13 +282,42 @@ def _set_attr_if_settable(node, attr, value):
         pass
 
 
-def reset_mutant_ctrls_hotkey_action():
+def _get_mutant_ctrl_transforms():
+    controls = cmds.ls('*_Ctrl', type='transform') or []
+    namespaced_controls = cmds.ls('*:*_Ctrl', type='transform') or []
+    return sorted(set(controls + namespaced_controls))
+
+
+def _set_attr_to_default_if_settable(node, attr):
+    attr_name = '{}.{}'.format(node, attr)
+    if not cmds.objExists(attr_name):
+        return
+
+    try:
+        if not cmds.getAttr(attr_name, settable=True):
+            return
+    except:
+        return
+
+    try:
+        default_values = cmds.attributeQuery(attr, node=node, listDefault=True)
+    except:
+        return
+
+    if not default_values:
+        return
+
+    try:
+        cmds.setAttr(attr_name, default_values[0])
+    except:
+        pass
+
+
+def reset_mutant_ctrls_to_zero_hotkey_action():
     if _focus_is_text_editable():
         return
 
-    controls = cmds.ls('*_Ctrl', type='transform') or []
-    namespaced_controls = cmds.ls('*:*_Ctrl', type='transform') or []
-    all_controls = sorted(set(controls + namespaced_controls))
+    all_controls = _get_mutant_ctrl_transforms()
 
     if not all_controls:
         cmds.warning('No *_Ctrl transforms found to reset.')
@@ -143,61 +332,194 @@ def reset_mutant_ctrls_hotkey_action():
         _set_attr_if_settable(control, 'ry', 0)
         _set_attr_if_settable(control, 'rz', 0)
 
-        _set_attr_if_settable(control, 'sx', 1)
-        _set_attr_if_settable(control, 'sy', 1)
-        _set_attr_if_settable(control, 'sz', 1)
+        _set_attr_if_settable(control, 'sx', 0)
+        _set_attr_if_settable(control, 'sy', 0)
+        _set_attr_if_settable(control, 'sz', 0)
 
-    print('Mutant: reset {} controls with suffix _Ctrl'.format(len(all_controls)))
+    print('Mutant: reset {} controls to 0,0,0 with suffix _Ctrl'.format(len(all_controls)))
 
 
-def _ensure_mutant_hotkey_command():
-    command_string = 'python("import Mutant_Tools.UI.QtMutantWindow as qmw;qmw.reset_mutant_ctrls_hotkey_action()")'
+def reset_mutant_ctrls_to_default_hotkey_action():
+    if _focus_is_text_editable():
+        return
 
-    try:
-        if not cmds.runTimeCommand(MUTANT_HOTKEY_RUNTIME_COMMAND, exists=True):
-            cmds.runTimeCommand(MUTANT_HOTKEY_RUNTIME_COMMAND,
-                                annotation='Mutant reset all *_Ctrl transforms',
-                                category='Mutant Tools',
-                                commandLanguage='mel',
-                                command=command_string)
-    except:
-        pass
+    all_controls = _get_mutant_ctrl_transforms()
 
-    try:
-        if not cmds.nameCommand(MUTANT_HOTKEY_NAME_COMMAND, exists=True):
-            cmds.nameCommand(MUTANT_HOTKEY_NAME_COMMAND,
-                             annotation='Mutant reset all *_Ctrl transforms',
-                             command=MUTANT_HOTKEY_RUNTIME_COMMAND)
-    except:
+    if not all_controls:
+        cmds.warning('No *_Ctrl transforms found to reset.')
+        return
+
+    for control in all_controls:
+        _set_attr_to_default_if_settable(control, 'tx')
+        _set_attr_to_default_if_settable(control, 'ty')
+        _set_attr_to_default_if_settable(control, 'tz')
+
+        _set_attr_to_default_if_settable(control, 'rx')
+        _set_attr_to_default_if_settable(control, 'ry')
+        _set_attr_to_default_if_settable(control, 'rz')
+
+        _set_attr_to_default_if_settable(control, 'sx')
+        _set_attr_to_default_if_settable(control, 'sy')
+        _set_attr_to_default_if_settable(control, 'sz')
+
+    print('Mutant: reset {} controls to default values with suffix _Ctrl'.format(len(all_controls)))
+
+
+def reset_mutant_ctrls_hotkey_action():
+    reset_mutant_ctrls_to_zero_hotkey_action()
+
+
+def _run_vertex_weights_mel_commands(command_list):
+    for command in command_list:
         try:
-            cmds.nameCommand(MUTANT_HOTKEY_NAME_COMMAND,
-                             annotation='Mutant reset all *_Ctrl transforms',
-                             command=MUTANT_HOTKEY_RUNTIME_COMMAND)
+            mel.eval(command)
+            return True
         except:
             pass
+    return False
+
+
+def copy_vertex_weights_hotkey_action():
+    if _focus_is_text_editable():
+        return
+
+    success = _run_vertex_weights_mel_commands([
+        'artAttrSkinWeightCopy;',
+        'performCopyWeights false;',
+        'performCopySkinWeights false;'
+    ])
+
+    if success:
+        print('Mutant: copied vertex weights')
+    else:
+        cmds.warning('Mutant: could not copy vertex weights. Open Paint Skin Weights and select vertices.')
+
+
+def paste_vertex_weights_hotkey_action():
+    if _focus_is_text_editable():
+        return
+
+    success = _run_vertex_weights_mel_commands([
+        'artAttrSkinWeightPaste;',
+        'performPasteWeights false;'
+    ])
+
+    if success:
+        print('Mutant: pasted vertex weights')
+    else:
+        cmds.warning('Mutant: could not paste vertex weights. Open Paint Skin Weights and select vertices.')
+
+
+def _ensure_mutant_hotkey_command(runtime_command_name, name_command_name, action_data):
+    command_string = action_data.get('command', '')
+    annotation = action_data.get('annotation', 'Mutant hotkey command')
+    category = MUTANT_HOTKEYS_CONFIG.get('category', 'Mutant Tools')
+    command_language = action_data.get('command_language', 'mel')
+
+    if not command_string:
+        return False
+
+    try:
+        if not cmds.runTimeCommand(runtime_command_name, exists=True):
+            cmds.runTimeCommand(runtime_command_name,
+                                annotation=annotation,
+                                category=category,
+                                commandLanguage=command_language,
+                                command=command_string)
+    except:
+        return False
+
+    try:
+        if not cmds.nameCommand(name_command_name, exists=True):
+            cmds.nameCommand(name_command_name,
+                             annotation=annotation,
+                             command=runtime_command_name)
+            return True
+    except:
+        try:
+            cmds.nameCommand(name_command_name,
+                             annotation=annotation,
+                             command=runtime_command_name)
+            return True
+        except:
+            return False
+
+    return True
+
+
+def _hotkey_to_string(binding):
+    key_name = str(binding.get('key', '')).upper()
+    parts = []
+    if binding.get('ctrl', False):
+        parts.append('Ctrl')
+    if binding.get('shift', False):
+        parts.append('Shift')
+    if binding.get('alt', False):
+        parts.append('Alt')
+    parts.append(key_name)
+    return '+'.join(parts)
+
+
+def _print_mutant_hotkeys_mapping():
+    print('Mutant hotkeys map:')
+    actions = MUTANT_HOTKEYS_CONFIG.get('actions', {})
+    for binding in MUTANT_HOTKEYS_CONFIG.get('bindings', []):
+        action_name = binding.get('action', 'reset_ctrls_zero')
+        action_data = actions.get(action_name, {})
+        action_label = binding.get('description') or action_data.get('annotation') or action_name
+        print('  {} -> {}'.format(_hotkey_to_string(binding), action_label))
 
 
 def _ensure_mutant_hotkey_set(source_set):
+    source_set_from_config = MUTANT_HOTKEYS_CONFIG.get('source_set')
+    if source_set:
+        source_to_use = source_set
+    else:
+        source_to_use = source_set_from_config
+
     try:
         if not cmds.hotkeySet(MUTANT_HOTKEY_SET, exists=True):
-            if source_set:
-                cmds.hotkeySet(MUTANT_HOTKEY_SET, source=source_set)
+            if source_to_use:
+                cmds.hotkeySet(MUTANT_HOTKEY_SET, source=source_to_use)
             else:
                 cmds.hotkeySet(MUTANT_HOTKEY_SET)
     except:
         return
 
-    _ensure_mutant_hotkey_command()
+    actions = MUTANT_HOTKEYS_CONFIG.get('actions', {})
 
-    try:
-        cmds.hotkey(k='t', name=MUTANT_HOTKEY_NAME_COMMAND)
-    except:
-        pass
+    for index, binding in enumerate(MUTANT_HOTKEYS_CONFIG.get('bindings', []), start=1):
+        key = binding.get('key')
+        if not key:
+            continue
 
-    try:
-        cmds.hotkey(k='t', sht=True, name=MUTANT_HOTKEY_NAME_COMMAND)
-    except:
-        pass
+        action_name = binding.get('action', 'reset_ctrls_zero')
+        action_data = actions.get(action_name)
+        if not isinstance(action_data, dict):
+            continue
+
+        runtime_command_name = binding.get('runtime_command') or 'MutantHotkeyRuntimeCommand{}'.format(index)
+        name_command_name = binding.get('name_command') or 'MutantHotkeyNameCommand{}'.format(index)
+
+        if not _ensure_mutant_hotkey_command(runtime_command_name, name_command_name, action_data):
+            continue
+
+        hotkey_kwargs = {
+            'k': key,
+            'name': name_command_name
+        }
+
+        if binding.get('shift', False):
+            hotkey_kwargs['sht'] = True
+        if binding.get('ctrl', False):
+            hotkey_kwargs['ctl'] = True
+        if binding.get('alt', False):
+            hotkey_kwargs['alt'] = True
+
+        try:
+            cmds.hotkey(**hotkey_kwargs)
+        except:
+            pass
 
 
 def is_mutant_hotkeys_active():
@@ -219,18 +541,21 @@ def set_mutant_hotkeys_enabled(enabled=True):
 
         try:
             cmds.hotkeySet(MUTANT_HOTKEY_SET, edit=True, current=True)
+            _print_mutant_hotkeys_mapping()
             return True
         except:
             return False
 
+    fallback_set = MUTANT_HOTKEYS_CONFIG.get('fallback_set', 'Maya_Default')
+
     try:
-        if cmds.hotkeySet('Maya_Default', exists=True):
-            cmds.hotkeySet('Maya_Default', edit=True, current=True)
+        if cmds.hotkeySet(fallback_set, exists=True):
+            cmds.hotkeySet(fallback_set, edit=True, current=True)
             return True
     except:
         pass
 
-    cmds.warning('Could not switch to Maya_Default hotkeys.')
+    cmds.warning('Could not switch to {} hotkeys.'.format(fallback_set))
     return False
 
 

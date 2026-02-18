@@ -250,9 +250,7 @@ class AutoRiggerMenu(QtWidgets.QDialog):
 		self.open_in_maya.setChecked(True)
 
 		self.tutorialMenu.addSeparator()
-		self.use_mutant_hotkeys = self.tutorialMenu.addAction('Use Mutant Hotkeys')
-		self.use_mutant_hotkeys.setCheckable(True)
-		self.refresh_hotkeys_toggle_state()
+		self.use_mutant_hotkeys = self.tutorialMenu.addAction('Set Mutant Hotkeys')
 
 		# -------------------------------------------------------------------
 
@@ -300,7 +298,7 @@ class AutoRiggerMenu(QtWidgets.QDialog):
 		self.riggers.triggered.connect(lambda: self.open_website('https://mutanttools.com/riggers/'))
 		self.developers.triggered.connect(lambda: self.open_website('https://mutanttools.com/mt_commands/'))
 		self.main_page.triggered.connect(lambda: self.open_website('https://mutanttools.com/'))
-		self.use_mutant_hotkeys.triggered.connect(self.toggle_mutant_hotkeys)
+		self.use_mutant_hotkeys.triggered.connect(self.set_mutant_hotkeys)
 
 		#DONATE MENU
 		self.paypal.triggered.connect(lambda: self.open_website('https://www.paypal.com/paypalme/renderdemartes'))
@@ -310,30 +308,19 @@ class AutoRiggerMenu(QtWidgets.QDialog):
 		self.toggle_dev.triggered.connect(lambda: mt.toggle_dev_mode())
 
 	# -------------------------------------------------------------------
-	def refresh_hotkeys_toggle_state(self):
+	def set_mutant_hotkeys(self, *args):
 		try:
 			import Mutant_Tools.UI.QtMutantWindow as QtMutantWindow
 			reload(QtMutantWindow)
-			is_active = QtMutantWindow.is_mutant_hotkeys_active()
-		except:
-			is_active = False
-
-		self.use_mutant_hotkeys.setChecked(is_active)
-
-	def toggle_mutant_hotkeys(self, state):
-		try:
-			import Mutant_Tools.UI.QtMutantWindow as QtMutantWindow
-			reload(QtMutantWindow)
-			success = QtMutantWindow.set_mutant_hotkeys_enabled(state)
+			success = QtMutantWindow.set_mutant_hotkeys_enabled(True)
 			if not success:
-				self.refresh_hotkeys_toggle_state()
+				cmds.warning('Could not set Mutant hotkeys.')
 				return
 		except Exception as e:
-			cmds.warning('Could not toggle Mutant hotkeys: {}'.format(e))
-			self.refresh_hotkeys_toggle_state()
+			cmds.warning('Could not set Mutant hotkeys: {}'.format(e))
 			return
 
-		self.refresh_hotkeys_toggle_state()
+		print('Mutant hotkeys set.')
 
 	# -------------------------------------------------------------------
 	def save_skins(self):
