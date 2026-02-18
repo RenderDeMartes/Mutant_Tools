@@ -135,6 +135,14 @@ def build_foot_block():
     main_ik = cmds.getAttr('{}.IKLeg'.format(config), asString=True)
     size = cmds.getAttr('{}.CtrlSize'.format(config), asString=True)
 
+    # Check for ParallelToFloor attribute (compatibility safe)
+    parallel_to_floor = False
+    if cmds.attributeQuery('ParallelToFloor', node=config, exists=True):
+        try:
+            parallel_to_floor = cmds.getAttr('{}.ParallelToFloor'.format(config))
+        except Exception:
+            parallel_to_floor = False
+
     #prep work for right side ------------------------------------------------------
 
     #if mirror is set only to right we need to build on left for mirror behavior then putt it back to righ side
@@ -287,8 +295,28 @@ def build_foot_block():
                               name=side_guide.replace('_Ankle'+nc['joint'], '_Toes'+nc['ctrl']),
                               size=size)
         mt.assign_color(color=color)
-        share_grp = mt.root_grp()[0]
+        share_grp, auto_grp = mt.root_grp(autoRoot=True)
         mt.match(share_grp, all_joints[6], r=True,t=True)
+
+        if parallel_to_floor:
+            # Create a temp locator in front of the foot (Z+ world position)
+            temp_locator = cmds.spaceLocator(n=side_guide + '_TempParallelLocator')[0]
+            cmds.xform(temp_locator, ws=True, t=[0, 0, 10])
+            # Aim constraint auto group to locator, only rotate Z
+            cmds.select(auto_grp)
+            aim_constraint = cmds.aimConstraint(
+            temp_locator,
+            auto_grp,
+            aimVector=[0, 0, 1],
+            upVector=[0, 1, 0],
+            worldUpType="vector",
+            worldUpVector=[0, 1, 0],
+            skip=["x", "y"]
+            )[0]
+            # Delete constraint and locator after
+            cmds.delete(aim_constraint)
+            cmds.delete(temp_locator)
+
         cmds.parentConstraint(all_joints[6], share_grp)
 
         #new toes joint
