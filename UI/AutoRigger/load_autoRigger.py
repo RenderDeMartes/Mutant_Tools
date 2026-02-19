@@ -676,14 +676,18 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		return ''.join(html_parts)
 
 	def _block_tooltip_html(self, block_data):
+		name = html.escape(str(block_data.get('Name', block_data.get('name', 'Block'))))
 		description = html.escape(str(block_data.get('Description', '')))
 		help_text = ''
 		if isinstance(block_data.get('attrs'), dict):
 			help_text = block_data['attrs'].get('Help_string', '')
 
 		if help_text:
-			return self._help_html(help_text, compact=True)
-		return '<html><body><p style="margin:0;"><b>{}</b></p></body></html>'.format(description)
+			# Add block name as a heading above the help HTML
+			help_html = self._help_html(help_text, compact=True)
+			return '<html><body><p style="margin:0 0 4px 0;"><b>{}</b></p>{}</body></html>'.format(name, help_html.replace('<html><body>', '').replace('</body></html>', ''))
+		# No help, show name and description
+		return '<html><body><p style="margin:0 0 2px 0;"><b>{}</b></p><p style="margin:0;">{}</p></body></html>'.format(name, description)
 
 	#-------------------------------------------------------------------
 	def create_block_buttons(self):
