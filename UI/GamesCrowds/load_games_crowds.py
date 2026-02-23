@@ -211,6 +211,10 @@ class GamesCrowds(QtMutantWindow.Qt_Mutant):
         self.ui.SegmentScaleOn_Bttn.clicked.connect(self.turn_on_scale_compensate)
         self.ui.SegmentScaleOff_Bttn.clicked.connect(self.turn_off_scale_compensate)
 
+        # Inherits Transform buttons
+        self.ui.turn_off_inherits_transform_on_selected_btn.clicked.connect(self.turn_off_inherits_transform_on_selected)
+        self.ui.turn_on_inherits_transform_on_selected_btn.clicked.connect(self.turn_on_inherits_transform_on_selected)
+
         #--------------------------------------------
         #----------------DemBones tab----------------
         #--------------------------------------------
@@ -348,6 +352,28 @@ class GamesCrowds(QtMutantWindow.Qt_Mutant):
         cGames.set_scale_compensate_on_skl(1)
     def turn_off_scale_compensate(self):
         cGames.set_scale_compensate_on_skl(0)
+
+    def turn_off_inherits_transform_on_selected(self):
+        sel = cmds.ls(sl=True, type='joint')
+        if not sel:
+            cmds.warning('No joints selected.')
+            return
+        for jnt in sel:
+            try:
+                cmds.setAttr(f"{jnt}.inheritsTransform", 0)
+            except Exception as e:
+                print(f"Failed to set inheritsTransform OFF for {jnt}: {e}")
+
+    def turn_on_inherits_transform_on_selected(self):
+        sel = cmds.ls(sl=True, type='joint')
+        if not sel:
+            cmds.warning('No joints selected.')
+            return
+        for jnt in sel:
+            try:
+                cmds.setAttr(f"{jnt}.inheritsTransform", 1)
+            except Exception as e:
+                print(f"Failed to set inheritsTransform ON for {jnt}: {e}")
 
     # -------------------------------------------------------------------
     # -------------------------------------------------------------------

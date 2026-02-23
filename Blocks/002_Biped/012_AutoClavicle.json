@@ -1,0 +1,17 @@
+{
+    "Name": "AutoClavicle",
+    "Description": "This will create an automatic clavicle reader system.",
+    "Icon": "AutoClavicle.png",
+    "Enable": "True",
+    "python_file": "exec_autoclavicle.py",
+    "import": "import exec_autoclavicle",
+    "imp.reload": "reload(exec_autoclavicle)",
+    "exec_command": "exec_autoclavicle.create_auto_clavicle_block()",
+    "build_command": "exec_autoclavicle.build_auto_clavicle_block()",
+    "attrs": {
+        "ClavicleCtrl_string": "L_Clavicle_Ctrl",
+        "FKShoulderCtrl_string": "L_Shoulder_FK_Ctrl",
+        "Mirror_enum": "True:False",
+        "Help_string": "Overview:\n  This will create an automatic clavicle reader system.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- ClavicleCtrl: set the clavicle control name.\n- FKShoulderCtrl: set the FK shoulder controller name.\n- Mirror: choose one option (for example: True, False, Right_Only).\n\nTips:\n- start with defaults, build once, then tweak only the fields you need."
+    }
+}

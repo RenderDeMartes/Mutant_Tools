@@ -146,7 +146,7 @@ def build_limb_block():
 
     elif cmds.getAttr('{}.Mirror'.format(config), asString=True) == 'True':
         # right_guide = cmds.mirrorJoint(new_guide, mirrorYZ = True, mirrorBehavior=True, searchReplace = (nc['left'],nc['right']))[0]
-        right_guide = mt.duplicate_change_names(input=new_guide, hi=True, search=nc['left'], replace=nc['right'])[0]
+        right_guide = cmds.mirrorJoint(new_guide, mirrorYZ=True, mirrorBehavior=True, searchReplace=(nc['left'], nc['right']))[0]
         mt.orient_joint(input=right_guide)
         to_build.append(right_guide)
 
@@ -386,35 +386,8 @@ def build_limb_block():
 
         # flip right rig  to right side -------------------------
         # check if the mirror attrs to Only_Right or mirror to True
-        if cmds.getAttr('{}.Mirror'.format(config), asString=True) == 'Right_Only':
-
-            mirror_ctrl_grp = mt.mirror_group(clean_ctrl_grp, world=True)
-            cmds.parentConstraint(block_parent, ikfk['ik_fk'][5][0], mo=True)
-            cmds.parentConstraint(block_parent, cmds.listRelatives(ikfk['ik_fk'][4][2], p=True), mo=True)
-            clean_ctrl_grp = mirror_ctrl_grp
-
-        elif cmds.getAttr('{}.Mirror'.format(config), asString=True) == 'True':
-            ''
-            if str(side_guide).startswith(nc['right']):
-                mirror_ctrl_grp = mt.mirror_group(clean_ctrl_grp, world=True)
-
-                cmds.parentConstraint(block_parent, ikfk['ik_fk'][5][0], mo=True)
-                cmds.parentConstraint(block_parent, cmds.listRelatives(ikfk['ik_fk'][4][2], p=True), mo=True)
-                #cmds.orientConstraint(block_parent, cmds.listRelatives(ikfk['upper_twist']['no_rotate'], p=True)[0], mo=True)
-
-                clean_ctrl_grp = mirror_ctrl_grp
-            else:
-                cmds.parentConstraint(block_parent, ikfk['ik_fk'][5][0], mo=True)
-                cmds.parentConstraint(block_parent, cmds.listRelatives(ikfk['ik_fk'][4][2], p=True), mo=True)
-                #cmds.orientConstraint(block_parent, cmds.listRelatives(ikfk['upper_twist']['no_rotate'], p=True)[0], mo=True)
-
-                clean_ctrl_grp = clean_ctrl_grp
-
-        else:  # only left side
-
-            cmds.parentConstraint(block_parent, ikfk['ik_fk'][5][0], mo=True)
-            cmds.parentConstraint(block_parent, cmds.listRelatives(ikfk['ik_fk'][4][2], p=True), mo=True)
-            #cmds.orientConstraint(block_parent, cmds.listRelatives(ikfk['upper_twist']['no_rotate'], p=True)[0], mo=True)
+        cmds.parentConstraint(block_parent, ikfk['ik_fk'][5][0], mo=True)
+        cmds.parentConstraint(block_parent, cmds.listRelatives(ikfk['ik_fk'][4][2], p=True), mo=True)
 
         cmds.parent(switch_locator_offset, clean_ctrl_grp)
 

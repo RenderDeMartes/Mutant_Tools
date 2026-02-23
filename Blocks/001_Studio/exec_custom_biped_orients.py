@@ -295,7 +295,7 @@ def build_custom_biped_orients_block():
         hand_ctrls = []
         for side in ['L', 'R']:
             for finger in ['Thumb', 'Index', 'Middle', 'Ring', 'Pinky']:
-                for segment in range(1, 4):
+                for segment in range(0, 4):
                     ctrl = '{}_Hand_{}_0{}_Ctrl'.format(side, finger, segment)
                     if cmds.objExists(ctrl):
                         hand_ctrls.append(ctrl)

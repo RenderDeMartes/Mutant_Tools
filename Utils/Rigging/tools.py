@@ -2665,7 +2665,7 @@ class Tools_class(object):
 
 
 	#-------------------------------------------------------------------------------
-	def create_quad_locator(self, locator, push_joint_name):
+	def create_quad_locator(self, locator, push_joint_name, locator_size=0.5, color='green'):
 		"""
         Creates a secondary locator (quad) to receive clean rotation data using euler-quaternion conversion.
 
@@ -2680,6 +2680,8 @@ class Tools_class(object):
         """
 		# Create quad locator
 		quad_loc = cmds.spaceLocator(n=locator + '_Quad')[0]
+		cmds.setAttr('{}.localScale'.format(quad_loc), locator_size, locator_size, locator_size)
+		self.assign_color(quad_loc, color=color)
 
 		# Parent it under the same parent as the original locator
 		parent = cmds.listRelatives(locator, p=True)
@@ -2700,7 +2702,7 @@ class Tools_class(object):
 
 		return quad_loc
 
-	def create_joint_reader(self, joint, push_joint_name):
+	def create_joint_reader(self, joint, push_joint_name, return_all=False, locator_size=0.5, color='green'):
 		"""
         Creates a reader locator for a given joint and organizes it under a reader group.
 
@@ -2716,6 +2718,8 @@ class Tools_class(object):
             str: The name of the created reader locator.
         """
 		reader = cmds.spaceLocator(n=push_joint_name + '_Reader_Loc')[0]
+		cmds.setAttr('{}.localScale'.format(reader), locator_size, locator_size, locator_size)
+		self.assign_color(reader, color=color)
 		root, auto = self.root_grp(input=reader, autoRoot=True)
 
 		reader_grp = push_joint_name + 'PushReaders_Grp'
@@ -2729,8 +2733,10 @@ class Tools_class(object):
 		cmds.parent(root, reader_grp)
 
 		# Create and connect the quad locator
-		self.create_quad_locator(reader, push_joint_name)
+		quad_loc = self.create_quad_locator(reader, push_joint_name)
 
+		if return_all:
+			return reader, reader_grp, quad_loc
 		return reader
 
 	def create_push_joint(self, joint_parent=None, reader=None, push_joint_name='Test', custom_position=None):
@@ -2791,7 +2797,9 @@ class Tools_class(object):
 
 		cmds.parentConstraint(reader, root_grp, mo=True)
 		cmds.parentConstraint(ctrl, root)
+		cmds.scaleConstraint(ctrl, root)
 		cmds.parentConstraint(driver_joint, skl_joint)
+		cmds.scaleConstraint(driver_joint, skl_joint)
 
 		return ctrl, driver_joint, skl_joint
 
