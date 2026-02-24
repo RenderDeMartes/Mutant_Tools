@@ -952,7 +952,7 @@ class Tools_class(object):
 			self.put_inside_rig_container([blend_node])
 
 	#----------------------------------------------------------------------------------------------------------------
-	def new_attr(self, input= '', name = 'switch', min = 0 , max = 1, default = 0):
+	def new_attr(self, input= '', name = 'switch', min = 0 , max = 1, default = 0, keyable = True):
 		"""Create a new double attribute on a transform.
 
 		Args:
@@ -980,7 +980,7 @@ class Tools_class(object):
 
 		#add new attr as float
 		cmds.addAttr(input, ln = name, at = 'double', min = min, max = max, dv = default)
-		cmds.setAttr('{}.{}'.format(input, name), e = True, keyable = True)
+		cmds.setAttr('{}.{}'.format(input, name), e = True, keyable = keyable)
 
 		return '{}.{}'.format(input, name)
 
