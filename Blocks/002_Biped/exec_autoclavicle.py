@@ -49,7 +49,7 @@ def build_auto_clavicle_block():
         cmds.parent(clean_rig_grp, misc_group)
 
     # Find ik shoulder joint based on FK shoulder ctrl naming
-    ik_joint = fk_shoulder_ctrl.replace('_FK'+nc['ctrl'], nc['joint'])
+    ik_joint = fk_shoulder_ctrl.replace('_Fk'+nc['ctrl'], '_Ik'+nc['joint'])
 
     to_build_ik = [ik_joint]
     if mirror == 'True':
@@ -59,7 +59,15 @@ def build_auto_clavicle_block():
     if mirror == 'True':
         to_build_fk.append(fk_shoulder_ctrl.replace(nc['left'], nc['right']))
     
-    
+    print('#$ Auto Clavicle Build Summary $#')    
+    print("#"*40)
+    print("$"*40)
+    print('Building Auto Clavicle for FK controls: {}'.format(to_build_fk))
+    print(fk_shoulder_ctrl)
+    print('Building Auto Clavicle for IK controls: {}'.format(to_build_ik))
+    print(ik_joint)
+    print("$"*40)
+    print("#"*40)
 
     # Fk Setup
     for fk_ctrl in to_build_fk:
@@ -88,7 +96,18 @@ def build_auto_clavicle_block():
                 mt.new_attr(input=clav_ctrl, name='AutoClavicle{}_Stop'.format(axis_name), min=-180, max=180, default=90)
 
         # create root for shoulder FK ctrl
-        clav_auto_grp = mt.root_grp(input=clav_ctrl, custom=True, custom_name='AutoClavicleFk_Root')[0]
+        clav_auto_grp = mt.root_grp(input=clav_ctrl, custom=True, custom_name='AutoClavicleFk_Auto')[0]
+        clav_root_grp = mt.root_grp(input=clav_ctrl, custom=True, custom_name='AutoClavicleFk_Root')[0]
+
+        # check translate, rotate are 0,0,0 and fix if not in clav_auto_grp, clav_root_grp and clav ctrl
+        for obj in [clav_auto_grp, clav_root_grp, clav_ctrl]:
+            cmds.setAttr('{}.translate'.format(obj), 0, 0, 0)
+            cmds.setAttr('{}.rotate'.format(obj), 0, 0, 0)  
+            try:
+                cmds.setAttr('{}.scale'.format(obj), 1, 1, 1)
+            except:
+                pass
+
 
         # create per-axis remapValue nodes before multiplyDivide
         node_name = fk_ctrl.replace('|', '_').replace(':', '_')
@@ -154,6 +173,72 @@ def build_auto_clavicle_block():
 
         reader, reader_group, quad_loc = mt.create_joint_reader(joint, push_joint_name=joint + '_Reader', return_all=True)
 
-        if cmds.objExists(misc_group) and cmds.objExists(reader):
-            cmds.parent(reader_group, clean_rig_grp)
-            print('Joint reader created for {} and parented to {}'.format(joint, misc_group))
+        if not cmds.objExists(clav_ctrl):
+            cmds.warning('Clavicle control not found, skipping IK setup: {}'.format(clav_ctrl))
+            continue
+        if not cmds.objExists(quad_loc):
+            cmds.warning('Quad loc not found, skipping IK setup: {}'.format(quad_loc))
+            continue
+
+        if not cmds.attributeQuery('AutoClavicle', node=clav_ctrl, exists=True):
+            mt.line_attr(input=clav_ctrl, name='Auto Clavicle')
+            mt.new_attr(input=clav_ctrl, name='AutoClavicle', min=0, max=1, default=1)
+
+        for axis_name in ['X', 'Y', 'Z']:
+            if not cmds.attributeQuery('AutoClavicle{}_Start'.format(axis_name), node=clav_ctrl, exists=True):
+                mt.new_attr(input=clav_ctrl, name='AutoClavicle{}_Start'.format(axis_name), min=-180, max=180, default=10)
+            if not cmds.attributeQuery('AutoClavicle{}_Stop'.format(axis_name), node=clav_ctrl, exists=True):
+                mt.new_attr(input=clav_ctrl, name='AutoClavicle{}_Stop'.format(axis_name), min=-180, max=180, default=90)
+
+        clav_auto_grp = mt.root_grp(input=clav_ctrl, custom=True, custom_name='AutoClavicleIk_Auto')[0]
+        clav_root_grp = mt.root_grp(input=clav_ctrl, custom=True, custom_name='AutoClavicleIk_Root')[0]
+
+        # check translate, rotate are 0,0,0 and fix if not in clav_auto_grp, clav_root_grp and clav ctrl
+        for obj in [clav_auto_grp, clav_root_grp, clav_ctrl]:
+            cmds.setAttr('{}.translate'.format(obj), 0, 0, 0)
+            cmds.setAttr('{}.rotate'.format(obj), 0, 0, 0)  
+            try:
+                cmds.setAttr('{}.scale'.format(obj), 1, 1, 1)
+            except:
+                pass
+
+    #     node_name = quad_loc.replace('|', '_').replace(':', '_')
+    #     md_node = cmds.createNode('multiplyDivide', n='{}_AutoClavicle_MD'.format(node_name))
+    #     cmds.setAttr('{}.operation'.format(md_node), 1)
+
+    #     for i, axis in enumerate(['X', 'Y', 'Z']):
+    #         remap_node = cmds.createNode('remapValue', n='{}_AutoClavicle_Remap{}'.format(node_name, axis))
+
+    #         cmds.connectAttr('{}.rotate{}'.format(quad_loc, axis), '{}.inputValue'.format(remap_node), f=True)
+    #         cmds.connectAttr('{}.AutoClavicle{}_Start'.format(clav_ctrl, axis), '{}.inputMin'.format(remap_node), f=True)
+    #         cmds.connectAttr('{}.AutoClavicle{}_Stop'.format(clav_ctrl, axis), '{}.inputMax'.format(remap_node), f=True)
+    #         cmds.setAttr('{}.outputMin'.format(remap_node), 0)
+    #         cmds.setAttr('{}.outputMax'.format(remap_node), 1)
+
+    #         if i == 0:
+    #             md_input = 'input1X'
+    #         elif i == 1:
+    #             md_input = 'input1Y'
+    #         else:
+    #             md_input = 'input1Z'
+
+    #         cmds.connectAttr('{}.outValue'.format(remap_node), '{}.{}'.format(md_node, md_input), f=True)
+    #         cmds.connectAttr('{}.rotate{}'.format(quad_loc, axis), '{}.input2{}'.format(md_node, axis), f=True)
+
+    #     final_md = cmds.createNode('multiplyDivide', n='{}_AutoClavicle_OnOff_MD'.format(node_name))
+    #     cmds.setAttr('{}.operation'.format(final_md), 1)
+
+    #     cmds.connectAttr('{}.output'.format(md_node), '{}.input1'.format(final_md), f=True)
+
+    #     cmds.setAttr('{}.input2X'.format(final_md), 1)
+    #     cmds.setAttr('{}.input2Y'.format(final_md), 1)
+    #     cmds.setAttr('{}.input2Z'.format(final_md), 1)
+    #     cmds.connectAttr('{}.AutoClavicle'.format(clav_ctrl), '{}.input2X'.format(final_md), f=True)
+    #     cmds.connectAttr('{}.AutoClavicle'.format(clav_ctrl), '{}.input2Y'.format(final_md), f=True)
+    #     cmds.connectAttr('{}.AutoClavicle'.format(clav_ctrl), '{}.input2Z'.format(final_md), f=True)
+
+    #     cmds.connectAttr('{}.output'.format(final_md), '{}.rotate'.format(clav_auto_grp), f=True)
+
+    #     if cmds.objExists(misc_group) and cmds.objExists(reader):
+    #         cmds.parent(reader_group, clean_rig_grp)
+    #         print('Joint reader created for {} and parented to {}'.format(joint, misc_group))

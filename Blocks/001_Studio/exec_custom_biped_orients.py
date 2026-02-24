@@ -84,13 +84,13 @@ def build_custom_biped_orients_block():
             return cmds.getAttr('{}.{}'.format(config, attr_name))
         return default
 
-    fix_arms = _get_bool_attr('FixArms_bool')
-    fix_clavicles = _get_bool_attr('FixClavicles_bool')
-    fix_pelvis = _get_bool_attr('FixPelvis_bool')
-    fix_legs = _get_bool_attr('FixLegs_bool')
-    fix_toes = _get_bool_attr('FixToes_bool')
-    fix_fingers = _get_bool_attr('FixFingers_bool')
-    fix_misc = _get_bool_attr('FixMisc_bool')
+    fix_arms = _get_bool_attr('FixArms')
+    fix_clavicles = _get_bool_attr('FixClavicles')
+    fix_pelvis = _get_bool_attr('FixPelvis')
+    fix_legs = _get_bool_attr('FixLegs')
+    fix_toes = _get_bool_attr('FixToes')
+    fix_fingers = _get_bool_attr('FixFingers')
+    fix_misc = _get_bool_attr('FixMisc')
 
     def _get_constraints(ctrl):
         constraints = cmds.listConnections(
