@@ -76,23 +76,68 @@ def build_auto_clavicle_block():
             cmds.warning('Clavicle control not found, skipping: {}'.format(clav_ctrl))
             continue
 
-        auto_clav_attr = '{}.AutoClavicle'.format(clav_ctrl)
         if not cmds.attributeQuery('AutoClavicle', node=clav_ctrl, exists=True):
             mt.line_attr(input=clav_ctrl, name='Auto Clavicle')
-            auto_clav_attr = mt.new_attr(input=clav_ctrl, name='AutoClavicle', min=0, max=1, default=1)
+            mt.new_attr(input=clav_ctrl, name='AutoClavicle', min=0, max=1, default=1)
 
-        # create root for shoulder FK ctrl and drive it with switchable weight
+        # create per-axis range attrs on clavicle
+        for axis_name in ['X', 'Y', 'Z']:
+            if not cmds.attributeQuery('AutoClavicle{}_Start'.format(axis_name), node=clav_ctrl, exists=True):
+                mt.new_attr(input=clav_ctrl, name='AutoClavicle{}_Start'.format(axis_name), min=-180, max=180, default=10)
+            if not cmds.attributeQuery('AutoClavicle{}_Stop'.format(axis_name), node=clav_ctrl, exists=True):
+                mt.new_attr(input=clav_ctrl, name='AutoClavicle{}_Stop'.format(axis_name), min=-180, max=180, default=90)
+
+        # create root for shoulder FK ctrl
         clav_auto_grp = mt.root_grp(input=clav_ctrl, custom=True, custom_name='AutoClavicleFk_Root')[0]
 
-        src_attr = '{}.rotate'.format(fk_ctrl)
-        dst_attr = '{}.rotate'.format(clav_auto_grp)
-        mt.connect_md_node(in_x1=src_attr,
-                           in_x2=auto_clav_attr,
-                           out_x=dst_attr,
-                           mode='mult',
-                           name='{}_AutoClavicle'.format(fk_ctrl),
-                           force=True,
-                           vector=True)
+        # create per-axis remapValue nodes before multiplyDivide
+        node_name = fk_ctrl.replace('|', '_').replace(':', '_')
+        md_node = cmds.createNode('multiplyDivide', n='{}_AutoClavicle_MD'.format(node_name))
+        cmds.setAttr('{}.operation'.format(md_node), 1)
+
+        for i, axis in enumerate(['X', 'Y', 'Z']):
+            # create remapValue for this axis
+            remap_node = cmds.createNode('remapValue', n='{}_AutoClavicle_Remap{}'.format(node_name, axis))
+
+            # connect input rotation axis
+            cmds.connectAttr('{}.rotate{}'.format(fk_ctrl, axis), '{}.inputValue'.format(remap_node), f=True)
+
+            # connect start/stop range from clavicle ctrl
+            cmds.connectAttr('{}.AutoClavicle{}_Start'.format(clav_ctrl, axis), '{}.inputMin'.format(remap_node), f=True)
+            cmds.connectAttr('{}.AutoClavicle{}_Stop'.format(clav_ctrl, axis), '{}.inputMax'.format(remap_node), f=True)
+            cmds.setAttr('{}.outputMin'.format(remap_node), 0)
+            cmds.setAttr('{}.outputMax'.format(remap_node), 1)
+
+            # connect remapped value to multiplyDivide input1
+            if i == 0:
+                md_input = 'input1X'
+            elif i == 1:
+                md_input = 'input1Y'
+            else:
+                md_input = 'input1Z'
+
+            cmds.connectAttr('{}.outValue'.format(remap_node), '{}.{}'.format(md_node, md_input), f=True)
+
+            # connect original rotation to multiplyDivide input2
+            cmds.connectAttr('{}.rotate{}'.format(fk_ctrl, axis), '{}.input2{}'.format(md_node, axis), f=True)
+
+        # create final on/off multiply node
+        final_md = cmds.createNode('multiplyDivide', n='{}_AutoClavicle_OnOff_MD'.format(node_name))
+        cmds.setAttr('{}.operation'.format(final_md), 1)
+        
+        # connect first MD output to final MD input1
+        cmds.connectAttr('{}.output'.format(md_node), '{}.input1'.format(final_md), f=True)
+        
+        # connect AutoClavicle on/off attr to input2
+        cmds.setAttr('{}.input2X'.format(final_md), 1)
+        cmds.setAttr('{}.input2Y'.format(final_md), 1)
+        cmds.setAttr('{}.input2Z'.format(final_md), 1)
+        cmds.connectAttr('{}.AutoClavicle'.format(clav_ctrl), '{}.input2X'.format(final_md), f=True)
+        cmds.connectAttr('{}.AutoClavicle'.format(clav_ctrl), '{}.input2Y'.format(final_md), f=True)
+        cmds.connectAttr('{}.AutoClavicle'.format(clav_ctrl), '{}.input2Z'.format(final_md), f=True)
+
+        # connect final output to auto clavicle group
+        cmds.connectAttr('{}.output'.format(final_md), '{}.rotate'.format(clav_auto_grp), f=True)
     
 
     # Ik Setup
