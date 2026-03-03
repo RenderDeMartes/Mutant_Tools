@@ -657,56 +657,98 @@ class Zombinator(QtMutantWindow.Qt_Mutant):
 
 	@undo
 	def reset_arms(self):
-		arms_pos = {
-			'L_Shoulder_Guide' : [15.673, 141.79, -3.056, 3.983, -41.351, 0],
-			'L_Elbow_Guide' : [21.794, 0.384, -0, 0, 0, 10.209],
-			'L_Wrist_Guide' : [25.642, -0.262, -0, 0, 0, 0]
-		}
+		def _set_zero_trs_and_orient(node):
+			if not cmds.objExists(node):
+				return
+			for attr in ['translateX', 'translateY', 'translateZ',
+						 'rotateX', 'rotateY', 'rotateZ',
+						 'jointOrientX', 'jointOrientY', 'jointOrientZ']:
+				if cmds.attributeQuery(attr, n=node, ex=True):
+					try:
+						cmds.setAttr('{}.{}'.format(node, attr), 0)
+					except:
+						pass
 
-		ref_plane = 'L_Shoulder_Guide_Ref'
+		if not cmds.objExists('L_Shoulder_Guide'):
+			cmds.warning('L_Shoulder_Guide does not exist.')
+			return
 
-		for guide in arms_pos:
-			cmds.setAttr('{}.translateX'.format(guide), arms_pos[guide][0])
-			cmds.setAttr('{}.translateY'.format(guide), arms_pos[guide][1])
-			cmds.setAttr('{}.translateZ'.format(guide), arms_pos[guide][2])
-			cmds.setAttr('{}.rotateX'.format(guide), arms_pos[guide][3])
-			cmds.setAttr('{}.rotateY'.format(guide), arms_pos[guide][4])
-			cmds.setAttr('{}.rotateZ'.format(guide), arms_pos[guide][5])
+		if cmds.objExists('L_Shoulder_Reset_Ref_Loc'):
+			cmds.delete('L_Shoulder_Reset_Ref_Loc')
 
-		cmds.delete(cmds.pointConstraint(ref_plane, 'L_Shoulder_Guide'))
+		shoulder_loc = cmds.spaceLocator(n='L_Shoulder_Reset_Ref_Loc')[0]
+		cmds.delete(cmds.pointConstraint('L_Shoulder_Guide', shoulder_loc))
+
+		_set_zero_trs_and_orient('L_Shoulder_Guide')
+		_set_zero_trs_and_orient('L_Elbow_Guide')
+		_set_zero_trs_and_orient('L_Wrist_Guide')
+
+		if cmds.objExists('L_Shoulder_Guide'):
+			if cmds.attributeQuery('rotateX', n='L_Shoulder_Guide', ex=True):
+				cmds.setAttr('L_Shoulder_Guide.rotateX', 90.0)
+
+		if cmds.objExists('L_Elbow_Guide'):
+			if cmds.attributeQuery('translateX', n='L_Elbow_Guide', ex=True):
+				cmds.setAttr('L_Elbow_Guide.translateX', 20)
+			if cmds.attributeQuery('rotateZ', n='L_Elbow_Guide', ex=True):
+				cmds.setAttr('L_Elbow_Guide.rotateZ', 25)
+
+		if cmds.objExists('L_Wrist_Guide'):
+			if cmds.attributeQuery('translateX', n='L_Wrist_Guide', ex=True):
+				cmds.setAttr('L_Wrist_Guide.translateX', 25)
+
+		if cmds.objExists(shoulder_loc) and cmds.objExists('L_Shoulder_Guide'):
+			cmds.delete(cmds.pointConstraint(shoulder_loc, 'L_Shoulder_Guide'))
+
+		cmds.delete(shoulder_loc)
 
 	@undo
 	def reset_legs(self, template='Human'):
+		def _set_zero_trs_and_orient(node):
+			if not cmds.objExists(node):
+				return
+			for attr in ['translateX', 'translateY', 'translateZ',
+						 'rotateX', 'rotateY', 'rotateZ',
+						 'jointOrientX', 'jointOrientY', 'jointOrientZ']:
+				if cmds.attributeQuery(attr, n=node, ex=True):
+					try:
+						cmds.setAttr('{}.{}'.format(node, attr), 0)
+					except:
+						pass
 
-		if template == 'Human':
-			hip_matrix = [0.013746933661306526, -0.9904106235830035, 0.13746933661307106, 0.0, -0.09854954040441069,
-						  -0.13815497346793637, -0.9854954040441555, 0.0, 0.9950371902099897, 5.5511151231257815e-17,
-						  -0.09950371902099397, 0.0, 8.897879600524902, 93.12921142578125, -0.46075183153152466, 1.0]
-			knee_matrix = [-0.01369176025564372, -0.9904878120458103, -0.13691760255644486, 0.0, -0.09855722094352554,
-						   0.13760048760343344, -0.9855722094353037, 0.0, 0.9950371902099894, 5.5511151231257796e-17,
-						   -0.09950371902099395, 0.0, 8.752433915230041, 54.822620709875224, -1.9152086844802474, 1.0]
-			ankle_matrix = [-0.01369176025564373, -0.9904878120458109, -0.13691760255644495, 0.0, -0.09855722094352558,
-							0.1376004876034335, -0.9855722094353041, 0.0, 0.99503719020999, 5.551115123125783e-17,
-							-0.09950371902099402, 0.0, 8.195169516284642, 9.931680646559656, -7.487852673934562, 1.0]
+		if not cmds.objExists('L_Hip_Guide'):
+			cmds.warning('L_Hip_Guide does not exist.')
+			return
 
-		elif template == 'Toon':
-			hip_matrix = [0.013746933661306526, -0.9904106235830035, 0.13746933661307106, 0.0, -0.09854954040441069,
-						  -0.13815497346793637, -0.9854954040441555, 0.0, 0.9950371902099897, 5.5511151231257815e-17,
-						  -0.09950371902099397, 0.0, 8.897879600524902, 93.12921142578125, -0.46075183153152466, 1.0]
-			knee_matrix = [-0.01369176025564372, -0.9904878120458103, -0.13691760255644486, 0.0, -0.09855722094352554,
-						   0.13760048760343344, -0.9855722094353037, 0.0, 0.9950371902099894, 5.5511151231257796e-17,
-						   -0.09950371902099395, 0.0, 8.752433915230041, 54.822620709875224, -1.9152086844802474, 1.0]
-			ankle_matrix = [-0.01369176025564373, -0.9904878120458109, -0.13691760255644495, 0.0, -0.09855722094352558,
-							0.1376004876034335, -0.9855722094353041, 0.0, 0.99503719020999, 5.551115123125783e-17,
-							-0.09950371902099402, 0.0, 8.195169516284642, 9.931680646559656, -7.487852673934562, 1.0]
+		if cmds.objExists('L_Hip_Reset_Ref_Loc'):
+			cmds.delete('L_Hip_Reset_Ref_Loc')
 
-			cmds.error('We need to get matrix data, i just copy paste from here to do later')
+		hip_loc = cmds.spaceLocator(n='L_Hip_Reset_Ref_Loc')[0]
+		cmds.delete(cmds.pointConstraint('L_Hip_Guide', hip_loc))
 
-		cmds.xform('L_Hip_Guide', m=hip_matrix, ws=True)
-		cmds.xform('L_Knee_Guide', m=knee_matrix, ws=True)
-		cmds.xform('L_Ankle_Guide', m=ankle_matrix, ws=True)
+		_set_zero_trs_and_orient('L_Hip_Guide')
+		_set_zero_trs_and_orient('L_Knee_Guide')
+		_set_zero_trs_and_orient('L_Ankle_Guide')
 
-		cmds.delete(cmds.pointConstraint('L_PelvisEnd_Guide', 'L_Hip_Guide'))
+		if cmds.objExists('L_Hip_Guide'):
+			if cmds.attributeQuery('rotateX', n='L_Hip_Guide', ex=True):
+				cmds.setAttr('L_Hip_Guide.rotateX', -90.0)
+			if cmds.attributeQuery('rotateZ', n='L_Hip_Guide', ex=True):
+				cmds.setAttr('L_Hip_Guide.rotateZ', -90.0)
+
+		if cmds.objExists('L_Knee_Guide'):
+			if cmds.attributeQuery('translateX', n='L_Knee_Guide', ex=True):
+				cmds.setAttr('L_Knee_Guide.translateX', 35)
+			if cmds.attributeQuery('rotateZ', n='L_Knee_Guide', ex=True):
+				cmds.setAttr('L_Knee_Guide.rotateZ', 25)
+
+		if cmds.objExists('L_Ankle_Guide') and cmds.attributeQuery('translateX', n='L_Ankle_Guide', ex=True):
+			cmds.setAttr('L_Ankle_Guide.translateX', 45)
+
+		if cmds.objExists(hip_loc) and cmds.objExists('L_Hip_Guide'):
+			cmds.delete(cmds.pointConstraint(hip_loc, 'L_Hip_Guide'))
+
+		cmds.delete(hip_loc)
 
 	# -------------------------------------------------------------------
 	# -------------------------------------------------------------------
