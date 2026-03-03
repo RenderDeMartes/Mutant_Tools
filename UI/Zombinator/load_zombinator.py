@@ -657,6 +657,15 @@ class Zombinator(QtMutantWindow.Qt_Mutant):
 
 	@undo
 	def reset_arms(self):
+		def _distance_between(node_a, node_b):
+			if not cmds.objExists(node_a) or not cmds.objExists(node_b):
+				return None
+			pos_a = cmds.xform(node_a, q=True, ws=True, t=True)
+			pos_b = cmds.xform(node_b, q=True, ws=True, t=True)
+			vec_a = OpenMaya.MVector(pos_a[0], pos_a[1], pos_a[2])
+			vec_b = OpenMaya.MVector(pos_b[0], pos_b[1], pos_b[2])
+			return (vec_b - vec_a).length()
+
 		def _set_zero_trs_and_orient(node):
 			if not cmds.objExists(node):
 				return
@@ -672,6 +681,9 @@ class Zombinator(QtMutantWindow.Qt_Mutant):
 		if not cmds.objExists('L_Shoulder_Guide'):
 			cmds.warning('L_Shoulder_Guide does not exist.')
 			return
+
+		shoulder_to_elbow_dist = _distance_between('L_Shoulder_Guide', 'L_Elbow_Guide')
+		elbow_to_wrist_dist = _distance_between('L_Elbow_Guide', 'L_Wrist_Guide')
 
 		if cmds.objExists('L_Shoulder_Reset_Ref_Loc'):
 			cmds.delete('L_Shoulder_Reset_Ref_Loc')
@@ -689,13 +701,13 @@ class Zombinator(QtMutantWindow.Qt_Mutant):
 
 		if cmds.objExists('L_Elbow_Guide'):
 			if cmds.attributeQuery('translateX', n='L_Elbow_Guide', ex=True):
-				cmds.setAttr('L_Elbow_Guide.translateX', 20)
+				cmds.setAttr('L_Elbow_Guide.translateX', shoulder_to_elbow_dist if shoulder_to_elbow_dist is not None else 20)
 			if cmds.attributeQuery('rotateZ', n='L_Elbow_Guide', ex=True):
 				cmds.setAttr('L_Elbow_Guide.rotateZ', 25)
 
 		if cmds.objExists('L_Wrist_Guide'):
 			if cmds.attributeQuery('translateX', n='L_Wrist_Guide', ex=True):
-				cmds.setAttr('L_Wrist_Guide.translateX', 25)
+				cmds.setAttr('L_Wrist_Guide.translateX', elbow_to_wrist_dist if elbow_to_wrist_dist is not None else 25)
 
 		if cmds.objExists(shoulder_loc) and cmds.objExists('L_Shoulder_Guide'):
 			cmds.delete(cmds.pointConstraint(shoulder_loc, 'L_Shoulder_Guide'))
@@ -704,6 +716,15 @@ class Zombinator(QtMutantWindow.Qt_Mutant):
 
 	@undo
 	def reset_legs(self, template='Human'):
+		def _distance_between(node_a, node_b):
+			if not cmds.objExists(node_a) or not cmds.objExists(node_b):
+				return None
+			pos_a = cmds.xform(node_a, q=True, ws=True, t=True)
+			pos_b = cmds.xform(node_b, q=True, ws=True, t=True)
+			vec_a = OpenMaya.MVector(pos_a[0], pos_a[1], pos_a[2])
+			vec_b = OpenMaya.MVector(pos_b[0], pos_b[1], pos_b[2])
+			return (vec_b - vec_a).length()
+
 		def _set_zero_trs_and_orient(node):
 			if not cmds.objExists(node):
 				return
@@ -719,6 +740,9 @@ class Zombinator(QtMutantWindow.Qt_Mutant):
 		if not cmds.objExists('L_Hip_Guide'):
 			cmds.warning('L_Hip_Guide does not exist.')
 			return
+
+		hip_to_knee_dist = _distance_between('L_Hip_Guide', 'L_Knee_Guide')
+		knee_to_ankle_dist = _distance_between('L_Knee_Guide', 'L_Ankle_Guide')
 
 		if cmds.objExists('L_Hip_Reset_Ref_Loc'):
 			cmds.delete('L_Hip_Reset_Ref_Loc')
@@ -738,12 +762,12 @@ class Zombinator(QtMutantWindow.Qt_Mutant):
 
 		if cmds.objExists('L_Knee_Guide'):
 			if cmds.attributeQuery('translateX', n='L_Knee_Guide', ex=True):
-				cmds.setAttr('L_Knee_Guide.translateX', 35)
+				cmds.setAttr('L_Knee_Guide.translateX', hip_to_knee_dist if hip_to_knee_dist is not None else 35)
 			if cmds.attributeQuery('rotateZ', n='L_Knee_Guide', ex=True):
 				cmds.setAttr('L_Knee_Guide.rotateZ', 25)
 
 		if cmds.objExists('L_Ankle_Guide') and cmds.attributeQuery('translateX', n='L_Ankle_Guide', ex=True):
-			cmds.setAttr('L_Ankle_Guide.translateX', 45)
+			cmds.setAttr('L_Ankle_Guide.translateX', knee_to_ankle_dist if knee_to_ankle_dist is not None else 45)
 
 		if cmds.objExists(hip_loc) and cmds.objExists('L_Hip_Guide'):
 			cmds.delete(cmds.pointConstraint(hip_loc, 'L_Hip_Guide'))
