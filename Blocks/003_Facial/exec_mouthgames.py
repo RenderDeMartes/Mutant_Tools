@@ -19,6 +19,7 @@ mt = main_mutant.Mutant()
 #---------------------------------------------
 TAB_FOLDER = '003_Facial'
 PYBLOCK_NAME = 'exec_mouthgames'
+CORNER_ORIENTS = True
 
 #Read name conventions as nc[''] and setup as seup['']
 PATH = os.path.dirname(__file__)
@@ -209,6 +210,7 @@ def build_mouthgames_block():
                 percentage = float(num) / (num_joints + 1)
             else:
                 percentage = 0.0
+            is_corner = num in (0, len(main_ctrl_names) - 1)
             cmds.setAttr(f'{poci}.turnOnPercentage', True)
             cmds.setAttr(f'{poci}.parameter', percentage)
 
@@ -216,11 +218,14 @@ def build_mouthgames_block():
             #----------------------------------------------
 
 
-            four_by_four, decompose = create_tangent_orient_setup(
-                base_name=f"{name}_{num}",
-                poci=poci,
-                loc=end_locator
-            )
+            if CORNER_ORIENTS or not is_corner:
+                four_by_four, decompose = create_tangent_orient_setup(
+                    base_name=f"{name}_{num}",
+                    poci=poci,
+                    loc=end_locator
+                )
+            else:
+                four_by_four, decompose = None, None
 
             if percentage not in (0, 0.5, 1):
                 cmds.delete(cmds.parentConstraint(end_locator, vtx_jnt))
@@ -255,11 +260,14 @@ def build_mouthgames_block():
             # ----------------------------------------------
             # ----------------------------------------------
 
-            four_by_four, decompose = create_tangent_orient_setup(
-                base_name=f"{name}_UpVector_{num}",
-                poci=poci,
-                loc=up_end_locator
-            )
+            if CORNER_ORIENTS or not is_corner:
+                four_by_four, decompose = create_tangent_orient_setup(
+                    base_name=f"{name}_UpVector_{num}",
+                    poci=poci,
+                    loc=up_end_locator
+                )
+            else:
+                four_by_four, decompose = None, None
 
             if percentage not in (0, 0.5, 1):
                 cmds.delete(cmds.parentConstraint(end_locator, vtx_jnt))
