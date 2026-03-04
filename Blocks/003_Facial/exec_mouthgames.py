@@ -131,6 +131,7 @@ def build_mouthgames_block():
 
         num_joints = int(cmds.getAttr('{}.TweakCtrlsAmount'.format(config)))
         num_ctrls = int(cmds.getAttr('{}.MidCtrlsAmount'.format(config)))
+        corner_follow_locs = []
 
         #
         cmds.select(edge)
@@ -226,6 +227,7 @@ def build_mouthgames_block():
                 )
             else:
                 four_by_four, decompose = None, None
+                corner_follow_locs.append((ctrl_name, end_locator, up_end_locator))
 
             if percentage not in (0, 0.5, 1):
                 cmds.delete(cmds.parentConstraint(end_locator, vtx_jnt))
@@ -605,6 +607,17 @@ def build_mouthgames_block():
 
         mt.match(left_puller_loc, left_controllers[-1])
         mt.match(right_puller_loc, right_controllers[-1])
+
+        if not CORNER_ORIENTS:
+            for ctrl_name, corner_loc, corner_up_loc in corner_follow_locs:
+                if ctrl_name.startswith(nc['right']):
+                    orient_target = right_puller_loc
+                elif ctrl_name.startswith(nc['left']):
+                    orient_target = left_puller_loc
+                else:
+                    continue
+                cmds.orientConstraint(orient_target, corner_loc, mo=True)
+                cmds.orientConstraint(orient_target, corner_up_loc, mo=True)
 
         print('*'*50)
         print('*'*50)
