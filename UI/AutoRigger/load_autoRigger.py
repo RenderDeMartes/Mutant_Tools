@@ -93,6 +93,9 @@ reload(QtMutantWindow)
 import Mutant_Tools.UI.CustomWidgets.expandableWidget as expandableWidget
 reload(expandableWidget)
 
+import Mutant_Tools.UI.CustomWidgets.codeEditorWidget as codeEditorWidget
+reload(codeEditorWidget)
+
 from Mutant_Tools.Utils.Helpers import helpers
 reload(Mutant_Tools.Utils.Helpers.helpers)
 mh = helpers.Helpers()
@@ -1119,10 +1122,11 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 
 				if attr == 'Code':  # if code in name it will create a larger box
 					line_edit.setParent(None)
-					plainText_edit = QtWidgets.QPlainTextEdit(cmds.getAttr('{}.{}'.format(config, attr)))
-					plainText_edit.textChanged.connect(partial(self.lineEdit_update_attr,plainText_edit, edit_attr))
-					slider = QtWidgets.QSlider()
-					h_layout.addWidget(plainText_edit)
+					code_editor = codeEditorWidget.IDECodeEditor()
+					code_editor.setPlainText(cmds.getAttr('{}.{}'.format(config, attr)))
+					code_editor.set_language('python')
+					code_editor.textChanged.connect(partial(self.lineEdit_update_attr, code_editor, edit_attr))
+					h_layout.addWidget(code_editor)
 
 				if attr == 'Help':  # if non string do a code box but non editable
 					line_edit.setParent(None)

@@ -98,6 +98,9 @@ from Mutant_Tools.UI import QtMutantWindow
 reload(QtMutantWindow)
 Qt_Mutant = QtMutantWindow.Qt_Mutant()
 
+import Mutant_Tools.UI.CustomWidgets.codeEditorWidget as codeEditorWidget
+reload(codeEditorWidget)
+
 #-------------------------------------------------------------------
 
 #QT WIndow!
@@ -117,6 +120,7 @@ class Code_Reader(QtMutantWindow.Qt_Mutant):
 		self.resize(680,475)
 
 		self.designer_loader_child(path=os.path.join(FOLDER, 'UI','CodeReader'), ui_file=UI_File)
+		self.replace_code_widget()
 		self.set_title('Title')
 
 		self.create_layout()
@@ -134,6 +138,23 @@ class Code_Reader(QtMutantWindow.Qt_Mutant):
 	def create_layout(self):
 
 		self.ui.layout().setContentsMargins(3, 3, 3, 3)
+
+	def replace_code_widget(self):
+		try:
+			old_widget = self.ui.code_text
+			editor = codeEditorWidget.IDECodeEditor(old_widget.parentWidget())
+			editor.setObjectName('code_text')
+			editor.setPlainText(old_widget.toPlainText())
+			editor.setReadOnly(old_widget.isReadOnly())
+			editor.set_language('python')
+
+			layout = old_widget.parentWidget().layout()
+			layout.replaceWidget(old_widget, editor)
+			old_widget.setParent(None)
+
+			self.ui.code_text = editor
+		except Exception as e:
+			cmds.warning('Could not replace code editor widget: {}'.format(e))
 
 	def create_connections(self):
 
@@ -168,6 +189,8 @@ class Code_Reader(QtMutantWindow.Qt_Mutant):
 
 	def change_font_size(self, size):
 		self.ui.code_text.setFont(QtGui.QFont('Arial', size))
+		if hasattr(self.ui.code_text, 'update_line_number_area_width'):
+			self.ui.code_text.update_line_number_area_width(0)
 
 	def set_path_label(self, code_path):
 		self.ui.path_ui.setText(code_path)
