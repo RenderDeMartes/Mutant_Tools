@@ -295,7 +295,9 @@ def build_foot_block():
                               name=side_guide.replace('_Ankle'+nc['joint'], '_Toes'+nc['ctrl']),
                               size=size)
         mt.assign_color(color=color)
-        share_grp, auto_grp = mt.root_grp(autoRoot=True)
+        share_grp = mt.root_grp()[0]
+        cmds.select(share_ctrl)
+        root_grp, auto_grp = mt.root_grp(autoRoot=True)
         mt.match(share_grp, all_joints[6], r=True,t=True)
 
         if parallel_to_floor:
