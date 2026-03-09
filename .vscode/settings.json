@@ -1,0 +1,20 @@
+{
+    "chat.tools.terminal.autoApprove": {
+        "/^\\$file = \"C:\\\\Users\\\\rodri\\\\AppData\\\\Roaming\\\\Python\\\\Python311\\\\site-packages\\\\pymel\\\\internal\\\\apicache\\.py\"; if \\(Test-Path \\$file\\) \\{ Select-String -Path \\$file -Pattern \"mayaApi\\|mayaCmdsDocs\\|mayaCmdsExamples\\|version\\|cache\" \\| Select-Object -First 120 \\| ForEach-Object \\{ \"\\{0\\}:\\{1\\}\" -f \\$_\\.LineNumber, \\$_\\.Line\\.Trim\\(\\) \\} \\}$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^\\$file = \"C:\\\\Users\\\\rodri\\\\AppData\\\\Roaming\\\\Python\\\\Python311\\\\site-packages\\\\pymel\\\\internal\\\\cachebase\\.py\"; if \\(Test-Path \\$file\\) \\{ Select-String -Path \\$file -Pattern \"USE_VERSION\\|version\\|allVersions\\|path\\|cacheNames\\|cache\" \\| Select-Object -First 180 \\| ForEach-Object \\{ \"\\{0\\}:\\{1\\}\" -f \\$_\\.LineNumber, \\$_\\.Line\\.Trim\\(\\) \\} \\}$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^\\$cacheDir = \"C:\\\\Users\\\\rodri\\\\AppData\\\\Roaming\\\\Python\\\\Python311\\\\site-packages\\\\pymel\\\\cache\"; if \\(Test-Path \\$cacheDir\\) \\{ Get-ChildItem \\$cacheDir -Name \\| Sort-Object \\}$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^\\$file = \"C:\\\\Users\\\\rodri\\\\AppData\\\\Roaming\\\\Python\\\\Python311\\\\site-packages\\\\pymel\\\\versions\\.py\"; if \\(Test-Path \\$file\\) \\{ Get-Content \\$file \\| Select-Object -First 260 \\}$/": {
+            "approve": true,
+            "matchCommandLine": true
+        }
+    }
+}

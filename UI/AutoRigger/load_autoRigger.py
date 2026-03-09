@@ -1467,7 +1467,7 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		#IO
 		if load_io:
 			ctrls.load_all(path=os.path.join(tempfile.gettempdir(), 'RebuildTempCtrls', 'tempControllers.json'))
-			EasySkin.load_all_skins_from(folder_path=os.path.join(tempfile.gettempdir(), 'RebuildTempSkin'))
+			self._load_rebuild_skins(temp_skin_folder=os.path.join(tempfile.gettempdir(), 'RebuildTempSkin'))
 			# Load parent hierarchy
 			temp_folder = os.path.join(tempfile.gettempdir(), 'RebuildTemp')
 			skeleton_file = os.path.join(temp_folder, 'skeleton_hierarchy.txt')
@@ -1512,6 +1512,64 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 					cmds.parent(joint, parent)
 				except:
 					pass
+
+	def _get_rebuild_skinned_geos(self):
+		skin_clusters = cmds.ls(type='skinCluster') or []
+		skinned_geos = []
+
+		for skin_cluster in skin_clusters:
+			geo_shapes = cmds.skinCluster(skin_cluster, q=True, g=True) or []
+			for geo_shape in geo_shapes:
+				geo_shape = str(geo_shape).split('.')[0]
+				if not cmds.objExists(geo_shape):
+					continue
+
+				if cmds.nodeType(geo_shape) == 'mesh':
+					parents = cmds.listRelatives(geo_shape, p=True, f=True) or []
+					geo_node = parents[0] if parents else geo_shape
+				else:
+					geo_node = geo_shape
+
+				if geo_node not in skinned_geos:
+					skinned_geos.append(geo_node)
+
+		return skinned_geos
+
+	def _save_rebuild_skins(self, temp_skin_folder):
+		temp_skin_pack = os.path.join(temp_skin_folder, 'tempSkinPack.bSkinPack')
+
+		try:
+			from Mutant_Tools.Utils.IO import IOSkin
+			reload(Mutant_Tools.Utils.IO.IOSkin)
+			import pymel.core as pm
+
+			skinned_geos = self._get_rebuild_skinned_geos()
+			if not skinned_geos:
+				cmds.warning('No skinned geometries found for fast rebuild skin export.')
+				EasySkin.save_all_skins_to(folder_path=temp_skin_folder)
+				return
+
+			pm_geos = [pm.PyNode(geo) for geo in skinned_geos if cmds.objExists(geo)]
+			IOSkin.exportSkinPack(packPath=temp_skin_pack, objs=pm_geos)
+			print('Fast rebuild skin pack saved: {}'.format(temp_skin_pack))
+		except Exception as e:
+			cmds.warning('Fast rebuild skin save unavailable ({}). Falling back to EasySkin.'.format(e))
+			EasySkin.save_all_skins_to(folder_path=temp_skin_folder)
+
+	def _load_rebuild_skins(self, temp_skin_folder):
+		temp_skin_pack = os.path.join(temp_skin_folder, 'tempSkinPack.bSkinPack')
+
+		try:
+			if not os.path.exists(temp_skin_pack):
+				raise IOError('Skin pack not found: {}'.format(temp_skin_pack))
+
+			from Mutant_Tools.Utils.IO import IOSkin
+			reload(Mutant_Tools.Utils.IO.IOSkin)
+			IOSkin.importSkinPack(filePath=temp_skin_pack)
+			print('Fast rebuild skin pack loaded: {}'.format(temp_skin_pack))
+		except Exception as e:
+			cmds.warning('Fast rebuild skin load unavailable ({}). Falling back to EasySkin.'.format(e))
+			EasySkin.load_all_skins_from(folder_path=temp_skin_folder)
 
 	#-------------------------------------------------------------------
 
@@ -1571,7 +1629,7 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 						pass
 				if not os.path.exists(temp_skin_folder):
 					os.mkdir(temp_skin_folder)
-				EasySkin.save_all_skins_to(folder_path=temp_skin_folder)
+				self._save_rebuild_skins(temp_skin_folder=temp_skin_folder)
 
 				#Delete
 				cmds.delete(build_grp)
