@@ -19,7 +19,10 @@ except:
 from maya import cmds
 import maya.OpenMaya as OpenMaya
 import maya.OpenMayaAnim as OpenMayaAnim
-from PySide2 import QtWidgets,QtCore,QtGui
+try:
+    from PySide6 import QtWidgets, QtCore, QtGui
+except:
+    from PySide2 import QtWidgets, QtCore, QtGui
 import functools
 import itertools
 import operator
@@ -290,6 +293,40 @@ def collectData(skinCls, dataDic):
 ######################################
 
 
+def getSkinnedSceneObjects():
+    if pm is None:
+        raise ImportError("pymel.core is required for IOSkin.getSkinnedSceneObjects")
+
+    skin_clusters = cmds.ls(type="skinCluster") or []
+    skinned_objs = []
+    seen = set()
+
+    for skin_cluster in skin_clusters:
+        geo_shapes = cmds.skinCluster(skin_cluster, q=True, g=True) or []
+        for geo_shape in geo_shapes:
+            geo_node = str(geo_shape).split(".")[0]
+            if not cmds.objExists(geo_node):
+                continue
+
+            if cmds.nodeType(geo_node) == "mesh":
+                parents = cmds.listRelatives(geo_node, p=True, f=True) or []
+                geo_node = parents[0] if parents else geo_node
+
+            try:
+                py_geo = pm.PyNode(geo_node)
+            except Exception:
+                continue
+
+            geo_key = py_geo.longName() if hasattr(py_geo, "longName") else py_geo.name()
+            if geo_key in seen:
+                continue
+
+            seen.add(geo_key)
+            skinned_objs.append(py_geo)
+
+    return skinned_objs
+
+
 def exportSkin(filePath=None, objs=None, *args):
     if not objs:
         if pm.selected():
@@ -411,7 +448,12 @@ def exportSkinPack(packPath=None, objs=None, use_json=False, *args):
     packDic["rootPath"], packName = os.path.split(packPath)
 
     for obj in objs:
-        fileName = obj.stripNamespace() + file_ext
+        if isinstance(obj, string_types):
+            obj = pm.PyNode(obj)
+
+        geo_name = obj.name().split("|")[-1]
+        geo_name = geo_name.replace(":", "_")
+        fileName = geo_name + file_ext
         filePath = os.path.join(packDic["rootPath"], fileName)
         if exportSkin(filePath, [obj], use_json):
             packDic["packFiles"].append(fileName)

@@ -333,7 +333,20 @@ class AutoRiggerMenu(QtWidgets.QDialog):
 		try:
 			from Mutant_Tools.Utils.IO import IOSkin
 			reload(Mutant_Tools.Utils.IO.IOSkin)
-			IOSkin.exportSkinPack()
+
+			folder_path = mh.folder_window()
+			if not folder_path:
+				cmds.warning('Fast Save Skin Pack cancelled (no folder selected).')
+				return
+
+			skinned_geos = IOSkin.getSkinnedSceneObjects()
+			if not skinned_geos:
+				cmds.warning('No skinned geometries found in scene for Fast Save Skin Pack.')
+				return
+
+			pack_path = os.path.join(folder_path, 'FastSkinPack.bSkinPack')
+			IOSkin.exportSkinPack(packPath=pack_path, objs=skinned_geos)
+			print('Fast Save Skin Pack exported: {}'.format(pack_path))
 		except Exception as e:
 			cmds.warning('Fast Save Skin Pack unavailable ({}). Falling back to Save All Skins.'.format(e))
 			EasySkin.save_all_skins_to()

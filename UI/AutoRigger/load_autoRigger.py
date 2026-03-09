@@ -1535,6 +1535,32 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 
 		return skinned_geos
 
+	def _rebuild_skin_mode_file(self, temp_skin_folder):
+		return os.path.join(temp_skin_folder, 'tempSkinMode.txt')
+
+	def _set_rebuild_skin_mode(self, temp_skin_folder, mode):
+		mode_file = self._rebuild_skin_mode_file(temp_skin_folder)
+		try:
+			with open(mode_file, 'w') as mode_handle:
+				mode_handle.write(mode)
+		except Exception as e:
+			cmds.warning('Could not cache rebuild skin mode ({}).'.format(e))
+
+	def _get_rebuild_skin_mode(self, temp_skin_folder):
+		mode_file = self._rebuild_skin_mode_file(temp_skin_folder)
+		if not os.path.exists(mode_file):
+			return 'fast'
+
+		try:
+			with open(mode_file, 'r') as mode_handle:
+				mode = mode_handle.read().strip()
+				if mode in ['fast', 'easy']:
+					return mode
+		except Exception:
+			pass
+
+		return 'fast'
+
 	def _save_rebuild_skins(self, temp_skin_folder):
 		temp_skin_pack = os.path.join(temp_skin_folder, 'tempSkinPack.bSkinPack')
 
@@ -1546,18 +1572,29 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 			skinned_geos = self._get_rebuild_skinned_geos()
 			if not skinned_geos:
 				cmds.warning('No skinned geometries found for fast rebuild skin export.')
+				self._set_rebuild_skin_mode(temp_skin_folder=temp_skin_folder, mode='easy')
 				EasySkin.save_all_skins_to(folder_path=temp_skin_folder)
 				return
 
 			pm_geos = [pm.PyNode(geo) for geo in skinned_geos if cmds.objExists(geo)]
 			IOSkin.exportSkinPack(packPath=temp_skin_pack, objs=pm_geos)
+			if not os.path.exists(temp_skin_pack):
+				raise IOError('Skin pack not created: {}'.format(temp_skin_pack))
+
+			self._set_rebuild_skin_mode(temp_skin_folder=temp_skin_folder, mode='fast')
 			print('Fast rebuild skin pack saved: {}'.format(temp_skin_pack))
 		except Exception as e:
 			cmds.warning('Fast rebuild skin save unavailable ({}). Falling back to EasySkin.'.format(e))
+			self._set_rebuild_skin_mode(temp_skin_folder=temp_skin_folder, mode='easy')
 			EasySkin.save_all_skins_to(folder_path=temp_skin_folder)
 
 	def _load_rebuild_skins(self, temp_skin_folder):
 		temp_skin_pack = os.path.join(temp_skin_folder, 'tempSkinPack.bSkinPack')
+		skin_mode = self._get_rebuild_skin_mode(temp_skin_folder=temp_skin_folder)
+
+		if skin_mode == 'easy':
+			EasySkin.load_all_skins_from(folder_path=temp_skin_folder)
+			return
 
 		try:
 			if not os.path.exists(temp_skin_pack):
