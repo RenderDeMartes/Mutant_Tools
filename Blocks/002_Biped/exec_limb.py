@@ -125,6 +125,12 @@ def build_limb_block():
     game_parent = cmds.getAttr('{}.SetGameParent'.format(config), asString=True)
     twist_amount = cmds.getAttr('{}.TwistAmount'.format(config))
 
+    # compatible with older versions without world ik option
+    if cmds.attributeQuery('ForceIkWorld', n=config, exists=True):
+        force_ik_world = cmds.getAttr('{}.ForceIkWorld'.format(config))
+    else:
+        force_ik_world = False
+
     # compatible with older versions without ribbons
     if cmds.attributeQuery('Ribbons', n=config, exists=True):
         create_ribbons = cmds.getAttr(config + '.Ribbons')
@@ -612,21 +618,34 @@ def build_limb_block():
         main_ik_root, main_ik_auto = mt.root_grp(autoRoot=True)
         cmds.delete(cmds.pointConstraint(old_main_ik, main_ik_root))
 
-        #Fix Aim in pose A
-        if mode == 'Arms':
-            #Make sure ik and fk are the same orientation
-            dummy_up = cmds.duplicate(ikfk['ik_fk'][3][2])[0]
-            cmds.setAttr(dummy_up+'.translateZ', -5)
-            cmds.delete(cmds.aimConstraint(limb_b, main_ik_root,
-                                           aimVector=(-1, 0, 0), upVector=(0, 1, 0),
-                                           worldUpType='object', worldUpObject=dummy_up, mo=False), dummy_up)
-        if mode == 'Legs':
-            cmds.delete(cmds.aimConstraint(limb_b, main_ik_root,
-                                           aimVector=(0, 1, 0), upVector=(0, 1, 0),
-                                           worldUpType='vector', mo=False))
+        # Fix Aim in pose A. Optional override keeps IK aligned to world.
+        if force_ik_world:
             cmds.setAttr('{}.rotateX'.format(main_ik_root), 0)
+            cmds.setAttr('{}.rotateY'.format(main_ik_root), 0)
+            cmds.setAttr('{}.rotateZ'.format(main_ik_root), 0)
+        else:
+            if mode == 'Arms':
+                #Make sure ik and fk are the same orientation
+                dummy_up = cmds.duplicate(ikfk['ik_fk'][3][2])[0]
+                cmds.setAttr(dummy_up+'.translateZ', -5)
+                cmds.delete(cmds.aimConstraint(limb_b, main_ik_root,
+                                               aimVector=(-1, 0, 0), upVector=(0, 1, 0),
+                                               worldUpType='object', worldUpObject=dummy_up, mo=False), dummy_up)
+            if mode == 'Legs':
+                cmds.delete(cmds.aimConstraint(limb_b, main_ik_root,
+                                               aimVector=(0, 1, 0), upVector=(0, 1, 0),
+                                               worldUpType='vector', mo=False))
+                cmds.setAttr('{}.rotateX'.format(main_ik_root), 0)
         cmds.parent(main_ik_root, grandfather)
         cmds.parent(cmds.listRelatives(old_main_ik, p=True)[0], main_ik_ctrl)
+
+        if force_ik_world:
+            cmds.setAttr('{}.rotateX'.format(main_ik_auto), 0)
+            cmds.setAttr('{}.rotateY'.format(main_ik_auto), 0)
+            cmds.setAttr('{}.rotateZ'.format(main_ik_auto), 0)
+            cmds.setAttr('{}.rotateX'.format(main_ik_ctrl), 0)
+            cmds.setAttr('{}.rotateY'.format(main_ik_ctrl), 0)
+            cmds.setAttr('{}.rotateZ'.format(main_ik_ctrl), 0)
 
         #Vis
         #cmds.connectAttr(switch_locator + '.Switch_IK_FK', cmds.listRelatives(main_ik_ctrl, s=True)[0]+'.v')
