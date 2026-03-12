@@ -10,9 +10,9 @@
     "build_command":  "exec_smart_rfl.build_smart_rfl_block()",
     "attrs":  {
                   "SetRFLAttrsPosition_string":  "L_Ankle_Ik_Ctrl",
-                  "AltMode_bool":  "False",
+                  "AltMode_enum":  "Original:SCL:SN",
                   "TransferAttrs_bool":  "True",
                   "SetFootBlockName_string":  "",
-                  "Help_string":  "Overview:\n  Will create a fancy RFL system for current Feet.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- AltMode: turn this ON/OFF depending on whether you want that feature.\n- TransferAttrs: turn this ON/OFF depending on whether you want that feature.\n- SetRFLAttrsPosition: set the node/object name this block should use.\n- SetFootBlockName: set the node/object name this block should use.\n\nTips:\n- if a field says left/right or mirror, use it to generate the opposite side quickly."
+                  "Help_string":  "Overview:\n  Will create a fancy RFL system for current Feet.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- AltMode: choose Original, SCL, or SN. Original keeps the classic Smart RFL behavior, SCL matches the legacy Alt Mode, and SN uses the alternate setup with RY behaving like PivotBallFloor.\n- TransferAttrs: turn this ON/OFF depending on whether you want that feature.\n- SetRFLAttrsPosition: set the node/object name this block should use.\n- SetFootBlockName: set the foot block base name this block should use for SCL and SN.\n\nTips:\n- if a field says left/right or mirror, use it to generate the opposite side quickly."
               }
 }

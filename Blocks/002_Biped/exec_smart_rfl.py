@@ -46,6 +46,131 @@ with open(MODULE_FILE) as module_file:
 
 #---------------------------------------------
 
+SMART_RFL_MODES = ('Original', 'SCL', 'SN')
+
+
+def _smart_rfl_attr_exists(attr):
+
+    if '.' not in attr:
+        return False
+
+    node, attr_name = attr.split('.', 1)
+    return cmds.objExists(node) and cmds.attributeQuery(attr_name, node=node, exists=True)
+
+
+def _get_smart_rfl_mode(config):
+
+    if not cmds.attributeQuery('AltMode', node=config, exists=True):
+        return 'Original'
+
+    attr = '{}.AltMode'.format(config)
+    attr_type = cmds.getAttr(attr, type=True)
+
+    if attr_type == 'enum':
+        mode = cmds.getAttr(attr, asString=True)
+        if mode in SMART_RFL_MODES:
+            return mode
+        return 'Original'
+
+    if attr_type == 'bool':
+        return 'SCL' if cmds.getAttr(attr) else 'Original'
+
+    value = cmds.getAttr(attr)
+    if value in [True, 1, 'True']:
+        return 'SCL'
+
+    return 'Original'
+
+
+def _get_smart_rfl_foot_name(config, side_guide):
+
+    if not cmds.attributeQuery('SetFootBlockName', node=config, exists=True):
+        return ''
+
+    foot_name = cmds.getAttr('{}.SetFootBlockName'.format(config))
+    if side_guide.startswith(nc['right']):
+        foot_name = foot_name.replace(nc['left'], nc['right'])
+
+    return foot_name
+
+
+def _connect_smart_rfl_direct(control_attr, target_attr):
+
+    if not _smart_rfl_attr_exists(target_attr):
+        return False
+
+    cmds.connectAttr(control_attr, target_attr, f=True)
+    return True
+
+
+def _connect_smart_rfl_additive(source_attr, control_attr, target_attr, name=''):
+
+    if name:
+        double_linear = mt.create_add_double_linear(name=name)
+    else:
+        double_linear = mt.create_add_double_linear()
+
+    input1_attr, input2_attr, output_attr = mt.get_add_double_linear_attrs(double_linear)
+    cmds.connectAttr(source_attr, '{}.{}'.format(double_linear, input1_attr), f=True)
+    cmds.connectAttr(control_attr, '{}.{}'.format(double_linear, input2_attr), f=True)
+    cmds.connectAttr('{}.{}'.format(double_linear, output_attr), target_attr, f=True)
+
+    return double_linear
+
+
+def _connect_original_pivot_ball(side_guide, rfl_ctrl, pivot_ball_connections):
+
+    for connection in pivot_ball_connections:
+        _connect_smart_rfl_additive('{}.PivotBall'.format(side_guide),
+                                    '{}.rotateY'.format(rfl_ctrl),
+                                    connection)
+
+
+def _connect_sn_pivot_ball_floor(side_guide, rfl_ctrl):
+
+    if not cmds.attributeQuery('PivotBallFloor', node=side_guide, exists=True):
+        return False
+
+    pivot_ball_floor_connections = cmds.listConnections('{}.PivotBallFloor'.format(side_guide), p=True) or []
+    if not pivot_ball_floor_connections:
+        return False
+
+    for connection in pivot_ball_floor_connections:
+        _connect_smart_rfl_additive('{}.PivotBallFloor'.format(side_guide),
+                                    '{}.rotateY'.format(rfl_ctrl),
+                                    connection)
+
+    return True
+
+
+def _connect_original_roll(name, side_guide, rfl_ctrl, roll_out_connections, roll_in_connections):
+
+    for connection in roll_out_connections:
+        out_remap_node = cmds.createNode('remapValue', name=name + '_RemapValueOut')
+        cmds.connectAttr('{}.rotateZ'.format(rfl_ctrl), '{}.inputValue'.format(out_remap_node), f=True)
+        cmds.setAttr('{}.inputMin'.format(out_remap_node), 0)
+        cmds.setAttr('{}.inputMax'.format(out_remap_node), -180)
+        cmds.setAttr('{}.outputMin'.format(out_remap_node), 0)
+        cmds.setAttr('{}.outputMax'.format(out_remap_node), -180)
+
+        _connect_smart_rfl_additive('{}.RollOut'.format(side_guide),
+                                    '{}.outValue'.format(out_remap_node),
+                                    connection,
+                                    name=name + '_DLOut')
+
+    for connection in roll_in_connections:
+        in_remap_node = cmds.createNode('remapValue', name=name + '_RemapValueIn')
+        cmds.connectAttr('{}.rotateZ'.format(rfl_ctrl), '{}.inputValue'.format(in_remap_node), f=True)
+        cmds.setAttr('{}.inputMin'.format(in_remap_node), 0)
+        cmds.setAttr('{}.inputMax'.format(in_remap_node), 180)
+        cmds.setAttr('{}.outputMin'.format(in_remap_node), 0)
+        cmds.setAttr('{}.outputMax'.format(in_remap_node), 180)
+
+        _connect_smart_rfl_additive('{}.RollIn'.format(side_guide),
+                                    '{}.outValue'.format(in_remap_node),
+                                    connection,
+                                    name=name + '_DLIn')
+
 def create_smart_rfl_block(name = 'Smart_RFL'):
 
     nc, curve_data, setup = mt.import_configs()
@@ -114,13 +239,13 @@ def build_smart_rfl_block():
         if not cmds.objExists(side_guide):
             continue
 
-        # Alt Mode
-        if cmds.attributeQuery("AltMode", n=config, ex=True):
-            alt_mode = cmds.getAttr("{}.AltMode".format(config))
-            if alt_mode:
-                print('Alt Mode is On')
-        else:
-            alt_mode = False
+        rfl_mode = _get_smart_rfl_mode(config)
+        if rfl_mode != 'Original':
+            print('{} Mode is On'.format(rfl_mode))
+
+        foot_name = ''
+        if rfl_mode in ['SCL', 'SN']:
+            foot_name = _get_smart_rfl_foot_name(config, side_guide)
 
         #main funcion -------------------------------------------
 
@@ -144,64 +269,32 @@ def build_smart_rfl_block():
         #setAttr "L_Ankle_Ik_Ctrl.RollIn" 28.7;
 
         #get connections of main one
-        roll_out_connections = cmds.listConnections('{}.FootRoll'.format(side_guide), p=True)
+        roll_out_connections = cmds.listConnections('{}.FootRoll'.format(side_guide), p=True) or []
         for c in roll_out_connections:
-            double_linear = mt.create_add_double_linear()
-            input1_attr, input2_attr, output_attr = mt.get_add_double_linear_attrs(double_linear)
-            cmds.connectAttr('{}.FootRoll'.format(side_guide), '{}.{}'.format(double_linear, input1_attr), f=True)
-            cmds.connectAttr('{}.rotateX'.format(rfl_ctrl), '{}.{}'.format(double_linear, input2_attr), f=True)
-            cmds.connectAttr('{}.{}'.format(double_linear, output_attr), c, f=True)
+            _connect_smart_rfl_additive('{}.FootRoll'.format(side_guide),
+                                        '{}.rotateX'.format(rfl_ctrl),
+                                        c)
 
 
-        pivot_ball_connections = cmds.listConnections('{}.PivotBall'.format(side_guide), p=True)
-        for c in pivot_ball_connections:
-            double_linear = mt.create_add_double_linear()
-            input1_attr, input2_attr, output_attr = mt.get_add_double_linear_attrs(double_linear)
-            cmds.connectAttr('{}.PivotBall'.format(side_guide), '{}.{}'.format(double_linear, input1_attr), f=True)
-            cmds.connectAttr('{}.rotateY'.format(rfl_ctrl), '{}.{}'.format(double_linear, input2_attr), f=True)
-            cmds.connectAttr('{}.{}'.format(double_linear, output_attr), c, f=True)
+        pivot_ball_connections = cmds.listConnections('{}.PivotBall'.format(side_guide), p=True) or []
+        if rfl_mode == 'SN':
+            if not _connect_sn_pivot_ball_floor(side_guide, rfl_ctrl):
+                cmds.warning('Smart RFL SN mode could not find PivotBallFloor connections on {}. Using legacy PivotBall behavior.'.format(side_guide))
+                _connect_original_pivot_ball(side_guide, rfl_ctrl, pivot_ball_connections)
+        else:
+            _connect_original_pivot_ball(side_guide, rfl_ctrl, pivot_ball_connections)
 
-        roll_out_connections = cmds.listConnections('{}.RollOut'.format(side_guide), p=True)
-        roll_in_connections = cmds.listConnections('{}.RollIn'.format(side_guide), p=True)
+        roll_out_connections = cmds.listConnections('{}.RollOut'.format(side_guide), p=True) or []
+        roll_in_connections = cmds.listConnections('{}.RollIn'.format(side_guide), p=True) or []
 
-        for c in roll_out_connections:
-            if not alt_mode:
-                out_remap_node = cmds.createNode('remapValue', name=name + '_RemapValueOut')
-                cmds.connectAttr('{}.rotateZ'.format(rfl_ctrl), '{}.inputValue'.format(out_remap_node), f=True)
-                cmds.setAttr('{}.inputMin'.format(out_remap_node), 0)
-                cmds.setAttr('{}.inputMax'.format(out_remap_node), -180)
-                cmds.setAttr('{}.outputMin'.format(out_remap_node), 0)
-                cmds.setAttr('{}.outputMax'.format(out_remap_node), -180)
-
-                double_linear = mt.create_add_double_linear(name=name + '_DLOut')
-                input1_attr, input2_attr, output_attr = mt.get_add_double_linear_attrs(double_linear)
-                cmds.connectAttr('{}.RollOut'.format(side_guide), '{}.{}'.format(double_linear, input1_attr), f=True)
-                cmds.connectAttr('{}.outValue'.format(out_remap_node), '{}.{}'.format(double_linear, input2_attr), f=True)
-                cmds.connectAttr('{}.{}'.format(double_linear, output_attr), c, f=True)
-
-        roll_in_connections = cmds.listConnections('{}.RollIn'.format(side_guide), p=True)
-        for c in roll_in_connections:
-            if not alt_mode:
-                in_remap_node = cmds.createNode('remapValue', name=name + '_RemapValueIn')
-                cmds.connectAttr('{}.rotateZ'.format(rfl_ctrl), '{}.inputValue'.format(in_remap_node), f=True)
-                cmds.setAttr('{}.inputMin'.format(in_remap_node), 0)
-                cmds.setAttr('{}.inputMax'.format(in_remap_node), 180)
-                cmds.setAttr('{}.outputMin'.format(in_remap_node), 0)
-                cmds.setAttr('{}.outputMax'.format(in_remap_node), 180)
-
-                double_linear = mt.create_add_double_linear(name=name + '_DLIn')
-                input1_attr, input2_attr, output_attr = mt.get_add_double_linear_attrs(double_linear)
-                cmds.connectAttr('{}.RollIn'.format(side_guide), '{}.{}'.format(double_linear, input1_attr), f=True)
-                cmds.connectAttr('{}.outValue'.format(in_remap_node), '{}.{}'.format(double_linear, input2_attr), f=True)
-                cmds.connectAttr('{}.{}'.format(double_linear, output_attr), c, f=True)
-                #L_Foot_In_RFL_Grp_Auto_Grp.rotateZ
-
-        if alt_mode:
+        if rfl_mode == 'Original':
+            _connect_original_roll(name, side_guide, rfl_ctrl, roll_out_connections, roll_in_connections)
+        else:
             print(side_guide)
-            foot_name = cmds.getAttr("{}.SetFootBlockName".format(config))
-            if side_guide.startswith(nc['right']):
-                foot_name = foot_name.replace(nc['left'], nc['right'])
-            cmds.connectAttr('{}.rotateZ'.format(rfl_ctrl), '{}_Ball_RFL_Grp_Auto_Grp.rotateX'.format(foot_name), f=True)
+            scl_target = '{}_Ball_RFL_Grp_Auto_Grp.rotateX'.format(foot_name)
+            if not _connect_smart_rfl_direct('{}.rotateZ'.format(rfl_ctrl), scl_target):
+                cmds.warning('Smart RFL {} mode could not find {}. Using legacy roll behavior.'.format(rfl_mode, scl_target))
+                _connect_original_roll(name, side_guide, rfl_ctrl, roll_out_connections, roll_in_connections)
 
         #clean a bit
         clean_ctrl_grp = cmds.group(em=True, name = name + nc['ctrl'] + nc['group'])

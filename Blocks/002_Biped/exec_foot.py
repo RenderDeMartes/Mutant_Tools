@@ -376,6 +376,7 @@ def build_foot_block():
                      'PivotToes':'{}.rotateY'.format(cmds.listRelatives(rfl_main_grps[6],p=True)[0]),
                      'PivotBallFloor':'{}.rotateZ'.format(cmds.listRelatives(rfl_main_grps[3],p=True)[0]),
                      'RollBall':'{}.rotateZ'.format(cmds.listRelatives(rfl_main_grps[7],p=True)[0]),
+                     'BallTwist':'{}.rotateX'.format(cmds.listRelatives(cmds.listRelatives(rfl_main_grps[7],p=True)[0], p=True)[0]),
                      'PivotBall':'{}.rotateY'.format(cmds.listRelatives(rfl_main_grps[7],p=True)[0]),
                      'PivotHeelMid':'{}.rotateY'.format(cmds.listRelatives(rfl_main_grps[4],p=True)[0]),
                      'RollHeel':'{}.rotateX'.format(cmds.listRelatives(rfl_main_grps[0],p=True)[0]),
