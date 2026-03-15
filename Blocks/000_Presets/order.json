@@ -2,7 +2,7 @@
 
   "Complex" : ["003_HumanBodyTemplate.json", "004_HumanFaceTemplate.json"],
   "Cartoon" : ["001_ToonTemplate.json", "002_ToonFaceTemplate.json"],
-  "Games" : ["003_HumanGameTemplate.json"],
+  "Games" : ["003_HumanGameTemplate.json", "003_HumanUnrealGameTemplate.json"],
   "Animals" : ["005_minotaurTemplate.json", "006_QuadTemplate.json", "008_SeagullTemplate.json",
               "011_ChamaleonTemplate.json", "012_TortoiseTemplate.json", "013_SlothTemplate.json",
               "013_PigTemplate.json"],
