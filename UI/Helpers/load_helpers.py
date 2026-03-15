@@ -235,6 +235,7 @@ class HelperUI(QtMutantWindow.Qt_Mutant):
 		self.ui.middle_reset.clicked.connect(self.zero_middle)
 		self.ui.index_reset.clicked.connect(self.zero_index)
 		self.ui.thumb_reset.clicked.connect(self.zero_thumb)
+		self.ui.normalize_fingers_btn.clicked.connect(self.normalize_fingers)
 
   
 		self.ui.fix_pelvis.clicked.connect(self.fix_pelvis)
@@ -673,6 +674,10 @@ class HelperUI(QtMutantWindow.Qt_Mutant):
 	@undo
 	def zero_thumb(self):
 		cWrap.zero_specific_finger('Thumb')
+
+	@undo
+	def normalize_fingers(self):
+		cWrap.normalize_fingers()
   
 	@undo
 	def fix_pelvis(self):

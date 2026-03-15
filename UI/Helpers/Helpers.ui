@@ -268,9 +268,9 @@
               <property name="geometry">
                <rect>
                 <x>0</x>
-                <y>-173</y>
-                <width>198</width>
-                <height>813</height>
+                <y>0</y>
+                <width>184</width>
+                <height>849</height>
                </rect>
               </property>
               <layout class="QGridLayout" name="gridLayout_3">
@@ -663,6 +663,19 @@
                   </layout>
                  </item>
                  <item>
+                  <widget class="QPushButton" name="normalize_fingers_btn">
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>30</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>Normalize Fingers</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
                   <widget class="QPushButton" name="fix_pelvis">
                    <property name="minimumSize">
                     <size>
@@ -897,8 +910,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>276</width>
-                <height>827</height>
+                <width>208</width>
+                <height>805</height>
                </rect>
               </property>
               <layout class="QGridLayout" name="gridLayout_5">
@@ -1537,7 +1550,7 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>84</width>
+                <width>98</width>
                 <height>40</height>
                </rect>
               </property>
@@ -1620,7 +1633,7 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>82</width>
+                <width>98</width>
                 <height>314</height>
                </rect>
               </property>
@@ -1892,8 +1905,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>176</width>
-                <height>837</height>
+                <width>134</width>
+                <height>831</height>
                </rect>
               </property>
               <layout class="QGridLayout" name="gridLayout_16">
@@ -2269,7 +2282,7 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>209</width>
+                <width>150</width>
                 <height>294</height>
                </rect>
               </property>

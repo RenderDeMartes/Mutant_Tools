@@ -242,6 +242,34 @@ class Wrap3D(object):
                     cmds.setAttr('{}.rotateX'.format(finger_guide), 0)
                 cmds.setAttr('{}.rotateY'.format(finger_guide), 0)
                 cmds.setAttr('{}.rotateZ'.format(finger_guide), 0)
+
+    def normalize_fingers(self, side='L'):
+        fingers = ['Index', 'Middle', 'Ring', 'Pinky']
+
+        for finger in fingers:
+            joints = [
+                '{}_Hand_{}_01_Guide'.format(side, finger),
+                '{}_Hand_{}_02_Guide'.format(side, finger),
+                '{}_Hand_{}_03_Guide'.format(side, finger),
+                '{}_Hand_{}_04_Guide'.format(side, finger)
+            ]
+
+            if not all(cmds.objExists(joint) for joint in joints):
+                print('Skipping {}, joints missing'.format(finger))
+                continue
+
+            lengths = [cmds.getAttr(joint + '.tx') for joint in joints[1:]]
+            total = sum(lengths)
+
+            proximal = total * 0.40
+            middle = total * 0.35
+            distal = total * 0.25
+
+            cmds.setAttr(joints[1] + '.tx', proximal)
+            cmds.setAttr(joints[2] + '.tx', middle)
+            cmds.setAttr(joints[3] + '.tx', distal)
+
+            print('{} done - total length: {}'.format(finger, total))
                 
     def fix_fingers_orientations(self, pose='A'):
 
