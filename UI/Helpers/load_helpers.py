@@ -193,6 +193,8 @@ class HelperUI(QtMutantWindow.Qt_Mutant):
 		self.ui.tabs.setCurrentIndex(0)
 
 		self.load_resets()
+		self.ui.place_push_loc_slider.setValue(10)
+		self.update_place_push_loc_label(self.ui.place_push_loc_slider.value())
 
 	def create_connections(self):
 		"""
@@ -246,6 +248,8 @@ class HelperUI(QtMutantWindow.Qt_Mutant):
 		self.ui.fix_cog.clicked.connect(self.fix_cog)
 
 		self.ui.shoe_to_guides.clicked.connect(self.shoe_to_guides)
+		self.ui.place_push_loc_btn.clicked.connect(self.place_push_locators)
+		self.ui.place_push_loc_slider.valueChanged.connect(self.update_place_push_loc_label)
 		self.ui.skin_to_other_button.clicked.connect(self.copy_skin_from_first_to_rest)
 
 		self.ui.remove_duplicate_names.clicked.connect(self.remove_dup_names)
@@ -800,6 +804,111 @@ class HelperUI(QtMutantWindow.Qt_Mutant):
 
 		#Reorient joints
 		self.fix_foot()
+
+	def update_place_push_loc_label(self, value):
+		size = float(value) / 10.0
+		if size.is_integer():
+			label_value = str(int(size))
+		else:
+			label_value = '{:.1f}'.format(size)
+		self.ui.place_push_loc_label.setText(label_value)
+
+	def get_push_locator_offset(self, locator_name, side, amount):
+		if '_Fr_' in locator_name:
+			return (0.0, 0.0, amount)
+		if '_Bk_' in locator_name:
+			return (0.0, 0.0, -amount)
+		if '_Out_' in locator_name:
+			if side == 'L':
+				return (amount, 0.0, 0.0)
+			return (-amount, 0.0, 0.0)
+		return (0.0, 0.0, 0.0)
+
+	def place_push_locator_from_parent(self, parent, locator, side, amount):
+		if not cmds.objExists(parent):
+			cmds.warning('Push locator parent not found: {}'.format(parent))
+			return False
+
+		if not cmds.objExists(locator):
+			cmds.warning('Push locator not found: {}'.format(locator))
+			return False
+
+		cmds.delete(cmds.parentConstraint(parent, locator, mo=False))
+		x, y, z = self.get_push_locator_offset(locator_name=locator, side=side, amount=amount)
+		if x or y or z:
+			cmds.move(x, y, z, locator, r=True, ws=True)
+		print('Placed {} from {} with size {}'.format(locator, parent, amount))
+		return True
+
+	def place_push_locator_from_mirrored_parent(self, left_parent, locator, side, amount):
+		if not cmds.objExists(left_parent):
+			cmds.warning('Push locator parent not found: {}'.format(left_parent))
+			return False
+
+		if not cmds.objExists(locator):
+			cmds.warning('Push locator not found: {}'.format(locator))
+			return False
+
+		left_pos = cmds.xform(left_parent, q=True, ws=True, t=True)
+		mirrored_pos = [-left_pos[0], left_pos[1], left_pos[2]]
+		cmds.xform(locator, ws=True, t=mirrored_pos)
+
+		x, y, z = self.get_push_locator_offset(locator_name=locator, side=side, amount=amount)
+		if x or y or z:
+			cmds.move(x, y, z, locator, r=True, ws=True)
+
+		print('Placed {} from mirrored {} with size {}'.format(locator, left_parent, amount))
+		return True
+
+	@undo
+	def place_push_locators(self):
+		size = float(self.ui.place_push_loc_slider.value()) / 10.0
+		push_schema = [
+			{
+				'parent': 'L_Knee_Guide',
+				'push_joints': ['L_Push_Knee_Fr_loc', 'L_Push_Knee_Bk_loc']
+			},
+			{
+				'parent': 'L_Hip_Guide',
+				'push_joints': ['L_Push_Hip_Fr_loc', 'L_Push_Hip_Bk_loc', 'L_Push_Hip_Out_loc']
+			},
+			{
+				'parent': 'L_Elbow_Guide',
+				'push_joints': ['L_Push_Elbow_Fr_loc', 'L_Push_Elbow_Bk_loc']
+			},
+			{
+				'parent': 'L_Knee_Guide',
+				'push_joints': ['L_Push_Knee_Fr_loc', 'L_Push_Knee_Bk_loc']
+			}
+		]
+
+		processed_left = set()
+		print('Push locator size: {}'.format(self.ui.place_push_loc_label.text()))
+		print('Placing left push locators...')
+		for data in push_schema:
+			left_parent = data['parent']
+			for left_locator in data['push_joints']:
+				task = (left_parent, left_locator)
+				if task in processed_left:
+					continue
+				processed_left.add(task)
+				self.place_push_locator_from_parent(parent=left_parent, locator=left_locator, side='L', amount=size)
+
+		print('Copying and placing right push locators...')
+		for left_parent, left_locator in processed_left:
+			right_locator = left_locator.replace('L_', 'R_', 1)
+
+			if not cmds.objExists(right_locator):
+				if cmds.objExists(left_locator):
+					cmds.duplicate(left_locator, rr=True, name=right_locator)
+					print('Created {} from {}'.format(right_locator, left_locator))
+				else:
+					cmds.warning('Cannot duplicate missing locator: {}'.format(left_locator))
+					continue
+
+			self.place_push_locator_from_mirrored_parent(left_parent=left_parent, locator=right_locator, side='R', amount=size)
+
+		print('Push locator placement done.')
 
 	@undo
 	def copy_skin_from_first_to_rest(self):
