@@ -231,7 +231,7 @@ class Wrap3D(object):
         cmds.delete(cmds.pointConstraint("L_Shoulder_Guide", 'L_ClavicleEnd_Guide', mo=False))
 
     def zero_specific_finger(self, finger):
-        for num in range(1,5):
+        for num in range(0,5):
             finger_guide = 'L_Hand_{}_0{}_Guide'.format(finger, num)
             if cmds.objExists(finger_guide):
                 print(finger_guide)
