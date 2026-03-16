@@ -237,7 +237,7 @@ class Wrap3D(object):
                 print(finger_guide)
                 cmds.setAttr('{}.jointOrientY'.format(finger_guide), 0)
                 cmds.setAttr('{}.jointOrientZ'.format(finger_guide), 0)
-                if num != 1:
+                if num != 0:
                     cmds.setAttr('{}.jointOrientX'.format(finger_guide), 0)
                     cmds.setAttr('{}.rotateX'.format(finger_guide), 0)
                 cmds.setAttr('{}.rotateY'.format(finger_guide), 0)
