@@ -1,0 +1,14 @@
+{
+    "Name": "LabelJoints",
+    "Description": "Find all joints in the scene and label them.",
+    "Icon": "Label.png",
+    "Enable": "True",
+    "python_file": "exec_label_joints.py",
+    "import": "import exec_label_joints",
+    "imp.reload": "reload(exec_label_joints)",
+    "exec_command": "exec_label_joints.create_label_joints_block()",
+    "build_command": "exec_label_joints.build_label_joints_block()",
+    "attrs": {
+        "Help_string": "Overview:\n  Labels every joint in the scene using smart side/name parsing.\n\nHow To Use:\n  Create this block and run Build.\n\nBehavior:\n- Processes all joints in scene (selection is ignored).\n- Sets joint side as Left/Right/Center.\n- Sets type to Other and writes clean label text into otherType.\n\nNaming Support:\n- Prefix side: L_*, R_*, Left*, Right*.\n- Suffix side: *_l, *_r, *_L, *_R (Unreal style).\n- Strips common tail tokens like Bnd, Skl, Jnt, Bind, Guide, JntCtrl."
+    }
+}

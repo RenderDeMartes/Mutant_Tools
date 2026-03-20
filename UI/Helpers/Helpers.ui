@@ -2376,7 +2376,7 @@
                     <string notr="true">text-align: left;</string>
                    </property>
                    <property name="text">
-                    <string>Label Joints</string>
+                                        <string>Label All Joints</string>
                    </property>
                   </widget>
                  </item>

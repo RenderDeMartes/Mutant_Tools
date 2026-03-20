@@ -1490,7 +1490,12 @@ class HelperUI(QtMutantWindow.Qt_Mutant):
 		from Mutant_Tools.Utils.Misc import label_joints
 		reload(label_joints)
 
-		label_joints.mass_label_joints()
+		if hasattr(label_joints, 'label_all_scene_joints'):
+			labeled_count, skipped_count = label_joints.label_all_scene_joints()
+			if labeled_count:
+				cmds.warning('Labeled {} joints. Skipped {} joints.'.format(labeled_count, skipped_count))
+		else:
+			label_joints.mass_label_joints()
 
 	def proxy_maker(self):
 		try:
