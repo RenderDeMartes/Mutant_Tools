@@ -57,7 +57,7 @@ mh = helpers.Helpers()
 import Mutant_Tools
 
 
-def save_all_skins_to(folder_path=''):
+def save_all_skins_to(folder_path='', accept_errors=True):
 
     if not folder_path:
         folder_path = mh.folder_window()
@@ -69,22 +69,46 @@ def save_all_skins_to(folder_path=''):
         return
 
     geos = []
+    saved_geos = []
+    errors = []
     from Mutant_Tools.UI.ProgressBar import load_progress_bar
     reload(load_progress_bar)
     cProgressBarUI = load_progress_bar.ProgressBarUI(items=skins, title='Saving Skins')
     cProgressBarUI.show()
-    for num, skin in enumerate(skins):
-        geo = cSkin.get_geo_from_skin(skin=skin)[0]
-        #geo = cmds.listRelatives(shape, p=True)[0]
-        geos.append(geo)
-        print(skin, geo)
+    try:
+        for num, skin in enumerate(skins):
+            cProgressBarUI.set_percent(num)
+            try:
+                geo = cSkin.get_geo_from_skin(skin=skin)[0]
+                #geo = cmds.listRelatives(shape, p=True)[0]
+                geos.append(geo)
+                print(skin, geo)
 
-        # save
-        cProgressBarUI.set_percent(num)
+                data = cSkin.get_weights(geo)
+                cSkin.save(data=data, path=os.path.join(folder_path, geo+'.json'))
+                saved_geos.append(geo)
+            except Exception as e:
+                errors.append('{}: {}'.format(skin, e))
+                if not accept_errors:
+                    raise
+    finally:
+        cProgressBarUI.close()
 
-        data = cSkin.get_weights(geo)
-        cSkin.save(data=data, path=os.path.join(folder_path, geo+'.json'))
-    cProgressBarUI.close()
+    if errors:
+        for e in errors:
+            print('?' * 50)
+            print('?' * 50)
+            print('?' * 50)
+            print(e)
+            print('?' * 50)
+            print('?' * 50)
+            print('?' * 50)
+        cmds.warning('Saved {} skin(s) with {} error(s). Check Script Editor for details.'.format(len(saved_geos), len(errors)))
+
+    return {
+        'saved_geos': saved_geos,
+        'errors': errors,
+    }
 
 def load_all_skins_from(folder_path='', accept_errors=True, namespace=False, avoid_rename=[]):
 
@@ -100,30 +124,35 @@ def load_all_skins_from(folder_path='', accept_errors=True, namespace=False, avo
     cProgressBarUI.show()
 
     errors = []
-    for num, file in enumerate(skin_files):
-        cProgressBarUI.set_percent(num)
-        geo = os.path.basename(file).replace('.json', '')
-        print(file, geo)
-        if not cmds.objExists(geo):
-            continue
-        print(cmds.nodeType(geo))
-        if cmds.nodeType(geo) != 'mesh':
-            continue
-        skin_data = cSkin.load_data(path=file)
-        if namespace and avoid_rename:
-            skin_data = add_namespace_to_json(file, namespace, avoid_rename)
-            #pprint.pprint(skin_data)
-        #try:
-        cSkin.set_weights(all_data=skin_data, geometry=geo, remove_unused=True, namespace=namespace, crowd_joints=avoid_rename)
-        '''
-        except Exception as e:
-            if not accept_errors:
-                print(file)
-                cmds.error(e)
-            print(e)
-            errors.append(e)
-        '''
-        
+    loaded_geos = []
+    skipped_missing = []
+    skipped_not_mesh = []
+    try:
+        for num, file in enumerate(skin_files):
+            cProgressBarUI.set_percent(num)
+            geo = os.path.basename(file).replace('.json', '')
+            print(file, geo)
+            if not cmds.objExists(geo):
+                skipped_missing.append(geo)
+                continue
+            print(cmds.nodeType(geo))
+            if cmds.nodeType(geo) != 'mesh':
+                skipped_not_mesh.append(geo)
+                continue
+
+            try:
+                skin_data = cSkin.load_data(path=file)
+                if namespace and avoid_rename:
+                    skin_data = add_namespace_to_json(file, namespace, avoid_rename)
+                    #pprint.pprint(skin_data)
+                cSkin.set_weights(all_data=skin_data, geometry=geo, remove_unused=True, namespace=namespace, crowd_joints=avoid_rename)
+                loaded_geos.append(geo)
+            except Exception as e:
+                errors.append('{}: {}'.format(geo, e))
+                if not accept_errors:
+                    raise
+    finally:
+        cProgressBarUI.close()
 
     if errors:
         for e in errors:
@@ -135,8 +164,16 @@ def load_all_skins_from(folder_path='', accept_errors=True, namespace=False, avo
             print('?' * 50)
             print('?' * 50)
 
+    if errors:
+        cmds.warning('Loaded {} skin(s) with {} error(s). Check Script Editor for details.'.format(len(loaded_geos), len(errors)))
+
     print('Import Complete')
-    cProgressBarUI.close()
+    return {
+        'loaded_geos': loaded_geos,
+        'skipped_missing': skipped_missing,
+        'skipped_not_mesh': skipped_not_mesh,
+        'errors': errors,
+    }
 def save_selected_geos(folder_path=''):
 
     if not folder_path:
