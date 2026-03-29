@@ -291,6 +291,13 @@ class HelperUI(QtMutantWindow.Qt_Mutant):
 
 		#Props Tab
 		self.ui.tools_ui.clicked.connect(self.open_tools_ui)
+		self.ui.prop_get_clean_selection_button.clicked.connect(self.prop_get_clean_selection_to_line)
+		self.ui.prop_aim_to_vtx_button.clicked.connect(self.prop_aim_selected_to_clean_selection_cluster)
+		self.ui.prop_get_spaces_selection_button.clicked.connect(self.prop_get_clean_selection_to_spaces_line)
+		self.ui.prop_spaces_on_sel_ctrl_button.clicked.connect(self.prop_create_space_switches_on_selected_controllers)
+		self.ui.prop_match_pivots_btn.clicked.connect(self.prop_match_pivots_to_last_selected)
+		self.ui.prop_skin_mode_on_btn.clicked.connect(self.prop_skin_mode_on)
+		self.ui.prop_skin_mode_off_btn.clicked.connect(self.prop_skin_mode_off)
 
 		#Animals Tab
 		self.ui.fix_quad_foot.clicked.connect(self.fix_quad_foot)
@@ -1336,6 +1343,273 @@ class HelperUI(QtMutantWindow.Qt_Mutant):
 		reload(load_RigTools)
 		cRigToolsUI = load_RigTools.RigTools_UI()
 		cRigToolsUI.show()
+
+	def _prop_get_clean_selection_text(self, selection=None):
+		if selection is None:
+			selection = cmds.ls(sl=True, fl=True) or []
+
+		cleaned = []
+		for item in selection:
+			clean_item = str(item).strip()
+			if clean_item:
+				cleaned.append(clean_item)
+
+		return ', '.join(cleaned)
+
+	@undo
+	def prop_get_clean_selection_to_line(self):
+		sel = cmds.ls(sl=True, fl=True) or []
+		if not sel:
+			cmds.warning('Nothing selected.')
+			return
+
+		self.ui.prop_clean_selection_line.setText(self._prop_get_clean_selection_text(selection=sel))
+
+	@undo
+	def prop_get_clean_selection_to_spaces_line(self):
+		sel = cmds.ls(sl=True, fl=True) or []
+		if not sel:
+			cmds.warning('Nothing selected.')
+			return
+
+		self.ui.prop_spaces_line.setText(self._prop_get_clean_selection_text(selection=sel))
+
+	@undo
+	def prop_aim_selected_to_clean_selection_cluster(self):
+		clean_text = self.ui.prop_clean_selection_line.text().strip()
+		if not clean_text:
+			cmds.warning('Clean selection text is empty.')
+			return False
+
+		cluster_components = [item.strip() for item in clean_text.split(',') if item.strip()]
+		if not cluster_components:
+			cmds.warning('No valid components in clean selection text.')
+			return False
+
+		source_transforms = set()
+		for component in cluster_components:
+			source_transforms.add(component.split('.')[0])
+
+		target_nodes = cmds.ls(sl=True, long=True) or []
+		aim_targets = []
+		for node in target_nodes:
+			if not cmds.objExists(node):
+				continue
+
+			node_type = cmds.nodeType(node)
+			if node_type in ['transform', 'joint']:
+				parent_transform = node
+			elif node_type in ['mesh', 'nurbsCurve', 'nurbsSurface', 'locator']:
+				parents = cmds.listRelatives(node, p=True, f=True) or []
+				if not parents:
+					continue
+				parent_transform = parents[0]
+			else:
+				continue
+
+			if parent_transform.split('|')[-1] in [name.split('|')[-1] for name in source_transforms]:
+				continue
+
+			aim_targets.append(parent_transform)
+
+		if not aim_targets:
+			cmds.warning('Select target transforms/joints to aim.')
+			return False
+
+		cluster_nodes = []
+		original_selection = cmds.ls(sl=True, long=True) or []
+		failed_targets = []
+		try:
+			cluster_nodes = cmds.cluster(cluster_components, n='PropAimTmp_Cls')
+			cluster_handle = cluster_nodes[1]
+
+			for target in aim_targets:
+				try:
+					constraint = cmds.aimConstraint(
+						cluster_handle,
+						target,
+						aimVector=(1, 0, 0),
+						upVector=(0, 1, 0),
+						worldUpType='scene'
+					)
+					if constraint:
+						cmds.delete(constraint)
+				except Exception:
+					failed_targets.append(target)
+		finally:
+			if cluster_nodes:
+				try:
+					cmds.delete(cluster_nodes)
+				except Exception:
+					pass
+
+			if original_selection:
+				cmds.select(original_selection, r=True)
+			else:
+				cmds.select(cl=True)
+
+		if failed_targets:
+			cmds.warning('Aim failed for {} target(s).'.format(len(failed_targets)))
+
+		cmds.warning('Aim To Vtx finished for {} target(s).'.format(len(aim_targets) - len(failed_targets)))
+		return True
+
+	def _prop_parse_space_names(self, spaces_text):
+		if not spaces_text:
+			return []
+		return [name.strip() for name in str(spaces_text).split(',') if name.strip()]
+
+	def _prop_resolve_scene_node(self, node_name):
+		candidate = str(node_name).strip()
+		if not candidate:
+			return None
+
+		if cmds.objExists(candidate):
+			return candidate
+
+		short_name = candidate.split('|')[-1]
+		matches = cmds.ls(short_name, long=True) or cmds.ls(short_name) or []
+		return matches[0] if matches else None
+
+	def _prop_create_space_switch_constraint(self, source_node, target_node):
+		constraint = cmds.orientConstraint(source_node, target_node, mo=True)
+		if isinstance(constraint, (list, tuple)):
+			return constraint[0]
+		return constraint
+
+	@undo
+	def prop_create_space_switches_on_selected_controllers(self):
+		spaces_text = self.ui.prop_spaces_line.text().strip()
+		space_names = self._prop_parse_space_names(spaces_text)
+		if not space_names:
+			cmds.warning('No spaces provided. Use comma-separated names.')
+			return []
+
+		space_nodes = []
+		missing = []
+		for name in space_names:
+			node = self._prop_resolve_scene_node(name)
+			if node and node not in space_nodes:
+				space_nodes.append(node)
+			else:
+				missing.append(name)
+
+		if not space_nodes:
+			cmds.warning('Could not resolve any spaces from the input list.')
+			return []
+
+		controllers = cmds.ls(sl=True, long=True, type='transform') or []
+		if not controllers:
+			cmds.warning('Select at least one controller transform.')
+			return []
+
+		results = []
+		for controller in controllers:
+			controller_short = controller.split('|')[-1]
+			auto_group = cmds.group(em=True, n='{}_AUTO_SpSw_GRP'.format(controller_short))
+			spaces_group = cmds.group(em=True, n='{}_SpSw_LOCS_GRP'.format(controller_short))
+
+			parent_node = cmds.listRelatives(controller, p=True, f=True) or []
+			if parent_node:
+				cmds.parent(auto_group, parent_node[0])
+
+			cmds.delete(cmds.parentConstraint(controller, auto_group, mo=False))
+			cmds.parent(spaces_group, auto_group)
+			cmds.parent(controller, auto_group)
+
+			enum_names = [node.split('|')[-1] for node in space_nodes]
+			attr_name = 'Follow'
+			if cmds.attributeQuery(attr_name, n=controller, exists=True):
+				cmds.deleteAttr('{}.{}'.format(controller, attr_name))
+
+			cmds.addAttr(controller, ln=attr_name, at='enum', en=':'.join(enum_names))
+			cmds.setAttr('{}.{}'.format(controller, attr_name), e=True, keyable=True)
+
+			created_locators = []
+			for space_node in space_nodes:
+				space_short = space_node.split('|')[-1]
+				locator = cmds.spaceLocator(n='{}_{}_SpSw_LOC'.format(controller_short, space_short))[0]
+				cmds.parent(locator, spaces_group)
+				cmds.delete(cmds.parentConstraint(controller, locator, mo=False))
+				cmds.parentConstraint(space_node, locator, mo=True)
+				created_locators.append(locator)
+
+			constraint = self._prop_create_space_switch_constraint(created_locators, auto_group)
+			weight_aliases = cmds.orientConstraint(constraint, q=True, wal=True) or []
+
+			for index, weight_attr in enumerate(weight_aliases):
+				condition_node = cmds.createNode('condition', n='{}_{}_SpSw_CND'.format(controller_short, index))
+				cmds.setAttr('{}.secondTerm'.format(condition_node), index)
+				cmds.setAttr('{}.colorIfTrueR'.format(condition_node), 1)
+				cmds.setAttr('{}.colorIfFalseR'.format(condition_node), 0)
+				cmds.connectAttr('{}.{}'.format(controller, attr_name), '{}.firstTerm'.format(condition_node), f=True)
+				cmds.connectAttr('{}.outColorR'.format(condition_node), '{}.{}'.format(constraint, weight_attr), f=True)
+
+			results.append(controller)
+
+		if missing:
+			cmds.warning('Missing space nodes: {}'.format(', '.join(missing)))
+
+		cmds.warning('Created space switch on {} controller(s).'.format(len(results)))
+		return results
+
+	@undo
+	def prop_match_pivots_to_last_selected(self):
+		sel = cmds.ls(sl=True, long=True) or []
+		if len(sel) < 2:
+			cmds.warning('Select at least 2 objects. Last selected is the reference pivot.')
+			return False
+
+		reference = sel[-1]
+		targets = sel[:-1]
+		if not cmds.objExists(reference):
+			cmds.warning('Reference object does not exist: {}'.format(reference))
+			return False
+
+		ref_pivot = cmds.xform(reference, q=True, ws=True, rp=True)
+		matched_count = 0
+		for obj in targets:
+			if not cmds.objExists(obj):
+				continue
+			try:
+				cmds.xform(obj, ws=True, rp=ref_pivot)
+				cmds.xform(obj, ws=True, sp=ref_pivot)
+				matched_count += 1
+			except Exception:
+				pass
+
+		if matched_count == 0:
+			cmds.warning('No pivots were matched.')
+			return False
+
+		cmds.warning('Pivots matched to {}'.format(reference.split('|')[-1]))
+		return True
+
+	def _prop_toggle_skin_mode(self, enable=True, disable=False):
+		if enable and disable:
+			cmds.warning('Choose either enable or disable skin mode.')
+			return 0
+
+		skins = cmds.ls(type='skinCluster') or []
+		for skin in skins:
+			if not cmds.objExists(skin):
+				continue
+			if enable:
+				cmds.setAttr('{}.moveJointsMode'.format(skin), 1)
+			elif disable:
+				cmds.setAttr('{}.moveJointsMode'.format(skin), 0)
+
+		return len(skins)
+
+	@undo
+	def prop_skin_mode_on(self):
+		count = self._prop_toggle_skin_mode(enable=True, disable=False)
+		cmds.warning('Skin mode ON on {} skinCluster(s).'.format(count))
+
+	@undo
+	def prop_skin_mode_off(self):
+		count = self._prop_toggle_skin_mode(enable=False, disable=True)
+		cmds.warning('Skin mode OFF on {} skinCluster(s).'.format(count))
 
 	#-------------------------------------------------
 	#-------------------------------------------------
