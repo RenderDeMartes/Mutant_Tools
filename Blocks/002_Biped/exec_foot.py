@@ -591,10 +591,19 @@ def build_foot_block():
             constraint= cmds.listRelatives(stretchy_loc, ad=True, type='parentConstraint')
             if constraint:
                 cmds.delete(constraint)
-            if side_guide.startswith(nc['right']):
-                cmds.parentConstraint(cmds.listRelatives(main_ik.replace(nc['left'], nc['right']), p=True)[0], stretchy_loc, mo=True)
-            else:
-                cmds.parentConstraint(cmds.listRelatives(main_ik, p=True)[0], stretchy_loc, mo=True)
+            # Do not override soft IK-driven locators; they already have translation inputs.
+            driven_translate = False
+            for axis in ['X', 'Y', 'Z']:
+                incoming = cmds.listConnections('{}.translate{}'.format(stretchy_loc, axis), s=True, d=False) or []
+                if incoming:
+                    driven_translate = True
+                    break
+
+            if not driven_translate:
+                if side_guide.startswith(nc['right']):
+                    cmds.parentConstraint(cmds.listRelatives(main_ik.replace(nc['left'], nc['right']), p=True)[0], stretchy_loc, mo=True)
+                else:
+                    cmds.parentConstraint(cmds.listRelatives(main_ik, p=True)[0], stretchy_loc, mo=True)
 
         #clean ctrls
         cmds.parent(clean_ctrl_grp, 'Rig_Ctrl_Grp')

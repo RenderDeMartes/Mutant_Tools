@@ -368,6 +368,19 @@ class Kinematics_class(tools.Tools_class):
 		pv_pos= cmds.xform(pv_ctrl, q=True, t = True, ws=True) 
 		axis = axis.upper()
 
+		# Soft IK can fail when a limb is not aligned to the configured global twist axis.
+		# Detect the dominant local translation axis from the chain and use it when needed.
+		if len(ik_joints) > 1:
+			mid_joint = ik_joints[1]
+			axis_values = {
+				'X': abs(cmds.getAttr('{}.translateX'.format(mid_joint))),
+				'Y': abs(cmds.getAttr('{}.translateY'.format(mid_joint))),
+				'Z': abs(cmds.getAttr('{}.translateZ'.format(mid_joint)))
+			}
+			detected_axis = max(axis_values, key=axis_values.get)
+			if axis_values.get(axis, 0.0) < 0.001 and axis_values[detected_axis] > 0.001:
+				axis = detected_axis
+
 		aim_vectors = {
 			'X': (1, 0, 0),
 			'Y': (0, 1, 0),
