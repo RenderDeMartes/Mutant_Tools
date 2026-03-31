@@ -536,7 +536,43 @@ class Kinematics_class(tools.Tools_class):
 		cmds.connectAttr('{}.outColorR'.format(soft_range_condition), '{}.colorIfTrueR'.format(soft_enable_condition), f=True)
 		cmds.connectAttr('{}.distance'.format(raw_distance), '{}.colorIfFalseR'.format(soft_enable_condition), f=True)
 
-		cmds.connectAttr('{}.outColorR'.format(soft_enable_condition), '{}.translate{}'.format(end_loc, axis), f=True)
+		# When soft IK and stretch are both active, add only the overflow beyond chain length
+		# so the IK target keeps following the controller while preserving the soft zone.
+		overflow_node = cmds.createNode('plusMinusAverage', n='{}_StretchOverflow'.format(end_joint[0]))
+		cmds.setAttr('{}.operation'.format(overflow_node), 2)
+		cmds.connectAttr('{}.distance'.format(raw_distance), '{}.input1D[0]'.format(overflow_node), f=True)
+		cmds.setAttr('{}.input1D[1]'.format(overflow_node), total_distance)
+
+		overflow_positive_condition = cmds.shadingNode('condition', asUtility=True, n='{}_StretchOverflowPos{}'.format(end_joint[0], self.nc['condition']))
+		cmds.setAttr('{}.operation'.format(overflow_positive_condition), 2)
+		cmds.setAttr('{}.secondTerm'.format(overflow_positive_condition), 0)
+		cmds.connectAttr('{}.output1D'.format(overflow_node), '{}.firstTerm'.format(overflow_positive_condition), f=True)
+		cmds.connectAttr('{}.output1D'.format(overflow_node), '{}.colorIfTrueR'.format(overflow_positive_condition), f=True)
+		cmds.setAttr('{}.colorIfFalseR'.format(overflow_positive_condition), 0)
+
+		soft_active_condition = cmds.shadingNode('condition', asUtility=True, n='{}_SoftActive{}'.format(end_joint[0], self.nc['condition']))
+		cmds.setAttr('{}.operation'.format(soft_active_condition), 3)
+		cmds.setAttr('{}.secondTerm'.format(soft_active_condition), epsilon_value)
+		cmds.connectAttr(soft_attr, '{}.firstTerm'.format(soft_active_condition), f=True)
+		cmds.setAttr('{}.colorIfTrueR'.format(soft_active_condition), 1)
+		cmds.setAttr('{}.colorIfFalseR'.format(soft_active_condition), 0)
+
+		stretch_soft_weight = cmds.createNode('multiplyDivide', n='{}_SoftStretchWeight'.format(end_joint[0]))
+		cmds.setAttr('{}.operation'.format(stretch_soft_weight), 1)
+		cmds.connectAttr('{}.outColorR'.format(soft_active_condition), '{}.input1X'.format(stretch_soft_weight), f=True)
+		cmds.connectAttr(stretch_Attr, '{}.input2X'.format(stretch_soft_weight), f=True)
+
+		stretch_overflow_apply = cmds.createNode('multiplyDivide', n='{}_StretchOverflowApply'.format(end_joint[0]))
+		cmds.setAttr('{}.operation'.format(stretch_overflow_apply), 1)
+		cmds.connectAttr('{}.outColorR'.format(overflow_positive_condition), '{}.input1X'.format(stretch_overflow_apply), f=True)
+		cmds.connectAttr('{}.outputX'.format(stretch_soft_weight), '{}.input2X'.format(stretch_overflow_apply), f=True)
+
+		final_ik_distance = cmds.createNode('plusMinusAverage', n='{}_FinalIkDistance'.format(end_joint[0]))
+		cmds.setAttr('{}.operation'.format(final_ik_distance), 1)
+		cmds.connectAttr('{}.outColorR'.format(soft_enable_condition), '{}.input1D[0]'.format(final_ik_distance), f=True)
+		cmds.connectAttr('{}.outputX'.format(stretch_overflow_apply), '{}.input1D[1]'.format(final_ik_distance), f=True)
+
+		cmds.connectAttr('{}.output1D'.format(final_ik_distance), '{}.translate{}'.format(end_loc, axis), f=True)
 
 		ik_parent_constraints = cmds.listConnections(ik, s=True, d=False, type='parentConstraint') or []
 		if ik_parent_constraints:
@@ -549,18 +585,19 @@ class Kinematics_class(tools.Tools_class):
 		cmds.setAttr(str(contidion_node)+'.secondTerm', total_distance)
 
 		#Connect To Distance
-		md0 = self.connect_md_node(in_x1 = str(distance)+'.distance', in_x2 = total_distance, out_x = str(contidion_node)+'.colorIfTrueR', mode = 'divide', name = '')		
+		# Stretch ratio must use raw controller distance, not softened IK distance.
+		md0 = self.connect_md_node(in_x1 = str(raw_distance)+'.distance', in_x2 = total_distance, out_x = str(contidion_node)+'.colorIfTrueR', mode = 'divide', name = '')		
 		
 		#connect to joints
 		md1 = self.connect_md_node(in_x1 = str(contidion_node)+'.outColorR', in_x2 = cmds.getAttr(str(ik_joints[1])+'.scale{}'.format(axis)), out_x = str(ik_joints[1])+'.scale{}'.format(axis), mode = 'mult', name = '{}_NewScale'.format(ik_joints[1]))
 		md2 = self.connect_md_node(in_x1 = str(contidion_node)+'.outColorR', in_x2 = cmds.getAttr(str(ik_joints[2])+'.scale{}'.format(axis)), out_x = str(ik_joints[2])+'.scale{}'.format(axis), mode = 'mult', name = '{}_NewScale'.format(ik_joints[2]))
 		
-		md3 = self.connect_md_node(in_x1 = str(distance)+'.distance', in_x2 = stretch_Attr, out_x = str(contidion_node)+'.firstTerm', mode = 'mult', name = '{}_TotalDistance'.format(name))
+		md3 = self.connect_md_node(in_x1 = str(raw_distance)+'.distance', in_x2 = stretch_Attr, out_x = str(contidion_node)+'.firstTerm', mode = 'mult', name = '{}_TotalDistance'.format(name))
 		print (md0,md1,md2, md3)
 
 		#normalize stretch
 		normalize_loc = cmds.spaceLocator(n = name + '_NormalScale' + self.nc['locator'])[0]
-		normal_md = self.connect_md_node( in_x1 = str(distance)+'.distance', in_x2 = str(normalize_loc) + '.scaleX', out_x = md0 + '.input1X', mode = 'divide', name = '{}_Normalize'.format(distance), force = True)
+		normal_md = self.connect_md_node( in_x1 = str(raw_distance)+'.distance', in_x2 = str(normalize_loc) + '.scaleX', out_x = md0 + '.input1X', mode = 'divide', name = '{}_Normalize'.format(raw_distance), force = True)
 		#normalize pole vector lock
 		cmds.connectAttr(str(normalize_loc) + '.scaleX', normal_md + '.input2Y')
 		cmds.connectAttr(str(normalize_loc) + '.scaleX', normal_md + '.input2Z')
@@ -635,6 +672,12 @@ class Kinematics_class(tools.Tools_class):
 			soft_result_node,
 			soft_range_condition,
 			soft_enable_condition,
+			overflow_node,
+			overflow_positive_condition,
+			soft_active_condition,
+			stretch_soft_weight,
+			stretch_overflow_apply,
+			final_ik_distance,
 			upper_lock_blend,
 			upper_lock_blend,
 			lower_lock_blend,
