@@ -366,37 +366,70 @@ class Kinematics_class(tools.Tools_class):
 		first_pos = cmds.xform(ik_joints[0], q=True, t = True, ws=True)
 		end_pos= cmds.xform(ik_joints[-1], q=True, t = True, ws=True) 
 		pv_pos= cmds.xform(pv_ctrl, q=True, t = True, ws=True) 
+		axis = axis.upper()
 
-		start_loc = cmds.spaceLocator(n = str(ik_joints[0]) + '_Stretchy' + self.nc['locator'])
-		cmds.xform(start_loc, t = first_pos)
-		cmds.setAttr(str(start_loc[0])+'.visibility', 0)
-		end_loc = cmds.spaceLocator(n = str(ik_joints[-1])+ '_Stretchy'+ self.nc['locator'])
-		cmds.xform(end_loc, t = end_pos)
-		cmds.setAttr(str(end_loc[0])+'.visibility', 0)
-		pv_loc = cmds.spaceLocator(n = str(ik_joints[1])+ '_Stretchy'+ self.nc['locator'])
-		cmds.xform(pv_loc, t = pv_pos)
-		cmds.setAttr(str(pv_loc[0])+'.visibility', 0)
+		aim_vectors = {
+			'X': (1, 0, 0),
+			'Y': (0, 1, 0),
+			'Z': (0, 0, 1)
+		}
+		up_vectors = {
+			'X': (0, 1, 0),
+			'Y': (0, 0, 1),
+			'Z': (0, 1, 0)
+		}
 
-		cmds.parentConstraint(top_ctrl, start_loc)
-		cmds.parentConstraint(ik_ctrl, end_loc)
-		cmds.parentConstraint(pv_ctrl, pv_loc)
-				
+		start_loc = cmds.spaceLocator(n = str(ik_joints[0]) + '_Stretchy' + self.nc['locator'])[0]
+		cmds.xform(start_loc, t = first_pos, ws=True)
+		cmds.setAttr('{}.visibility'.format(start_loc), 0)
+		end_loc = cmds.spaceLocator(n = str(ik_joints[-1])+ '_Stretchy'+ self.nc['locator'])[0]
+		cmds.xform(end_loc, t = end_pos, ws=True)
+		cmds.setAttr('{}.visibility'.format(end_loc), 0)
+		pv_loc = cmds.spaceLocator(n = str(ik_joints[1])+ '_Stretchy'+ self.nc['locator'])[0]
+		cmds.xform(pv_loc, t = pv_pos, ws=True)
+		cmds.setAttr('{}.visibility'.format(pv_loc), 0)
+		end_ctrl_loc = cmds.spaceLocator(n = str(ik_joints[-1]) + '_SoftCtrl' + self.nc['locator'])[0]
+		cmds.xform(end_ctrl_loc, t = end_pos, ws=True)
+		cmds.setAttr('{}.visibility'.format(end_ctrl_loc), 0)
+		soft_aim_loc = cmds.spaceLocator(n = str(ik_joints[0]) + '_SoftAim' + self.nc['locator'])[0]
+		cmds.xform(soft_aim_loc, t = first_pos, ws=True)
+		cmds.setAttr('{}.visibility'.format(soft_aim_loc), 0)
+
+		cmds.parent(end_loc, soft_aim_loc)
+		for rotate_axis in ('X', 'Y', 'Z'):
+			cmds.setAttr('{}.rotate{}'.format(end_loc, rotate_axis), 0)
+			if rotate_axis != axis:
+				cmds.setAttr('{}.translate{}'.format(end_loc, rotate_axis), 0)
+
+		cmds.pointConstraint(top_ctrl, start_loc, mo=False)
+		cmds.pointConstraint(top_ctrl, soft_aim_loc, mo=False)
+		cmds.parentConstraint(ik_ctrl, end_ctrl_loc, mo=False)
+		cmds.parentConstraint(pv_ctrl, pv_loc, mo=False)
+		cmds.aimConstraint(end_ctrl_loc, soft_aim_loc,
+						  aimVector=aim_vectors.get(axis, (1, 0, 0)),
+						  upVector=up_vectors.get(axis, (0, 1, 0)),
+						  worldUpType='objectrotation',
+						  worldUpObject=top_ctrl,
+						  worldUpVector=up_vectors.get(axis, (0, 1, 0)),
+						  mo=False)
+
+		def create_distance_node(node_name, source_a, source_b):
+			distance_node = cmds.createNode('distanceBetween', n=node_name)
+			source_a_shape = cmds.listRelatives(source_a, s=True)[0]
+			source_b_shape = cmds.listRelatives(source_b, s=True)[0]
+			cmds.connectAttr('{}.worldPosition[0]'.format(source_a_shape), '{}.point1'.format(distance_node), f=True)
+			cmds.connectAttr('{}.worldPosition[0]'.format(source_b_shape), '{}.point2'.format(distance_node), f=True)
+			return distance_node
+
 		#distances nodes
-		#main distance
-		distance = cmds.distanceDimension(sp=first_pos, ep=end_pos)
-		distance = cmds.rename(distance, ik_joints[-1] + '_' + ik_joints[0]+ self.nc['distance']+'_Shape')
-		cmds.rename(cmds.listRelatives(distance, p =True), ik_joints[-1] + '_' + ik_joints[0]+ self.nc['distance'])
-		cmds.setAttr('{}.visibility'.format(distance), 0)
-		#top PV distance
-		top_distance = cmds.distanceDimension(sp=first_pos, ep=pv_pos)
-		top_distance = cmds.rename(top_distance, ik_joints[1] + '_' + ik_joints[0]+ self.nc['distance']+'_Shape')
-		cmds.rename(cmds.listRelatives(top_distance, p =True), ik_joints[1] + '_' + ik_joints[0]+ self.nc['distance'])
-		cmds.setAttr('{}.visibility'.format(top_distance), 0)		
-		#IK PV distance
-		ik_distance = cmds.distanceDimension(sp=end_pos, ep=pv_pos)
-		ik_distance = cmds.rename(ik_distance, ik_joints[-1] + '_' + ik_joints[1]+ self.nc['distance']+'_Shape')
-		cmds.rename(cmds.listRelatives(ik_distance, p =True), ik_joints[-1] + '_' + ik_joints[1]+ self.nc['distance'])	
-		cmds.setAttr('{}.visibility'.format(ik_distance), 0)
+		raw_distance = create_distance_node(ik_joints[-1] + '_' + ik_joints[0] + '_Raw' + self.nc['distance'] + '_Shape',
+									   start_loc, end_ctrl_loc)
+		distance = create_distance_node(ik_joints[-1] + '_' + ik_joints[0]+ self.nc['distance']+'_Shape',
+								 start_loc, end_loc)
+		top_distance = create_distance_node(ik_joints[1] + '_' + ik_joints[0]+ self.nc['distance']+'_Shape',
+									   start_loc, pv_loc)
+		ik_distance = create_distance_node(ik_joints[-1] + '_' + ik_joints[1]+ self.nc['distance']+'_Shape',
+								  end_loc, pv_loc)
 				
 		# stretchy math
 		joints_for_distance = cmds.listRelatives (base_joint, ad = True, typ = 'joint')
@@ -426,6 +459,76 @@ class Kinematics_class(tools.Tools_class):
 		show_gimbal = self.new_enum(input=attrs_location, name='SubIk', enums='Hide:Show', keyable=False)
 
 		stretch_Attr = self.new_attr(input= attrs_location, name = 'Stretch_On', min = 0 , max = 1, default = int(self.setup['stretch_default']))
+		soft_attr = self.new_attr(input=attrs_location, name='Soft_Distance', min=0, default=0)
+
+		epsilon_value = 0.001
+		soft_safe_condition = cmds.shadingNode('condition', asUtility=True, n='{}_SoftSafe{}'.format(end_joint[0], self.nc['condition']))
+		cmds.setAttr('{}.operation'.format(soft_safe_condition), 3)
+		cmds.setAttr('{}.secondTerm'.format(soft_safe_condition), epsilon_value)
+		cmds.connectAttr(soft_attr, '{}.firstTerm'.format(soft_safe_condition), f=True)
+		cmds.connectAttr(soft_attr, '{}.colorIfTrueR'.format(soft_safe_condition), f=True)
+		cmds.setAttr('{}.colorIfFalseR'.format(soft_safe_condition), epsilon_value)
+
+		soft_start_node = cmds.createNode('plusMinusAverage', n='{}_SoftStart'.format(end_joint[0]))
+		cmds.setAttr('{}.operation'.format(soft_start_node), 2)
+		cmds.setAttr('{}.input1D[0]'.format(soft_start_node), total_distance)
+		cmds.connectAttr('{}.outColorR'.format(soft_safe_condition), '{}.input1D[1]'.format(soft_start_node), f=True)
+
+		soft_delta_node = cmds.createNode('plusMinusAverage', n='{}_SoftDelta'.format(end_joint[0]))
+		cmds.setAttr('{}.operation'.format(soft_delta_node), 2)
+		cmds.connectAttr('{}.distance'.format(raw_distance), '{}.input1D[0]'.format(soft_delta_node), f=True)
+		cmds.connectAttr('{}.output1D'.format(soft_start_node), '{}.input1D[1]'.format(soft_delta_node), f=True)
+
+		soft_ratio_node = cmds.createNode('multiplyDivide', n='{}_SoftRatio'.format(end_joint[0]))
+		cmds.setAttr('{}.operation'.format(soft_ratio_node), 2)
+		cmds.connectAttr('{}.output1D'.format(soft_delta_node), '{}.input1X'.format(soft_ratio_node), f=True)
+		cmds.connectAttr('{}.outColorR'.format(soft_safe_condition), '{}.input2X'.format(soft_ratio_node), f=True)
+
+		soft_negative_node = cmds.createNode('multiplyDivide', n='{}_SoftNegative'.format(end_joint[0]))
+		cmds.setAttr('{}.operation'.format(soft_negative_node), 1)
+		cmds.setAttr('{}.input2X'.format(soft_negative_node), -1)
+		cmds.connectAttr('{}.outputX'.format(soft_ratio_node), '{}.input1X'.format(soft_negative_node), f=True)
+
+		soft_exp_node = cmds.createNode('multiplyDivide', n='{}_SoftExp'.format(end_joint[0]))
+		cmds.setAttr('{}.operation'.format(soft_exp_node), 3)
+		cmds.setAttr('{}.input1X'.format(soft_exp_node), 2.718281828)
+		cmds.connectAttr('{}.outputX'.format(soft_negative_node), '{}.input2X'.format(soft_exp_node), f=True)
+
+		soft_one_minus_node = cmds.createNode('plusMinusAverage', n='{}_SoftOneMinus'.format(end_joint[0]))
+		cmds.setAttr('{}.operation'.format(soft_one_minus_node), 2)
+		cmds.setAttr('{}.input1D[0]'.format(soft_one_minus_node), 1)
+		cmds.connectAttr('{}.outputX'.format(soft_exp_node), '{}.input1D[1]'.format(soft_one_minus_node), f=True)
+
+		soft_scaled_node = cmds.createNode('multiplyDivide', n='{}_SoftScaled'.format(end_joint[0]))
+		cmds.setAttr('{}.operation'.format(soft_scaled_node), 1)
+		cmds.connectAttr('{}.outColorR'.format(soft_safe_condition), '{}.input1X'.format(soft_scaled_node), f=True)
+		cmds.connectAttr('{}.output1D'.format(soft_one_minus_node), '{}.input2X'.format(soft_scaled_node), f=True)
+
+		soft_result_node = cmds.createNode('plusMinusAverage', n='{}_SoftResult'.format(end_joint[0]))
+		cmds.setAttr('{}.operation'.format(soft_result_node), 1)
+		cmds.connectAttr('{}.outputX'.format(soft_scaled_node), '{}.input1D[0]'.format(soft_result_node), f=True)
+		cmds.connectAttr('{}.output1D'.format(soft_start_node), '{}.input1D[1]'.format(soft_result_node), f=True)
+
+		soft_range_condition = cmds.shadingNode('condition', asUtility=True, n='{}_SoftRange{}'.format(end_joint[0], self.nc['condition']))
+		cmds.setAttr('{}.operation'.format(soft_range_condition), 5)
+		cmds.setAttr('{}.secondTerm'.format(soft_range_condition), 0)
+		cmds.connectAttr('{}.output1D'.format(soft_delta_node), '{}.firstTerm'.format(soft_range_condition), f=True)
+		cmds.connectAttr('{}.distance'.format(raw_distance), '{}.colorIfTrueR'.format(soft_range_condition), f=True)
+		cmds.connectAttr('{}.output1D'.format(soft_result_node), '{}.colorIfFalseR'.format(soft_range_condition), f=True)
+
+		soft_enable_condition = cmds.shadingNode('condition', asUtility=True, n='{}_SoftEnable{}'.format(end_joint[0], self.nc['condition']))
+		cmds.setAttr('{}.operation'.format(soft_enable_condition), 3)
+		cmds.setAttr('{}.secondTerm'.format(soft_enable_condition), epsilon_value)
+		cmds.connectAttr(soft_attr, '{}.firstTerm'.format(soft_enable_condition), f=True)
+		cmds.connectAttr('{}.outColorR'.format(soft_range_condition), '{}.colorIfTrueR'.format(soft_enable_condition), f=True)
+		cmds.connectAttr('{}.distance'.format(raw_distance), '{}.colorIfFalseR'.format(soft_enable_condition), f=True)
+
+		cmds.connectAttr('{}.outColorR'.format(soft_enable_condition), '{}.translate{}'.format(end_loc, axis), f=True)
+
+		ik_parent_constraints = cmds.listConnections(ik, s=True, d=False, type='parentConstraint') or []
+		if ik_parent_constraints:
+			cmds.delete(list(set(ik_parent_constraints)))
+		cmds.pointConstraint(end_loc, ik, mo=False)
 
 		#IK Stretchy Nodes and Connections from RdM2 
 		contidion_node = cmds.shadingNode('condition', asUtility=True, n= end_joint[0]+self.nc['condition'])
@@ -499,10 +602,32 @@ class Kinematics_class(tools.Tools_class):
 			cmds.connectAttr('{}.output.outputR'.format(upper_volume_blend), str(ik_joints[1])+'.scale{}'.format(scale_axis))
 
 		#organize
-		ik_grp = cmds.group(top_distance, ik_distance, distance,start_loc, end_loc, pv_loc ,normalize_loc , n = '{}_Stretchy{}'.format(ik, self.nc['group']))
+		ik_grp = cmds.group(start_loc, end_ctrl_loc, soft_aim_loc, pv_loc, normalize_loc, n = '{}_Stretchy{}'.format(ik, self.nc['group']))
 		cmds.setAttr('{}.visibility'.format(ik_grp), 0)
 
-		self.put_inside_rig_container([contidion_node,upper_lock_blend,upper_lock_blend, lower_lock_blend,upper_volume_blend, lower_volume_blend])
+		self.put_inside_rig_container([
+			contidion_node,
+			raw_distance,
+			distance,
+			top_distance,
+			ik_distance,
+			soft_safe_condition,
+			soft_start_node,
+			soft_delta_node,
+			soft_ratio_node,
+			soft_negative_node,
+			soft_exp_node,
+			soft_one_minus_node,
+			soft_scaled_node,
+			soft_result_node,
+			soft_range_condition,
+			soft_enable_condition,
+			upper_lock_blend,
+			upper_lock_blend,
+			lower_lock_blend,
+			upper_volume_blend,
+			lower_volume_blend
+		])
 
 		return (ik_grp, normalize_loc, start_loc, end_loc, pv_loc, distance, top_distance, ik_distance)
 		
