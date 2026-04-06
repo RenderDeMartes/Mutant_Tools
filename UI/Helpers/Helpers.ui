@@ -842,6 +842,19 @@
                   </widget>
                  </item>
                  <item>
+                  <widget class="QPushButton" name="mirror_push_joints_grp_btn">
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>30</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>Mirror Push Joints Grp</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
                   <widget class="Line" name="line_2">
                    <property name="orientation">
                     <enum>Qt::Horizontal</enum>

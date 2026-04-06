@@ -250,6 +250,7 @@ class HelperUI(QtMutantWindow.Qt_Mutant):
 		self.ui.shoe_to_guides.clicked.connect(self.shoe_to_guides)
 		self.ui.place_push_loc_btn.clicked.connect(self.place_push_locators)
 		self.ui.place_push_loc_slider.valueChanged.connect(self.update_place_push_loc_label)
+		self.ui.mirror_push_joints_grp_btn.clicked.connect(self.mirror_push_joints_grp)
 		self.ui.skin_to_other_button.clicked.connect(self.copy_skin_from_first_to_rest)
 
 		self.ui.remove_duplicate_names.clicked.connect(self.remove_dup_names)
@@ -916,6 +917,50 @@ class HelperUI(QtMutantWindow.Qt_Mutant):
 			self.place_push_locator_from_mirrored_parent(left_parent=left_parent, locator=right_locator, side='R', amount=size)
 
 		print('Push locator placement done.')
+
+	@undo
+	def mirror_push_joints_grp(self):
+		push_joints_grp = cmds.ls(sl=True)
+		if push_joints_grp:
+			push_joints_grp = push_joints_grp[0]
+		if not push_joints_grp:
+			push_joints_grp = 'L_PushJointCreationLocators_Grp'
+
+		if push_joints_grp.startswith('L_'):
+			mirror_push_joints_grp = push_joints_grp.replace('L_', 'R_')
+			mirror_prefix = ['L_', 'R_']
+		elif push_joints_grp.startswith('R_'):
+			mirror_push_joints_grp = push_joints_grp.replace('R_', 'L_')
+			mirror_prefix = ['R_', 'L_']
+		else:
+			cmds.warning('Push joints group must start with L_ or R_: {}'.format(push_joints_grp))
+			return
+
+		if not cmds.objExists(push_joints_grp):
+			cmds.warning('Push joints group not found: {}'.format(push_joints_grp))
+			return
+
+		if cmds.objExists(mirror_push_joints_grp):
+			cmds.delete(mirror_push_joints_grp)
+
+		dup_push_grp = cmds.duplicate(push_joints_grp, name=mirror_push_joints_grp)[0]
+		cmds.setAttr('{}.sx'.format(dup_push_grp), -1)
+
+		dup_hierarchy = cmds.listRelatives(dup_push_grp, ad=True, type='transform', f=True) or []
+
+		renamed = []
+		for element in dup_hierarchy:
+			short_name = element.split('|')[-1].replace(mirror_prefix[0], mirror_prefix[1])
+			renamed_element = cmds.rename(element, short_name)
+			renamed.append(renamed_element)
+			cmds.parent(renamed_element, world=True)
+			cmds.makeIdentity(renamed_element, scale=True)
+
+		cmds.makeIdentity(dup_push_grp, scale=True)
+		if renamed:
+			cmds.parent(renamed, dup_push_grp)
+
+		print('Mirrored {} -> {}'.format(push_joints_grp, mirror_push_joints_grp))
 
 	@undo
 	def copy_skin_from_first_to_rest(self):
