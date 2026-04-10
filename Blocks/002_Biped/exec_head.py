@@ -68,7 +68,9 @@ def create_head_block(name = 'Head'):
     cmds.parent(neck_guide, block)
     cmds.select(block)
 
-    mt.orient_joint(input = neck_guide)
+    # Orient head guides: Y aims at child joint, X aims at world X
+    cmds.makeIdentity(neck_guide, apply=True, t=True, r=True, s=True, n=False, pn=1)
+    cmds.joint(neck_guide, e=True, oj='yxz', ch=True, secondaryAxisOrient='xup')
     cmds.setAttr("{}.jointOrientX".format(head_guideEnd), 0)
     cmds.setAttr("{}.jointOrientY".format(head_guideEnd), 0)
     cmds.setAttr("{}.jointOrientZ".format(head_guideEnd), 0)
@@ -97,8 +99,14 @@ def build_head_block():
     #cmds.getAttr('{}.AttrName'.format(config))
     #cmds.getAttr('{}.AttrName'.format(config), asString = True)
 
-    #orient the joints
-    mt.orient_joint(input = guide)
+    #orient the joints: Y aims at child joint, X aims at world X
+    cmds.makeIdentity(guide, apply=True, t=True, r=True, s=True, n=False, pn=1)
+    cmds.joint(guide, e=True, oj='yxz', ch=True, secondaryAxisOrient='xup')
+    # Zero out end joint orient (leaf has no child to aim at)
+    end_jnt = cmds.listRelatives(cmds.listRelatives(guide, c=True)[0], c=True)
+    if end_jnt:
+        for attr in ['jointOrientX', 'jointOrientY', 'jointOrientZ']:
+            cmds.setAttr('{}.{}'.format(end_jnt[0], attr), 0)
     new_guide = mt.duplicate_and_remove_guides(guide)
 
     #use this locator in case parent is set to new locator
