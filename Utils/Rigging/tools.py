@@ -958,8 +958,8 @@ class Tools_class(object):
 		Args:
 			input (str): Name of the transform to add the attribute to. If not specified, it will use the currently selected object.
 			name (str): Name of the new attribute.
-			min (int): Minimum value for the attribute (inclusive).
-			max (int): Maximum value for the attribute (inclusive).
+			min (int/False): Minimum value for the attribute (inclusive). Use False for no minimum.
+			max (int/False): Maximum value for the attribute (inclusive). Use False for no maximum.
 			default (int): Default value for the attribute.
 
 		Returns:
@@ -972,6 +972,7 @@ class Tools_class(object):
 			- The 'min' and 'max' parameters define the range of values for the attribute.
 			- The 'default' parameter sets the default value of the attribute.
 			- The function sets the added attribute as keyable.
+			- Pass min=False and/or max=False to create an unclamped attribute.
 
 		Examples:
 			# Create a new double attribute named 'switch' with a range of 0 to 1 and a default value of 0.
@@ -979,7 +980,12 @@ class Tools_class(object):
 		"""
 
 		#add new attr as float
-		cmds.addAttr(input, ln = name, at = 'double', min = min, max = max, dv = default)
+		kwargs = {'ln': name, 'at': 'double', 'dv': default}
+		if min is not False:
+			kwargs['min'] = min
+		if max is not False:
+			kwargs['max'] = max
+		cmds.addAttr(input, **kwargs)
 		cmds.setAttr('{}.{}'.format(input, name), e = True, keyable = keyable)
 
 		return '{}.{}'.format(input, name)

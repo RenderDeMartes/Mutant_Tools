@@ -853,6 +853,13 @@ def build_limb_block():
             cmds.setAttr(switch_locator+'.Switch_IK_FK', 1)
             cmds.setAttr(ikfk['ik_fk'][3][0]+'.RotateOrder', 3)
 
+        # Twist offset attrs on switch locator
+        mt.line_attr(input=switch_locator, name='Twist')
+        upper_twist_attr = mt.new_attr(input=switch_locator, name='UpperTwist', min=False, max=False, default=0)
+        lower_twist_attr = mt.new_attr(input=switch_locator, name='LowerTwist', min=False, max=False, default=0)
+        cmds.connectAttr(upper_twist_attr, '{}.twist'.format(ikfk['upper_twist']['ik_spline']))
+        cmds.connectAttr(lower_twist_attr, '{}.twist'.format(ikfk['lower_twist']['ik_spline']))
+
         #mt.line_attr(input=switch_locator, name='MT')
 
         # #Add proxy attrs to main controllers

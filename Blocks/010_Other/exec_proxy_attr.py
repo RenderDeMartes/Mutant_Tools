@@ -130,16 +130,20 @@ def build_proxy_attr_block():
             continue
 
         if attr_type == 'double':
-            cmds.addAttr(ctrl, ln=attr, proxy="{}.{}".format(attrs_from, attr), at="double",
-                    min=cmds.attributeQuery(attr, node=attrs_from, min=True)[0],
-                    max=cmds.attributeQuery(attr, node=attrs_from, max=True)[0],
-                    )
+            kwargs = {'ln': attr, 'proxy': "{}.{}".format(attrs_from, attr), 'at': 'double'}
+            if cmds.attributeQuery(attr, node=attrs_from, minExists=True):
+                kwargs['min'] = cmds.attributeQuery(attr, node=attrs_from, min=True)[0]
+            if cmds.attributeQuery(attr, node=attrs_from, maxExists=True):
+                kwargs['max'] = cmds.attributeQuery(attr, node=attrs_from, max=True)[0]
+            cmds.addAttr(ctrl, **kwargs)
 
         elif attr_type == 'double':
-            cmds.addAttr(ctrl, ln=attr, proxy="{}.{}".format(attrs_from, attr), at="double",
-                    min=cmds.attributeQuery(attr, node=attrs_from, min=True)[0],
-                    max=cmds.attributeQuery(attr, node=attrs_from, max=True)[0],
-                    )
+            kwargs = {'ln': attr, 'proxy': "{}.{}".format(attrs_from, attr), 'at': 'double'}
+            if cmds.attributeQuery(attr, node=attrs_from, minExists=True):
+                kwargs['min'] = cmds.attributeQuery(attr, node=attrs_from, min=True)[0]
+            if cmds.attributeQuery(attr, node=attrs_from, maxExists=True):
+                kwargs['max'] = cmds.attributeQuery(attr, node=attrs_from, max=True)[0]
+            cmds.addAttr(ctrl, **kwargs)
 
         elif attr_type == 'enum':
             if 'RotateOrder' in attr:
