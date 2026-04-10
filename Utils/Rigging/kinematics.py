@@ -1889,7 +1889,7 @@ class Kinematics_class(tools.Tools_class):
 
 	#----------------------------------------------------------------------------------------------------------------
 
-	def basic_ribbon(self, start = '', end = '', divisions = 5, name = 'Ribbon', ctrl_type = 'circleY',size = 1, world_orient=False, start_end_joints=False):
+	def basic_ribbon(self, start = '', end = '', divisions = 5, name = 'Ribbon', ctrl_type = 'circleY',size = 1, world_orient=False, start_end_joints=False, orient_like=False):
 		"""
 		Create a basic ribbon rig between two objects using a plane and follicles.
 
@@ -1952,6 +1952,8 @@ class Kinematics_class(tools.Tools_class):
 			#create joints for later bind
 			cmds.select(fol)
 			jnt = cmds.joint(n = fol + nc ['joint'])
+			if orient_like:
+				cmds.delete(cmds.orientConstraint(orient_like, jnt, mo=False))
 			fol_joints.append(jnt)
 
 			#joint to bind the ruibbon and add ctrls
@@ -1982,6 +1984,8 @@ class Kinematics_class(tools.Tools_class):
 				cmds.setAttr('{}.rotateX'.format(ctrl),0)
 				cmds.setAttr('{}.rotateY'.format(ctrl),0)
 				cmds.setAttr('{}.rotateZ'.format(ctrl),0)
+			if orient_like:
+				cmds.delete(cmds.orientConstraint(orient_like, ctrl, mo=False))
 			grp = self.root_grp()[0]
 			cmds.parentConstraint(ctrl , jnt, mo=True)
 			#cmds.scaleConstraint(ctrl , jnt, mo=True)
@@ -2009,7 +2013,7 @@ class Kinematics_class(tools.Tools_class):
 	
 	#----------------------------------------------------------------------------------------------------------------
 
-	def ribbon_between(self, start = '', end = '', divisions = 5, name = 'Ribbon', ctrl_type = 'circleY', size = 1, world_orient=False):
+	def ribbon_between(self, start = '', end = '', divisions = 5, name = 'Ribbon', ctrl_type = 'circleY', size = 1, world_orient=False, orient_like=False):
 		"""
 		Create a ribbon rig between two objects using a NURBS plane and follicles.
 
@@ -2049,7 +2053,7 @@ class Kinematics_class(tools.Tools_class):
 			end = cmds.ls(sl=True)[1]
 		
 		#run main basic ribbon
-		basic_ribbon = self.basic_ribbon(start = start, end = end, divisions = divisions, name = name, ctrl_type = ctrl_type, size = size, world_orient=world_orient)
+		basic_ribbon = self.basic_ribbon(start = start, end = end, divisions = divisions, name = name, ctrl_type = ctrl_type, size = size, world_orient=world_orient, orient_like=orient_like)
 		
 		#create a new nursb to drive the ctrls
 		ctrl_surface = cmds.duplicate(basic_ribbon['surface'], n = name + self.nc['ctrl'] +self.nc['nurb'])[0]

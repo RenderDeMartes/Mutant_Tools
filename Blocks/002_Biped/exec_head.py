@@ -134,37 +134,6 @@ def build_head_block():
     mt.match(dumb_head , head_joint)
     cmds.pointConstraint(head_joint, dumb_head)
     name = str(neck_joint).replace(nc['joint'], '')
-    ribbon = mt.ribbon_between(start=neck_joint, end=dumb_head, divisions=ribbon_amount , name=name, size = ctrl_size, world_orient=True)
-
-    '''
-    ribbon =    {'surface':[basic_ribbon['surface'],ctrl_surface], 
-				'follicles':basic_ribbon['follicles'],
-				'fol_joints':basic_ribbon['fol_joints'],
-				'ctrl_joints':basic_ribbon['ctrl_joints'],
-				'controllers':basic_ribbon['controllers'],
-				'controllers_grp':basic_ribbon['controllers_grp']}
-    '''
-
-    # # force extra joints start and end
-    # start_end_joints = []
-    # cmds.select(ribbon['surface'][-1])
-    # mel.eval("createHair 1 {} 10 0 0 0 0 5 0 1 2 1".format(2))
-    # cmds.delete('hairSystem1', 'pfxHair1', 'nucleus1')
-    # values = [0, 1]
-    # for num in range(1, 3):
-    #     # delete crated curve and folicle rename
-    #     fol = cmds.rename(cmds.listRelatives('curve' + str(num), p=True),
-    #                       name + nc['ctrl'] + '_' + str(num) + nc['follicle'])
-    #     cmds.setAttr("{}.parameterV".format(fol), values[num-1])
-    #     try:
-    #         cmds.delete('curve' + str(num))
-    #     except:
-    #         pass
-    #     cmds.select(fol)
-    #     jnt = cmds.joint(n=name+'Main_'+str(num)+nc['joint'])
-    #     start_end_joints.append(jnt)
-    #
-    # extra_fol_grp = cmds.rename('hairSystem1Follicles', name + '_Extra' + nc['follicle'] + nc['ctrl'] + nc['group'])
 
     #Fk chain neck and head
     cmds.select(neck_joint, head_joint)
@@ -183,6 +152,18 @@ def build_head_block():
     cmds.delete(cmds.parentConstraint(fk_chain[1], up_vector))
     cmds.move(0,10,0, r=True)
     cmds.parentConstraint(fk_chain[1], up_vector, mo=True)
+
+    #Create Ribbon
+    ribbon = mt.ribbon_between(start=neck_joint, end=dumb_head, divisions=ribbon_amount , name=name, size = ctrl_size, world_orient=True, orient_like=fk_chain[1])
+
+    '''
+    ribbon =    {'surface':[basic_ribbon['surface'],ctrl_surface], 
+				'follicles':basic_ribbon['follicles'],
+				'fol_joints':basic_ribbon['fol_joints'],
+				'ctrl_joints':basic_ribbon['ctrl_joints'],
+				'controllers':basic_ribbon['controllers'],
+				'controllers_grp':basic_ribbon['controllers_grp']}
+    '''
 
     for ctrl in ribbon['controllers']:
         cmds.aimConstraint(fk_chain[1], mt.root_grp(input=ctrl, autoRoot=True)[1], aimVector=(0, 1, 0), upVector=(0, 1, 0),
