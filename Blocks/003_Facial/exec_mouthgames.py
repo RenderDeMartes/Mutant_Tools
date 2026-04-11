@@ -19,7 +19,7 @@ mt = main_mutant.Mutant()
 #---------------------------------------------
 TAB_FOLDER = '003_Facial'
 PYBLOCK_NAME = 'exec_mouthgames'
-CORNER_ORIENTS = True
+CORNER_ORIENTS = False
 
 #Read name conventions as nc[''] and setup as seup['']
 PATH = os.path.dirname(__file__)
