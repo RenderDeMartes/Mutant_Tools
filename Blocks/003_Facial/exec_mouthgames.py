@@ -962,8 +962,19 @@ def build_mouthgames_block():
     weights = cmds.parentConstraint(pc, q=True, wal=True)
     w0, w1 = [f"{pc}.{w}" for w in weights]
 
-    cmds.connectAttr(bc + ".outputR", w0, f=True)
-    cmds.connectAttr(rev + ".outputX", w1, f=True)
+    # LipCollision attr on jaw to blend collision on/off
+    mt.line_attr(input=jaw_ctrl, name='Automation')
+    lip_collision_attr = mt.new_attr(input=jaw_ctrl, name='LipCollision', min=0, max=1, default=1)
+
+    collision_mult = cmds.createNode("multiplyDivide", name=name + "_jaw_collisionMult")
+    cmds.connectAttr(bc + ".outputR", collision_mult + ".input1X", f=True)
+    cmds.connectAttr(lip_collision_attr, collision_mult + ".input2X", f=True)
+
+    collision_rev = cmds.createNode("reverse", name=name + "_jaw_collisionReverse")
+    cmds.connectAttr(collision_mult + ".outputX", collision_rev + ".inputX", f=True)
+
+    cmds.connectAttr(collision_mult + ".outputX", w0, f=True)
+    cmds.connectAttr(collision_rev + ".outputX", w1, f=True)
 
     #--------------------------------------------------
     #--Make the whole mouth and center mouth works-----
