@@ -1708,7 +1708,8 @@ class Kinematics_class(tools.Tools_class):
 
 	#----------------------------------------------------------------------------------------------------------------
 
-	def basic_ribbon(self, start = '', end = '', divisions = 5, name = 'Ribbon', ctrl_type = 'circleY',size = 1, world_orient=False, start_end_joints=False):
+	def basic_ribbon(self, start='', end='', divisions=5, name='Ribbon', ctrl_type='circleY', size=1,
+	                 world_orient=False, start_end_joints=False, orient_like=False):
 		"""
 		Create a basic ribbon rig between two objects using a plane and follicles.
 
@@ -1745,90 +1746,97 @@ class Kinematics_class(tools.Tools_class):
 			ribbon_elements = basic_ribbon(start='object1', end='object2', divisions=7, name='MyRibbon',
 										   ctrl_type='cube', size=2.0, world_orient=True)
 		"""
-		#this will create a plane between 2 objects and then create a ribbon rig for you
+		# this will create a plane between 2 objects and then create a ribbon rig for you
 
-		if start ==  '':
+		if start == '':
 			start = cmds.ls(sl=True)[0]
 			end = cmds.ls(sl=True)[1]
 
-		#create a nurbs etween and then create the follicles to it
-		surface = self.nurbs_between(start=start,end=end)
-		surface = cmds.rebuildSurface(surface, ch =False, dv=3,du=3, su=0,sv=divisions)
-		surface = cmds.rename(surface, name + self.nc['joint'] +self.nc['nurb'])
+		# create a nurbs etween and then create the follicles to it
+		surface = self.nurbs_between(start=start, end=end)
+		surface = cmds.rebuildSurface(surface, ch=False, dv=3, du=3, su=0, sv=divisions)
+		surface = cmds.rename(surface, name + self.nc['joint'] + self.nc['nurb'])
 
 		cmds.select(surface)
 		mel.eval("createHair 1 {} 10 0 0 0 0 5 0 1 2 1".format(divisions))
-		cmds.delete ('hairSystem1','pfxHair1','nucleus1')
-		cmds.setAttr( surface +'.inheritsTransform', 0)
-		
+		cmds.delete('hairSystem1', 'pfxHair1', 'nucleus1')
+		cmds.setAttr(surface + '.inheritsTransform', 0)
+
 		fol_joints = []
 		ctrl_joints = []
-		for num in range (1, divisions+1):
-			#delete crated curve and folicle rename
-			fol = cmds.rename(cmds.listRelatives('curve' + str (num) , p=True), name + '_' +str(num) + self.nc['follicle'] )
-			try:cmds.delete ('curve' + str (num) )
-			except: pass
-			#create joints for later bind
+		for num in range(1, divisions + 1):
+			# delete crated curve and folicle rename
+			fol = cmds.rename(cmds.listRelatives('curve' + str(num), p=True),
+			                  name + '_' + str(num) + self.nc['follicle'])
+			try:
+				cmds.delete('curve' + str(num))
+			except:
+				pass
+			# create joints for later bind
 			cmds.select(fol)
-			jnt = cmds.joint(n = fol + nc ['joint'])
+			jnt = cmds.joint(n=fol + nc['joint'])
+			if orient_like:
+				cmds.delete(cmds.orientConstraint(orient_like, jnt, mo=False))
 			fol_joints.append(jnt)
 
-			#joint to bind the ruibbon and add ctrls
+			# joint to bind the ruibbon and add ctrls
 			cmds.select(cl=True)
-			cltr_joint = cmds.joint(n = fol.replace(nc ['follicle'],nc ['joint']))
+			cltr_joint = cmds.joint(n=fol.replace(nc['follicle'], nc['joint']))
 			self.match(cltr_joint, jnt)
 			cmds.setAttr('{}.radius'.format(cltr_joint), 1.25)
 			ctrl_joints.append(cltr_joint)
 
-		cmds.rename ('hairSystem1Follicles', name + self.nc['follicle']+self.nc['group'])
-		
-		follicles = cmds.ls(name + self.nc['follicle']+self.nc['group'], dag = True, type = 'follicle')
+		cmds.rename('hairSystem1Follicles', name + self.nc['follicle'] + self.nc['group'])
 
-		#bind skin to nurbs
+		follicles = cmds.ls(name + self.nc['follicle'] + self.nc['group'], dag=True, type='follicle')
+
+		# bind skin to nurbs
 		cmds.select(ctrl_joints, surface)
-		cmds.skinCluster(n = name.replace(self.nc['joint'], self.nc['skin_cluster']), toSelectedBones=True)
+		cmds.skinCluster(n=name.replace(self.nc['joint'], self.nc['skin_cluster']), toSelectedBones=True)
 		cmds.select(surface)
 		mel.eval('doPruneSkinClusterWeightsArgList 1 { "0.3" };')
 
-		#controllers
-		controllers =[]
+		# controllers
+		controllers = []
 		roots_grps = []
 		for num, jnt in enumerate(ctrl_joints):
 			cmds.select(jnt)
-			ctrl = self.curve(type = ctrl_type, custom_name= True, name = str(jnt).replace(self.nc['joint'], self.nc['ctrl']), size = size * 0.75)
+			ctrl = self.curve(type=ctrl_type, custom_name=True,
+			                  name=str(jnt).replace(self.nc['joint'], self.nc['ctrl']), size=size * 0.75)
 			if world_orient:
 				print('World Orient in Simple Ribbon')
-				cmds.setAttr('{}.rotateX'.format(ctrl),0)
-				cmds.setAttr('{}.rotateY'.format(ctrl),0)
-				cmds.setAttr('{}.rotateZ'.format(ctrl),0)
+				cmds.setAttr('{}.rotateX'.format(ctrl), 0)
+				cmds.setAttr('{}.rotateY'.format(ctrl), 0)
+				cmds.setAttr('{}.rotateZ'.format(ctrl), 0)
+			if orient_like:
+				cmds.delete(cmds.orientConstraint(orient_like, ctrl, mo=False))
 			grp = self.root_grp()[0]
-			cmds.parentConstraint(ctrl , jnt, mo=True)
-			#cmds.scaleConstraint(ctrl , jnt, mo=True)
+			cmds.parentConstraint(ctrl, jnt, mo=True)
+			# cmds.scaleConstraint(ctrl , jnt, mo=True)
 			controllers.append(ctrl)
 			roots_grps.append(grp)
-			cmds.scaleConstraint(ctrl ,fol_joints[num], mo=True)
+			cmds.scaleConstraint(ctrl, fol_joints[num], mo=True)
 			if world_orient:
 				cmds.delete(cmds.aimConstraint(start, grp, aimVector=(0, -1, 0), upVector=(0, 1, 0),
-												   worldUpType='vector', mo=False))
+				                               worldUpType='vector', mo=False))
 
-
-		main_ctrl_grp = cmds.group(roots_grps, n = name + self.nc['ctrl'] + self.nc['group'])
-		cmds.group(ctrl_joints, n = name + self.nc['joint'] + self.nc['group'])
+		main_ctrl_grp = cmds.group(roots_grps, n=name + self.nc['ctrl'] + self.nc['group'])
+		cmds.group(ctrl_joints, n=name + self.nc['joint'] + self.nc['group'])
 
 		if start_end_joints:
 			''
 
-		return {'surface':surface, 
-				'follicles':follicles,
-				'fol_joints':fol_joints,
-				'ctrl_joints':ctrl_joints,
-				'controllers':controllers,
-				'controllers_grp':main_ctrl_grp}
+		return {'surface': surface,
+		        'follicles': follicles,
+		        'fol_joints': fol_joints,
+		        'ctrl_joints': ctrl_joints,
+		        'controllers': controllers,
+		        'controllers_grp': main_ctrl_grp}
 
-	
-	#----------------------------------------------------------------------------------------------------------------
+	# ----------------------------------------------------------------------------------------------------------------
 
-	def ribbon_between(self, start = '', end = '', divisions = 5, name = 'Ribbon', ctrl_type = 'circleY', size = 1, world_orient=False):
+	def ribbon_between(self, start='', end='', divisions=5, name='Ribbon', ctrl_type='circleY', size=1,
+	                   world_orient=False, orient_like=False):
 		"""
 		Create a ribbon rig between two objects using a NURBS plane and follicles.
 
@@ -1863,41 +1871,47 @@ class Kinematics_class(tools.Tools_class):
 			ribbon_elements = ribbon_between(start='object1', end='object2', divisions=7, name='MyRibbon',
 											 ctrl_type='cube', size=2.0, world_orient=True)
 		"""
-		if start ==  '':
+		if start == '':
 			start = cmds.ls(sl=True)[0]
 			end = cmds.ls(sl=True)[1]
-		
-		#run main basic ribbon
-		basic_ribbon = self.basic_ribbon(start = start, end = end, divisions = divisions, name = name, ctrl_type = ctrl_type, size = size, world_orient=world_orient)
-		
-		#create a new nursb to drive the ctrls
-		ctrl_surface = cmds.duplicate(basic_ribbon['surface'], n = name + self.nc['ctrl'] +self.nc['nurb'])[0]
-		ctrl_surface = cmds.rebuildSurface(ctrl_surface, ch =False, dv=1,du=1, su=1,sv=1)[0]
+
+		# run main basic ribbon
+		basic_ribbon = self.basic_ribbon(start=start, end=end, divisions=divisions, name=name, ctrl_type=ctrl_type,
+		                                 size=size, world_orient=world_orient, orient_like=orient_like)
+
+		# create a new nursb to drive the ctrls
+		ctrl_surface = cmds.duplicate(basic_ribbon['surface'], n=name + self.nc['ctrl'] + self.nc['nurb'])[0]
+		ctrl_surface = cmds.rebuildSurface(ctrl_surface, ch=False, dv=1, du=1, su=1, sv=1)[0]
 
 		cmds.select(ctrl_surface)
 		mel.eval("createHair 1 {} 10 0 0 0 0 5 0 1 2 1".format(divisions))
-		cmds.delete ('hairSystem1','pfxHair1','nucleus1')
-		cmds.setAttr( ctrl_surface +'.inheritsTransform', 0)
+		cmds.delete('hairSystem1', 'pfxHair1', 'nucleus1')
+		cmds.setAttr(ctrl_surface + '.inheritsTransform', 0)
 
 		fol_joints = []
-		for num in range (1, divisions+1):
-			#delete crated curve and folicle rename
-			fol = cmds.rename(cmds.listRelatives('curve' + str (num) , p=True), name + self.nc['ctrl'] + '_' +str(num) + self.nc['follicle'] )
-			try:cmds.delete ('curve' + str (num) )
-			except: pass
+		for num in range(1, divisions + 1):
+			# delete crated curve and folicle rename
+			fol = cmds.rename(cmds.listRelatives('curve' + str(num), p=True),
+			                  name + self.nc['ctrl'] + '_' + str(num) + self.nc['follicle'])
+			try:
+				cmds.delete('curve' + str(num))
+			except:
+				pass
 
-			#parent fol to ctrl offset grp
-			cmds.parentConstraint(fol,cmds.listRelatives(basic_ribbon['controllers'][num-1], p=True), mo=True)
-		
-		ctrl_fol_grp = cmds.rename ('hairSystem1Follicles', name + self.nc['follicle']+self.nc['ctrl']+self.nc['group'])
-		
-		#bind skin to nurbs
-		cmds.select(start,end, ctrl_surface)
-		skin = cmds.skinCluster(n = name.replace(self.nc['joint'], self.nc['skin_cluster']), toSelectedBones=True, dr = 10)[0]
+			# parent fol to ctrl offset grp
+			cmds.parentConstraint(fol, cmds.listRelatives(basic_ribbon['controllers'][num - 1], p=True), mo=True)
+
+		ctrl_fol_grp = cmds.rename('hairSystem1Follicles',
+		                           name + self.nc['follicle'] + self.nc['ctrl'] + self.nc['group'])
+
+		# bind skin to nurbs
+		cmds.select(start, end, ctrl_surface)
+		skin = cmds.skinCluster(n=name.replace(self.nc['joint'], self.nc['skin_cluster']), toSelectedBones=True, dr=10)[
+			0]
 		cmds.skinPercent(skin, '{}.cv[0:1][1]'.format(ctrl_surface), transformValue=[(end, 1)])
 		cmds.skinPercent(skin, '{}.cv[0:1][0]'.format(ctrl_surface), transformValue=[(start, 1)])
 
-		cmds.group(basic_ribbon['surface'], ctrl_surface , n = name + self.nc['nurb'] + self.nc['group'])
+		cmds.group(basic_ribbon['surface'], ctrl_surface, n=name + self.nc['nurb'] + self.nc['group'])
 
 		return {'surface':[basic_ribbon['surface'],ctrl_surface], 
 				'follicles':basic_ribbon['follicles'],
@@ -1906,7 +1920,6 @@ class Kinematics_class(tools.Tools_class):
 				'controllers':basic_ribbon['controllers'],
 				'controllers_grp':basic_ribbon['controllers_grp'],
 				'ctrl_fol_grp': ctrl_fol_grp}
-
 
 	#----------------------------------------------------------------------------------------------------------------
 
