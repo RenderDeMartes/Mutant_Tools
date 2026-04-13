@@ -591,7 +591,6 @@ def build_foot_block():
             constraint= cmds.listRelatives(stretchy_loc, ad=True, type='parentConstraint')
             if constraint:
                 cmds.delete(constraint)
-                
             if side_guide.startswith(nc['right']):
                 cmds.parentConstraint(cmds.listRelatives(main_ik.replace(nc['left'], nc['right']), p=True)[0], stretchy_loc, mo=True)
             else:
