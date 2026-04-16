@@ -2,17 +2,17 @@ from __future__ import absolute_import
 from maya import cmds
 
 """   
---------------------------LABEL JOINTS---------------------------
+-------------------------- LABEL JOINTS---------------------------
 """
 
-def mass_label_joints():
+def split_label_joints():
     """
     #Description :
         Label joints based on selection. 
 
     #Instructions:
-        Select either the specific joints you wish to label, the group they are under and run script. If nothing is selected
-        it will look for Mutant's "Bind_Joints_Grp" and label every joint in there; if the group doesn't exist then it will error. 
+        Select either the specific joints you wish to label or the group they are under and run script. If nothing is selected
+        it will look for the "root" joint and label every joint in there; if the joint doesn't exist then it will error. 
 
     # Return: None
     """
@@ -22,8 +22,8 @@ def mass_label_joints():
     joint_naming_ends = ["BND", "SKIN", "SKN", "JNT"]
 
     #Defining possible prefixes.
-    L_joint_prefixes = ["L", "LF", "LB", "LC"]
-    R_joint_prefixes = ["R", "RF", "RB", "RC"]
+    L_joint_letter = ["L", "LF", "LB", "LC", "LEFT"]
+    R_joint_letter = ["R", "RF", "RB", "RC", "RIGHT"]
     skirt_prefixes = ["SKIRT", "COAT", "CAPE", "DRESS", "JACKET", "FLAPS", "SWEATER"]
 
 
@@ -49,9 +49,9 @@ def mass_label_joints():
 
     #When nothing is selected look for the mutant "Bind_Joints_Grp" and apply it to all it's children.          
     else:
-        bind_joint_sel = cmds.listRelatives("Bind_Joints_Grp", allDescendents=True, type="joint")
+        bind_joint_sel = cmds.listRelatives("root", allDescendents=True, type="joint")
 
-    #If the mutant "Bind_Joints_Grp" does not exist then ask for a selection. 
+    #If the joint "root" does not exist then ask for a selection. 
     if not bind_joint_sel:
         cmds.error("No Mutant Bind_Joints_Grp found. Please select the joints you wish to add labels to.")
 
@@ -62,71 +62,34 @@ def mass_label_joints():
         #Dividing name in parts to analize it.
         bind_joint_names = bind_joint.split("_")
         
-        #Determining Label side based on initial letter.
-        if bind_joint_names[0].upper() in L_joint_prefixes or bind_joint_names[0].upper().startswith("LEFT"):
-            cmds.setAttr("{}.side".format(bind_joint), 1)   
-        elif bind_joint_names[0].upper() in R_joint_prefixes or bind_joint_names[0].upper().startswith("RIGHT"):
-            cmds.setAttr("{}.side".format(bind_joint), 2)
-        
-        #Creating scenario for skirt setup variants.
-        elif bind_joint_names[0].upper() in skirt_prefixes:
+        #If name has multiple parts check for a side and remove it from the name. 
+        if len(bind_joint_names)>1:
+            part_index = 0 
+            #Check each part of the name against the list of possible side codes. 
+            for name_part in bind_joint_names:
+                #If there is a match set the side attribute that side and remove the part from the name. 
+                if name_part.upper() in L_joint_letter:
+                    cmds.setAttr("{}.side".format(bind_joint), 1)
+                    del bind_joint_names[part_index]
+                elif name_part.upper() in R_joint_letter:
+                    cmds.setAttr("{}.side".format(bind_joint), 2)
+                    del bind_joint_names[part_index]
+                else:
+                    #If nothing matches add one to the count and continue to the next part of the name. 
+                    part_index = part_index + 1
             
-            #Setting label side based on second split instead of first one. 
-            if bind_joint_names[1].upper() in L_joint_prefixes:
-                cmds.setAttr("{}.side".format(bind_joint), 1)
-            elif bind_joint_names[1].upper() in R_joint_prefixes:
-                cmds.setAttr("{}.side".format(bind_joint), 2)
-            else:
-                cmds.setAttr("{}.side".format(bind_joint), 0)
-        
-        #If no letter and no exception as first split, set as center.             
+        #Otherwise assume it's a center joint. 
         else:
             cmds.setAttr("{}.side".format(bind_joint), 0)
-            
+        
         #Setting type to "Other" for costume name.
         cmds.setAttr("{}.type".format(bind_joint), 18)
         
+        label_name = "_".join(bind_joint_names)
         
-        """
-        #Idea to remove joint suffix. Not needed but will keep just in case.
-        #Determining what name to write in label box.
-        if bind_joint_names[-1].upper() in joint_naming_ends:
-            print("JOINT HAS SUFFIX")
-            
-            if bind_joint_names[0].upper() in L_joint_prefixes or bind_joint_names[0] in R_joint_prefixes:
-                label_name = "_".join(bind_joint_names[1:-1])
-                print("JOINT HAS PREFIX")
-            else:
-                label_name = "_".join(bind_joint_names[0:-1])
-                print("JOINT HAS NO PREFIX")
-        else:
-            print("JOINT HAS NO SUFFIX")
-            if bind_joint_names[0].upper() in L_joint_prefixes or bind_joint_names[0] in R_joint_prefixes:
-                label_name = "_".join(bind_joint_names[1:])
-                print("JOINT HAS PREFIX")
-                
-            
-            else:
-                label_name = "_".join(bind_joint_names)
-                print("JOINT HAS NO PREFIX")
-        """
-        
-        #Determining what name to write in label box.
-        if bind_joint_names[0].upper() in L_joint_prefixes or bind_joint_names[0].upper() in R_joint_prefixes:
-            label_name = "_".join(bind_joint_names[1:])
-            
-        elif bind_joint.upper().startswith("LEFT"):
-            label_name = bind_joint.replace("Left", "")
-            
-        elif bind_joint.upper().startswith("RIGHT"):
-            label_name = bind_joint.replace("Right", "")
-
-        else:
-            label_name = "_".join(bind_joint_names[0:])        
-        
-
         #Setting the label name on the joint
         cmds.setAttr("{}.otherType".format(bind_joint), label_name, type="string")  
+
         
     cmds.warning("Joints have been labeled without error. Thank you.")
 
