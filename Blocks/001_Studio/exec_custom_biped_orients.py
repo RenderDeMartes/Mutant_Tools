@@ -218,8 +218,8 @@ def build_custom_biped_orients_block():
         clavicle_ctrls = []
 
         if fix_arms:
-            left_arm_ctrls = ['L_Shoulder_Fk_Ctrl', 'L_Elbow_Fk_Ctrl', 'L_Wrist_Fk_Ctrl']
-            right_arm_ctrls = ['R_Shoulder_Fk_Ctrl', 'R_Elbow_Fk_Ctrl', 'R_Wrist_Fk_Ctrl']
+            left_arm_ctrls = ['L_Shoulder_Fk_Ctrl', 'L_Elbow_Fk_Ctrl', 'L_Wrist_Fk_Ctrl', 'L_Hand_Wrist_Ctrl']
+            right_arm_ctrls = ['R_Shoulder_Fk_Ctrl', 'R_Elbow_Fk_Ctrl', 'R_Wrist_Fk_Ctrl', 'R_Hand_Wrist_Ctrl']
             left_ctrls.extend(left_arm_ctrls)
             right_ctrls.extend(right_arm_ctrls)
             arm_ctrls.extend(left_arm_ctrls + right_arm_ctrls)
