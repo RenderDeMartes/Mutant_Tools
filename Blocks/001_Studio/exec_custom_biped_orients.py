@@ -209,6 +209,13 @@ def build_custom_biped_orients_block():
         print('Custom Biped Orients: {} orient fix applied.'.format(section_name))
 
     if fix_arms or fix_clavicles:
+
+        try:
+            cmds.delete('L_Hand_Middle_03_Smart_Ctrl_Root_Grp_parentConstraint1')
+            cmds.delete('R_Hand_Middle_03_Smart_Ctrl_Root_Grp_parentConstraint1')
+        except Exception as exc:
+            print(exc)
+
         arm_rotate = [-90, -90, 0]
         clavicle_rotate = [-90, -90, 0]
 
@@ -243,6 +250,12 @@ def build_custom_biped_orients_block():
             section_name='FK arms/clavicles',
             custom_rotate_by_ctrl=ctrl_rotates
         )
+
+        try:
+            cmds.parentConstraint("R_Hand_Wrist_Ctrl","R_Hand_Middle_03_Smart_Ctrl_Root_Grp", mo=True)
+            cmds.parentConstraint("L_Hand_Wrist_Ctrl","L_Hand_Middle_03_Smart_Ctrl_Root_Grp", mo=True)
+        except Exception as exc:
+            print(exc)
         
     if fix_legs:
         leg_rotate = [-90, -90, 0]
@@ -286,6 +299,12 @@ def build_custom_biped_orients_block():
             section_name='FK toes'
         )
     if fix_fingers:
+        try:
+            cmds.delete('L_Hand_Middle_03_Smart_Ctrl_Root_Grp_parentConstraint1')
+            cmds.delete('R_Hand_Middle_03_Smart_Ctrl_Root_Grp_parentConstraint1')
+        except Exception as exc:
+            print(exc)
+
         four_fingers_rotate = [-90, 90, 0]
         thumb_rotate = [-90, 90, 0]
         hand_other_rotate = [-90, 90, 0]
@@ -328,6 +347,13 @@ def build_custom_biped_orients_block():
                 section_name='FK fingers',
                 custom_rotate_by_ctrl=ctrl_rotates
             )
+
+        try:
+            cmds.parentConstraint("R_Hand_Wrist_Ctrl","R_Hand_Middle_03_Smart_Ctrl_Root_Grp", mo=True)
+            cmds.parentConstraint("L_Hand_Wrist_Ctrl","L_Hand_Middle_03_Smart_Ctrl_Root_Grp", mo=True)
+        except Exception as exc:
+            print(exc)
+
         else:
             cmds.warning('Custom Biped Orients: no hand ctrls found for fingers section.')
     if fix_misc:
