@@ -95,11 +95,11 @@ def build_chain_block():
     guides = cmds.listRelatives(block, c=True)
     name = block.replace(nc['module'],'')
 
-    clean_ctrl_grp = cmds.group(em=True, name=name + nc['ctrl'] + nc['group'])
-    clean_rig_grp = cmds.group(em=True, name=name + '_Rig' + nc['group'])
+    # clean_ctrl_grp = cmds.group(em=True, name=name + nc['ctrl'] + nc['group'])
+    # clean_rig_grp = cmds.group(em=True, name=name + '_Rig' + nc['group'])
 
-    cmds.parent(clean_rig_grp, '{}{}'.format(setup['rig_groups']['misc'], nc['group']))
-    cmds.parent(clean_ctrl_grp, setup['base_groups']['control'] + nc['group'])
+    # cmds.parent(clean_rig_grp, '{}{}'.format(setup['rig_groups']['misc'], nc['group']))
+    # cmds.parent(clean_ctrl_grp, setup['base_groups']['control'] + nc['group'])
 
     for guide in guides:
 
@@ -160,6 +160,14 @@ def build_chain_block():
 
             if is_right_side:
                 name = name.replace(nc['left'], nc['right'])
+
+
+            clean_ctrl_grp = cmds.group(em=True, name=name + nc['ctrl'] + nc['group'])
+            clean_rig_grp = cmds.group(em=True, name=name + '_Rig' + nc['group'])
+
+            cmds.parent(clean_rig_grp, '{}{}'.format(setup['rig_groups']['misc'], nc['group']))
+            cmds.parent(clean_ctrl_grp, setup['base_groups']['control'] + nc['group'])
+
 
             #clean a bit
 
