@@ -156,7 +156,7 @@ def build_chain_block():
                                     scale=True,
                                     twist_axis=cmds.getAttr('{}.TwistAxis'.format(config), asString=True),
                                     world_orient=False,
-                                    direct_scale=True)
+                                    direct_scale=False)
 
             if is_right_side:
                 name = name.replace(nc['left'], nc['right'])
@@ -212,7 +212,7 @@ def build_chain_block():
             cmds.parentConstraint(block_parent, ctrl_root, maintainOffset=1)
             cmds.scaleConstraint(block_parent, ctrl_root, maintainOffset=1)
             cmds.parentConstraint(block_parent, clean_rig_grp, maintainOffset=1)
-            cmds.scaleConstraint(block_parent, clean_rig_grp, maintainOffset=1)
+            #cmds.scaleConstraint(block_parent, clean_rig_grp, maintainOffset=1)
 
             # bind joints
             bind_joints = []
