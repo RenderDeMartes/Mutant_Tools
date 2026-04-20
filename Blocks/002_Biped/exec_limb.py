@@ -860,6 +860,12 @@ def build_limb_block():
         cmds.connectAttr(upper_twist_attr, '{}.twist'.format(ikfk['upper_twist']['ik_spline']))
         cmds.connectAttr(lower_twist_attr, '{}.twist'.format(ikfk['lower_twist']['ik_spline']))
 
+        # Roll offset attrs on switch locator
+        upper_roll_attr = mt.new_attr(input=switch_locator, name='UpperRoll', min=False, max=False, default=0)
+        lower_roll_attr = mt.new_attr(input=switch_locator, name='LowerRoll', min=False, max=False, default=0)
+        cmds.connectAttr(upper_roll_attr, '{}.roll'.format(ikfk['upper_twist']['ik_spline']))
+        cmds.connectAttr(lower_roll_attr, '{}.roll'.format(ikfk['lower_twist']['ik_spline']))
+
         #mt.line_attr(input=switch_locator, name='MT')
 
         # #Add proxy attrs to main controllers
