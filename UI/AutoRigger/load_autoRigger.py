@@ -1468,6 +1468,7 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		if load_io:
 			ctrls.load_all(path=os.path.join(tempfile.gettempdir(), 'RebuildTempCtrls', 'tempControllers.json'))
 			self._load_rebuild_skins(temp_skin_folder=os.path.join(tempfile.gettempdir(), 'RebuildTempSkin'))
+			self._reorder_loaded_skin_deformers()
 			# Load parent hierarchy
 			temp_folder = os.path.join(tempfile.gettempdir(), 'RebuildTemp')
 			skeleton_file = os.path.join(temp_folder, 'skeleton_hierarchy.txt')
@@ -1607,6 +1608,40 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		except Exception as e:
 			cmds.warning('Fast rebuild skin load unavailable ({}). Falling back to EasySkin.'.format(e))
 			EasySkin.load_all_skins_from(folder_path=temp_skin_folder)
+
+	def _reorder_loaded_skin_deformers(self):
+		skinned_geos = self._get_rebuild_skinned_geos()
+		if not skinned_geos:
+			return
+
+		reordered = 0
+		for geo in skinned_geos:
+			try:
+				history = cmds.listHistory(geo, pruneDagObjects=True) or []
+				blend_nodes = [h for h in history if cmds.nodeType(h) == 'blendShape']
+				skin_nodes = [h for h in history if cmds.nodeType(h) == 'skinCluster']
+				delta_nodes = [h for h in history if cmds.nodeType(h) == 'deltaMush']
+
+				blend = blend_nodes[0] if blend_nodes else None
+				skin = skin_nodes[0] if skin_nodes else None
+				delta = delta_nodes[0] if delta_nodes else None
+
+				if skin and delta:
+					cmds.reorderDeformers(delta, skin, geo)
+
+				if blend and delta:
+					cmds.reorderDeformers(delta, blend, geo)
+
+				if blend and skin:
+					cmds.reorderDeformers(skin, blend, geo)
+
+				if blend or skin or delta:
+					reordered += 1
+			except Exception as e:
+				cmds.warning('Could not reorder deformers on {} ({}).'.format(geo, e))
+
+		if reordered:
+			print('Reordered deformers on {} skinned geos (blendShape -> skinCluster -> deltaMush).'.format(reordered))
 
 	#-------------------------------------------------------------------
 
