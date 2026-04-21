@@ -210,39 +210,75 @@ def build_custom_biped_orients_block():
 
     if fix_arms or fix_clavicles:
 
-        try:
-            cmds.delete('L_Hand_Middle_03_Smart_Ctrl_Root_Grp_parentConstraint1')
-            cmds.delete('R_Hand_Middle_03_Smart_Ctrl_Root_Grp_parentConstraint1')
-        except Exception as exc:
-            print(exc)
+        # Clean old constraints
+        for c in [
+            'L_Hand_Middle_03_Smart_Ctrl_Root_Grp_parentConstraint1',
+            'R_Hand_Middle_03_Smart_Ctrl_Root_Grp_parentConstraint1'
+        ]:
+            if cmds.objExists(c):
+                try:
+                    cmds.delete(c)
+                except Exception as exc:
+                    print(exc)
 
+        # Rotations
         arm_rotate = [-90, -90, 0]
-        clavicle_rotate = [-90, -90, 0]
+        clavicle_rotate = [0, -90, -90]
+        wrist_rotate = [0, 0, -90]
 
         left_ctrls = []
         right_ctrls = []
         arm_ctrls = []
         clavicle_ctrls = []
 
+        # Arms
         if fix_arms:
-            left_arm_ctrls = ['L_Shoulder_Fk_Ctrl', 'L_Elbow_Fk_Ctrl', 'L_Wrist_Fk_Ctrl', 'L_Hand_Wrist_Ctrl']
-            right_arm_ctrls = ['R_Shoulder_Fk_Ctrl', 'R_Elbow_Fk_Ctrl', 'R_Wrist_Fk_Ctrl', 'R_Hand_Wrist_Ctrl']
+            left_arm_ctrls = [
+                'L_Shoulder_Fk_Ctrl',
+                'L_Elbow_Fk_Ctrl',
+                'L_Wrist_Fk_Ctrl',
+                'L_Hand_Wrist_Ctrl'
+            ]
+            right_arm_ctrls = [
+                'R_Shoulder_Fk_Ctrl',
+                'R_Elbow_Fk_Ctrl',
+                'R_Wrist_Fk_Ctrl',
+                'R_Hand_Wrist_Ctrl'
+            ]
+
             left_ctrls.extend(left_arm_ctrls)
             right_ctrls.extend(right_arm_ctrls)
             arm_ctrls.extend(left_arm_ctrls + right_arm_ctrls)
 
+        # Clavicles
         if fix_clavicles:
             left_clavicle_ctrl = 'L_Clavicle_Ctrl'
             right_clavicle_ctrl = 'R_Clavicle_Ctrl'
+
             left_ctrls.append(left_clavicle_ctrl)
             right_ctrls.append(right_clavicle_ctrl)
             clavicle_ctrls.extend([left_clavicle_ctrl, right_clavicle_ctrl])
 
         fk_arm_ctrls = left_ctrls + right_ctrls
 
+        # --- Custom rotation overrides ---
         ctrl_rotates = {}
+
+        # Clavicles
         for ctrl in clavicle_ctrls:
             ctrl_rotates[ctrl] = clavicle_rotate
+
+        # Wrists (this is what you were missing)
+        wrist_ctrls = [
+            'L_Wrist_Fk_Ctrl', 'L_Hand_Wrist_Ctrl',
+            'R_Wrist_Fk_Ctrl', 'R_Hand_Wrist_Ctrl'
+        ]
+
+        for ctrl in wrist_ctrls:
+            if ctrl in fk_arm_ctrls:
+                ctrl_rotates[ctrl] = wrist_rotate
+
+        # Apply orient fix
         _apply_orient_fix(
             ctrls=fk_arm_ctrls,
             right_ctrls=right_ctrls,
@@ -251,9 +287,18 @@ def build_custom_biped_orients_block():
             custom_rotate_by_ctrl=ctrl_rotates
         )
 
+        # Recreate constraints
         try:
-            cmds.parentConstraint("R_Hand_Wrist_Ctrl","R_Hand_Middle_03_Smart_Ctrl_Root_Grp", mo=True)
-            cmds.parentConstraint("L_Hand_Wrist_Ctrl","L_Hand_Middle_03_Smart_Ctrl_Root_Grp", mo=True)
+            cmds.parentConstraint(
+                "R_Hand_Wrist_Ctrl",
+                "R_Hand_Middle_03_Smart_Ctrl_Root_Grp",
+                mo=True
+            )
+            cmds.parentConstraint(
+                "L_Hand_Wrist_Ctrl",
+                "L_Hand_Middle_03_Smart_Ctrl_Root_Grp",
+                mo=True
+            )
         except Exception as exc:
             print(exc)
         
