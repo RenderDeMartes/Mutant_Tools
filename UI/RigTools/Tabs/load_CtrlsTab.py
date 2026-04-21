@@ -232,6 +232,7 @@ class CtrlsTab(QtWidgets.QDialog):
 
 
 	# -------------------------------------------------------------------
+	@undo
 	def random_color(self):
 		r = randrange(255)
 		g = randrange(255)
@@ -246,6 +247,7 @@ class CtrlsTab(QtWidgets.QDialog):
 			mt.assign_color_rgb(color=[rand_color[0] / 255, rand_color[1] / 255, rand_color[2] / 255])
 		cmds.select(sel)
 
+	@undo
 	def random_color_each(self):
 
 		sel = cmds.ls(sl=True)
@@ -262,6 +264,7 @@ class CtrlsTab(QtWidgets.QDialog):
 
 
 
+	@undo
 	def rgb_pick_color(self):
 		result = cmds.colorEditor()
 		buffer = result.split()
@@ -281,6 +284,7 @@ class CtrlsTab(QtWidgets.QDialog):
 			mt.assign_color_rgb(color = values)
 		cmds.select(sel)
 
+	@undo
 	def rgb_color(self, color = [0,0,0]):
 		sel = cmds.ls(sl=True)
 		if not sel:
@@ -443,18 +447,23 @@ class CtrlsTab(QtWidgets.QDialog):
 	def assign_color(self, color):
 		mt.assign_color(color=color)
 
+	@undo
 	def mirror_behavior(self):
 		mt.mirror_group(input=cmds.ls(sl=True), world=False)
 
+	@undo
 	def mirror_world(self):
 		mt.mirror_group(input=cmds.ls(sl=True), world=True)
 
+	@undo
 	def root_auto(self):
 		mt.root_grp(autoRoot=True)
 
+	@undo
 	def offset_grp(self):
 		mt.root_grp()
 
+	@undo
 	def match_transform(self):
 		sel = cmds.ls(sl=True)
 		for s in sel:

@@ -258,6 +258,7 @@ class ToolsTab(QtWidgets.QDialog):
 
 		cmds.select(cl=True)
 
+	@undo
 	def resize_Ctrls(self, size):
 		""" Make ctrls bigger or smaller
 

@@ -111,6 +111,8 @@ from Mutant_Tools.Utils.Rigging import main_mutant
 
 reload(Mutant_Tools.Utils.Rigging.main_mutant)
 mt = main_mutant.Mutant()
+
+from Mutant_Tools.Utils.Helpers.decorators import undo
 # -------------------------------------------------------------------
 
 #Read name conventions as nc[''] and setup as setup['']
@@ -276,6 +278,7 @@ class SkinTab(QtWidgets.QDialog):
 		return bezier
 
 	# -------------------------------------------------------------------
+	@undo
 	def makes_dual_quaternion_non_rigids(self):
 		scs = cmds.ls(type='skinCluster')
 		if not scs:
@@ -285,6 +288,7 @@ class SkinTab(QtWidgets.QDialog):
 			cmds.setAttr(skin + '.dqsSupportNonRigid', 1)
 
 	# -------------------------------------------------------------------
+	@undo
 	def connect_deltas_to_global_ctrl(self):
 		deltas = cmds.ls(type='deltaMush')
 		if not deltas:
@@ -295,6 +299,7 @@ class SkinTab(QtWidgets.QDialog):
 			cmds.connectAttr('Global_Ctrl.rigScale', dm + '.scale.scaleZ')
 
 	# -------------------------------------------------------------------
+	@undo
 	def turn_off_skins(self):
 		scs = cmds.ls(type='skinCluster')
 		if not scs:
@@ -302,6 +307,7 @@ class SkinTab(QtWidgets.QDialog):
 		for skin in scs:
 			cmds.skinCluster(skin, edit=True, mjm=False)
 
+	@undo
 	def turn_on_skins(self):
 		scs = cmds.ls(type='skinCluster')
 		if not scs:
@@ -589,6 +595,7 @@ class SkinTab(QtWidgets.QDialog):
 
 	# -------------------------------------------------------------------
 
+	@undo
 	def copy_skin_nurb(self, geo=None, nurb=None):
     
 		#get spans values of nurb
@@ -614,6 +621,7 @@ class SkinTab(QtWidgets.QDialog):
 
 		cmds.select(geo)
 
+	@undo
 	def click_copy(self):
 		geos = cmds.ls(sl=True)
 		source = geos[0]
