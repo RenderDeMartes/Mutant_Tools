@@ -145,9 +145,15 @@ def build_spaceSwitches_block():
         #         pass
 
 
-        for index, space in enumerate(spaces):
 
+        for index, space in enumerate(spaces):
             space_loc = cmds.spaceLocator(n=space+'_'+block+nc['locator'])[0]
+
+            # Match the scale pivot of the locator to the world position of the space
+            space_pos = cmds.xform(space, q=True, ws=True, rp=True)
+            cmds.xform(space_loc, ws=True, sp=space_pos)  # set scale pivot
+            cmds.xform(space_loc, ws=True, rp=space_pos)  # set rotate pivot (optional, for completeness)
+
             cmds.parent(space_loc, spaces_grp)
             cmds.parentConstraint(space, space_loc, mo=True)
 
