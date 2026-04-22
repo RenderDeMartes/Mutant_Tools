@@ -344,6 +344,12 @@ def build_custom_biped_orients_block():
             default_rotate=toes_rotate,
             section_name='FK toes'
         )
+
+        cmds.delete("L_Foot_BallToes_Jnt_parentConstraint1")
+        cmds.delete("R_Foot_BallToes_Jnt_parentConstraint1")
+        cmds.parentConstraint("L_Foot_Toes_Ctrl", "L_Foot_BallToes_Jnt")
+        cmds.parentConstraint("R_Foot_Toes_Ctrl", "R_Foot_BallToes_Jnt")
+
     if fix_fingers:
         try:
             cmds.delete('L_Hand_Middle_03_Smart_Ctrl_Root_Grp_parentConstraint1')
