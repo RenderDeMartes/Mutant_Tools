@@ -128,11 +128,22 @@ def build_hair_block():
     guides = cmds.listRelatives(block, c=True)
     name = block.replace(nc['module'],'')
 
-    clean_ctrl_grp = cmds.group(em=True, name=name + nc['ctrl'] + nc['group'])
-    clean_rig_grp = cmds.group(em=True, name=name + '_Rig' + nc['group'])
 
-    cmds.parent(clean_rig_grp, '{}{}'.format(setup['rig_groups']['misc'], nc['group']))
-    cmds.parent(clean_ctrl_grp, setup['base_groups']['control'] + nc['group'])
+    mirror_on = cmds.getAttr('{}.Mirror'.format(config))
+    if mirror_on:
+        clean_ctrl_grp_L = cmds.group(em=True, name=name + '_L' + nc['ctrl'] + nc['group'])
+        clean_ctrl_grp_R = cmds.group(em=True, name=name + '_R' + nc['ctrl'] + nc['group'])
+        clean_rig_grp_L = cmds.group(em=True, name=name + '_L_Rig' + nc['group'])
+        clean_rig_grp_R = cmds.group(em=True, name=name + '_R_Rig' + nc['group'])
+        cmds.parent(clean_rig_grp_L, '{}{}'.format(setup['rig_groups']['misc'], nc['group']))
+        cmds.parent(clean_rig_grp_R, '{}{}'.format(setup['rig_groups']['misc'], nc['group']))
+        cmds.parent(clean_ctrl_grp_L, setup['base_groups']['control'] + nc['group'])
+        cmds.parent(clean_ctrl_grp_R, setup['base_groups']['control'] + nc['group'])
+    else:
+        clean_ctrl_grp = cmds.group(em=True, name=name + nc['ctrl'] + nc['group'])
+        clean_rig_grp = cmds.group(em=True, name=name + '_Rig' + nc['group'])
+        cmds.parent(clean_rig_grp, '{}{}'.format(setup['rig_groups']['misc'], nc['group']))
+        cmds.parent(clean_ctrl_grp, setup['base_groups']['control'] + nc['group'])
 
     to_build = []
     to_mirror = []
@@ -168,44 +179,41 @@ def build_hair_block():
             to_build.append(new_guide)
 
     #Getting the build guides's hierchies. 
+
     for guide in to_build:
-        guide_childs_build=cmds.listRelatives(guide, ad=True)
+        guide_childs_build = cmds.listRelatives(guide, ad=True)
         if guide_childs_build:
             guide_hierarchy = [guide] + list(reversed(guide_childs_build))
         else:
             guide_hierarchy = [guide]
         cmds.select(guide_hierarchy)
 
-        #Settting proper colors.
         color = cmds.getAttr('{}.CtrlColor'.format(config), asString=True)
         is_right_side = guide.startswith(nc['right'])
 
-        # if mirror is set, ignore ctrlColor attr and use default side colors
-        if cmds.getAttr('{}.Mirror'.format(config)):
+        if mirror_on:
             if guide.startswith(nc['left']):
                 color = setup['left_color']
             elif is_right_side:
                 color = setup['right_color']
-        
-        # Creating the FK Chain. 
-        fk_system = mt.fk_chain(input='',
-                        size=cmds.getAttr('{}.CtrlSize'.format(config)),
-                        color=color,
-                        curve_type=cmds.getAttr('{}.CtrlType'.format(config), asString=True),
-                        scale=True,
-                        twist_axis=cmds.getAttr('{}.TwistAxis'.format(config), asString=True),
-                        world_orient=False)
-        
+
+        fk_system = mt.fk_chain(
+            input='',
+            size=cmds.getAttr('{}.CtrlSize'.format(config)),
+            color=color,
+            curve_type=cmds.getAttr('{}.CtrlType'.format(config), asString=True),
+            scale=True,
+            twist_axis=cmds.getAttr('{}.TwistAxis'.format(config), asString=True),
+            world_orient=False)
+
         for ctrl in fk_system:
             all_fk_ctrls.append(ctrl)
-        
+
         fk_systems_info_dict[fk_system[0]] = fk_system
 
-        #fixing scaling on jnt hierarchy. 
         for jnt in guide_hierarchy:
             cmds.setAttr("{}.segmentScaleCompensate".format(jnt), 0)
 
-        #Creating bind joints:
         bind_joints = []
         for i, joint in enumerate(guide_hierarchy):
             bind_joint = cmds.duplicate(joint, n=joint.replace(nc['joint'], nc['joint_bind']), parentOnly=1)[0]
@@ -215,28 +223,64 @@ def build_hair_block():
             if i > 0:
                 cmds.parent(bind_joint, bind_joints[i-1])
 
-        #Cleaning up a bit
         ctrl_root = cmds.listRelatives(fk_system[0], p=1)[0]
         fk_ctrl_roots.append(ctrl_root)
-        cmds.parent(ctrl_root, clean_ctrl_grp)
-        #print('fk system = {}'.format(fk_system))
-        cmds.parent(guide, clean_rig_grp)
+
+        # Parent to correct group based on side
+        if mirror_on:
+            if guide.startswith(nc['left']):
+                cmds.parent(ctrl_root, clean_ctrl_grp_L)
+                cmds.parent(guide, clean_rig_grp_L)
+            elif is_right_side:
+                cmds.parent(ctrl_root, clean_ctrl_grp_R)
+                cmds.parent(guide, clean_rig_grp_R)
+            else:
+                cmds.parent(ctrl_root, clean_ctrl_grp_L)
+                cmds.parent(guide, clean_rig_grp_L)
+        else:
+            cmds.parent(ctrl_root, clean_ctrl_grp)
+            cmds.parent(guide, clean_rig_grp)
 
         bind_jnt_grp = '{}{}'.format(setup['rig_groups']['bind_joints'], nc['group'])
         if cmds.objExists(bind_jnt_grp):
             cmds.parent(bind_joints[0], bind_jnt_grp)
 
-    #use this locator in case parent is set to new locator
-    if cmds.getAttr('{}.SetParent'.format(config)) == 'new_locator':
-        loc_name = '{}'.format(str(block).replace(nc['module'],'_Parent' + nc['locator']))
 
-        block_parent = cmds.spaceLocator( n = loc_name)
-        cmds.parentConstraint(block_parent, clean_ctrl_grp, maintainOffset=1)
-        cmds.scaleConstraint(block_parent, clean_ctrl_grp, maintainOffset=1)
+    # Parent constraints for left/right clean groups if mirror is on
+    if mirror_on:
+        # Left
+        if cmds.getAttr('{}.SetParent'.format(config)) == 'new_locator':
+            loc_name_L = '{}'.format(str(block).replace(nc['module'], '_L_Parent' + nc['locator']))
+            block_parent_L = cmds.spaceLocator(n=loc_name_L)
+            cmds.parentConstraint(block_parent_L, clean_ctrl_grp_L, maintainOffset=1)
+            cmds.scaleConstraint(block_parent_L, clean_ctrl_grp_L, maintainOffset=1)
+        else:
+            block_parent_L = cmds.getAttr('{}.SetParent'.format(config))
+            if block_parent_L:
+                cmds.parentConstraint(block_parent_L, clean_ctrl_grp_L, maintainOffset=1)
+                cmds.scaleConstraint(block_parent_L, clean_ctrl_grp_L, maintainOffset=1)
+        # Right
+        if cmds.getAttr('{}.SetParent'.format(config)) == 'new_locator':
+            loc_name_R = '{}'.format(str(block).replace(nc['module'], '_R_Parent' + nc['locator']))
+            block_parent_R = cmds.spaceLocator(n=loc_name_R)
+            cmds.parentConstraint(block_parent_R, clean_ctrl_grp_R, maintainOffset=1)
+            cmds.scaleConstraint(block_parent_R, clean_ctrl_grp_R, maintainOffset=1)
+        else:
+            block_parent_R = cmds.getAttr('{}.SetParent'.format(config))
+            block_parent_R = block_parent_R.replace(nc['left'], nc['right'])
+            if block_parent_R:
+                cmds.parentConstraint(block_parent_R, clean_ctrl_grp_R, maintainOffset=1)
+                cmds.scaleConstraint(block_parent_R, clean_ctrl_grp_R, maintainOffset=1)
     else:
-        block_parent = cmds.getAttr('{}.SetParent'.format(config))
-        cmds.parentConstraint(block_parent, clean_ctrl_grp, maintainOffset=1)
-        cmds.scaleConstraint(block_parent, clean_ctrl_grp, maintainOffset=1)
+        if cmds.getAttr('{}.SetParent'.format(config)) == 'new_locator':
+            loc_name = '{}'.format(str(block).replace(nc['module'],'_Parent' + nc['locator']))
+            block_parent = cmds.spaceLocator(n=loc_name)
+            cmds.parentConstraint(block_parent, clean_ctrl_grp, maintainOffset=1)
+            cmds.scaleConstraint(block_parent, clean_ctrl_grp, maintainOffset=1)
+        else:
+            block_parent = cmds.getAttr('{}.SetParent'.format(config))
+            cmds.parentConstraint(block_parent, clean_ctrl_grp, maintainOffset=1)
+            cmds.scaleConstraint(block_parent, clean_ctrl_grp, maintainOffset=1)
 
     #SUB AUTO ROTATES
     if cmds.getAttr('{}.SubAutoRotate'.format(config)):
