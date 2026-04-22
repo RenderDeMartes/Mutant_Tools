@@ -223,7 +223,8 @@ def build_custom_biped_orients_block():
 
         # Rotations
         arm_rotate = [-90, -90, 0]
-        clavicle_rotate = [0, -90, -90]
+        clavicle_rotate = [-90, 0, 0]
+        #clavicle_rotate = [0, -90, -90]
         wrist_rotate = [0, 0, -90]
 
         left_ctrls = []
