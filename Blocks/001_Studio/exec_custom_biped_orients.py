@@ -331,7 +331,7 @@ def build_custom_biped_orients_block():
         )
 
     if fix_toes:
-        toes_rotate = [90, -90, 0]
+        toes_rotate = [0, 90, 0]
 
         left_toes_ctrls = ['L_Foot_Toes_Ctrl']
         right_toes_ctrls = ['R_Foot_Toes_Ctrl']
