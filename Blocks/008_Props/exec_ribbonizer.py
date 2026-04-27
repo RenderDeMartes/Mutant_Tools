@@ -112,6 +112,11 @@ def build_ribbonizer_block():
         except:
             main_ctrl_pos = 'Original'
 
+        try:
+            ctrl_orientation = cmds.getAttr('{}.CtrlOrientation'.format(config), asString=True)
+        except:
+            ctrl_orientation = 'SurfaceNormal'
+
         ctrl_grp, rig_grp, bnd_grp = Ribbonizer.ribbonize(   surf_tr=new_guide,
                                                              equal=cmds.getAttr('{}.Equal'.format(config)),
                                                              num_of_Ctrls=cmds.getAttr('{}.Ctrls'.format(config)),
@@ -120,7 +125,8 @@ def build_ribbonizer_block():
                                                              constrain=cmds.getAttr('{}.Constraint'.format(config)),
                                                              add_fk=cmds.getAttr('{}.AddFk'.format(config)),
                                                              wire=cmds.getAttr('{}.Wire'.format(config)),
-                                                             middle_ctrl_pos=main_ctrl_pos)
+                                                             middle_ctrl_pos=main_ctrl_pos,
+                                                             ctrl_orientation=ctrl_orientation)
         #[main_Ctrl_offset, rig_Grp, prefix + 'Bnd_Grp']
 
         cmds.parent(ctrl_grp, clean_ctrl_grp)

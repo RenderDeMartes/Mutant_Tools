@@ -234,7 +234,7 @@ def get_selection():
     return surf_tr
 
 
-def ribbonize(surf_tr, equal=1, num_of_Ctrls=5, num_of_Jnts=29, prefix="", constrain=1, add_fk=0, wire=0, middle_ctrl_pos='Original'):
+def ribbonize(surf_tr, equal=1, num_of_Ctrls=5, num_of_Jnts=29, prefix="", constrain=1, add_fk=0, wire=0, middle_ctrl_pos='Original', ctrl_orientation='SurfaceNormal'):
     attrs = [".tx", ".ty", ".tz", ".rx", ".ry", ".rz", ".sx", ".sy", ".sz", ".v"]
 
     if prefix == "":
@@ -346,8 +346,13 @@ def ribbonize(surf_tr, equal=1, num_of_Ctrls=5, num_of_Jnts=29, prefix="", const
         # create final bind joints on the surface
         bind_Jnts.append(cmds.createNode("joint", n="{}Bind_{:02d}_Bnd".format(prefix, x + 1)))
 
-        cmds.parentConstraint(fols_tr[-1], bind_Jnts[-1], mo=False)
-        cmds.scaleConstraint(fols_tr[-1], bind_Jnts[-1], mo=False)
+        if ctrl_orientation == 'WorldForward':
+            # Position from follicle, orientation stays at world default
+            cmds.pointConstraint(fols_tr[-1], bind_Jnts[-1], mo=False)
+            cmds.scaleConstraint(fols_tr[-1], bind_Jnts[-1], mo=False)
+        else:
+            cmds.parentConstraint(fols_tr[-1], bind_Jnts[-1], mo=False)
+            cmds.scaleConstraint(fols_tr[-1], bind_Jnts[-1], mo=False)
 
         cmds.setAttr(bind_Jnts[-1] + ".radius", Bind_joints_rad)
 
@@ -416,7 +421,11 @@ def ribbonize(surf_tr, equal=1, num_of_Ctrls=5, num_of_Jnts=29, prefix="", const
     for x, Ctrl in enumerate(controls):
 
         Ctrl_ofs_Grp = cmds.group(Ctrl, n="{}_Offset_Grp".format(Ctrl))
-        cmds.delete(cmds.parentConstraint(temp_fols_tr[x], Ctrl_ofs_Grp))
+        if ctrl_orientation == 'WorldForward':
+            # Position from follicle, but keep world-aligned rotation
+            cmds.delete(cmds.pointConstraint(temp_fols_tr[x], Ctrl_ofs_Grp))
+        else:
+            cmds.delete(cmds.parentConstraint(temp_fols_tr[x], Ctrl_ofs_Grp))
         Ctrl_ofs_Grps.append(Ctrl_ofs_Grp)
 
         # scale ik controls
@@ -432,7 +441,11 @@ def ribbonize(surf_tr, equal=1, num_of_Ctrls=5, num_of_Jnts=29, prefix="", const
         cmds.setAttr(Ctrl_joints[x] + ".radius", Ctrl_joints_rad)
         # create offset groups for Ctrl joints
         Ctrl_Jnt_ofs_Grp = cmds.group(Ctrl_joints[-1], n="{}_Offset_Grp".format(Ctrl_joints[-1]))
-        cmds.delete(cmds.parentConstraint(temp_fols_tr[x], Ctrl_Jnt_ofs_Grp))
+        if ctrl_orientation == 'WorldForward':
+            # Position from follicle, but keep world-aligned rotation
+            cmds.delete(cmds.pointConstraint(temp_fols_tr[x], Ctrl_Jnt_ofs_Grp))
+        else:
+            cmds.delete(cmds.parentConstraint(temp_fols_tr[x], Ctrl_Jnt_ofs_Grp))
         Ctrl_Jnt_ofs_Grps.append(Ctrl_Jnt_ofs_Grp)
 
     ###
@@ -660,7 +673,7 @@ class UI(object):
             cmds.deleteUI(windowName)
             cmds.windowPref(windowName, remove=True)
 
-        mainWindow = cmds.window(windowName, t="Ribbonizer 3.0 adapted", s=False, mnb=False, mxb=False)
+        mainWindow = cmds.window(windowName, t="Ribbonizer 3.0 adapted for BARDEL", s=False, mnb=False, mxb=False)
         cmds.window(windowName, e=True, wh=(windowWidth, windowHeight))
         mainFormL = cmds.formLayout()
 
