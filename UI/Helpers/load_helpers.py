@@ -292,6 +292,7 @@ class HelperUI(QtMutantWindow.Qt_Mutant):
 
 		#Props Tab
 		self.ui.tools_ui.clicked.connect(self.open_tools_ui)
+		self.ui.ribbonizer_ui_btn.clicked.connect(self.open_ribbonizer_ui)
 		self.ui.prop_get_clean_selection_button.clicked.connect(self.prop_get_clean_selection_to_line)
 		self.ui.prop_aim_to_vtx_button.clicked.connect(self.prop_aim_selected_to_clean_selection_cluster)
 		self.ui.prop_get_spaces_selection_button.clicked.connect(self.prop_get_clean_selection_to_spaces_line)
@@ -1655,6 +1656,19 @@ class HelperUI(QtMutantWindow.Qt_Mutant):
 	def prop_skin_mode_off(self):
 		count = self._prop_toggle_skin_mode(enable=False, disable=True)
 		cmds.warning('Skin mode OFF on {} skinCluster(s).'.format(count))
+
+	def open_ribbonizer_ui(self):
+		try:
+			from Mutant_Tools.Utils.External import Ribbonizer
+			try:
+				import importlib; from importlib import reload
+			except:
+				import imp; from imp import reload
+			reload(Ribbonizer)
+			Ribbonizer.UI()
+		except Exception as e:
+			import maya.cmds as cmds
+			cmds.warning('Failed to load Ribbonizer UI: {}'.format(e))
 
 	#-------------------------------------------------
 	#-------------------------------------------------

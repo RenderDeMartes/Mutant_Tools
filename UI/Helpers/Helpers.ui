@@ -1644,6 +1644,22 @@
                     <string>Tools UI</string>
                    </property>
                   </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="ribbonizer_ui_btn">
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>30</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">text-align: left;</string>
+                  </property>
+                  <property name="text">
+                   <string>Ribbonizer UI</string>
+                  </property>
+                 </widget>
                  </item>
                                 <item>
                                  <layout class="QHBoxLayout" name="horizontalLayout_prop_aim">

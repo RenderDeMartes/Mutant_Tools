@@ -660,7 +660,7 @@ class UI(object):
             cmds.deleteUI(windowName)
             cmds.windowPref(windowName, remove=True)
 
-        mainWindow = cmds.window(windowName, t="Ribbonizer 3.0 adapted for BARDEL", s=False, mnb=False, mxb=False)
+        mainWindow = cmds.window(windowName, t="Ribbonizer 3.0 adapted", s=False, mnb=False, mxb=False)
         cmds.window(windowName, e=True, wh=(windowWidth, windowHeight))
         mainFormL = cmds.formLayout()
 
