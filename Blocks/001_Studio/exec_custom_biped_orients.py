@@ -363,6 +363,7 @@ def build_custom_biped_orients_block():
 
         four_fingers_tokens = ['_Index_', '_Middle_', '_Ring_', '_Pinky_']
 
+
         hand_ctrls = []
         for side in ['L', 'R']:
             for finger in ['Thumb', 'Index', 'Middle', 'Ring', 'Pinky']:
@@ -370,6 +371,13 @@ def build_custom_biped_orients_block():
                     ctrl = '{}_Hand_{}_0{}_Ctrl'.format(side, finger, segment)
                     if cmds.objExists(ctrl):
                         hand_ctrls.append(ctrl)
+            # Add OutterCup and InnerCup controllers for each side
+            outter_cup_ctrl = '{}_Hand_OutterCup_Ctrl'.format(side)
+            inner_cup_ctrl = '{}_Hand_InnerCup_Ctrl'.format(side)
+            if cmds.objExists(outter_cup_ctrl):
+                hand_ctrls.append(outter_cup_ctrl)
+            if cmds.objExists(inner_cup_ctrl):
+                hand_ctrls.append(inner_cup_ctrl)
 
         hand_ctrls = sorted(set(hand_ctrls))
 
