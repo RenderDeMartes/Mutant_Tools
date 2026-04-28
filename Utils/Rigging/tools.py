@@ -600,18 +600,24 @@ class Tools_class(object):
 			cmds.select(ctrl)
 			mel.eval('TagAsController;')
 			if cmds.objExists(global_ctrl):
-				if cmds.attributeQuery('visibilityMode', node=ctrl+'_tag', exists=True) and cmds.attributeQuery('CtrlVis', node=global_ctrl, exists=True):
-					cmds.connectAttr(global_ctrl+'.CtrlVis', ctrl+'_tag.visibilityMode')
+				try:
+					if cmds.attributeQuery('visibilityMode', node=ctrl+'_tag', exists=True) and cmds.attributeQuery('CtrlVis', node=global_ctrl, exists=True):
+						cmds.connectAttr(global_ctrl+'.CtrlVis', ctrl+'_tag.visibilityMode')
+				except:
+					pass
 
 		#hide on playback
 		if playback:
 			if cmds.objExists(global_ctrl):
-				shapes = cmds.listRelatives(ctrl, shapes=True)
+				shapes = cmds.listRelatives(ctrl, shapes=True, f=True)
 				if shapes:
-					for shape in shapes:
-						if cmds.attributeQuery('hideOnPlayback', node=shape, exists=True) and cmds.attributeQuery('CtrlPlayback', node=global_ctrl, exists=True):
-							cmds.connectAttr(global_ctrl + '.CtrlPlayback',
-											cmds.listRelatives(ctrl, shapes=True)[0] + '.hideOnPlayback')
+					try:
+						for shape in shapes:
+							if cmds.attributeQuery('hideOnPlayback', node=shape, exists=True) and cmds.attributeQuery('CtrlPlayback', node=global_ctrl, exists=True):
+								cmds.connectAttr(global_ctrl + '.CtrlPlayback',
+												shape + '.hideOnPlayback')
+					except:
+						pass
 
 
 		return ctrl

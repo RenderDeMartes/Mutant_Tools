@@ -878,6 +878,9 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		options = load_autoRiggerOptions.AutoRiggerOptions(autorigger_ui=self, block=block, layout=layout)
 		options.show()
 
+	def _on_block_right_click(self, block, layout, pos):
+		"""Triggered by right-clicking a block name button. Opens the same options popup as the gear icon."""
+		self.options_side_buttonblock(block, layout)
 
 	#-------------------------------------------------------------------
 
@@ -984,6 +987,10 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 
 		edit_button.clicked.connect(partial (self.create_properties_layout, pack_name))
 		options_button.clicked.connect(partial (self.options_side_buttonblock, pack_name, side_hbox))
+
+		# Right-click on the block name button also opens the options popup
+		edit_button.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
+		edit_button.customContextMenuRequested.connect(partial(self._on_block_right_click, pack_name, side_hbox))
 
 		self.update_side_block_highlight()
 

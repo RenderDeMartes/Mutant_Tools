@@ -234,7 +234,7 @@ def get_selection():
     return surf_tr
 
 
-def ribbonize(surf_tr, equal=1, num_of_Ctrls=5, num_of_Jnts=29, prefix="", constrain=1, add_fk=0, wire=0, middle_ctrl_pos='Original', ctrl_orientation='SurfaceNormal'):
+def ribbonize(surf_tr, equal=1, num_of_Ctrls=5, num_of_Jnts=29, prefix="", constrain=1, add_fk=0, wire=0, middle_ctrl_pos='Original', ctrl_orientation='SurfaceNormal', ctrl_scales=False, joint_orient=False):
     attrs = [".tx", ".ty", ".tz", ".rx", ".ry", ".rz", ".sx", ".sy", ".sz", ".v"]
 
     if prefix == "":
@@ -280,6 +280,9 @@ def ribbonize(surf_tr, equal=1, num_of_Ctrls=5, num_of_Jnts=29, prefix="", const
         curve_type = "periodic"
         divider_for_Ctrls = num_of_Ctrls
     elif cmds.getAttr(surf + ".formU") == 0 or cmds.getAttr(surf + ".formV") == 0:
+        curve_type = "open"
+        divider_for_Ctrls = num_of_Ctrls - 1
+    else:
         curve_type = "open"
         divider_for_Ctrls = num_of_Ctrls - 1
 
@@ -346,13 +349,15 @@ def ribbonize(surf_tr, equal=1, num_of_Ctrls=5, num_of_Jnts=29, prefix="", const
         # create final bind joints on the surface
         bind_Jnts.append(cmds.createNode("joint", n="{}Bind_{:02d}_Bnd".format(prefix, x + 1)))
 
-        if ctrl_orientation == 'WorldForward':
-            # Position from follicle, orientation stays at world default
+        if joint_orient or ctrl_orientation == 'WorldForward':
+            # Position from follicle, orientation will be set later (joint_orient) or stays world (WorldForward)
             cmds.pointConstraint(fols_tr[-1], bind_Jnts[-1], mo=False)
-            cmds.scaleConstraint(fols_tr[-1], bind_Jnts[-1], mo=False)
+            if not ctrl_scales:
+                cmds.scaleConstraint(fols_tr[-1], bind_Jnts[-1], mo=False)
         else:
             cmds.parentConstraint(fols_tr[-1], bind_Jnts[-1], mo=False)
-            cmds.scaleConstraint(fols_tr[-1], bind_Jnts[-1], mo=False)
+            if not ctrl_scales:
+                cmds.scaleConstraint(fols_tr[-1], bind_Jnts[-1], mo=False)
 
         cmds.setAttr(bind_Jnts[-1] + ".radius", Bind_joints_rad)
 
@@ -495,6 +500,35 @@ def ribbonize(surf_tr, equal=1, num_of_Ctrls=5, num_of_Jnts=29, prefix="", const
         for flt in fols_tr:
             cmds.scaleConstraint(main_Ctrl, flt)
 
+    # if joint_orient is enabled, orient bind joints to nearest control joint
+    if joint_orient and Ctrl_joints:
+        for bj in bind_Jnts:
+            bj_pos = cmds.xform(bj, q=True, ws=True, t=True)
+            # find the nearest control joint by world-space distance
+            closest_cj = Ctrl_joints[0]
+            closest_dist = float('inf')
+            for cj in Ctrl_joints:
+                cj_pos = cmds.xform(cj, q=True, ws=True, t=True)
+                dist = sum((a - b) ** 2 for a, b in zip(bj_pos, cj_pos)) ** 0.5
+                if dist < closest_dist:
+                    closest_dist = dist
+                    closest_cj = cj
+            cmds.orientConstraint(closest_cj, bj, mo=False)
+
+    # if ctrl_scales is enabled, scale bind joints from nearest IK control
+    if ctrl_scales and controls:
+        for bj in bind_Jnts:
+            bj_pos = cmds.xform(bj, q=True, ws=True, t=True)
+            closest_ctrl = controls[0]
+            closest_dist = float('inf')
+            for ctrl in controls:
+                ctrl_pos = cmds.xform(ctrl, q=True, ws=True, t=True)
+                dist = sum((a - b) ** 2 for a, b in zip(bj_pos, ctrl_pos)) ** 0.5
+                if dist < closest_dist:
+                    closest_dist = dist
+                    closest_ctrl = ctrl
+            cmds.scaleConstraint(closest_ctrl, bj, mo=False)
+
     #######################################################################
 
     if wire == True and num_of_Ctrls > 1:
@@ -564,7 +598,10 @@ def ribbonize(surf_tr, equal=1, num_of_Ctrls=5, num_of_Jnts=29, prefix="", const
     # lock and hide attributes
     #lock_hide([final_group, follicles_Grp, Ctrl_joints_Grp, surf_tr, Ctrl_Grp, rig_Grp], attrs[:9])
     lock_hide([main_Ctrl], attrs[6:])
-    lock_hide(controls, attrs[7:])
+    if ctrl_scales:
+        lock_hide(controls, ['.v'])  # only hide visibility, leave scales unlocked
+    else:
+        lock_hide(controls, attrs[7:])
 
     # clear selection
     cmds.select(cl=True)  # if selection isn't cleared a control joint gets added to the bind joints set
@@ -614,9 +651,13 @@ def ribbonize(surf_tr, equal=1, num_of_Ctrls=5, num_of_Jnts=29, prefix="", const
 
         for fk, ik in zip(fk_Ctrls, ik_Ctrl_constr_Grps[:-1]):
             cmds.parentConstraint(fk, ik)
+            if ctrl_scales:
+                cmds.scaleConstraint(fk, ik)
 
         # constrain last ik Ctrl
         cmds.parentConstraint(fk_Ctrls[-1], ik_Ctrl_constr_Grps[-1], mo=True)
+        if ctrl_scales:
+            cmds.scaleConstraint(fk_Ctrls[-1], ik_Ctrl_constr_Grps[-1], mo=True)
         #lock_hide(ik_Ctrl_constr_Grps, attrs[:9])
 
         ########
