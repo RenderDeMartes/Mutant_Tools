@@ -10,6 +10,7 @@
     "build_command":  "exec_smarthand.build_smarthand_block()",
     "attrs":  {
                   "HandBlock_string":  "L_Hand",
+                  "Mode_enum": "A:B",
                   "Help_string":  "Overview:\n  Control Fingers in a smarter way.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- HandBlock: set the node/object name this block should use.\n\nTips:\n- start with defaults, build once, then tweak only the fields you need."
               }
 }

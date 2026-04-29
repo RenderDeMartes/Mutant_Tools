@@ -82,6 +82,11 @@ def build_smarthand_block():
     block = block[0]
 
     hand_block = cmds.getAttr('{}.HandBlock'.format(config), asString=True)
+    try:
+         mode_block = cmds.getAttr('{}.Mode'.format(config), asString=True)
+    except:
+        mode_block = 'A'
+
 
     if cmds.objExists(hand_block+'_Wrist_Ctrl'):
         to_build = [hand_block, hand_block.replace(nc['left'], nc['right'])]
@@ -152,15 +157,24 @@ def build_smarthand_block():
                 spread_root = mt.root_grp(ctrl, custom=True, custom_name=ctrl.replace('_Ctrl', '_SmartSpread_RootGrp'))[0]
                 spread = mt.root_grp(ctrl, custom=True, custom_name=ctrl.replace('_Ctrl', '_SmartSpread_Grp'))[0]
 
-                mt.connect_md_node(in_x1=main_ctrl+'.rotateZ',
+                if mode_block == 'A':
+                    attr = main_ctrl + '.rotateZ'
+                else:
+                    attr = main_ctrl + '.rotateX'
+
+                mt.connect_md_node(in_x1=attr,
                                    in_x2=1.0,
                                    out_x=curl+'.rotateZ'
                                    , mode='mult', name='', force=True)
 
                 if num > 1:
                     continue
-
-                mt.connect_md_node(in_x1=main_ctrl+'.rotateY',
+                
+                if mode_block == 'A':
+                    attr = main_ctrl + '.rotateY'
+                else:
+                    attr = main_ctrl + '.rotateZ'
+                mt.connect_md_node(in_x1=attr,
                                    in_x2=1.0,
                                    out_x=side_to_side+'.rotateY'
                                    , mode='mult', name='', force=True)
@@ -174,7 +188,11 @@ def build_smarthand_block():
                 elif finger == 'Index':
                     value = -0.6
 
-                mt.connect_md_node(in_x1=main_ctrl + '.rotateX',
+                if mode_block == 'A':
+                    attr = main_ctrl + '.rotateX'
+                else:
+                    attr = main_ctrl + '.rotateY'
+                mt.connect_md_node(in_x1=attr,
                                    in_x2=value,
                                    out_x=spread + '.rotateZ',
                                    mode='mult', name='', force=True)
