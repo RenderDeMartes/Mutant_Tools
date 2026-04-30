@@ -268,9 +268,9 @@
               <property name="geometry">
                <rect>
                 <x>0</x>
-                <y>-211</y>
+                <y>0</y>
                 <width>184</width>
-                <height>933</height>
+                <height>969</height>
                </rect>
               </property>
               <layout class="QGridLayout" name="gridLayout_3">
@@ -1610,8 +1610,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>79</width>
-                <height>40</height>
+                <width>201</width>
+                <height>638</height>
                </rect>
               </property>
               <layout class="QGridLayout" name="gridLayout_7">
@@ -1644,164 +1644,177 @@
                     <string>Tools UI</string>
                    </property>
                   </widget>
-                </item>
-                <item>
-                 <widget class="QPushButton" name="ribbonizer_ui_btn">
-                  <property name="minimumSize">
-                   <size>
-                    <width>0</width>
-                    <height>30</height>
-                   </size>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">text-align: left;</string>
-                  </property>
-                  <property name="text">
-                   <string>Ribbonizer UI</string>
-                  </property>
-                 </widget>
                  </item>
-                                <item>
-                                 <layout class="QHBoxLayout" name="horizontalLayout_prop_aim">
-                                    <item>
-                                     <widget class="QLineEdit" name="prop_clean_selection_line">
-                                        <property name="minimumSize">
-                                         <size>
-                                            <width>0</width>
-                                            <height>30</height>
-                                         </size>
-                                        </property>
-                                        <property name="placeholderText">
-                                         <string>vtx / component selection</string>
-                                        </property>
-                                     </widget>
-                                    </item>
-                                    <item>
-                                     <widget class="QPushButton" name="prop_get_clean_selection_button">
-                                        <property name="minimumSize">
-                                         <size>
-                                            <width>30</width>
-                                            <height>30</height>
-                                         </size>
-                                        </property>
-                                        <property name="maximumSize">
-                                         <size>
-                                            <width>30</width>
-                                            <height>30</height>
-                                         </size>
-                                        </property>
-                                        <property name="text">
-                                         <string>&lt;&lt;</string>
-                                        </property>
-                                     </widget>
-                                    </item>
-                                    <item>
-                                     <widget class="QPushButton" name="prop_aim_to_vtx_button">
-                                        <property name="minimumSize">
-                                         <size>
-                                            <width>0</width>
-                                            <height>30</height>
-                                         </size>
-                                        </property>
-                                        <property name="text">
-                                         <string>Aim To Vtx</string>
-                                        </property>
-                                     </widget>
-                                    </item>
-                                 </layout>
-                                </item>
-                                <item>
-                                 <layout class="QHBoxLayout" name="horizontalLayout_prop_spaces">
-                                    <item>
-                                     <widget class="QLineEdit" name="prop_spaces_line">
-                                        <property name="minimumSize">
-                                         <size>
-                                            <width>0</width>
-                                            <height>30</height>
-                                         </size>
-                                        </property>
-                                        <property name="placeholderText">
-                                         <string>spaceA, spaceB, ...</string>
-                                        </property>
-                                     </widget>
-                                    </item>
-                                    <item>
-                                     <widget class="QPushButton" name="prop_get_spaces_selection_button">
-                                        <property name="minimumSize">
-                                         <size>
-                                            <width>30</width>
-                                            <height>30</height>
-                                         </size>
-                                        </property>
-                                        <property name="maximumSize">
-                                         <size>
-                                            <width>30</width>
-                                            <height>30</height>
-                                         </size>
-                                        </property>
-                                        <property name="text">
-                                         <string>&lt;&lt;</string>
-                                        </property>
-                                     </widget>
-                                    </item>
-                                    <item>
-                                     <widget class="QPushButton" name="prop_spaces_on_sel_ctrl_button">
-                                        <property name="minimumSize">
-                                         <size>
-                                            <width>0</width>
-                                            <height>30</height>
-                                         </size>
-                                        </property>
-                                        <property name="text">
-                                         <string>Spaces on sel ctrl</string>
-                                        </property>
-                                     </widget>
-                                    </item>
-                                 </layout>
-                                </item>
-                                <item>
-                                 <widget class="QPushButton" name="prop_match_pivots_btn">
-                                    <property name="minimumSize">
-                                     <size>
-                                        <width>0</width>
-                                        <height>30</height>
-                                     </size>
-                                    </property>
-                                    <property name="text">
-                                     <string>Match Pivots</string>
-                                    </property>
-                                 </widget>
-                                </item>
-                                <item>
-                                 <layout class="QHBoxLayout" name="horizontalLayout_prop_skin_mode">
-                                    <item>
-                                     <widget class="QPushButton" name="prop_skin_mode_on_btn">
-                                        <property name="minimumSize">
-                                         <size>
-                                            <width>0</width>
-                                            <height>30</height>
-                                         </size>
-                                        </property>
-                                        <property name="text">
-                                         <string>Skin Mode ON</string>
-                                        </property>
-                                     </widget>
-                                    </item>
-                                    <item>
-                                     <widget class="QPushButton" name="prop_skin_mode_off_btn">
-                                        <property name="minimumSize">
-                                         <size>
-                                            <width>0</width>
-                                            <height>30</height>
-                                         </size>
-                                        </property>
-                                        <property name="text">
-                                         <string>Skin Mode OFF</string>
-                                        </property>
-                                     </widget>
-                                    </item>
-                                 </layout>
-                                </item>
+                 <item>
+                  <widget class="QPushButton" name="ribbonizer_ui_btn">
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>30</height>
+                    </size>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">text-align: left;</string>
+                   </property>
+                   <property name="text">
+                    <string>Ribbonizer UI</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout_prop_aim">
+                   <item>
+                    <widget class="QLineEdit" name="prop_clean_selection_line">
+                     <property name="minimumSize">
+                      <size>
+                       <width>0</width>
+                       <height>30</height>
+                      </size>
+                     </property>
+                     <property name="placeholderText">
+                      <string>vtx / component selection</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QPushButton" name="prop_get_clean_selection_button">
+                     <property name="minimumSize">
+                      <size>
+                       <width>30</width>
+                       <height>30</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>30</width>
+                       <height>30</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>&lt;&lt;</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QPushButton" name="prop_aim_to_vtx_button">
+                     <property name="minimumSize">
+                      <size>
+                       <width>0</width>
+                       <height>30</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>Aim To Vtx</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout_prop_spaces">
+                   <item>
+                    <widget class="QLineEdit" name="prop_spaces_line">
+                     <property name="minimumSize">
+                      <size>
+                       <width>0</width>
+                       <height>30</height>
+                      </size>
+                     </property>
+                     <property name="placeholderText">
+                      <string>spaceA, spaceB, ...</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QPushButton" name="prop_get_spaces_selection_button">
+                     <property name="minimumSize">
+                      <size>
+                       <width>30</width>
+                       <height>30</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>30</width>
+                       <height>30</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>&lt;&lt;</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QPushButton" name="prop_spaces_on_sel_ctrl_button">
+                     <property name="minimumSize">
+                      <size>
+                       <width>0</width>
+                       <height>30</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>Spaces on sel ctrl</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="prop_match_pivots_btn">
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>30</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>Match Pivots</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout_prop_skin_mode">
+                   <item>
+                    <widget class="QPushButton" name="prop_skin_mode_on_btn">
+                     <property name="minimumSize">
+                      <size>
+                       <width>0</width>
+                       <height>30</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>Skin Mode ON</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QPushButton" name="prop_skin_mode_off_btn">
+                     <property name="minimumSize">
+                      <size>
+                       <width>0</width>
+                       <height>30</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>Skin Mode OFF</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="reorder_sns">
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>30</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>Reorder SnS</string>
+                   </property>
+                  </widget>
+                 </item>
                  <item>
                   <spacer name="verticalSpacer_2">
                    <property name="orientation">
@@ -1850,7 +1863,7 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>79</width>
+                <width>98</width>
                 <height>314</height>
                </rect>
               </property>
@@ -2546,7 +2559,7 @@
                     <string notr="true">text-align: left;</string>
                    </property>
                    <property name="text">
-                                        <string>Label All Joints</string>
+                    <string>Label All Joints</string>
                    </property>
                   </widget>
                  </item>

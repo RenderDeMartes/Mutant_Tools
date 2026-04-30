@@ -300,6 +300,8 @@ class HelperUI(QtMutantWindow.Qt_Mutant):
 		self.ui.prop_match_pivots_btn.clicked.connect(self.prop_match_pivots_to_last_selected)
 		self.ui.prop_skin_mode_on_btn.clicked.connect(self.prop_skin_mode_on)
 		self.ui.prop_skin_mode_off_btn.clicked.connect(self.prop_skin_mode_off)
+		self.ui.reorder_sns.clicked.connect(self.reorder_deformers_on_selection)
+		
 
 		#Animals Tab
 		self.ui.fix_quad_foot.clicked.connect(self.fix_quad_foot)
@@ -1669,6 +1671,72 @@ class HelperUI(QtMutantWindow.Qt_Mutant):
 		except Exception as e:
 			import maya.cmds as cmds
 			cmds.warning('Failed to load Ribbonizer UI: {}'.format(e))
+
+	@undo
+	def reorder_deformers_on_selection(self):
+		"""
+		Ensures order:
+		squash (bottom) → bend side → bend front → skin (top)
+		"""
+
+		selection = cmds.ls(sl=True, long=True) or []
+
+		if not selection:
+			cmds.warning("Nothing selected.")
+			return
+
+		for geo in selection:
+			history = cmds.listHistory(geo, pruneDagObjects=True) or []
+
+			skin = None
+			bend_front = None
+			bend_side = None
+			squash = None
+
+			# -----------------------------
+			# 🔍 FIND DEFORMERS
+			# -----------------------------
+			for node in history:
+				node_type = cmds.nodeType(node)
+
+				if node_type == "skinCluster":
+					skin = node
+
+				elif node_type == "nonLinear":
+					if "SS_" in node:
+						squash = node
+					elif "Side" in node:
+						bend_side = node
+					elif "Front_Back" in node:
+						bend_front = node
+
+			# -----------------------------
+			# 🧠 DEBUG
+			# -----------------------------
+			print(f"\n{geo}")
+			print(f"  squash     : {squash}")
+			print(f"  bend_side  : {bend_side}")
+			print(f"  bend_front : {bend_front}")
+			print(f"  skin       : {skin}")
+
+			# -----------------------------
+			# 🔥 REORDER (BOTTOM → TOP)
+			# -----------------------------
+			try:
+				if squash and bend_side:
+					cmds.reorderDeformers(squash, bend_side, geo)
+
+				if bend_side and bend_front:
+					cmds.reorderDeformers(bend_side, bend_front, geo)
+
+				if bend_front and skin:
+					cmds.reorderDeformers(bend_front, skin, geo)
+
+				print(f"[OK] Reordered: {geo}")
+
+			except Exception as e:
+				cmds.warning(f"[Failed] {geo} → {e}")
+
 
 	#-------------------------------------------------
 	#-------------------------------------------------
