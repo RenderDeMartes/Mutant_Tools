@@ -78,7 +78,12 @@ def build_squash_block():
     else:
         block_parent = cmds.getAttr('{}.SetParent'.format(config))
 
-    cmds.select(cmds.getAttr('{}.SetGeo'.format(config), asString=True))
+    geos = cmds.getAttr('{}.SetGeo'.format(config), asString=True)
+    if ',' in geos:
+        geos = geos.split(',')
+    else:
+        geos = [geos]
+    cmds.select(geos)
     rig_grp, ctrl_group = mt.bend_and_squash(name=name, geo=None, parent_grp=block_parent)
 
     #clean a bit

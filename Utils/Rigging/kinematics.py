@@ -2440,10 +2440,10 @@ class Kinematics_class(tools.Tools_class):
 	def bend_and_squash(self, name='SnS', geo=None, parent_grp=None):
 
 		if not geo:
-			geo = cmds.ls(sl=True)[0]
+			geo = cmds.ls(sl=True)
 
 		if not parent_grp:
-			parent_grp = cmds.spaceLocator(n=geo + '_SnS_Parent' + self.nc['locator'])[0]
+			parent_grp = cmds.spaceLocator(n=name + '_SnS_Parent' + self.nc['locator'])[0]
 
 		nolinear_rot = [-90, 0, 0]
 		nolinear_types = ["bend", "bend", "squash"]
@@ -2564,6 +2564,12 @@ class Kinematics_class(tools.Tools_class):
 		cmds.parentConstraint(parent_grp, ctrl_grp, mo=True)
 
 		self.hide_attr(input=ctrl, r=True, s=True, rotate_order=True)
+
+		#Custom Values
+		cmds.setAttr(f"{ctrl}.SS_Squash_highBound", 2)
+		cmds.setAttr(f"{ctrl}.Squash_Bend_Side_highBound", 2)
+		cmds.setAttr(f"{ctrl}.Squash_Bend_Front_Back_highBound", 2)
+		cmds.setAttr(f"{ctrl}.SS_Squash_mult", 0.1)
 
 		return off_def_grp, ctrl_grp
 	
