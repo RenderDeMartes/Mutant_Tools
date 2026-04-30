@@ -86,6 +86,9 @@ def build_squash_block():
     cmds.select(geos)
     rig_grp, ctrl_group = mt.bend_and_squash(name=name, geo=None, parent_grp=block_parent)
 
+    for g in geos:
+        reorder_deformers(g)
+
     #clean a bit
     clean_ctrl_grp = cmds.group(em=True, name = name + nc['ctrl'] + nc['group'])
     clean_rig_grp = cmds.group(em=True, name = name + '_Rig' + nc['group'])
@@ -103,3 +106,48 @@ def build_squash_block():
 
 
 #build_squash_block()
+
+
+def reorder_deformers(geo):
+    """
+    Ensures correct deformer order:
+    skinCluster (bottom) → bend front → bend side → squash (top)
+    """
+
+    history = cmds.listHistory(geo, pruneDagObjects=True) or []
+
+    skin = None
+    bends = []
+    squash = None
+
+    for node in history:
+        if cmds.nodeType(node) == "skinCluster":
+            skin = node
+        elif cmds.nodeType(node) == "nonLinear":
+            # detect type via name
+            if "SS_" in node:
+                squash = node
+            elif "Side" in node:
+                bends.append(("side", node))
+            elif "Front_Back" in node:
+                bends.append(("front", node))
+
+    # sort bends properly
+    bend_front = next((n for t, n in bends if t == "front"), None)
+    bend_side = next((n for t, n in bends if t == "side"), None)
+
+    # -----------------------------
+    # 🔥 REORDER STACK
+    # -----------------------------
+    try:
+        if skin and bend_front:
+            cmds.reorderDeformers(skin, bend_front, geo)
+
+        if bend_front and bend_side:
+            cmds.reorderDeformers(bend_front, bend_side, geo)
+
+        if bend_side and squash:
+            cmds.reorderDeformers(bend_side, squash, geo)
+
+    except Exception as e:
+        print(f"[Reorder Warning] {geo}: {e}")
