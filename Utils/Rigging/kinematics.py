@@ -1709,7 +1709,7 @@ class Kinematics_class(tools.Tools_class):
 	#----------------------------------------------------------------------------------------------------------------
 
 	def basic_ribbon(self, start='', end='', divisions=5, name='Ribbon', ctrl_type='circleY', size=1,
-	                 world_orient=False, start_end_joints=False, orient_like=False):
+					 world_orient=False, start_end_joints=False, orient_like=False):
 		"""
 		Create a basic ribbon rig between two objects using a plane and follicles.
 
@@ -1767,7 +1767,7 @@ class Kinematics_class(tools.Tools_class):
 		for num in range(1, divisions + 1):
 			# delete crated curve and folicle rename
 			fol = cmds.rename(cmds.listRelatives('curve' + str(num), p=True),
-			                  name + '_' + str(num) + self.nc['follicle'])
+							  name + '_' + str(num) + self.nc['follicle'])
 			try:
 				cmds.delete('curve' + str(num))
 			except:
@@ -1802,7 +1802,7 @@ class Kinematics_class(tools.Tools_class):
 		for num, jnt in enumerate(ctrl_joints):
 			cmds.select(jnt)
 			ctrl = self.curve(type=ctrl_type, custom_name=True,
-			                  name=str(jnt).replace(self.nc['joint'], self.nc['ctrl']), size=size * 0.75)
+							  name=str(jnt).replace(self.nc['joint'], self.nc['ctrl']), size=size * 0.75)
 			if world_orient:
 				print('World Orient in Simple Ribbon')
 				cmds.setAttr('{}.rotateX'.format(ctrl), 0)
@@ -1818,7 +1818,7 @@ class Kinematics_class(tools.Tools_class):
 			cmds.scaleConstraint(ctrl, fol_joints[num], mo=True)
 			if world_orient:
 				cmds.delete(cmds.aimConstraint(start, grp, aimVector=(0, -1, 0), upVector=(0, 1, 0),
-				                               worldUpType='vector', mo=False))
+											   worldUpType='vector', mo=False))
 
 		main_ctrl_grp = cmds.group(roots_grps, n=name + self.nc['ctrl'] + self.nc['group'])
 		cmds.group(ctrl_joints, n=name + self.nc['joint'] + self.nc['group'])
@@ -1827,16 +1827,16 @@ class Kinematics_class(tools.Tools_class):
 			''
 
 		return {'surface': surface,
-		        'follicles': follicles,
-		        'fol_joints': fol_joints,
-		        'ctrl_joints': ctrl_joints,
-		        'controllers': controllers,
-		        'controllers_grp': main_ctrl_grp}
+				'follicles': follicles,
+				'fol_joints': fol_joints,
+				'ctrl_joints': ctrl_joints,
+				'controllers': controllers,
+				'controllers_grp': main_ctrl_grp}
 
 	# ----------------------------------------------------------------------------------------------------------------
 
 	def ribbon_between(self, start='', end='', divisions=5, name='Ribbon', ctrl_type='circleY', size=1,
-	                   world_orient=False, orient_like=False):
+					   world_orient=False, orient_like=False):
 		"""
 		Create a ribbon rig between two objects using a NURBS plane and follicles.
 
@@ -1877,7 +1877,7 @@ class Kinematics_class(tools.Tools_class):
 
 		# run main basic ribbon
 		basic_ribbon = self.basic_ribbon(start=start, end=end, divisions=divisions, name=name, ctrl_type=ctrl_type,
-		                                 size=size, world_orient=world_orient, orient_like=orient_like)
+										 size=size, world_orient=world_orient, orient_like=orient_like)
 
 		# create a new nursb to drive the ctrls
 		ctrl_surface = cmds.duplicate(basic_ribbon['surface'], n=name + self.nc['ctrl'] + self.nc['nurb'])[0]
@@ -1892,7 +1892,7 @@ class Kinematics_class(tools.Tools_class):
 		for num in range(1, divisions + 1):
 			# delete crated curve and folicle rename
 			fol = cmds.rename(cmds.listRelatives('curve' + str(num), p=True),
-			                  name + self.nc['ctrl'] + '_' + str(num) + self.nc['follicle'])
+							  name + self.nc['ctrl'] + '_' + str(num) + self.nc['follicle'])
 			try:
 				cmds.delete('curve' + str(num))
 			except:
@@ -1902,7 +1902,7 @@ class Kinematics_class(tools.Tools_class):
 			cmds.parentConstraint(fol, cmds.listRelatives(basic_ribbon['controllers'][num - 1], p=True), mo=True)
 
 		ctrl_fol_grp = cmds.rename('hairSystem1Follicles',
-		                           name + self.nc['follicle'] + self.nc['ctrl'] + self.nc['group'])
+								   name + self.nc['follicle'] + self.nc['ctrl'] + self.nc['group'])
 
 		# bind skin to nurbs
 		cmds.select(start, end, ctrl_surface)
@@ -2437,81 +2437,136 @@ class Kinematics_class(tools.Tools_class):
 
 	#----------------------------------------------------------------------------------------------------------------
 
-	def bend_and_squash(self, name = 'SnS', geo=None, parent_grp=None):
-		"""
-		Add squash and bend deformations to objects.
-
-		Args:
-			name (str): Name prefix for the deformers and controls.
-			geo (str): Name of the geometry to apply the deformations to. If None, the currently selected object will be used.
-			parent_grp (str): Name of the parent group. If None, a new locator will be created as the parent group.
-
-		Returns:
-			tuple: Tuple containing the names of the offset deformation group and control group.
-
-		Notes:
-			- This function adds squash and bend deformations to the specified geometry.
-			- It creates control handles and deformers for each type of deformation.
-			- The control handles are connected to the deformers, and the deformers are connected to the geometry.
-			- The function sets up constraints and parenting for the control handles and deformers.
-			- The function returns the names of the offset deformation group and control group.
-
-		Example:
-			# Apply squash and bend deformations to the 'head_geo' with a parent group 'head_grp'
-			off_def_grp, ctrl_grp = bend_and_squash('head', 'head_geo', 'head_grp')
-		"""
+	def bend_and_squash(self, name='SnS', geo=None, parent_grp=None):
 
 		if not geo:
 			geo = cmds.ls(sl=True)[0]
+
 		if not parent_grp:
-			parent_grp = cmds.spaceLocator(n=geo+'_SnS_Parent'+self.nc['locator'])[0]
+			parent_grp = cmds.spaceLocator(n=geo + '_SnS_Parent' + self.nc['locator'])[0]
 
 		nolinear_rot = [-90, 0, 0]
 		nolinear_types = ["bend", "bend", "squash"]
-		nolinear_hdls = ["{}_Bend_Front_Back".format(name), "{}_Bend_Side".format(name), "SS_{}".format(name)]
+		nolinear_hdls = [
+			"{}_Bend_Front_Back".format(name),
+			"{}_Bend_Side".format(name),
+			"SS_{}".format(name)
+		]
 		nolinear_trans = ["z", "x", "y"]
 		nolinear_fac = ["curvature", "curvature", "factor"]
 		nolinear_mult = [15, 15, 0.15]
 
 		def_grp = cmds.group(n="Pivot_{}_Grp".format(name), em=True)
 		off_def_grp = cmds.group(n="Pivot_{}_Grp_Offset".format(name))
+		cmds.parent(def_grp, off_def_grp)
 
 		ctrl_grp = cmds.group(n="{}_Ctrl_Offset".format(name), em=True)
 
 		ctrl = self.curve(type='sphere', name="{}_Ctrl".format(name))
-
 		cmds.parent(ctrl, ctrl_grp)
-		cmds.matchTransform(ctrl_grp, parent_grp)
 
-		for n_hdl, n_type, n_rot, n_trans, n_fac, n_mult in zip(nolinear_hdls, nolinear_types, nolinear_rot, nolinear_trans,
-																nolinear_fac, nolinear_mult):
+		# Track which separators were already added
+		added_sections = set()
+
+		for n_hdl, n_type, n_rot, n_trans, n_fac, n_mult in zip(
+			nolinear_hdls,
+			nolinear_types,
+			nolinear_rot,
+			nolinear_trans,
+			nolinear_fac,
+			nolinear_mult
+		):
 			cmds.select(geo)
 
 			dag, hdl = cmds.nonLinear(type=n_type, lowBound=0)
 
 			hdl = cmds.rename(hdl, n_hdl)
 			dag = cmds.rename(dag, "{0}_Deformer".format(n_hdl))
+
 			cmds.setAttr("{0}.ry".format(hdl), n_rot)
 
 			cmds.parent(hdl, def_grp)
-
 			cmds.matchTransform(hdl, def_grp, pos=True, rot=False)
 
-			nolinear_mdl, in1_attr, in2_attr, out_attr = self.create_mdl_compat("{0}_multD".format(hdl))
-			cmds.setAttr("{0}.{1}".format(nolinear_mdl, in2_attr), n_mult)
+			# -----------------------------
+			# 🔹 SECTION DETECTION
+			# -----------------------------
+			if "SS_" in n_hdl:
+				section = "Squash"
+			elif "Front_Back" in n_hdl:
+				section = "Bend_Front_Back"
+			else:
+				section = "Bend_Side"
 
-			cmds.connectAttr("{0}.t{1}".format(ctrl, n_trans), "{0}.{1}".format(nolinear_mdl, in1_attr))
-			cmds.connectAttr("{0}.{1}".format(nolinear_mdl, out_attr), "{0}.{1}".format(dag, n_fac))
+			# -----------------------------
+			# 🔥 ADD SEPARATOR (ONLY ONCE)
+			# -----------------------------
+			if section not in added_sections:
+				self.line_attr(input=ctrl, name=section)
+				added_sections.add(section)
 
+			# -----------------------------
+			# 🔹 MULTIPLY DIVIDE
+			# -----------------------------
+			mdl, in1_attr, in2_attr, out_attr = self.create_mdl_compat("{0}_multD".format(hdl))
+
+			mult_attr = "{}_mult".format(n_hdl)
+			if not cmds.attributeQuery(mult_attr, node=ctrl, exists=True):
+				cmds.addAttr(ctrl, ln=mult_attr, at="double", k=True, dv=n_mult)
+
+			cmds.connectAttr(f"{ctrl}.{mult_attr}", f"{mdl}.{in2_attr}", f=True)
+
+			# translate -> mdl
+			cmds.connectAttr(f"{ctrl}.t{n_trans}", f"{mdl}.{in1_attr}")
+
+			# -----------------------------
+			# 🔥 ADD NODE (blend system)
+			# -----------------------------
+			add_node = cmds.shadingNode("addDoubleLinear", asUtility=True, n=f"{n_hdl}_ADD")
+
+			cmds.connectAttr(f"{mdl}.{out_attr}", f"{add_node}.input1", f=True)
+
+			# -----------------------------
+			# 🔹 MAIN ATTR (curvature/factor)
+			# -----------------------------
+			main_attr = "{}_{}".format(n_hdl, n_fac)
+			if not cmds.attributeQuery(main_attr, node=ctrl, exists=True):
+				cmds.addAttr(ctrl, ln=main_attr, at="double", k=True, dv=0)
+
+			cmds.connectAttr(f"{ctrl}.{main_attr}", f"{add_node}.input2", f=True)
+
+			cmds.connectAttr(f"{add_node}.output", f"{dag}.{n_fac}", f=True)
+
+			# -----------------------------
+			# 🔹 BOUNDS
+			# -----------------------------
+			low_attr = "{}_lowBound".format(n_hdl)
+			high_attr = "{}_highBound".format(n_hdl)
+
+			if not cmds.attributeQuery(low_attr, node=ctrl, exists=True):
+				cmds.addAttr(ctrl, ln=low_attr, at="double", k=True, dv=0)
+
+			if not cmds.attributeQuery(high_attr, node=ctrl, exists=True):
+				cmds.addAttr(ctrl, ln=high_attr, at="double", k=True, dv=1)
+
+			cmds.connectAttr(f"{ctrl}.{low_attr}", f"{dag}.lowBound", f=True)
+			cmds.connectAttr(f"{ctrl}.{high_attr}", f"{dag}.highBound", f=True)
+
+		# -----------------------------
+		# 🔹 CONSTRAINTS / CLEANUP
+		# -----------------------------
 		cmds.parentConstraint(parent_grp, off_def_grp, mo=False)
-		cmds.delete(cmds.parentConstraint(parent_grp, ctrl_grp, mo=False))
-		cmds.setAttr("{0}.ty".format(ctrl_grp), 7)
+		cmds.delete(cmds.pointConstraint(parent_grp, ctrl_grp, mo=False))
+
+		if cmds.objExists('HeadEnd_Guide'):
+			cmds.delete(cmds.pointConstraint('HeadEnd_Guide', ctrl_grp, mo=False))
+
 		cmds.parentConstraint(parent_grp, ctrl_grp, mo=True)
 
-		self.hide_attr(input=ctrl,r=True, s=True, rotate_order=True)
+		self.hide_attr(input=ctrl, r=True, s=True, rotate_order=True)
 
 		return off_def_grp, ctrl_grp
-
+	
 	#----------------------------------------------------------------------------------------------------------------
 
 	def create_lods_containers(self, lods = ['High']):
