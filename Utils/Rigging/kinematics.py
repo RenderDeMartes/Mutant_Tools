@@ -42,6 +42,7 @@ www.mutanttools.com
 author:  Esteban Rodriguez <info@mutanttools.com>
 
 '''
+from curses.ascii import ctrl
 import math
 
 import maya.mel as mel
@@ -2569,7 +2570,9 @@ class Kinematics_class(tools.Tools_class):
 		cmds.setAttr(f"{ctrl}.SS_Squash_highBound", 2)
 		cmds.setAttr(f"{ctrl}.Squash_Bend_Side_highBound", 2)
 		cmds.setAttr(f"{ctrl}.Squash_Bend_Front_Back_highBound", 2)
-		cmds.setAttr(f"{ctrl}.SS_Squash_mult", 0.1)
+		cmds.setAttr(f"{ctrl}.SS_Squash_mult", 0.01)
+		cmds.setAttr(f"{ctrl}.Squash_Bend_Front_Back_mult", 1)
+		cmds.setAttr(f"{ctrl}.Squash_Bend_Side_mult", 1)
 
 		return off_def_grp, ctrl_grp
 	
