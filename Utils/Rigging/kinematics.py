@@ -42,7 +42,6 @@ www.mutanttools.com
 author:  Esteban Rodriguez <info@mutanttools.com>
 
 '''
-from curses.ascii import ctrl
 import math
 
 import maya.mel as mel
