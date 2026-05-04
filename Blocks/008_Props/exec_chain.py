@@ -81,6 +81,20 @@ def create_chain_block(name = 'Chain'):
 
 #-------------------------
 
+def _apply_seg_scale_compensate(joints, state):
+    """
+    Set segmentScaleCompensate on a list of joints.
+
+    Args:
+        joints (list): List of joint node name strings.
+        state  (bool): True = ON, False = OFF.
+    """
+    for jnt in joints:
+        if cmds.objExists(jnt) and cmds.attributeQuery('segmentScaleCompensate', node=jnt, exists=True):
+            cmds.setAttr('{}.segmentScaleCompensate'.format(jnt), int(state))
+
+#-------------------------
+
 def build_chain_block():
 
     print('Start of build chain func')
@@ -94,6 +108,12 @@ def build_chain_block():
     block = block[0]
     guides = cmds.listRelatives(block, c=True)
     name = block.replace(nc['module'],'')
+
+    # Read the SegScaleCompensate toggle once — applies to all joints built in this block
+    try:
+        seg_scale_on = cmds.getAttr('{}.SegScaleCompensate'.format(config))
+    except:
+        seg_scale_on = True  # Default to True if attribute doesn't exist
 
     # clean_ctrl_grp = cmds.group(em=True, name=name + nc['ctrl'] + nc['group'])
     # clean_rig_grp = cmds.group(em=True, name=name + '_Rig' + nc['group'])
@@ -226,6 +246,10 @@ def build_chain_block():
                 if i > 0:
                     cmds.parent(bind_joint, bind_joints[i-1])
 
+            # ---------------------------------------------------------
+            # Apply segmentScaleCompensate on bind joints
+            _apply_seg_scale_compensate(bind_joints, seg_scale_on)
+            # ---------------------------------------------------------
 
             bind_jnt_grp = '{}{}'.format(setup['rig_groups']['bind_joints'], nc['group'])
             if cmds.objExists(bind_jnt_grp):
