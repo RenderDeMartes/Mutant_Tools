@@ -74,113 +74,174 @@ def build_slide_block():
     guide = cmds.listRelatives(block, c=True)[0]
 
     name = block.replace(nc['module'], '')
-    size=cmds.getAttr('{}.CtrlSize'.format(config))
-    position_locator = cmds.spaceLocator(n=name+'SlideAim'+nc['locator'])[0]
-    position_locator_root = mt.root_grp()
-    slide_locator = position_locator
-    cmds.delete(cmds.pointConstraint(guide, position_locator_root))
-    slide_surface = cmds.getAttr('{}.SetSlideNurb'.format(config), asString = True)
-    driver_locator = cmds.spaceLocator(n=name+'SlideDriver'+nc['locator'])[0]
-    mirror_behavior = cmds.getAttr('{}.MirrorBehavior'.format(config), asString = True)
-    color= cmds.getAttr('{}.CtrlColor'.format(config), asString = True)
+    size = cmds.getAttr('{}.CtrlSize'.format(config))
+    color = cmds.getAttr('{}.CtrlColor'.format(config), asString=True)
 
-    #use this locator in case parent is set to new locator
-    if cmds.getAttr('{}.SetParent'.format(config)) == 'new_locator':
-        block_parent = cmds.spaceLocator( n = '{}'.format(str(block).replace(nc['module'],'_Parent' + nc['locator'])))
-    else:
-        block_parent = cmds.getAttr('{}.SetParent'.format(config))
+    try:
+        mirror_mode = cmds.getAttr('{}.Mirror'.format(config), asString=True)
+    except:
+        mirror_mode = 'False'
 
-    if slide_surface == 'new_plane':
-        slide_surface = cmds.nurbsPlane(n = name + nc['nurb'])[0]
-        cmds.delete(cmds.parentConstraint(position_locator, slide_surface))
+    # Force left naming when mirroring to match the rest of the blocks workflow.
+    if mirror_mode in ('True', 'Right_Only') and not name.startswith(nc['left']) and not name.startswith(nc['right']):
+        name = nc['left'] + name
 
-    closest_point_on_sruface_node = cmds.createNode('closestPointOnSurface', n= name + '_CPOS')
-    decompose_matrix = cmds.createNode('decomposeMatrix', n=name+'_decomposeMatrix')
+    left_name = name
+    right_name = name.replace(nc['left'], nc['right'], 1) if name.startswith(nc['left']) else nc['right'] + name
 
-    cmds.connectAttr('{}.worldSpace[0]'.format(slide_surface), '{}.inputSurface'.format(closest_point_on_sruface_node))
-    cmds.connectAttr('{}.worldMatrix[0]'.format(position_locator), '{}.inputMatrix'.format(decompose_matrix))
-    cmds.connectAttr('{}.outputTranslate'.format(decompose_matrix), '{}.inPosition'.format(closest_point_on_sruface_node))
-    #cmds.connectAttr('{}.result.position'.format(closest_point_on_sruface_node), '{}.translate'.format(driver_locator))
+    # Build side list from duplicated guides (same as other mirrored blocks).
+    build_guide_name = '{}SlideBuildGuide{}'.format(left_name, nc['locator'])
+    new_guide = cmds.duplicate(guide, n=build_guide_name)[0]
+    to_build = [new_guide]
 
-    #cmds.aimConstraint(position_locator, driver_locator, mo=True)
+    if mirror_mode == 'Right_Only':
+        # Convert the source guide into right side while preserving mirror behavior.
+        miror_grp = mt.mirror_group(new_guide, world=True)
+        cmds.makeIdentity(miror_grp, a=True, t=True, r=True, s=True)
+        cmds.parent(new_guide, w=True)
+        cmds.delete(miror_grp)
+        try:
+            if nc['left'] in new_guide:
+                new_guide = cmds.rename(new_guide, new_guide.replace(nc['left'], nc['right'], 1))
+        except:
+            pass
+        to_build = [new_guide]
 
-    #create controller
-    slide_ctrl = mt.curve(input=position_locator,
-                          type='mover',
-                          rename=True,
-                          custom_name=True,
-                          name=name+nc['ctrl'],
-                          size=size)
-    mt.assign_color(color=color)
-    cmds.delete(cmds.pointConstraint(position_locator, slide_ctrl))
-    slide_ctrl_root = mt.root_grp(slide_ctrl)
-    mt.hide_attr(input=slide_ctrl, s=True, r=True)
+    elif mirror_mode == 'True':
+        right_guide = mt.duplicate_change_names(input=new_guide, hi=True, search=nc['left'], replace=nc['right'])[0]
+        to_build.append(right_guide)
 
-    if mirror_behavior:
-        slide_ctrl_root = mt.mirror_group(input=slide_ctrl_root, world=False)
+    for side_guide in to_build:
 
-    mt.line_attr(input=slide_ctrl, name='EnableAxis', lines=10)
-    blend_nodes = []
-    for axis in ['X','Y','Z']:
-        cmds.connectAttr('{}.rotate{}'.format(slide_ctrl, axis), '{}.rotate{}'.format(position_locator, axis), f=True)
+        is_right_side = str(side_guide).startswith(nc['right'])
+        side_name = right_name if is_right_side else left_name
 
-        axis_attr = mt.new_attr(input=slide_ctrl, name=axis, min=-0, max=1, default=1)
-        blend_node = cmds.shadingNode('blendColors', asUtility=True, n=slide_ctrl.replace(nc['ctrl'], nc['blend']))
-        cmds.connectAttr('{}.translate{}'.format(slide_ctrl, axis), '{}.color1.color1R'.format(blend_node), f=1)
-        cmds.setAttr('{}.color2.color2R'.format(blend_node), 0)
-        cmds.connectAttr('{}'.format(axis_attr), '{}.blender'.format(blend_node), f=1)
-        cmds.connectAttr('{}.output.outputR'.format(blend_node), '{}.translate{}'.format(position_locator, axis), f=1)
-        blend_nodes.append(blend_node)
+        # Side-resolved config attrs
+        slide_surface = cmds.getAttr('{}.SetSlideNurb'.format(config), asString=True)
+        if is_right_side and nc['left'] in str(slide_surface):
+            slide_surface = slide_surface.replace(nc['left'], nc['right'], 1)
 
-    mt.assign_color(input=driver_locator ,color=color)
+        parent_attr = cmds.getAttr('{}.SetParent'.format(config))
+        if is_right_side and nc['left'] in str(parent_attr):
+            parent_attr = parent_attr.replace(nc['left'], nc['right'], 1)
 
-    # Fix Slide
-    # create 3 nodes
-    node_pos = cmds.shadingNode('pointOnSurfaceInfo', n=name + 'POS', au=True)
-    node_fbfm = cmds.shadingNode('fourByFourMatrix', n=name + 'FBFM', au=True)
-    node_dcm = cmds.shadingNode('decomposeMatrix', n=name + 'DCM', au=True)
+        # Build position locator from this side guide
+        position_locator = cmds.spaceLocator(n=side_name + 'SlideAim' + nc['locator'])[0]
+        position_locator_root = mt.root_grp()
+        cmds.delete(cmds.parentConstraint(side_guide, position_locator_root))
 
-    cmds.connectAttr('{}.positionX'.format(node_pos), '{}.in30'.format(node_fbfm), f=True)
-    cmds.connectAttr('{}.positionY'.format(node_pos), '{}.in31'.format(node_fbfm), f=True)
-    cmds.connectAttr('{}.positionZ'.format(node_pos), '{}.in32'.format(node_fbfm), f=True)
-    cmds.connectAttr('{}.normalX'.format(node_pos), '{}.in00'.format(node_fbfm), f=True)
-    cmds.connectAttr('{}.normalY'.format(node_pos), '{}.in01'.format(node_fbfm), f=True)
-    cmds.connectAttr('{}.normalZ'.format(node_pos), '{}.in02'.format(node_fbfm), f=True)
-    cmds.connectAttr('{}.tangentUx'.format(node_pos), '{}.in10'.format(node_fbfm), f=True)
-    cmds.connectAttr('{}.tangentUy'.format(node_pos), '{}.in11'.format(node_fbfm), f=True)
-    cmds.connectAttr('{}.tangentUz'.format(node_pos), '{}.in12'.format(node_fbfm), f=True)
-    cmds.connectAttr('{}.tangentVx'.format(node_pos), '{}.in20'.format(node_fbfm), f=True)
-    cmds.connectAttr('{}.tangentVy'.format(node_pos), '{}.in21'.format(node_fbfm), f=True)
-    cmds.connectAttr('{}.tangentVz'.format(node_pos), '{}.in22'.format(node_fbfm), f=True)
-    cmds.connectAttr('{}.output'.format(node_fbfm), '{}.inputMatrix'.format(node_dcm), f=True)
+        if slide_surface == 'new_plane':
+            slide_surface = cmds.nurbsPlane(n=side_name + nc['nurb'])[0]
+            cmds.delete(cmds.parentConstraint(position_locator, slide_surface))
 
-    cmds.connectAttr(closest_point_on_sruface_node + '.parameterV', node_pos + '.parameterV')
-    cmds.connectAttr(closest_point_on_sruface_node + '.parameterU', node_pos + '.parameterU')
-    cmds.connectAttr('{}.worldSpace'.format(slide_surface),'{}.inputSurface'.format(node_pos),f=True)
+        if parent_attr == 'new_locator':
+            block_parent = cmds.spaceLocator(n='{}_Parent{}'.format(side_name, nc['locator']))[0]
+        else:
+            block_parent = parent_attr
 
-    cmds.connectAttr(node_dcm + '.outputRotate', driver_locator + '.rotate')
-    cmds.connectAttr(node_dcm + '.outputTranslate', driver_locator + '.translate')
+        driver_locator = cmds.spaceLocator(n=side_name + 'SlideDriver' + nc['locator'])[0]
 
-    #clean
-    cmds.setAttr('{}.v'.format(position_locator), 0)
-    cmds.scaleConstraint('Global_Ctrl', driver_locator, mo=True)
-    cmds.scaleConstraint('Global_Ctrl', slide_ctrl_root, mo=True)
-    cmds.scaleConstraint('Global_Ctrl', position_locator, mo=True)
+        closest_point_on_sruface_node = cmds.createNode('closestPointOnSurface', n=side_name + '_CPOS')
+        decompose_matrix = cmds.createNode('decomposeMatrix', n=side_name + '_decomposeMatrix')
 
-    #parent to base
-    clean_rig_grp = cmds.group(n=name + '_Rig' + nc['group'], em=True)
-    clean_ctrl_grp = cmds.group(n = name + '_Ctrl' + nc['group'],em=True)
+        cmds.connectAttr('{}.worldSpace[0]'.format(slide_surface), '{}.inputSurface'.format(closest_point_on_sruface_node))
+        cmds.connectAttr('{}.worldMatrix[0]'.format(position_locator), '{}.inputMatrix'.format(decompose_matrix))
+        cmds.connectAttr('{}.outputTranslate'.format(decompose_matrix), '{}.inPosition'.format(closest_point_on_sruface_node))
 
-    cmds.parent(slide_ctrl_root, clean_ctrl_grp)
-    cmds.parent(position_locator_root, driver_locator,clean_rig_grp)
+        # Create controller
+        slide_ctrl = mt.curve(input=position_locator,
+                              type='mover',
+                              rename=True,
+                              custom_name=True,
+                              name=side_name + nc['ctrl'],
+                              size=size)
+        mt.assign_color(color=color)
+        cmds.delete(cmds.parentConstraint(position_locator, slide_ctrl))
+        slide_ctrl_root = mt.root_grp(slide_ctrl)
+        mt.hide_attr(input=slide_ctrl, s=True, r=True)
 
-    cmds.parent(clean_rig_grp, '{}{}'.format(setup['rig_groups']['misc'], nc['group']))
-    cmds.parent(clean_ctrl_grp, setup['base_groups']['control'] + nc['group'])
+        mt.line_attr(input=slide_ctrl, name='EnableAxis', lines=10)
+        blend_nodes = []
+        for axis in ['X', 'Y', 'Z']:
+            cmds.connectAttr('{}.rotate{}'.format(slide_ctrl, axis), '{}.rotate{}'.format(position_locator, axis), f=True)
 
-    cmds.parentConstraint(block_parent, slide_ctrl_root, mo=True)
-    cmds.parentConstraint(block_parent, position_locator_root, mo=True)
+            axis_attr = mt.new_attr(input=slide_ctrl, name=axis, min=-0, max=1, default=1)
+            blend_node = cmds.shadingNode('blendColors', asUtility=True, n=slide_ctrl.replace(nc['ctrl'], nc['blend']))
+            cmds.connectAttr('{}.translate{}'.format(slide_ctrl, axis), '{}.color1.color1R'.format(blend_node), f=1)
+            cmds.setAttr('{}.color2.color2R'.format(blend_node), 0)
+            cmds.connectAttr('{}'.format(axis_attr), '{}.blender'.format(blend_node), f=1)
+            cmds.connectAttr('{}.output.outputR'.format(blend_node), '{}.translate{}'.format(position_locator, axis), f=1)
+            blend_nodes.append(blend_node)
 
-    if mirror_behavior:
-        md = mt.connect_md_node(in_x1='{}.output.outputR'.format(blend_nodes[0]),in_x2=-1,out_x = '{}.translateX'.format(position_locator), mode = 'multiply', force=True)
+        mt.assign_color(input=driver_locator, color=color)
+
+        # Fix Slide – build surface-following matrix
+        node_pos  = cmds.shadingNode('pointOnSurfaceInfo', n=side_name + 'POS',  au=True)
+        node_fbfm = cmds.shadingNode('fourByFourMatrix',   n=side_name + 'FBFM', au=True)
+        node_dcm  = cmds.shadingNode('decomposeMatrix',    n=side_name + 'DCM',  au=True)
+
+        cmds.connectAttr('{}.positionX'.format(node_pos), '{}.in30'.format(node_fbfm), f=True)
+        cmds.connectAttr('{}.positionY'.format(node_pos), '{}.in31'.format(node_fbfm), f=True)
+        cmds.connectAttr('{}.positionZ'.format(node_pos), '{}.in32'.format(node_fbfm), f=True)
+        cmds.connectAttr('{}.normalX'.format(node_pos),   '{}.in00'.format(node_fbfm), f=True)
+        cmds.connectAttr('{}.normalY'.format(node_pos),   '{}.in01'.format(node_fbfm), f=True)
+        cmds.connectAttr('{}.normalZ'.format(node_pos),   '{}.in02'.format(node_fbfm), f=True)
+        cmds.connectAttr('{}.tangentUx'.format(node_pos), '{}.in10'.format(node_fbfm), f=True)
+        cmds.connectAttr('{}.tangentUy'.format(node_pos), '{}.in11'.format(node_fbfm), f=True)
+        cmds.connectAttr('{}.tangentUz'.format(node_pos), '{}.in12'.format(node_fbfm), f=True)
+        cmds.connectAttr('{}.tangentVx'.format(node_pos), '{}.in20'.format(node_fbfm), f=True)
+        cmds.connectAttr('{}.tangentVy'.format(node_pos), '{}.in21'.format(node_fbfm), f=True)
+        cmds.connectAttr('{}.tangentVz'.format(node_pos), '{}.in22'.format(node_fbfm), f=True)
+        cmds.connectAttr('{}.output'.format(node_fbfm), '{}.inputMatrix'.format(node_dcm), f=True)
+
+        cmds.connectAttr(closest_point_on_sruface_node + '.parameterV', node_pos + '.parameterV')
+        cmds.connectAttr(closest_point_on_sruface_node + '.parameterU', node_pos + '.parameterU')
+        cmds.connectAttr('{}.worldSpace'.format(slide_surface), '{}.inputSurface'.format(node_pos), f=True)
+
+        # For right side, wrap driver_locator in a mirror group before connecting DCM
+        # so the rig hierarchy sits in the correct world side from the start.
+        rig_mirror_grp = None
+        if mirror_mode in ('True', 'Right_Only') and is_right_side:
+            rig_mirror_grp = mt.mirror_group(input=driver_locator, world=True)
+
+        cmds.connectAttr(node_dcm + '.outputRotate',    driver_locator + '.rotate')
+        cmds.connectAttr(node_dcm + '.outputTranslate', driver_locator + '.translate')
+
+        # Clean
+        cmds.setAttr('{}.v'.format(position_locator), 0)
+        cmds.scaleConstraint('Global_Ctrl', driver_locator,        mo=True)
+        cmds.scaleConstraint('Global_Ctrl', slide_ctrl_root,       mo=True)
+        cmds.scaleConstraint('Global_Ctrl', position_locator,      mo=True)
+
+        # Parent to base
+        clean_rig_grp  = cmds.group(n=side_name + '_Rig'  + nc['group'], em=True)
+        clean_ctrl_grp = cmds.group(n=side_name + '_Ctrl' + nc['group'], em=True)
+
+        cmds.parent(slide_ctrl_root, clean_ctrl_grp)
+        # For right side: driver_locator is already inside rig_mirror_grp; parent that instead.
+        if rig_mirror_grp:
+            cmds.parent(position_locator_root, rig_mirror_grp, clean_rig_grp)
+        else:
+            cmds.parent(position_locator_root, driver_locator, clean_rig_grp)
+
+        # Mirror complete right-side ctrl hierarchy.
+        if mirror_mode in ('True', 'Right_Only') and is_right_side:
+            clean_ctrl_grp = mt.mirror_group(input=clean_ctrl_grp, world=True)
+
+        cmds.parentConstraint(block_parent, clean_ctrl_grp, mo=True)
+        cmds.parentConstraint(block_parent, clean_rig_grp,  mo=True)
+
+        cmds.parent(clean_rig_grp,  '{}{}'.format(setup['rig_groups']['misc'], nc['group']))
+        cmds.parent(clean_ctrl_grp, setup['base_groups']['control'] + nc['group'])
+
+    # Remove temporary duplicated guides used only for build side resolution.
+    for side_guide in to_build:
+        if cmds.objExists(side_guide):
+            try:
+                cmds.delete(side_guide)
+            except:
+                pass
+
+    print('Build {} Success'.format(block))
 
 #build_slide_block()
