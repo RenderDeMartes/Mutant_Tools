@@ -207,11 +207,6 @@ def build_slide_block():
         cmds.connectAttr(node_dcm + '.outputRotate',    driver_locator + '.rotate')
         cmds.connectAttr(node_dcm + '.outputTranslate', driver_locator + '.translate')
 
-        # Clean
-        cmds.setAttr('{}.v'.format(position_locator), 0)
-        cmds.scaleConstraint('Global_Ctrl', driver_locator,        mo=True)
-        cmds.scaleConstraint('Global_Ctrl', slide_ctrl_root,       mo=True)
-        cmds.scaleConstraint('Global_Ctrl', position_locator,      mo=True)
 
         # Parent to base
         clean_rig_grp  = cmds.group(n=side_name + '_Rig'  + nc['group'], em=True)
@@ -219,20 +214,27 @@ def build_slide_block():
 
         cmds.parent(slide_ctrl_root, clean_ctrl_grp)
         # For right side: driver_locator is already inside rig_mirror_grp; parent that instead.
-        if rig_mirror_grp:
-            cmds.parent(position_locator_root, rig_mirror_grp, clean_rig_grp)
-        else:
-            cmds.parent(position_locator_root, driver_locator, clean_rig_grp)
 
         # Mirror complete right-side ctrl hierarchy.
         if mirror_mode in ('True', 'Right_Only') and is_right_side:
             clean_ctrl_grp = mt.mirror_group(input=clean_ctrl_grp, world=True)
+
+        if rig_mirror_grp:
+            cmds.parent(position_locator_root, rig_mirror_grp, clean_rig_grp)
+        else:
+            cmds.parent(position_locator_root, driver_locator, clean_rig_grp)
 
         cmds.parentConstraint(block_parent, clean_ctrl_grp, mo=True)
         cmds.parentConstraint(block_parent, clean_rig_grp,  mo=True)
 
         cmds.parent(clean_rig_grp,  '{}{}'.format(setup['rig_groups']['misc'], nc['group']))
         cmds.parent(clean_ctrl_grp, setup['base_groups']['control'] + nc['group'])
+
+        # Clean
+        cmds.setAttr('{}.v'.format(position_locator), 0)
+        cmds.scaleConstraint('Global_Ctrl', driver_locator,        mo=True)
+        cmds.scaleConstraint('Global_Ctrl', slide_ctrl_root,       mo=True)
+        cmds.scaleConstraint('Global_Ctrl', position_locator,      mo=True)
 
     # Remove temporary duplicated guides used only for build side resolution.
     for side_guide in to_build:
