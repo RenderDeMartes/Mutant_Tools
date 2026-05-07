@@ -127,7 +127,7 @@ def build_slide_block():
 
         # Build position locator from this side guide
         position_locator = cmds.spaceLocator(n=side_name + 'SlideAim' + nc['locator'])[0]
-        position_locator_root = mt.root_grp()
+        position_locator_root, position_locator_auto = mt.root_grp(input=position_locator, autoRoot=True)
         cmds.delete(cmds.parentConstraint(side_guide, position_locator_root))
 
         if slide_surface == 'new_plane':
@@ -157,7 +157,7 @@ def build_slide_block():
                               size=size)
         mt.assign_color(color=color)
         cmds.delete(cmds.parentConstraint(position_locator, slide_ctrl))
-        slide_ctrl_root = mt.root_grp(slide_ctrl)
+        slide_ctrl_root, slide_ctrl_auto = mt.root_grp(input=slide_ctrl, autoRoot=True)
         mt.hide_attr(input=slide_ctrl, s=True, r=True)
 
         mt.line_attr(input=slide_ctrl, name='EnableAxis', lines=10)
@@ -166,12 +166,27 @@ def build_slide_block():
             cmds.connectAttr('{}.rotate{}'.format(slide_ctrl, axis), '{}.rotate{}'.format(position_locator, axis), f=True)
 
             axis_attr = mt.new_attr(input=slide_ctrl, name=axis, min=-0, max=1, default=1)
-            blend_node = cmds.shadingNode('blendColors', asUtility=True, n=slide_ctrl.replace(nc['ctrl'], nc['blend']))
-            cmds.connectAttr('{}.translate{}'.format(slide_ctrl, axis), '{}.color1.color1R'.format(blend_node), f=1)
-            cmds.setAttr('{}.color2.color2R'.format(blend_node), 0)
-            cmds.connectAttr('{}'.format(axis_attr), '{}.blender'.format(blend_node), f=1)
-            cmds.connectAttr('{}.output.outputR'.format(blend_node), '{}.translate{}'.format(position_locator, axis), f=1)
-            blend_nodes.append(blend_node)
+            direct_blend_node = cmds.shadingNode(
+                'blendColors',
+                asUtility=True,
+                n='{}Slide{}Direct{}'.format(side_name, axis, nc['blend'])
+            )
+            cmds.connectAttr('{}.translate{}'.format(slide_ctrl, axis), '{}.color1.color1R'.format(direct_blend_node), f=1)
+            cmds.setAttr('{}.color2.color2R'.format(direct_blend_node), 0)
+            cmds.connectAttr('{}'.format(axis_attr), '{}.blender'.format(direct_blend_node), f=1)
+            cmds.connectAttr('{}.output.outputR'.format(direct_blend_node), '{}.translate{}'.format(position_locator, axis), f=1)
+            blend_nodes.append(direct_blend_node)
+
+            auto_blend_node = cmds.shadingNode(
+                'blendColors',
+                asUtility=True,
+                n='{}Slide{}Auto{}'.format(side_name, axis, nc['blend'])
+            )
+            cmds.connectAttr('{}.translate{}'.format(slide_ctrl_auto, axis), '{}.color1.color1R'.format(auto_blend_node), f=1)
+            cmds.setAttr('{}.color2.color2R'.format(auto_blend_node), 0)
+            cmds.connectAttr('{}'.format(axis_attr), '{}.blender'.format(auto_blend_node), f=1)
+            cmds.connectAttr('{}.output.outputR'.format(auto_blend_node), '{}.translate{}'.format(position_locator_auto, axis), f=1)
+            blend_nodes.append(auto_blend_node)
 
         mt.assign_color(input=driver_locator, color=color)
 
