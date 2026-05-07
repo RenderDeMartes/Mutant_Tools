@@ -229,7 +229,7 @@ def _create_expression(side_token, dist_shape, soft_attr_holder, global_scale_at
     expression = """
 $controlDist = {dist_shape}.distance*1/({global_scale_attr}*{mover_scale_attr});
 $softDist = $controlDist;
-$softp = {soft_attr_holder}.dsoft;
+$softp = {soft_attr_holder}.SoftIk;
 $chainLen = {chain_length};
 $strech = {stretch_attr};
 $pin = {pin_attr};
@@ -270,16 +270,21 @@ if($controlDist > $chainLen){{$sdif = $chainLen;}}
 
 def _ensure_soft_attr(ctrl):
 
-    if not cmds.attributeQuery('dsoft', node=ctrl, exists=True):
+    if not cmds.attributeQuery('SoftIk', node=ctrl, exists=True):
         mt.line_attr(input=ctrl, name='SoftIk')
-        mt.new_attr(input=ctrl, name='dsoft', min=0, max=100, default=0)
+        mt.new_attr(input=ctrl, name='SoftIk', min=0, max=100, default=0)
 
 
 def _get_side_config(config, side_token, nc):
 
+    if cmds.attributeQuery('LeftSoftIkAttrHolder', node=config, exists=True):
+        soft_holder_raw = cmds.getAttr('{}.LeftSoftIkAttrHolder'.format(config))
+    else:
+        soft_holder_raw = cmds.getAttr('{}.LeftSoftAttrHolder'.format(config))
+
     return {
         'ankle_ctrl': _replace_side(cmds.getAttr('{}.LeftAnkleCtrl'.format(config)), side_token, nc),
-        'soft_attr_holder': _replace_side(cmds.getAttr('{}.LeftSoftAttrHolder'.format(config)), side_token, nc),
+        'soft_attr_holder': _replace_side(soft_holder_raw, side_token, nc),
         'ankle_grp': _replace_side(cmds.getAttr('{}.LeftAnkleRFLGroup'.format(config)), side_token, nc),
         'pelvis_ctrl': _replace_side(cmds.getAttr('{}.LeftPelvisCtrl'.format(config)), side_token, nc),
         'ik_handle': _replace_side(cmds.getAttr('{}.LeftIKHandle'.format(config)), side_token, nc),
@@ -353,19 +358,16 @@ def build_leg_softik_block():
     config = connections[1]
     block = block[0]
     misc_group = _ensure_misc_group(setup, nc)
+    side_config_L = _get_side_config(config, nc['left'], nc)
+    side_config_R = _get_side_config(config, nc['right'], nc)
 
     sides = ['L', 'R']
 
-    for side in sides:
-        ctrl = '{}_Ankle_Ik_Ctrl'.format(side)
-        if not cmds.objExists(ctrl):
-            cmds.warning('Missing control: {}'.format(ctrl))
+    for side, holder in (('L', side_config_L['soft_attr_holder']), ('R', side_config_R['soft_attr_holder'])):
+        if not cmds.objExists(holder):
+            cmds.warning('Missing SoftIk attr holder for {} side: {}'.format(side, holder))
             continue
-
-        attr = 'dsoft'
-        if not cmds.attributeQuery(attr, node=ctrl, exists=True):
-            mt.line_attr(ctrl, name='SoftIk')
-            mt.new_attr(input=ctrl, name=attr, min=0, max=100, default=0)
+        _ensure_soft_attr(holder)
 
     def setup_locator(loc):
         shapes = cmds.listRelatives(loc, shapes=True) or []
@@ -497,8 +499,8 @@ def build_leg_softik_block():
         dist_shape = distance_nodes[side]
         chain_len = cmds.getAttr('{}.distance'.format(dist_shape))
 
-        global_size = cmds.getAttr('Global_Ctrl.size')
-        mover_size = cmds.getAttr('Mover_Ctrl.size')
+        global_size = cmds.getAttr('Global_Ctrl.sx')
+        mover_size = cmds.getAttr('Mover_Ctrl.sx')
         chain_len = chain_len / (global_size * mover_size)
 
         chain_lengths[side] = chain_len
@@ -509,9 +511,9 @@ def build_leg_softik_block():
         return
 
     left_expression = """
-$controlDist = l_pv_upLeg_joint_distanceShape.distance*1/(Global_Ctrl.size*Mover_Ctrl.size);
+$controlDist = l_pv_upLeg_joint_distanceShape.distance*1/(Global_Ctrl.sx*Mover_Ctrl.sx);
 $softDist = $controlDist;
-$softp = L_Ankle_Ik_Ctrl.dsoft;
+$softp = {left_soft_attr_holder}.SoftIk;
 $chainLen = {left_len};
 $strech = L_KneeMid_Bendy_Ctrl|L_Hip_Jnt_Switch_Loc.Stretch_On;
 $pin = L_KneeMid_Bendy_Ctrl|L_Hip_Jnt_Switch_Loc.Pole_Vector_Lock;
@@ -531,12 +533,12 @@ L_Ankle_Ik_Auto_Grp.translateY = (-1*($softDist-$controlDist)*(1-$strech))*(1-$p
 
 if($controlDist > $chainLen){{$sdif = $chainLen;}}
 knee_plusMinusAverage.input1D[1] = (($sdif-$softDist)*$strech)*(1-$pin);
-""".format(left_len=chain_lengths['L'])
+""".format(left_soft_attr_holder=side_config_L['soft_attr_holder'], left_len=chain_lengths['L'])
 
     right_expression = """
-$controlDist = r_pv_upLeg_joint_distanceShape.distance*1/(Global_Ctrl.size*Mover_Ctrl.size);
+$controlDist = r_pv_upLeg_joint_distanceShape.distance*1/(Global_Ctrl.sx*Mover_Ctrl.sx);
 $softDist = $controlDist;
-$softp = R_Ankle_Ik_Ctrl.dsoft;
+$softp = {right_soft_attr_holder}.SoftIk;
 $chainLen = {right_len};
 $strech = R_KneeMid_Bendy_Ctrl|R_Hip_Jnt_Switch_Loc.Stretch_On;
 $pin = R_KneeMid_Bendy_Ctrl|R_Hip_Jnt_Switch_Loc.Pole_Vector_Lock;
@@ -556,7 +558,7 @@ R_Ankle_Ik_Auto_Grp.translateY = (-1*($softDist-$controlDist)*(1-$strech))*(1-$p
 
 if($controlDist > $chainLen){{$sdif = $chainLen;}}
 r_knee_plusMinusAverage.input1D[1] = (($sdif-$softDist)*$strech)*(1-$pin);
-""".format(right_len=chain_lengths['R'])
+""".format(right_soft_attr_holder=side_config_R['soft_attr_holder'], right_len=chain_lengths['R'])
 
     if cmds.objExists('L_SoftIk_Expression'):
         cmds.delete('L_SoftIk_Expression')

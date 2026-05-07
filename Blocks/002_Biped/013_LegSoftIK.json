@@ -11,6 +11,7 @@
     "attrs": {
         "Mirror_enum": "True:False:Right_Only",
         "LeftAnkleCtrl_string": "L_Ankle_Ik_Ctrl",
+        "LeftSoftIkAttrHolder_string": "L_Hip_Jnt_Switch_Loc",
         "LeftSoftAttrHolder_string": "L_Ankle_Ik_Ctrl",
         "LeftAnkleRFLGroup_string": "L_Foot_Ankle_RFL_Grp",
         "LeftPelvisCtrl_string": "L_Pelvis_Ctrl",
@@ -20,6 +21,6 @@
         "LeftPinAttr_string": "L_KneeMid_Bendy_Ctrl|L_Hip_Jnt_Switch_Loc.Pole_Vector_Lock",
         "GlobalScaleAttr_string": "Global_Ctrl.size",
         "MoverScaleAttr_string": "Mover_Ctrl.size",
-        "Help_string": "Overview:\n  Creates a utility Soft IK setup for existing biped legs.\n\nHow To Use:\n  build the leg and foot first, then select this block and run Build.\n\nFields:\n- Mirror: build left only, right only, or both sides from the left-side names below.\n- LeftAnkleCtrl: IK ankle control used by the leg Soft IK setup.\n- LeftSoftAttrHolder: node that will receive the dsoft attr and drive the Soft IK amount.\n- LeftAnkleRFLGroup: reverse foot ankle group that will own the Soft IK offset groups.\n- LeftPelvisCtrl: pelvis or hip control used as the upper distance target.\n- LeftIKHandle: ankle IK handle to offset with Soft IK.\n- LeftKneeIkJoint: knee IK joint driven through plusMinusAverage.\n- LeftStretchAttr: stretch enable attr path used by the expression.\n- LeftPinAttr: pole vector pin attr path used by the expression.\n- GlobalScaleAttr: normalized global size attr path.\n- MoverScaleAttr: normalized mover size attr path.\n\nTips:\n- Default values assume the standard biped limb and foot naming.\n- DistanceDimension nodes are parented under the misc rig group.\n- Rebuild after changing any of the paths above."
+        "Help_string": "Overview:\n  Creates a utility Soft IK setup for existing biped legs.\n\nHow To Use:\n  build the leg and foot first, then select this block and run Build.\n\nFields:\n- Mirror: build left only, right only, or both sides from the left-side names below.\n- LeftAnkleCtrl: IK ankle control used by the leg Soft IK setup.\n- LeftSoftIkAttrHolder: node that will receive the SoftIk attr and drive Soft IK amount. Right side is mirrored automatically.\n- LeftSoftAttrHolder: deprecated legacy holder for compatibility.\n- LeftAnkleRFLGroup: reverse foot ankle group that will own the Soft IK offset groups.\n- LeftPelvisCtrl: pelvis or hip control used as the upper distance target.\n- LeftIKHandle: ankle IK handle to offset with Soft IK.\n- LeftKneeIkJoint: knee IK joint driven through plusMinusAverage.\n- LeftStretchAttr: stretch enable attr path used by the expression.\n- LeftPinAttr: pole vector pin attr path used by the expression.\n- GlobalScaleAttr: normalized global size attr path.\n- MoverScaleAttr: normalized mover size attr path.\n\nTips:\n- Default values assume the standard biped limb and foot naming.\n- DistanceDimension nodes are parented under the misc rig group.\n- Rebuild after changing any of the paths above."
     }
 }
