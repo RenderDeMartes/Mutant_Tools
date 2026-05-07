@@ -571,6 +571,8 @@ r_knee_plusMinusAverage.input1D[1] = (($sdif-$softDist)*$strech)*(1-$pin);
     try:
         cmds.setAttr('L_KneeMid_Bendy_Ctrl|L_Hip_Jnt_Switch_Loc.Lower_Length', 0.995)
         cmds.setAttr('L_KneeMid_Bendy_Ctrl|L_Hip_Jnt_Switch_Loc.Upper_Length', 0.995)
+        cmds.setAttr('R_KneeMid_Bendy_Ctrl|R_Hip_Jnt_Switch_Loc.Lower_Length', 0.995)
+        cmds.setAttr('R_KneeMid_Bendy_Ctrl|R_Hip_Jnt_Switch_Loc.Upper_Length', 0.995)
     except Exception as error:
         cmds.warning('Leg Soft IK defaults could not be fully applied: {}'.format(error))
 
