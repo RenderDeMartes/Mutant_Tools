@@ -272,7 +272,7 @@ def _ensure_soft_attr(ctrl):
 
     if not cmds.attributeQuery('SoftIk', node=ctrl, exists=True):
         mt.line_attr(input=ctrl, name='SoftIk')
-        mt.new_attr(input=ctrl, name='SoftIk', min=0, max=100, default=0)
+        mt.new_attr(input=ctrl, name='SoftIk', min=0, max=100, default=0.75)
 
 
 def _get_side_config(config, side_token, nc):
@@ -567,6 +567,12 @@ r_knee_plusMinusAverage.input1D[1] = (($sdif-$softDist)*$strech)*(1-$pin);
 
     cmds.expression(name='L_SoftIk_Expression', string=left_expression, alwaysEvaluate=True, unitConversion='all')
     cmds.expression(name='R_SoftIk_Expression', string=right_expression, alwaysEvaluate=True, unitConversion='all')
+
+    try:
+        cmds.setAttr('L_KneeMid_Bendy_Ctrl|L_Hip_Jnt_Switch_Loc.Lower_Length', 0.995)
+        cmds.setAttr('L_KneeMid_Bendy_Ctrl|L_Hip_Jnt_Switch_Loc.Upper_Length', 0.995)
+    except Exception as error:
+        cmds.warning('Leg Soft IK defaults could not be fully applied: {}'.format(error))
 
     print('Expressions created | L chainLen: {} | R chainLen: {}'.format(chain_lengths['L'], chain_lengths['R']))
     cmds.select(block)
