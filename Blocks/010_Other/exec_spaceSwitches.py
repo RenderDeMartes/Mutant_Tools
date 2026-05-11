@@ -77,7 +77,7 @@ def build_spaceSwitches_block():
             return oc
 
 
-    def create_space_switch_setup(target_ctrl, spaces, attrs_holder, clean_rig_grp, block):
+    def create_space_switch_setup(target_ctrl, spaces, attrs_holder, clean_rig_grp, block, custom_names=''):
 
         block = block.replace('_Block', '')
 
@@ -105,7 +105,13 @@ def build_spaceSwitches_block():
             attr_name = block
 
 
-        def process_spaces(spaces):
+        def process_spaces(spaces, custom_names=''):
+
+            # If custom names provided and count matches, use them directly
+            if custom_names and custom_names.strip():
+                cn_list = [n.strip() for n in custom_names.split(',')]
+                if len(cn_list) == len(spaces):
+                    return cn_list
 
             # Change the display name in the space enum attr for particular cases
 
@@ -117,7 +123,7 @@ def build_spaceSwitches_block():
                     c_spaces[index] = 'Global_Ctrl'
             return c_spaces
 
-        processed_spaces = process_spaces(spaces)
+        processed_spaces = process_spaces(spaces, custom_names)
 
         animbot_friendly=True
         if not cmds.attributeQuery('Animbot', n=config, exists=True):
@@ -183,10 +189,13 @@ def build_spaceSwitches_block():
     target_ctrl = cmds.getAttr('{}.SetTargetCtrl'.format(config), asString=True)
     spaces = cmds.getAttr('{}.Spaces'.format(config), asString=True)
     attrs_holder = cmds.getAttr('{}.SetAttrsHolder'.format(config), asString=1)
+    custom_names = ''
+    if cmds.attributeQuery('CustomNames', n=config, exists=True):
+        custom_names = cmds.getAttr('{}.CustomNames'.format(config), asString=True) or ''
     if not cmds.attributeQuery('___________', n=attrs_holder, exists=True) and not cmds.attributeQuery('Animbot', n=config, exists=True):
         line_attr = mt.new_enum(input=attrs_holder, name='___________', enums='{}:'.format('Spaces'))
         cmds.setAttr(line_attr, e=True, lock=True)
-    create_space_switch_setup(target_ctrl, spaces, attrs_holder, clean_rig_grp, block)
+    create_space_switch_setup(target_ctrl, spaces, attrs_holder, clean_rig_grp, block, custom_names)
 
     mirror = cmds.getAttr('{}.Mirror'.format(config))
     if mirror:
@@ -196,7 +205,8 @@ def build_spaceSwitches_block():
         r_target_ctrl = target_ctrl.replace('L_', 'R_')
         r_spaces = spaces.replace('L_', 'R_')
         r_attrs = attrs_holder.replace('L_', 'R_')
+        r_custom_names = custom_names.replace('L_', 'R_') if custom_names else ''
 
-        create_space_switch_setup(r_target_ctrl, r_spaces, r_attrs, r_clean_rig_group, r_name)
+        create_space_switch_setup(r_target_ctrl, r_spaces, r_attrs, r_clean_rig_group, r_name, r_custom_names)
 
     print('Build {} sucess'.format(block))
