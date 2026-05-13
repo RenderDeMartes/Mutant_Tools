@@ -49,6 +49,20 @@ Before operating:
 - Check attrs with `cmds.attributeQuery(..., exists=True)`.
 - Avoid assuming selected order without validation.
 
+### 2.9 Always be backwards compatible when adding new block attributes
+When a new attribute is added to a block JSON (`attrs` dict), existing config nodes in saved scenes will **not** have that attribute. Build functions must therefore:
+- Guard every `cmds.getAttr` on a new attr with `cmds.attributeQuery('AttrName', node=config, exists=True)`.
+- Fall back to the JSON default value when the attribute is absent, so old rigs rebuild correctly without errors.
+
+Example pattern:
+```python
+# New attr added in JSON as "IndependentScale_bool": "False"
+independent_scale = (
+    cmds.attributeQuery('IndependentScale', node=config, exists=True)
+    and cmds.getAttr('{}.IndependentScale'.format(config))
+)
+```
+
 ### 2.5 Use `mt.root_grp` with custom naming when collisions are possible
 If generating helper offset groups repeatedly, prefer:
 - `mt.root_grp(input=node, custom=True, custom_name='SomeUniqueSuffix')`
@@ -88,6 +102,7 @@ Before finalizing any change, AI should verify:
 3. New code does not create name clashes for helper groups.
 4. Constraints are recreated after temporary deletions (if workflow requires it).
 5. Only requested body parts/features are changed.
+6. Any newly added block attribute is read with `cmds.attributeQuery(..., exists=True)` guard so old config nodes without the attr still build correctly.
 
 ---
 
@@ -127,6 +142,9 @@ Follow these rules strictly:
 8) Make minimal, focused edits only; do not refactor unrelated code.
 9) Use cmds.warning for issues and concise prints for success.
 10) Keep changes compatible with the existing Mutant_Tools style.
+11) When adding a new attribute to a block JSON, always guard its getAttr in the build function with
+    cmds.attributeQuery('AttrName', node=config, exists=True) so old saved rigs without the attr
+    still build without errors (backwards compatibility).
 
 When requirements are ambiguous, choose the simplest solution consistent with existing blocks.
 ```
