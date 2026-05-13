@@ -133,12 +133,14 @@ def build_hair_block():
     if mirror_on:
         clean_ctrl_grp_L = cmds.group(em=True, name=name + '_L' + nc['ctrl'] + nc['group'])
         clean_ctrl_grp_R = cmds.group(em=True, name=name + '_R' + nc['ctrl'] + nc['group'])
+        clean_ctrl_grp = cmds.group(em=True, name=name + nc['ctrl'] + nc['group'])
         clean_rig_grp_L = cmds.group(em=True, name=name + '_L_Rig' + nc['group'])
         clean_rig_grp_R = cmds.group(em=True, name=name + '_R_Rig' + nc['group'])
         cmds.parent(clean_rig_grp_L, '{}{}'.format(setup['rig_groups']['misc'], nc['group']))
         cmds.parent(clean_rig_grp_R, '{}{}'.format(setup['rig_groups']['misc'], nc['group']))
         cmds.parent(clean_ctrl_grp_L, setup['base_groups']['control'] + nc['group'])
         cmds.parent(clean_ctrl_grp_R, setup['base_groups']['control'] + nc['group'])
+        cmds.parent(clean_ctrl_grp, setup['base_groups']['control'] + nc['group'])
     else:
         clean_ctrl_grp = cmds.group(em=True, name=name + nc['ctrl'] + nc['group'])
         clean_rig_grp = cmds.group(em=True, name=name + '_Rig' + nc['group'])
