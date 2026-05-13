@@ -1,0 +1,15 @@
+{
+    "Name":  "WIP_Complete",
+    "Description":  "Set the rig scene to WIP or Complete mode",
+    "Icon":  "WIP_Complete.png",
+    "Enable":  "True",
+    "python_file":  "exec_wip_complete.py",
+    "import":  "import exec_wip_complete",
+    "imp.reload":  "reload(exec_wip_complete)",
+    "exec_command":  "exec_wip_complete.create_wip_complete_block()",
+    "build_command":  "exec_wip_complete.build_wip_complete_block()",
+    "attrs":  {
+                  "Mode_enum":  "WIP:COMPLETE",
+                  "Help_string":  "Overview:\n  Sets the rig scene to WIP or Complete mode, mirroring the Helpers UI buttons.\n\nHow To Use:\n  Set Mode to WIP or COMPLETE then build the block.\n\nFields:\n- Mode: WIP keeps the rig editable and visible. COMPLETE finalises the rig hierarchy, locks geo, tags controllers and hides internal groups.\n\nTips:\n- WIP mode is useful during rigging iterations.\n- COMPLETE mode prepares the rig for delivery/animation."
+              }
+}
