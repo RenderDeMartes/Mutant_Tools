@@ -229,7 +229,7 @@ def build_chain_block():
                 cmds.parent(mirror_ctrl_grp, clean_ctrl_grp)
 
             # Independent Scale System
-            if cmds.getAttr('{}.IndependentScale'.format(config)):
+            if cmds.attributeQuery('IndependentScale', node=config, exists=True) and cmds.getAttr('{}.IndependentScale'.format(config)):
                 for ctrl in fk_system:
                     cltr_child = cmds.listRelatives(ctrl, c=True, type='transform') or []
                     for child in cltr_child:
@@ -245,7 +245,7 @@ def build_chain_block():
 
             # bind joints
             bind_joints = []
-            independent_scale = cmds.getAttr('{}.IndependentScale'.format(config))
+            independent_scale = cmds.attributeQuery('IndependentScale', node=config, exists=True) and cmds.getAttr('{}.IndependentScale'.format(config))
             for i, joint in enumerate(guide_hierarchy):
                 cmds.select(cl=True)
                 bind_joint = cmds.joint(n=joint.replace(nc['joint'], nc['joint_bind']))
