@@ -102,7 +102,7 @@ def _build_single_fk_side(name, loc_guide, config, nc, setup, is_mirror_side=Fal
     #create orientation offset above ctrl if enabled
     orient_name = None
     driven_node = None
-    if cmds.getAttr('{}.CtrlOrientOffset'.format(config)) == True:
+    if cmds.attributeQuery('CtrlOrientOffset', node=config, exists=True) and cmds.getAttr('{}.CtrlOrientOffset'.format(config)) == True:
         orient_name = name + '_Orient'
 
         # Capture existing orient values before rebuild (if a previous build exists)
@@ -302,7 +302,7 @@ def _build_single_fk_side(name, loc_guide, config, nc, setup, is_mirror_side=Fal
         except:pass
 
         #parent to ctrl or gimbal, or driven if offset active
-        has_offset = cmds.getAttr('{}.CtrlOrientOffset'.format(config))
+        has_offset = cmds.attributeQuery('CtrlOrientOffset', node=config, exists=True) and cmds.getAttr('{}.CtrlOrientOffset'.format(config))
 
         if has_offset:
             # If gimbal exists, add its local matrix into the driven chain
