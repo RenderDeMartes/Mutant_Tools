@@ -221,6 +221,11 @@ class AutoRiggerMenu(QtWidgets.QDialog):
 		self.update_all_blocks = self.fileMenu.addAction("Update All Blocks")
 		self.toggle_dev = self.fileMenu.addAction("Toggle Dev Mode")
 
+		self.visual_build = self.fileMenu.addAction("Visual Build")
+		self.visual_build.setCheckable(True)
+		visual_build_state = cmds.optionVar(q="mutant_visual_build") if cmds.optionVar(ex="mutant_visual_build") else True
+		self.visual_build.setChecked(visual_build_state)
+		
 		self.fileMenu.addSeparator()
 
 		self.menuBar.addMenu(self.fileMenu)
@@ -306,6 +311,9 @@ class AutoRiggerMenu(QtWidgets.QDialog):
 
 		#Dev Mode
 		self.toggle_dev.triggered.connect(lambda: mt.toggle_dev_mode())
+
+		#Visual Build
+		self.visual_build.toggled.connect(lambda state: cmds.optionVar(intValue=("mutant_visual_build", state)))
 
 	# -------------------------------------------------------------------
 	def set_mutant_hotkeys(self, *args):

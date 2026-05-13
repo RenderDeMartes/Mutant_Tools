@@ -97,15 +97,19 @@ def create_hand_block(name = 'Hand'):
         cmds.parent(inner_cup, palm)
 
     #create Outter Cup joints
-    if 'Pinky' or 'Ring' in fingers:
+    if 'Pinky' in fingers or 'Ring' in fingers:
         outter_cup = mt.create_joint_guide(name = (name + '_' + 'OutterCup' ))
-        try:cmds.delete(cmds.parentConstraint(palm, pinkys[0],outter_cup ,mo=False))
-        except:cmds.delete(cmds.parentConstraint(palm, rings[0],outter_cup ,mo=False))
 
-        if cmds.objExists(pinkys[0]):
+        # Position the outter cup - prefer pinky, fallback to ring
+        if 'Pinky' in fingers:
+            cmds.delete(cmds.parentConstraint(palm, pinkys[0], outter_cup, mo=False))
+        elif 'Ring' in fingers:
+            cmds.delete(cmds.parentConstraint(palm, rings[0], outter_cup, mo=False))
+
+        if 'Pinky' in fingers:
             cmds.parent(pinkys[0], outter_cup)
 
-        if cmds.objExists(rings[0]):
+        if 'Ring' in fingers:
             cmds.parent(rings[0], outter_cup)
 
         cmds.parent(outter_cup, palm)
@@ -184,7 +188,9 @@ def build_hand_block():
 
         #orient Joints becouse the thumbs sucks
         #hardcoded becouse fuck it
-        cmds.select('*Thumb_01*')
+        thumb_search = cmds.ls('*Thumb_01*')
+        if thumb_search:
+            cmds.select(thumb_search)
         #cmds.hide(guide)
         #cmds.joint(e=True, oj='yxz', ch=True, secondaryAxisOrient='{}'.format(setup['secondaryAxisOrient']))
 
@@ -409,7 +415,7 @@ def build_hand_block():
                     elif finger == 'Index_01':
                         mult = -0.5
 
-                mt.connect_md_node(in_x1 = spread_attr, in_x2 = mult, out_x = '{}.rotateY'.format(spread_grp), mode = 'mult', name = 'Spread', force = False)
+                    mt.connect_md_node(in_x1 = spread_attr, in_x2 = mult, out_x = '{}.rotateY'.format(spread_grp), mode = 'mult', name = 'Spread', force = False)
 
             #relax stuff
             relax_attr = mt.new_attr(input= ctrl_with_attrs,

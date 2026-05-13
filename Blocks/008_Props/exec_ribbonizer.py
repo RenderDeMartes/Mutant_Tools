@@ -94,7 +94,7 @@ def build_ribbonizer_block():
         mirror_mode = 'False'
 
     # Auto-prepend L_ when mirroring if the name doesn't already have a side prefix
-    if mirror_mode in ('True', 'Right_Only') and not name.startswith(nc['left']) and not name.startswith(nc['right']):
+    if mirror_mode == 'True' and not name.startswith(nc['left']) and not name.startswith(nc['right']):
         name = nc['left'] + name
 
     #clean a bit
@@ -104,59 +104,52 @@ def build_ribbonizer_block():
 
     cmds.parent(clean_rig_grp, '{}{}'.format(setup['rig_groups']['misc'], nc['group']))
     cmds.parent(clean_ctrl_grp, setup['base_groups']['control'] + nc['group'])
-
+    
+    if mirror_mode == 'True':
+        r_name = name.replace(nc['left'], nc['right'], 1) if name.startswith(nc['left']) else nc['right'] + name
+        r_block = block.replace(nc['left'], nc['right'], 1) if block.startswith(nc['left']) else nc['right'] + block
+        
+        r_clean_ctrl_grp = cmds.group(n=r_name+nc['ctrl']+nc['group'], em=True)
+        r_clean_rig_grp = cmds.group(em=True, n = '{}{}'.format(r_block.replace(nc['module'],'_Rig'), nc['group']))
+        
+        cmds.parent(r_clean_rig_grp, '{}{}'.format(setup['rig_groups']['misc'], nc['group']))
+        cmds.parent(r_clean_ctrl_grp, setup['base_groups']['control'] + nc['group'])
 
     #use this locator in case parent is set to new locator
     if cmds.getAttr('{}.SetParent'.format(config)) == 'new_locator':
-        block_parent = cmds.spaceLocator( n = '{}'.format(str(block).replace(nc['module'],'_Parent' + nc['locator'])))
+        block_parent = cmds.spaceLocator( n = '{}'.format(str(block).replace(nc['module'],'_Parent' + nc['locator'])))[0]
+        if mirror_mode == 'True':
+            r_block_loc_name = str(block).replace(nc['left'], nc['right'], 1) if str(block).startswith(nc['left']) else nc['right'] + str(block)
+            r_block_parent = cmds.spaceLocator( n = '{}'.format(r_block_loc_name.replace(nc['module'],'_Parent' + nc['locator'])))[0]
     else:
         block_parent = cmds.getAttr('{}.SetParent'.format(config))
+        if mirror_mode == 'True':
+            r_block_parent = block_parent.replace(nc['left'], nc['right'], 1) if block_parent.startswith(nc['left']) else block_parent
+            if not cmds.objExists(r_block_parent):
+                r_block_parent = block_parent
+
+    if cmds.objExists(block_parent):
+        cmds.matchTransform(clean_ctrl_grp, block_parent, pos=True, piv=True)
+        cmds.matchTransform(clean_rig_grp, block_parent, pos=True, piv=True)
+        
+    if mirror_mode == 'True' and cmds.objExists(r_block_parent):
+        cmds.matchTransform(r_clean_ctrl_grp, r_block_parent, pos=True, piv=True)
+        cmds.matchTransform(r_clean_rig_grp, r_block_parent, pos=True, piv=True)
 
     for num, guide in enumerate(guides):
 
         new_guide=cmds.duplicate(guide, n=guide.replace(nc['guide'], nc['nurb']))
         cmds.parent(new_guide, w=True)
 
-        # Determine which sides to build based on mirror mode
-        # Each entry: (side_guide, side_prefix, needs_mirror_group)
-        sides_to_build = []
+        guide_name = new_guide[0] if isinstance(new_guide, list) else new_guide
 
         # Derive left/right names robustly
-        guide_name = new_guide[0] if isinstance(new_guide, list) else new_guide
         if name.startswith(nc['left']):
             right_name = name.replace(nc['left'], nc['right'], 1)
-            right_guide_rename = guide_name.replace(nc['left'], nc['right'], 1)
         else:
             right_name = nc['right'] + name
-            right_guide_rename = nc['right'] + guide_name
 
-        if mirror_mode == 'Right_Only':
-            # Mirror the guide to the right side, build only the right side
-            miror_grp = mt.mirror_group(guide_name, world=True)
-            cmds.makeIdentity(miror_grp, a=True, t=True, r=True, s=True)
-            cmds.parent(guide_name, w=True)
-            cmds.delete(miror_grp)
-            # Rename guide to R_ side
-            if right_guide_rename != guide_name:
-                guide_name = cmds.rename(guide_name, right_guide_rename)
-            right_prefix = right_name + '_' + str(num+1)
-            sides_to_build.append((guide_name, right_prefix, False))
-
-        elif mirror_mode == 'True':
-            # Build the left side as-is
-            left_prefix = name + '_' + str(num+1)
-            sides_to_build.append((guide_name, left_prefix, False))
-
-            # Duplicate and mirror for the right side
-            right_guide = cmds.duplicate(guide_name, n=right_guide_rename)
-            right_guide_result = right_guide[0] if isinstance(right_guide, list) else right_guide
-            right_prefix = right_name + '_' + str(num+1)
-            sides_to_build.append((right_guide_result, right_prefix, True))
-
-        else:
-            # No mirror - build as-is
-            sides_to_build.append((guide_name, name + '_' + str(num+1), False))
-
+        # Read ribbonizer config attrs once
         try:
             main_ctrl_pos = cmds.getAttr('{}.MiddleCtrlPosition'.format(config), asString=True)
         except:
@@ -177,42 +170,93 @@ def build_ribbonizer_block():
         except:
             joint_orient = False
 
-        for side_guide, side_prefix, needs_mirror in sides_to_build:
+        ribbonize_kwargs = dict(
+            equal=cmds.getAttr('{}.Equal'.format(config)),
+            num_of_Ctrls=cmds.getAttr('{}.Ctrls'.format(config)),
+            num_of_Jnts=cmds.getAttr('{}.Joints'.format(config)),
+            constrain=cmds.getAttr('{}.Constraint'.format(config)),
+            add_fk=cmds.getAttr('{}.AddFk'.format(config)),
+            wire=cmds.getAttr('{}.Wire'.format(config)),
+            middle_ctrl_pos=main_ctrl_pos,
+            ctrl_orientation=ctrl_orientation,
+            ctrl_scales=ctrl_scales,
+            joint_orient=joint_orient,
+        )
 
-            ctrl_grp, rig_grp, bnd_grp = Ribbonizer.ribbonize(   surf_tr=side_guide,
-                                                                 equal=cmds.getAttr('{}.Equal'.format(config)),
-                                                                 num_of_Ctrls=cmds.getAttr('{}.Ctrls'.format(config)),
-                                                                 num_of_Jnts=cmds.getAttr('{}.Joints'.format(config)),
-                                                                 prefix=side_prefix,
-                                                                 constrain=cmds.getAttr('{}.Constraint'.format(config)),
-                                                                 add_fk=cmds.getAttr('{}.AddFk'.format(config)),
-                                                                 wire=cmds.getAttr('{}.Wire'.format(config)),
-                                                                 middle_ctrl_pos=main_ctrl_pos,
-                                                                 ctrl_orientation=ctrl_orientation,
-                                                                 ctrl_scales=ctrl_scales,
-                                                                 joint_orient=joint_orient)
-            #[main_Ctrl_offset, rig_Grp, prefix + 'Bnd_Grp']
+        if mirror_mode == 'Right_Only':
+            right_guide_rename = guide_name.replace(nc['left'], nc['right'], 1) if nc['left'] in guide_name else nc['right'] + guide_name
+            right_guide = cmds.duplicate(guide_name, n=right_guide_rename)
+            right_guide_result = right_guide[0] if isinstance(right_guide, list) else right_guide
+            try:
+                cmds.parent(right_guide_result, w=True)
+            except:
+                pass
 
-            if needs_mirror:
-                # Wrap the right side output in mirror groups (negate X scale)
-                ctrl_grp = mt.mirror_group(ctrl_grp, world=True)
-                rig_grp = mt.mirror_group(rig_grp, world=True)
-                bnd_grp = mt.mirror_group(bnd_grp, world=True)
+            right_prefix = right_name + '_' + str(num+1)
+            r_ctrl_grp, r_rig_grp, r_bnd_grp = Ribbonizer.ribbonize(
+                surf_tr=right_guide_result, prefix=right_prefix, **ribbonize_kwargs)
+
+            # Wrap the right side outputs with mirror_group (adds -1 scale + 180 rotateX)
+            r_ctrl_mirror = mt.mirror_group(r_ctrl_grp, world=True)
+            r_rig_mirror = mt.mirror_group(r_rig_grp, world=True)
+
+            cmds.parent(r_ctrl_mirror, r_clean_ctrl_grp)
+            cmds.parent(r_rig_mirror, r_clean_rig_grp)
+            cmds.parent(r_bnd_grp, bind_jnt_grp)
+
+        elif mirror_mode == 'True':
+            # Duplicate the guide for the right side BEFORE ribbonize (it renames the input surface)
+            right_guide_rename = guide_name.replace(nc['left'], nc['right'], 1) if nc['left'] in guide_name else nc['right'] + guide_name
+            right_guide = cmds.duplicate(guide_name, n=right_guide_rename)
+            right_guide_result = right_guide[0] if isinstance(right_guide, list) else right_guide
+            try:
+                cmds.parent(right_guide_result, w=True)
+            except:
+                pass
+
+            # --- Left side: build from the original guide ---
+            left_prefix = name + '_' + str(num+1)
+            ctrl_grp, rig_grp, bnd_grp = Ribbonizer.ribbonize(
+                surf_tr=guide_name, prefix=left_prefix, **ribbonize_kwargs)
+
+            # Add identity wrapper group so hierarchy depth matches the mirrored side
+            left_wrapper = cmds.group(ctrl_grp, n='{}Mirror{}'.format(ctrl_grp, nc['group']))
+            cmds.xform(left_wrapper, rp=(0,0,0), sp=(0,0,0))
+            cmds.parent(left_wrapper, clean_ctrl_grp)
+            cmds.parent(rig_grp, clean_rig_grp)
+            cmds.parent(bnd_grp, bind_jnt_grp)
+
+            # --- Right side: build from the pre-duplicated guide, then wrap with mirror_group ---
+            right_prefix = right_name + '_' + str(num+1)
+            r_ctrl_grp, r_rig_grp, r_bnd_grp = Ribbonizer.ribbonize(
+                surf_tr=right_guide_result, prefix=right_prefix, **ribbonize_kwargs)
+
+            # Wrap the right side outputs with mirror_group (adds -1 scale + 180 rotateX)
+            r_ctrl_mirror = mt.mirror_group(r_ctrl_grp, world=True)
+            r_rig_mirror = mt.mirror_group(r_rig_grp, world=True)
+
+            cmds.parent(r_ctrl_mirror, r_clean_ctrl_grp)
+            cmds.parent(r_rig_mirror, r_clean_rig_grp)
+            cmds.parent(r_bnd_grp, bind_jnt_grp)
+
+        else:
+            # No mirror - build as-is (no wrapper groups needed)
+            side_prefix = name + '_' + str(num+1)
+            ctrl_grp, rig_grp, bnd_grp = Ribbonizer.ribbonize(
+                surf_tr=guide_name, prefix=side_prefix, **ribbonize_kwargs)
 
             cmds.parent(ctrl_grp, clean_ctrl_grp)
             cmds.parent(rig_grp, clean_rig_grp)
             cmds.parent(bnd_grp, bind_jnt_grp)
 
-        # Resolve block_parent for right side if mirroring
-        side_block_parent = block_parent
-        if mirror_mode == 'True' or mirror_mode == 'Right_Only':
-            parent_str = cmds.getAttr('{}.SetParent'.format(config))
-            if parent_str != 'new_locator' and nc['left'] in str(parent_str):
-                # We handle right-side parent swap inside the loop above via mirror groups
-                pass
-
     cmds.parentConstraint(block_parent, clean_ctrl_grp, mo=True)
     cmds.scaleConstraint(block_parent, clean_ctrl_grp, mo=True)
+    #cmds.scaleConstraint(block_parent, clean_rig_grp, mo=True) # Commented out to prevent double transforms on surface
+    
+    if mirror_mode == 'True':
+        cmds.parentConstraint(r_block_parent, r_clean_ctrl_grp, mo=True)
+        cmds.scaleConstraint(r_block_parent, r_clean_ctrl_grp, mo=True)
+        #cmds.scaleConstraint(r_block_parent, r_clean_rig_grp, mo=True) # Commented out to prevent double transforms on surface
 
 
     print ('Build {} Success'.format(block))

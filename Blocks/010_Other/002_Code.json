@@ -14,6 +14,7 @@
 
     "attrs": {
         "Exec_enum": "Python:Mel",
+        "RunAfterBuild_bool": "False",
         "Code_string": ""
     }
 }

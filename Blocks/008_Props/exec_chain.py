@@ -228,6 +228,15 @@ def build_chain_block():
                 mirror_ctrl_grp = mt.mirror_group(ctrl_root, world=True)
                 cmds.parent(mirror_ctrl_grp, clean_ctrl_grp)
 
+            # Independent Scale System
+            if cmds.getAttr('{}.IndependentScale'.format(config)):
+                for ctrl in fk_system:
+                    cltr_child = cmds.listRelatives(ctrl, c=True, type='transform') or []
+                    for child in cltr_child:
+                        if cmds.objExists(child):
+                            cmds.parent(child, ctrl_root)
+                            cmds.parentConstraint(ctrl, child, mo=True)
+
             #Constriant after mirror
             cmds.parentConstraint(block_parent, ctrl_root, maintainOffset=1)
             cmds.scaleConstraint(block_parent, ctrl_root, maintainOffset=1)
@@ -236,6 +245,7 @@ def build_chain_block():
 
             # bind joints
             bind_joints = []
+            independent_scale = cmds.getAttr('{}.IndependentScale'.format(config))
             for i, joint in enumerate(guide_hierarchy):
                 cmds.select(cl=True)
                 bind_joint = cmds.joint(n=joint.replace(nc['joint'], nc['joint_bind']))
@@ -244,7 +254,8 @@ def build_chain_block():
                 #cmds.connectAttr(f"{joint}.scale", f"{bind_joint}.scale")
                 bind_joints.append(bind_joint)
                 if i > 0:
-                    cmds.parent(bind_joint, bind_joints[i-1])
+                    if not independent_scale:
+                        cmds.parent(bind_joint, bind_joints[i-1])
 
             # ---------------------------------------------------------
             # Apply segmentScaleCompensate on bind joints
@@ -253,7 +264,11 @@ def build_chain_block():
 
             bind_jnt_grp = '{}{}'.format(setup['rig_groups']['bind_joints'], nc['group'])
             if cmds.objExists(bind_jnt_grp):
-                cmds.parent(bind_joints[0], bind_jnt_grp)
+                if independent_scale:
+                    for bj in bind_joints:
+                        cmds.parent(bj, bind_jnt_grp)
+                else:
+                    cmds.parent(bind_joints[0], bind_jnt_grp)
 
             print ('Build {} Success'.format(block))
 

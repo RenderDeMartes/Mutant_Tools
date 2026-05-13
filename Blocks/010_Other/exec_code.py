@@ -62,7 +62,7 @@ def create_code_block(name = 'Code'):
 
 #-------------------------
 
-def build_code_block():
+def build_code_block(force=False):
 
     nc, curve_data, setup = mt.import_configs()
 
@@ -75,6 +75,15 @@ def build_code_block():
     #cmds.getAttr('{}.AttrName'.format(config))
     pl = cmds.getAttr('{}.Exec'.format(config), asString = True)
     code = cmds.getAttr('{}.Code'.format(config), asString = True)
+
+    # Check if this code block should run after the full build completes
+    run_after = False
+    if cmds.attributeQuery('RunAfterBuild', n=config, exists=True):
+        run_after = cmds.getAttr('{}.RunAfterBuild'.format(config))
+
+    if run_after and not force:
+        print('Code block {} deferred to run after build completes'.format(block))
+        return
 
     if pl != 'Python':
        mel.eval(code)

@@ -73,12 +73,12 @@ import sys
 import json
 from collections import OrderedDict
 from pathlib import Path
-try:
+'''try:
 	from rstar import convention
 	convention.set_project()
 except Exception as e:
 	cmds.warning('Error loading rstar.convention on load_AutoRigger')
-
+'''
 from Mutant_Tools.UI.AutoRigger import load_autoRiggerMenu
 reload(load_autoRiggerMenu)
 
@@ -98,6 +98,8 @@ reload(codeEditorWidget)
 
 from Mutant_Tools.Utils.Helpers import helpers
 reload(Mutant_Tools.Utils.Helpers.helpers)
+from Mutant_Tools.Utils.Helpers import decorators
+reload(decorators)
 mh = helpers.Helpers()
 
 import Mutant_Tools.Utils.IO
@@ -195,6 +197,93 @@ def add_sys_folders_remove_compiled():
 	print ('Cache removed...')
 
 #-------------------------------------------------------------------
+
+class DraggableButton(QtWidgets.QPushButton):
+	def __init__(self, block_name, *args, **kwargs):
+		super(DraggableButton, self).__init__(*args, **kwargs)
+		self.block_name = block_name
+
+	def mousePressEvent(self, event):
+		if event.button() == QtCore.Qt.LeftButton:
+			self.drag_start_position = event.pos()
+		super(DraggableButton, self).mousePressEvent(event)
+
+	def mouseMoveEvent(self, event):
+		if not (event.buttons() & QtCore.Qt.LeftButton):
+			super(DraggableButton, self).mouseMoveEvent(event)
+			return
+		if not hasattr(self, 'drag_start_position'):
+			super(DraggableButton, self).mouseMoveEvent(event)
+			return
+		if (event.pos() - self.drag_start_position).manhattanLength() < QtWidgets.QApplication.startDragDistance():
+			super(DraggableButton, self).mouseMoveEvent(event)
+			return
+
+		drag = QtGui.QDrag(self)
+		mime_data = QtCore.QMimeData()
+		mime_data.setText(self.block_name)
+		drag.setMimeData(mime_data)
+		exec_func = getattr(drag, 'exec_', drag.exec)
+		exec_func(QtCore.Qt.MoveAction)
+
+class DraggableBlockWidget(QtWidgets.QGroupBox):
+	block_dropped = QtCore.Signal(str, str, bool)
+
+	def __init__(self, block_name, *args, **kwargs):
+		super(DraggableBlockWidget, self).__init__(*args, **kwargs)
+		self.block_name = block_name
+		self.setAcceptDrops(True)
+		self._drop_indicator = None
+
+	def dragEnterEvent(self, event):
+		if event.mimeData().hasText():
+			source_block = event.mimeData().text()
+			if source_block != self.block_name:
+				event.acceptProposedAction()
+				return
+		event.ignore()
+
+	def dragMoveEvent(self, event):
+		if event.mimeData().hasText():
+			source_block = event.mimeData().text()
+			if source_block != self.block_name:
+				drop_above = event.pos().y() < (self.height() / 2)
+				new_indicator = 'top' if drop_above else 'bottom'
+				if self._drop_indicator != new_indicator:
+					self._drop_indicator = new_indicator
+					self.update()
+				event.acceptProposedAction()
+				return
+		event.ignore()
+
+	def dragLeaveEvent(self, event):
+		if self._drop_indicator is not None:
+			self._drop_indicator = None
+			self.update()
+		event.accept()
+
+	def dropEvent(self, event):
+		self._drop_indicator = None
+		self.update()
+		source_block = event.mimeData().text()
+		drop_above = event.pos().y() < (self.height() / 2)
+		self.block_dropped.emit(source_block, self.block_name, drop_above)
+		event.acceptProposedAction()
+
+	def paintEvent(self, event):
+		super(DraggableBlockWidget, self).paintEvent(event)
+		if self._drop_indicator:
+			painter = QtGui.QPainter(self)
+			pen = QtGui.QPen(QtGui.QColor(90, 200, 250))  # Light blue separator
+			pen.setWidth(4)
+			painter.setPen(pen)
+			rect = self.rect()
+			if self._drop_indicator == 'top':
+				y = rect.top() + 2
+				painter.drawLine(rect.left(), y, rect.right(), y)
+			elif self._drop_indicator == 'bottom':
+				y = rect.bottom() - 2
+				painter.drawLine(rect.left(), y, rect.right(), y)
 
 class AutoRigger(QtMutantWindow.Qt_Mutant):
 
@@ -936,20 +1025,13 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		if block_parent == None:
 			block_parent = self.ui.side_layout
 
-		side_hbox = QGroupBox()
+		side_hbox = DraggableBlockWidget(pack_name)
+		side_hbox.block_dropped.connect(self.move_outliner_to_block)
 		block_parent.addWidget(side_hbox)
 		self.side_block_widgets[pack_name] = side_hbox
 
-		#up down buttons
-		up_button = QtWidgets.QPushButton()
-		up_button.setIcon(QtGui.QIcon(os.path.join(IconsPath ,'Up.png')))
-		down_button = QtWidgets.QPushButton()
-		down_button.setIcon(QtGui.QIcon(os.path.join(IconsPath ,'Down.png')))
-		up_button.setFixedSize(15,20)
-		down_button.setFixedSize(15,20)
-
 		#propierties button
-		edit_button = QtWidgets.QPushButton(pack_name.replace(nc['module'],''))
+		edit_button = DraggableButton(pack_name, pack_name.replace(nc['module'],''))
 		edit_button.setFixedSize(75,50)
 		self.side_block_edit_buttons[pack_name] = edit_button
 
@@ -968,22 +1050,13 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		h_layout = QtWidgets.QHBoxLayout()
 		v_layout = QtWidgets.QVBoxLayout()
 
-		v_layout.addWidget(up_button)
 		v_layout.addWidget(options_button)
-		v_layout.addWidget(down_button)
 		h_layout.addLayout(v_layout)
 		h_layout.addWidget(edit_button)
 
 		h_layout.addStretch()
 
 		side_hbox.setLayout(h_layout)
-		up_button.clicked.connect(partial (mt.move_outliner, pack_name, True, False))
-		down_button.clicked.connect(partial (mt.move_outliner, pack_name, False, True))
-		#down_button.clicked.connect(partial (self.create_properties_layout, cmds.ls(sl=True)[0]))
-		#up_button.clicked.connect(partial (self.create_properties_layout, cmds.ls(sl=True)[0]))
-
-		up_button.clicked.connect(self.create_layout)
-		down_button.clicked.connect(self.create_layout)
 
 		edit_button.clicked.connect(partial (self.create_properties_layout, pack_name))
 		options_button.clicked.connect(partial (self.options_side_buttonblock, pack_name, side_hbox))
@@ -1005,6 +1078,35 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 				button.setStyleSheet(active_style)
 			else:
 				button.setStyleSheet(default_style)
+
+	def move_outliner_to_block(self, source_block, target_block, drop_above):
+		try:
+			parent = cmds.listRelatives(source_block, parent=True)
+			if not parent:
+				return
+			parent = parent[0]
+			
+			children = cmds.listRelatives(parent, children=True)
+			if source_block not in children or target_block not in children:
+				return
+			
+			source_idx = children.index(source_block)
+			target_idx = children.index(target_block)
+			
+			# Put source at front (index 0)
+			cmds.reorder(source_block, front=True)
+			
+			current_tgt_idx = target_idx if source_idx < target_idx else target_idx + 1
+			new_idx = current_tgt_idx - 1 if drop_above else current_tgt_idx
+			
+			if new_idx > 0:
+				cmds.reorder(source_block, relative=new_idx)
+				
+		except Exception as e:
+			cmds.warning('Could not reorder blocks: {}'.format(e))
+			
+		# Refresh the UI layout
+		self.create_layout()
 
 	#-------------------------------------------------------------------
 	def create_properties_layout(self, block, scroll_to_block=False):
@@ -1311,7 +1413,6 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 
 		return to_build
 
-	#-------------------------------------------------------------------
 	def build_autorigger(self, only_progressbar=False):
 
 		self.ui.bar_label.resize(100, 200)
@@ -1353,11 +1454,22 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 															 title='Building Mutant...')
 			cProgressBarUI.show()
 
+		#collect deferred code blocks to run after the entire build + IO completes
+		deferred_code_blocks = []
+
 		#select each block and run the build command and make progress bar move
 		for num, block in enumerate(blocks):
 
-			#just for fun
-			cmds.refresh()
+			is_skin_block = 'skin' in block.lower()
+
+			if is_skin_block and not cmds.about(batch=True):
+				mel.eval("paneLayout -e -manage false $gMainPane")
+
+			if not is_skin_block:
+				visual_build_enabled = cmds.optionVar(q="mutant_visual_build") if cmds.optionVar(ex="mutant_visual_build") else True
+				if visual_build_enabled:
+					#just for fun
+					cmds.refresh()
 
 			#log
 			mt.Mutant_logger(mode = 'create')
@@ -1435,9 +1547,20 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 					cmds.undo()
 				if only_progressbar:
 					cProgressBarUI.close()
+				if is_skin_block and not cmds.about(batch=True):
+					mel.eval("paneLayout -e -manage true $gMainPane")
 				return
 
 			post_build_nodes = self.get_all_nodes()
+
+			#check if this is a deferred code block
+			try:
+				block_config = cmds.listConnections(block)[1]
+				if cmds.attributeQuery('RunAfterBuild', n=block_config, exists=True):
+					if cmds.getAttr('{}.RunAfterBuild'.format(block_config)):
+						deferred_code_blocks.append(block)
+			except:
+				pass
 
 			#succes message
 			self.ui.bar_label.setText('{}'.format(block))
@@ -1451,6 +1574,8 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 			if block == 'Stop_Block':
 				print ('User Stop')
 				cmds.undoInfo(closeChunk=True)
+				if is_skin_block and not cmds.about(batch=True):
+					mel.eval("paneLayout -e -manage true $gMainPane")
 				return
 
 			#put build nodes only in notes
@@ -1458,6 +1583,9 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 				cmds.addAttr(block, ln="notes", sn="nts", dt="string")
 			nodes_dif = self.get_diference_in_nodes(pre_build_nodes, post_build_nodes)
 			cmds.setAttr("{}.notes".format(block), nodes_dif, type="string")
+
+			if is_skin_block and not cmds.about(batch=True):
+				mel.eval("paneLayout -e -manage true $gMainPane")
 
 		if only_progressbar:
 			cProgressBarUI.close()
@@ -1473,14 +1601,43 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 
 		#IO
 		if load_io:
-			ctrls.load_all(path=os.path.join(tempfile.gettempdir(), 'RebuildTempCtrls', 'tempControllers.json'))
-			self._load_rebuild_skins(temp_skin_folder=os.path.join(tempfile.gettempdir(), 'RebuildTempSkin'))
-			self._reorder_loaded_skin_deformers()
-			# Load parent hierarchy
-			temp_folder = os.path.join(tempfile.gettempdir(), 'RebuildTemp')
-			skeleton_file = os.path.join(temp_folder, 'skeleton_hierarchy.txt')
-			if cmds.objExists('Skeleton'):
-				self.load_joint_parents("Skeleton", skeleton_file)
+			if not cmds.about(batch=True):
+				mel.eval("paneLayout -e -manage false $gMainPane")
+			try:
+				ctrls.load_all(path=os.path.join(tempfile.gettempdir(), 'RebuildTempCtrls', 'tempControllers.json'))
+				self._load_rebuild_skins(temp_skin_folder=os.path.join(tempfile.gettempdir(), 'RebuildTempSkin'))
+				self._reorder_loaded_skin_deformers()
+				# Load parent hierarchy
+				temp_folder = os.path.join(tempfile.gettempdir(), 'RebuildTemp')
+				skeleton_file = os.path.join(temp_folder, 'skeleton_hierarchy.txt')
+				if cmds.objExists('Skeleton'):
+					self.load_joint_parents("Skeleton", skeleton_file)
+			finally:
+				if not cmds.about(batch=True):
+					mel.eval("paneLayout -e -manage true $gMainPane")
+
+		#Run deferred code blocks (RunAfterBuild) as the very last step
+		if deferred_code_blocks:
+			print('------------------------------------------------------------------------------------')
+			print('Running {} deferred Code block(s)...'.format(len(deferred_code_blocks)))
+			print('------------------------------------------------------------------------------------')
+			for deferred_block in deferred_code_blocks:
+				try:
+					print('Running deferred: {}'.format(deferred_block))
+					self.ui.bar_label.setText('Deferred: {}'.format(deferred_block))
+					cmds.select(deferred_block)
+					deferred_config = cmds.listConnections(deferred_block)[1]
+					deferred_pl = cmds.getAttr('{}.Exec'.format(deferred_config), asString=True)
+					deferred_code = cmds.getAttr('{}.Code'.format(deferred_config), asString=True)
+					if deferred_pl != 'Python':
+						mel.eval(deferred_code)
+					else:
+						exec(deferred_code)
+					print('Deferred code block {} completed'.format(deferred_block))
+				except Exception:
+					import traceback
+					traceback.print_exc()
+					cmds.warning('Deferred code block {} failed'.format(deferred_block))
 
 		cmds.undoInfo(closeChunk=True)
 
@@ -1686,6 +1843,29 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 					skeleton_file = os.path.join(temp_folder, 'skeleton_hierarchy.txt')
 					# Save parent hierarchy to file
 					self.save_joint_parents("Skeleton", skeleton_file)
+
+				# Orient Values
+				try:
+					import json
+					scene_name = cmds.file(q=True, sceneName=True)
+					safe_scene = os.path.basename(scene_name).replace('.ma', '').replace('.mb', '') if scene_name else "untitled"
+					
+					temp_folder = os.path.join(tempfile.gettempdir(), 'RebuildTemp')
+					if not os.path.exists(temp_folder):
+						os.mkdir(temp_folder)
+					
+					orient_file = os.path.join(temp_folder, '{}_orient_values.json'.format(safe_scene))
+					orient_data = {}
+					for orient in cmds.ls('*_Orient', type='transform'):
+						orient_data[orient] = {
+							't': cmds.getAttr('{}.t'.format(orient))[0],
+							'r': cmds.getAttr('{}.r'.format(orient))[0],
+							's': cmds.getAttr('{}.s'.format(orient))[0]
+						}
+					with open(orient_file, 'w') as f:
+						json.dump(orient_data, f)
+				except Exception as e:
+					print("Failed to save orient values:", e)
 
 
 				# Controllers
