@@ -304,23 +304,6 @@ class Ctrls(object):
             all_ctrl_data["ctrl_shape_data"] = all_ctrls
             all_ctrl_data["ctrl_color_data"] = colors_data
 
-        # Gather custom attributes
-        custom_attrs_data = {}
-        for ctrl in cmds.ls(sl=True):
-            user_attrs = cmds.listAttr(ctrl, userDefined=True) or []
-            ctrl_attrs = {}
-            for attr in user_attrs:
-                try:
-                    attr_type = cmds.getAttr('{}.{}'.format(ctrl, attr), type=True)
-                    if attr_type in ['double', 'doubleAngle', 'doubleLinear', 'float', 'int', 'long', 'enum', 'bool']:
-                        val = cmds.getAttr('{}.{}'.format(ctrl, attr))
-                        ctrl_attrs[attr] = val
-                except:
-                    pass
-            if ctrl_attrs:
-                custom_attrs_data[ctrl] = ctrl_attrs
-                
-        all_ctrl_data["ctrl_custom_attrs"] = custom_attrs_data
 
         self.saveData(path=path, data=all_ctrl_data, force_validate=force_validate)
 
@@ -367,20 +350,6 @@ class Ctrls(object):
         if color_info_presence:
             color_data = all_data["ctrl_color_data"]    
             self.apply_ctrls_color_data(colors_data=color_data, selection=list(color_data.keys()))
-
-        # Restore custom attributes
-        if "ctrl_custom_attrs" in all_data:
-            custom_attrs_data = all_data["ctrl_custom_attrs"]
-            for ctrl, attrs in custom_attrs_data.items():
-                if cmds.objExists(ctrl):
-                    for attr, val in attrs.items():
-                        try:
-                            # Only set if attribute exists and is not locked
-                            if cmds.attributeQuery(attr, node=ctrl, exists=True):
-                                if not cmds.getAttr('{}.{}'.format(ctrl, attr), lock=True):
-                                    cmds.setAttr('{}.{}'.format(ctrl, attr), val)
-                        except Exception as e:
-                            print('Could not restore custom attr {}.{}: {}'.format(ctrl, attr, e))
 
 
     @undo

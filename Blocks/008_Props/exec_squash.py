@@ -112,6 +112,49 @@ def build_squash_block():
     for g in geos:
         reorder_deformers(g)
 
+    # Apply custom deformer values defined in the block config
+    ctrl = "{}_Ctrl_Offset_Ctrl".format(name)
+    param_map = {
+        'SquashMult':         'SS_{}_mult'.format(name),
+        'SquashFactor':       'SS_{}_factor'.format(name),
+        'SquashLowBound':     'SS_{}_lowBound'.format(name),
+        'SquashHighBound':    'SS_{}_highBound'.format(name),
+        'BendFrontMult':      '{}_Bend_Front_Back_mult'.format(name),
+        'BendFrontCurvature': '{}_Bend_Front_Back_curvature'.format(name),
+        'BendFrontLowBound':  '{}_Bend_Front_Back_lowBound'.format(name),
+        'BendFrontHighBound': '{}_Bend_Front_Back_highBound'.format(name),
+        'BendSideMult':       '{}_Bend_Side_mult'.format(name),
+        'BendSideCurvature':  '{}_Bend_Side_curvature'.format(name),
+        'BendSideLowBound':   '{}_Bend_Side_lowBound'.format(name),
+        'BendSideHighBound':  '{}_Bend_Side_highBound'.format(name),
+    }
+    for config_attr, ctrl_attr in param_map.items():
+        if cmds.attributeQuery(config_attr, node=config, exists=True):
+            val = cmds.getAttr('{}.{}'.format(config, config_attr), asString=True)
+            val = float(val)
+            cmds.setAttr('{}.{}'.format(ctrl, ctrl_attr), val)
+
+    # Lock secondary attrs if requested
+    try:
+        lock_secondary = cmds.getAttr('{}.LockSecondaryAttrs'.format(config))
+    except:
+        lock_secondary = False
+    if lock_secondary:
+        secondary_attrs = [
+            '{}_Bend_Front_Back_curvature'.format(name),
+            '{}_Bend_Front_Back_lowBound'.format(name),
+            '{}_Bend_Front_Back_highBound'.format(name),
+            '{}_Bend_Side_curvature'.format(name),
+            '{}_Bend_Side_lowBound'.format(name),
+            '{}_Bend_Side_highBound'.format(name),
+            'SS_{}_factor'.format(name),
+            'SS_{}_lowBound'.format(name),
+            'SS_{}_highBound'.format(name),
+        ]
+        for attr in secondary_attrs:
+            full = '{}.{}'.format(ctrl, attr)
+            cmds.setAttr(full, lock=True, keyable=False, channelBox=False)
+
     #clean a bit
     clean_ctrl_grp = cmds.group(em=True, name = name + nc['ctrl'] + nc['group'])
     clean_rig_grp = cmds.group(em=True, name = name + '_Rig' + nc['group'])
@@ -122,50 +165,6 @@ def build_squash_block():
     cmds.parent(rig_grp, clean_rig_grp)
     cmds.parent(ctrl_group, clean_ctrl_grp)
 
-    # -----------------------------
-    # 🔥 STORE VALUES IN BLOCK
-    # -----------------------------
-    ctrl = "{}_Ctrl".format(name)
-    
-    # Define what we want to store and their block attribute prefixes
-    nodes_to_store = {
-        ctrl: "sqsh",
-        "{}_Bend_Front_Back".format(name): "sqsh_front",
-        "{}_Bend_Side".format(name): "sqsh_side",
-        "SS_{}".format(name): "sqsh_ss"
-    }
-
-    for node_name, prefix in nodes_to_store.items():
-        if cmds.objExists(node_name):
-            # Base transforms
-            attrs_to_sync = ['tx', 'ty', 'tz', 'rx', 'ry', 'rz', 'sx', 'sy', 'sz']
-            
-            # If it's the control, we do NOT store custom attributes here anymore.
-            # CtrlUtils.save_all and load_all now handle custom user-defined attributes robustly.
-            
-            for attr in attrs_to_sync:
-                block_attr = "{}_{}".format(prefix, attr.replace(":", "_"))
-                
-                # Apply saved value if it exists
-                if cmds.attributeQuery(block_attr, node=block, exists=True):
-                    saved_val = cmds.getAttr('{}.{}'.format(block, block_attr))
-                    try:
-                        cmds.setAttr('{}.{}'.format(node_name, attr), saved_val)
-                    except Exception as e:
-                        print("Could not set saved value for {}.{}: {}".format(node_name, attr, e))
-                else:
-                    # Create attribute on block to store the value
-                    try:
-                        current_val = cmds.getAttr('{}.{}'.format(node_name, attr))
-                        cmds.addAttr(block, longName=block_attr, attributeType='double', defaultValue=current_val)
-                    except Exception as e:
-                        print("Could not add block attr {}: {}".format(block_attr, e))
-                
-                # Connect the node's attribute to the block so it auto-updates
-                try:
-                    cmds.connectAttr('{}.{}'.format(node_name, attr), '{}.{}'.format(block, block_attr), force=True)
-                except Exception as e:
-                    print("Could not connect {}.{} to block: {}".format(node_name, attr, e))
 
     print ('Build {} Success'.format(block))
 
