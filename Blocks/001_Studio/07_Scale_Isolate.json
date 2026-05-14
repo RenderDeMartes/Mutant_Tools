@@ -1,0 +1,16 @@
+{
+    "Name": "ScaleIsolate",
+    "Description": "Isolates scale for selected controls by driving a sibling node via matrix and reparenting children.",
+    "Icon": "FingersScale.png",
+    "Enable": "True",
+    "python_file": "exec_scale_isolate.py",
+    "import": "import exec_scale_isolate",
+    "imp.reload": "reload(exec_scale_isolate)",
+    "exec_command": "exec_scale_isolate.create_scale_isolate_block()",
+    "build_command": "exec_scale_isolate.build_scale_isolate_block()",
+    "attrs": {
+        "SetControlsList_string": "",
+        "AutoParentChildren_bool": "True",
+        "Help_string": "Overview:\n  Prevents the scale of specified controls from affecting their children.\n\nHow To Use:\n  Select the controls in the scene and click 'Add Selected' below. Then click build.\n\nFields:\n- SetControlsList: List of controls to process.\n- AutoParentChildren: If true, existing children of the controls will be reparented under the new _ScaleIsolated groups automatically."
+    }
+}

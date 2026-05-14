@@ -2357,12 +2357,26 @@ class Kinematics_class(tools.Tools_class):
 	def create_mdl_compat(self, name):
 		try:
 			node = cmds.createNode("multDoubleLinear", n=name)
+			if cmds.nodeType(node) == "unknown":
+				cmds.delete(node)
+				raise Exception("Node type multDoubleLinear is unknown")
 			return node, "input1", "input2", "output"
 		except Exception:
 			node = cmds.createNode("multiplyDivide", n=name)
 			cmds.setAttr("{0}.operation".format(node), 1)
 			return node, "input1X", "input2X", "outputX"
 
+	def create_add_compat(self, name):
+		try:
+			node = cmds.createNode("addDoubleLinear", n=name)
+			if cmds.nodeType(node) == "unknown":
+				cmds.delete(node)
+				raise Exception("Node type addDoubleLinear is unknown")
+			return node, "input1", "input2", "output"
+		except Exception:
+			node = cmds.createNode("plusMinusAverage", n=name)
+			cmds.setAttr("{0}.operation".format(node), 1)
+			return node, "input1D[0]", "input1D[1]", "output1D"
 
 	def bend_and_squash_head(self, geo, parent_grp):
 		"""
@@ -2397,8 +2411,11 @@ class Kinematics_class(tools.Tools_class):
 		nolinear_fac = ["curvature", "curvature", "factor"]
 		nolinear_mult = [15, 15, 0.15]
 
+		cmds.select(cl=True)
 		def_grp = cmds.group(n="Pivot_Head_SS_Grp", em=True)
-		off_def_grp = cmds.group(n="Pivot_Head_SS_Grp_Offset")
+		cmds.select(cl=True)
+		off_def_grp = cmds.group(n="Pivot_Head_SS_Grp_Offset", em=True)
+		cmds.parent(def_grp, off_def_grp)
 
 		ctrl_grp = cmds.group(n="SS_Head_Ctrl_Offset", em=True)
 
@@ -2437,7 +2454,7 @@ class Kinematics_class(tools.Tools_class):
 
 	#----------------------------------------------------------------------------------------------------------------
 
-	def bend_and_squash(self, name='SnS', geo=None, parent_grp=None):
+	def bend_and_squash(self, name='SnS', geo=None, parent_grp=None, squash_enabled=True, bend_enabled=True, ctrl_guide=None):
 
 		if not geo:
 			geo = cmds.ls(sl=True)
@@ -2445,19 +2462,36 @@ class Kinematics_class(tools.Tools_class):
 		if not parent_grp:
 			parent_grp = cmds.spaceLocator(n=name + '_SnS_Parent' + self.nc['locator'])[0]
 
-		nolinear_rot = [-90, 0, 0]
-		nolinear_types = ["bend", "bend", "squash"]
-		nolinear_hdls = [
-			"{}_Bend_Front_Back".format(name),
-			"{}_Bend_Side".format(name),
-			"SS_{}".format(name)
-		]
-		nolinear_trans = ["z", "x", "y"]
-		nolinear_fac = ["curvature", "curvature", "factor"]
-		nolinear_mult = [15, 15, 0.15]
+		nolinear_rot = []
+		nolinear_types = []
+		nolinear_hdls = []
+		nolinear_trans = []
+		nolinear_fac = []
+		nolinear_mult = []
 
+		if bend_enabled:
+			nolinear_rot.extend([-90, 0])
+			nolinear_types.extend(["bend", "bend"])
+			nolinear_hdls.extend([
+				"{}_Bend_Front_Back".format(name),
+				"{}_Bend_Side".format(name)
+			])
+			nolinear_trans.extend(["z", "x"])
+			nolinear_fac.extend(["curvature", "curvature"])
+			nolinear_mult.extend([15, 15])
+		
+		if squash_enabled:
+			nolinear_rot.append(0)
+			nolinear_types.append("squash")
+			nolinear_hdls.append("SS_{}".format(name))
+			nolinear_trans.append("y")
+			nolinear_fac.append("factor")
+			nolinear_mult.append(0.15)
+
+		cmds.select(cl=True)
 		def_grp = cmds.group(n="Pivot_{}_Grp".format(name), em=True)
-		off_def_grp = cmds.group(n="Pivot_{}_Grp_Offset".format(name))
+		cmds.select(cl=True)
+		off_def_grp = cmds.group(n="Pivot_{}_Grp_Offset".format(name), em=True)
 		cmds.parent(def_grp, off_def_grp)
 
 		ctrl_grp = cmds.group(n="{}_Ctrl_Offset".format(name), em=True)
@@ -2522,9 +2556,9 @@ class Kinematics_class(tools.Tools_class):
 			# -----------------------------
 			# 🔥 ADD NODE (blend system)
 			# -----------------------------
-			add_node = cmds.shadingNode("addDoubleLinear", asUtility=True, n=f"{n_hdl}_ADD")
+			add_node, add_in1, add_in2, add_out = self.create_add_compat(f"{n_hdl}_ADD")
 
-			cmds.connectAttr(f"{mdl}.{out_attr}", f"{add_node}.input1", f=True)
+			cmds.connectAttr(f"{mdl}.{out_attr}", f"{add_node}.{add_in1}", f=True)
 
 			# -----------------------------
 			# 🔹 MAIN ATTR (curvature/factor)
@@ -2533,9 +2567,9 @@ class Kinematics_class(tools.Tools_class):
 			if not cmds.attributeQuery(main_attr, node=ctrl, exists=True):
 				cmds.addAttr(ctrl, ln=main_attr, at="double", k=True, dv=0)
 
-			cmds.connectAttr(f"{ctrl}.{main_attr}", f"{add_node}.input2", f=True)
+			cmds.connectAttr(f"{ctrl}.{main_attr}", f"{add_node}.{add_in2}", f=True)
 
-			cmds.connectAttr(f"{add_node}.output", f"{dag}.{n_fac}", f=True)
+			cmds.connectAttr(f"{add_node}.{add_out}", f"{dag}.{n_fac}", f=True)
 
 			# -----------------------------
 			# 🔹 BOUNDS
@@ -2556,22 +2590,32 @@ class Kinematics_class(tools.Tools_class):
 		# 🔹 CONSTRAINTS / CLEANUP
 		# -----------------------------
 		cmds.parentConstraint(parent_grp, off_def_grp, mo=False)
-		cmds.delete(cmds.pointConstraint(parent_grp, ctrl_grp, mo=False))
 
-		if cmds.objExists('HeadEnd_Guide'):
-			cmds.delete(cmds.pointConstraint('HeadEnd_Guide', ctrl_grp, mo=False))
+		if ctrl_guide:
+			cmds.delete(cmds.pointConstraint(ctrl_guide, ctrl_grp, mo=False))
+		else:
+			cmds.delete(cmds.pointConstraint(parent_grp, ctrl_grp, mo=False))
+
+			if cmds.objExists('HeadEnd_Guide'):
+				cmds.delete(cmds.pointConstraint('HeadEnd_Guide', ctrl_grp, mo=False))
 
 		cmds.parentConstraint(parent_grp, ctrl_grp, mo=True)
 
 		self.hide_attr(input=ctrl, r=True, s=True, rotate_order=True)
 
 		#Custom Values
-		cmds.setAttr(f"{ctrl}.SS_Squash_highBound", 2)
-		cmds.setAttr(f"{ctrl}.Squash_Bend_Side_highBound", 2)
-		cmds.setAttr(f"{ctrl}.Squash_Bend_Front_Back_highBound", 2)
-		cmds.setAttr(f"{ctrl}.SS_Squash_mult", 0.01)
-		cmds.setAttr(f"{ctrl}.Squash_Bend_Front_Back_mult", 1)
-		cmds.setAttr(f"{ctrl}.Squash_Bend_Side_mult", 1)
+		try: cmds.setAttr(f"{ctrl}.SS_{name}_highBound", 2)
+		except: pass
+		try: cmds.setAttr(f"{ctrl}.{name}_Bend_Side_highBound", 2)
+		except: pass
+		try: cmds.setAttr(f"{ctrl}.{name}_Bend_Front_Back_highBound", 2)
+		except: pass
+		try: cmds.setAttr(f"{ctrl}.SS_{name}_mult", 0.01)
+		except: pass
+		try: cmds.setAttr(f"{ctrl}.{name}_Bend_Front_Back_mult", 1)
+		except: pass
+		try: cmds.setAttr(f"{ctrl}.{name}_Bend_Side_mult", 1)
+		except: pass
 
 		return off_def_grp, ctrl_grp
 	

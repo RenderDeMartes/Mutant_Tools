@@ -226,6 +226,7 @@ class AutoRiggerOptions(QtMutantWindow.Qt_Mutant):
 		print(self.block, 'Delete Block')
 		cmds.delete(self.block)
 		self.layout.setParent(None)
+		self.close()
 
 	@undo
 	def delete_build_cmd(self):

@@ -9,8 +9,23 @@
     "exec_command":  "exec_squash.create_squash_block()",
     "build_command":  "exec_squash.build_squash_block()",
     "attrs":  {
+                  "Squash_bool": "True",
+                  "Bend_bool": "True",
+                  "SquashMult_string": "0.01",
+                  "SquashFactor_string": "0.0",
+                  "SquashLowBound_string": "0.0",
+                  "SquashHighBound_string": "2.0",
+                  "BendFrontMult_string": "1.0",
+                  "BendFrontCurvature_string": "0.0",
+                  "BendFrontLowBound_string": "0.0",
+                  "BendFrontHighBound_string": "2.0",
+                  "BendSideMult_string": "1.0",
+                  "BendSideCurvature_string": "0.0",
+                  "BendSideLowBound_string": "0.0",
+                  "BendSideHighBound_string": "2.0",
+                  "LockSecondaryAttrs_bool": "True",
                   "SetParent_string":  "new_locator",
                   "SetGeo_string":  "",
-                  "Help_string":  "Overview:\n  Create a Local Squash System.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetParent: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- SetGeo: set the node/object name this block should use.\n- Template parent examples: Spine_End_Jnt, Head_Jnt, L_Wrist_Jnt.\n\nTips:\n- start with defaults, build once, then tweak only the fields you need."
+                  "Help_string":  "Overview:\n  Create a Local Squash System.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- Squash: Enable or disable creation of the squash deformer.\n- Bend: Enable or disable creation of the bend deformers.\n- SetParent: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- SetGeo: set the node/object name this block should use.\n- Template parent examples: Spine_End_Jnt, Head_Jnt, L_Wrist_Jnt.\n\nTips:\n- start with defaults, build once, then tweak only the fields you need."
               }
 }

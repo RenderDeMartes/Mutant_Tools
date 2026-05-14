@@ -49,6 +49,9 @@ def create_squash_block(name = 'Squash'):
     config = block[1]
     block = block[0]
       
+    loc_guide = cmds.spaceLocator(n = name + nc['locator'])[0]
+    cmds.parent(loc_guide, block)
+
     #cmds.getAttr('{}.AttrName'.format(config)) #get attrs from config
     #cmds.getAttr('{}.AttrName'.format(config), asString = True) #for enums
     #joint_one = mt.create_joint_guide(name = name) #guide base with shapes
@@ -72,22 +75,85 @@ def build_squash_block():
     block = block[0]
     name = block.replace(nc['module'],'')
 
+    try:
+        loc_guide = cmds.listRelatives(block, c=True, fullPath=True, type='transform')[0]
+    except:
+        loc_guide = None
+
     #use this locator in case parent is set to new locator
     if cmds.getAttr('{}.SetParent'.format(config)) == 'new_locator':
         block_parent = cmds.spaceLocator( n = '{}'.format(str(block).replace(nc['module'],'_Parent' + nc['locator'])))
     else:
         block_parent = cmds.getAttr('{}.SetParent'.format(config))
 
-    geos = cmds.getAttr('{}.SetGeo'.format(config), asString=True)
-    if ',' in geos:
-        geos = geos.split(',')
+    # Get Squash and Bend booleans
+    try:
+        squash_enabled = cmds.getAttr('{}.Squash'.format(config))
+    except:
+        squash_enabled = True
+    try:
+        bend_enabled = cmds.getAttr('{}.Bend'.format(config))
+    except:
+        bend_enabled = True
+
+    geos_attr = cmds.getAttr('{}.SetGeo'.format(config), asString=True)
+    if geos_attr:
+        if ',' in geos_attr:
+            geos = [g.strip() for g in geos_attr.split(',') if g.strip()]
+        else:
+            geos = [geos_attr.strip()]
     else:
-        geos = [geos]
-    cmds.select(geos)
-    rig_grp, ctrl_group = mt.bend_and_squash(name=name, geo=None, parent_grp=block_parent)
+        geos = []
+    
+    if geos:
+        cmds.select(geos)
+    rig_grp, ctrl_group = mt.bend_and_squash(name=name, geo=None, parent_grp=block_parent, squash_enabled=squash_enabled, bend_enabled=bend_enabled, ctrl_guide=loc_guide)
 
     for g in geos:
         reorder_deformers(g)
+
+    # Apply custom deformer values defined in the block config
+    ctrl = "{}_Ctrl_Offset_Ctrl".format(name)
+    param_map = {
+        'SquashMult':         'SS_{}_mult'.format(name),
+        'SquashFactor':       'SS_{}_factor'.format(name),
+        'SquashLowBound':     'SS_{}_lowBound'.format(name),
+        'SquashHighBound':    'SS_{}_highBound'.format(name),
+        'BendFrontMult':      '{}_Bend_Front_Back_mult'.format(name),
+        'BendFrontCurvature': '{}_Bend_Front_Back_curvature'.format(name),
+        'BendFrontLowBound':  '{}_Bend_Front_Back_lowBound'.format(name),
+        'BendFrontHighBound': '{}_Bend_Front_Back_highBound'.format(name),
+        'BendSideMult':       '{}_Bend_Side_mult'.format(name),
+        'BendSideCurvature':  '{}_Bend_Side_curvature'.format(name),
+        'BendSideLowBound':   '{}_Bend_Side_lowBound'.format(name),
+        'BendSideHighBound':  '{}_Bend_Side_highBound'.format(name),
+    }
+    for config_attr, ctrl_attr in param_map.items():
+        if cmds.attributeQuery(config_attr, node=config, exists=True):
+            val = cmds.getAttr('{}.{}'.format(config, config_attr), asString=True)
+            val = float(val)
+            cmds.setAttr('{}.{}'.format(ctrl, ctrl_attr), val)
+
+    # Lock secondary attrs if requested
+    try:
+        lock_secondary = cmds.getAttr('{}.LockSecondaryAttrs'.format(config))
+    except:
+        lock_secondary = False
+    if lock_secondary:
+        secondary_attrs = [
+            '{}_Bend_Front_Back_curvature'.format(name),
+            '{}_Bend_Front_Back_lowBound'.format(name),
+            '{}_Bend_Front_Back_highBound'.format(name),
+            '{}_Bend_Side_curvature'.format(name),
+            '{}_Bend_Side_lowBound'.format(name),
+            '{}_Bend_Side_highBound'.format(name),
+            'SS_{}_factor'.format(name),
+            'SS_{}_lowBound'.format(name),
+            'SS_{}_highBound'.format(name),
+        ]
+        for attr in secondary_attrs:
+            full = '{}.{}'.format(ctrl, attr)
+            cmds.setAttr(full, lock=True, keyable=False, channelBox=False)
 
     #clean a bit
     clean_ctrl_grp = cmds.group(em=True, name = name + nc['ctrl'] + nc['group'])
@@ -98,7 +164,6 @@ def build_squash_block():
 
     cmds.parent(rig_grp, clean_rig_grp)
     cmds.parent(ctrl_group, clean_ctrl_grp)
-
 
 
     print ('Build {} Success'.format(block))

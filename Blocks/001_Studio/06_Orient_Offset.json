@@ -1,0 +1,16 @@
+{
+    "Name": "OrientOffset",
+    "Description": "Applies a matrix orient offset setup to a list of custom controls.",
+    "Icon": "Pose.png",
+    "Enable": "True",
+    "python_file": "exec_orient_offset.py",
+    "import": "import exec_orient_offset",
+    "imp.reload": "reload(exec_orient_offset)",
+    "exec_command": "exec_orient_offset.create_orient_offset_block()",
+    "build_command": "exec_orient_offset.build_orient_offset_block()",
+    "attrs": {
+        "SetControlsList_string": "",
+        "AutoParentChildren_bool": "True",
+        "Help_string": "Overview:\n  Applies the matrix orient offset setup to a custom list of controls.\n\nHow To Use:\n  Select the controls in the scene and click 'Add Selected' below. Then click build.\n\nFields:\n- SetControlsList: List of controls to process.\n- AutoParentChildren: If true, existing children of the controls will be reparented under the new _Driven groups automatically."
+    }
+}
