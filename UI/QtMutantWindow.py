@@ -579,6 +579,10 @@ class Qt_Mutant(QtWidgets.QMainWindow):
         super(Qt_Mutant, self).__init__(parent)
         #super().__init__(parent)
 
+        self.setMouseTracking(True)
+        self.grip_margin = 10
+        self._resize_dir = None
+        self._resizing = False
 
         self.setObjectName('MainMutantWindow')
         self.setWindowTitle('Mutant Tools')
@@ -777,56 +781,97 @@ class Qt_Mutant(QtWidgets.QMainWindow):
             self._centered_once = True
             QtCore.QTimer.singleShot(0, self.move_to_center_screen)
 
+    def _get_resize_direction(self, pos):
+        rect = self.rect()
+        x, y, w, h = pos.x(), pos.y(), rect.width(), rect.height()
+        m = self.grip_margin
+        dir = ""
+        if y <= m: dir += "top"
+        elif y >= h - m: dir += "bottom"
+        if x <= m: dir += ("_" if dir else "") + "left"
+        elif x >= w - m: dir += ("_" if dir else "") + "right"
+        return dir
+
+    def _set_resize_cursor(self, dir):
+        if dir in ['top', 'bottom']: self.setCursor(QtCore.Qt.SizeVerCursor)
+        elif dir in ['left', 'right']: self.setCursor(QtCore.Qt.SizeHorCursor)
+        elif dir in ['top_left', 'bottom_right']: self.setCursor(QtCore.Qt.SizeFDiagCursor)
+        elif dir in ['top_right', 'bottom_left']: self.setCursor(QtCore.Qt.SizeBDiagCursor)
+        else: self.setCursor(QtCore.Qt.ArrowCursor)
+
     def mousePressEvent(self, event):
         """
         Handle mouse press event to grab the current position of the UI.
-
-        Args:
-            event: The mouse press event.
         """
         self.scale = False
         self.oldPos = event.globalPos()
+        self.oldGeom = self.geometry()
+        
+        dir = self._get_resize_direction(event.pos())
+        if dir:
+            self._resize_dir = dir
+            self._resizing = True
+        else:
+            self._resizing = False
+            self._resize_dir = None
+
         if self.popup_mode:
             self.close()
 
-    # ------------------------------------------------
     def mouseDoubleClickEvent(self, event):
         """
         Handle mouse double-click event. Scale with double click
-
-        Args:
-            event: The mouse double-click event.
         """
-        #scale with double click
         if event.button() == QtCore.Qt.RightButton:
             self.check_size()
 
-    # ------------------------------------------------
-
     def mouseMoveEvent(self, event):
         """
-        Handle mouse move event to move the frameless UI.
-
-        Args:
-            event: The mouse move event.
+        Handle mouse move event to move or resize the frameless UI.
         """
-        if self.scale ==  True:
+        if self.scale == True and not self._resizing:
             return
 
         if self.current_size_mode == 'big':
-            #self.check_size()
             return
 
         if event.buttons() == QtCore.Qt.NoButton:
-            "Simple mouse motion"
+            dir = self._get_resize_direction(event.pos())
+            self._set_resize_cursor(dir)
         elif event.buttons() == QtCore.Qt.LeftButton:
-            "Left click drag"
-            delta = QtCore.QPoint(event.globalPos() - self.oldPos)
-            self.move(self.x() + delta.x(), self.y() + delta.y())
-            self.oldPos = event.globalPos()
+            if self._resizing and self._resize_dir:
+                delta = event.globalPos() - self.oldPos
+                geom = QtCore.QRect(self.oldGeom)
+                d = self._resize_dir
+                if 'left' in d:
+                    geom.setLeft(geom.left() + delta.x())
+                elif 'right' in d:
+                    geom.setRight(geom.right() + delta.x())
+                if 'top' in d:
+                    geom.setTop(geom.top() + delta.y())
+                elif 'bottom' in d:
+                    geom.setBottom(geom.bottom() + delta.y())
+                
+                # Fallback to minimal dimensions to avoid weird squashing
+                if geom.width() < self.minimumWidth():
+                    if 'left' in d: geom.setLeft(geom.right() - self.minimumWidth())
+                    else: geom.setRight(geom.left() + self.minimumWidth())
+                if geom.height() < self.minimumHeight():
+                    if 'top' in d: geom.setTop(geom.bottom() - self.minimumHeight())
+                    else: geom.setBottom(geom.top() + self.minimumHeight())
+                    
+                self.setGeometry(geom)
+            else:
+                delta = QtCore.QPoint(event.globalPos() - self.oldPos)
+                self.move(self.x() + delta.x(), self.y() + delta.y())
+                self.oldPos = event.globalPos()
         elif event.buttons() == QtCore.Qt.RightButton:
-            "Right click drag"
-    # ------------------------------------------------
+            pass
+
+    def mouseReleaseEvent(self, event):
+        self._resizing = False
+        self._resize_dir = None
+        self.setCursor(QtCore.Qt.ArrowCursor)
 
     def open_over_mouse(self):
         """Open the UI over the mouse cursor position."""

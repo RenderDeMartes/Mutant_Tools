@@ -75,7 +75,12 @@ def build_lattice_block():
     clean_rig_grp = ''
     clean_ctrl_grp = ''
     
-    size = cmds.getAttr('{}.CtrlSize'.format(config))
+    size = float(cmds.getAttr('{}.CtrlSize'.format(config)))
+    try:
+        divisions = int(max(2, cmds.getAttr('{}.Divisions'.format(config))))
+    except:
+        divisions = 3
+
     color = cmds.getAttr('{}.CtrlColor'.format(config), asString=True)
     geo = cmds.getAttr('{}.SetGeo'.format(config))
     local_mode =  cmds.getAttr('{}.Local'.format(config))
@@ -86,13 +91,13 @@ def build_lattice_block():
     if attrs_position == 'new_locator':
         attrs_position = cmds.spaceLocator(n=name + '_Attrs' + nc['locator'])[0]
     mt.line_attr(input=attrs_position, name=name)
-    vis_attr = mt.new_enum(input=attrs_position, name=name+'Vis', enums='Hide:Show')
+    vis_attr = mt.new_enum(input=attrs_position, name=name+'Vis', enums='Hide:Show', default=1)
 
     #create lattice
     if ',' in geo:
         geo = geo.split(',')
     cmds.select(geo)
-    lattice_deformer = cmds.lattice(divisions=(3, 2, 2), objectCentered=True, ldv=(3, 2, 2), ol=False,
+    lattice_deformer = cmds.lattice(divisions=(divisions, 2, 2), objectCentered=True, ldv=(divisions, 2, 2), ol=False,
                                     n='{}_Lat_'.format(name), outsideLattice=1)
 
     cmds.setAttr('{}.outsideLattice'.format(lattice_deformer[0]), 1)
@@ -107,7 +112,7 @@ def build_lattice_block():
     clean_ctrl_grp = cmds.group(n=name+nc['ctrl']+nc['group'], em=True)
     clean_rig_grp = cmds.group(em=True, n = '{}{}'.format(block.replace(nc['module'],'_Rig'), nc['group']))
 
-    for loop in range(3):
+    for loop in range(divisions):
 
         #This is a bad code i know pls dont judge me :)
         loop_clusters = []
@@ -140,7 +145,7 @@ def build_lattice_block():
                         rename=True,
                         custom_name=True,
                         name=cls1[1].replace(nc['cluster']+'Handle', nc['ctrl']),
-                        size=size/2)
+                        size=size/2.0)
         loop_ctrls.append(ctrl1)
         mt.hide_attr(t=False, r=True, s=True)
         mt.assign_color(color = color)
@@ -157,7 +162,7 @@ def build_lattice_block():
                         rename=True,
                         custom_name=True,
                         name=cls2[1].replace(nc['cluster']+'Handle', nc['ctrl']),
-                        size=size/2)
+                        size=size/2.0)
         loop_ctrls.append(ctrl2)
         mt.hide_attr(t=False, r=True, s=True)
         mt.assign_color(color = color)
@@ -174,7 +179,7 @@ def build_lattice_block():
                         rename=True,
                         custom_name=True,
                         name=cls3[1].replace(nc['cluster']+'Handle', nc['ctrl']),
-                        size=size/2)
+                        size=size/2.0)
         loop_ctrls.append(ctrl3)
         mt.hide_attr(t=False, r=True, s=True)
         mt.assign_color(color = color)
@@ -191,7 +196,7 @@ def build_lattice_block():
                         rename=True,
                         custom_name=True,
                         name=cls4[1].replace(nc['cluster']+'Handle', nc['ctrl']),
-                        size=size/2)
+                        size=size/2.0)
         loop_ctrls.append(ctrl4)
         mt.assign_color(color = color)
         mt.hide_attr(t=False, r=True, s=True)

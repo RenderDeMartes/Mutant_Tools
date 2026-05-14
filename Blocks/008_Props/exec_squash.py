@@ -49,6 +49,9 @@ def create_squash_block(name = 'Squash'):
     config = block[1]
     block = block[0]
       
+    loc_guide = cmds.spaceLocator(n = name + nc['locator'])[0]
+    cmds.parent(loc_guide, block)
+
     #cmds.getAttr('{}.AttrName'.format(config)) #get attrs from config
     #cmds.getAttr('{}.AttrName'.format(config), asString = True) #for enums
     #joint_one = mt.create_joint_guide(name = name) #guide base with shapes
@@ -72,19 +75,39 @@ def build_squash_block():
     block = block[0]
     name = block.replace(nc['module'],'')
 
+    try:
+        loc_guide = cmds.listRelatives(block, c=True, fullPath=True, type='transform')[0]
+    except:
+        loc_guide = None
+
     #use this locator in case parent is set to new locator
     if cmds.getAttr('{}.SetParent'.format(config)) == 'new_locator':
         block_parent = cmds.spaceLocator( n = '{}'.format(str(block).replace(nc['module'],'_Parent' + nc['locator'])))
     else:
         block_parent = cmds.getAttr('{}.SetParent'.format(config))
 
-    geos = cmds.getAttr('{}.SetGeo'.format(config), asString=True)
-    if ',' in geos:
-        geos = geos.split(',')
+    # Get Squash and Bend booleans
+    try:
+        squash_enabled = cmds.getAttr('{}.Squash'.format(config))
+    except:
+        squash_enabled = True
+    try:
+        bend_enabled = cmds.getAttr('{}.Bend'.format(config))
+    except:
+        bend_enabled = True
+
+    geos_attr = cmds.getAttr('{}.SetGeo'.format(config), asString=True)
+    if geos_attr:
+        if ',' in geos_attr:
+            geos = [g.strip() for g in geos_attr.split(',') if g.strip()]
+        else:
+            geos = [geos_attr.strip()]
     else:
-        geos = [geos]
-    cmds.select(geos)
-    rig_grp, ctrl_group = mt.bend_and_squash(name=name, geo=None, parent_grp=block_parent)
+        geos = []
+    
+    if geos:
+        cmds.select(geos)
+    rig_grp, ctrl_group = mt.bend_and_squash(name=name, geo=None, parent_grp=block_parent, squash_enabled=squash_enabled, bend_enabled=bend_enabled, ctrl_guide=loc_guide)
 
     for g in geos:
         reorder_deformers(g)
@@ -99,7 +122,50 @@ def build_squash_block():
     cmds.parent(rig_grp, clean_rig_grp)
     cmds.parent(ctrl_group, clean_ctrl_grp)
 
+    # -----------------------------
+    # 🔥 STORE VALUES IN BLOCK
+    # -----------------------------
+    ctrl = "{}_Ctrl".format(name)
+    
+    # Define what we want to store and their block attribute prefixes
+    nodes_to_store = {
+        ctrl: "sqsh",
+        "{}_Bend_Front_Back".format(name): "sqsh_front",
+        "{}_Bend_Side".format(name): "sqsh_side",
+        "SS_{}".format(name): "sqsh_ss"
+    }
 
+    for node_name, prefix in nodes_to_store.items():
+        if cmds.objExists(node_name):
+            # Base transforms
+            attrs_to_sync = ['tx', 'ty', 'tz', 'rx', 'ry', 'rz', 'sx', 'sy', 'sz']
+            
+            # If it's the control, we do NOT store custom attributes here anymore.
+            # CtrlUtils.save_all and load_all now handle custom user-defined attributes robustly.
+            
+            for attr in attrs_to_sync:
+                block_attr = "{}_{}".format(prefix, attr.replace(":", "_"))
+                
+                # Apply saved value if it exists
+                if cmds.attributeQuery(block_attr, node=block, exists=True):
+                    saved_val = cmds.getAttr('{}.{}'.format(block, block_attr))
+                    try:
+                        cmds.setAttr('{}.{}'.format(node_name, attr), saved_val)
+                    except Exception as e:
+                        print("Could not set saved value for {}.{}: {}".format(node_name, attr, e))
+                else:
+                    # Create attribute on block to store the value
+                    try:
+                        current_val = cmds.getAttr('{}.{}'.format(node_name, attr))
+                        cmds.addAttr(block, longName=block_attr, attributeType='double', defaultValue=current_val)
+                    except Exception as e:
+                        print("Could not add block attr {}: {}".format(block_attr, e))
+                
+                # Connect the node's attribute to the block so it auto-updates
+                try:
+                    cmds.connectAttr('{}.{}'.format(node_name, attr), '{}.{}'.format(block, block_attr), force=True)
+                except Exception as e:
+                    print("Could not connect {}.{} to block: {}".format(node_name, attr, e))
 
     print ('Build {} Success'.format(block))
 

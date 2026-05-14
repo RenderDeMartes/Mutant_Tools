@@ -164,6 +164,9 @@ class FaceInstallUI(QtMutantWindow.Qt_Mutant):
     def create_mdl_compat(self, name):
         try:
             node = cmds.createNode('multDoubleLinear', n=name)
+            if cmds.nodeType(node) == "unknown":
+                cmds.delete(node)
+                raise Exception("Node type multDoubleLinear is unknown")
             return node, 'input1', 'input2', 'output'
         except Exception:
             node = cmds.createNode('multiplyDivide', n=name)

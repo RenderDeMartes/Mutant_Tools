@@ -285,6 +285,27 @@ class DraggableBlockWidget(QtWidgets.QGroupBox):
 				y = rect.bottom() - 2
 				painter.drawLine(rect.left(), y, rect.right(), y)
 
+class ListResizer(QtWidgets.QFrame):
+	def __init__(self, target, *args, **kwargs):
+		super(ListResizer, self).__init__(*args, **kwargs)
+		self.target = target
+		self.setCursor(QtCore.Qt.SizeVerCursor)
+		self.setFixedHeight(8)
+		self.setStyleSheet("background-color: #3a3a3a; border-radius: 4px;")
+		self._is_resizing = False
+	def mousePressEvent(self, event):
+		if event.button() == QtCore.Qt.LeftButton:
+			self._is_resizing = True
+			self._start_y = event.globalPos().y()
+			self._start_height = self.target.height()
+	def mouseMoveEvent(self, event):
+		if self._is_resizing:
+			diff = event.globalPos().y() - self._start_y
+			new_h = max(50, self._start_height + diff)
+			self.target.setMinimumHeight(new_h)
+	def mouseReleaseEvent(self, event):
+		self._is_resizing = False
+
 class AutoRigger(QtMutantWindow.Qt_Mutant):
 
 	def __init__(self):
@@ -1204,7 +1225,7 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 				line_edit.textChanged.connect(partial(self.lineEdit_update_attr,line_edit, edit_attr))
 				h_layout.addWidget(line_edit)
 
-				if 'Set' in attr: #if set in name it will create a greab button
+				if 'Set' in attr and 'List' not in attr: #if set in name it will create a greab button
 					set_button = QtWidgets.QPushButton('Set Selection')
 					set_button.setFixedSize(80,30)
 					set_button.clicked.connect(partial(self.lineEdit_get_selection,line_edit, edit_attr))
@@ -1228,6 +1249,75 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 					file_button.setFixedSize(80,35)
 					file_button.clicked.connect(partial(self.lineEdit_get_path,line_edit, edit_attr))
 					h_layout.addWidget(file_button)
+
+				if 'List' in attr:
+					line_edit.setParent(None)
+					
+					list_widget = QtWidgets.QListWidget()
+					list_widget.setSelectionMode(QtWidgets.QAbstractItemView.ExtendedSelection)
+					list_widget.setMinimumHeight(100)
+					
+					current_text = cmds.getAttr(edit_attr)
+					if current_text:
+						items = [i.strip() for i in current_text.split(',') if i.strip()]
+						list_widget.addItems(items)
+						
+					def update_attr_from_list(lw=list_widget, ea=edit_attr):
+						items = []
+						for i in range(lw.count()):
+							items.append(lw.item(i).text())
+						cmds.setAttr(ea, ','.join(items), type='string')
+						
+					def add_selected_to_list(lw=list_widget, ea=edit_attr):
+						sel = cmds.ls(sl=True)
+						if not sel: return
+						existing = []
+						for i in range(lw.count()):
+							existing.append(lw.item(i).text())
+						for s in sel:
+							if s not in existing:
+								lw.addItem(s)
+						update_attr_from_list(lw, ea)
+						
+					def remove_selected_from_list(lw=list_widget, ea=edit_attr):
+						selected_items = lw.selectedItems()
+						if not selected_items: return
+						for item in selected_items:
+							lw.takeItem(lw.row(item))
+						update_attr_from_list(lw, ea)
+						
+					def select_all_in_list(lw=list_widget):
+						items = [lw.item(i).text() for i in range(lw.count())]
+						existing = [i for i in items if cmds.objExists(i)]
+						if existing:
+							cmds.select(existing)
+						else:
+							cmds.select(clear=True)
+
+					list_v_layout = QtWidgets.QVBoxLayout()
+					list_v_layout.addWidget(list_widget)
+					
+					resizer_widget = ListResizer(list_widget)
+					list_v_layout.addWidget(resizer_widget)
+					
+					btn_h_layout = QtWidgets.QHBoxLayout()
+					add_btn = QtWidgets.QPushButton('Add Selected')
+					add_btn.clicked.connect(add_selected_to_list)
+					remove_btn = QtWidgets.QPushButton('Remove Selected')
+					remove_btn.clicked.connect(remove_selected_from_list)
+					btn_h_layout.addWidget(add_btn)
+					btn_h_layout.addWidget(remove_btn)
+					
+					if 'Set' in attr:
+						select_button = QtWidgets.QPushButton()
+						select_button.setFixedSize(20, 20)
+						select_button.setIcon(QtGui.QIcon(os.path.join(IconsPath, 'Cursor.png')))
+						select_button.clicked.connect(select_all_in_list)
+						btn_h_layout.addWidget(select_button)
+
+					list_v_layout.addLayout(btn_h_layout)
+					
+					h_layout.addLayout(list_v_layout)
 
 				if attr == 'Code':  # if code in name it will create a larger box
 					line_edit.setParent(None)
