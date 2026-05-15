@@ -733,11 +733,21 @@ def build_limb_block():
 
                 clean_ctrl_grp = clean_ctrl_grp
 
+                # Ensure mirror: wrap L side with identity Mirror_Grp for hierarchy consistency
+                if cmds.optionVar(q="mutant_ensure_mirror") if cmds.optionVar(ex="mutant_ensure_mirror") else False:
+                    clean_ctrl_grp = mt.ensure_mirror_group(clean_ctrl_grp, world=True)
+                    clean_rig_grp = mt.ensure_mirror_group(clean_rig_grp, world=True)
+
         else:  # only left side
 
             cmds.parentConstraint(block_parent, ikfk['ik_fk'][5][0], mo=True)
             cmds.parentConstraint(block_parent, cmds.listRelatives(ikfk['ik_fk'][4][2], p=True), mo=True)
             #cmds.orientConstraint(block_parent, cmds.listRelatives(ikfk['upper_twist']['no_rotate'], p=True)[0], mo=True)
+
+            # Ensure mirror: wrap L side with identity Mirror_Grp for hierarchy consistency
+            if cmds.optionVar(q="mutant_ensure_mirror") if cmds.optionVar(ex="mutant_ensure_mirror") else False:
+                clean_ctrl_grp = mt.ensure_mirror_group(clean_ctrl_grp, world=True)
+                clean_rig_grp = mt.ensure_mirror_group(clean_rig_grp, world=True)
 
 
         # blends

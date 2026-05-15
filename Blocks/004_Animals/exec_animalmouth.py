@@ -512,6 +512,11 @@ def build_animalmouth_block():
         if side == nc['right']:
             loc_root = mt.mirror_group(loc_root, world=True)
             left_main_ctrl_root = mt.mirror_group(left_main_ctrl_root, world=True)
+        else:
+            # Ensure mirror: wrap L side inner nodes with identity Mirror_Grp to match R side hierarchy
+            if cmds.optionVar(q="mutant_ensure_mirror") if cmds.optionVar(ex="mutant_ensure_mirror") else False:
+                loc_root = mt.ensure_mirror_group(loc_root, world=True)
+                left_main_ctrl_root = mt.ensure_mirror_group(left_main_ctrl_root, world=True)
 
         cmds.parent(loc_root, clean_rig_grp)
         cmds.parent(left_main_ctrl_root, clean_ctrl_grp)

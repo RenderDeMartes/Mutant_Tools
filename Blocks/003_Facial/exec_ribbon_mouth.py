@@ -553,6 +553,10 @@ def build_mouth_block():
             cmds.connectAttr('{}.translate'.format(side_loc), '{}.translate'.format(right_local_locs[1]))
             cmds.connectAttr('{}.rotate'.format(side_loc), '{}.rotate'.format(right_local_locs[1]))
         else:
+            # Ensure mirror: wrap L side inner nodes with identity Mirror_Grp to match R side hierarchy
+            if cmds.optionVar(q="mutant_ensure_mirror") if cmds.optionVar(ex="mutant_ensure_mirror") else False:
+                root_grp = mt.ensure_mirror_group(root_grp, world=True)
+                loc_root_grp = mt.ensure_mirror_group(loc_root_grp, world=True)
             cmds.parent(root_grp, clean_ctrl_grp)
             cmds.parent(loc_root_grp, clean_rig_grp)
             cmds.connectAttr('{}.translate'.format(side_loc), '{}.translate'.format(left_local_locs[0]))

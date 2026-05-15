@@ -95,6 +95,10 @@ def _build_single_fk_side(name, loc_guide, config, nc, setup, is_mirror_side=Fal
     # If mirror side, wrap root in mirror group before parenting
     if is_mirror_side:
         root = mt.mirror_group(root, world=True)
+    else:
+        # Ensure mirror: wrap L side with identity Mirror_Grp for hierarchy consistency
+        if cmds.optionVar(q="mutant_ensure_mirror") if cmds.optionVar(ex="mutant_ensure_mirror") else False:
+            root = mt.ensure_mirror_group(root, world=True)
 
     try:cmds.parent(root, cmds.getAttr('{}.SetCtrlParent'.format(config)))
     except:pass

@@ -512,6 +512,15 @@ def setInfluenceWeights(skinCls, dagPath, components, dataDic, compressed):
 
     for importedInfluence, wtValues in dataDic["weights"].items():
         influenceIndex = influenceMap.get(importedInfluence)
+        
+        # Fallback to short name matching if exact path matching fails
+        if influenceIndex is None:
+            shortInfluence = importedInfluence.split("|")[-1].split(":")[-1]
+            for mapName, idx in influenceMap.items():
+                if mapName.split(":")[-1] == shortInfluence:
+                    influenceIndex = idx
+                    break
+
         if influenceIndex is not None:
             if compressed:
                 for jj in range(numComponentsPerInfluence):
@@ -626,6 +635,7 @@ def importSkin(filePath=None, *args):
         with open(filePath, "r") as fp:
             dataPack = json.load(fp)
 
+    print("IOSkin: importSkin processing {} objects from {}".format(len(dataPack["objDDic"]), filePath))
     for data in dataPack["objDDic"]:
         # This checks if the jSkin file has the new style compressed format.
         # use a skinDataFormat key to check for backwards compatibility.
@@ -638,7 +648,14 @@ def importSkin(filePath=None, *args):
         try:
             skinCluster = False
             objName = data["objName"]
-            objNode = pm.PyNode(objName)
+            print("IOSkin: Processing object '{}' ({} influences)".format(objName, len(data.get("weights", {}))))
+            try:
+                objNode = pm.PyNode(objName)
+            except Exception:
+                # Fallback to short name if the hierarchy/path changed during rebuild
+                shortObjName = objName.split("|")[-1]
+                print("IOSkin: '{}' not found, trying short name '{}'".format(objName, shortObjName))
+                objNode = pm.PyNode(shortObjName)
 
             try:
                 # use getShapes() else meshes with 2+ shapes will fail.
@@ -671,31 +688,34 @@ def importSkin(filePath=None, *args):
                         )
                     )
                     continue
-            except Exception:
-                pass
+            except Exception as vtx_err:
+                print("IOSkin: Vertex count check skipped for '{}': {}".format(objName, vtx_err))
 
             if getSkinCluster(objNode):
                 skinCluster = getSkinCluster(objNode)
+                print("IOSkin: Found existing skinCluster '{}' on '{}'".format(skinCluster, objName))
             else:
+                print("IOSkin: No existing skinCluster on '{}', creating new one".format(objName))
                 try:
-                    joints = list(data["weights"].keys())
+                    # Strip partial paths to avoid issues if hierarchy changed during rebuild
+                    joints = [j.split("|")[-1] for j in data["weights"].keys()]
                     # strip | from longName, or skinCluster command may fail.
                     skinName = data["skinClsName"].replace("|", "")
                     skinCluster = pm.skinCluster(
                         joints, objNode, tsb=True, nw=2, n=skinName
                     )
-                except Exception:
+                except Exception as e:
                     sceneJoints = set(
-                        [pm.PyNode(x).name() for x in pm.ls(type="joint")]
+                        [pm.PyNode(x).name().split("|")[-1] for x in pm.ls(type="joint")]
                     )
                     notFound = []
-                    for j in data["weights"].keys():
+                    for j in joints:
                         if j not in sceneJoints:
                             notFound.append(str(j))
                     pm.displayWarning(
                         "Object: " + objName + " Skiped. Can't "
                         "found corresponding deformer for the "
-                        "following joints: " + str(notFound)
+                        "following joints: " + str(notFound) + " | Error: " + str(e)
                     )
                     continue
 
@@ -706,9 +726,11 @@ def importSkin(filePath=None, *args):
                 setData(skinCluster, data, compressed)
                 print("Imported skin for: {}".format(objName))
 
-        except Exception:
-            warningMsg = "Object: {} Skipped. Can NOT be found in the scene"
-            pm.displayWarning(warningMsg.format(objName))
+        except Exception as e:
+            import traceback
+            warningMsg = "Object: {} Skipped. Can NOT be found in the scene ({})"
+            pm.displayWarning(warningMsg.format(objName, e))
+            traceback.print_exc()
 
 
 

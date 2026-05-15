@@ -350,6 +350,11 @@ def build_antleg_block():
             clean_rig_grp = miror_jnt_grp
             clean_ctrl_grp = miror_ctrl_grp
 
+            # Ensure mirror: wrap L side with identity Mirror_Grp for hierarchy consistency
+            if cmds.optionVar(q="mutant_ensure_mirror") if cmds.optionVar(ex="mutant_ensure_mirror") else False:
+                clean_ctrl_grp = mt.ensure_mirror_group(clean_ctrl_grp, world=True)
+                clean_rig_grp = mt.ensure_mirror_group(clean_rig_grp, world=True)
+
         elif cmds.getAttr('{}.Mirror'.format(config), asString = True) == 'True':
             if str(side_guide).startswith(nc['right']) :
                 miror_ctrl_grp = mt.mirror_group(ctrl_main_grp)
@@ -358,17 +363,32 @@ def build_antleg_block():
                 cmds.parentConstraint(block_parent,(cmds.listRelatives(fk_system[0],p=True)),mo=True)
                 clean_rig_grp = miror_jnt_grp
                 clean_ctrl_grp = miror_ctrl_grp
+
+                # Ensure mirror: wrap L side with identity Mirror_Grp for hierarchy consistency
+                if cmds.optionVar(q="mutant_ensure_mirror") if cmds.optionVar(ex="mutant_ensure_mirror") else False:
+                    clean_ctrl_grp = mt.ensure_mirror_group(clean_ctrl_grp, world=True)
+                    clean_rig_grp = mt.ensure_mirror_group(clean_rig_grp, world=True)
             else:
                 cmds.parentConstraint(block_parent, top_grp , mo = True)
                 cmds.parentConstraint(block_parent,(cmds.listRelatives(fk_system[0],p=True)),mo=True)
                 clean_rig_grp = rig_main_grp
                 clean_ctrl_grp = ctrl_main_grp        
+
+                # Ensure mirror: wrap L side with identity Mirror_Grp for hierarchy consistency
+                if cmds.optionVar(q="mutant_ensure_mirror") if cmds.optionVar(ex="mutant_ensure_mirror") else False:
+                    clean_ctrl_grp = mt.ensure_mirror_group(clean_ctrl_grp, world=True)
+                    clean_rig_grp = mt.ensure_mirror_group(clean_rig_grp, world=True)
         
         else: #only left side
             cmds.parentConstraint(block_parent, top_grp , mo = True)
             cmds.parentConstraint(block_parent,(cmds.listRelatives(fk_system[0],p=True)),mo=True)
             clean_rig_grp = rig_main_grp
             clean_ctrl_grp = ctrl_main_grp  
+
+            # Ensure mirror: wrap L side with identity Mirror_Grp for hierarchy consistency
+            if cmds.optionVar(q="mutant_ensure_mirror") if cmds.optionVar(ex="mutant_ensure_mirror") else False:
+                clean_ctrl_grp = mt.ensure_mirror_group(clean_ctrl_grp, world=True)
+                clean_rig_grp = mt.ensure_mirror_group(clean_rig_grp, world=True)
 
         #blends
         '''
@@ -393,6 +413,11 @@ def build_antleg_block():
     #clean a bit
     '''clean_ctrl_grp = cmds.group(em=True, name = name + nc['ctrl'] + nc['group'])
     clean_rig_grp = cmds.group(em=True, name = name + '_Rig' + nc['group'])
+
+    # Ensure mirror: wrap L side with identity Mirror_Grp for hierarchy consistency
+    if cmds.optionVar(q="mutant_ensure_mirror") if cmds.optionVar(ex="mutant_ensure_mirror") else False:
+        clean_ctrl_grp = mt.ensure_mirror_group(clean_ctrl_grp, world=True)
+        clean_rig_grp = mt.ensure_mirror_group(clean_rig_grp, world=True)
 
     cmds.parent(clean_rig_grp, '{}{}'.format(setup['rig_groups']['misc'], nc['group']))
     cmds.parent(clean_ctrl_grp, setup['base_groups']['control'] + nc['group'])'''

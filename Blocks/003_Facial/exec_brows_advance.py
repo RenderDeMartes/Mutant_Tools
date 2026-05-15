@@ -174,6 +174,11 @@ def build_brows_advance_block():
         clean_ctrl_grp = cmds.group(em=True, name=name + nc['ctrl'] + nc['group'])
         clean_rig_grp = cmds.group(em=True, name=name + '_Rig' + nc['group'])
 
+        # Ensure mirror: wrap L side with identity Mirror_Grp for hierarchy consistency
+        if cmds.optionVar(q="mutant_ensure_mirror") if cmds.optionVar(ex="mutant_ensure_mirror") else False:
+            clean_ctrl_grp = mt.ensure_mirror_group(clean_ctrl_grp, world=True)
+            clean_rig_grp = mt.ensure_mirror_group(clean_rig_grp, world=True)
+
 
         #Create folicles in same pos as the guide
         cmds.select(surface + 'Shape')

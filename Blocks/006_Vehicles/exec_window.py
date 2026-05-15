@@ -91,6 +91,7 @@ def build_window_block():
     clean_rig_grp = ''
     clean_ctrl_grp = ''
 
+    # Ensure mirror: wrap L side with identity Mirror_Grp for hierarchy consistency
     if cmds.getAttr('{}.Mirror'.format(config), asString=True) == 'True':
         right_guide = mt.duplicate_change_names(input=new_guide, hi=True, search=nc['left'], replace=nc['right'])[0]
         to_build.append(right_guide)
@@ -137,14 +138,29 @@ def build_window_block():
                 cmds.parentConstraint(block_parent, fk_parent, mo=True)
                 clean_rig_grp = miror_jnt_grp
                 clean_ctrl_grp = miror_ctrl_grp
+
+                # Ensure mirror: wrap L side with identity Mirror_Grp for hierarchy consistency
+                if cmds.optionVar(q="mutant_ensure_mirror") if cmds.optionVar(ex="mutant_ensure_mirror") else False:
+                    clean_ctrl_grp = mt.ensure_mirror_group(clean_ctrl_grp, world=True)
+                    clean_rig_grp = mt.ensure_mirror_group(clean_rig_grp, world=True)
             else:
                 cmds.parentConstraint(block_parent, fk_parent, mo=True)
                 clean_rig_grp = side_guide
                 clean_ctrl_grp = fk_parent
+
+                # Ensure mirror: wrap L side with identity Mirror_Grp for hierarchy consistency
+                if cmds.optionVar(q="mutant_ensure_mirror") if cmds.optionVar(ex="mutant_ensure_mirror") else False:
+                    clean_ctrl_grp = mt.ensure_mirror_group(clean_ctrl_grp, world=True)
+                    clean_rig_grp = mt.ensure_mirror_group(clean_rig_grp, world=True)
         else:
             cmds.parentConstraint(block_parent, fk_parent, mo=True)
             clean_rig_grp = side_guide
             clean_ctrl_grp = fk_parent
+
+            # Ensure mirror: wrap L side with identity Mirror_Grp for hierarchy consistency
+            if cmds.optionVar(q="mutant_ensure_mirror") if cmds.optionVar(ex="mutant_ensure_mirror") else False:
+                clean_ctrl_grp = mt.ensure_mirror_group(clean_ctrl_grp, world=True)
+                clean_rig_grp = mt.ensure_mirror_group(clean_rig_grp, world=True)
 
         # create bind Joints for the skin
         cmds.select(cl=True)

@@ -208,18 +208,21 @@ class AutoRiggerOptions(QtMutantWindow.Qt_Mutant):
 			cmds.parent(og_guides, block)
 
 		#Make the new block pretty on shapes
-		shapes = cmds.listRelatives(new_guide, ad=True, type='shape')
-		if shapes:
-			for s in shapes:
-				if cmds.objectType(s)=="nurbsCurve":
-					cmds.setAttr("{}.lineWidth".format(s), int(setup['line_width']))
+		if og_guides:
+			shapes = cmds.listRelatives(new_guide, ad=True, type='shape')
+			if shapes:
+				for s in shapes:
+					if cmds.objectType(s)=="nurbsCurve":
+						cmds.setAttr("{}.lineWidth".format(s), int(setup['line_width']))
 
 		try:
 			self.autorigger_ui.create_layout()
 			mt.update_icons()
-			cmds.select(new_block)
-		except:
-			pass
+		except Exception as e:
+			print('Duplicate refresh error: {}'.format(e))
+
+		cmds.select(new_block)
+		self.close()
 
 	@undo
 	def delete_cmd(self):

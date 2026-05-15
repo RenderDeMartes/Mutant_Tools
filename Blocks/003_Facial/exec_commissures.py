@@ -176,6 +176,10 @@ def build_commissures_block():
         cmds.parent(curves, curve_grp)
         if side == nc['right']:
             curve_grp = mt.mirror_group(curve_grp, world=True)
+        else:
+            # Ensure mirror: wrap L side with identity Mirror_Grp for hierarchy consistency
+            if cmds.optionVar(q="mutant_ensure_mirror") if cmds.optionVar(ex="mutant_ensure_mirror") else False:
+                curve_grp = mt.ensure_mirror_group(curve_grp, world=True)
 
         curves_grp.append(curve_grp)
 

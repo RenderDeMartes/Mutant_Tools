@@ -233,11 +233,18 @@ def build_slide_block():
         # Mirror complete right-side ctrl hierarchy.
         if mirror_mode in ('True', 'Right_Only') and is_right_side:
             clean_ctrl_grp = mt.mirror_group(input=clean_ctrl_grp, world=True)
+        else:
+            # Ensure mirror: wrap L side with identity Mirror_Grp for hierarchy consistency
+            if cmds.optionVar(q="mutant_ensure_mirror") if cmds.optionVar(ex="mutant_ensure_mirror") else False:
+                clean_ctrl_grp = mt.ensure_mirror_group(clean_ctrl_grp, world=True)
 
         if rig_mirror_grp:
             cmds.parent(position_locator_root, rig_mirror_grp, clean_rig_grp)
         else:
             cmds.parent(position_locator_root, driver_locator, clean_rig_grp)
+            # Ensure mirror: wrap L side rig with identity Mirror_Grp for hierarchy consistency
+            if cmds.optionVar(q="mutant_ensure_mirror") if cmds.optionVar(ex="mutant_ensure_mirror") else False:
+                clean_rig_grp = mt.ensure_mirror_group(clean_rig_grp, world=True)
 
         cmds.parentConstraint(block_parent, clean_ctrl_grp, mo=True)
         cmds.parentConstraint(block_parent, clean_rig_grp,  mo=True)

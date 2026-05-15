@@ -600,6 +600,16 @@ class Qt_Mutant(QtWidgets.QMainWindow):
         self.set_title()
         self.set_stylesheet(widget = self.master_ui)
 
+        # Enable mouse tracking on child widgets so the resize cursor
+        # appears when hovering over the window edges.
+        self._enable_mouse_tracking_recursive(self.master_ui)
+        self.master_ui.installEventFilter(self)
+
+        # Apply saved window mode preference (standard vs frameless)
+        self._standard_window_mode = False
+        if cmds.optionVar(ex='mutant_standard_window') and cmds.optionVar(q='mutant_standard_window'):
+            self.apply_window_mode(standard=True)
+
         self.connect_buttons()
 
         self.minimize_state = False
@@ -731,6 +741,53 @@ class Qt_Mutant(QtWidgets.QMainWindow):
         self.setWindowFlags(flags)
         return
 
+    def apply_window_mode(self, standard=False):
+        """Switch between standard OS window and custom frameless window.
+
+        Args:
+            standard (bool): If True, use a normal OS-decorated window.
+                If False, use the custom frameless style.
+        """
+        was_visible = self.isVisible()
+        pos = self.pos()
+        size = self.size()
+        self._standard_window_mode = standard
+
+        if standard:
+            # Standard OS window with native title bar
+            if sys.platform == 'darwin':
+                flags = QtCore.Qt.Window | QtCore.Qt.WindowStaysOnTopHint
+            else:
+                flags = QtCore.Qt.Window
+            self.setWindowFlags(flags)
+            self.setWindowTitle('Mutant Tools')
+            # Hide the custom title bar and size grip since the OS provides them
+            self.master_ui.top_frame.hide()
+            self.master_ui.size_grip_box.hide()
+            self.size_grip.hide()
+            self.set_margins(top=0, buttom=0, right=0, left=0)
+        else:
+            # Custom frameless window
+            self.make_frameless()
+            self.master_ui.top_frame.show()
+            self.master_ui.size_grip_box.show()
+            self.size_grip.show()
+            self.set_margins()
+
+        if was_visible:
+            self.show()
+            self.move(pos)
+            self.resize(size)
+
+    def toggle_standard_window(self, standard=True):
+        """Toggle between standard and frameless window modes.
+
+        Args:
+            standard (bool): Whether to enable standard window mode.
+        """
+        cmds.optionVar(intValue=('mutant_standard_window', int(standard)))
+        self.apply_window_mode(standard=standard)
+
     # ------------------------------------------------
 
     def move_top_corner(self):
@@ -781,6 +838,26 @@ class Qt_Mutant(QtWidgets.QMainWindow):
             self._centered_once = True
             QtCore.QTimer.singleShot(0, self.move_to_center_screen)
 
+    def _enable_mouse_tracking_recursive(self, widget):
+        """Enable mouse tracking on a widget and all its children."""
+        widget.setMouseTracking(True)
+        for child in widget.findChildren(QtWidgets.QWidget):
+            child.setMouseTracking(True)
+
+    def eventFilter(self, obj, event):
+        """Intercept mouse moves on child widgets to show resize cursors at window edges."""
+        if event.type() == QtCore.QEvent.MouseMove and not self._resizing:
+            if self.current_size_mode != 'big':
+                # Map the position from the child widget to the main window
+                window_pos = self.mapFromGlobal(obj.mapToGlobal(event.pos()))
+                direction = self._get_resize_direction(window_pos)
+                if direction:
+                    self._set_resize_cursor(direction)
+                    return False
+                else:
+                    self.unsetCursor()
+        return QtWidgets.QMainWindow.eventFilter(self, obj, event)
+
     def _get_resize_direction(self, pos):
         rect = self.rect()
         x, y, w, h = pos.x(), pos.y(), rect.width(), rect.height()
@@ -797,7 +874,7 @@ class Qt_Mutant(QtWidgets.QMainWindow):
         elif dir in ['left', 'right']: self.setCursor(QtCore.Qt.SizeHorCursor)
         elif dir in ['top_left', 'bottom_right']: self.setCursor(QtCore.Qt.SizeFDiagCursor)
         elif dir in ['top_right', 'bottom_left']: self.setCursor(QtCore.Qt.SizeBDiagCursor)
-        else: self.setCursor(QtCore.Qt.ArrowCursor)
+        else: self.unsetCursor()
 
     def mousePressEvent(self, event):
         """

@@ -32,6 +32,7 @@ author:  Esteban Rodriguez <info@mutanttools.com>
 '''
 
 from maya import cmds
+import maya.mel as mel
 import os
 import glob
 from pathlib import Path
@@ -82,10 +83,18 @@ def save_all_skins_to(folder_path='', accept_errors=True):
                 geo = cSkin.get_geo_from_skin(skin=skin)[0]
                 #geo = cmds.listRelatives(shape, p=True)[0]
                 geos.append(geo)
+
+                # Skip non-mesh types (nurbsSurface, nurbsCurve) — the build recreates those skins
+                geo_type = cmds.nodeType(geo)
+                if geo_type not in ['mesh']:
+                    continue
+
                 print(skin, geo)
 
                 data = cSkin.get_weights(geo)
-                cSkin.save(data=data, path=os.path.join(folder_path, geo+'.json'))
+                # Sanitize ':' from filename (namespace separator is illegal in Windows filenames)
+                safe_geo_name = geo.replace(':', '__NS__')
+                cSkin.save(data=data, path=os.path.join(folder_path, safe_geo_name+'.json'))
                 saved_geos.append(geo)
             except Exception as e:
                 errors.append('{}: {}'.format(skin, e))
@@ -115,13 +124,19 @@ def load_all_skins_from(folder_path='', accept_errors=True, namespace=False, avo
     if not folder_path:
         folder_path = mh.folder_window()
 
-    skin_files = glob.glob(os.path.join(folder_path, '*'))
+    skin_files = glob.glob(os.path.join(folder_path, '*.json'))
     if not skin_files:
         cmds.warning('No Skin Files on Selected Folder')
     from Mutant_Tools.UI.ProgressBar import load_progress_bar
     reload(load_progress_bar)
     cProgressBarUI = load_progress_bar.ProgressBarUI(items=skin_files, title='Loading Skins')
     cProgressBarUI.show()
+
+    # Freeze the viewport to speed up skin loading
+    viewport_frozen = False
+    if not cmds.about(batch=True):
+        mel.eval("paneLayout -e -manage false $gMainPane")
+        viewport_frozen = True
 
     errors = []
     loaded_geos = []
@@ -130,18 +145,34 @@ def load_all_skins_from(folder_path='', accept_errors=True, namespace=False, avo
     try:
         for num, file in enumerate(skin_files):
             cProgressBarUI.set_percent(num)
-            geo = os.path.basename(file).replace('.json', '')
+            # Read the actual geo name from inside the JSON data instead of
+            # deriving from filename, so namespaced geos (saved with __NS__) work.
+            try:
+                skin_data = cSkin.load_data(path=file)
+            except Exception as e:
+                errors.append('{}: {}'.format(os.path.basename(file), e))
+                if not accept_errors:
+                    raise
+                continue
+
+            # Get the real geo name from the data keys (preserves namespace)
+            geo_keys = list(skin_data.keys())
+            if not geo_keys:
+                continue
+            geo = geo_keys[0]
             print(file, geo)
             if not cmds.objExists(geo):
                 skipped_missing.append(geo)
                 continue
             print(cmds.nodeType(geo))
-            if cmds.nodeType(geo) != 'mesh':
+            if cmds.nodeType(geo) not in ['mesh', 'nurbsSurface', 'nurbsCurve']:
                 skipped_not_mesh.append(geo)
+                continue
+            # Silently skip non-mesh types — SkinUtils only supports mesh
+            if cmds.nodeType(geo) != 'mesh':
                 continue
 
             try:
-                skin_data = cSkin.load_data(path=file)
                 if namespace and avoid_rename:
                     skin_data = add_namespace_to_json(file, namespace, avoid_rename)
                     #pprint.pprint(skin_data)
@@ -153,6 +184,9 @@ def load_all_skins_from(folder_path='', accept_errors=True, namespace=False, avo
                     raise
     finally:
         cProgressBarUI.close()
+        # Unfreeze the viewport
+        if viewport_frozen:
+            mel.eval("paneLayout -e -manage true $gMainPane")
 
     if errors:
         for e in errors:

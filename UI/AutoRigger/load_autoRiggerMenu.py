@@ -209,6 +209,11 @@ class AutoRiggerMenu(QtWidgets.QDialog):
 		self.fast_load_skin = self.skinsMenu.addAction("Fast Load Skin Pack")
 		self.save_sel_skin = self.skinsMenu.addAction("Save Selected Skins")
 		self.load_sel_skin = self.skinsMenu.addAction("Load Selected Skins")
+		self.skinsMenu.addSeparator()
+		self.use_fast_skin = self.skinsMenu.addAction("Use Fast Skin (Rebuild)")
+		self.use_fast_skin.setCheckable(True)
+		fast_skin_state = cmds.optionVar(q="mutant_use_fast_skin") if cmds.optionVar(ex="mutant_use_fast_skin") else True
+		self.use_fast_skin.setChecked(fast_skin_state)
 
 		# Controllers submenu
 		self.ctrlsMenu = QtWidgets.QMenu("Controllers", self)
@@ -232,8 +237,23 @@ class AutoRiggerMenu(QtWidgets.QDialog):
 		self.visual_build.setCheckable(True)
 		visual_build_state = cmds.optionVar(q="mutant_visual_build") if cmds.optionVar(ex="mutant_visual_build") else True
 		self.visual_build.setChecked(visual_build_state)
+
+		self.clear_script_editor = self.fileMenu.addAction("Clear Script Editor on Build")
+		self.clear_script_editor.setCheckable(True)
+		clear_se_state = cmds.optionVar(q="mutant_clear_script_editor") if cmds.optionVar(ex="mutant_clear_script_editor") else True
+		self.clear_script_editor.setChecked(clear_se_state)
+
+		self.revert_on_fail = self.fileMenu.addAction("Revert on Fail")
+		self.revert_on_fail.setCheckable(True)
+		revert_state = cmds.optionVar(q="mutant_revert_on_fail") if cmds.optionVar(ex="mutant_revert_on_fail") else True
+		self.revert_on_fail.setChecked(revert_state)
 		
 		self.fileMenu.addSeparator()
+
+		self.standard_window = self.fileMenu.addAction("Use Standard Window")
+		self.standard_window.setCheckable(True)
+		std_win_state = cmds.optionVar(q="mutant_standard_window") if cmds.optionVar(ex="mutant_standard_window") else False
+		self.standard_window.setChecked(std_win_state)
 
 		self.menuBar.addMenu(self.fileMenu)
 
@@ -321,6 +341,29 @@ class AutoRiggerMenu(QtWidgets.QDialog):
 
 		#Visual Build
 		self.visual_build.toggled.connect(lambda state: cmds.optionVar(intValue=("mutant_visual_build", state)))
+
+		#Clear Script Editor
+		self.clear_script_editor.toggled.connect(lambda state: cmds.optionVar(intValue=("mutant_clear_script_editor", state)))
+
+		#Revert on Fail
+		self.revert_on_fail.toggled.connect(lambda state: cmds.optionVar(intValue=("mutant_revert_on_fail", state)))
+
+		#Use Fast Skin (Rebuild)
+		self.use_fast_skin.toggled.connect(lambda state: cmds.optionVar(intValue=("mutant_use_fast_skin", state)))
+
+		#Standard Window
+		self.standard_window.toggled.connect(self._toggle_standard_window)
+
+	# -------------------------------------------------------------------
+	def _toggle_standard_window(self, state):
+		"""Find the parent Qt_Mutant window and toggle its window mode."""
+		parent = self.parent()
+		while parent:
+			if hasattr(parent, 'toggle_standard_window'):
+				parent.toggle_standard_window(standard=state)
+				return
+			parent = parent.parent()
+		cmds.warning('Could not find Mutant main window to toggle window mode.')
 
 	# -------------------------------------------------------------------
 	def set_mutant_hotkeys(self, *args):

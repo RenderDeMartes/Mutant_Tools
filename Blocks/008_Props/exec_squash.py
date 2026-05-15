@@ -52,9 +52,21 @@ def create_squash_block(name = 'Squash'):
     loc_guide = cmds.spaceLocator(n = name + nc['locator'])[0]
     cmds.parent(loc_guide, block)
 
+    bend_guide = cmds.spaceLocator(n = name + "_Bend_Guide" + nc['locator'])[0]
+    cmds.parent(bend_guide, block)
+    cmds.setAttr(bend_guide + '.ty', 2)
+
+    squash_guide = cmds.spaceLocator(n = name + "_Squash_Guide" + nc['locator'])[0]
+    cmds.parent(squash_guide, block)
+    cmds.setAttr(squash_guide + '.ty', 4)
+
     #cmds.getAttr('{}.AttrName'.format(config)) #get attrs from config
     #cmds.getAttr('{}.AttrName'.format(config), asString = True) #for enums
     #joint_one = mt.create_joint_guide(name = name) #guide base with shapes
+
+    if cmds.attributeQuery('UseCustomPivots', node=config, exists=True):
+        cmds.connectAttr(config + '.UseCustomPivots', bend_guide + '.v')
+        cmds.connectAttr(config + '.UseCustomPivots', squash_guide + '.v')
 
     cmds.select(block)
 
@@ -76,9 +88,24 @@ def build_squash_block():
     name = block.replace(nc['module'],'')
 
     try:
-        loc_guide = cmds.listRelatives(block, c=True, fullPath=True, type='transform')[0]
+        guides = cmds.listRelatives(block, c=True, fullPath=True, type='transform') or []
+        loc_guide = None
+        bend_guide = None
+        squash_guide = None
+        for guide in guides:
+            shapes = cmds.listRelatives(guide, s=True, type='locator')
+            if shapes:
+                short_name = guide.split('|')[-1]
+                if "Bend_Guide" in short_name:
+                    bend_guide = guide
+                elif "Squash_Guide" in short_name:
+                    squash_guide = guide
+                else:
+                    loc_guide = guide
     except:
         loc_guide = None
+        bend_guide = None
+        squash_guide = None
 
     #use this locator in case parent is set to new locator
     if cmds.getAttr('{}.SetParent'.format(config)) == 'new_locator':
@@ -96,6 +123,15 @@ def build_squash_block():
     except:
         bend_enabled = True
 
+    try:
+        use_custom_pivots = cmds.getAttr('{}.UseCustomPivots'.format(config))
+    except:
+        use_custom_pivots = False
+
+    if not use_custom_pivots:
+        bend_guide = None
+        squash_guide = None
+
     geos_attr = cmds.getAttr('{}.SetGeo'.format(config), asString=True)
     if geos_attr:
         if ',' in geos_attr:
@@ -105,9 +141,23 @@ def build_squash_block():
     else:
         geos = []
     
-    if geos:
-        cmds.select(geos)
-    rig_grp, ctrl_group = mt.bend_and_squash(name=name, geo=None, parent_grp=block_parent, squash_enabled=squash_enabled, bend_enabled=bend_enabled, ctrl_guide=loc_guide)
+    dummy_geo = None
+    if not geos:
+        dummy_geo = cmds.polyCube(n=name + '_Squash_Dummy_Geo')[0]
+        cmds.setAttr(dummy_geo + '.v', 0)
+        geos = [dummy_geo]
+    
+    cmds.select(geos)
+    rig_grp, ctrl_group = mt.bend_and_squash(
+        name=name, 
+        geo=geos, 
+        parent_grp=block_parent, 
+        squash_enabled=squash_enabled, 
+        bend_enabled=bend_enabled, 
+        ctrl_guide=loc_guide,
+        bend_guide=bend_guide,
+        squash_guide=squash_guide
+    )
 
     for g in geos:
         reorder_deformers(g)
@@ -130,9 +180,10 @@ def build_squash_block():
     }
     for config_attr, ctrl_attr in param_map.items():
         if cmds.attributeQuery(config_attr, node=config, exists=True):
-            val = cmds.getAttr('{}.{}'.format(config, config_attr), asString=True)
-            val = float(val)
-            cmds.setAttr('{}.{}'.format(ctrl, ctrl_attr), val)
+            if cmds.attributeQuery(ctrl_attr, node=ctrl, exists=True):
+                val = cmds.getAttr('{}.{}'.format(config, config_attr), asString=True)
+                val = float(val)
+                cmds.setAttr('{}.{}'.format(ctrl, ctrl_attr), val)
 
     # Lock secondary attrs if requested
     try:
@@ -152,12 +203,16 @@ def build_squash_block():
             'SS_{}_highBound'.format(name),
         ]
         for attr in secondary_attrs:
-            full = '{}.{}'.format(ctrl, attr)
-            cmds.setAttr(full, lock=True, keyable=False, channelBox=False)
+            if cmds.attributeQuery(attr, node=ctrl, exists=True):
+                full = '{}.{}'.format(ctrl, attr)
+                cmds.setAttr(full, lock=True, keyable=False, channelBox=False)
 
     #clean a bit
     clean_ctrl_grp = cmds.group(em=True, name = name + nc['ctrl'] + nc['group'])
     clean_rig_grp = cmds.group(em=True, name = name + '_Rig' + nc['group'])
+
+    if dummy_geo:
+        cmds.parent(dummy_geo, clean_rig_grp)
 
     cmds.parent(clean_rig_grp, '{}{}'.format(setup['rig_groups']['misc'], nc['group']))
     cmds.parent(clean_ctrl_grp, setup['base_groups']['control'] + nc['group'])
