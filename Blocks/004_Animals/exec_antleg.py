@@ -362,7 +362,7 @@ def build_antleg_block():
                 cmds.parentConstraint(block_parent, top_grp , mo = True)
                 cmds.parentConstraint(block_parent,(cmds.listRelatives(fk_system[0],p=True)),mo=True)
                 clean_rig_grp = rig_main_grp
-                clean_ctrl_grp = ctrl_main_grp        
+                clean_ctrl_grp = ctrl_main_grp
         
         else: #only left side
             cmds.parentConstraint(block_parent, top_grp , mo = True)

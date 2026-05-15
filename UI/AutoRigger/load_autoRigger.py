@@ -198,6 +198,79 @@ def add_sys_folders_remove_compiled():
 
 #-------------------------------------------------------------------
 
+class FlowLayout(QtWidgets.QLayout):
+	"""A layout that arranges widgets left-to-right, wrapping to the next row."""
+	def __init__(self, parent=None, margin=0, spacing=-1):
+		super(FlowLayout, self).__init__(parent)
+		if parent is not None:
+			self.setContentsMargins(margin, margin, margin, margin)
+		self._item_list = []
+		self._h_spacing = spacing if spacing >= 0 else 4
+		self._v_spacing = spacing if spacing >= 0 else 4
+
+	def addItem(self, item):
+		self._item_list.append(item)
+
+	def count(self):
+		return len(self._item_list)
+
+	def itemAt(self, index):
+		if 0 <= index < len(self._item_list):
+			return self._item_list[index]
+		return None
+
+	def takeAt(self, index):
+		if 0 <= index < len(self._item_list):
+			return self._item_list.pop(index)
+		return None
+
+	def expandingDirections(self):
+		return QtCore.Qt.Orientations(QtCore.Qt.Orientation(0))
+
+	def hasHeightForWidth(self):
+		return True
+
+	def heightForWidth(self, width):
+		return self._do_layout(QtCore.QRect(0, 0, width, 0), test_only=True)
+
+	def setGeometry(self, rect):
+		super(FlowLayout, self).setGeometry(rect)
+		self._do_layout(rect, test_only=False)
+
+	def sizeHint(self):
+		return self.minimumSize()
+
+	def minimumSize(self):
+		size = QtCore.QSize()
+		for item in self._item_list:
+			size = size.expandedTo(item.minimumSize())
+		margins = self.contentsMargins()
+		size += QtCore.QSize(margins.left() + margins.right(), margins.top() + margins.bottom())
+		return size
+
+	def _do_layout(self, rect, test_only):
+		margins = self.contentsMargins()
+		effective = rect.adjusted(margins.left(), margins.top(), -margins.right(), -margins.bottom())
+		x = effective.x()
+		y = effective.y()
+		line_height = 0
+		for item in self._item_list:
+			widget = item.widget()
+			space_x = self._h_spacing
+			space_y = self._v_spacing
+			next_x = x + item.sizeHint().width() + space_x
+			if next_x - space_x > effective.right() and line_height > 0:
+				x = effective.x()
+				y = y + line_height + space_y
+				next_x = x + item.sizeHint().width() + space_x
+				line_height = 0
+			if not test_only:
+				item.setGeometry(QtCore.QRect(QtCore.QPoint(x, y), item.sizeHint()))
+			x = next_x
+			line_height = max(line_height, item.sizeHint().height())
+		return y + line_height - rect.y() + margins.bottom()
+
+
 class DraggableButton(QtWidgets.QPushButton):
 	def __init__(self, block_name, *args, **kwargs):
 		super(DraggableButton, self).__init__(*args, **kwargs)
@@ -233,6 +306,7 @@ class DraggableBlockWidget(QtWidgets.QGroupBox):
 		super(DraggableBlockWidget, self).__init__(*args, **kwargs)
 		self.block_name = block_name
 		self.setAcceptDrops(True)
+		self.setFocusPolicy(QtCore.Qt.NoFocus)
 		self._drop_indicator = None
 
 	def dragEnterEvent(self, event):
@@ -317,7 +391,7 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 
 		self.create_menu()
 
-		self.resize(605, 652)
+		self.resize(605, 750)
 
 		#load blocks folders to sys and remove all the compiled info in BLOCKS and UI Folder
 		if mt.check_dev_mode():
@@ -352,6 +426,11 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 
 		self.studio_name = setup['studio']
 		self.ui.tabs.setTabText(1, self.studio_name)
+
+		# Connect tab change to save active tab live
+		self.ui.tabs.currentChanged.connect(
+			lambda idx: cmds.optionVar(intValue=('mutant_active_tab', idx))
+		)
 
 		try:OpenMaya.MGlobal.displayInfo('<3')
 		except:pass
@@ -422,6 +501,256 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		self.menu.update_all_blocks.triggered.connect(self.update_all_blocks_cmd)
 		
 
+	def _setup_splitter(self):
+		"""Replace fixed layouts with draggable QSplitters (vertical between tabs/content, horizontal between blocks/properties)."""
+		if hasattr(self, '_splitter_installed'):
+			return
+
+		main_layout = self.ui.layout()
+		if main_layout is None:
+			return
+
+		# --- Horizontal splitter: side_scroll | properties ---
+		# Remove the max-width constraint on side_scroll so splitter controls it
+		self.ui.side_scroll.setMaximumWidth(16777215)
+		self.ui.side_scroll.setMinimumWidth(120)
+
+		# Collect all widgets from the right-side vertical layout into a container
+		right_widget = QtWidgets.QWidget()
+		right_layout = QtWidgets.QVBoxLayout(right_widget)
+		right_layout.setContentsMargins(0, 0, 0, 0)
+
+		v_layout = self.ui.findChild(QtWidgets.QVBoxLayout, 'verticalLayout_2')
+		if v_layout:
+			while v_layout.count():
+				child = v_layout.takeAt(0)
+				if child.widget():
+					right_layout.addWidget(child.widget())
+				elif child.layout():
+					right_layout.addLayout(child.layout())
+
+		self._h_splitter = QtWidgets.QSplitter(QtCore.Qt.Horizontal)
+		self._h_splitter.addWidget(self.ui.side_scroll)
+		self._h_splitter.addWidget(right_widget)
+		self._h_splitter.setStretchFactor(0, 0)
+		self._h_splitter.setStretchFactor(1, 1)
+		self._h_splitter.setSizes([200, 400])
+		self._h_splitter.setHandleWidth(5)
+
+		# --- Vertical splitter: tabs on top | h_splitter on bottom ---
+		# Find the tabs and the grid that holds the blocks/properties
+		tabs_widget = self.ui.tabs
+		# Remove tabs max height so it can shrink
+		tabs_widget.setMaximumHeight(16777215)
+
+		# Remove the menuLayout_3 wrapper around tabs so we can reparent it
+		menu_layout_3 = self.ui.findChild(QtWidgets.QVBoxLayout, 'menuLayout_3')
+
+		self._v_splitter = QtWidgets.QSplitter(QtCore.Qt.Vertical)
+		self._v_splitter.addWidget(tabs_widget)
+		self._v_splitter.addWidget(self._h_splitter)
+		self._v_splitter.setStretchFactor(0, 0)
+		self._v_splitter.setStretchFactor(1, 1)
+		# Default height for tabs – enough for ~3 rows of icons
+		self._v_splitter.setSizes([180, 500])
+		self._v_splitter.setHandleWidth(5)
+
+		splitter_style = 'QSplitter::handle { background-color: #3a3a3a; }'
+		self._h_splitter.setStyleSheet(splitter_style)
+		self._v_splitter.setStyleSheet(splitter_style)
+
+		# Insert the vertical splitter into the main grid
+		# Find gridLayout_12 and remove it since h_splitter now owns its content
+		grid_12 = None
+		for i in range(main_layout.count()):
+			item = main_layout.itemAt(i)
+			if item and item.layout() and item.layout().objectName() == 'gridLayout_12':
+				grid_12 = item.layout()
+				main_layout.removeItem(item)
+				break
+
+		# Remove menuLayout_3 item that held the tabs
+		for i in range(main_layout.count()):
+			item = main_layout.itemAt(i)
+			if item and item.layout() and item.layout().objectName() == 'menuLayout_3':
+				main_layout.removeItem(item)
+				break
+
+		# Add the vertical splitter spanning the content area
+		main_layout.addWidget(self._v_splitter, 1, 0)
+
+		self._splitter_installed = True
+
+		# Connect splitter signals to save state live as the user drags
+		self._h_splitter.splitterMoved.connect(self._on_splitter_moved)
+		self._v_splitter.splitterMoved.connect(self._on_splitter_moved)
+
+	# -------------------------------------------------------------------
+	# UI State Persistence
+	# -------------------------------------------------------------------
+
+	def _on_splitter_moved(self, pos, index):
+		"""Save splitter sizes whenever the user drags a splitter handle."""
+		self._save_splitter_state()
+
+	def _save_splitter_state(self):
+		"""Save only splitter positions to optionVar."""
+		try:
+			if hasattr(self, '_v_splitter'):
+				sizes = self._v_splitter.sizes()
+				if len(sizes) == 2 and sizes[0] > 0 and sizes[1] > 0:
+					cmds.optionVar(intValue=('mutant_vsplit_0', sizes[0]))
+					cmds.optionVar(intValue=('mutant_vsplit_1', sizes[1]))
+			if hasattr(self, '_h_splitter'):
+				sizes = self._h_splitter.sizes()
+				if len(sizes) == 2 and sizes[0] > 0 and sizes[1] > 0:
+					cmds.optionVar(intValue=('mutant_hsplit_0', sizes[0]))
+					cmds.optionVar(intValue=('mutant_hsplit_1', sizes[1]))
+		except:
+			pass
+
+	def _save_ui_state(self):
+		"""Save window geometry, splitter positions, and active tab to Maya optionVar."""
+		try:
+			# Window geometry
+			geo = self.geometry()
+			cmds.optionVar(intValue=('mutant_win_x', geo.x()))
+			cmds.optionVar(intValue=('mutant_win_y', geo.y()))
+			cmds.optionVar(intValue=('mutant_win_w', geo.width()))
+			cmds.optionVar(intValue=('mutant_win_h', geo.height()))
+
+			# Splitters
+			self._save_splitter_state()
+
+			# Active tab index
+			if hasattr(self, 'ui') and hasattr(self.ui, 'tabs'):
+				cmds.optionVar(intValue=('mutant_active_tab', self.ui.tabs.currentIndex()))
+		except Exception as e:
+			print('Mutant: could not save UI state: {}'.format(e))
+
+	def _restore_ui_state(self):
+		"""Restore window geometry, splitter positions, and active tab from Maya optionVar."""
+		try:
+			# Restore window geometry
+			if (cmds.optionVar(ex='mutant_win_w') and cmds.optionVar(ex='mutant_win_h')):
+				w = cmds.optionVar(q='mutant_win_w')
+				h = cmds.optionVar(q='mutant_win_h')
+				if w > 100 and h > 100:
+					self.resize(w, h)
+
+				if (cmds.optionVar(ex='mutant_win_x') and cmds.optionVar(ex='mutant_win_y')):
+					x = cmds.optionVar(q='mutant_win_x')
+					y = cmds.optionVar(q='mutant_win_y')
+					# Validate the position is on-screen
+					screen = None
+					try:
+						screen = QtGui.QGuiApplication.screenAt(QtCore.QPoint(x, y))
+					except:
+						pass
+					if screen:
+						self._centered_once = True  # Skip the auto-center
+						self.move(x, y)
+
+			# Restore vertical splitter sizes
+			if hasattr(self, '_v_splitter'):
+				if (cmds.optionVar(ex='mutant_vsplit_0') and cmds.optionVar(ex='mutant_vsplit_1')):
+					s0 = cmds.optionVar(q='mutant_vsplit_0')
+					s1 = cmds.optionVar(q='mutant_vsplit_1')
+					if s0 > 0 and s1 > 0:
+						self._v_splitter.setSizes([s0, s1])
+
+			# Restore horizontal splitter sizes
+			if hasattr(self, '_h_splitter'):
+				if (cmds.optionVar(ex='mutant_hsplit_0') and cmds.optionVar(ex='mutant_hsplit_1')):
+					s0 = cmds.optionVar(q='mutant_hsplit_0')
+					s1 = cmds.optionVar(q='mutant_hsplit_1')
+					if s0 > 0 and s1 > 0:
+						self._h_splitter.setSizes([s0, s1])
+
+			# Restore active tab
+			if hasattr(self, 'ui') and hasattr(self.ui, 'tabs'):
+				if cmds.optionVar(ex='mutant_active_tab'):
+					tab_idx = cmds.optionVar(q='mutant_active_tab')
+					if 0 <= tab_idx < self.ui.tabs.count():
+						self.ui.tabs.setCurrentIndex(tab_idx)
+		except Exception as e:
+			print('Mutant: could not restore UI state: {}'.format(e))
+
+	def showEvent(self, event):
+		"""Restore UI state after the window is fully shown and laid out."""
+		super(AutoRigger, self).showEvent(event)
+		if not hasattr(self, '_state_restored'):
+			self._state_restored = True
+			# Use a 150ms delay to let Qt finalize all layout calculations
+			QtCore.QTimer.singleShot(150, self._restore_ui_state)
+
+	def closeEvent(self, event):
+		"""Save UI state before closing."""
+		self._save_ui_state()
+		try:
+			cmds.scriptJob(kill=self.mutant_sj, force=True)
+		except:
+			pass
+		super(AutoRigger, self).closeEvent(event)
+
+	# -------------------------------------------------------------------
+
+	def _convert_tab_layouts_to_flow(self):
+		"""Replace each tab's QHBoxLayout with a FlowLayout so buttons wrap."""
+		if hasattr(self, '_flow_installed'):
+			return
+		self._flow_installed = True
+
+		# Map layout name -> attribute name on self.ui
+		layout_names = [
+			'presets_layout', 'studio_layout', 'biped_layout',
+			'facial_layout', 'animals_layout', 'vehicles_layout',
+			'clothes_layout', 'props_layout', 'games_layout',
+			'data_layout', 'other_layout'
+		]
+
+		for name in layout_names:
+			old_layout = getattr(self.ui, name, None)
+			if old_layout is None:
+				continue
+			# Get the parent widget containing this layout
+			parent_item = old_layout.parent()
+			if parent_item is None:
+				continue
+
+			# Find which layout/widget owns old_layout and replace it
+			parent_layout = None
+			if hasattr(parent_item, 'layout'):
+				parent_layout = parent_item.layout() if callable(parent_item.layout) else parent_item
+			if parent_layout is None:
+				continue
+
+			# Move any existing widgets from the old layout
+			widgets = []
+			while old_layout.count():
+				child = old_layout.takeAt(0)
+				if child.widget():
+					widgets.append(child.widget())
+
+			# Clear everything from the parent grid (old layout + spacers)
+			while parent_layout.count():
+				child = parent_layout.takeAt(0)
+				if child.widget():
+					child.widget().deleteLater()
+
+			# Create a new FlowLayout and add it as the sole item
+			flow = FlowLayout(spacing=4)
+			if isinstance(parent_layout, QtWidgets.QGridLayout):
+				parent_layout.addLayout(flow, 0, 0)
+			else:
+				parent_layout.addLayout(flow)
+
+			for w in widgets:
+				flow.addWidget(w)
+
+			# Point the attribute to the new flow layout
+			setattr(self.ui, name, flow)
+
 	def create_layout(self):
 		self.create_block_buttons()
 		self.delete_side_buttons()
@@ -441,6 +770,10 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		self.ui.postbuild.setIcon(QtGui.QIcon(os.path.join(IconsPath ,'POSTCODE.png')))
 		self.ui.reload_ui.setIcon(QtGui.QIcon(os.path.join(IconsPath ,'RELOAD.png')))
 		self.ui.log.setIcon(QtGui.QIcon(os.path.join(IconsPath ,'LOG.png')))
+
+		# Setup resizable splitters and wrapping block buttons
+		self._setup_splitter()
+		self._convert_tab_layouts_to_flow()
 
 		# keep current scroll position on UI refresh; outliner changes handle scrolling via scriptJob
 
@@ -469,6 +802,7 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		self.ui.log.clicked.connect(lambda : self.view_log())
 
 		self.ui.search_button.clicked.connect(self.search_command)
+		self.ui.search_line.textChanged.connect(self.search_command)
 
 	#-------------------------------------------------------------------
 	def reload_all_blocks(self):
@@ -644,6 +978,18 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 				value_to_set = existing_values[attr]
 
 			self.set_config_attr_value(config=config, attr=attr_name, attr_key=attr, value=value_to_set)
+
+		# Update block icon if provided in JSON
+		if 'Icon' in module:
+			icon_name = module['Icon']
+			if not icon_name.endswith('.png'):
+				icon_name += '.png'
+			icon_path = os.path.join(FOLDER, 'Icons', icon_name)
+			if cmds.attributeQuery('iconName', node=block, exists=True):
+				try:
+					cmds.setAttr('{}.iconName'.format(block), icon_path, type="string")
+				except Exception as e:
+					print('Could not update icon for {}: {}'.format(block, e))
 
 	def update_all_blocks_cmd(self):
 		if not cmds.objExists('Mutant_Build'):
@@ -910,10 +1256,11 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 					try:
 						button.setIcon(QtGui.QIcon(os.path.join(IconsPath ,block['Icon'])))
 						button.setIconSize((QtCore.QSize(35, 35)))
-						button.setStyleSheet("text-align:right;")
+						button.setStyleSheet("QPushButton { text-align:right; border: none; background: transparent; } QPushButton:hover { background-color: rgba(255, 255, 255, 5); border-radius: 4px; }")
 						#button.setText(block_name)
 					except:
 						button.setText(block_name)
+						button.setStyleSheet("QPushButton { border: none; background: transparent; } QPushButton:hover { background-color: rgba(255, 255, 255, 5); border-radius: 4px; }")
 
 					if block['Enable'] == 'False':
 						button.setEnabled(False)
@@ -1035,22 +1382,25 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 			self.side_block_widgets = {}
 			for num, child in enumerate(cmds.listRelatives(build_group, c=True)):
 				if not child.endswith(nc['module']):
-					colapsable_box = expandableWidget.expandableWidget(parent=self.ui.side_layout, title=child.replace('_Build', ''))
 					grand_childs = cmds.listRelatives(child, c=True)
 					#if not childs in group pass else parent sde button to group
 					if grand_childs is None:
 						continue
+
+					# When searching, find matching children first
+					if search_text:
+						matching = [gc for gc in grand_childs if search_text.lower() in gc.lower()]
+						if not matching:
+							continue
 					else:
-						for grand_child in grand_childs:
-							if search_text:
-								if search_text.lower() in grand_child.lower():
-									self.create_side_button(pack_name=grand_child, index=num,
-															block_parent=colapsable_box.layout)
-							else:
-								self.create_side_button(pack_name=grand_child, index=num, block_parent=colapsable_box.layout)
+						matching = grand_childs
+
+					colapsable_box = expandableWidget.expandableWidget(parent=self.ui.side_layout, title=child.replace('_Build', ''))
+					for grand_child in matching:
+						self.create_side_button(pack_name=grand_child, index=num, block_parent=colapsable_box.layout)
 				else:
 					if search_text:
-						if search_text.lower() in grand_child.lower():
+						if search_text.lower() in child.lower():
 							self.create_side_button(pack_name=child, index=num, block_parent=None)
 						else:
 							continue
@@ -1066,20 +1416,44 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 			block_parent = self.ui.side_layout
 
 		side_hbox = DraggableBlockWidget(pack_name)
+		side_hbox.setStyleSheet('QGroupBox { margin-top: 0; padding: 0; }')
 		side_hbox.block_dropped.connect(self.move_outliner_to_block)
 		block_parent.addWidget(side_hbox)
 		self.side_block_widgets[pack_name] = side_hbox
 
 		#propierties button
-		edit_button = DraggableButton(pack_name, pack_name.replace(nc['module'],''))
-		edit_button.setFixedSize(75,50)
+		edit_button = DraggableButton(pack_name, '')
+		edit_button.setFixedHeight(50)
+		edit_button.setMinimumWidth(120)
+		edit_button.setStyleSheet('text-align: left; padding: 2px;')
 		self.side_block_edit_buttons[pack_name] = edit_button
 
+		# Nice display name: strip _Block suffix and replace underscores with spaces
+		display_name = pack_name.replace(nc['module'],'').replace('_', ' ').strip()
+
+		# Horizontal layout: icon on left, word-wrap label beside it
+		btn_layout = QtWidgets.QHBoxLayout(edit_button)
+		btn_layout.setContentsMargins(6, 2, 4, 2)
+		btn_layout.setSpacing(6)
+
+		btn_icon_label = QtWidgets.QLabel()
+		btn_icon_label.setFixedSize(30, 30)
+		btn_icon_label.setAttribute(QtCore.Qt.WA_TransparentForMouseEvents)
+		btn_icon_label.setStyleSheet('background: transparent;')
 		try:
-			edit_button.setIcon(QtGui.QIcon(cmds.getAttr('{}.iconName'.format(pack_name))))
-			edit_button.setIconSize((QtCore.QSize(30, 30)))
+			icon_path = cmds.getAttr('{}.iconName'.format(pack_name))
+			btn_icon_label.setPixmap(QtGui.QPixmap(icon_path).scaled(30, 30, QtCore.Qt.KeepAspectRatio, QtCore.Qt.SmoothTransformation))
 		except:
-			edit_button.setText(pack_name)
+			btn_icon_label.hide()
+
+		btn_label = QtWidgets.QLabel(display_name)
+		btn_label.setWordWrap(True)
+		btn_label.setAlignment(QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
+		btn_label.setAttribute(QtCore.Qt.WA_TransparentForMouseEvents)
+		btn_label.setStyleSheet('background: transparent; color: white;')
+
+		btn_layout.addWidget(btn_icon_label)
+		btn_layout.addWidget(btn_label, 1)
 
 
 		options_button = QtWidgets.QPushButton()
@@ -1088,13 +1462,14 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		options_button.setToolTip('Options: {}'.format(pack_name))
 
 		h_layout = QtWidgets.QHBoxLayout()
+		h_layout.setContentsMargins(4, 12, 4, -4)
 		v_layout = QtWidgets.QVBoxLayout()
+		v_layout.setContentsMargins(0, 0, 0, 0)
 
-		v_layout.addWidget(options_button)
+		v_layout.addWidget(options_button, 0, QtCore.Qt.AlignVCenter)
 		h_layout.addLayout(v_layout)
-		h_layout.addWidget(edit_button)
-
-		h_layout.addStretch()
+		h_layout.setSpacing(2)
+		h_layout.addWidget(edit_button, 1)
 
 		side_hbox.setLayout(h_layout)
 
@@ -1109,7 +1484,7 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 
 	def update_side_block_highlight(self):
 		active_style = "QPushButton { color: #DDE2EA; border: 1px solid rgba(180, 190, 205, 90); border-radius: 3px; background-color: rgba(180, 190, 205, 20); }"
-		default_style = ""
+		default_style = "QPushButton { border: none; background: transparent; } QPushButton:hover { background-color: rgba(255, 255, 255, 5); border-radius: 3px; }"
 
 		for block_name, button in self.side_block_edit_buttons.items():
 			if not button:
@@ -1331,7 +1706,7 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 						select_button = QtWidgets.QPushButton()
 						select_button.setFixedSize(20, 20)
 						select_button.setIcon(QtGui.QIcon(os.path.join(IconsPath, 'Cursor.png')))
-						select_button.clicked.connect(select_all_in_list)
+						select_button.clicked.connect(lambda checked=False, lw=list_widget: select_all_in_list(lw))
 						btn_h_layout.addWidget(select_button)
 
 					list_v_layout.addLayout(btn_h_layout)
@@ -1523,92 +1898,96 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		return to_build
 
 	def build_autorigger(self, only_progressbar=False):
-
-		self.ui.bar_label.resize(100, 200)
-		self.ui.bar_label.setText('Starting the Build')
-
-		#Load need plugins
-		self.force_load_of_dependency_plugins()
-
-		#Check rebuild
-		rebuild = self.check_if_previous_build()
-		if not rebuild:
-			return False
-
-		if rebuild == 'First Build':
-			load_io = False
-		elif rebuild == 'Just Rebuild':
-			load_io = False
-		else:
-			load_io = True
-
 		cmds.undoInfo(openChunk=True)
+		build_failed = False
+		failed_block = 'Unknown'
+		is_skin_block = False
 
-		#log
 		try:
-			cmds.scriptEditorInfo(ch=True)
-			mt.Mutant_logger(mode = 'clear')
-			mt.Mutant_logger(mode = 'stop')
-		except:
-			pass
+			self.ui.bar_label.resize(100, 200)
+			self.ui.bar_label.setText('Starting the Build')
 
-		#build
-		blocks = self.get_blocks_to_build(mode = self.ui.build_method.currentText())
-		progress_max = len(blocks)
-		self.ui.progressBar.setMaximum(progress_max)
-		if only_progressbar:
-			from Mutant_Tools.UI.ProgressBar import load_progress_bar
-			reload(load_progress_bar)
-			cProgressBarUI = load_progress_bar.ProgressBarUI(items=blocks,
-															 title='Building Mutant...')
-			cProgressBarUI.show()
+			#Load need plugins
+			self.force_load_of_dependency_plugins()
 
-		#collect deferred code blocks to run after the entire build + IO completes
-		deferred_code_blocks = []
+			#Check rebuild
+			rebuild = self.check_if_previous_build()
+			if not rebuild:
+				return False
 
-		#select each block and run the build command and make progress bar move
-		for num, block in enumerate(blocks):
-
-			is_skin_block = 'skin' in block.lower()
-
-			if is_skin_block and not cmds.about(batch=True):
-				mel.eval("paneLayout -e -manage false $gMainPane")
-
-			if not is_skin_block:
-				visual_build_enabled = cmds.optionVar(q="mutant_visual_build") if cmds.optionVar(ex="mutant_visual_build") else True
-				if visual_build_enabled:
-					#just for fun
-					cmds.refresh()
-
+			if rebuild == 'First Build':
+				load_io = False
+			elif rebuild == 'Just Rebuild':
+				load_io = False
+			else:
+				load_io = True
 			#log
-			mt.Mutant_logger(mode = 'create')
-			print ('------------------------------------------------------------------------------------')
-			print ('------------------------------------------------------------------------------------')
-			print ('Building: {}'.format(block))
-			print ('------------------------------------------------------------------------------------')
-			print ('------------------------------------------------------------------------------------')
-
-			self.ui.bar_label.setText('Building: {}'.format(block))
-			self.ui.bar_label.setToolTip('Building: {}'.format(block))
-
-			#building
-			cmds.select(block)
-			config = cmds.listConnections(block)[1]
-			precode = cmds.getAttr('{}.precode'.format(config))
-			import_command = cmds.getAttr('{}.Import_Command'.format(config))
-			reload_command = import_command.replace('import', 'reload(')+')'.replace(' ', '')
-			buid_command = cmds.getAttr('{}.Build_Command'.format(config))
-			postcode = cmds.getAttr('{}.postcode'.format(config))
-
-			self.ui.bar_label.setText(buid_command)
-			self.ui.bar_label.setToolTip(buid_command)
-
-			exec(import_command)
-			exec(reload_command)
-			print ('Import successfully {}'.format(import_command))
-			pre_build_nodes = self.get_all_nodes()
-			#if error in build show log and stop log writing
 			try:
+				clear_se = cmds.optionVar(q="mutant_clear_script_editor") if cmds.optionVar(ex="mutant_clear_script_editor") else True
+				if clear_se:
+					cmds.scriptEditorInfo(ch=True)
+				mt.Mutant_logger(mode = 'clear')
+				mt.Mutant_logger(mode = 'stop')
+			except:
+				pass
+
+			#build
+			cmds.optionVar(iv=("mutant_ensure_mirror", 0))  # Reset ensure-mirror flag before build
+			blocks = self.get_blocks_to_build(mode = self.ui.build_method.currentText())
+			progress_max = len(blocks)
+			self.ui.progressBar.setMaximum(progress_max)
+			if only_progressbar:
+				from Mutant_Tools.UI.ProgressBar import load_progress_bar
+				reload(load_progress_bar)
+				cProgressBarUI = load_progress_bar.ProgressBarUI(items=blocks,
+																 title='Building Mutant...')
+				cProgressBarUI.show()
+
+			#collect deferred code blocks to run after the entire build + IO completes
+			deferred_code_blocks = []
+
+			#select each block and run the build command and make progress bar move
+			for num, block in enumerate(blocks):
+				failed_block = block
+				is_skin_block = 'skin' in block.lower()
+
+				if is_skin_block and not cmds.about(batch=True):
+					mel.eval("paneLayout -e -manage false $gMainPane")
+
+				if not is_skin_block:
+					visual_build_enabled = cmds.optionVar(q="mutant_visual_build") if cmds.optionVar(ex="mutant_visual_build") else True
+					if visual_build_enabled:
+						#just for fun
+						cmds.refresh()
+
+				#log
+				mt.Mutant_logger(mode = 'create')
+				print ('------------------------------------------------------------------------------------')
+				print ('------------------------------------------------------------------------------------')
+				print ('Building: {}'.format(block))
+				print ('------------------------------------------------------------------------------------')
+				print ('------------------------------------------------------------------------------------')
+
+				self.ui.bar_label.setText('Building: {}'.format(block))
+				self.ui.bar_label.setToolTip('Building: {}'.format(block))
+
+				#building
+				cmds.select(block)
+				config = cmds.listConnections(block)[1]
+				precode = cmds.getAttr('{}.precode'.format(config))
+				import_command = cmds.getAttr('{}.Import_Command'.format(config))
+				reload_command = import_command.replace('import', 'reload(')+')'.replace(' ', '')
+				buid_command = cmds.getAttr('{}.Build_Command'.format(config))
+				postcode = cmds.getAttr('{}.postcode'.format(config))
+
+				self.ui.bar_label.setText(buid_command)
+				self.ui.bar_label.setToolTip(buid_command)
+
+				exec(import_command)
+				exec(reload_command)
+				print ('Import successfully {}'.format(import_command))
+				pre_build_nodes = self.get_all_nodes()
+				
 				if only_progressbar:
 					cProgressBarUI.set_percent(num)
 				# ----------------------
@@ -1645,93 +2024,75 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 					except:
 						mel.eval(postcode)
 
-			#Errors
-			except Exception:
-				import traceback
-				traceback.print_exc()
-				mt.Mutant_logger(mode='stop')
-				self.view_log()
-				cmds.undoInfo(closeChunk=True)
-				if not mt.check_dev_mode():
-					cmds.undo()
-				if only_progressbar:
-					cProgressBarUI.close()
-				if is_skin_block and not cmds.about(batch=True):
-					mel.eval("paneLayout -e -manage true $gMainPane")
-				return
+				post_build_nodes = self.get_all_nodes()
 
-			post_build_nodes = self.get_all_nodes()
-
-			#check if this is a deferred code block
-			try:
-				block_config = cmds.listConnections(block)[1]
-				if cmds.attributeQuery('RunAfterBuild', n=block_config, exists=True):
-					if cmds.getAttr('{}.RunAfterBuild'.format(block_config)):
-						deferred_code_blocks.append(block)
-			except:
-				pass
-
-			#succes message
-			self.ui.bar_label.setText('{}'.format(block))
-			self.ui.bar_label.setToolTip('Succesfull build: {}'.format(block))
-			self.ui.progressBar.setValue((num + 1))
-
-			#log
-			mt.Mutant_logger(mode = 'stop')
-
-			#Stop Block
-			if block == 'Stop_Block':
-				print ('User Stop')
-				cmds.undoInfo(closeChunk=True)
-				if is_skin_block and not cmds.about(batch=True):
-					mel.eval("paneLayout -e -manage true $gMainPane")
-				return
-
-			#put build nodes only in notes
-			if not cmds.attributeQuery("notes", n=block, ex=True):
-				cmds.addAttr(block, ln="notes", sn="nts", dt="string")
-			nodes_dif = self.get_diference_in_nodes(pre_build_nodes, post_build_nodes)
-			cmds.setAttr("{}.notes".format(block), nodes_dif, type="string")
-
-			if is_skin_block and not cmds.about(batch=True):
-				mel.eval("paneLayout -e -manage true $gMainPane")
-
-		if only_progressbar:
-			cProgressBarUI.close()
-
-		#all success message
-		print('Mutant Build Complete')
-		self.ui.bar_label.setText('Mutant Build Complete')
-		self.ui.bar_label.setToolTip('Mutant Build Complete')
-
-		cmds.setAttr('Mutant_Build.v', 0)
-		if cmds.objExists('Mutant_Rig'):
-			cmds.parent('Mutant_Rig', 'Miscellaneous_Grp')
-
-		#IO
-		if load_io:
-			if not cmds.about(batch=True):
-				mel.eval("paneLayout -e -manage false $gMainPane")
-			try:
-				ctrls.load_all(path=os.path.join(tempfile.gettempdir(), 'RebuildTempCtrls', 'tempControllers.json'))
-				self._load_rebuild_skins(temp_skin_folder=os.path.join(tempfile.gettempdir(), 'RebuildTempSkin'))
-				self._reorder_loaded_skin_deformers()
-				# Load parent hierarchy
-				temp_folder = os.path.join(tempfile.gettempdir(), 'RebuildTemp')
-				skeleton_file = os.path.join(temp_folder, 'skeleton_hierarchy.txt')
-				if cmds.objExists('Skeleton'):
-					self.load_joint_parents("Skeleton", skeleton_file)
-			finally:
-				if not cmds.about(batch=True):
-					mel.eval("paneLayout -e -manage true $gMainPane")
-
-		#Run deferred code blocks (RunAfterBuild) as the very last step
-		if deferred_code_blocks:
-			print('------------------------------------------------------------------------------------')
-			print('Running {} deferred Code block(s)...'.format(len(deferred_code_blocks)))
-			print('------------------------------------------------------------------------------------')
-			for deferred_block in deferred_code_blocks:
+				#check if this is a deferred code block
 				try:
+					block_config = cmds.listConnections(block)[1]
+					if cmds.attributeQuery('RunAfterBuild', n=block_config, exists=True):
+						if cmds.getAttr('{}.RunAfterBuild'.format(block_config)):
+							deferred_code_blocks.append(block)
+				except:
+					pass
+
+				#succes message
+				self.ui.bar_label.setText('{}'.format(block))
+				self.ui.bar_label.setToolTip('Succesfull build: {}'.format(block))
+				self.ui.progressBar.setValue((num + 1))
+
+				#log
+				mt.Mutant_logger(mode = 'stop')
+
+				#Stop Block
+				if block == 'Stop_Block':
+					print ('User Stop')
+					return
+
+				#put build nodes only in notes
+				if not cmds.attributeQuery("notes", n=block, ex=True):
+					cmds.addAttr(block, ln="notes", sn="nts", dt="string")
+				nodes_dif = self.get_diference_in_nodes(pre_build_nodes, post_build_nodes)
+				cmds.setAttr("{}.notes".format(block), nodes_dif, type="string")
+
+				if is_skin_block and not cmds.about(batch=True):
+					mel.eval("paneLayout -e -manage true $gMainPane")
+
+			if only_progressbar:
+				cProgressBarUI.close()
+
+			#all success message
+			print('Mutant Build Complete')
+			self.ui.bar_label.setText('Mutant Build Complete')
+			self.ui.bar_label.setToolTip('Mutant Build Complete')
+
+			cmds.setAttr('Mutant_Build.v', 0)
+			if cmds.objExists('Mutant_Rig'):
+				cmds.parent('Mutant_Rig', 'Miscellaneous_Grp')
+
+			#IO
+			if load_io:
+				if not cmds.about(batch=True):
+					mel.eval("paneLayout -e -manage false $gMainPane")
+				try:
+					ctrls.load_all(path=os.path.join(tempfile.gettempdir(), 'RebuildTempCtrls', 'tempControllers.json'))
+					self._load_rebuild_skins(temp_skin_folder=os.path.join(tempfile.gettempdir(), 'RebuildTempSkin'))
+					self._reorder_loaded_skin_deformers()
+					# Load parent hierarchy
+					temp_folder = os.path.join(tempfile.gettempdir(), 'RebuildTemp')
+					skeleton_file = os.path.join(temp_folder, 'skeleton_hierarchy.txt')
+					if cmds.objExists('Skeleton'):
+						self.load_joint_parents("Skeleton", skeleton_file)
+				finally:
+					if not cmds.about(batch=True):
+						mel.eval("paneLayout -e -manage true $gMainPane")
+
+			#Run deferred code blocks (RunAfterBuild) as the very last step
+			if deferred_code_blocks:
+				print('------------------------------------------------------------------------------------')
+				print('Running {} deferred Code block(s)...'.format(len(deferred_code_blocks)))
+				print('------------------------------------------------------------------------------------')
+				for deferred_block in deferred_code_blocks:
+					failed_block = deferred_block + ' (Deferred)'
 					print('Running deferred: {}'.format(deferred_block))
 					self.ui.bar_label.setText('Deferred: {}'.format(deferred_block))
 					cmds.select(deferred_block)
@@ -1743,13 +2104,31 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 					else:
 						exec(deferred_code)
 					print('Deferred code block {} completed'.format(deferred_block))
-				except Exception:
-					import traceback
-					traceback.print_exc()
-					cmds.warning('Deferred code block {} failed'.format(deferred_block))
 
-		cmds.undoInfo(closeChunk=True)
+		except Exception:
+			import traceback
+			traceback.print_exc()
+			build_failed = True
 
+		finally:
+			cmds.undoInfo(closeChunk=True)
+			if build_failed:
+				mt.Mutant_logger(mode='stop')
+				
+				revert_on_fail = cmds.optionVar(q="mutant_revert_on_fail") if cmds.optionVar(ex="mutant_revert_on_fail") else True
+				if revert_on_fail:
+					cmds.warning('Build failed on "{}". Reverting to pre-build state...'.format(failed_block))
+					import maya.utils
+					maya.utils.executeDeferred('import maya.cmds as cmds; cmds.undo()')
+				else:
+					cmds.warning('Build failed on "{}". Revert on Fail is disabled, scene left as-is.'.format(failed_block))
+				
+				self.view_log()
+				
+				if only_progressbar and 'cProgressBarUI' in locals():
+					cProgressBarUI.close()
+				if 'is_skin_block' in locals() and is_skin_block and not cmds.about(batch=True):
+					mel.eval("paneLayout -e -manage true $gMainPane")
 	def save_joint_parents(self, group_name, file_path):
 		"""
         Save the parent hierarchy of joints under the specified group to a file.
@@ -1836,31 +2215,38 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		return 'fast'
 
 	def _save_rebuild_skins(self, temp_skin_folder):
-		temp_skin_pack = os.path.join(temp_skin_folder, 'tempSkinPack.bSkinPack')
+		use_fast = cmds.optionVar(q="mutant_use_fast_skin") if cmds.optionVar(ex="mutant_use_fast_skin") else True
 
-		try:
-			from Mutant_Tools.Utils.IO import IOSkin
-			reload(Mutant_Tools.Utils.IO.IOSkin)
-			import pymel.core as pm
-
-			skinned_geos = self._get_rebuild_skinned_geos()
-			if not skinned_geos:
-				cmds.warning('No skinned geometries found for fast rebuild skin export.')
-				self._set_rebuild_skin_mode(temp_skin_folder=temp_skin_folder, mode='easy')
-				EasySkin.save_all_skins_to(folder_path=temp_skin_folder)
-				return
-
-			pm_geos = [pm.PyNode(geo) for geo in skinned_geos if cmds.objExists(geo)]
-			IOSkin.exportSkinPack(packPath=temp_skin_pack, objs=pm_geos)
-			if not os.path.exists(temp_skin_pack):
-				raise IOError('Skin pack not created: {}'.format(temp_skin_pack))
-
-			self._set_rebuild_skin_mode(temp_skin_folder=temp_skin_folder, mode='fast')
-			print('Fast rebuild skin pack saved: {}'.format(temp_skin_pack))
-		except Exception as e:
-			cmds.warning('Fast rebuild skin save unavailable ({}). Falling back to EasySkin.'.format(e))
+		if use_fast:
 			self._set_rebuild_skin_mode(temp_skin_folder=temp_skin_folder, mode='easy')
 			EasySkin.save_all_skins_to(folder_path=temp_skin_folder)
+		else:
+			temp_skin_pack = os.path.join(temp_skin_folder, 'tempSkinPack.bSkinPack')
+			try:
+				from Mutant_Tools.Utils.IO import IOSkin
+				reload(Mutant_Tools.Utils.IO.IOSkin)
+				import pymel.core as pm
+
+				skinned_geos = self._get_rebuild_skinned_geos()
+				if not skinned_geos:
+					cmds.warning('No skinned geometries found for IOSkin rebuild export.')
+					self._set_rebuild_skin_mode(temp_skin_folder=temp_skin_folder, mode='easy')
+					EasySkin.save_all_skins_to(folder_path=temp_skin_folder)
+					return
+
+				pm_geos = [pm.PyNode(geo) for geo in skinned_geos if cmds.objExists(geo)]
+				IOSkin.exportSkinPack(packPath=temp_skin_pack, objs=pm_geos)
+				if not os.path.exists(temp_skin_pack):
+					raise IOError('Skin pack not created: {}'.format(temp_skin_pack))
+
+				self._set_rebuild_skin_mode(temp_skin_folder=temp_skin_folder, mode='fast')
+				print('IOSkin rebuild skin pack saved: {}'.format(temp_skin_pack))
+			except Exception as e:
+				import traceback
+				traceback.print_exc()
+				cmds.warning('IOSkin save unavailable ({}). Falling back to Fast Skin.'.format(e))
+				self._set_rebuild_skin_mode(temp_skin_folder=temp_skin_folder, mode='easy')
+				EasySkin.save_all_skins_to(folder_path=temp_skin_folder)
 
 	def _load_rebuild_skins(self, temp_skin_folder):
 		temp_skin_pack = os.path.join(temp_skin_folder, 'tempSkinPack.bSkinPack')

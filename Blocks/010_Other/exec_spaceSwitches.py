@@ -153,19 +153,20 @@ def build_spaceSwitches_block():
 
 
         for index, space in enumerate(spaces):
-            space_loc = cmds.spaceLocator(n=space+'_'+block+nc['locator'])[0]
+            space_short = space.split('|')[-1]
+            space_loc = cmds.spaceLocator(n=space_short+'_'+block+nc['locator'])[0]
 
             # Match the scale pivot of the locator to the world position of the space
             space_pos = cmds.xform(space, q=True, ws=True, rp=True)
             cmds.xform(space_loc, ws=True, sp=space_pos)  # set scale pivot
             cmds.xform(space_loc, ws=True, rp=space_pos)  # set rotate pivot (optional, for completeness)
 
-            cmds.parent(space_loc, spaces_grp)
+            space_loc = cmds.parent(space_loc, spaces_grp)[0]
             cmds.parentConstraint(space, space_loc, mo=True)
 
             c = constrain(space_loc, auto_grp)
 
-            condition_node = cmds.shadingNode('condition', asUtility=True, n=block+space+nc['condition'])
+            condition_node = cmds.shadingNode('condition', asUtility=True, n=block+space_short+nc['condition'])
             cmds.setAttr('{}.operation'.format(condition_node), 0)
             cmds.setAttr('{}.colorIfTrueR'.format(condition_node), 1)
             cmds.setAttr('{}.colorIfFalseR'.format(condition_node), 0)

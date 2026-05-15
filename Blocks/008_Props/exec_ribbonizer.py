@@ -170,6 +170,11 @@ def build_ribbonizer_block():
         except:
             joint_orient = False
 
+        try:
+            fk_on_last = cmds.getAttr('{}.FkOnLast'.format(config))
+        except:
+            fk_on_last = False
+
         ribbonize_kwargs = dict(
             equal=cmds.getAttr('{}.Equal'.format(config)),
             num_of_Ctrls=cmds.getAttr('{}.Ctrls'.format(config)),
@@ -181,6 +186,7 @@ def build_ribbonizer_block():
             ctrl_orientation=ctrl_orientation,
             ctrl_scales=ctrl_scales,
             joint_orient=joint_orient,
+            fk_on_last=fk_on_last,
         )
 
         if mirror_mode == 'Right_Only':

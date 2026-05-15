@@ -79,7 +79,7 @@ def build_eyes_block():
     #groups for later cleaning
     clean_rig_grp = ''
     clean_ctrl_grp = ''
-    
+
     #cmds.getAttr('{}.AttrName'.format(config))
     #cmds.getAttr('{}.AttrName'.format(config), asString = True)
 

@@ -1706,6 +1706,7 @@ class Kinematics_class(tools.Tools_class):
 
 		return mirror_grp
 
+
 	#----------------------------------------------------------------------------------------------------------------
 
 	def basic_ribbon(self, start='', end='', divisions=5, name='Ribbon', ctrl_type='circleY', size=1,
@@ -2454,7 +2455,7 @@ class Kinematics_class(tools.Tools_class):
 
 	#----------------------------------------------------------------------------------------------------------------
 
-	def bend_and_squash(self, name='SnS', geo=None, parent_grp=None, squash_enabled=True, bend_enabled=True, ctrl_guide=None):
+	def bend_and_squash(self, name='SnS', geo=None, parent_grp=None, squash_enabled=True, bend_enabled=True, ctrl_guide=None, bend_guide=None, squash_guide=None):
 
 		if not geo:
 			geo = cmds.ls(sl=True)
@@ -2494,6 +2495,16 @@ class Kinematics_class(tools.Tools_class):
 		off_def_grp = cmds.group(n="Pivot_{}_Grp_Offset".format(name), em=True)
 		cmds.parent(def_grp, off_def_grp)
 
+		bend_pivot = cmds.group(n="{}_Bend_Pivot".format(name), em=True)
+		squash_pivot = cmds.group(n="{}_Squash_Pivot".format(name), em=True)
+		cmds.parent(bend_pivot, def_grp)
+		cmds.parent(squash_pivot, def_grp)
+
+		if bend_guide:
+			cmds.delete(cmds.parentConstraint(bend_guide, bend_pivot, mo=False))
+		if squash_guide:
+			cmds.delete(cmds.parentConstraint(squash_guide, squash_pivot, mo=False))
+
 		ctrl_grp = cmds.group(n="{}_Ctrl_Offset".format(name), em=True)
 
 		ctrl = self.curve(type='sphere', name="{}_Ctrl".format(name))
@@ -2517,11 +2528,6 @@ class Kinematics_class(tools.Tools_class):
 			hdl = cmds.rename(hdl, n_hdl)
 			dag = cmds.rename(dag, "{0}_Deformer".format(n_hdl))
 
-			cmds.setAttr("{0}.ry".format(hdl), n_rot)
-
-			cmds.parent(hdl, def_grp)
-			cmds.matchTransform(hdl, def_grp, pos=True, rot=False)
-
 			# -----------------------------
 			# 🔹 SECTION DETECTION
 			# -----------------------------
@@ -2531,6 +2537,15 @@ class Kinematics_class(tools.Tools_class):
 				section = "Bend_Front_Back"
 			else:
 				section = "Bend_Side"
+
+			cmds.setAttr("{0}.ry".format(hdl), n_rot)
+
+			if section == "Squash":
+				cmds.parent(hdl, squash_pivot)
+				cmds.matchTransform(hdl, squash_pivot, pos=True, rot=False)
+			else:
+				cmds.parent(hdl, bend_pivot)
+				cmds.matchTransform(hdl, bend_pivot, pos=True, rot=False)
 
 			# -----------------------------
 			# 🔥 ADD SEPARATOR (ONLY ONCE)

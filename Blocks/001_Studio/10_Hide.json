@@ -1,0 +1,15 @@
+{
+    "Name": "Hide",
+    "Description": "Hides the specified nodes by setting their visibility to 0.",
+    "Icon": "Hide.png",
+    "Enable": "True",
+    "python_file": "exec_hide.py",
+    "import": "import exec_hide",
+    "imp.reload": "reload(exec_hide)",
+    "exec_command": "exec_hide.create_hide_block()",
+    "build_command": "exec_hide.build_hide_block()",
+    "attrs": {
+        "SetNodeList_string": "",
+        "Help_string": "Overview:\n  Hides specified nodes by setting their visibility to 0.\n\nHow To Use:\n  Select the nodes in the scene and click 'Add Selected' below. Then click build.\n\nFields:\n- SetNodeList: List of nodes to hide."
+    }
+}

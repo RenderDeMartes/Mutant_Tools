@@ -153,7 +153,7 @@ def build_clavicle_block():
             else:
                 cmds.parentConstraint(block_parent, for_parent , mo = True) 
                 clean_rig_grp = side_guide
-                clean_ctrl_grp = for_parent        
+                clean_ctrl_grp = for_parent
         else:
             cmds.parentConstraint(block_parent, for_parent , mo = True) 
             clean_rig_grp = side_guide

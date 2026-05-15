@@ -590,7 +590,8 @@ def build_hand_block():
                 cmds.parent(bind_joints[0], bind_jnt_grp) 
            
         #clean ctrls
-        cmds.parent(clean_ctrl_grp, 'Rig_Ctrl_Grp')
+        cmds.parent(clean_ctrl_grp, setup['base_groups']['control'] + nc['group'])
+        cmds.scaleConstraint('Rig_Ctrl_Grp', clean_ctrl_grp, mo=True)
 
         #parent rig
         cmds.parent(clean_rig_grp, '{}{}'.format(setup['rig_groups']['misc'], nc['group']))

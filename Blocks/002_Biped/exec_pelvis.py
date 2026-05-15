@@ -160,12 +160,12 @@ def build_pelvis_block():
             else:
                 cmds.parentConstraint(block_parent, for_parent , mo = True) 
                 clean_rig_grp = side_guide
-                clean_ctrl_grp = for_parent        
+                clean_ctrl_grp = for_parent
         
         else: #only left side
             cmds.parentConstraint(block_parent, for_parent , mo = True) 
             clean_rig_grp = side_guide
-            clean_ctrl_grp = for_parent   
+            clean_ctrl_grp = for_parent
 
         #create bind Joints for the skin
         cmds.select(cl=True)

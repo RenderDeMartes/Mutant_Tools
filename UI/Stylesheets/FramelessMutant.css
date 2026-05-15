@@ -11,6 +11,10 @@ QScrollArea, QAbstractScrollArea {
     background-color: transparent;
 }
 
+QScrollArea {
+    border: 1px solid #323232;
+}
+
 QApplication,
 QMainWindow, QFrame, QDockWidget, QDialog, QFileDialog, QMessageBox,
 QRadioButton,
@@ -44,6 +48,12 @@ QCheckBox {
 QGroupBox {
     border-top: 1px solid #2d2d2d;
     margin-top: 0.5em;
+    outline: 0;
+}
+QGroupBox:focus {
+    border: none;
+    border-top: 1px solid #2d2d2d;
+    outline: 0;
 }
 QGroupBox::title {
     subcontrol-origin: margin;
@@ -413,7 +423,7 @@ QStatusBar QLabel {
  * QT-BUG: Strange behaviour of selection-* properties (always :!focus)
  */
 QAbstractItemView {
-    border: 1px solid #323232;
+    border: none;
     selection-color: #bbbbbb;
     selection-background-color: #4b6eaf;
     alternate-background-color: #414547; /* Works only if setAlternatingRowColors(true) */

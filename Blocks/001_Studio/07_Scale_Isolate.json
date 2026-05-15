@@ -1,7 +1,7 @@
 {
     "Name": "ScaleIsolate",
     "Description": "Isolates scale for selected controls by driving a sibling node via matrix and reparenting children.",
-    "Icon": "FingersScale.png",
+    "Icon": "ScaleIsolate.png",
     "Enable": "True",
     "python_file": "exec_scale_isolate.py",
     "import": "import exec_scale_isolate",

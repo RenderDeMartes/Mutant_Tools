@@ -154,7 +154,7 @@ def build_side_mirror_block():
             else:
                 cmds.parentConstraint(block_parent, fk_parent , mo = True) 
                 clean_rig_grp = side_guide
-                clean_ctrl_grp = fk_parent        
+                clean_ctrl_grp = fk_parent
         else:
             cmds.parentConstraint(block_parent, fk_parent , mo = True) 
             clean_rig_grp = side_guide

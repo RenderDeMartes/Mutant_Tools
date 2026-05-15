@@ -1,0 +1,17 @@
+{
+    "Name": "ToonEye",
+    "Description": "Imports a toon eye rig from an external file, positions it at a locator guide, and optionally mirrors to the other side with L_/R_ prefixes.",
+    "Icon": "ToonEye.png",
+    "Enable": "True",
+    "python_file": "exec_tooneye.py",
+    "import": "import exec_tooneye",
+    "imp.reload": "reload(exec_tooneye)",
+    "exec_command": "exec_tooneye.create_tooneye_block()",
+    "build_command": "exec_tooneye.build_tooneye_block()",
+    "attrs": {
+        "SetCtrlParent_Hierarchy_string": "Rig_Ctrl_Grp",
+        "Mirror_enum": "True:False",
+        "EyeFile_string": "S:/shows/SN_FrogFight/assets/prop/eye/WIP/eyerig.ma",
+        "Help_string": "Overview:\n  Imports a toon eye rig from an external Maya file and positions it at the locator guide.\n\nHow To Use:\n  1. Create the block and position the locator where you want the eye.\n  2. Set Mirror to True if you want both L_ and R_ eyes.\n  3. Click Build.\n\nFields:\n- SetCtrlParent: Parent destination for the eye group in the rig hierarchy.\n- Mirror: False builds a single eye. True builds both L_ and R_ sides (R_ is mirrored in X).\n- EyeFile: Path to the Maya file containing the eye rig to import."
+    }
+}

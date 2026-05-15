@@ -51,11 +51,12 @@ def get_bbox_center(obj):
     return mid_point
 
 
-def make_fk_Ctrls(prefix, num_of_Ctrls):
+def make_fk_Ctrls(prefix, num_of_Ctrls, fk_on_last=False):
     fk_Ctrls = []
     fk_Ctrl_off_Grps = []
 
-    fk_Ctrls = Ctrl_maker(prefix, Ctrl_type="circle", count=num_of_Ctrls - 1, deg=3, sp=8, name="fk")
+    fk_count = num_of_Ctrls if fk_on_last else num_of_Ctrls - 1
+    fk_Ctrls = Ctrl_maker(prefix, Ctrl_type="circle", count=fk_count, deg=3, sp=8, name="fk")
     fk_Ctrl_off_Grps = [cmds.group(fk_Ctrl, n=fk_Ctrl + "_offset") for fk_Ctrl in fk_Ctrls]
     [cmds.xform(fk_Ctrl_off_Grp, piv=(0, 0, 0), os=True) for fk_Ctrl_off_Grp in fk_Ctrl_off_Grps]
 
@@ -234,7 +235,7 @@ def get_selection():
     return surf_tr
 
 
-def ribbonize(surf_tr, equal=1, num_of_Ctrls=5, num_of_Jnts=29, prefix="", constrain=1, add_fk=0, wire=0, middle_ctrl_pos='Original', ctrl_orientation='SurfaceNormal', ctrl_scales=False, joint_orient=False):
+def ribbonize(surf_tr, equal=1, num_of_Ctrls=5, num_of_Jnts=29, prefix="", constrain=1, add_fk=0, wire=0, middle_ctrl_pos='Original', ctrl_orientation='SurfaceNormal', ctrl_scales=False, joint_orient=False, fk_on_last=False):
     attrs = [".tx", ".ty", ".tz", ".rx", ".ry", ".rz", ".sx", ".sy", ".sz", ".v"]
 
     if prefix == "":
@@ -624,7 +625,7 @@ def ribbonize(surf_tr, equal=1, num_of_Ctrls=5, num_of_Jnts=29, prefix="", const
 
     if add_fk == 1 and cmds.getAttr(surf + ".formU") != 2 and cmds.getAttr(surf + ".formV") != 2:
 
-        fk_Ctrls, fk_Ctrl_off_Grps = make_fk_Ctrls(prefix, num_of_Ctrls)
+        fk_Ctrls, fk_Ctrl_off_Grps = make_fk_Ctrls(prefix, num_of_Ctrls, fk_on_last=fk_on_last)
         cmds.parent(fk_Ctrl_off_Grps[0], Ctrl_Grp)
 
         # scale fk controls
@@ -646,18 +647,29 @@ def ribbonize(surf_tr, equal=1, num_of_Ctrls=5, num_of_Jnts=29, prefix="", const
         ik_Ctrl_constr_Grps = [cmds.group(Ctrl, n=Ctrl + "_constr_Grp") for Ctrl in controls]
         [cmds.xform(ik_Ctrl_constr_Grp, piv=(0, 0, 0), os=True) for ik_Ctrl_constr_Grp in ik_Ctrl_constr_Grps]
 
-        for ik, fk in zip(controls[:-1], fk_Ctrl_off_Grps):
-            cmds.delete(cmds.parentConstraint(ik, fk))
+        if fk_on_last:
+            # FK covers all IK controls including the last one
+            for ik, fk in zip(controls, fk_Ctrl_off_Grps):
+                cmds.delete(cmds.parentConstraint(ik, fk))
 
-        for fk, ik in zip(fk_Ctrls, ik_Ctrl_constr_Grps[:-1]):
-            cmds.parentConstraint(fk, ik)
+            for fk, ik in zip(fk_Ctrls, ik_Ctrl_constr_Grps):
+                cmds.parentConstraint(fk, ik)
+                if ctrl_scales:
+                    cmds.scaleConstraint(fk, ik)
+        else:
+            # Original behavior: FK covers all but the last IK control
+            for ik, fk in zip(controls[:-1], fk_Ctrl_off_Grps):
+                cmds.delete(cmds.parentConstraint(ik, fk))
+
+            for fk, ik in zip(fk_Ctrls, ik_Ctrl_constr_Grps[:-1]):
+                cmds.parentConstraint(fk, ik)
+                if ctrl_scales:
+                    cmds.scaleConstraint(fk, ik)
+
+            # constrain last ik Ctrl
+            cmds.parentConstraint(fk_Ctrls[-1], ik_Ctrl_constr_Grps[-1], mo=True)
             if ctrl_scales:
-                cmds.scaleConstraint(fk, ik)
-
-        # constrain last ik Ctrl
-        cmds.parentConstraint(fk_Ctrls[-1], ik_Ctrl_constr_Grps[-1], mo=True)
-        if ctrl_scales:
-            cmds.scaleConstraint(fk_Ctrls[-1], ik_Ctrl_constr_Grps[-1], mo=True)
+                cmds.scaleConstraint(fk_Ctrls[-1], ik_Ctrl_constr_Grps[-1], mo=True)
         #lock_hide(ik_Ctrl_constr_Grps, attrs[:9])
 
         ########
