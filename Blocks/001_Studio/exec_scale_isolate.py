@@ -33,7 +33,7 @@ def create_scale_isolate_block(name='ScaleIsolate'):
         cmds.warning('Name already exists.')
         return ''
 
-    block = mt.create_block(name=name, icon=module['Icon'], attrs=module['attrs'], build_command=module['build_command'], import_command=module['import'])
+    block = mt.create_block(name=name, icon=module['Icon'].replace('.png',''), attrs=module['attrs'], build_command=module['build_command'], import_command=module['import'])
     
     print('{} Created successfully'.format(name))
 

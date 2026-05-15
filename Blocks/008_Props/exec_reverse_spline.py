@@ -78,7 +78,7 @@ def create_reverse_spline_block(name = 'ReverseSpline'):
         cmds.warning('Maximum supported joints amount is {}.'.format(max_amount))
         return False
 
-    block = mt.create_block(name=name, icon='Chain', attrs=module['attrs'], build_command=module['build_command'],
+    block = mt.create_block(name=name, icon=module['Icon'].replace('.png',''), attrs=module['attrs'], build_command=module['build_command'],
                             import_command=module['import'])
     config = block[1]
     block = block[0]
