@@ -1,7 +1,7 @@
 {
     "Name": "ToonEye",
     "Description": "Imports a toon eye rig from an external file, positions it at a locator guide, and optionally mirrors to the other side with L_/R_ prefixes.",
-    "Icon": "Eyes.png",
+    "Icon": "ToonEye.png",
     "Enable": "True",
     "python_file": "exec_tooneye.py",
     "import": "import exec_tooneye",

@@ -849,7 +849,7 @@ class Qt_Mutant(QtWidgets.QMainWindow):
         if event.type() == QtCore.QEvent.WindowDeactivate:
             self._reset_resize_state()
         elif event.type() == QtCore.QEvent.MouseMove and not self._resizing:
-            if self.current_size_mode != 'big':
+            if self.current_size_mode != 'big' and not getattr(self, 'popup_mode', False):
                 # Map the position from the child widget to the main window
                 window_pos = self.mapFromGlobal(obj.mapToGlobal(event.pos()))
                 direction = self._get_resize_direction(window_pos)
@@ -914,9 +914,12 @@ class Qt_Mutant(QtWidgets.QMainWindow):
             return
 
         if event.buttons() == QtCore.Qt.NoButton:
-            self.scale = False
-            dir = self._get_resize_direction(event.pos())
-            self._set_resize_cursor(dir)
+            if getattr(self, 'popup_mode', False):
+                self.unsetCursor()
+            else:
+                self.scale = False
+                dir = self._get_resize_direction(event.pos())
+                self._set_resize_cursor(dir)
         elif event.buttons() == QtCore.Qt.LeftButton:
             if self._resizing and self._resize_dir:
                 delta = event.globalPos() - self.oldPos

@@ -960,6 +960,18 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 
 			self.set_config_attr_value(config=config, attr=attr_name, attr_key=attr, value=value_to_set)
 
+		# Update block icon if provided in JSON
+		if 'Icon' in module:
+			icon_name = module['Icon']
+			if not icon_name.endswith('.png'):
+				icon_name += '.png'
+			icon_path = os.path.join(FOLDER, 'Icons', icon_name)
+			if cmds.attributeQuery('iconName', node=block, exists=True):
+				try:
+					cmds.setAttr('{}.iconName'.format(block), icon_path, type="string")
+				except Exception as e:
+					print('Could not update icon for {}: {}'.format(block, e))
+
 	def update_all_blocks_cmd(self):
 		if not cmds.objExists('Mutant_Build'):
 			cmds.warning('Mutant_Build was not found in scene.')
@@ -1225,10 +1237,11 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 					try:
 						button.setIcon(QtGui.QIcon(os.path.join(IconsPath ,block['Icon'])))
 						button.setIconSize((QtCore.QSize(35, 35)))
-						button.setStyleSheet("text-align:right;")
+						button.setStyleSheet("QPushButton { text-align:right; border: none; background: transparent; } QPushButton:hover { background-color: rgba(255, 255, 255, 5); border-radius: 4px; }")
 						#button.setText(block_name)
 					except:
 						button.setText(block_name)
+						button.setStyleSheet("QPushButton { border: none; background: transparent; } QPushButton:hover { background-color: rgba(255, 255, 255, 5); border-radius: 4px; }")
 
 					if block['Enable'] == 'False':
 						button.setEnabled(False)
@@ -1452,7 +1465,7 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 
 	def update_side_block_highlight(self):
 		active_style = "QPushButton { color: #DDE2EA; border: 1px solid rgba(180, 190, 205, 90); border-radius: 3px; background-color: rgba(180, 190, 205, 20); }"
-		default_style = ""
+		default_style = "QPushButton { border: none; background: transparent; } QPushButton:hover { background-color: rgba(255, 255, 255, 5); border-radius: 3px; }"
 
 		for block_name, button in self.side_block_edit_buttons.items():
 			if not button:

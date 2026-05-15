@@ -1,7 +1,7 @@
 {
     "Name": "WorldOrient",
     "Description": "Isolates rotation for selected controls by driving a sibling node via inverse matrix, locking their orientation to world space.",
-    "Icon": "OrientOffset.png",
+    "Icon": "WorldOrient.png",
     "Enable": "True",
     "python_file": "exec_world_orient.py",
     "import": "import exec_world_orient",

@@ -1,7 +1,7 @@
 {
     "Name": "OrientOffset",
     "Description": "Applies a matrix orient offset setup to a list of custom controls.",
-    "Icon": "Pose.png",
+    "Icon": "OrientOffset.png",
     "Enable": "True",
     "python_file": "exec_orient_offset.py",
     "import": "import exec_orient_offset",

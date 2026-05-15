@@ -322,6 +322,10 @@ class AutoRiggerOptions(QtMutantWindow.Qt_Mutant):
 
 		#update the config
 		self.update_config(block, config, module)
+		try:
+			self.autorigger_ui.create_layout()
+		except:
+			pass
 
 	def update_config(self, block, config, module):
 		print(config)
@@ -368,6 +372,18 @@ class AutoRiggerOptions(QtMutantWindow.Qt_Mutant):
 				value_to_set = existing_values[attr]
 
 			self.set_config_attr_value(config=config, attr=attr_name, attr_key=attr, value=value_to_set)
+
+		# Update block icon if provided in JSON
+		if 'Icon' in module:
+			icon_name = module['Icon']
+			if not icon_name.endswith('.png'):
+				icon_name += '.png'
+			icon_path = os.path.join(FOLDER, 'Icons', icon_name)
+			if cmds.attributeQuery('iconName', node=block, exists=True):
+				try:
+					cmds.setAttr('{}.iconName'.format(block), icon_path, type="string")
+				except Exception as e:
+					print('Could not update icon for {}: {}'.format(block, e))
 
 	def set_config_attr_value(self, config, attr, attr_key, value):
 		attr_path = '{}.{}'.format(config, attr)
