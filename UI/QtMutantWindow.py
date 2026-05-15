@@ -846,7 +846,9 @@ class Qt_Mutant(QtWidgets.QMainWindow):
 
     def eventFilter(self, obj, event):
         """Intercept mouse moves on child widgets to show resize cursors at window edges."""
-        if event.type() == QtCore.QEvent.MouseMove and not self._resizing:
+        if event.type() == QtCore.QEvent.WindowDeactivate:
+            self._reset_resize_state()
+        elif event.type() == QtCore.QEvent.MouseMove and not self._resizing:
             if self.current_size_mode != 'big':
                 # Map the position from the child widget to the main window
                 window_pos = self.mapFromGlobal(obj.mapToGlobal(event.pos()))
@@ -856,6 +858,8 @@ class Qt_Mutant(QtWidgets.QMainWindow):
                     return False
                 else:
                     self.unsetCursor()
+                    if obj is not self:
+                        obj.unsetCursor()
         return QtWidgets.QMainWindow.eventFilter(self, obj, event)
 
     def _get_resize_direction(self, pos):
@@ -906,13 +910,11 @@ class Qt_Mutant(QtWidgets.QMainWindow):
         """
         Handle mouse move event to move or resize the frameless UI.
         """
-        if self.scale == True and not self._resizing:
-            return
-
         if self.current_size_mode == 'big':
             return
 
         if event.buttons() == QtCore.Qt.NoButton:
+            self.scale = False
             dir = self._get_resize_direction(event.pos())
             self._set_resize_cursor(dir)
         elif event.buttons() == QtCore.Qt.LeftButton:
@@ -945,13 +947,24 @@ class Qt_Mutant(QtWidgets.QMainWindow):
         elif event.buttons() == QtCore.Qt.RightButton:
             pass
 
-    def mouseReleaseEvent(self, event):
+    def _reset_resize_state(self):
+        """Clear all resize/drag state and restore the default cursor."""
         self._resizing = False
         self._resize_dir = None
-        self.setCursor(QtCore.Qt.ArrowCursor)
+        self.scale = False
+        self.unsetCursor()
+
+    def mouseReleaseEvent(self, event):
+        self._reset_resize_state()
+
+    def leaveEvent(self, event):
+        """Reset cursor when the mouse leaves the window."""
+        self._reset_resize_state()
+        QtWidgets.QMainWindow.leaveEvent(self, event)
 
     def open_over_mouse(self):
         """Open the UI over the mouse cursor position."""
+        self._centered_once = True
         point = QtGui.QCursor.pos()
         self.move(point.x(), point.y())
 

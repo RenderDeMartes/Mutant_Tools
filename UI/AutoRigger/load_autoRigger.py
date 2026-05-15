@@ -391,7 +391,7 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 
 		self.create_menu()
 
-		self.resize(605, 652)
+		self.resize(605, 750)
 
 		#load blocks folders to sys and remove all the compiled info in BLOCKS and UI Folder
 		if mt.check_dev_mode():
@@ -426,6 +426,11 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 
 		self.studio_name = setup['studio']
 		self.ui.tabs.setTabText(1, self.studio_name)
+
+		# Connect tab change to save active tab live
+		self.ui.tabs.currentChanged.connect(
+			lambda idx: cmds.optionVar(intValue=('mutant_active_tab', idx))
+		)
 
 		try:OpenMaya.MGlobal.displayInfo('<3')
 		except:pass
@@ -524,13 +529,13 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 				elif child.layout():
 					right_layout.addLayout(child.layout())
 
-		h_splitter = QtWidgets.QSplitter(QtCore.Qt.Horizontal)
-		h_splitter.addWidget(self.ui.side_scroll)
-		h_splitter.addWidget(right_widget)
-		h_splitter.setStretchFactor(0, 0)
-		h_splitter.setStretchFactor(1, 1)
-		h_splitter.setSizes([200, 400])
-		h_splitter.setHandleWidth(5)
+		self._h_splitter = QtWidgets.QSplitter(QtCore.Qt.Horizontal)
+		self._h_splitter.addWidget(self.ui.side_scroll)
+		self._h_splitter.addWidget(right_widget)
+		self._h_splitter.setStretchFactor(0, 0)
+		self._h_splitter.setStretchFactor(1, 1)
+		self._h_splitter.setSizes([200, 400])
+		self._h_splitter.setHandleWidth(5)
 
 		# --- Vertical splitter: tabs on top | h_splitter on bottom ---
 		# Find the tabs and the grid that holds the blocks/properties
@@ -541,18 +546,18 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		# Remove the menuLayout_3 wrapper around tabs so we can reparent it
 		menu_layout_3 = self.ui.findChild(QtWidgets.QVBoxLayout, 'menuLayout_3')
 
-		v_splitter = QtWidgets.QSplitter(QtCore.Qt.Vertical)
-		v_splitter.addWidget(tabs_widget)
-		v_splitter.addWidget(h_splitter)
-		v_splitter.setStretchFactor(0, 0)
-		v_splitter.setStretchFactor(1, 1)
-		# Start with tabs compact (just enough for 2 rows of icons ~120px)
-		v_splitter.setSizes([120, 500])
-		v_splitter.setHandleWidth(5)
+		self._v_splitter = QtWidgets.QSplitter(QtCore.Qt.Vertical)
+		self._v_splitter.addWidget(tabs_widget)
+		self._v_splitter.addWidget(self._h_splitter)
+		self._v_splitter.setStretchFactor(0, 0)
+		self._v_splitter.setStretchFactor(1, 1)
+		# Default height for tabs – enough for ~3 rows of icons
+		self._v_splitter.setSizes([180, 500])
+		self._v_splitter.setHandleWidth(5)
 
 		splitter_style = 'QSplitter::handle { background-color: #3a3a3a; }'
-		h_splitter.setStyleSheet(splitter_style)
-		v_splitter.setStyleSheet(splitter_style)
+		self._h_splitter.setStyleSheet(splitter_style)
+		self._v_splitter.setStyleSheet(splitter_style)
 
 		# Insert the vertical splitter into the main grid
 		# Find gridLayout_12 and remove it since h_splitter now owns its content
@@ -572,9 +577,123 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 				break
 
 		# Add the vertical splitter spanning the content area
-		main_layout.addWidget(v_splitter, 1, 0)
+		main_layout.addWidget(self._v_splitter, 1, 0)
 
 		self._splitter_installed = True
+
+		# Connect splitter signals to save state live as the user drags
+		self._h_splitter.splitterMoved.connect(self._on_splitter_moved)
+		self._v_splitter.splitterMoved.connect(self._on_splitter_moved)
+
+	# -------------------------------------------------------------------
+	# UI State Persistence
+	# -------------------------------------------------------------------
+
+	def _on_splitter_moved(self, pos, index):
+		"""Save splitter sizes whenever the user drags a splitter handle."""
+		self._save_splitter_state()
+
+	def _save_splitter_state(self):
+		"""Save only splitter positions to optionVar."""
+		try:
+			if hasattr(self, '_v_splitter'):
+				sizes = self._v_splitter.sizes()
+				if len(sizes) == 2 and sizes[0] > 0 and sizes[1] > 0:
+					cmds.optionVar(intValue=('mutant_vsplit_0', sizes[0]))
+					cmds.optionVar(intValue=('mutant_vsplit_1', sizes[1]))
+			if hasattr(self, '_h_splitter'):
+				sizes = self._h_splitter.sizes()
+				if len(sizes) == 2 and sizes[0] > 0 and sizes[1] > 0:
+					cmds.optionVar(intValue=('mutant_hsplit_0', sizes[0]))
+					cmds.optionVar(intValue=('mutant_hsplit_1', sizes[1]))
+		except:
+			pass
+
+	def _save_ui_state(self):
+		"""Save window geometry, splitter positions, and active tab to Maya optionVar."""
+		try:
+			# Window geometry
+			geo = self.geometry()
+			cmds.optionVar(intValue=('mutant_win_x', geo.x()))
+			cmds.optionVar(intValue=('mutant_win_y', geo.y()))
+			cmds.optionVar(intValue=('mutant_win_w', geo.width()))
+			cmds.optionVar(intValue=('mutant_win_h', geo.height()))
+
+			# Splitters
+			self._save_splitter_state()
+
+			# Active tab index
+			if hasattr(self, 'ui') and hasattr(self.ui, 'tabs'):
+				cmds.optionVar(intValue=('mutant_active_tab', self.ui.tabs.currentIndex()))
+		except Exception as e:
+			print('Mutant: could not save UI state: {}'.format(e))
+
+	def _restore_ui_state(self):
+		"""Restore window geometry, splitter positions, and active tab from Maya optionVar."""
+		try:
+			# Restore window geometry
+			if (cmds.optionVar(ex='mutant_win_w') and cmds.optionVar(ex='mutant_win_h')):
+				w = cmds.optionVar(q='mutant_win_w')
+				h = cmds.optionVar(q='mutant_win_h')
+				if w > 100 and h > 100:
+					self.resize(w, h)
+
+				if (cmds.optionVar(ex='mutant_win_x') and cmds.optionVar(ex='mutant_win_y')):
+					x = cmds.optionVar(q='mutant_win_x')
+					y = cmds.optionVar(q='mutant_win_y')
+					# Validate the position is on-screen
+					screen = None
+					try:
+						screen = QtGui.QGuiApplication.screenAt(QtCore.QPoint(x, y))
+					except:
+						pass
+					if screen:
+						self._centered_once = True  # Skip the auto-center
+						self.move(x, y)
+
+			# Restore vertical splitter sizes
+			if hasattr(self, '_v_splitter'):
+				if (cmds.optionVar(ex='mutant_vsplit_0') and cmds.optionVar(ex='mutant_vsplit_1')):
+					s0 = cmds.optionVar(q='mutant_vsplit_0')
+					s1 = cmds.optionVar(q='mutant_vsplit_1')
+					if s0 > 0 and s1 > 0:
+						self._v_splitter.setSizes([s0, s1])
+
+			# Restore horizontal splitter sizes
+			if hasattr(self, '_h_splitter'):
+				if (cmds.optionVar(ex='mutant_hsplit_0') and cmds.optionVar(ex='mutant_hsplit_1')):
+					s0 = cmds.optionVar(q='mutant_hsplit_0')
+					s1 = cmds.optionVar(q='mutant_hsplit_1')
+					if s0 > 0 and s1 > 0:
+						self._h_splitter.setSizes([s0, s1])
+
+			# Restore active tab
+			if hasattr(self, 'ui') and hasattr(self.ui, 'tabs'):
+				if cmds.optionVar(ex='mutant_active_tab'):
+					tab_idx = cmds.optionVar(q='mutant_active_tab')
+					if 0 <= tab_idx < self.ui.tabs.count():
+						self.ui.tabs.setCurrentIndex(tab_idx)
+		except Exception as e:
+			print('Mutant: could not restore UI state: {}'.format(e))
+
+	def showEvent(self, event):
+		"""Restore UI state after the window is fully shown and laid out."""
+		super(AutoRigger, self).showEvent(event)
+		if not hasattr(self, '_state_restored'):
+			self._state_restored = True
+			# Use a 150ms delay to let Qt finalize all layout calculations
+			QtCore.QTimer.singleShot(150, self._restore_ui_state)
+
+	def closeEvent(self, event):
+		"""Save UI state before closing."""
+		self._save_ui_state()
+		try:
+			cmds.scriptJob(kill=self.mutant_sj, force=True)
+		except:
+			pass
+		super(AutoRigger, self).closeEvent(event)
+
+	# -------------------------------------------------------------------
 
 	def _convert_tab_layouts_to_flow(self):
 		"""Replace each tab's QHBoxLayout with a FlowLayout so buttons wrap."""
