@@ -506,16 +506,10 @@ def build_foot_block():
                 clean_rig_grp = miror_grp
 
             else:
-                # Ensure mirror: wrap L side with identity Mirror_Grp for hierarchy consistency
-                if cmds.optionVar(q="mutant_ensure_mirror") if cmds.optionVar(ex="mutant_ensure_mirror") else False:
-                    clean_ctrl_grp = mt.ensure_mirror_group(clean_ctrl_grp, world=True)
-                    clean_rig_grp = mt.ensure_mirror_group(clean_rig_grp, world=True)
+                pass
 
         else: #only left side
-            # Ensure mirror: wrap L side with identity Mirror_Grp for hierarchy consistency
-            if cmds.optionVar(q="mutant_ensure_mirror") if cmds.optionVar(ex="mutant_ensure_mirror") else False:
-                clean_ctrl_grp = mt.ensure_mirror_group(clean_ctrl_grp, world=True)
-                clean_rig_grp = mt.ensure_mirror_group(clean_rig_grp, world=True)
+            pass
 
 
         #create bind Joints for the skin -------------------------

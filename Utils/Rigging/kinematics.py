@@ -1706,53 +1706,6 @@ class Kinematics_class(tools.Tools_class):
 
 		return mirror_grp
 
-	#----------------------------------------------------------------------------------------------------------------
-
-	def ensure_mirror_group(self, input = '', world = True):
-		"""
-		   Create a Mirror_Grp wrapper with identity (zeroed-out) transforms,
-		   wrapping the input node to match the hierarchy of mirror_group().
-
-		   This is the counterpart to mirror_group() for the unmirrored side.
-		   It creates the same 'Mirror_Grp' hierarchy node so both sides of a
-		   mirrored rig have consistent hierarchy depth, but without any actual
-		   mirroring transforms applied.
-
-		   If the input is already wrapped by a Mirror_Grp, returns the existing
-		   wrapper to prevent double-wrapping.
-
-		   Args:
-			   input (str): Name of the object to wrap. If not provided, the first selected object will be used.
-			   world (bool): Specifies whether to set the pivot to world origin.
-
-		   Returns:
-			   str: The name of the new or existing Mirror_Grp wrapper.
-		"""
-
-		if input == '':
-			input = cmds.ls(sl=True)[0]
-
-		# Guard: skip if already wrapped by a Mirror_Grp
-		parent = cmds.listRelatives(input, p=True, type='transform')
-		if parent and parent[0].endswith('Mirror{}'.format(self.nc['group'])):
-			return parent[0]
-
-		mirror_grp = cmds.group(em=True, n = '{}Mirror{}'.format(input, self.nc['group']))
-
-		if world == False:
-			cmds.delete(cmds.parentConstraint(input, mirror_grp))
-			
-		cmds.parent(input, mirror_grp)
-
-		if world == True:
-			cmds.xform(mirror_grp, rp= (0,0,0), sp = (0,0,0))
-
-		# Identity transforms — no mirroring, just a hierarchy wrapper
-		cmds.setAttr('{}.scaleX'.format(mirror_grp), 1)
-		cmds.setAttr('{}.scaleY'.format(mirror_grp), 1)
-		cmds.setAttr('{}.scaleZ'.format(mirror_grp), 1)
-
-		return mirror_grp
 
 	#----------------------------------------------------------------------------------------------------------------
 

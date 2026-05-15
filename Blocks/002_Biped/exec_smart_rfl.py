@@ -311,10 +311,6 @@ def build_smart_rfl_block():
             cmds.parentConstraint(attrs_pos, root_grp, mo=True)
             cmds.scaleConstraint(attrs_pos, root_grp, mo=True)
 
-            # Ensure mirror: wrap L side with identity Mirror_Grp for hierarchy consistency
-            if cmds.optionVar(q="mutant_ensure_mirror") if cmds.optionVar(ex="mutant_ensure_mirror") else False:
-                clean_ctrl_grp = mt.ensure_mirror_group(clean_ctrl_grp, world=True)
-
         cmds.parent(clean_ctrl_grp, setup['base_groups']['control'] + nc['group'])
 
     

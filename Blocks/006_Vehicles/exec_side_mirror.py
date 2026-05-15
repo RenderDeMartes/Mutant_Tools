@@ -87,7 +87,6 @@ def build_side_mirror_block():
     clean_rig_grp = ''
     clean_ctrl_grp = ''
 
-    # Ensure mirror: wrap L side with identity Mirror_Grp for hierarchy consistency
     #if mirror is set only to right we need to build on left for mirror behavior then putt it back to righ side
     if cmds.getAttr('{}.Mirror'.format(config), asString = True) == 'Right_Only':
         miror_grp = mt.mirror_group(new_guide, world = True)
@@ -144,11 +143,6 @@ def build_side_mirror_block():
             clean_rig_grp = miror_jnt_grp
             clean_ctrl_grp = miror_ctrl_grp
 
-            # Ensure mirror: wrap L side with identity Mirror_Grp for hierarchy consistency
-            if cmds.optionVar(q="mutant_ensure_mirror") if cmds.optionVar(ex="mutant_ensure_mirror") else False:
-                clean_ctrl_grp = mt.ensure_mirror_group(clean_ctrl_grp, world=True)
-                clean_rig_grp = mt.ensure_mirror_group(clean_rig_grp, world=True)
-
         elif cmds.getAttr('{}.Mirror'.format(config), asString = True) == 'True':
             if str(side_guide).startswith(nc['right']) :
                 miror_ctrl_grp = mt.mirror_group(fk_parent, world = True)
@@ -157,29 +151,14 @@ def build_side_mirror_block():
                 clean_rig_grp = miror_jnt_grp
                 clean_ctrl_grp = miror_ctrl_grp
 
-                # Ensure mirror: wrap L side with identity Mirror_Grp for hierarchy consistency
-                if cmds.optionVar(q="mutant_ensure_mirror") if cmds.optionVar(ex="mutant_ensure_mirror") else False:
-                    clean_ctrl_grp = mt.ensure_mirror_group(clean_ctrl_grp, world=True)
-                    clean_rig_grp = mt.ensure_mirror_group(clean_rig_grp, world=True)
-
             else:
                 cmds.parentConstraint(block_parent, fk_parent , mo = True) 
                 clean_rig_grp = side_guide
-                clean_ctrl_grp = fk_parent        
-
-                # Ensure mirror: wrap L side with identity Mirror_Grp for hierarchy consistency
-                if cmds.optionVar(q="mutant_ensure_mirror") if cmds.optionVar(ex="mutant_ensure_mirror") else False:
-                    clean_ctrl_grp = mt.ensure_mirror_group(clean_ctrl_grp, world=True)
-                    clean_rig_grp = mt.ensure_mirror_group(clean_rig_grp, world=True)
+                clean_ctrl_grp = fk_parent
         else:
             cmds.parentConstraint(block_parent, fk_parent , mo = True) 
             clean_rig_grp = side_guide
             clean_ctrl_grp = fk_parent
-
-            # Ensure mirror: wrap L side with identity Mirror_Grp for hierarchy consistency
-            if cmds.optionVar(q="mutant_ensure_mirror") if cmds.optionVar(ex="mutant_ensure_mirror") else False:
-                clean_ctrl_grp = mt.ensure_mirror_group(clean_ctrl_grp, world=True)
-                clean_rig_grp = mt.ensure_mirror_group(clean_rig_grp, world=True)
 
         #create bind Joints for the skin
         cmds.select(cl=True)

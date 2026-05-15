@@ -208,12 +208,6 @@ def build_smarthand_block():
             miror_jnt_grp = mt.mirror_group(root_grp, world=True)
             cmds.parent(miror_jnt_grp, setup['base_groups']['control'] + nc['group'])
 
-        else:
-            # Ensure mirror: wrap L side with identity Mirror_Grp for hierarchy consistency
-            if cmds.optionVar(q="mutant_ensure_mirror") if cmds.optionVar(ex="mutant_ensure_mirror") else False:
-                ensure_grp = mt.ensure_mirror_group(root_grp, world=True)
-                cmds.parent(ensure_grp, setup['base_groups']['control'] + nc['group'])
-
         cmds.parentConstraint('{}_Wrist_Ctrl'.format(side_guide), root_grp, mo=True)
 
 

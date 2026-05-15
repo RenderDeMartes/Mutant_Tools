@@ -15,7 +15,7 @@
                   "Ctrls_float":  "5",
                   "Joints_float":  "5",
                   "Constraint_bool":  "True",
-                  "AddFk_bool":  "False",
+                  "AddFk_bool":  "True",
                   "FkOnLast_bool":  "False",
                   "Wire_bool":  "False",
                   "CtrlScales_bool":  "False",

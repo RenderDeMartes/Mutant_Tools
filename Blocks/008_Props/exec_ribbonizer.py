@@ -100,7 +100,6 @@ def build_ribbonizer_block():
     #clean a bit
     clean_ctrl_grp = cmds.group(n=name+nc['ctrl']+nc['group'], em=True)
     clean_rig_grp = cmds.group(em=True, n = '{}{}'.format(block.replace(nc['module'],'_Rig'), nc['group']))
-
     bind_jnt_grp = '{}{}'.format(setup['rig_groups']['bind_joints'], nc['group'])
 
     cmds.parent(clean_rig_grp, '{}{}'.format(setup['rig_groups']['misc'], nc['group']))
@@ -226,11 +225,10 @@ def build_ribbonizer_block():
             ctrl_grp, rig_grp, bnd_grp = Ribbonizer.ribbonize(
                 surf_tr=guide_name, prefix=left_prefix, **ribbonize_kwargs)
 
-            # Ensure mirror: wrap L side inner nodes with identity Mirror_Grp to match R side hierarchy
-            if cmds.optionVar(q="mutant_ensure_mirror") if cmds.optionVar(ex="mutant_ensure_mirror") else False:
-                ctrl_grp = mt.ensure_mirror_group(ctrl_grp, world=True)
-                rig_grp = mt.ensure_mirror_group(rig_grp, world=True)
-            cmds.parent(ctrl_grp, clean_ctrl_grp)
+            # Add identity wrapper group so hierarchy depth matches the mirrored side
+            left_wrapper = cmds.group(ctrl_grp, n='{}Mirror{}'.format(ctrl_grp, nc['group']))
+            cmds.xform(left_wrapper, rp=(0,0,0), sp=(0,0,0))
+            cmds.parent(left_wrapper, clean_ctrl_grp)
             cmds.parent(rig_grp, clean_rig_grp)
             cmds.parent(bnd_grp, bind_jnt_grp)
 

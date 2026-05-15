@@ -189,10 +189,15 @@ class AutoRiggerMenu(QtWidgets.QDialog):
 		self.fileMenu = QtWidgets.QMenu(self)
 		self.fileMenu.setTitle("File")
 
-		self.save_guide = self.fileMenu.addAction("Save Guide")
-		self.load_guide = self.fileMenu.addAction("Load Guide")
-		self.place_guide = self.fileMenu.addAction("Guide Placement")
-		self.butcher = self.fileMenu.addAction("Butcher")
+		# Guides submenu
+		self.guidesMenu = QtWidgets.QMenu("Guides", self)
+		self.fileMenu.addMenu(self.guidesMenu)
+
+		self.save_guide = self.guidesMenu.addAction("Save Guide")
+		self.load_guide = self.guidesMenu.addAction("Load Guide")
+		self.guidesMenu.addSeparator()
+		self.place_guide = self.guidesMenu.addAction("Guide Placement")
+		self.butcher = self.guidesMenu.addAction("Butcher")
 		self.fileMenu.addSeparator()
 
 		self.bind_selected = self.fileMenu.addAction("Bind Selected Geo")
@@ -231,26 +236,33 @@ class AutoRiggerMenu(QtWidgets.QDialog):
 
 		self.dev_reload = self.fileMenu.addAction("Reload Blocks")
 		self.update_all_blocks = self.fileMenu.addAction("Update All Blocks")
-		self.toggle_dev = self.fileMenu.addAction("Toggle Dev Mode")
 
-		self.visual_build = self.fileMenu.addAction("Visual Build")
+		# Settings submenu
+		self.settingsMenu = QtWidgets.QMenu("Settings", self)
+		self.fileMenu.addMenu(self.settingsMenu)
+
+		self.toggle_dev = self.settingsMenu.addAction("Toggle Dev Mode")
+
+		self.settingsMenu.addSeparator()
+
+		self.visual_build = self.settingsMenu.addAction("Visual Build")
 		self.visual_build.setCheckable(True)
 		visual_build_state = cmds.optionVar(q="mutant_visual_build") if cmds.optionVar(ex="mutant_visual_build") else True
 		self.visual_build.setChecked(visual_build_state)
 
-		self.clear_script_editor = self.fileMenu.addAction("Clear Script Editor on Build")
+		self.clear_script_editor = self.settingsMenu.addAction("Clear Script Editor on Build")
 		self.clear_script_editor.setCheckable(True)
 		clear_se_state = cmds.optionVar(q="mutant_clear_script_editor") if cmds.optionVar(ex="mutant_clear_script_editor") else True
 		self.clear_script_editor.setChecked(clear_se_state)
 
-		self.revert_on_fail = self.fileMenu.addAction("Revert on Fail")
+		self.revert_on_fail = self.settingsMenu.addAction("Revert on Fail")
 		self.revert_on_fail.setCheckable(True)
 		revert_state = cmds.optionVar(q="mutant_revert_on_fail") if cmds.optionVar(ex="mutant_revert_on_fail") else True
 		self.revert_on_fail.setChecked(revert_state)
-		
-		self.fileMenu.addSeparator()
 
-		self.standard_window = self.fileMenu.addAction("Use Standard Window")
+		self.settingsMenu.addSeparator()
+
+		self.standard_window = self.settingsMenu.addAction("Use Standard Window")
 		self.standard_window.setCheckable(True)
 		std_win_state = cmds.optionVar(q="mutant_standard_window") if cmds.optionVar(ex="mutant_standard_window") else False
 		self.standard_window.setChecked(std_win_state)

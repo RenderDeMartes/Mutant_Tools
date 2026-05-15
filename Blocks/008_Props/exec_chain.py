@@ -227,11 +227,6 @@ def build_chain_block():
             if is_right_side and mirror:
                 mirror_ctrl_grp = mt.mirror_group(ctrl_root, world=True)
                 cmds.parent(mirror_ctrl_grp, clean_ctrl_grp)
-            elif not is_right_side:
-                # Ensure mirror: wrap L side ctrl_root with identity Mirror_Grp to match R side hierarchy
-                if cmds.optionVar(q="mutant_ensure_mirror") if cmds.optionVar(ex="mutant_ensure_mirror") else False:
-                    ensure_grp = mt.ensure_mirror_group(ctrl_root, world=True)
-                    cmds.parent(ensure_grp, clean_ctrl_grp)
 
             # Independent Scale System
             if cmds.attributeQuery('IndependentScale', node=config, exists=True) and cmds.getAttr('{}.IndependentScale'.format(config)):

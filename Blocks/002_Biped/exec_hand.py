@@ -570,20 +570,12 @@ def build_hand_block():
                 clean_rig_grp = side_guide
                 clean_ctrl_grp = ctrls_grp
 
-                # Ensure mirror: wrap L side with identity Mirror_Grp for hierarchy consistency
-                if cmds.optionVar(q="mutant_ensure_mirror") if cmds.optionVar(ex="mutant_ensure_mirror") else False:
-                    clean_ctrl_grp = mt.ensure_mirror_group(clean_ctrl_grp, world=True)
-                    clean_rig_grp = mt.ensure_mirror_group(clean_rig_grp, world=True)
-
         else: #only left side
             cmds.parentConstraint(block_parent, ctrls_grp , mo = True)
             clean_rig_grp = side_guide
             clean_ctrl_grp = ctrls_grp
 
-            # Ensure mirror: wrap L side with identity Mirror_Grp for hierarchy consistency
-            if cmds.optionVar(q="mutant_ensure_mirror") if cmds.optionVar(ex="mutant_ensure_mirror") else False:
-                clean_ctrl_grp = mt.ensure_mirror_group(clean_ctrl_grp, world=True)
-                clean_rig_grp = mt.ensure_mirror_group(clean_rig_grp, world=True)
+            #Finish -------------------------------------------
         
         #game parents for bind joints
         game_parent = cmds.getAttr('{}.SetGameParent'.format(config))

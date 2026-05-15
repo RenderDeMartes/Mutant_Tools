@@ -154,21 +154,10 @@ def build_clavicle_block():
                 cmds.parentConstraint(block_parent, for_parent , mo = True) 
                 clean_rig_grp = side_guide
                 clean_ctrl_grp = for_parent
-
-                # Ensure mirror: wrap L side with identity Mirror_Grp for hierarchy consistency
-                if cmds.optionVar(q="mutant_ensure_mirror") if cmds.optionVar(ex="mutant_ensure_mirror") else False:
-                    clean_ctrl_grp = mt.ensure_mirror_group(clean_ctrl_grp, world=True)
-                    clean_rig_grp = mt.ensure_mirror_group(clean_rig_grp, world=True)
-
         else:
             cmds.parentConstraint(block_parent, for_parent , mo = True) 
             clean_rig_grp = side_guide
             clean_ctrl_grp = for_parent
-
-            # Ensure mirror: wrap L side with identity Mirror_Grp for hierarchy consistency
-            if cmds.optionVar(q="mutant_ensure_mirror") if cmds.optionVar(ex="mutant_ensure_mirror") else False:
-                clean_ctrl_grp = mt.ensure_mirror_group(clean_ctrl_grp, world=True)
-                clean_rig_grp = mt.ensure_mirror_group(clean_rig_grp, world=True)
 
         #create bind Joints for the skin
         cmds.select(cl=True)
