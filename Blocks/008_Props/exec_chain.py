@@ -181,9 +181,10 @@ def build_chain_block():
             if is_right_side:
                 name = name.replace(nc['left'], nc['right'])
 
+            groups_guide_name = guide.replace(nc['guide'], '')
 
-            clean_ctrl_grp = cmds.group(em=True, name=name + nc['ctrl'] + nc['group'])
-            clean_rig_grp = cmds.group(em=True, name=name + '_Rig' + nc['group'])
+            clean_ctrl_grp = cmds.group(em=True, name=groups_guide_name + nc['ctrl'] + nc['group'])
+            clean_rig_grp = cmds.group(em=True, name=groups_guide_name + '_Rig' + nc['group'])
 
             cmds.parent(clean_rig_grp, '{}{}'.format(setup['rig_groups']['misc'], nc['group']))
             cmds.parent(clean_ctrl_grp, setup['base_groups']['control'] + nc['group'])
