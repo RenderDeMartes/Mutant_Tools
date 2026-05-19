@@ -116,20 +116,24 @@ def build_quadlimb_block():
     block = cmds.ls(sl=True)
     config = cmds.listConnections(block)[1]
     block = block[0]
-    guide = cmds.listRelatives(block, c=True)[0]
-    aim_guide = cmds.listRelatives(block, c=True)[1]
-
-    if 'Aim' in guide:
-        guide = cmds.listRelatives(block, c=True)[1]
-        aim_guide = cmds.listRelatives(block, c=True)[0]
+    children = cmds.listRelatives(block, c=True)
+    guide = next((c for c in children if '_PV' not in c), None)
+    aim_guide = next((c for c in children if '_PV' in c), None)
 
     new_guide = mt.duplicate_and_remove_guides(guide)
     print(new_guide)
     to_build = [new_guide]
 
+    # compatible with older versions without AutoOrient
+    if cmds.attributeQuery('AutoOrient', n=config, exists=True):
+        auto_orient = cmds.getAttr(config + '.AutoOrient')
+    else:
+        auto_orient = True
+
     # orient the joints
 
-    mt.orient_joint(input=new_guide)
+    if auto_orient:
+        mt.orient_joint(input=new_guide)
     # force last joint to orient
     joint_four = cmds.listRelatives(new_guide, ad=True)[-3]
     cmds.setAttr("{}.jointOrientX".format(joint_four), 0)
@@ -157,7 +161,8 @@ def build_quadlimb_block():
         cmds.makeIdentity(miror_grp, a=True, t=True, r=True, s=True)
         cmds.parent(new_guide, w = True)
         cmds.delete(miror_grp)
-        mt.orient_joint(input = new_guide)
+        if auto_orient:
+            mt.orient_joint(input=new_guide)
 
     elif cmds.getAttr('{}.Mirror'.format(config), asString = True) == 'True':
         right_guide = mt.duplicate_change_names(input = new_guide, hi = True, search=nc['left'], replace =nc['right'])[0]
@@ -244,12 +249,12 @@ def build_quadlimb_block():
         print('Setting 90 down', back_sys_joint_b)
         cmds.setAttr('{}.rotateX'.format(back_sys_joint_b), -90)
 
-        mt.orient_joint(back_sys_joint_a)
+        #mt.orient_joint(back_sys_joint_a)
 
         new_pos = cmds.getAttr('{}.tx'.format(joint_three))+cmds.getAttr('{}.tx'.format(joint_four))
         cmds.setAttr('{}.tx'.format(back_sys_joint_c), new_pos*-1)
 
-        mt.orient_joint(back_sys_joint_a)
+        #mt.orient_joint(back_sys_joint_a)
 
         #Temp ik and placement
         temp_ik_data = cmds.ikHandle(sj=back_sys_joint_a, ee=back_sys_joint_c, sol='ikRPsolver')
@@ -273,7 +278,7 @@ def build_quadlimb_block():
                 cmds.setAttr('{}.twist'.format(temp_ik_data[0]), 180)
 
         cmds.delete(temp_pv, temp_ik_data[1])
-        mt.orient_joint(back_sys_joint_a)
+        #mt.orient_joint(back_sys_joint_a)
 
         #Create oficial system now
         backwards_ik = cmds.ikHandle(sj=back_sys_joint_a, ee=back_sys_joint_c,
