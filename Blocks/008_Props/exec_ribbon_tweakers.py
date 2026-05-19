@@ -236,10 +236,21 @@ def build_ribbon_tweakers_block():
 
     bind_jnt_grp = '{}{}'.format(setup['rig_groups']['bind_joints'], nc['group'])
 
+    # flip right
+    flip_right = False
+    if cmds.attributeQuery('FlipRight', n=config, exists=True):
+        flip_right = cmds.getAttr('{}.FlipRight'.format(config))
+
     resolved_names = _resolve_custom_names(raw_custom_names, count, 'Twk')
 
+    # Pass 1: build all ctrls, rig joints and bind joints.
+    # ctrl_root parenting/flipping is deferred so every left-side ctrl exists
+    # before any right-side ctrl tries to find its counterpart.
+    pending_ctrl_roots = []  # list of (ctrl_root, ctrl_roots, fol, do_flip)
+
     for i, fol in enumerate(follicles):
-        custom_base = '{}_{}'.format(name, resolved_names[i])
+        custom_base = '{}_{}'.format(resolved_names[i], name)
+        do_flip = flip_right and nc['right'] in custom_base
 
         ctrl_name = '{}{}'.format(custom_base, nc['ctrl'])
         rig_jnt_name = '{}{}'.format(custom_base, nc['joint'])
@@ -260,7 +271,8 @@ def build_ribbon_tweakers_block():
 
         cmds.delete(cmds.parentConstraint(fol, ctrl_root, mo=False))
         cmds.parentConstraint(fol, ctrl_root, mo=True)
-        cmds.parent(ctrl_root, clean_ctrl_grp)
+
+        pending_ctrl_roots.append((ctrl_root, ctrl_roots, fol, do_flip))
 
         cmds.select(cl=True)
         rig_joint = cmds.joint(n=rig_jnt_name)
@@ -280,6 +292,20 @@ def build_ribbon_tweakers_block():
 
         if cmds.objExists(bind_jnt_grp):
             cmds.parent(bind_joint, bind_jnt_grp)
+
+    # Pass 2: flip right-side ctrls now that all left-side ctrls exist, then parent.
+    for ctrl_root, ctrl_roots, fol, do_flip in pending_ctrl_roots:
+        if do_flip:
+            left_ctrl_root = ctrl_root.replace(nc['right'], nc['left'])
+            if cmds.objExists(left_ctrl_root):
+                for con in (cmds.listRelatives(ctrl_root, type='parentConstraint') or []):
+                    cmds.delete(con)
+                cmds.delete(cmds.parentConstraint(left_ctrl_root, ctrl_root, mo=False))
+                ctrl_root = mt.mirror_group(ctrl_root, world=True)
+                cmds.parentConstraint(fol, ctrl_roots[0], mo=True)
+            else:
+                ctrl_root = mt.mirror_group(ctrl_root, world=False)
+        cmds.parent(ctrl_root, clean_ctrl_grp)
 
     misc_grp = '{}{}'.format(setup['rig_groups']['misc'], nc['group'])
     ctrl_base_grp = '{}{}'.format(setup['base_groups']['control'], nc['group'])
