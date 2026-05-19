@@ -603,8 +603,8 @@ def build_quadlimb_block():
         mt.assign_color(main_mid_ctrl, sec_color)
         root_mid_ctrl = mt.root_grp(input=main_mid_ctrl)
         mt.shape_with_attr(input=main_mid_ctrl, obj_name=main_joints[0] + '_Switch', attr_name='')
-
-        cmds.parentConstraint(limb_b, root_mid_ctrl, mo=False)
+        mt.match(root_mid_ctrl, limb_b, r=True, t=True)
+        cmds.parentConstraint(limb_b, root_mid_ctrl, mo=True)
 
         cmds.pointConstraint(main_mid_ctrl, cmds.listRelatives(top_top_ribbon['second_ctrls'][1], p=True), mo=True)
         cmds.pointConstraint(main_mid_ctrl, cmds.listRelatives(top_ribbon['second_ctrls'][0], p=True), mo=True)
@@ -621,8 +621,8 @@ def build_quadlimb_block():
         mt.assign_color(sec_mid_ctrl, sec_color)
         root_sec_mid_ctrl = mt.root_grp(input=sec_mid_ctrl)
         mt.shape_with_attr(input=sec_mid_ctrl, obj_name=main_joints[0] + '_Switch', attr_name='')
-
-        cmds.parentConstraint(limb_c, root_sec_mid_ctrl, mo=False)
+        mt.match(root_sec_mid_ctrl, limb_c, r=True, t=True)
+        cmds.parentConstraint(limb_c, root_sec_mid_ctrl, mo=True)
 
         cmds.pointConstraint(sec_mid_ctrl, cmds.listRelatives(top_ribbon['second_ctrls'][1], p=True), mo=True)
         cmds.pointConstraint(sec_mid_ctrl, cmds.listRelatives(low_ribbon['second_ctrls'][0], p=True), mo=True)
