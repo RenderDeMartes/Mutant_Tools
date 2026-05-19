@@ -299,8 +299,43 @@ class DraggableButton(QtWidgets.QPushButton):
 		exec_func = getattr(drag, 'exec_', drag.exec)
 		exec_func(QtCore.Qt.MoveAction)
 
+class DraggableTabButton(QtWidgets.QPushButton):
+	"""Tab button that can be dragged into the side panel to create a block at a specific position."""
+	def __init__(self, json_path, *args, **kwargs):
+		super(DraggableTabButton, self).__init__(*args, **kwargs)
+		self.json_path = json_path
+
+	def mousePressEvent(self, event):
+		if event.button() == QtCore.Qt.LeftButton:
+			self.drag_start_position = event.pos()
+		super(DraggableTabButton, self).mousePressEvent(event)
+
+	def mouseMoveEvent(self, event):
+		if not (event.buttons() & QtCore.Qt.LeftButton):
+			return
+		if not hasattr(self, 'drag_start_position'):
+			return
+		if (event.pos() - self.drag_start_position).manhattanLength() < QtWidgets.QApplication.startDragDistance():
+			return
+
+		drag = QtGui.QDrag(self)
+		mime_data = QtCore.QMimeData()
+		mime_data.setText('create:' + self.json_path)
+		drag.setMimeData(mime_data)
+
+		# Show the button icon as the drag pixmap
+		icon = self.icon()
+		if not icon.isNull():
+			pixmap = icon.pixmap(32, 32)
+			drag.setPixmap(pixmap)
+			drag.setHotSpot(QtCore.QPoint(16, 16))
+
+		exec_func = getattr(drag, 'exec_', drag.exec)
+		exec_func(QtCore.Qt.CopyAction)
+
 class DraggableBlockWidget(QtWidgets.QGroupBox):
 	block_dropped = QtCore.Signal(str, str, bool)
+	block_create_dropped = QtCore.Signal(str, str, bool)
 
 	def __init__(self, block_name, *args, **kwargs):
 		super(DraggableBlockWidget, self).__init__(*args, **kwargs)
@@ -309,25 +344,29 @@ class DraggableBlockWidget(QtWidgets.QGroupBox):
 		self.setFocusPolicy(QtCore.Qt.NoFocus)
 		self._drop_indicator = None
 
+	def _is_valid_drop(self, mime_data):
+		if not mime_data.hasText():
+			return False
+		text = mime_data.text()
+		if text.startswith('create:'):
+			return True
+		return text != self.block_name
+
 	def dragEnterEvent(self, event):
-		if event.mimeData().hasText():
-			source_block = event.mimeData().text()
-			if source_block != self.block_name:
-				event.acceptProposedAction()
-				return
+		if self._is_valid_drop(event.mimeData()):
+			event.acceptProposedAction()
+			return
 		event.ignore()
 
 	def dragMoveEvent(self, event):
-		if event.mimeData().hasText():
-			source_block = event.mimeData().text()
-			if source_block != self.block_name:
-				drop_above = event.pos().y() < (self.height() / 2)
-				new_indicator = 'top' if drop_above else 'bottom'
-				if self._drop_indicator != new_indicator:
-					self._drop_indicator = new_indicator
-					self.update()
-				event.acceptProposedAction()
-				return
+		if self._is_valid_drop(event.mimeData()):
+			drop_above = event.pos().y() < (self.height() / 2)
+			new_indicator = 'top' if drop_above else 'bottom'
+			if self._drop_indicator != new_indicator:
+				self._drop_indicator = new_indicator
+				self.update()
+			event.acceptProposedAction()
+			return
 		event.ignore()
 
 	def dragLeaveEvent(self, event):
@@ -339,9 +378,13 @@ class DraggableBlockWidget(QtWidgets.QGroupBox):
 	def dropEvent(self, event):
 		self._drop_indicator = None
 		self.update()
-		source_block = event.mimeData().text()
+		text = event.mimeData().text()
 		drop_above = event.pos().y() < (self.height() / 2)
-		self.block_dropped.emit(source_block, self.block_name, drop_above)
+		if text.startswith('create:'):
+			json_path = text[7:]  # strip 'create:' prefix
+			self.block_create_dropped.emit(json_path, self.block_name, drop_above)
+		else:
+			self.block_dropped.emit(text, self.block_name, drop_above)
 		event.acceptProposedAction()
 
 	def paintEvent(self, event):
@@ -380,10 +423,110 @@ class ListResizer(QtWidgets.QFrame):
 	def mouseReleaseEvent(self, event):
 		self._is_resizing = False
 
+class SearchOverlay(QtWidgets.QFrame):
+	"""Floating search bar that appears over the AutoRigger on Ctrl+F."""
+
+	def __init__(self, parent, search_line):
+		super(SearchOverlay, self).__init__(parent)
+		self._search_line = search_line
+		self.setFrameShape(QtWidgets.QFrame.NoFrame)
+		self.setFixedHeight(38)
+		self.setMinimumWidth(260)
+		self.setMaximumWidth(340)
+		self.setStyleSheet(
+			'SearchOverlay {'
+			'  background-color: #3c3f41;'
+			'  border: 1px solid #5f6161;'
+			'  border-radius: 4px;'
+			'}'
+		)
+
+		layout = QtWidgets.QHBoxLayout(self)
+		layout.setContentsMargins(8, 4, 8, 4)
+		layout.setSpacing(6)
+
+
+
+		self.field = QtWidgets.QLineEdit()
+		self.field.setPlaceholderText('Search blocks...')
+		self.field.setStyleSheet(
+			'QLineEdit {'
+			'  background-color: #45494a;'
+			'  border: 1px solid #646464;'
+			'  border-radius: 2px;'
+			'  color: #bbbbbb;'
+			'  padding: 2px 6px;'
+			'  font-size: 12px;'
+			'  selection-background-color: #555555;'
+			'}'
+			'QLineEdit:focus {'
+			'  border: 1px solid #888888;'
+			'}'
+		)
+		layout.addWidget(self.field)
+
+		# Sync overlay field with the existing search_line
+		self.field.textChanged.connect(self._on_text_changed)
+		self.field.installEventFilter(self)
+		self.hide()
+
+	def popup(self):
+		"""Show the overlay centered near the top of the parent."""
+		p = self.parent()
+		if p:
+			w = min(self.maximumWidth(), int(p.width() * 0.6))
+			self.setFixedWidth(max(self.minimumWidth(), w))
+			x = (p.width() - self.width()) // 2
+			self.move(x, 8)
+		self.field.setText(self._search_line.text())
+		self.show()
+		self.raise_()
+		self.field.setFocus()
+		self.field.selectAll()
+
+	def dismiss(self):
+		"""Hide the overlay and clear the search."""
+		self.field.clear()
+		self.hide()
+
+	def _on_text_changed(self, text):
+		self._search_line.setText(text)
+
+	def eventFilter(self, obj, event):
+		if obj is self.field:
+			if event.type() == QtCore.QEvent.KeyPress:
+				if event.key() == QtCore.Qt.Key_Escape:
+					self.dismiss()
+					return True
+				elif event.key() in (QtCore.Qt.Key_Return, QtCore.Qt.Key_Enter):
+					self.hide()
+					return True
+			elif event.type() == QtCore.QEvent.FocusOut:
+				# Small delay so clicks inside the overlay aren't interrupted
+				QtCore.QTimer.singleShot(150, self._check_focus)
+		return super(SearchOverlay, self).eventFilter(obj, event)
+
+	def _check_focus(self):
+		if not self.field.hasFocus() and self.isVisible():
+			self.hide()
+
+
 class AutoRigger(QtMutantWindow.Qt_Mutant):
 
+	OBJECT_NAME = 'MutantAutoRiggerWindow'
+
 	def __init__(self):
+		# Close any existing instance (survives module reloads)
+		for widget in QtWidgets.QApplication.topLevelWidgets():
+			if widget is not self and widget.objectName() == self.OBJECT_NAME:
+				try:
+					widget.close()
+					widget.deleteLater()
+				except Exception:
+					pass
+
 		super(AutoRigger, self).__init__()
+		self.setObjectName(self.OBJECT_NAME)
 
 		#UI Init
 		self.setWindowTitle(Title)
@@ -803,6 +946,13 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 
 		self.ui.search_button.clicked.connect(self.search_command)
 		self.ui.search_line.textChanged.connect(self.search_command)
+
+		# Ctrl+F shortcut to focus the search/filter field
+		try:
+			search_shortcut = QtGui.QShortcut(QtGui.QKeySequence('Ctrl+F'), self)
+		except AttributeError:
+			search_shortcut = QtWidgets.QShortcut(QtGui.QKeySequence('Ctrl+F'), self)
+		search_shortcut.activated.connect(self._focus_search)
 
 	#-------------------------------------------------------------------
 	def reload_all_blocks(self):
@@ -1245,9 +1395,8 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 
 					#create button
 					block_name = str(block_file).split('_')[1].replace('.json', '')
-					button = QPushButton()#give a nicer name
+					button = DraggableTabButton(real_path)
 					button.clicked.connect(partial (self.create_new_block, real_path))
-					button.clicked.connect(self.create_layout)
 					button.setToolTip(self._block_tooltip_html(block))
 					button.setToolTipDuration(20000)
 					button.setFixedSize(40, 40)
@@ -1302,13 +1451,35 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 
 		cmds.undoInfo(openChunk=True)
 
+		# Remember which blocks exist before creation
+		existing_blocks = set(self.side_block_widgets.keys())
+
 		exec (block['import'])
 		if mt.check_dev_mode():
 			try:exec (block['imp.reload'])
 			except: print ('couldnt imp.reload {}'.format(bock_path))
 		exec (block['exec_command'])
 		mt.update_icons()
-		self.create_properties_layout(block = cmds.ls(sl=True)[0])
+
+		# Rebuild the entire side panel so block names come from the real
+		# Maya hierarchy (some exec scripts leave the config node selected
+		# instead of the block container, which was causing wrong names).
+		scroll_bar = self.ui.side_scroll.verticalScrollBar()
+		saved_scroll = scroll_bar.value()
+		self.delete_side_buttons()
+		try:
+			self.create_all_side_buttons()
+		except Exception as e:
+			print(e)
+		QtWidgets.QApplication.processEvents()
+		scroll_bar.setValue(saved_scroll)
+		QtCore.QTimer.singleShot(50, lambda: self.ui.side_scroll.verticalScrollBar().setValue(saved_scroll))
+
+		# Detect the newly created block and show its properties
+		new_blocks = set(self.side_block_widgets.keys()) - existing_blocks
+		if new_blocks:
+			new_block = list(new_blocks)[0]
+			self.create_properties_layout(block=new_block, scroll_to_block=True)
 
 		cmds.undoInfo(closeChunk=True)
 
@@ -1418,6 +1589,7 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		side_hbox = DraggableBlockWidget(pack_name)
 		side_hbox.setStyleSheet('QGroupBox { margin-top: 0; padding: 0; }')
 		side_hbox.block_dropped.connect(self.move_outliner_to_block)
+		side_hbox.block_create_dropped.connect(self.create_block_at_position)
 		block_parent.addWidget(side_hbox)
 		self.side_block_widgets[pack_name] = side_hbox
 
@@ -1428,8 +1600,11 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		edit_button.setStyleSheet('text-align: left; padding: 2px;')
 		self.side_block_edit_buttons[pack_name] = edit_button
 
-		# Nice display name: strip _Block suffix and replace underscores with spaces
-		display_name = pack_name.replace(nc['module'],'').replace('_', ' ').strip()
+		# Nice display name: strip _Block suffix, split camelCase, replace underscores
+		display_name = pack_name.replace(nc['module'],'')
+		display_name = re.sub(r'([a-z])([A-Z])', r'\1 \2', display_name)
+		display_name = re.sub(r'([A-Z]+)([A-Z][a-z])', r'\1 \2', display_name)
+		display_name = display_name.replace('_', ' ').strip()
 
 		# Horizontal layout: icon on left, word-wrap label beside it
 		btn_layout = QtWidgets.QHBoxLayout(edit_button)
@@ -1520,8 +1695,72 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		except Exception as e:
 			cmds.warning('Could not reorder blocks: {}'.format(e))
 			
-		# Refresh the UI layout
-		self.create_layout()
+		# Refresh only the side buttons, preserving scroll position
+		scroll_bar = self.ui.side_scroll.verticalScrollBar()
+		saved_scroll = scroll_bar.value()
+		self.delete_side_buttons()
+		try:
+			self.create_all_side_buttons()
+		except Exception as e:
+			print(e)
+		# Force Qt to compute the new layout so the scrollbar range is valid
+		QtWidgets.QApplication.processEvents()
+		scroll_bar.setValue(saved_scroll)
+		# Backup: if Qt still needs another pass, restore again shortly after
+		QtCore.QTimer.singleShot(50, lambda: self.ui.side_scroll.verticalScrollBar().setValue(saved_scroll))
+
+	def create_block_at_position(self, json_path, target_block, drop_above):
+		"""Create a new block from a tab drag-drop and insert it at the drop position."""
+		with open(json_path, "r") as block_info:
+			block = json.load(block_info)
+
+		cmds.undoInfo(openChunk=True)
+		try:
+			exec(block['import'])
+			if mt.check_dev_mode():
+				try: exec(block['imp.reload'])
+				except: print('couldnt imp.reload {}'.format(json_path))
+			exec(block['exec_command'])
+			mt.update_icons()
+
+			new_block = None
+			try:
+				new_block = cmds.ls(sl=True)[0]
+			except:
+				pass
+
+			if new_block:
+				# Reorder the new block to the drop position
+				try:
+					parent = cmds.listRelatives(new_block, parent=True)
+					if parent:
+						children = cmds.listRelatives(parent[0], children=True)
+						if target_block in children:
+							target_idx = children.index(target_block)
+							# New block is at the end, move it to front first
+							cmds.reorder(new_block, front=True)
+							# target_idx stays the same since we moved from after it
+							new_idx = target_idx if drop_above else target_idx + 1
+							if new_idx > 0:
+								cmds.reorder(new_block, relative=new_idx)
+				except Exception as e:
+					cmds.warning('Could not reorder new block: {}'.format(e))
+
+				# Rebuild side panel to reflect correct order and show properties
+				scroll_bar = self.ui.side_scroll.verticalScrollBar()
+				saved_scroll = scroll_bar.value()
+				self.delete_side_buttons()
+				try: self.create_all_side_buttons()
+				except Exception as e: print(e)
+				QtWidgets.QApplication.processEvents()
+				scroll_bar.setValue(saved_scroll)
+				QtCore.QTimer.singleShot(50, lambda: self.ui.side_scroll.verticalScrollBar().setValue(saved_scroll))
+				self.create_properties_layout(block=new_block)
+
+		except Exception as e:
+			cmds.warning('Failed to create block: {}'.format(e))
+
+		cmds.undoInfo(closeChunk=True)
 
 	#-------------------------------------------------------------------
 	def create_properties_layout(self, block, scroll_to_block=False):
@@ -1662,7 +1901,47 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 							items.append(lw.item(i).text())
 						cmds.setAttr(ea, ','.join(items), type='string')
 						
-					def add_selected_to_list(lw=list_widget, ea=edit_attr):
+					def add_selected_to_list(lw=list_widget, ea=edit_attr, attr_name=attr):
+						if 'Defaults' in attr_name:
+							# Special: capture selected channel box attrs + values
+							sel = cmds.ls(sl=True)
+							if not sel:
+								cmds.warning('Select objects first.')
+								return
+							main_attrs = cmds.channelBox('mainChannelBox', q=True, sma=True) or []
+							shape_attrs = cmds.channelBox('mainChannelBox', q=True, ssa=True) or []
+							history_attrs = cmds.channelBox('mainChannelBox', q=True, sha=True) or []
+							output_attrs = cmds.channelBox('mainChannelBox', q=True, soa=True) or []
+							all_attrs = main_attrs + shape_attrs + history_attrs + output_attrs
+							if not all_attrs:
+								cmds.warning('Highlight attributes in the Channel Box first.')
+								return
+							existing = [lw.item(i).text() for i in range(lw.count())]
+							added = 0
+							for node in sel:
+								for cb_attr in all_attrs:
+									full = '{}.{}'.format(node, cb_attr)
+									if not cmds.objExists(full):
+										continue
+									try:
+										val = cmds.getAttr(full)
+										entry = '{} = {}'.format(full, val)
+										# Replace if same attr already stored
+										replaced = False
+										for idx in range(lw.count()):
+											if lw.item(idx).text().startswith(full + ' ='):
+												lw.item(idx).setText(entry)
+												replaced = True
+												break
+										if not replaced:
+											lw.addItem(entry)
+										added += 1
+									except:
+										pass
+							if added == 0:
+								cmds.warning('No valid attributes found.')
+							update_attr_from_list(lw, ea)
+							return
 						sel = cmds.ls(sl=True)
 						if not sel: return
 						existing = []
@@ -2516,6 +2795,12 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 	def search_command(self):
 		self.delete_side_buttons()
 		self.create_all_side_buttons()
+
+	def _focus_search(self):
+		"""Show the floating search overlay."""
+		if not hasattr(self, '_search_overlay'):
+			self._search_overlay = SearchOverlay(self.master_ui, self.ui.search_line)
+		self._search_overlay.popup()
 
 	def show_bar_only(self):
 		self.ui.menuLayout.setParent(None)

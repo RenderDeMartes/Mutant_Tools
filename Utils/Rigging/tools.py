@@ -1109,11 +1109,11 @@ class Tools_class(object):
 			new_boolean(input='myObject', name='visibility', dv=False)
 		"""
 
-		#add new attr as float
-		cmds.addAttr(input, ln = name, at = 'bool')
+		#add new attr as bool
+		bool_val = 1 if dv == 'True' else 0
+		cmds.addAttr(input, ln = name, at = 'bool', dv = bool_val)
+		cmds.setAttr('{}.{}'.format(input, name), bool_val)
 		cmds.setAttr('{}.{}'.format(input, name), e = True, channelBox = True)
-		if dv == 'True':
-			cmds.setAttr('{}.{}'.format(input, name), 1)
 		print (dv)
 
 		return '{}.{}'.format(input, name)

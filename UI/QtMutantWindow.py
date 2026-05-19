@@ -759,8 +759,9 @@ class Qt_Mutant(QtWidgets.QMainWindow):
                 flags = QtCore.Qt.Window | QtCore.Qt.WindowStaysOnTopHint
             else:
                 flags = QtCore.Qt.Window
+            title = self.windowTitle() or 'Mutant Tools'
             self.setWindowFlags(flags)
-            self.setWindowTitle('Mutant Tools')
+            self.setWindowTitle(title)
             # Hide the custom title bar and size grip since the OS provides them
             self.master_ui.top_frame.hide()
             self.master_ui.size_grip_box.hide()

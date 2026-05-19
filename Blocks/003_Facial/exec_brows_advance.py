@@ -54,7 +54,7 @@ def create_brows_advance_block(name='L_Brow'):
         cmds.warning('Name already exists.')
         return ''
 
-    block = mt.create_block(name=name, icon='L_BrowAdvance', attrs=module['attrs'], build_command=module['build_command'],
+    block = mt.create_block(name=name, icon=module['Icon'].replace('.png',''), attrs=module['attrs'], build_command=module['build_command'],
                             import_command=module['import'])
     config = block[1]
     block = block[0]
