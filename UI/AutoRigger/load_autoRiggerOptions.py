@@ -174,7 +174,7 @@ class AutoRiggerOptions(QtMutantWindow.Qt_Mutant):
 			cmds.parent(og_guides, w=True)
 
 		#Dup block
-		new_name = mt.ask_name(text='',
+		new_name = mt.ask_name(text=name,
 							   ask_for='New Name',
 							   check_split=True)
 
@@ -215,6 +215,21 @@ class AutoRiggerOptions(QtMutantWindow.Qt_Mutant):
 					if cmds.objectType(s)=="nurbsCurve":
 						cmds.setAttr("{}.lineWidth".format(s), int(setup['line_width']))
 
+		# Reorder so the new block sits just below the original
+		try:
+			parent = cmds.listRelatives(new_block, parent=True)
+			if parent:
+				children = cmds.listRelatives(parent[0], children=True)
+				if block in children:
+					orig_idx = children.index(block)
+					cmds.reorder(new_block, front=True)
+					# After front, move relative to land right after original
+					new_idx = orig_idx + 1
+					if new_idx > 0:
+						cmds.reorder(new_block, relative=new_idx)
+		except Exception as e:
+			print('Could not reorder duplicated block: {}'.format(e))
+
 		try:
 			self.autorigger_ui.create_layout()
 			mt.update_icons()
@@ -229,6 +244,13 @@ class AutoRiggerOptions(QtMutantWindow.Qt_Mutant):
 		print(self.block, 'Delete Block')
 		cmds.delete(self.block)
 		self.layout.setParent(None)
+		# Clear the properties panel so deleted block info doesn't linger
+		try:
+			self.autorigger_ui.current_block = None
+			self.autorigger_ui.delete_properties_layout()
+			self.autorigger_ui.ui.block_label.setText('Mutant Autorigger')
+		except Exception as e:
+			print('Could not clear properties: {}'.format(e))
 		self.close()
 
 	@undo

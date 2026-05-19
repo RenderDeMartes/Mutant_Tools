@@ -161,7 +161,12 @@ class HelperUI(QtMutantWindow.Qt_Mutant):
 		self.create_layout()
 		self.create_connections()
 
-		self.make_frameless()
+		# Re-apply the saved window mode so standard-window preference is
+		# respected after the child UI has been loaded.
+		if cmds.optionVar(ex='mutant_standard_window') and cmds.optionVar(q='mutant_standard_window'):
+			self.apply_window_mode(standard=True)
+		else:
+			self.make_frameless()
 
 		self.hierarchy_array = []
 		self.block_order = []

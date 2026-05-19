@@ -47,7 +47,7 @@ def create_tooneye_block(name='ToonEye'):
         cmds.warning('Name already exists.')
         return ''
 
-    block = mt.create_block(name=name, icon='Eyes', attrs=module['attrs'],
+    block = mt.create_block(name=name, icon=module['Icon'].replace('.png',''), attrs=module['attrs'],
                             build_command=module['build_command'],
                             import_command=module['import'])
     config = block[1]
