@@ -50,6 +50,26 @@ def _resolve_source_surface(block):
     return None
 
 
+def _resolve_custom_names(raw_string, count, fallback_prefix):
+    """Return a list of exactly `count` name tokens from a comma-separated string.
+    If names run out, the last name is suffixed with an incrementing number.
+    Falls back to fallback_prefix_01, _02 ... when no names are provided.
+    """
+    tokens = [t.strip() for t in raw_string.split(',') if t.strip()] if raw_string else []
+    if not tokens:
+        return ['{}_{:02d}'.format(fallback_prefix, i + 1) for i in range(count)]
+
+    resolved = tokens[:count]  # drop extras if user gave too many
+    if len(resolved) < count:
+        last = resolved[-1]
+        extra = 1
+        while len(resolved) < count:
+            resolved.append('{}{}'.format(last, extra))
+            extra += 1
+
+    return resolved
+
+
 def _create_follicles(surface_transform, count, walk_axis, prefix, nc):
     surface_shape = _get_surface_shape(surface_transform)
     if not surface_shape:
@@ -182,6 +202,7 @@ def build_ribbon_tweakers_block():
     ctrl_type = cmds.getAttr('{}.CtrlType'.format(config), asString=True)
     ctrl_size = cmds.getAttr('{}.CtrlSize'.format(config))
     ctrl_color = cmds.getAttr('{}.CtrlColor'.format(config), asString=True)
+    raw_custom_names = cmds.getAttr('{}.CustomNames'.format(config), asString=True) or ''
 
     if walk_axis not in ['u', 'v']:
         walk_axis = 'v'
@@ -215,12 +236,14 @@ def build_ribbon_tweakers_block():
 
     bind_jnt_grp = '{}{}'.format(setup['rig_groups']['bind_joints'], nc['group'])
 
-    for fol in follicles:
-        base = fol.replace(nc['follicle'], '')
+    resolved_names = _resolve_custom_names(raw_custom_names, count, 'Twk')
 
-        ctrl_name = '{}{}'.format(base, nc['ctrl'])
-        rig_jnt_name = '{}{}'.format(base, nc['joint'])
-        bind_jnt_name = '{}{}'.format(base, nc['joint_bind'])
+    for i, fol in enumerate(follicles):
+        custom_base = '{}_{}'.format(name, resolved_names[i])
+
+        ctrl_name = '{}{}'.format(custom_base, nc['ctrl'])
+        rig_jnt_name = '{}{}'.format(custom_base, nc['joint'])
+        bind_jnt_name = '{}{}'.format(custom_base, nc['joint_bind'])
 
         ctrl = mt.curve(
             input=fol,
