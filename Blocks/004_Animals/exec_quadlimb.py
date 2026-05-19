@@ -90,10 +90,9 @@ def create_quadlimb_block(name = 'QuadLimb'):
     cmds.select(cl=True)
     pv_joint = mt.create_joint_guide(name=limb_name[0]+'_PV')
     cmds.parent(pv_joint, block)
-    pv_loc = mt.pole_vector_placement(bone_one=[joint_one], bone_two=[joint_two],
-                                      bone_three=[joint_three], back_distance=1)
-    cmds.delete(cmds.pointConstraint(pv_loc, pv_joint, mo=False))
-    cmds.delete(pv_loc)
+    cmds.delete(cmds.pointConstraint(joint_four, pv_joint))
+    cmds.setAttr(pv_joint + '.tz', cmds.getAttr(joint_two + '.translateX') * 2)
+    cmds.setAttr(pv_joint + '.ty', 18)
 
     cmds.setAttr("{}.jointOrientX".format(joint_four), 0)
     cmds.setAttr("{}.jointOrientY".format(joint_four), 0)
@@ -286,11 +285,16 @@ def build_quadlimb_block():
                                      sol='ikRPsolver',
                                      n=ik_joints[-1].replace(nc['joint'], nc['ik_rp']))
 
-        # pv_loc placed at mathematically correct pole vector position for the quad chain
-        pv_loc = mt.pole_vector_placement(bone_one=[ik_joints[0]],
-                                          bone_two=[ik_joints[1]],
-                                          bone_three=[ik_joints[2]],
-                                          back_distance=1)
+        distance = mt.get_distance_between(ik_joints[1], aim_guide)
+
+        pv_loc=mt.pole_vector_placement(bone_one=[ik_joints[0]],
+                                         bone_two=[ik_joints[1]],
+                                         bone_three=[ik_joints[2]],
+                                         back_distance=distance)
+
+        #aim_guide
+        constraint = cmds.pointConstraint(aim_guide, pv_loc, skip=['x', 'y'], mo=False)[0]
+        cmds.delete(constraint)
         pv_constraint = cmds.poleVectorConstraint(pv_loc, backwards_ik[0])
 
         pos_ik = cmds.xform(ik_joints[0], q=True, t=True, ws=True)[2]
@@ -603,8 +607,8 @@ def build_quadlimb_block():
         mt.assign_color(main_mid_ctrl, sec_color)
         root_mid_ctrl = mt.root_grp(input=main_mid_ctrl)
         mt.shape_with_attr(input=main_mid_ctrl, obj_name=main_joints[0] + '_Switch', attr_name='')
-
-        cmds.parentConstraint(limb_b, root_mid_ctrl, mo=False)
+        mt.match(root_mid_ctrl, limb_b, r=True, t=True)
+        cmds.parentConstraint(limb_b, root_mid_ctrl, mo=True)
 
         cmds.pointConstraint(main_mid_ctrl, cmds.listRelatives(top_top_ribbon['second_ctrls'][1], p=True), mo=True)
         cmds.pointConstraint(main_mid_ctrl, cmds.listRelatives(top_ribbon['second_ctrls'][0], p=True), mo=True)
@@ -621,8 +625,8 @@ def build_quadlimb_block():
         mt.assign_color(sec_mid_ctrl, sec_color)
         root_sec_mid_ctrl = mt.root_grp(input=sec_mid_ctrl)
         mt.shape_with_attr(input=sec_mid_ctrl, obj_name=main_joints[0] + '_Switch', attr_name='')
-
-        cmds.parentConstraint(limb_c, root_sec_mid_ctrl, mo=False)
+        mt.match(root_sec_mid_ctrl, limb_c, r=True, t=True)
+        cmds.parentConstraint(limb_c, root_sec_mid_ctrl, mo=True)
 
         cmds.pointConstraint(sec_mid_ctrl, cmds.listRelatives(top_ribbon['second_ctrls'][1], p=True), mo=True)
         cmds.pointConstraint(sec_mid_ctrl, cmds.listRelatives(low_ribbon['second_ctrls'][0], p=True), mo=True)
