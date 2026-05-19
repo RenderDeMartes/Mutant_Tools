@@ -16,6 +16,7 @@
         "CtrlSize_float": "1",
         "CtrlColor_enum": "lightBlue:blue:white:purple:green:red:yellow:grey",
         "CustomNames_string": "",
+        "FlipRight_bool": "False",
         "Help_string": "Overview:\n  Builds a simple ribbon tweaker layer.\n\nHow To Use:\n  1) Create block and set guide sides in popup.\n  2) Keep the generated NURBS cylinder guide, or parent another NURBS under the block.\n  3) Build.\n\nFields:\n- SetParent: parent target for controls.\n- Joints: amount of tweaker chains to create.\n- WalkAxis: V or U distribution over the ribbon.\n- CtrlType: mt.curve control shape.\n- CtrlSize: control size.\n- CtrlColor: control color.\n- CustomNames: comma-separated names for each tweaker ctrl (e.g. Spine,Chest,Neck). If fewer names than joints, the last name is suffixed with 1,2,3... to fill the rest."
     }
 }
