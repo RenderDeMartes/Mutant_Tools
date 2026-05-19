@@ -90,9 +90,10 @@ def create_quadlimb_block(name = 'QuadLimb'):
     cmds.select(cl=True)
     pv_joint = mt.create_joint_guide(name=limb_name[0]+'_PV')
     cmds.parent(pv_joint, block)
-    cmds.delete(cmds.pointConstraint(joint_four, pv_joint))
-    cmds.setAttr(pv_joint + '.tz', cmds.getAttr(joint_two + '.translateX') * 2)
-    cmds.setAttr(pv_joint + '.ty', 18)
+    pv_loc = mt.pole_vector_placement(bone_one=[joint_one], bone_two=[joint_two],
+                                      bone_three=[joint_three], back_distance=1)
+    cmds.delete(cmds.pointConstraint(pv_loc, pv_joint, mo=False))
+    cmds.delete(pv_loc)
 
     cmds.setAttr("{}.jointOrientX".format(joint_four), 0)
     cmds.setAttr("{}.jointOrientY".format(joint_four), 0)
@@ -285,16 +286,11 @@ def build_quadlimb_block():
                                      sol='ikRPsolver',
                                      n=ik_joints[-1].replace(nc['joint'], nc['ik_rp']))
 
-        distance = mt.get_distance_between(ik_joints[1], aim_guide)
-
-        pv_loc=mt.pole_vector_placement(bone_one=[ik_joints[0]],
-                                         bone_two=[ik_joints[1]],
-                                         bone_three=[ik_joints[2]],
-                                         back_distance=distance)
-
-        #aim_guide
-        constraint = cmds.pointConstraint(aim_guide, pv_loc, skip=['x', 'y'], mo=False)[0]
-        cmds.delete(constraint)
+        # pv_loc placed at mathematically correct pole vector position for the quad chain
+        pv_loc = mt.pole_vector_placement(bone_one=[ik_joints[0]],
+                                          bone_two=[ik_joints[1]],
+                                          bone_three=[ik_joints[2]],
+                                          back_distance=1)
         pv_constraint = cmds.poleVectorConstraint(pv_loc, backwards_ik[0])
 
         pos_ik = cmds.xform(ik_joints[0], q=True, t=True, ws=True)[2]
