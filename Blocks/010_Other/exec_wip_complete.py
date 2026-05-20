@@ -57,7 +57,7 @@ def create_wip_complete_block(name = 'WIP_Complete'):
 
 #-------------------------
 
-def _activate_wip_mode():
+def _activate_wip_mode(geo_group = 'geo'):
     """Mirrors HelperUI.activate_wip_mode() logic."""
 
     # studio groups
@@ -73,9 +73,9 @@ def _activate_wip_mode():
         cmds.setAttr('Global_Ctrl.Geo', 0)
     except:
         pass
-    if cmds.objExists('geo'):
+    if cmds.objExists(geo_group):
         try:
-            geos = cmds.listRelatives('geo', ad=True)
+            geos = cmds.listRelatives(geo_group, ad=True)
             for each in geos:
                 cmds.setAttr('{0}.overrideEnabled'.format(each), 0)
         except:
@@ -104,14 +104,14 @@ def _activate_wip_mode():
 
     # unreferece_geo
     try:
-        for geo in cmds.listRelatives('geo', ad=True):
+        for geo in cmds.listRelatives(geo_group, ad=True):
             cmds.setAttr('{}.overrideEnabled'.format(geo), 1)
             cmds.connectAttr('Global_Ctrl.Geo', '{}.overrideDisplayType'.format(geo), f=True)
     except:
         pass
 
 
-def _activate_complete_mode():
+def _activate_complete_mode(geo_group = 'geo'):
     """Mirrors HelperUI.activate_complete_mode() logic."""
 
     if cmds.objExists('Mutant_Build'):
@@ -140,8 +140,8 @@ def _activate_complete_mode():
     if cmds.objExists('Miscellaneous_Grp'):
         cmds.setAttr('Miscellaneous_Grp.v', 0)
 
-    if cmds.objExists('geo'):
-        try: cmds.setAttr('geo.v', 1)
+    if cmds.objExists(geo_group):
+        try: cmds.setAttr('{}.v'.format(geo_group), 1)
         except: cmds.setAttr('Global_Ctrl.GeoVis', 1)
 
     # lock_geo
@@ -149,9 +149,9 @@ def _activate_complete_mode():
         cmds.setAttr('Global_Ctrl.Geo', 2)
     except:
         pass
-    if cmds.objExists('geo'):
+    if cmds.objExists(geo_group):
         try:
-            geos = cmds.listRelatives('geo', ad=True)
+            geos = cmds.listRelatives(geo_group, ad=True)
             for each in geos:
                 cmds.setAttr('{0}.overrideEnabled'.format(each), 0)
         except:
@@ -213,16 +213,31 @@ def build_wip_complete_block():
     mt.check_is_there_is_base()
 
     block = cmds.ls(sl=True)
-    config = cmds.listConnections(block)[1]
+    # Safely get configuration node
+    conns = cmds.listConnections(block, type='network') or []
+    if not conns:
+        conns = cmds.listConnections(block) or []
+        if len(conns) < 2:
+            cmds.warning("Could not find configuration node for WIP_Complete block {}".format(block))
+            return
+        config = conns[1]
+    else:
+        config = conns[0]
     block = block[0]
 
     mode = cmds.getAttr('{}.Mode'.format(config), asString=True)
+    
+    geo_group = 'geo'
+    if cmds.attributeQuery('Geometry_Group', node=config, exists=True):
+        geo_group = cmds.getAttr('{}.Geometry_Group'.format(config)) or 'geo'
+    elif cmds.attributeQuery('Geometry', node=config, exists=True):
+        geo_group = cmds.getAttr('{}.Geometry'.format(config)) or 'geo'
 
     if mode == 'WIP':
-        _activate_wip_mode()
+        _activate_wip_mode(geo_group)
         print('Build {} - WIP Mode Success'.format(block))
     elif mode == 'COMPLETE':
-        _activate_complete_mode()
+        _activate_complete_mode(geo_group)
         print('Build {} - COMPLETE Mode Success'.format(block))
 
 #build_wip_complete_block()

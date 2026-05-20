@@ -349,6 +349,22 @@ class AutoRiggerOptions(QtMutantWindow.Qt_Mutant):
 		except:
 			pass
 
+		# Reselect the block and update the GUI
+		try:
+			import maya.utils
+			def reselect_and_refresh():
+				if cmds.objExists(block):
+					cmds.select(clear=True)
+					cmds.select(block)
+					if self.autorigger_ui:
+						self.autorigger_ui.current_selected_block = block
+						self.autorigger_ui.create_properties_layout(block=block, scroll_to_block=True)
+			maya.utils.executeDeferred(reselect_and_refresh)
+		except Exception as e:
+			print('Error refreshing UI after update:', e)
+
+		self.close()
+
 	def update_config(self, block, config, module):
 		print(config)
 		attrs_in_json = module.get('attrs', {})
@@ -379,7 +395,7 @@ class AutoRiggerOptions(QtMutantWindow.Qt_Mutant):
 				cmds.deleteAttr('{}.{}'.format(config, attr))
 
 		for attr in attrs_in_json:
-			attr_name = attr.split('_')[0]
+			attr_name = attr.rsplit('_', 1)[0]
 			if 'string' in attr:
 				mt.string_attr(input=config, name=attr_name, string=module['attrs'][attr])
 			elif 'enum' in attr:

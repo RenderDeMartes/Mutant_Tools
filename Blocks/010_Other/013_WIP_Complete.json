@@ -10,6 +10,7 @@
     "build_command":  "exec_wip_complete.build_wip_complete_block()",
     "attrs":  {
                   "Mode_enum":  "WIP:COMPLETE",
-                  "Help_string":  "Overview:\n  Sets the rig scene to WIP or Complete mode, mirroring the Helpers UI buttons.\n\nHow To Use:\n  Set Mode to WIP or COMPLETE then build the block.\n\nFields:\n- Mode: WIP keeps the rig editable and visible. COMPLETE finalises the rig hierarchy, locks geo, tags controllers and hides internal groups.\n\nTips:\n- WIP mode is useful during rigging iterations.\n- COMPLETE mode prepares the rig for delivery/animation."
+                  "Geometry_Group_string": "geo",
+                  "Help_string":  "Overview:\n  Sets the rig scene to WIP or Complete mode, mirroring the Helpers UI buttons.\n\nHow To Use:\n  Set Mode to WIP or COMPLETE then build the block.\n\nFields:\n- Mode: WIP keeps the rig editable and visible. COMPLETE finalises the rig hierarchy, locks geo, tags controllers and hides internal groups.\n- Geometry Group: The name of the geometry group to lock/unlock/hide/show (defaults to 'geo').\n\nTips:\n- WIP mode is useful during rigging iterations.\n- COMPLETE mode prepares the rig for delivery/animation."
               }
 }

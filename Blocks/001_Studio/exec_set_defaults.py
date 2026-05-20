@@ -62,7 +62,16 @@ def build_set_defaults_block():
         cmds.warning("Please select the SetDefaults block to build.")
         return
 
-    config = cmds.listConnections(block)[1]
+    # Safely get configuration node
+    conns = cmds.listConnections(block, type='network') or []
+    if not conns:
+        conns = cmds.listConnections(block) or []
+        if len(conns) < 2:
+            cmds.warning("Could not find configuration node for SetDefaults block {}".format(block))
+            return
+        config = conns[1]
+    else:
+        config = conns[0]
     block = block[0]
 
     stored_string = cmds.getAttr('{}.SetDefaultsList'.format(config), asString=True)
@@ -101,7 +110,50 @@ def build_set_defaults_block():
             elif attr_type in ('bool',):
                 cmds.setAttr(attr_path, bool(int(float(value_str))))
             elif attr_type in ('enum',):
-                cmds.setAttr(attr_path, int(float(value_str)))
+                try:
+                    val = int(float(value_str))
+                    cmds.setAttr(attr_path, val)
+                except ValueError:
+                    # It's a string name (e.g., 'head')
+                    # Query the enum options to find the corresponding index
+                    node = attr_path.split('.')[0]
+                    attr_name = attr_path.split('.')[-1]
+                    enums_str = cmds.attributeQuery(attr_name, node=node, listEnum=True)[0]
+                    enum_list = str(enums_str).split(':')
+                    
+                    found_idx = None
+                    for idx, enum_item in enumerate(enum_list):
+                        enum_name = enum_item.split('=')[0].strip()
+                        if enum_name == value_str:
+                            if '=' in enum_item:
+                                try:
+                                    found_idx = int(enum_item.split('=')[1].strip())
+                                except ValueError:
+                                    found_idx = idx
+                            else:
+                                found_idx = idx
+                            break
+                    
+                    if found_idx is not None:
+                        cmds.setAttr(attr_path, found_idx)
+                    else:
+                        # Fallback: try case-insensitive comparison
+                        for idx, enum_item in enumerate(enum_list):
+                            enum_name = enum_item.split('=')[0].strip()
+                            if enum_name.lower() == value_str.lower():
+                                if '=' in enum_item:
+                                    try:
+                                        found_idx = int(enum_item.split('=')[1].strip())
+                                    except ValueError:
+                                        found_idx = idx
+                                else:
+                                    found_idx = idx
+                                break
+                        
+                        if found_idx is not None:
+                            cmds.setAttr(attr_path, found_idx)
+                        else:
+                            raise ValueError("Enum value '{}' not found in options: {}".format(value_str, enums_str))
             else:
                 cmds.setAttr(attr_path, float(value_str))
 

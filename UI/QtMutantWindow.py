@@ -583,6 +583,7 @@ class Qt_Mutant(QtWidgets.QMainWindow):
         self.grip_margin = 10
         self._resize_dir = None
         self._resizing = False
+        self._window_dragging = False
 
         self.setObjectName('MainMutantWindow')
         self.setWindowTitle('Mutant Tools')
@@ -893,9 +894,11 @@ class Qt_Mutant(QtWidgets.QMainWindow):
         if dir:
             self._resize_dir = dir
             self._resizing = True
+            self._window_dragging = False
         else:
             self._resizing = False
             self._resize_dir = None
+            self._window_dragging = True
 
         if self.popup_mode:
             self.close()
@@ -944,7 +947,7 @@ class Qt_Mutant(QtWidgets.QMainWindow):
                     else: geom.setBottom(geom.top() + self.minimumHeight())
                     
                 self.setGeometry(geom)
-            else:
+            elif getattr(self, '_window_dragging', False):
                 delta = QtCore.QPoint(event.globalPos() - self.oldPos)
                 self.move(self.x() + delta.x(), self.y() + delta.y())
                 self.oldPos = event.globalPos()
@@ -956,6 +959,7 @@ class Qt_Mutant(QtWidgets.QMainWindow):
         self._resizing = False
         self._resize_dir = None
         self.scale = False
+        self._window_dragging = False
         self.unsetCursor()
 
     def mouseReleaseEvent(self, event):

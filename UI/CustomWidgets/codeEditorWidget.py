@@ -140,6 +140,163 @@ class PythonSyntaxHighlighter(QtGui.QSyntaxHighlighter):
         return self.currentBlockState() == state
 
 
+class SearchReplacePanel(QtWidgets.QFrame):
+    def __init__(self, editor):
+        super(SearchReplacePanel, self).__init__(editor)
+        self.editor = editor
+        
+        self.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.setStyleSheet(
+            'SearchReplacePanel {'
+            '  background-color: #2D2D2D;'
+            '  border: 1px solid #3F3F3F;'
+            '  border-radius: 4px;'
+            '}'
+            'QLineEdit {'
+            '  background-color: #3C3C3C;'
+            '  color: #CCCCCC;'
+            '  border: 1px solid #555555;'
+            '  border-radius: 2px;'
+            '  padding: 2px 4px;'
+            '}'
+            'QPushButton {'
+            '  background-color: #3A3A3A;'
+            '  color: #DDDDDD;'
+            '  border: 1px solid #555555;'
+            '  border-radius: 2px;'
+            '  padding: 2px 6px;'
+            '  font-size: 11px;'
+            '}'
+            'QPushButton:hover {'
+            '  background-color: #4A4A4A;'
+            '}'
+            'QLabel {'
+            '  color: #FF5555;'
+            '  font-size: 10px;'
+            '}'
+        )
+        
+        layout = QtWidgets.QVBoxLayout(self)
+        layout.setContentsMargins(6, 6, 6, 6)
+        layout.setSpacing(4)
+        
+        # Row 1: Search field + Find button + Close button
+        row1 = QtWidgets.QHBoxLayout()
+        self.search_input = QtWidgets.QLineEdit()
+        self.search_input.setPlaceholderText('Search...')
+        self.search_input.setMinimumWidth(120)
+        row1.addWidget(self.search_input)
+        
+        self.find_btn = QtWidgets.QPushButton('Find')
+        self.find_btn.clicked.connect(self.find_next)
+        row1.addWidget(self.find_btn)
+        
+        self.close_btn = QtWidgets.QPushButton('X')
+        self.close_btn.setFixedSize(18, 18)
+        self.close_btn.setStyleSheet('border: none; background: transparent; color: #888888; font-weight: bold;')
+        self.close_btn.clicked.connect(self.hide_panel)
+        row1.addWidget(self.close_btn)
+        layout.addLayout(row1)
+        
+        # Row 2: Replace field + Replace button + Replace All button
+        row2 = QtWidgets.QHBoxLayout()
+        self.replace_input = QtWidgets.QLineEdit()
+        self.replace_input.setPlaceholderText('Replace with...')
+        self.replace_input.setMinimumWidth(120)
+        row2.addWidget(self.replace_input)
+        
+        self.replace_btn = QtWidgets.QPushButton('Replace')
+        self.replace_btn.clicked.connect(self.replace_current)
+        row2.addWidget(self.replace_btn)
+        
+        self.replace_all_btn = QtWidgets.QPushButton('All')
+        self.replace_all_btn.clicked.connect(self.replace_all)
+        row2.addWidget(self.replace_all_btn)
+        layout.addLayout(row2)
+        
+        # Status Label
+        self.status_label = QtWidgets.QLabel('')
+        layout.addWidget(self.status_label)
+        
+        # Adjust panel size to contents
+        self.adjustSize()
+        self.hide()
+        
+        # Set shortcut context
+        self.search_input.returnPressed.connect(self.find_next)
+        self.replace_input.returnPressed.connect(self.replace_current)
+
+    def show_panel(self):
+        self.adjustSize()
+        editor_width = self.editor.width()
+        panel_width = self.width()
+        scrollbar_w = self.editor.verticalScrollBar().width() if self.editor.verticalScrollBar().isVisible() else 0
+        x = max(10, editor_width - panel_width - scrollbar_w - 10)
+        y = 5
+        self.move(x, y)
+        self.show()
+        self.raise_()
+        self.search_input.setFocus()
+        self.search_input.selectAll()
+
+    def hide_panel(self):
+        self.hide()
+        self.editor.setFocus()
+
+    def find_next(self):
+        search_text = self.search_input.text()
+        if not search_text:
+            return
+        
+        cursor = self.editor.textCursor()
+        document = self.editor.document()
+        
+        found_cursor = document.find(search_text, cursor)
+        if found_cursor.isNull():
+            found_cursor = document.find(search_text, 0)
+            
+        if not found_cursor.isNull():
+            self.editor.setTextCursor(found_cursor)
+            self.editor.ensureCursorVisible()
+            self.status_label.setText('')
+        else:
+            self.status_label.setText('Text not found!')
+
+    def replace_current(self):
+        search_text = self.search_input.text()
+        replace_text = self.replace_input.text()
+        if not search_text:
+            return
+            
+        cursor = self.editor.textCursor()
+        if cursor.selectedText() == search_text:
+            cursor.insertText(replace_text)
+            self.find_next()
+        else:
+            self.find_next()
+
+    def replace_all(self):
+        search_text = self.search_input.text()
+        replace_text = self.replace_input.text()
+        if not search_text:
+            return
+            
+        document = self.editor.document()
+        cursor = self.editor.textCursor()
+        cursor.beginEditBlock()
+        
+        found_cursor = document.find(search_text, 0)
+        count = 0
+        while not found_cursor.isNull():
+            found_cursor.insertText(replace_text)
+            found_cursor = document.find(search_text, found_cursor)
+            count += 1
+            
+        cursor.endEditBlock()
+        self.editor.refresh_editor()
+        self.status_label.setText('Replaced {} occurrences.'.format(count))
+
+
 class LineNumberArea(QtWidgets.QWidget):
 
     def __init__(self, editor):
@@ -155,8 +312,9 @@ class LineNumberArea(QtWidgets.QWidget):
 
 class IDECodeEditor(QtWidgets.QPlainTextEdit):
 
-    def __init__(self, parent=None):
+    def __init__(self, parent=None, max_height_limit=600):
         super(IDECodeEditor, self).__init__(parent)
+        self.max_height_limit = max_height_limit
 
         self.line_number_area = LineNumberArea(self)
         self.block_count_changed_connection = self.blockCountChanged.connect(self.update_line_number_area_width)
@@ -191,6 +349,75 @@ class IDECodeEditor(QtWidgets.QPlainTextEdit):
         self.update_line_number_area_width(0)
         self.highlight_current_line()
 
+        self.is_manually_resized = False
+        self.textChanged.connect(self.on_text_changed)
+        self.search_replace_panel = SearchReplacePanel(self)
+
+    def on_text_changed(self):
+        if not getattr(self, 'is_manually_resized', False):
+            self.adjust_height_to_fit()
+
+    def show_search_replace(self):
+        if not getattr(self, 'search_replace_panel', None):
+            self.search_replace_panel = SearchReplacePanel(self)
+        self.search_replace_panel.show_panel()
+
+    def keyPressEvent(self, event):
+        # Intercept Ctrl+F when editor has focus
+        if event.key() == QtCore.Qt.Key_F and event.modifiers() == QtCore.Qt.ControlModifier:
+            self.show_search_replace()
+            event.accept()
+            return
+            
+        # Let Escape close the panel if visible
+        if event.key() == QtCore.Qt.Key_Escape:
+            if getattr(self, 'search_replace_panel', None) and self.search_replace_panel.isVisible():
+                self.search_replace_panel.hide_panel()
+                event.accept()
+                return
+                
+        super(IDECodeEditor, self).keyPressEvent(event)
+
+    def adjust_height_to_fit(self):
+        line_count = max(1, self.blockCount())
+        line_height = self.fontMetrics().lineSpacing()
+        doc_margin = self.document().documentMargin()
+        
+        # Calculate needed height (adding 2 extra lines worth of spacing to prevent vertical scrollbar)
+        needed_height = int((line_count + 2) * line_height + doc_margin * 2 + 10)
+        
+        # If the horizontal scrollbar is visible, add its height
+        if self.horizontalScrollBar().isVisible():
+            needed_height += self.horizontalScrollBar().height()
+            
+        needed_height = max(80, needed_height)
+        if getattr(self, 'max_height_limit', None) is not None:
+            needed_height = min(needed_height, self.max_height_limit)
+        
+        self.setFixedHeight(needed_height)
+        self.line_number_area.update()
+        self.updateGeometry()
+        
+        parent = self.parentWidget()
+        if parent:
+            parent.update()
+            if parent.layout():
+                parent.layout().activate()
+
+    def insertFromMimeData(self, source):
+        # On paste, reset manual resize so it auto-fits to the new pasted content size
+        self.is_manually_resized = False
+        super(IDECodeEditor, self).insertFromMimeData(source)
+        self.refresh_editor()
+
+    def refresh_editor(self):
+        self.adjust_height_to_fit()
+        if getattr(self, 'highlighter', None):
+            self.highlighter.rehighlight()
+        self.update_line_number_area_width(0)
+        self.line_number_area.update()
+        self.viewport().update()
+
     def line_number_area_width(self):
         digits = len(str(max(1, self.blockCount())))
         return 10 + self.fontMetrics().horizontalAdvance('9') * digits
@@ -213,6 +440,8 @@ class IDECodeEditor(QtWidgets.QPlainTextEdit):
         self.line_number_area.setGeometry(
             QtCore.QRect(content_rect.left(), content_rect.top(), self.line_number_area_width(), content_rect.height())
         )
+        if getattr(self, 'search_replace_panel', None) and self.search_replace_panel.isVisible():
+            self.search_replace_panel.show_panel()
 
     def line_number_area_paint_event(self, event):
         painter = QtGui.QPainter(self.line_number_area)
