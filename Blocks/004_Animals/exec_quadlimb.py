@@ -134,6 +134,9 @@ def build_quadlimb_block():
 
     if auto_orient:
         mt.orient_joint(input=new_guide)
+        cmds.select(new_guide)
+        mel.eval("joint -e -oj xzy -sao zup -aos -ch -zso;")
+        
     # force last joint to orient
     joint_four = cmds.listRelatives(new_guide, ad=True)[-3]
     cmds.setAttr("{}.jointOrientX".format(joint_four), 0)
@@ -163,6 +166,8 @@ def build_quadlimb_block():
         cmds.delete(miror_grp)
         if auto_orient:
             mt.orient_joint(input=new_guide)
+            cmds.select(new_guide)
+            mel.eval("joint -e -oj xzy -sao zup -aos -ch -zso;")
 
     elif cmds.getAttr('{}.Mirror'.format(config), asString = True) == 'True':
         right_guide = mt.duplicate_change_names(input = new_guide, hi = True, search=nc['left'], replace =nc['right'])[0]
