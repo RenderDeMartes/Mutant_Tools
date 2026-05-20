@@ -285,16 +285,11 @@ def build_quadlimb_block():
                                      sol='ikRPsolver',
                                      n=ik_joints[-1].replace(nc['joint'], nc['ik_rp']))
 
-        distance = mt.get_distance_between(ik_joints[1], aim_guide)
-
-        pv_loc=mt.pole_vector_placement(bone_one=[ik_joints[0]],
-                                         bone_two=[ik_joints[1]],
-                                         bone_three=[ik_joints[2]],
-                                         back_distance=distance)
-
-        #aim_guide
-        constraint = cmds.pointConstraint(aim_guide, pv_loc, skip=['x', 'y'], mo=False)[0]
-        cmds.delete(constraint)
+        # pv_loc placed at mathematically correct pole vector position for the quad chain
+        pv_loc = mt.pole_vector_placement(bone_one=[ik_joints[0]],
+                                          bone_two=[ik_joints[1]],
+                                          bone_three=[ik_joints[2]],
+                                          back_distance=1)
         pv_constraint = cmds.poleVectorConstraint(pv_loc, backwards_ik[0])
 
         pos_ik = cmds.xform(ik_joints[0], q=True, t=True, ws=True)[2]
