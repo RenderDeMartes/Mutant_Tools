@@ -855,6 +855,11 @@ def build_limb_block():
 
         # Twist offset attrs on switch locator
         mt.line_attr(input=switch_locator, name='Twist')
+
+        # Main Twist attr
+        main_twist_attr = mt.new_attr(input=switch_locator, name='MainTwist', min=False, max=False, default=0)
+        cmds.connectAttr(main_twist_attr, '{}.twist'.format(ikfk['ik_fk'][4][3]))
+
         upper_twist_attr = mt.new_attr(input=switch_locator, name='UpperTwist', min=False, max=False, default=0)
         lower_twist_attr = mt.new_attr(input=switch_locator, name='LowerTwist', min=False, max=False, default=0)
         cmds.connectAttr(upper_twist_attr, '{}.twist'.format(ikfk['upper_twist']['ik_spline']))
