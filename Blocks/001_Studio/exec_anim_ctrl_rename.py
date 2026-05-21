@@ -72,6 +72,15 @@ def build_animctrlrename_block(force=False):
         config = conns[0]
     block = block[0]
 
+    # Check if this rename block should run before the build begins
+    run_before = False
+    if cmds.attributeQuery('RunBeforeBuild', n=config, exists=True):
+        run_before = cmds.getAttr('{}.RunBeforeBuild'.format(config))
+
+    if run_before and not force:
+        print('AnimCtrlRename block {} deferred to run before build starts'.format(block))
+        return
+
     # Check if this rename block should run after the full build completes (e.g. after skin/ctrl-shapes import)
     run_after = False
     if cmds.attributeQuery('RunAfterBuild', n=config, exists=True):
@@ -80,6 +89,10 @@ def build_animctrlrename_block(force=False):
     if run_after and not force:
         print('AnimCtrlRename block {} deferred to run after build completes (post-build procedure)'.format(block))
         return
+
+    revert = False
+    if cmds.attributeQuery('Revert', n=config, exists=True):
+        revert = cmds.getAttr('{}.Revert'.format(config))
 
     stored_string = cmds.getAttr('{}.RenameList'.format(config), asString=True)
 
@@ -101,6 +114,9 @@ def build_animctrlrename_block(force=False):
         old_name, new_name = entry.split('=', 1)
         old_name = old_name.strip()
         new_name = new_name.strip()
+
+        if revert:
+            old_name, new_name = new_name, old_name
 
         if not old_name or not new_name:
             cmds.warning("Invalid rename entry (empty names): {}".format(entry))

@@ -180,6 +180,14 @@ class Code_Reader(QtMutantWindow.Qt_Mutant):
 		except:
 			pass
 
+		# Ensure the header label is always the same size
+		if hasattr(self.ui, 'label'):
+			self.ui.label.setFixedHeight(30)
+
+		# Shrink/adjust the window height to perfectly fit the content
+		self.adjustSize()
+		self.resize(680, self.height())
+
 	def slider_changed(self):
 		self.ui.code_text.verticalScrollBar().setValue(self.ui.code_text.verticalScrollBar().maximum())
 

@@ -1787,6 +1787,7 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		edit_button.customContextMenuRequested.connect(partial(self._on_block_right_click, pack_name, side_hbox))
 
 		self.update_side_block_highlight()
+		self._update_block_disabled_visual(pack_name)
 
 	def update_side_block_highlight(self):
 		active_style = "QPushButton { color: #DDE2EA; border: 1px solid rgba(180, 190, 205, 90); border-radius: 3px; background-color: rgba(180, 190, 205, 20); }"
@@ -2430,6 +2431,21 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 				cmds.setAttr(attr, bool(state))
 			except Exception as e:
 				print('Could not set {}: {}'.format(attr, e))
+		self._update_block_disabled_visual(block)
+
+	def _update_block_disabled_visual(self, block):
+		"""Dim the side-panel widget for a block when its build is disabled."""
+		widget = self.side_block_widgets.get(block)
+		if not widget:
+			return
+		enabled = self.get_block_lod_visibility(block)
+		effect = widget.graphicsEffect()
+		if enabled:
+			widget.setGraphicsEffect(None)
+		else:
+			opacity = QtWidgets.QGraphicsOpacityEffect(widget)
+			opacity.setOpacity(0.35)
+			widget.setGraphicsEffect(opacity)
 
 	def is_valid_block(self, block):
 		if not block or not cmds.objExists(block):
