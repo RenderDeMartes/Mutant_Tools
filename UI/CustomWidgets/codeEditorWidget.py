@@ -142,7 +142,8 @@ class PythonSyntaxHighlighter(QtGui.QSyntaxHighlighter):
 
 class SearchReplacePanel(QtWidgets.QFrame):
     def __init__(self, editor):
-        super(SearchReplacePanel, self).__init__(editor)
+        # Parent to the viewport so the panel stays fixed in the visible area
+        super(SearchReplacePanel, self).__init__(editor.viewport())
         self.editor = editor
         
         self.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -228,16 +229,19 @@ class SearchReplacePanel(QtWidgets.QFrame):
 
     def show_panel(self):
         self.adjustSize()
-        editor_width = self.editor.width()
-        panel_width = self.width()
-        scrollbar_w = self.editor.verticalScrollBar().width() if self.editor.verticalScrollBar().isVisible() else 0
-        x = max(10, editor_width - panel_width - scrollbar_w - 10)
-        y = 5
-        self.move(x, y)
+        self.reposition()
         self.show()
         self.raise_()
         self.search_input.setFocus()
         self.search_input.selectAll()
+
+    def reposition(self):
+        """Position the panel at the top-right of the viewport."""
+        viewport = self.editor.viewport()
+        panel_width = self.width()
+        x = max(10, viewport.width() - panel_width - 10)
+        y = 5
+        self.move(x, y)
 
     def hide_panel(self):
         self.hide()
@@ -312,9 +316,8 @@ class LineNumberArea(QtWidgets.QWidget):
 
 class IDECodeEditor(QtWidgets.QPlainTextEdit):
 
-    def __init__(self, parent=None, max_height_limit=600):
+    def __init__(self, parent=None, max_height_limit=None):
         super(IDECodeEditor, self).__init__(parent)
-        self.max_height_limit = max_height_limit
 
         self.line_number_area = LineNumberArea(self)
         self.block_count_changed_connection = self.blockCountChanged.connect(self.update_line_number_area_width)
@@ -325,6 +328,10 @@ class IDECodeEditor(QtWidgets.QPlainTextEdit):
         self.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAsNeeded)
         self.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAsNeeded)
         self.setTabStopDistance(self.fontMetrics().horizontalAdvance(' ') * 4)
+
+        # Use expanding size policy so the editor fills available space
+        self.setSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        self.setMinimumHeight(80)
 
         font = QtGui.QFont('Consolas')
         if not QtGui.QFontInfo(font).exactMatch():
@@ -349,13 +356,13 @@ class IDECodeEditor(QtWidgets.QPlainTextEdit):
         self.update_line_number_area_width(0)
         self.highlight_current_line()
 
-        self.is_manually_resized = False
-        self.textChanged.connect(self.on_text_changed)
         self.search_replace_panel = SearchReplacePanel(self)
 
-    def on_text_changed(self):
-        if not getattr(self, 'is_manually_resized', False):
-            self.adjust_height_to_fit()
+    def scrollContentsBy(self, dx, dy):
+        """Keep the search panel pinned to the viewport when scrolling."""
+        super(IDECodeEditor, self).scrollContentsBy(dx, dy)
+        if getattr(self, 'search_replace_panel', None) and self.search_replace_panel.isVisible():
+            self.search_replace_panel.reposition()
 
     def show_search_replace(self):
         if not getattr(self, 'search_replace_panel', None):
@@ -378,40 +385,11 @@ class IDECodeEditor(QtWidgets.QPlainTextEdit):
                 
         super(IDECodeEditor, self).keyPressEvent(event)
 
-    def adjust_height_to_fit(self):
-        line_count = max(1, self.blockCount())
-        line_height = self.fontMetrics().lineSpacing()
-        doc_margin = self.document().documentMargin()
-        
-        # Calculate needed height (adding 2 extra lines worth of spacing to prevent vertical scrollbar)
-        needed_height = int((line_count + 2) * line_height + doc_margin * 2 + 10)
-        
-        # If the horizontal scrollbar is visible, add its height
-        if self.horizontalScrollBar().isVisible():
-            needed_height += self.horizontalScrollBar().height()
-            
-        needed_height = max(80, needed_height)
-        if getattr(self, 'max_height_limit', None) is not None:
-            needed_height = min(needed_height, self.max_height_limit)
-        
-        self.setFixedHeight(needed_height)
-        self.line_number_area.update()
-        self.updateGeometry()
-        
-        parent = self.parentWidget()
-        if parent:
-            parent.update()
-            if parent.layout():
-                parent.layout().activate()
-
     def insertFromMimeData(self, source):
-        # On paste, reset manual resize so it auto-fits to the new pasted content size
-        self.is_manually_resized = False
         super(IDECodeEditor, self).insertFromMimeData(source)
         self.refresh_editor()
 
     def refresh_editor(self):
-        self.adjust_height_to_fit()
         if getattr(self, 'highlighter', None):
             self.highlighter.rehighlight()
         self.update_line_number_area_width(0)
@@ -441,7 +419,7 @@ class IDECodeEditor(QtWidgets.QPlainTextEdit):
             QtCore.QRect(content_rect.left(), content_rect.top(), self.line_number_area_width(), content_rect.height())
         )
         if getattr(self, 'search_replace_panel', None) and self.search_replace_panel.isVisible():
-            self.search_replace_panel.show_panel()
+            self.search_replace_panel.reposition()
 
     def line_number_area_paint_event(self, event):
         painter = QtGui.QPainter(self.line_number_area)

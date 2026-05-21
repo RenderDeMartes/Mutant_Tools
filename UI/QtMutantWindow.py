@@ -986,6 +986,12 @@ class Qt_Mutant(QtWidgets.QMainWindow):
         #avoid move when scaling the windown
         self.scale = True
 
+        # Ensure the master UI fills the entire window when resized/maximized
+        if hasattr(self, 'master_ui') and self.master_ui:
+            self.master_ui.resize(self.size())
+
+        QtWidgets.QMainWindow.resizeEvent(self, event)
+
 
     def enable_popup_mode(self):
         """Enable popup mode for the UI."""
