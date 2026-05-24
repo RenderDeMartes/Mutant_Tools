@@ -227,6 +227,12 @@ def build_quadlimb_block():
         else:
             create_ribbons = True
 
+        # compatible with older versions without IkOrient
+        if cmds.attributeQuery('IkOrient', n=config, exists=True):
+            ik_orient = cmds.getAttr(config + '.IkOrient', asString=True)
+        else:
+            ik_orient = 'World'
+
         #Create Blend Systems
         # duplicate chains to have the 3 of them
         ik_joints = mt.duplicate_change_names(input=side_guide, hi=True, search=nc['joint'], replace=nc['ik'])
@@ -294,7 +300,7 @@ def build_quadlimb_block():
         pv_loc = mt.pole_vector_placement(bone_one=[ik_joints[0]],
                                           bone_two=[ik_joints[1]],
                                           bone_three=[ik_joints[2]],
-                                          back_distance=1)
+                                          back_distance=2)
         pv_constraint = cmds.poleVectorConstraint(pv_loc, backwards_ik[0])
 
         pos_ik = cmds.xform(ik_joints[0], q=True, t=True, ws=True)[2]
@@ -324,10 +330,21 @@ def build_quadlimb_block():
                         name=ik_joints[-1].replace(nc['joint'], nc['ctrl']),
                         size=ctrl_size)
 
+        cmds.rotate(0, 0, 0)
         mt.assign_color(color=color)
         main_ik_ctrl_root_grp = mt.root_grp()[0]
-        mt.match(main_ik_ctrl_root_grp, ik_joints[-1], r=False, t=True)
-        cmds.rotate(0,0,0, main_ik_ctrl_root_grp)
+        cmds.delete(cmds.pointConstraint(ik_joints[-1], main_ik_ctrl_root_grp))
+        # Mirror of ForceIkWorld logic from exec_limb.py
+        if ik_orient == 'World':
+            cmds.setAttr('{}.rotateX'.format(main_ik_ctrl_root_grp), 0)
+            cmds.setAttr('{}.rotateY'.format(main_ik_ctrl_root_grp), 0)
+            cmds.setAttr('{}.rotateZ'.format(main_ik_ctrl_root_grp), 0)
+        else:  # FootY - aim -Z toward ankle so Z stays forward, giving correct Y rotation
+            cmds.delete(cmds.aimConstraint(ik_joints[-2], main_ik_ctrl_root_grp,
+                                           aimVector=(0, 0, -1), upVector=(0, 1, 0),
+                                           worldUpType='vector', mo=False))
+            cmds.setAttr('{}.rotateX'.format(main_ik_ctrl_root_grp), 0)
+            cmds.setAttr('{}.rotateZ'.format(main_ik_ctrl_root_grp), 0)
         mt.hide_attr(main_ik_ctrl, t=False, r=False, s=True, rotate_order=False)
 
         #Ik Sub
