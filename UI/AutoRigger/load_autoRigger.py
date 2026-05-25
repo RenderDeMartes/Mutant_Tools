@@ -333,6 +333,37 @@ class DraggableTabButton(QtWidgets.QPushButton):
 		exec_func = getattr(drag, 'exec_', drag.exec)
 		exec_func(QtCore.Qt.CopyAction)
 
+class DraggableLabel(QtWidgets.QLabel):
+	def __init__(self, block_name, text, *args, **kwargs):
+		super(DraggableLabel, self).__init__(text, *args, **kwargs)
+		self.block_name = block_name
+
+	def mousePressEvent(self, event):
+		if event.button() == QtCore.Qt.LeftButton:
+			self.drag_start_position = event.pos()
+			event.accept()
+		else:
+			super(DraggableLabel, self).mousePressEvent(event)
+
+	def mouseMoveEvent(self, event):
+		if not (event.buttons() & QtCore.Qt.LeftButton):
+			super(DraggableLabel, self).mouseMoveEvent(event)
+			return
+		if not hasattr(self, 'drag_start_position'):
+			super(DraggableLabel, self).mouseMoveEvent(event)
+			return
+		if (event.pos() - self.drag_start_position).manhattanLength() < QtWidgets.QApplication.startDragDistance():
+			super(DraggableLabel, self).mouseMoveEvent(event)
+			return
+
+		event.accept()
+		drag = QtGui.QDrag(self)
+		mime_data = QtCore.QMimeData()
+		mime_data.setText(self.block_name)
+		drag.setMimeData(mime_data)
+		exec_func = getattr(drag, 'exec_', drag.exec)
+		exec_func(QtCore.Qt.MoveAction)
+
 class DraggableBlockWidget(QtWidgets.QGroupBox):
 	block_dropped = QtCore.Signal(str, str, bool)
 	block_create_dropped = QtCore.Signal(str, str, bool)
@@ -343,6 +374,46 @@ class DraggableBlockWidget(QtWidgets.QGroupBox):
 		self.setAcceptDrops(True)
 		self.setFocusPolicy(QtCore.Qt.NoFocus)
 		self._drop_indicator = None
+
+		# Timer for auto-scrolling during drag-and-drop
+		self._scroll_timer = QtCore.QTimer(self)
+		self._scroll_timer.setInterval(50)
+		self._scroll_timer.timeout.connect(self._do_autoscroll)
+
+	def _do_autoscroll(self):
+		scroll_area = None
+		parent = self.parentWidget()
+		while parent:
+			if isinstance(parent, QtWidgets.QScrollArea):
+				scroll_area = parent
+				break
+			parent = parent.parentWidget()
+
+		if scroll_area:
+			viewport = scroll_area.viewport()
+			global_cursor_pos = QtGui.QCursor.pos()
+			pos_in_viewport = viewport.mapFromGlobal(global_cursor_pos)
+
+			scroll_bar = scroll_area.verticalScrollBar()
+			if scroll_bar and scroll_bar.isVisible():
+				margin = 40  # Trigger scrolling within 40 pixels of top/bottom
+				step = 10    # Amount to scroll each tick (50ms)
+				vh = viewport.height()
+				vw = viewport.width()
+				y = pos_in_viewport.y()
+				x = pos_in_viewport.x()
+
+				# Ensure the cursor is still within the boundaries of the scroll viewport
+				if 0 <= x <= vw and 0 <= y <= vh:
+					if y < margin:
+						scroll_bar.setValue(max(scroll_bar.value() - step, scroll_bar.minimum()))
+						return
+					elif y > vh - margin:
+						scroll_bar.setValue(min(scroll_bar.value() + step, scroll_bar.maximum()))
+						return
+
+		# Stop the timer if we are no longer in the scroll zone or viewport
+		self._scroll_timer.stop()
 
 	def _is_valid_drop(self, mime_data):
 		if not mime_data.hasText():
@@ -365,17 +436,40 @@ class DraggableBlockWidget(QtWidgets.QGroupBox):
 			if self._drop_indicator != new_indicator:
 				self._drop_indicator = new_indicator
 				self.update()
+
+			# Check for auto-scrolling
+			scroll_area = None
+			parent = self.parentWidget()
+			while parent:
+				if isinstance(parent, QtWidgets.QScrollArea):
+					scroll_area = parent
+					break
+				parent = parent.parentWidget()
+
+			if scroll_area:
+				viewport = scroll_area.viewport()
+				pos_in_viewport = self.mapTo(viewport, event.pos())
+				margin = 40
+				y = pos_in_viewport.y()
+				if y < margin or y > viewport.height() - margin:
+					if not self._scroll_timer.isActive():
+						self._scroll_timer.start()
+				else:
+					self._scroll_timer.stop()
+
 			event.acceptProposedAction()
 			return
 		event.ignore()
 
 	def dragLeaveEvent(self, event):
+		self._scroll_timer.stop()
 		if self._drop_indicator is not None:
 			self._drop_indicator = None
 			self.update()
 		event.accept()
 
 	def dropEvent(self, event):
+		self._scroll_timer.stop()
 		self._drop_indicator = None
 		self.update()
 		text = event.mimeData().text()
@@ -419,9 +513,17 @@ class ListResizer(QtWidgets.QFrame):
 		if self._is_resizing:
 			diff = event.globalPos().y() - self._start_y
 			new_h = max(50, self._start_height + diff)
-			self.target.setMinimumHeight(new_h)
+			if hasattr(self.target, 'is_manually_resized'):
+				self.target.is_manually_resized = True
+			self.target.setFixedHeight(new_h)
 	def mouseReleaseEvent(self, event):
 		self._is_resizing = False
+	def mouseDoubleClickEvent(self, event):
+		if event.button() == QtCore.Qt.LeftButton:
+			if hasattr(self.target, 'is_manually_resized'):
+				self.target.is_manually_resized = False
+				if hasattr(self.target, 'adjust_height_to_fit'):
+					self.target.adjust_height_to_fit()
 
 class SearchOverlay(QtWidgets.QFrame):
 	"""Floating search bar that appears over the AutoRigger on Ctrl+F."""
@@ -642,6 +744,7 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		#Relaod blocks connection in Menu
 		self.menu.dev_reload.triggered.connect(self.reload_all_blocks)
 		self.menu.update_all_blocks.triggered.connect(self.update_all_blocks_cmd)
+		self.menu.wrap_icons.toggled.connect(self.toggle_wrap_icons)
 		
 
 	def _setup_splitter(self):
@@ -838,13 +941,16 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 
 	# -------------------------------------------------------------------
 
-	def _convert_tab_layouts_to_flow(self):
-		"""Replace each tab's QHBoxLayout with a FlowLayout so buttons wrap."""
-		if hasattr(self, '_flow_installed'):
-			return
-		self._flow_installed = True
+	def toggle_wrap_icons(self, state):
+		"""Toggle between wrapping FlowLayout and horizontal QHBoxLayout for tab layouts."""
+		cmds.optionVar(intValue=("mutant_wrap_icons", state))
+		self._setup_tab_layouts()
 
-		# Map layout name -> attribute name on self.ui
+	def _setup_tab_layouts(self):
+		"""Set up the tab layouts as either wrapping FlowLayout or horizontal QHBoxLayout,
+		depending on the optionVar mutant_wrap_icons."""
+		wrap = cmds.optionVar(q="mutant_wrap_icons") if cmds.optionVar(ex="mutant_wrap_icons") else True
+
 		layout_names = [
 			'presets_layout', 'studio_layout', 'biped_layout',
 			'facial_layout', 'animals_layout', 'vehicles_layout',
@@ -856,6 +962,7 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 			old_layout = getattr(self.ui, name, None)
 			if old_layout is None:
 				continue
+
 			# Get the parent widget containing this layout
 			parent_item = old_layout.parent()
 			if parent_item is None:
@@ -868,31 +975,59 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 			if parent_layout is None:
 				continue
 
-			# Move any existing widgets from the old layout
+			# Extract existing widgets from the old layout
 			widgets = []
 			while old_layout.count():
 				child = old_layout.takeAt(0)
 				if child.widget():
 					widgets.append(child.widget())
 
-			# Clear everything from the parent grid (old layout + spacers)
+			# Clear everything from the parent layout
 			while parent_layout.count():
-				child = parent_layout.takeAt(0)
-				if child.widget():
-					child.widget().deleteLater()
+				item = parent_layout.takeAt(0)
+				if item.widget():
+					w = item.widget()
+					if w not in widgets:
+						w.setParent(None)
+						w.deleteLater()
+				elif item.layout():
+					l = item.layout()
+					while l.count():
+						sub_item = l.takeAt(0)
+						if sub_item.widget() and sub_item.widget() not in widgets:
+							sub_item.widget().deleteLater()
+					l.setParent(None)
 
-			# Create a new FlowLayout and add it as the sole item
-			flow = FlowLayout(spacing=4)
-			if isinstance(parent_layout, QtWidgets.QGridLayout):
-				parent_layout.addLayout(flow, 0, 0)
+			# Now create the new layout based on the wrap setting
+			if wrap:
+				# Use FlowLayout
+				new_layout = FlowLayout(spacing=4)
+				if isinstance(parent_layout, QtWidgets.QGridLayout):
+					parent_layout.addLayout(new_layout, 0, 0)
+				else:
+					parent_layout.addLayout(new_layout)
 			else:
-				parent_layout.addLayout(flow)
+				# Use QHBoxLayout
+				new_layout = QtWidgets.QHBoxLayout()
+				new_layout.setContentsMargins(0, 0, 0, 0)
+				new_layout.setSpacing(4)
 
+				if isinstance(parent_layout, QtWidgets.QGridLayout):
+					parent_layout.addLayout(new_layout, 0, 0)
+					# Add the horizontal spacer to push buttons to the left
+					spacer = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+					parent_layout.addItem(spacer, 0, 1)
+				else:
+					parent_layout.addLayout(new_layout)
+					spacer = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+					parent_layout.addItem(spacer)
+
+			# Re-add all our widgets into the new layout
 			for w in widgets:
-				flow.addWidget(w)
+				new_layout.addWidget(w)
 
-			# Point the attribute to the new flow layout
-			setattr(self.ui, name, flow)
+			# Update the attribute on self.ui to point to the new layout
+			setattr(self.ui, name, new_layout)
 
 	def create_layout(self):
 		self.create_block_buttons()
@@ -913,10 +1048,14 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		self.ui.postbuild.setIcon(QtGui.QIcon(os.path.join(IconsPath ,'POSTCODE.png')))
 		self.ui.reload_ui.setIcon(QtGui.QIcon(os.path.join(IconsPath ,'RELOAD.png')))
 		self.ui.log.setIcon(QtGui.QIcon(os.path.join(IconsPath ,'LOG.png')))
+		self.ui.search_button.setIcon(QtGui.QIcon(os.path.join(IconsPath, 'RELOAD.png')))
+		self.ui.search_button.setIconSize(QtCore.QSize(14, 14))
+		self.ui.search_button.setStyleSheet("QPushButton { border: none; background: transparent; } QPushButton:hover { background-color: rgba(255, 255, 255, 10); border-radius: 3px; }")
+		self.ui.search_button.setToolTip("Refresh and reset block search")
 
 		# Setup resizable splitters and wrapping block buttons
 		self._setup_splitter()
-		self._convert_tab_layouts_to_flow()
+		self._setup_tab_layouts()
 
 		# keep current scroll position on UI refresh; outliner changes handle scrolling via scriptJob
 
@@ -1108,20 +1247,19 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 
 		# Phase 3: recreate from JSON, then restore the saved value (or keep JSON default for new attrs)
 		for attr in attrs_in_json:
-			attr_name = attr.split('_')[0]
-			if not cmds.attributeQuery(attr_name, node=config, exists=True):
-				try:
-					if 'string' in attr:
-						mt.string_attr(input=config, name=attr_name, string=module['attrs'][attr])
-					elif 'enum' in attr:
-						mt.new_enum(input=config, name=attr_name, enums=module['attrs'][attr])
-					elif 'float' in attr:
-						mt.new_attr_interger(input=config, name=attr_name, min=1, max=20, default=int(float(module['attrs'][attr])))
-					elif 'bool' in attr:
-						mt.new_boolean(input=config, name=attr_name, dv=module['attrs'][attr])
-				except Exception as e:
-					print('Could not create {}.{}: {}'.format(config, attr_name, e))
-					continue
+			attr_name = attr.rsplit('_', 1)[0]
+			try:
+				if 'string' in attr:
+					mt.string_attr(input=config, name=attr_name, string=module['attrs'][attr])
+				elif 'enum' in attr:
+					mt.new_enum(input=config, name=attr_name, enums=module['attrs'][attr])
+				elif 'float' in attr:
+					mt.new_attr_interger(input=config, name=attr_name, min=1, max=20, default=int(float(module['attrs'][attr])))
+				elif 'bool' in attr:
+					mt.new_boolean(input=config, name=attr_name, dv=module['attrs'][attr])
+			except Exception as e:
+				print('Could not create {}.{}: {}'.format(config, attr_name, e))
+				continue
 
 			value_to_set = module['attrs'][attr]
 			if attr in existing_values and existing_values[attr] is not None:
@@ -1566,7 +1704,18 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 					else:
 						matching = grand_childs
 
-					colapsable_box = expandableWidget.expandableWidget(parent=self.ui.side_layout, title=child.replace('_Build', ''))
+					colapsable_box = expandableWidget.expandableWidget(
+						parent=self.ui.side_layout,
+						title=child.replace('_Build', ''),
+						group_box_class=DraggableBlockWidget,
+						label_class=DraggableLabel,
+						block_name=child
+					)
+					colapsable_box.exp_box.setStyleSheet('QGroupBox { margin-top: 0; padding: 0; }')
+					colapsable_box.exp_box.block_dropped.connect(self.move_outliner_to_block)
+					colapsable_box.exp_box.block_create_dropped.connect(self.create_block_at_position)
+					self.side_block_widgets[child] = colapsable_box.exp_box
+
 					for grand_child in matching:
 						self.create_side_button(pack_name=grand_child, index=num, block_parent=colapsable_box.layout)
 				else:
@@ -1656,6 +1805,7 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		edit_button.customContextMenuRequested.connect(partial(self._on_block_right_click, pack_name, side_hbox))
 
 		self.update_side_block_highlight()
+		self._update_block_disabled_visual(pack_name)
 
 	def update_side_block_highlight(self):
 		active_style = "QPushButton { color: #DDE2EA; border: 1px solid rgba(180, 190, 205, 90); border-radius: 3px; background-color: rgba(180, 190, 205, 20); }"
@@ -1732,6 +1882,17 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 			if new_block:
 				# Reorder the new block to the drop position
 				try:
+					target_parent = cmds.listRelatives(target_block, parent=True)
+					if target_parent:
+						target_parent = target_parent[0]
+						curr = new_block
+						while curr:
+							curr_parent = cmds.listRelatives(curr, parent=True)
+							if curr_parent and curr_parent[0] == target_parent:
+								new_block = curr
+								break
+							curr = curr_parent[0] if curr_parent else None
+
 					parent = cmds.listRelatives(new_block, parent=True)
 					if parent:
 						children = cmds.listRelatives(parent[0], children=True)
@@ -1780,7 +1941,10 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		if len(current_sel) != 1 or current_sel[0] != self.current_block:
 			self.ignore_next_selection_changed = True
 			cmds.select(self.current_block)
-		config = cmds.listConnections(block)[1]
+		config = self._get_block_config(block)
+		if not config:
+			cmds.warning("Could not find configuration for block {}".format(block))
+			return
 		attrs =  cmds.listAttr(config , ud=True)
 
 		#create may q box to hold the widgets
@@ -1889,17 +2053,25 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 					list_widget = QtWidgets.QListWidget()
 					list_widget.setSelectionMode(QtWidgets.QAbstractItemView.ExtendedSelection)
 					list_widget.setMinimumHeight(100)
+
+					def add_item_to_list(text, lw=list_widget):
+						item = QtWidgets.QListWidgetItem(text)
+						item.setFlags(item.flags() | QtCore.Qt.ItemIsEditable)
+						lw.addItem(item)
 					
 					current_text = cmds.getAttr(edit_attr)
 					if current_text:
 						items = [i.strip() for i in current_text.split(',') if i.strip()]
-						list_widget.addItems(items)
+						for item_text in items:
+							add_item_to_list(item_text)
 						
 					def update_attr_from_list(lw=list_widget, ea=edit_attr):
 						items = []
 						for i in range(lw.count()):
 							items.append(lw.item(i).text())
 						cmds.setAttr(ea, ','.join(items), type='string')
+
+					list_widget.itemChanged.connect(lambda item, lw=list_widget, ea=edit_attr: update_attr_from_list(lw, ea))
 						
 					def add_selected_to_list(lw=list_widget, ea=edit_attr, attr_name=attr):
 						if 'Defaults' in attr_name:
@@ -1924,7 +2096,11 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 									if not cmds.objExists(full):
 										continue
 									try:
-										val = cmds.getAttr(full)
+										attr_type = cmds.getAttr(full, type=True)
+										if attr_type == 'enum':
+											val = cmds.getAttr(full, asString=True)
+										else:
+											val = cmds.getAttr(full)
 										entry = '{} = {}'.format(full, val)
 										# Replace if same attr already stored
 										replaced = False
@@ -1934,7 +2110,7 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 												replaced = True
 												break
 										if not replaced:
-											lw.addItem(entry)
+											add_item_to_list(entry)
 										added += 1
 									except:
 										pass
@@ -1942,6 +2118,24 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 								cmds.warning('No valid attributes found.')
 							update_attr_from_list(lw, ea)
 							return
+						elif 'Rename' in attr_name:
+							sel = cmds.ls(sl=True)
+							if not sel:
+								cmds.warning('Select controls first.')
+								return
+							for s in sel:
+								entry = '{} = {}'.format(s, s)
+								replaced = False
+								for idx in range(lw.count()):
+									if lw.item(idx).text().startswith(s + ' ='):
+										lw.item(idx).setText(entry)
+										replaced = True
+										break
+								if not replaced:
+									add_item_to_list(entry)
+							update_attr_from_list(lw, ea)
+							return
+						
 						sel = cmds.ls(sl=True)
 						if not sel: return
 						existing = []
@@ -1949,7 +2143,7 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 							existing.append(lw.item(i).text())
 						for s in sel:
 							if s not in existing:
-								lw.addItem(s)
+								add_item_to_list(s)
 						update_attr_from_list(lw, ea)
 						
 					def remove_selected_from_list(lw=list_widget, ea=edit_attr):
@@ -1961,11 +2155,103 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 						
 					def select_all_in_list(lw=list_widget):
 						items = [lw.item(i).text() for i in range(lw.count())]
-						existing = [i for i in items if cmds.objExists(i)]
+						# For rename lists or default lists, extract the object name part before '='
+						existing = []
+						for it in items:
+							obj_name = it.split('=')[0].strip() if '=' in it else it
+							if cmds.objExists(obj_name):
+								existing.append(obj_name)
 						if existing:
 							cmds.select(existing)
 						else:
 							cmds.select(clear=True)
+
+					def handle_paste(lw=list_widget, ea=edit_attr, attr_name=attr):
+						clipboard = QtWidgets.QApplication.clipboard()
+						clipboard_text = clipboard.text()
+						if not clipboard_text:
+							cmds.warning('Clipboard is empty.')
+							return
+						
+						# Split text into lines
+						lines = clipboard_text.split('\n')
+						added = 0
+						for line in lines:
+							line = line.strip()
+							if not line:
+								continue
+							
+							# Try to split by tab, equals, comma, or colon
+							parts = []
+							if '\t' in line:
+								parts = [p.strip() for p in line.split('\t') if p.strip()]
+							elif '=' in line:
+								parts = [p.strip() for p in line.split('=') if p.strip()]
+							elif ',' in line:
+								parts = [p.strip() for p in line.split(',') if p.strip()]
+							elif ':' in line:
+								parts = [p.strip() for p in line.split(':') if p.strip()]
+							else:
+								parts = [p.strip() for p in line.split() if p.strip()]
+							
+							if not parts:
+								continue
+								
+							if 'Rename' in attr_name:
+								if len(parts) >= 2:
+									orig = parts[0]
+									new_n = parts[1]
+									entry = '{} = {}'.format(orig, new_n)
+								else:
+									orig = parts[0]
+									entry = '{} = {}'.format(orig, orig)
+							else:
+								# For other lists, just use the first column or full line
+								orig = parts[0]
+								entry = line
+								
+							# Avoid duplicates (or replace)
+							replaced = False
+							# Match prefix if it has '='
+							match_prefix = orig + ' =' if '=' in entry else entry
+							for idx in range(lw.count()):
+								if '=' in entry:
+									if lw.item(idx).text().startswith(match_prefix):
+										lw.item(idx).setText(entry)
+										replaced = True
+										break
+								else:
+									if lw.item(idx).text() == entry:
+										replaced = True
+										break
+							if not replaced:
+								add_item_to_list(entry)
+							added += 1
+							
+						if added > 0:
+							update_attr_from_list(lw, ea)
+							print('Pasted {} entries successfully.'.format(added))
+
+					def handle_copy(lw=list_widget):
+						items = []
+						for i in range(lw.count()):
+							items.append(lw.item(i).text())
+						text = '\n'.join(items)
+						clipboard = QtWidgets.QApplication.clipboard()
+						clipboard.setText(text)
+						print('Copied {} entries to clipboard.'.format(lw.count()))
+
+					def clear_list(lw=list_widget, ea=edit_attr):
+						lw.clear()
+						update_attr_from_list(lw, ea)
+						print('List cleared successfully.')
+
+					# Create copy and paste shortcuts on the list widget
+					copy_shortcut = QtGui.QShortcut(QtGui.QKeySequence("Ctrl+C"), list_widget)
+					copy_shortcut.activated.connect(lambda lw=list_widget: handle_copy(lw))
+
+					paste_shortcut = QtGui.QShortcut(QtGui.QKeySequence("Ctrl+V"), list_widget)
+					paste_shortcut.activated.connect(lambda lw=list_widget, ea=edit_attr, an=attr: handle_paste(lw, ea, an))
 
 					list_v_layout = QtWidgets.QVBoxLayout()
 					list_v_layout.addWidget(list_widget)
@@ -1978,8 +2264,22 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 					add_btn.clicked.connect(add_selected_to_list)
 					remove_btn = QtWidgets.QPushButton('Remove Selected')
 					remove_btn.clicked.connect(remove_selected_from_list)
+					clear_btn = QtWidgets.QPushButton('Clear')
+					clear_btn.setToolTip("Clear all entries from this list")
+					clear_btn.clicked.connect(lambda checked=False, lw=list_widget, ea=edit_attr: clear_list(lw, ea))
 					btn_h_layout.addWidget(add_btn)
 					btn_h_layout.addWidget(remove_btn)
+					btn_h_layout.addWidget(clear_btn)
+
+					copy_btn = QtWidgets.QPushButton('Copy')
+					copy_btn.setToolTip("Copy all list entries to clipboard")
+					copy_btn.clicked.connect(lambda checked=False, lw=list_widget: handle_copy(lw))
+					btn_h_layout.addWidget(copy_btn)
+
+					paste_btn = QtWidgets.QPushButton('Paste')
+					paste_btn.setToolTip("Paste entries from clipboard (supports spreadsheet columns, tab/comma/equals/colon separated values)")
+					paste_btn.clicked.connect(lambda checked=False, lw=list_widget, ea=edit_attr, an=attr: handle_paste(lw, ea, an))
+					btn_h_layout.addWidget(paste_btn)
 					
 					if 'Set' in attr:
 						select_button = QtWidgets.QPushButton()
@@ -1994,11 +2294,19 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 
 				if attr == 'Code':  # if code in name it will create a larger box
 					line_edit.setParent(None)
-					code_editor = codeEditorWidget.IDECodeEditor()
+					h_layout.removeWidget(label)
+					code_v_layout = QtWidgets.QVBoxLayout()
+					label.setFixedHeight(25)
+					label.setStyleSheet("font-weight: bold; color: #9CC7FF;")
+					code_v_layout.addWidget(label)
+					code_editor = codeEditorWidget.IDECodeEditor(max_height_limit=None)
 					code_editor.setPlainText(cmds.getAttr('{}.{}'.format(config, attr)))
 					code_editor.set_language('python')
 					code_editor.textChanged.connect(partial(self.lineEdit_update_attr, code_editor, edit_attr))
-					h_layout.addWidget(code_editor)
+					code_v_layout.addWidget(code_editor)
+					resizer_widget = ListResizer(code_editor)
+					code_v_layout.addWidget(resizer_widget)
+					h_layout.addLayout(code_v_layout)
 
 				if attr == 'Help':  # if non string do a code box but non editable
 					line_edit.setParent(None)
@@ -2141,6 +2449,47 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 				cmds.setAttr(attr, bool(state))
 			except Exception as e:
 				print('Could not set {}: {}'.format(attr, e))
+		self._update_block_disabled_visual(block)
+
+	def _update_block_disabled_visual(self, block):
+		"""Dim the side-panel widget for a block when its build is disabled."""
+		widget = self.side_block_widgets.get(block)
+		if not widget:
+			return
+		enabled = self.get_block_lod_visibility(block)
+		effect = widget.graphicsEffect()
+		if enabled:
+			widget.setGraphicsEffect(None)
+		else:
+			opacity = QtWidgets.QGraphicsOpacityEffect(widget)
+			opacity.setOpacity(0.35)
+			widget.setGraphicsEffect(opacity)
+
+	def is_valid_block(self, block):
+		if not block or not cmds.objExists(block):
+			return False
+		if not block.endswith(nc['module']):
+			return False
+		# Must have a config node connected
+		conns = cmds.listConnections(block, type='network') or []
+		if conns:
+			return True
+		# Fallback general check
+		all_conns = cmds.listConnections(block) or []
+		return len(all_conns) >= 2
+
+	def _get_block_config(self, block):
+		if not block or not cmds.objExists(block):
+			return None
+		conns = cmds.listConnections(block, type='network') or []
+		if conns:
+			return conns[0]
+		all_conns = cmds.listConnections(block) or []
+		if len(all_conns) >= 2:
+			return all_conns[1]
+		if len(all_conns) == 1:
+			return all_conns[0]
+		return None
 
 	#-------------------------------------------------------------------
 
@@ -2149,30 +2498,40 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		print(mode)
 
 		to_build = []
+		blocks = []
 
 		if mode == 'Build Mutant Tools':
-			blocks = cmds.listRelatives('Mutant_Build', c=True)
+			if not cmds.objExists('Mutant_Build'):
+				cmds.warning("Mutant_Build group does not exist in the scene.")
+				return []
+			blocks = cmds.listRelatives('Mutant_Build', c=True) or []
 		elif mode == 'Build Selected Group':
-			grp = cmds.ls(sl=True)[0]
-			blocks = cmds.listRelatives(grp, c=True)
+			sel = cmds.ls(sl=True)
+			if not sel:
+				cmds.warning("Nothing selected for group build.")
+				return []
+			grp = sel[0]
+			if not cmds.objExists(grp):
+				return []
+			blocks = cmds.listRelatives(grp, c=True) or []
 		elif mode == 'Build Selected Block':
-			blocks = cmds.ls(sl=True)
+			blocks = cmds.ls(sl=True) or []
 
 		for block in blocks:
-			if not block.endswith(nc['module']):
-				grand_childs = cmds.listRelatives(block, c=True)
-				if not grand_childs:
-					continue
-				for grand_child in grand_childs:
-					if self.get_block_lod_visibility(grand_child):
-						to_build.append(grand_child)
-					else:
-						print('Skipped disabled block:', grand_child)
-			else:
+			if self.is_valid_block(block):
 				if self.get_block_lod_visibility(block):
 					to_build.append(block)
 				else:
 					print('Skipped disabled block:', block)
+			else:
+				# If not a valid block itself, check if it's a group node containing blocks
+				children = cmds.listRelatives(block, c=True) or []
+				for child in children:
+					if self.is_valid_block(child):
+						if self.get_block_lod_visibility(child):
+							to_build.append(child)
+						else:
+							print('Skipped disabled block:', child)
 
 		return to_build
 
@@ -2185,6 +2544,71 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		try:
 			self.ui.bar_label.resize(100, 200)
 			self.ui.bar_label.setText('Starting the Build')
+
+			# Get blocks to build early so we can run pre-build blocks before EVERYTHING
+			blocks = self.get_blocks_to_build(mode = self.ui.build_method.currentText())
+
+			# Collect and run pre-build blocks (RunBeforeBuild) before any plugins, rebuild cleanups, or IO
+			before_code_blocks = []
+			for block in blocks:
+				try:
+					block_config = self._get_block_config(block)
+					if block_config and cmds.attributeQuery('RunBeforeBuild', n=block_config, exists=True):
+						if cmds.getAttr('{}.RunBeforeBuild'.format(block_config)):
+							before_code_blocks.append(block)
+				except:
+					pass
+
+			if before_code_blocks:
+				print('------------------------------------------------------------------------------------')
+				print('Running {} pre-build block(s) before EVERYTHING...'.format(len(before_code_blocks)))
+				print('------------------------------------------------------------------------------------')
+				for before_block in before_code_blocks:
+					failed_block = before_block + ' (Pre-Build)'
+					print('Running pre-build: {}'.format(before_block))
+					self.ui.bar_label.setText('Pre-Build: {}'.format(before_block))
+					cmds.select(before_block)
+					before_config = self._get_block_config(before_block)
+					if not before_config:
+						cmds.warning("Could not find configuration for pre-build block {}. Skipping.".format(before_block))
+						continue
+					
+					# Generic block builder execution: call the block's Build_Command with force=True
+					executed = False
+					build_cmd = None
+					if cmds.attributeQuery('Build_Command', n=before_config, exists=True):
+						build_cmd = cmds.getAttr('{}.Build_Command'.format(before_config), asString=True)
+					
+					if build_cmd:
+						build_cmd_force = build_cmd.replace('()', '(force=True)') if '()' in build_cmd else build_cmd
+						
+						# Ensure module is imported
+						import_cmd = None
+						if cmds.attributeQuery('Import_Command', n=before_config, exists=True):
+							import_cmd = cmds.getAttr('{}.Import_Command'.format(before_config), asString=True)
+						if import_cmd:
+							try:
+								exec(import_cmd)
+								reload_cmd = import_cmd.replace('import ', 'reload(') + ')'
+								exec(reload_cmd)
+							except:
+								pass
+						
+						try:
+							eval(build_cmd_force)
+							executed = True
+						except Exception as e:
+							print('Could not execute pre-build block via build command: {}. Error: {}. Falling back to default legacy execution.'.format(build_cmd_force, e))
+					
+					if not executed:
+						# Legacy fallback for custom Code blocks
+						before_pl = cmds.getAttr('{}.Exec'.format(before_config), asString=True)
+						before_code = cmds.getAttr('{}.Code'.format(before_config), asString=True)
+						if before_pl != 'Python':
+							mel.eval(before_code)
+						else:
+							exec(before_code)
+					print('Pre-build block {} completed'.format(before_block))
 
 			#Load need plugins
 			self.force_load_of_dependency_plugins()
@@ -2252,7 +2676,10 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 
 				#building
 				cmds.select(block)
-				config = cmds.listConnections(block)[1]
+				config = self._get_block_config(block)
+				if not config:
+					cmds.warning("Could not find configuration for block {}. Skipping.".format(block))
+					continue
 				precode = cmds.getAttr('{}.precode'.format(config))
 				import_command = cmds.getAttr('{}.Import_Command'.format(config))
 				reload_command = import_command.replace('import', 'reload(')+')'.replace(' ', '')
@@ -2274,11 +2701,22 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 				# ----------------------
 				cmds.select(block)
 				print('Precode {}'.format(block))
+
+				# Skip precode/postcode for blocks that defer execution
+				skip_pre_post = False
+				if cmds.attributeQuery('RunAfterBuild', n=config, exists=True) and cmds.getAttr('{}.RunAfterBuild'.format(config)):
+					skip_pre_post = True
+				if cmds.attributeQuery('RunBeforeBuild', n=config, exists=True) and cmds.getAttr('{}.RunBeforeBuild'.format(config)):
+					skip_pre_post = True
+
 				if precode:
-					try:
-						exec(precode)
-					except:
-						mel.eval(precode)
+					if skip_pre_post:
+						print('Skipping precode for deferred block {}'.format(block))
+					else:
+						try:
+							exec(precode)
+						except:
+							mel.eval(precode)
 
 				# ----------------------
 				# BUILD-----------------
@@ -2298,17 +2736,20 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 				cmds.select(block)
 				print('Postcode {}'.format(block))
 				if postcode:
-					try:
-						exec(postcode)
-					except:
-						mel.eval(postcode)
+					if skip_pre_post:
+						print('Skipping postcode for deferred block {}'.format(block))
+					else:
+						try:
+							exec(postcode)
+						except:
+							mel.eval(postcode)
 
 				post_build_nodes = self.get_all_nodes()
 
 				#check if this is a deferred code block
 				try:
-					block_config = cmds.listConnections(block)[1]
-					if cmds.attributeQuery('RunAfterBuild', n=block_config, exists=True):
+					block_config = self._get_block_config(block)
+					if block_config and cmds.attributeQuery('RunAfterBuild', n=block_config, exists=True):
 						if cmds.getAttr('{}.RunAfterBuild'.format(block_config)):
 							deferred_code_blocks.append(block)
 				except:
@@ -2365,24 +2806,57 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 					if not cmds.about(batch=True):
 						mel.eval("paneLayout -e -manage true $gMainPane")
 
-			#Run deferred code blocks (RunAfterBuild) as the very last step
+			#Run deferred blocks (RunAfterBuild) as the very last step (post-build procedures)
 			if deferred_code_blocks:
 				print('------------------------------------------------------------------------------------')
-				print('Running {} deferred Code block(s)...'.format(len(deferred_code_blocks)))
+				print('Running {} deferred block(s)...'.format(len(deferred_code_blocks)))
 				print('------------------------------------------------------------------------------------')
 				for deferred_block in deferred_code_blocks:
 					failed_block = deferred_block + ' (Deferred)'
 					print('Running deferred: {}'.format(deferred_block))
 					self.ui.bar_label.setText('Deferred: {}'.format(deferred_block))
 					cmds.select(deferred_block)
-					deferred_config = cmds.listConnections(deferred_block)[1]
-					deferred_pl = cmds.getAttr('{}.Exec'.format(deferred_config), asString=True)
-					deferred_code = cmds.getAttr('{}.Code'.format(deferred_config), asString=True)
-					if deferred_pl != 'Python':
-						mel.eval(deferred_code)
-					else:
-						exec(deferred_code)
-					print('Deferred code block {} completed'.format(deferred_block))
+					deferred_config = self._get_block_config(deferred_block)
+					if not deferred_config:
+						cmds.warning("Could not find configuration for deferred block {}. Skipping.".format(deferred_block))
+						continue
+					
+					# Generic block builder execution: call the block's Build_Command with force=True
+					executed = False
+					build_cmd = None
+					if cmds.attributeQuery('Build_Command', n=deferred_config, exists=True):
+						build_cmd = cmds.getAttr('{}.Build_Command'.format(deferred_config), asString=True)
+					
+					if build_cmd:
+						build_cmd_force = build_cmd.replace('()', '(force=True)') if '()' in build_cmd else build_cmd
+						
+						# Ensure module is imported
+						import_cmd = None
+						if cmds.attributeQuery('Import_Command', n=deferred_config, exists=True):
+							import_cmd = cmds.getAttr('{}.Import_Command'.format(deferred_config), asString=True)
+						if import_cmd:
+							try:
+								exec(import_cmd)
+								reload_cmd = import_cmd.replace('import ', 'reload(') + ')'
+								exec(reload_cmd)
+							except:
+								pass
+						
+						try:
+							eval(build_cmd_force)
+							executed = True
+						except Exception as e:
+							print('Could not execute deferred block via build command: {}. Error: {}. Falling back to default legacy execution.'.format(build_cmd_force, e))
+					
+					if not executed:
+						# Legacy fallback for custom Code blocks
+						deferred_pl = cmds.getAttr('{}.Exec'.format(deferred_config), asString=True)
+						deferred_code = cmds.getAttr('{}.Code'.format(deferred_config), asString=True)
+						if deferred_pl != 'Python':
+							mel.eval(deferred_code)
+						else:
+							exec(deferred_code)
+					print('Deferred block {} completed'.format(deferred_block))
 
 		except Exception:
 			import traceback
@@ -2683,7 +3157,9 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 	#-------------------------------------------------------------------
 	def check_precode(self, block):
 
-		config = cmds.listConnections(block)[1]
+		config = self._get_block_config(block)
+		if not config:
+			return
 
 		# Precode and Postcode attrs Code
 		if cmds.getAttr('{}.precode'.format(config)) != '':
@@ -2694,7 +3170,9 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 	#-------------------------------------------------------------------
 	def check_postcode(self, block):
 
-		config = cmds.listConnections(block)[1]
+		config = self._get_block_config(block)
+		if not config:
+			return
 
 		# Precode and Postcode attrs Code
 		if cmds.getAttr('{}.postcode'.format(config)) != '':
@@ -2706,7 +3184,9 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 
 	def edit_prebuild_code(self, block):
 
-		config = cmds.listConnections(block)[1]
+		config = self._get_block_config(block)
+		if not config:
+			return
 
 		#get past code
 		pastcode_attr = cmds.getAttr('{}.precode'.format(config))
@@ -2724,7 +3204,9 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 
 	def view_build_code(self, block):
 
-		config = cmds.listConnections(block)[1]
+		config = self._get_block_config(block)
+		if not config:
+			return
 
 		import_command = cmds.getAttr('{}.Import_Command'.format(config))
 		build_file = import_command.replace('import ', '')
@@ -2752,7 +3234,9 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 	#-------------------------------------------------
 
 	def edit_postbuild_code(self, block):
-		config = cmds.listConnections(block)[1]
+		config = self._get_block_config(block)
+		if not config:
+			return
 
 		#get past code
 		postcode_attr = cmds.getAttr('{}.postcode'.format(config))
@@ -2797,7 +3281,12 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		self.create_all_side_buttons()
 
 	def _focus_search(self):
-		"""Show the floating search overlay."""
+		"""Show the floating search overlay, unless the code editor has focus."""
+		focused = QtWidgets.QApplication.focusWidget()
+		if focused and hasattr(focused, 'show_search_replace'):
+			focused.show_search_replace()
+			return
+
 		if not hasattr(self, '_search_overlay'):
 			self._search_overlay = SearchOverlay(self.master_ui, self.ui.search_line)
 		self._search_overlay.popup()
@@ -2861,4 +3350,3 @@ from Mutant_Tools.Utils.Rigging import main_mutant
 reload(Mutant_Tools.Utils.Rigging.main_mutant)
 mt = main_mutant.Mutant()
 ''')
-

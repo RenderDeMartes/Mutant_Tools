@@ -56,6 +56,7 @@ def create_code_block(name = 'Code'):
     #cmds.getAttr('{}.AttrName'.format(config), asString = True) #for enums
     #joint_one = mt.create_joint_guide(name = name) #guide base with shapes
 
+    cmds.select(block)
     print('{} Created Successfully'.format(name))
 
 #create_code_block()
@@ -69,12 +70,34 @@ def build_code_block(force=False):
     #mt.check_is_there_is_base()
 
     block = cmds.ls(sl=True)
-    config = cmds.listConnections(block)[1]
+    if not block:
+        cmds.warning("Please select the Code block to build.")
+        return
+
+    # Safely get configuration node
+    conns = cmds.listConnections(block, type='network') or []
+    if not conns:
+        conns = cmds.listConnections(block) or []
+        if len(conns) < 2:
+            cmds.warning("Could not find configuration node for Code block {}".format(block))
+            return
+        config = conns[1]
+    else:
+        config = conns[0]
     block = block[0]
 
     #cmds.getAttr('{}.AttrName'.format(config))
     pl = cmds.getAttr('{}.Exec'.format(config), asString = True)
     code = cmds.getAttr('{}.Code'.format(config), asString = True)
+
+    # Check if this code block should run before the build begins
+    run_before = False
+    if cmds.attributeQuery('RunBeforeBuild', n=config, exists=True):
+        run_before = cmds.getAttr('{}.RunBeforeBuild'.format(config))
+
+    if run_before and not force:
+        print('Code block {} deferred to run before build starts'.format(block))
+        return
 
     # Check if this code block should run after the full build completes
     run_after = False

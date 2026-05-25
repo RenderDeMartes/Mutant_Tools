@@ -250,6 +250,12 @@ class AutoRiggerMenu(QtWidgets.QDialog):
 		visual_build_state = cmds.optionVar(q="mutant_visual_build") if cmds.optionVar(ex="mutant_visual_build") else True
 		self.visual_build.setChecked(visual_build_state)
 
+		self.wrap_icons = self.settingsMenu.addAction("Wrap Block Icons")
+		self.wrap_icons.setCheckable(True)
+		wrap_icons_state = cmds.optionVar(q="mutant_wrap_icons") if cmds.optionVar(ex="mutant_wrap_icons") else True
+		self.wrap_icons.setChecked(wrap_icons_state)
+
+
 		self.clear_script_editor = self.settingsMenu.addAction("Clear Script Editor on Build")
 		self.clear_script_editor.setCheckable(True)
 		clear_se_state = cmds.optionVar(q="mutant_clear_script_editor") if cmds.optionVar(ex="mutant_clear_script_editor") else True
@@ -353,6 +359,9 @@ class AutoRiggerMenu(QtWidgets.QDialog):
 
 		#Visual Build
 		self.visual_build.toggled.connect(lambda state: cmds.optionVar(intValue=("mutant_visual_build", state)))
+
+		#Wrap Block Icons
+		self.wrap_icons.toggled.connect(lambda state: cmds.optionVar(intValue=("mutant_wrap_icons", state)))
 
 		#Clear Script Editor
 		self.clear_script_editor.toggled.connect(lambda state: cmds.optionVar(intValue=("mutant_clear_script_editor", state)))

@@ -73,11 +73,14 @@ ICONS_FOLDER = os.path.join(FOLDER, 'Icons')
 
 class expandableWidget(QtWidgets.QDialog):
 
-    def __init__(self, parent=None, title='ExpandableWidget'):
+    def __init__(self, parent=None, title='ExpandableWidget', group_box_class=None, label_class=None, block_name=None):
 
         self.parent = parent
         self.title = title
         self.layout = ''
+        self.group_box_class = group_box_class or QtWidgets.QGroupBox
+        self.label_class = label_class or QtWidgets.QLabel
+        self.block_name = block_name
 
         self.create_widget()
         self.create_connections()
@@ -86,18 +89,26 @@ class expandableWidget(QtWidgets.QDialog):
 
     def create_widget(self):
         #Top Part
-        exp_box = QGroupBox()
-        self.parent.addWidget(exp_box)
+        if self.block_name is not None:
+            self.exp_box = self.group_box_class(self.block_name)
+        else:
+            self.exp_box = self.group_box_class()
+        self.parent.addWidget(self.exp_box)
 
         main_layout = QtWidgets.QVBoxLayout()
-        exp_box.setLayout(main_layout)
+        self.exp_box.setLayout(main_layout)
 
         h_layout = QtWidgets.QHBoxLayout()
 
         main_layout.addLayout(h_layout)
 
         self.open_button = QtWidgets.QPushButton()
-        self.label = QtWidgets.QLabel(self.title)
+        if self.block_name is not None and self.label_class != QtWidgets.QLabel:
+            self.label = self.label_class(self.block_name, self.title)
+        else:
+            self.label = self.label_class(self.title)
+
+        self.label.setSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Preferred)
 
         self.open_button.setFixedSize(15,15)
         self.open_button.setIconSize(QtCore.QSize(10,10))

@@ -161,13 +161,13 @@ class Modules_class(kinematics.Kinematics_class):
 		#main block attrs
 		for attr in attrs:
 			if 'string' in attr:
-				self.string_attr(input = config, name = attr.split('_')[0], string = attrs[attr])
+				self.string_attr(input = config, name = attr.rsplit('_', 1)[0], string = attrs[attr])
 			elif 'enum' in attr:
-				self.new_enum(input= config, name = attr.split('_')[0], enums = attrs[attr])
+				self.new_enum(input= config, name = attr.rsplit('_', 1)[0], enums = attrs[attr])
 			elif 'float' in attr:
-				self.new_attr_interger(input= config, name = attr.split('_')[0], min = 1 , max = 20, default = int(attrs[attr]))
+				self.new_attr_interger(input= config, name = attr.rsplit('_', 1)[0], min = 1 , max = 20, default = int(attrs[attr]))
 			elif 'bool' in attr:
-				self.new_boolean(input= config, name = attr.split('_')[0], dv = attrs[attr])
+				self.new_boolean(input= config, name = attr.rsplit('_', 1)[0], dv = attrs[attr])
 
 		postcode = self.string_attr(input = config, name = 'postcode', string = '')
 
@@ -493,23 +493,26 @@ class Modules_class(kinematics.Kinematics_class):
 						tx = text)
 
 		if ask_name == 'OK':
-			if cmds.objExists(cmds.promptDialog(query=True, text=True).replace(',','_')+self.nc['module']):
+			entered_name = cmds.promptDialog(query=True, text=True)
+			if cmds.objExists(entered_name.replace(',','_')+self.nc['module']):
 				if not allow_name_exists:
 					print ('Name exists error')
 					cmds.confirmDialog( title='Error',
 										message='Error "{}": Block name already exists.'.format(
-											cmds.promptDialog(query=True, text=True).replace(',','_')+self.nc['module']),
+											entered_name.replace(',','_')+self.nc['module']),
 										button=["Oh! ok!"])
+					return None
 
 			if check_split == True:
-				if cmds.objExists(cmds.promptDialog(query=True, text=True).split(',')[0]+self.nc['module']):
+				if cmds.objExists(entered_name.split(',')[0]+self.nc['module']):
 					if not allow_name_exists:
 						print ('Name exists error')
 						cmds.confirmDialog( title='Error',
 											message='Error: Block name already exists',
 											button=["Oh! ok!"])
+						return None
 
-			return cmds.promptDialog(query=True, text=True)	
+			return entered_name
 
 		else:
 			cmds.warning('We need a name :)')

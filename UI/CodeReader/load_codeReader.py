@@ -139,6 +139,13 @@ class Code_Reader(QtMutantWindow.Qt_Mutant):
 
 		self.ui.layout().setContentsMargins(3, 3, 3, 3)
 
+		# Make the code editor row (row 2) stretch to fill available space
+		grid = self.ui.layout()
+		grid.setRowStretch(0, 0)  # label row - fixed
+		grid.setRowStretch(1, 0)  # path bar row - fixed
+		grid.setRowStretch(2, 1)  # code editor row - stretches
+		grid.setRowStretch(3, 0)  # button bar row - fixed
+
 	def replace_code_widget(self):
 		try:
 			old_widget = self.ui.code_text
@@ -179,6 +186,12 @@ class Code_Reader(QtMutantWindow.Qt_Mutant):
 			self.ui.code_text.verticalScrollBar().maximum()
 		except:
 			pass
+
+		# Ensure the header label is always the same size
+		if hasattr(self.ui, 'label'):
+			self.ui.label.setFixedHeight(30)
+
+		# Keep the window at its initial size; the code editor will scroll within it
 
 	def slider_changed(self):
 		self.ui.code_text.verticalScrollBar().setValue(self.ui.code_text.verticalScrollBar().maximum())
