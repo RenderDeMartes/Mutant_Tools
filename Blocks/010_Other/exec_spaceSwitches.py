@@ -57,21 +57,7 @@ def create_spaceSwitches_block(name='target_switches'):
 def build_spaceSwitches_block():
     nc, curve_data, setup = mt.import_configs()
     block = cmds.ls(sl=True)
-    if not block:
-        cmds.warning("Please select the spaceSwitches block to build.")
-        return
-
-    # Safely get configuration node
-    conns = cmds.listConnections(block, type='network') or []
-    if not conns:
-        conns = cmds.listConnections(block) or []
-        if len(conns) < 2:
-            cmds.warning("Could not find configuration node for spaceSwitches block {}.".format(block))
-            return
-        config = conns[1]
-    else:
-        config = conns[0]
-
+    config = cmds.listConnections(block)[1]
     block = block[0]
 
     # get the translate/rotate configuration to determine which type of constrain to use
@@ -116,48 +102,9 @@ def build_spaceSwitches_block():
 
         block = block.replace('_Block', '')
 
-        if not cmds.objExists(target_ctrl):
-            cmds.warning("Target control '{}' does not exist in the scene. Skipping space switch setup for {}.".format(target_ctrl, block))
-            return
-
-        animbot_friendly=True
-        if not cmds.attributeQuery('Animbot', n=config, exists=True):
-            animbot_friendly = False
-        else:
-            animbot_friendly = cmds.getAttr('{}.Animbot'.format(config))
-
-        if not animbot_friendly and not cmds.objExists(attrs_holder):
-            cmds.warning("Attributes holder '{}' does not exist in the scene. Skipping space switch setup for {}.".format(attrs_holder, block))
-            return
-
         spaces_str = spaces
         spaces = spaces.replace(" ", "")
         spaces = spaces.split(',')
-
-        # Parallel filter of spaces and custom names to skip nonexistent spaces while keeping name alignment
-        cn_list = []
-        if custom_names and custom_names.strip():
-            cn_list = [n.strip() for n in custom_names.split(',')]
-
-        valid_spaces = []
-        valid_custom_names = []
-        for idx, s in enumerate(spaces):
-            if cmds.objExists(s):
-                valid_spaces.append(s)
-                if idx < len(cn_list):
-                    valid_custom_names.append(cn_list[idx])
-            else:
-                cmds.warning("Space target '{}' does not exist in the scene. Skipping this target.".format(s))
-
-        if not valid_spaces:
-            cmds.warning("No valid space targets found for {}. Skipping space switch setup.".format(block))
-            return
-
-        spaces = valid_spaces
-        if valid_custom_names:
-            custom_names = ','.join(valid_custom_names)
-        else:
-            custom_names = ''
 
         # if each side has a separate ctrl to hold space attrs, we can omit the side token in the attr name
 
@@ -187,6 +134,12 @@ def build_spaceSwitches_block():
             return c_spaces
 
         processed_spaces = process_spaces(spaces, custom_names)
+
+        animbot_friendly=True
+        if not cmds.attributeQuery('Animbot', n=config, exists=True):
+            animbot_friendly = False
+        else:
+            animbot_friendly = cmds.getAttr('{}.Animbot'.format(config))
 
         enums_str = ':'.join(processed_spaces)
 
@@ -333,44 +286,29 @@ def build_spaceSwitches_block():
             #make keyable
             cmds.setAttr(space_attr, e=True, k=True)
 
+    clean_rig_grp = cmds.group(em=True, n=block.replace('_Block', '') + '_Rig' + nc['group'])
+
     target_ctrl = cmds.getAttr('{}.SetTargetCtrl'.format(config), asString=True)
     spaces = cmds.getAttr('{}.Spaces'.format(config), asString=True)
     attrs_holder = cmds.getAttr('{}.SetAttrsHolder'.format(config), asString=1)
     custom_names = ''
     if cmds.attributeQuery('CustomNames', n=config, exists=True):
         custom_names = cmds.getAttr('{}.CustomNames'.format(config), asString=True) or ''
-
-    # Handle the line attribute
-    animbot_friendly_root = True
-    if not cmds.attributeQuery('Animbot', n=config, exists=True):
-        animbot_friendly_root = False
-    else:
-        animbot_friendly_root = cmds.getAttr('{}.Animbot'.format(config))
-
-    if not animbot_friendly_root and cmds.objExists(attrs_holder):
-        if not cmds.attributeQuery('___________', n=attrs_holder, exists=True):
-            line_attr = mt.new_enum(input=attrs_holder, name='___________', enums='{}:'.format('Spaces'))
-            cmds.setAttr(line_attr, e=True, lock=True)
-
-    if cmds.objExists(target_ctrl):
-        clean_rig_grp = cmds.group(em=True, n=block.replace('_Block', '') + '_Rig' + nc['group'])
-        create_space_switch_setup(target_ctrl, spaces, attrs_holder, clean_rig_grp, block, custom_names)
-    else:
-        cmds.warning("Target control '{}' does not exist in the scene. Skipping space switch build.".format(target_ctrl))
+    if not cmds.attributeQuery('___________', n=attrs_holder, exists=True) and not cmds.attributeQuery('Animbot', n=config, exists=True):
+        line_attr = mt.new_enum(input=attrs_holder, name='___________', enums='{}:'.format('Spaces'))
+        cmds.setAttr(line_attr, e=True, lock=True)
+    create_space_switch_setup(target_ctrl, spaces, attrs_holder, clean_rig_grp, block, custom_names)
 
     mirror = cmds.getAttr('{}.Mirror'.format(config))
     if mirror:
         r_name = block.replace('L_', 'R_')
         r_name = r_name.replace('_Block', '')
+        r_clean_rig_group = cmds.group(em=True, n=r_name + '_Rig' + nc['group'])
         r_target_ctrl = target_ctrl.replace('L_', 'R_')
         r_spaces = spaces.replace('L_', 'R_')
         r_attrs = attrs_holder.replace('L_', 'R_')
         r_custom_names = custom_names.replace('L_', 'R_') if custom_names else ''
 
-        if cmds.objExists(r_target_ctrl):
-            r_clean_rig_group = cmds.group(em=True, n=r_name + '_Rig' + nc['group'])
-            create_space_switch_setup(r_target_ctrl, r_spaces, r_attrs, r_clean_rig_group, r_name, r_custom_names)
-        else:
-            cmds.warning("Mirrored target control '{}' does not exist in the scene. Skipping mirrored space switch.".format(r_target_ctrl))
+        create_space_switch_setup(r_target_ctrl, r_spaces, r_attrs, r_clean_rig_group, r_name, r_custom_names)
 
-    print('Build {} success'.format(block))
+    print('Build {} sucess'.format(block))
