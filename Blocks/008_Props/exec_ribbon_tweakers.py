@@ -50,6 +50,26 @@ def _resolve_source_surface(block):
     return None
 
 
+def _resolve_custom_names(raw_string, count, fallback_prefix):
+    """Return a list of exactly `count` name tokens from a comma-separated string.
+    If names run out, the last name is suffixed with an incrementing number.
+    Falls back to fallback_prefix_01, _02 ... when no names are provided.
+    """
+    tokens = [t.strip() for t in raw_string.split(',') if t.strip()] if raw_string else []
+    if not tokens:
+        return ['{}_{:02d}'.format(fallback_prefix, i + 1) for i in range(count)]
+
+    resolved = tokens[:count]  # drop extras if user gave too many
+    if len(resolved) < count:
+        last = resolved[-1]
+        extra = 1
+        while len(resolved) < count:
+            resolved.append('{}{}'.format(last, extra))
+            extra += 1
+
+    return resolved
+
+
 def _create_follicles(surface_transform, count, walk_axis, prefix, nc):
     surface_shape = _get_surface_shape(surface_transform)
     if not surface_shape:
@@ -62,7 +82,9 @@ def _create_follicles(surface_transform, count, walk_axis, prefix, nc):
 
     follicles = []
     for i in range(count):
-        t = i / float(count)
+        # Centre each follicle in the middle of its span zone so it is as far as
+        # possible from knot boundaries, where surface tangents are least stable.
+        t = (i + 0.5) / float(count)
 
         if walk_axis.lower() == 'u':
             u_val, v_val = t, 0.5
@@ -144,7 +166,8 @@ def create_ribbon_tweakers_block(name='RibbonTweakers'):
 
     guide_name = '{}{}'.format(name, nc['guide'])
     guide_surface = mel.eval(
-        'cylinder -p 0 0 0 -ax 0 1 0 -ssw 0 -esw 360 -r 1 -hr 2 -d 3 -ut 0 -tol 0.01 -s {} -nsp 1 -ch 1 -n "{}";'.format(
+        'cylinder -p 0 0 0 -ax 0 1 0 -ssw 0 -esw 360 -r 1 -hr 2 -d 3 -ut 0 -tol 0.01 -s {} -nsp {} -ch 1 -n "{}";'.format(
+            joints_count,
             joints_count,
             guide_name)
     )[0]
@@ -182,6 +205,7 @@ def build_ribbon_tweakers_block():
     ctrl_type = cmds.getAttr('{}.CtrlType'.format(config), asString=True)
     ctrl_size = cmds.getAttr('{}.CtrlSize'.format(config))
     ctrl_color = cmds.getAttr('{}.CtrlColor'.format(config), asString=True)
+    raw_custom_names = cmds.getAttr('{}.CustomNames'.format(config), asString=True) or ''
 
     if walk_axis not in ['u', 'v']:
         walk_axis = 'v'
@@ -209,18 +233,45 @@ def build_ribbon_tweakers_block():
     runtime_surface = cmds.duplicate(source_surface, n=runtime_surface_name)[0]
     cmds.parent(runtime_surface, clean_rig_grp)
 
+    # Rebuild the runtime surface to have one span per follicle zone.
+    # This ensures follicles are always placed in the interior of a span (not at
+    # a knot boundary) and gives the surface enough topology to compute stable
+    # normals even when the surface deforms.  Shape is preserved because we
+    # rebuild to a higher-resolution uniform parameterisation.
+    rebuild_spans = max(4, count)
+    cmds.rebuildSurface(
+        runtime_surface,
+        rebuildType=0, endKnots=1, keepRange=0,
+        keepControlPoints=False,
+        spansU=rebuild_spans, spansV=rebuild_spans,
+        degreeU=3, degreeV=3, ch=False
+    )
+
     follicle_prefix = '{}_Twk'.format(name)
     fol_grp, follicles = _create_follicles(runtime_surface, count, walk_axis, follicle_prefix, nc)
     cmds.parent(fol_grp, clean_rig_grp)
 
     bind_jnt_grp = '{}{}'.format(setup['rig_groups']['bind_joints'], nc['group'])
 
-    for fol in follicles:
-        base = fol.replace(nc['follicle'], '')
+    # flip right
+    flip_right = False
+    if cmds.attributeQuery('FlipRight', n=config, exists=True):
+        flip_right = cmds.getAttr('{}.FlipRight'.format(config))
 
-        ctrl_name = '{}{}'.format(base, nc['ctrl'])
-        rig_jnt_name = '{}{}'.format(base, nc['joint'])
-        bind_jnt_name = '{}{}'.format(base, nc['joint_bind'])
+    resolved_names = _resolve_custom_names(raw_custom_names, count, 'Twk')
+
+    # Pass 1: build all ctrls, rig joints and bind joints.
+    # ctrl_root parenting/flipping is deferred so every left-side ctrl exists
+    # before any right-side ctrl tries to find its counterpart.
+    pending_ctrl_roots = []  # list of (ctrl_root, ctrl_roots, fol, do_flip)
+
+    for i, fol in enumerate(follicles):
+        custom_base = '{}_{}'.format(resolved_names[i], name)
+        do_flip = flip_right and nc['right'] in custom_base
+
+        ctrl_name = '{}{}'.format(custom_base, nc['ctrl'])
+        rig_jnt_name = '{}{}'.format(custom_base, nc['joint'])
+        bind_jnt_name = '{}{}'.format(custom_base, nc['joint_bind'])
 
         ctrl = mt.curve(
             input=fol,
@@ -235,9 +286,9 @@ def build_ribbon_tweakers_block():
         ctrl_roots = mt.root_grp(input=ctrl, autoRoot=True)
         ctrl_root = ctrl_roots[0]
 
-        cmds.delete(cmds.parentConstraint(fol, ctrl_root, mo=False))
-        cmds.parentConstraint(fol, ctrl_root, mo=True)
-        cmds.parent(ctrl_root, clean_ctrl_grp)
+        cmds.parentConstraint(fol, ctrl_root, mo=False)
+
+        pending_ctrl_roots.append((ctrl_root, ctrl_roots, fol, do_flip))
 
         cmds.select(cl=True)
         rig_joint = cmds.joint(n=rig_jnt_name)
@@ -257,6 +308,22 @@ def build_ribbon_tweakers_block():
 
         if cmds.objExists(bind_jnt_grp):
             cmds.parent(bind_joint, bind_jnt_grp)
+
+    # Pass 2: flip right-side ctrls now that all left-side ctrls exist, then parent.
+    for ctrl_root, ctrl_roots, fol, do_flip in pending_ctrl_roots:
+        if do_flip:
+            left_ctrl_root = ctrl_root.replace(nc['right'], nc['left'])
+            if cmds.objExists(left_ctrl_root):
+                for con in (cmds.listRelatives(ctrl_root, type='parentConstraint') or []):
+                    cmds.delete(con)
+                cmds.delete(cmds.parentConstraint(left_ctrl_root, ctrl_root, mo=False))
+                ctrl_root = mt.mirror_group(ctrl_root, world=True)
+                # Constrain the outermost mirror_grp — not the inner ctrl_root inside
+                # a scale(-1) parent, which caused the original instability.
+                cmds.parentConstraint(fol, ctrl_root, mo=True)
+            else:
+                ctrl_root = mt.mirror_group(ctrl_root, world=False)
+        cmds.parent(ctrl_root, clean_ctrl_grp)
 
     misc_grp = '{}{}'.format(setup['rig_groups']['misc'], nc['group'])
     ctrl_base_grp = '{}{}'.format(setup['base_groups']['control'], nc['group'])

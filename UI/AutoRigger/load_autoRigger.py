@@ -1171,6 +1171,8 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		attr_path = '{}.{}'.format(config, attr)
 		if not cmds.attributeQuery(attr, node=config, exists=True):
 			return
+		if value is None:
+			return
 
 		try:
 			if 'string' in attr_key:
@@ -1181,12 +1183,15 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 					enum_values = enums[0].split(':')
 					if isinstance(value, str) and value in enum_values:
 						cmds.setAttr(attr_path, enum_values.index(value))
-					elif isinstance(value, int):
-						cmds.setAttr(attr_path, value)
+					elif isinstance(value, (int, float)):
+						cmds.setAttr(attr_path, int(value))
 			elif 'float' in attr_key:
-				cmds.setAttr(attr_path, int(value))
+				cmds.setAttr(attr_path, int(float(value)))
 			elif 'bool' in attr_key:
-				cmds.setAttr(attr_path, bool(value))
+				if isinstance(value, str):
+					cmds.setAttr(attr_path, 1 if value.strip().lower() == 'true' else 0)
+				else:
+					cmds.setAttr(attr_path, 1 if value else 0)
 		except Exception as e:
 			print('Could not set {}: {}'.format(attr_path, e))
 
@@ -1217,34 +1222,47 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		attrs_to_recreate = []
 		existing_values = {}
 
+		# Phase 1: snapshot existing values; drop attrs not in JSON
 		for attr in attrs_in_config:
 			if attr in skips:
 				continue
 			clean_attr = self.get_mutant_config_attr(attr, config)
 			if clean_attr not in attrs_in_json:
 				if cmds.attributeQuery(attr, node=config, exists=True):
-					cmds.deleteAttr('{}.{}'.format(config, attr))
+					try:
+						cmds.deleteAttr('{}.{}'.format(config, attr))
+					except Exception as e:
+						print('Could not delete {}.{}: {}'.format(config, attr, e))
 			else:
 				attrs_to_recreate.append(attr)
 				existing_values[clean_attr] = self.get_config_attr_value(config=config, attr=attr, attr_key=clean_attr)
 
+		# Phase 2: delete attrs that will be rebuilt from JSON
 		for attr in attrs_to_recreate:
 			if cmds.attributeQuery(attr, node=config, exists=True):
-				cmds.deleteAttr('{}.{}'.format(config, attr))
+				try:
+					cmds.deleteAttr('{}.{}'.format(config, attr))
+				except Exception as e:
+					print('Could not delete {}.{}: {}'.format(config, attr, e))
 
+		# Phase 3: recreate from JSON, then restore the saved value (or keep JSON default for new attrs)
 		for attr in attrs_in_json:
 			attr_name = attr.rsplit('_', 1)[0]
-			if 'string' in attr:
-				mt.string_attr(input=config, name=attr_name, string=module['attrs'][attr])
-			elif 'enum' in attr:
-				mt.new_enum(input=config, name=attr_name, enums=module['attrs'][attr])
-			elif 'float' in attr:
-				mt.new_attr_interger(input=config, name=attr_name, min=1, max=20, default=int(module['attrs'][attr]))
-			elif 'bool' in attr:
-				mt.new_boolean(input=config, name=attr_name, dv=module['attrs'][attr])
+			try:
+				if 'string' in attr:
+					mt.string_attr(input=config, name=attr_name, string=module['attrs'][attr])
+				elif 'enum' in attr:
+					mt.new_enum(input=config, name=attr_name, enums=module['attrs'][attr])
+				elif 'float' in attr:
+					mt.new_attr_interger(input=config, name=attr_name, min=1, max=20, default=int(float(module['attrs'][attr])))
+				elif 'bool' in attr:
+					mt.new_boolean(input=config, name=attr_name, dv=module['attrs'][attr])
+			except Exception as e:
+				print('Could not create {}.{}: {}'.format(config, attr_name, e))
+				continue
 
 			value_to_set = module['attrs'][attr]
-			if attr in existing_values:
+			if attr in existing_values and existing_values[attr] is not None:
 				value_to_set = existing_values[attr]
 
 			self.set_config_attr_value(config=config, attr=attr_name, attr_key=attr, value=value_to_set)
@@ -3332,4 +3350,3 @@ from Mutant_Tools.Utils.Rigging import main_mutant
 reload(Mutant_Tools.Utils.Rigging.main_mutant)
 mt = main_mutant.Mutant()
 ''')
-
