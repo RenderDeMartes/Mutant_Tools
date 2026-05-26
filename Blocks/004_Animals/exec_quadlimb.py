@@ -114,11 +114,10 @@ def _orient_chain_compat(root_joint):
 
     cmds.select(root_joint)
     try:
-        # Keep the same orientation intent without relying on removed MEL flags.
-        cmds.joint(root_joint, e=True, oj='xzy', sao='zup', ch=True, zso=True)
+        mel.eval("joint -e -oj xzy -sao zup -aos -ch -zso;")
     except Exception:
-        # Fallback for older environments where cmds.joint edit may differ.
         mel.eval("joint -e -oj xzy -sao zup -ch -zso;")
+
 
 def build_quadlimb_block():
 
