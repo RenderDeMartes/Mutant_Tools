@@ -2379,7 +2379,11 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 			cmds.setAttr(attr, field.toPlainText(), type = 'string')
 
 	def lineEdit_get_selection(self, field, attr,*args):
-		sel = cmds.ls(sl=True)
+		attr_name = attr.split('.')[-1] if '.' in attr else attr
+		if 'Flat' in attr_name:
+			sel = cmds.ls(sl=True, fl=True)
+		else:
+			sel = cmds.ls(sl=True)
 		print(sel)
 		#remove ugly lists keys
 		nice_selection = str(sel)[1:-1]
