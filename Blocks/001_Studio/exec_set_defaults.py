@@ -100,25 +100,46 @@ def build_set_defaults_block():
             fail_count += 1
             continue
 
+        attr_name = attr_path.split('.')[-1]
+        is_trs = attr_name in (
+            'translate', 'translateX', 'translateY', 'translateZ', 'tx', 'ty', 'tz',
+            'rotate', 'rotateX', 'rotateY', 'rotateZ', 'rx', 'ry', 'rz',
+            'scale', 'scaleX', 'scaleY', 'scaleZ', 'sx', 'sy', 'sz'
+        )
+
         try:
             attr_type = cmds.getAttr(attr_path, type=True)
 
             if attr_type in ('string',):
                 cmds.setAttr(attr_path, value_str, type='string')
             elif attr_type in ('double', 'float', 'long', 'short', 'byte', 'doubleAngle', 'doubleLinear'):
-                cmds.setAttr(attr_path, float(value_str))
+                val = float(value_str)
+                cmds.setAttr(attr_path, val)
+                if not is_trs:
+                    try:
+                        cmds.addAttr(attr_path, edit=True, defaultValue=val)
+                    except Exception:
+                        pass
             elif attr_type in ('bool',):
-                cmds.setAttr(attr_path, bool(int(float(value_str))))
+                val = bool(int(float(value_str)))
+                cmds.setAttr(attr_path, val)
+                if not is_trs:
+                    try:
+                        cmds.addAttr(attr_path, edit=True, defaultValue=val)
+                    except Exception:
+                        pass
             elif attr_type in ('enum',):
+                resolved_val = None
                 try:
                     val = int(float(value_str))
                     cmds.setAttr(attr_path, val)
+                    resolved_val = val
                 except ValueError:
                     # It's a string name (e.g., 'head')
                     # Query the enum options to find the corresponding index
                     node = attr_path.split('.')[0]
-                    attr_name = attr_path.split('.')[-1]
-                    enums_str = cmds.attributeQuery(attr_name, node=node, listEnum=True)[0]
+                    attr_name_only = attr_path.split('.')[-1]
+                    enums_str = cmds.attributeQuery(attr_name_only, node=node, listEnum=True)[0]
                     enum_list = str(enums_str).split(':')
                     
                     found_idx = None
@@ -131,11 +152,12 @@ def build_set_defaults_block():
                                 except ValueError:
                                     found_idx = idx
                             else:
-                                found_idx = idx
+                                    found_idx = idx
                             break
                     
                     if found_idx is not None:
                         cmds.setAttr(attr_path, found_idx)
+                        resolved_val = found_idx
                     else:
                         # Fallback: try case-insensitive comparison
                         for idx, enum_item in enumerate(enum_list):
@@ -152,10 +174,23 @@ def build_set_defaults_block():
                         
                         if found_idx is not None:
                             cmds.setAttr(attr_path, found_idx)
+                            resolved_val = found_idx
                         else:
                             raise ValueError("Enum value '{}' not found in options: {}".format(value_str, enums_str))
+                
+                if resolved_val is not None and not is_trs:
+                    try:
+                        cmds.addAttr(attr_path, edit=True, defaultValue=resolved_val)
+                    except Exception:
+                        pass
             else:
-                cmds.setAttr(attr_path, float(value_str))
+                val = float(value_str)
+                cmds.setAttr(attr_path, val)
+                if not is_trs:
+                    try:
+                        cmds.addAttr(attr_path, edit=True, defaultValue=val)
+                    except Exception:
+                        pass
 
             success_count += 1
         except Exception as e:

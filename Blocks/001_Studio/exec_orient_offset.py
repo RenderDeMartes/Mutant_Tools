@@ -47,6 +47,14 @@ def build_orient_offset_block():
     controls_string = cmds.getAttr('{}.SetControlsList'.format(config), asString=True)
     auto_parent = cmds.getAttr('{}.AutoParentChildren'.format(config))
 
+    hide_orient_attrs = False
+    if cmds.attributeQuery('HideOrientAttrs', node=config, exists=True):
+        hide_orient_attrs = cmds.getAttr('{}.HideOrientAttrs'.format(config))
+
+    lock_orient_attrs = False
+    if cmds.attributeQuery('LockOrientAttrs', node=config, exists=True):
+        lock_orient_attrs = cmds.getAttr('{}.LockOrientAttrs'.format(config))
+
     if not controls_string:
         cmds.warning("No controls defined in SetControlsList.")
         return
@@ -244,5 +252,20 @@ def build_orient_offset_block():
         # This guarantees that the block always stores the latest values and retains them on deletion.
         for attr in ['tx', 'ty', 'tz', 'rx', 'ry', 'rz', 'sx', 'sy', 'sz']:
             cmds.connectAttr('{}.{}'.format(orient_node, attr), '{}.{}_{}'.format(block, safe_ctrl_name, attr), force=True)
+
+        # Hide orient proxy attrs if HideOrientAttrs is on
+        if hide_orient_attrs:
+            cmds.setAttr('{}.ctrlOrient'.format(ctrl), lock=False)
+            cmds.setAttr('{}.ctrlOrient'.format(ctrl), channelBox=False, keyable=False)
+            cmds.setAttr('{}.ctrlOrient'.format(ctrl), lock=True)
+            for prefix in ['orientTranslate', 'orientRotate', 'orientScale']:
+                for axis in ['X', 'Y', 'Z']:
+                    cmds.setAttr('{}.{}{}'.format(ctrl, prefix, axis), channelBox=False, keyable=False)
+
+        # Lock orient proxy attrs if LockOrientAttrs is on
+        if lock_orient_attrs:
+            for prefix in ['orientTranslate', 'orientRotate', 'orientScale']:
+                for axis in ['X', 'Y', 'Z']:
+                    cmds.setAttr('{}.{}{}'.format(ctrl, prefix, axis), lock=True)
                 
     print('Build OrientOffset on controls sucessful')

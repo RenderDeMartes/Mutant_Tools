@@ -517,6 +517,14 @@ class ListResizer(QtWidgets.QFrame):
 				self.target.is_manually_resized = True
 			self.target.setFixedHeight(new_h)
 	def mouseReleaseEvent(self, event):
+		if self._is_resizing:
+			# Persist the code block height so it's remembered across sessions
+			try:
+				from Mutant_Tools.UI.CustomWidgets import codeEditorWidget as _cew
+				if isinstance(self.target, _cew.IDECodeEditor):
+					cmds.optionVar(iv=('mutant_code_block_height', self.target.height()))
+			except:
+				pass
 		self._is_resizing = False
 	def mouseDoubleClickEvent(self, event):
 		if event.button() == QtCore.Qt.LeftButton:
@@ -1052,6 +1060,9 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		self.ui.search_button.setIconSize(QtCore.QSize(14, 14))
 		self.ui.search_button.setStyleSheet("QPushButton { border: none; background: transparent; } QPushButton:hover { background-color: rgba(255, 255, 255, 10); border-radius: 3px; }")
 		self.ui.search_button.setToolTip("Refresh and reset block search")
+
+		# Built-in clear (X) button inside the search field
+		self.ui.search_line.setClearButtonEnabled(True)
 
 		# Setup resizable splitters and wrapping block buttons
 		self._setup_splitter()
@@ -2054,10 +2065,13 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 					list_widget.setSelectionMode(QtWidgets.QAbstractItemView.ExtendedSelection)
 					list_widget.setMinimumHeight(100)
 
-					def add_item_to_list(text, lw=list_widget):
+					def add_item_to_list(text, lw=list_widget, at_top=False):
 						item = QtWidgets.QListWidgetItem(text)
 						item.setFlags(item.flags() | QtCore.Qt.ItemIsEditable)
-						lw.addItem(item)
+						if at_top:
+							lw.insertItem(0, item)
+						else:
+							lw.addItem(item)
 					
 					current_text = cmds.getAttr(edit_attr)
 					if current_text:
@@ -2106,11 +2120,12 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 										replaced = False
 										for idx in range(lw.count()):
 											if lw.item(idx).text().startswith(full + ' ='):
-												lw.item(idx).setText(entry)
+												lw.takeItem(idx)
+												add_item_to_list(entry, at_top=True)
 												replaced = True
 												break
 										if not replaced:
-											add_item_to_list(entry)
+											add_item_to_list(entry, at_top=True)
 										added += 1
 									except:
 										pass
@@ -2128,11 +2143,12 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 								replaced = False
 								for idx in range(lw.count()):
 									if lw.item(idx).text().startswith(s + ' ='):
-										lw.item(idx).setText(entry)
+										lw.takeItem(idx)
+										add_item_to_list(entry, at_top=True)
 										replaced = True
 										break
 								if not replaced:
-									add_item_to_list(entry)
+									add_item_to_list(entry, at_top=True)
 							update_attr_from_list(lw, ea)
 							return
 						
@@ -2143,7 +2159,7 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 							existing.append(lw.item(i).text())
 						for s in sel:
 							if s not in existing:
-								add_item_to_list(s)
+								add_item_to_list(s, at_top=True)
 						update_attr_from_list(lw, ea)
 						
 					def remove_selected_from_list(lw=list_widget, ea=edit_attr):
@@ -2303,6 +2319,11 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 					code_editor.setPlainText(cmds.getAttr('{}.{}'.format(config, attr)))
 					code_editor.set_language('python')
 					code_editor.textChanged.connect(partial(self.lineEdit_update_attr, code_editor, edit_attr))
+					# Restore saved code block height if available
+					if cmds.optionVar(ex='mutant_code_block_height'):
+						saved_h = cmds.optionVar(q='mutant_code_block_height')
+						if saved_h > 50:
+							code_editor.setFixedHeight(saved_h)
 					code_v_layout.addWidget(code_editor)
 					resizer_widget = ListResizer(code_editor)
 					code_v_layout.addWidget(resizer_widget)
