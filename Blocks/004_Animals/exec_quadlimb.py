@@ -107,6 +107,19 @@ def create_quadlimb_block(name = 'QuadLimb'):
 
 #-------------------------
 
+def _orient_chain_compat(root_joint):
+    """Orient a joint chain in a Maya-version-safe way."""
+    if not root_joint or not cmds.objExists(root_joint):
+        return
+
+    cmds.select(root_joint)
+    try:
+        # Keep the same orientation intent without relying on removed MEL flags.
+        cmds.joint(root_joint, e=True, oj='xzy', sao='zup', ch=True, zso=True)
+    except Exception:
+        # Fallback for older environments where cmds.joint edit may differ.
+        mel.eval("joint -e -oj xzy -sao zup -ch -zso;")
+
 def build_quadlimb_block():
 
     nc, curve_data, setup = mt.import_configs()
@@ -134,8 +147,7 @@ def build_quadlimb_block():
 
     if auto_orient:
         mt.orient_joint(input=new_guide)
-        cmds.select(new_guide)
-        mel.eval("joint -e -oj xzy -sao zup -aos -ch -zso;")
+        _orient_chain_compat(new_guide)
         
     # force last joint to orient
     joint_four = cmds.listRelatives(new_guide, ad=True)[-3]
@@ -166,8 +178,7 @@ def build_quadlimb_block():
         cmds.delete(miror_grp)
         if auto_orient:
             mt.orient_joint(input=new_guide)
-            cmds.select(new_guide)
-            mel.eval("joint -e -oj xzy -sao zup -aos -ch -zso;")
+            _orient_chain_compat(new_guide)
 
     elif cmds.getAttr('{}.Mirror'.format(config), asString = True) == 'True':
         right_guide = mt.duplicate_change_names(input = new_guide, hi = True, search=nc['left'], replace =nc['right'])[0]
