@@ -80,6 +80,22 @@ def _build_single_fk_side(name, loc_guide, config, nc, setup, is_mirror_side=Fal
         dict with 'root', 'ctrl', 'jnt', 'bind_jnt', 'rig_grp' keys (values may be None)
     """
 
+    def _resolve_parent_target(attr_name, default_target):
+        """Return a valid parent target from config attr or fallback to default."""
+        target = default_target
+
+        if cmds.attributeQuery(attr_name, node=config, exists=True):
+            custom_target = cmds.getAttr('{}.{}'.format(config, attr_name))
+            if custom_target:
+                if cmds.objExists(custom_target):
+                    target = custom_target
+                else:
+                    cmds.warning('Parent target {} does not exist, falling back to {}'.format(custom_target, default_target))
+        else:
+            cmds.warning('Config attr {} not found on {}, using default {}'.format(attr_name, config, default_target))
+
+        return target
+
     ctrl = mt.curve(input = loc_guide, type = cmds.getAttr('{}.CtrlType'.format(config), asString=True), rename = True,
                                        custom_name = True, name = name + nc['ctrl'],
                                        size = cmds.getAttr('{}.CtrlSize'.format(config)))
@@ -96,8 +112,12 @@ def _build_single_fk_side(name, loc_guide, config, nc, setup, is_mirror_side=Fal
     if is_mirror_side:
         root = mt.mirror_group(root, world=True)
 
-    try:cmds.parent(root, cmds.getAttr('{}.SetCtrlParent'.format(config)))
-    except:pass
+    default_ctrl_parent = '{}{}'.format(setup['main_ctrl_grp'], nc['group'])
+    ctrl_parent_target = _resolve_parent_target('SetCtrlParentHierarchy', default_ctrl_parent)
+    if cmds.objExists(ctrl_parent_target):
+        cmds.parent(root, ctrl_parent_target)
+    else:
+        cmds.warning('Could not parent {}. Missing target {}'.format(root, ctrl_parent_target))
 
     #create orientation offset above ctrl if enabled
     orient_name = None
@@ -296,10 +316,14 @@ def _build_single_fk_side(name, loc_guide, config, nc, setup, is_mirror_side=Fal
         cmds.xform(jnt, ws=True, ro=guide_rot)
 
         clean_rig_grp = cmds.group(em=True, name=name + '_Rig' + nc['group'])
-        cmds.parent(clean_rig_grp, '{}{}'.format(setup['rig_groups']['misc'], nc['group']))
-        try:
-            cmds.parent(jnt, clean_rig_grp)
-        except:pass
+        default_joint_parent = '{}{}'.format(setup['rig_groups']['misc'], nc['group'])
+        joint_parent_target = _resolve_parent_target('SetJointParentHierarchy', default_joint_parent)
+        if cmds.objExists(joint_parent_target):
+            cmds.parent(clean_rig_grp, joint_parent_target)
+        else:
+            cmds.warning('Could not parent {}. Missing target {}'.format(clean_rig_grp, joint_parent_target))
+
+        cmds.parent(jnt, clean_rig_grp)
 
         #parent to ctrl or gimbal, or driven if offset active
         has_offset = cmds.attributeQuery('CtrlOrientOffset', node=config, exists=True) and cmds.getAttr('{}.CtrlOrientOffset'.format(config))

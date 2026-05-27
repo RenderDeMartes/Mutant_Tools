@@ -82,9 +82,7 @@ def _create_follicles(surface_transform, count, walk_axis, prefix, nc):
 
     follicles = []
     for i in range(count):
-        # Centre each follicle in the middle of its span zone so it is as far as
-        # possible from knot boundaries, where surface tangents are least stable.
-        t = (i + 0.5) / float(count)
+        t = i / float(count)
 
         if walk_axis.lower() == 'u':
             u_val, v_val = t, 0.5
@@ -166,8 +164,7 @@ def create_ribbon_tweakers_block(name='RibbonTweakers'):
 
     guide_name = '{}{}'.format(name, nc['guide'])
     guide_surface = mel.eval(
-        'cylinder -p 0 0 0 -ax 0 1 0 -ssw 0 -esw 360 -r 1 -hr 2 -d 3 -ut 0 -tol 0.01 -s {} -nsp {} -ch 1 -n "{}";'.format(
-            joints_count,
+        'cylinder -p 0 0 0 -ax 0 1 0 -ssw 0 -esw 360 -r 1 -hr 2 -d 3 -ut 0 -tol 0.01 -s {} -nsp 1 -ch 1 -n "{}";'.format(
             joints_count,
             guide_name)
     )[0]
@@ -233,20 +230,6 @@ def build_ribbon_tweakers_block():
     runtime_surface = cmds.duplicate(source_surface, n=runtime_surface_name)[0]
     cmds.parent(runtime_surface, clean_rig_grp)
 
-    # Rebuild the runtime surface to have one span per follicle zone.
-    # This ensures follicles are always placed in the interior of a span (not at
-    # a knot boundary) and gives the surface enough topology to compute stable
-    # normals even when the surface deforms.  Shape is preserved because we
-    # rebuild to a higher-resolution uniform parameterisation.
-    rebuild_spans = max(4, count)
-    cmds.rebuildSurface(
-        runtime_surface,
-        rebuildType=0, endKnots=1, keepRange=0,
-        keepControlPoints=False,
-        spansU=rebuild_spans, spansV=rebuild_spans,
-        degreeU=3, degreeV=3, ch=False
-    )
-
     follicle_prefix = '{}_Twk'.format(name)
     fol_grp, follicles = _create_follicles(runtime_surface, count, walk_axis, follicle_prefix, nc)
     cmds.parent(fol_grp, clean_rig_grp)
@@ -286,7 +269,8 @@ def build_ribbon_tweakers_block():
         ctrl_roots = mt.root_grp(input=ctrl, autoRoot=True)
         ctrl_root = ctrl_roots[0]
 
-        cmds.parentConstraint(fol, ctrl_root, mo=False)
+        cmds.delete(cmds.parentConstraint(fol, ctrl_root, mo=False))
+        cmds.parentConstraint(fol, ctrl_root, mo=True)
 
         pending_ctrl_roots.append((ctrl_root, ctrl_roots, fol, do_flip))
 
@@ -318,9 +302,7 @@ def build_ribbon_tweakers_block():
                     cmds.delete(con)
                 cmds.delete(cmds.parentConstraint(left_ctrl_root, ctrl_root, mo=False))
                 ctrl_root = mt.mirror_group(ctrl_root, world=True)
-                # Constrain the outermost mirror_grp — not the inner ctrl_root inside
-                # a scale(-1) parent, which caused the original instability.
-                cmds.parentConstraint(fol, ctrl_root, mo=True)
+                cmds.parentConstraint(fol, ctrl_roots[0], mo=True)
             else:
                 ctrl_root = mt.mirror_group(ctrl_root, world=False)
         cmds.parent(ctrl_root, clean_ctrl_grp)
@@ -336,6 +318,8 @@ def build_ribbon_tweakers_block():
     if cmds.objExists(block_parent):
         cmds.parentConstraint(block_parent, clean_ctrl_grp, mo=True)
         cmds.scaleConstraint(block_parent, clean_ctrl_grp, mo=True)
+
+    mel.eval(f'rebuildSurface -ch 0 -rpo 1 -rt 0 -end 1 -kr 0 -kcp 0 -kc 0 -su 2 -du 3 -sv 48 -dv 3 -tol 0.01 -fr 0  -dir 2 "{runtime_surface_name}";')
 
     print('Build {} Success'.format(block))
 
