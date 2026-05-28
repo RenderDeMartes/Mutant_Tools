@@ -90,7 +90,7 @@ def build_eyes_block():
     if nc['left'] in name:
         name = name.replace(nc['left'], '')
     if nc['right'] in name:
-        name = name.replace(nc['left'], '')
+        name = name.replace(nc['right'], '')
 
     #use this locator in case parent is set to new locator
     if cmds.getAttr('{}.SetParent'.format(config)) == 'new_locator':
@@ -116,15 +116,21 @@ def build_eyes_block():
 
 
 
-    right_guide = mt.duplicate_change_names(input = new_guide, hi = True, search=nc['left'], replace =nc['right'])[0]
-    cmds.delete(cmds.parentConstraint(cmds.listRelatives(new_guide,c=True)[0],
-                          cmds.listRelatives(right_guide,c=True)[0],
-                          main_eye_root))
-    cmds.setAttr(main_eye_root+'.translateX', 0)
+    right_guide = None
     if eyes_amount == 'Two':
+        # Build the right rig directly on the right side (no mirrored rig group).
+        right_guide = cmds.mirrorJoint(new_guide, mirrorYZ=True, mirrorBehavior=True,
+                                       searchReplace=(nc['left'], nc['right']))[0]
+        cmds.delete(cmds.pointConstraint(cmds.listRelatives(new_guide, c=True)[0],
+                             cmds.listRelatives(right_guide, c=True)[0],
+                             main_eye_root))
+        cmds.setAttr(main_eye_root + '.translateX', 0)
         to_build.append(right_guide)
-    else:
-        cmds.delete(right_guide)
+
+    # Keep the main eye offset world-oriented.
+    cmds.setAttr(main_eye_root + '.rotateX', 0)
+    cmds.setAttr(main_eye_root + '.rotateY', 0)
+    cmds.setAttr(main_eye_root + '.rotateZ', 0)
 
 
     eyes_ctrls = []
@@ -158,19 +164,18 @@ def build_eyes_block():
 
         rig_group = cmds.group(aim_ik[0], side_guide, n = name+'Eye'+nc['group'])
 
-        #mirror system
+        # Mirror only the controller hierarchy for the right side.
         if eyes_amount == 'Two':
             if str(side_guide).startswith(nc['right']) :
-                eye_ctrl_root = mt.mirror_group(eye_ctrl_root, world = True)
-                rig_group = mt.mirror_group(rig_group, world = True)
+                eye_ctrl_root = mt.mirror_group(eye_ctrl_root, world = False)
 
         cmds.parent(eye_ctrl_root, main_eye_ctrl)
         eyes_root.append(eye_ctrl_root)
 
         clean_rig_grps.append(rig_group)
 
-        #parent Ctrl to Ik
-        cmds.parentConstraint(eye_ctrl, aim_ik[0], mo=True)
+        # Keep IK handle translation-only to avoid mirrored rotation instability.
+        cmds.pointConstraint(eye_ctrl, aim_ik[0], mo=True)
 
 
     #clean a bit
@@ -185,7 +190,7 @@ def build_eyes_block():
 
     for jnt in to_build:
         cmds.parentConstraint(block_parent, jnt, mo=-True)
-    cmds.parentConstraint(block_parent, main_eye_root, mo=True)
+    cmds.pointConstraint(block_parent, main_eye_root, mo=True)
 
     #Bind joints
     bind_jnt_grp = '{}{}'.format(setup['rig_groups']['bind_joints'], nc['group'])
@@ -212,6 +217,12 @@ def build_eyes_block():
     ctrl = main_eye_ctrl
     offset = main_eye_root
     root, auto = mt.root_grp(input=ctrl, autoRoot=True)
+    cmds.setAttr(root + '.rotateX', 0)
+    cmds.setAttr(root + '.rotateY', 0)
+    cmds.setAttr(root + '.rotateZ', 0)
+    cmds.setAttr(auto + '.rotateX', 0)
+    cmds.setAttr(auto + '.rotateY', 0)
+    cmds.setAttr(auto + '.rotateZ', 0)
 
 
 
