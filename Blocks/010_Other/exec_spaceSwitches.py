@@ -77,23 +77,30 @@ def build_spaceSwitches_block():
     if cmds.attributeQuery('SplitTranslateRotate', n=config, exists=True):
         split_tr = cmds.getAttr('{}.SplitTranslateRotate'.format(config))
 
-    def constrain(source, target):
+    # get maintain offset toggle (default on for backward compatibility)
+    maintain_offset = True
+    if cmds.attributeQuery('MaintainOffset', n=config, exists=True):
+        maintain_offset = cmds.getAttr('{}.MaintainOffset'.format(config))
+    
+    print("WILL BUILD WITH MAINTAIN OFFSET SET TO : {}".format(maintain_offset))
+
+    def constrain(source, target, mo=True):
         if translate and rotate:
-            pc = cmds.parentConstraint(source, target, mo=1)[0]
+            pc = cmds.parentConstraint(source, target, mo=mo)[0]
             cmds.setAttr('{}.interpType'.format(pc), 2)
             return pc
         elif translate:
-            return cmds.pointConstraint(source, target, mo=1)[0]
+            return cmds.pointConstraint(source, target, mo=mo)[0]
         elif rotate:
-            oc = cmds.orientConstraint(source, target, mo=1)[0]
+            oc = cmds.orientConstraint(source, target, mo=mo)[0]
             cmds.setAttr('{}.interpType'.format(oc), 2)
             return oc
 
-    def constrain_translate(source, target):
-        return cmds.pointConstraint(source, target, mo=1)[0]
+    def constrain_translate(source, target, mo=True):
+        return cmds.pointConstraint(source, target, mo=mo)[0]
 
-    def constrain_rotate(source, target):
-        oc = cmds.orientConstraint(source, target, mo=1)[0]
+    def constrain_rotate(source, target, mo=True):
+        oc = cmds.orientConstraint(source, target, mo=mo)[0]
         cmds.setAttr('{}.interpType'.format(oc), 2)
         return oc
 
@@ -190,9 +197,9 @@ def build_spaceSwitches_block():
                 t_loc = cmds.spaceLocator(n=space_short+'_'+block+'_T'+nc['locator'])[0]
                 cmds.delete(cmds.parentConstraint(target_ctrl, t_loc))
                 t_loc = cmds.parent(t_loc, spaces_grp)[0]
-                cmds.parentConstraint(space, t_loc, mo=True)
+                cmds.parentConstraint(space, t_loc, mo=maintain_offset)
 
-                c_t = constrain_translate(t_loc, auto_grp_t)
+                c_t = constrain_translate(t_loc, auto_grp_t, maintain_offset)
 
                 cond_t = cmds.shadingNode('condition', asUtility=True, n=block+space_short+'_T'+nc['condition'])
                 cmds.setAttr('{}.operation'.format(cond_t), 0)
@@ -206,9 +213,9 @@ def build_spaceSwitches_block():
                 r_loc = cmds.spaceLocator(n=space_short+'_'+block+'_R'+nc['locator'])[0]
                 cmds.delete(cmds.parentConstraint(target_ctrl, r_loc))
                 r_loc = cmds.parent(r_loc, spaces_grp)[0]
-                cmds.parentConstraint(space, r_loc, mo=True)
+                cmds.parentConstraint(space, r_loc, mo=maintain_offset)
 
-                c_r = constrain_rotate(r_loc, auto_grp_r)
+                c_r = constrain_rotate(r_loc, auto_grp_r, maintain_offset)
 
                 cond_r = cmds.shadingNode('condition', asUtility=True, n=block+space_short+'_R'+nc['condition'])
                 cmds.setAttr('{}.operation'.format(cond_r), 0)
@@ -263,9 +270,9 @@ def build_spaceSwitches_block():
                 cmds.delete(cmds.parentConstraint(target_ctrl, space_loc))
 
                 space_loc = cmds.parent(space_loc, spaces_grp)[0]
-                cmds.parentConstraint(space, space_loc, mo=True)
+                cmds.parentConstraint(space, space_loc, mo=maintain_offset)
 
-                c = constrain(space_loc, auto_grp)
+                c = constrain(space_loc, auto_grp, maintain_offset)
 
                 condition_node = cmds.shadingNode('condition', asUtility=True, n=block+space_short+nc['condition'])
                 cmds.setAttr('{}.operation'.format(condition_node), 0)
