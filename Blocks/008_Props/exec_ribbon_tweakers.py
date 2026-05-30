@@ -290,8 +290,34 @@ def build_ribbon_tweakers_block():
         cmds.parentConstraint(rig_joint, bind_joint, mo=False)
         cmds.scaleConstraint(rig_joint, bind_joint, mo=True)
 
+        cmds.select(cl=True)
+        tick_bind = cmds.joint(n=bind_joint.replace(nc['joint_bind'], nc['joint_bind'] + '_Tick'))
+        cmds.delete(cmds.parentConstraint(rig_joint, tick_bind, mo=False))
+        cmds.setAttr('{}.segmentScaleCompensate'.format(tick_bind), 0)
+        cmds.setAttr('{}.inheritsTransform'.format(tick_bind), 0)
+
+        # --- Thickness attrs on ctrl ---
+        if not cmds.attributeQuery('Tick', n=ctrl, exists=True):
+            cmds.addAttr(ctrl, ln='Tick', nn='---- Tick ----', at='enum', en='-------:', k=True)
+            cmds.setAttr('{}.Tick'.format(ctrl), lock=True)
+        for axis in ('X', 'Y', 'Z'):
+            attr = 'Tick{}'.format(axis)
+            if not cmds.attributeQuery(attr, n=ctrl, exists=True):
+                cmds.addAttr(ctrl, ln=attr, at='float', dv=1.0, k=True)
+
+        # Thickness driver group parented under ctrl
+        tick_driver = cmds.group(em=True, n='{}_TickDriver'.format(custom_base))
+        cmds.delete(cmds.parentConstraint(ctrl, tick_driver, mo=False))
+        cmds.parent(tick_driver, ctrl)
+        for axis in ('X', 'Y', 'Z'):
+            cmds.connectAttr('{}.Tick{}'.format(ctrl, axis), '{}.scale{}'.format(tick_driver, axis), force=True)
+
+        cmds.parentConstraint(tick_driver, tick_bind, mo=False)
+        cmds.scaleConstraint(tick_driver, tick_bind, mo=True)
+
         if cmds.objExists(bind_jnt_grp):
             cmds.parent(bind_joint, bind_jnt_grp)
+            cmds.parent(tick_bind, bind_jnt_grp)
 
     # Pass 2: parent ctrl roots. Right-side ctrls get a mirror group (world=False)
     # but with all scale values forced back to 1 so no negative scale inherits down.
