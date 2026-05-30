@@ -293,19 +293,18 @@ def build_ribbon_tweakers_block():
         if cmds.objExists(bind_jnt_grp):
             cmds.parent(bind_joint, bind_jnt_grp)
 
-    # Pass 2: flip right-side ctrls now that all left-side ctrls exist, then parent.
+    # Pass 2: parent ctrl roots. Right-side ctrls get a mirror group (world=False)
+    # but with all scale values forced back to 1 so no negative scale inherits down.
+    # The rotateX=180 on the mirror group provides the orientation flip.
     for ctrl_root, ctrl_roots, fol, do_flip in pending_ctrl_roots:
         if do_flip:
-            left_ctrl_root = ctrl_root.replace(nc['right'], nc['left'])
-            if cmds.objExists(left_ctrl_root):
-                for con in (cmds.listRelatives(ctrl_root, type='parentConstraint') or []):
-                    cmds.delete(con)
-                cmds.delete(cmds.parentConstraint(left_ctrl_root, ctrl_root, mo=False))
-                ctrl_root = mt.mirror_group(ctrl_root, world=True)
-                cmds.parentConstraint(fol, ctrl_roots[0], mo=True)
-            else:
-                ctrl_root = mt.mirror_group(ctrl_root, world=False)
-        cmds.parent(ctrl_root, clean_ctrl_grp)
+            mirror_grp = mt.mirror_group(ctrl_root, world=False)
+            cmds.setAttr('{}.scaleX'.format(mirror_grp), 1)
+            cmds.setAttr('{}.scaleY'.format(mirror_grp), 1)
+            cmds.setAttr('{}.scaleZ'.format(mirror_grp), 1)
+            cmds.parent(mirror_grp, clean_ctrl_grp)
+        else:
+            cmds.parent(ctrl_root, clean_ctrl_grp)
 
     misc_grp = '{}{}'.format(setup['rig_groups']['misc'], nc['group'])
     ctrl_base_grp = '{}{}'.format(setup['base_groups']['control'], nc['group'])
