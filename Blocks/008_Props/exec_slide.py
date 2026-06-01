@@ -133,7 +133,9 @@ def build_slide_block():
         # Build position locator from this side guide
         position_locator = cmds.spaceLocator(n=side_name + 'SlideAim' + nc['locator'])[0]
         position_locator_root, position_locator_auto = mt.root_grp(input=position_locator, autoRoot=True)
-        cmds.delete(cmds.parentConstraint(side_guide, position_locator_root))
+        cmds.delete(cmds.parentConstraint(guide, position_locator_root))
+        if side_guide.startswith(nc['right']):
+            mirror_position_locator_root = mt.mirror_group(input=position_locator_root, world=True)
 
         if slide_surface == 'new_plane':
             slide_surface = cmds.nurbsPlane(n=side_name + nc['nurb'])[0]
@@ -250,7 +252,10 @@ def build_slide_block():
         # position_locator_root follows block_pareant via clean_rig_grp constraint.
         # driver_locator is intentionally kept OUT of clean_rig_grp so the constraint
         # does not move it – its world position comes entirely from node_dcm.
-        cmds.parent(position_locator_root, clean_rig_grp)
+        if side_guide.startswith(nc['right']):
+            cmds.parent(mirror_position_locator_root, clean_rig_grp)
+        else:
+            cmds.parent(position_locator_root, clean_rig_grp)
 
         cmds.parentConstraint(block_parent, clean_ctrl_grp, mo=True)
         cmds.parentConstraint(block_parent, clean_rig_grp,  mo=True)
