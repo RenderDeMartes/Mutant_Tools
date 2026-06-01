@@ -1055,9 +1055,41 @@ class KanbanCardWidget(QFrame):
         self._drag_start = None
         super(KanbanCardWidget, self).mouseReleaseEvent(event)
 
+    # ------------------------------------------------------------------
+    # Context menu — right-click PDF export
 
-# ========================================================
-# COLUMN DROP AREA
+    def contextMenuEvent(self, event):
+        try:
+            import importlib; from importlib import reload
+        except ImportError:
+            import imp; from imp import reload
+
+        from Mutant_Tools.UI.Kanban.Utils import kanban_pdf
+        reload(kanban_pdf)
+
+        menu = QtWidgets.QMenu(self)
+        menu.setStyleSheet(
+            'QMenu { background:#2b2b2b; color:#e0e0e0; border:1px solid #555; }'
+            'QMenu::item:selected { background:#3a6ea5; }'
+            'QMenu::separator { height:1px; background:#444; margin:3px 0; }'
+        )
+
+        act_card = menu.addAction('Export This Card to PDF')
+        act_col  = menu.addAction(
+            'Export Column "{}" to PDF'.format(self.column_name))
+        menu.addSeparator()
+        act_all  = menu.addAction('Export All Cards to PDF')
+
+        action = menu.exec_(event.globalPos())
+
+        if action == act_card:
+            kanban_pdf.export_card_to_pdf(self.node)
+        elif action == act_col:
+            kanban_pdf.export_column_to_pdf(self.column_name)
+        elif action == act_all:
+            kanban_pdf.export_all_to_pdf()
+
+
 # ========================================================
 
 class ColumnDropArea(QWidget):
