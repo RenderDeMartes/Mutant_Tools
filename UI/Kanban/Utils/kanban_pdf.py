@@ -70,7 +70,7 @@ def _img_data_uri(encoded):
 # Card HTML
 
 def _card_html(data):
-    """Return the HTML table block for one card (light theme)."""
+    """Return the HTML table block for one card (dark theme)."""
     title       = _esc(data.get('title', 'Untitled'))
     notes       = _esc(data.get('notes', ''))
     priority    = int(data.get('priority', 1))
@@ -102,7 +102,7 @@ def _card_html(data):
         notes_display = notes.replace('&#10;', '<br>').replace('\n', '<br>')
         notes_block = (
             '<tr><td colspan="2" style="padding:0 12px 6px 14px;">'
-            '<span style="font-size:11px;color:#555555;">{}</span>'
+            '<span style="font-size:11px;color:#b0b8c8;">{}</span>'
             '</td></tr>'.format(notes_display)
         )
 
@@ -112,7 +112,7 @@ def _card_html(data):
         pills = ''
         for t in (t.strip() for t in tags_raw.split(',') if t.strip()):
             pills += (
-                '<span style="background:#ddeeff;color:#2255aa;'
+                '<span style="background:#1a3a5c;color:#7ab4e0;'
                 'padding:2px 7px;font-size:9px;margin-right:3px;">'
                 '{}</span>'.format(_esc(t))
             )
@@ -127,9 +127,9 @@ def _card_html(data):
     if camera:
         meta_rows += (
             '<tr>'
-            '<td style="width:90px;font-size:9px;color:#888888;'
+            '<td style="width:90px;font-size:9px;color:#667788;'
             'padding:2px 4px 2px 0;">Camera</td>'
-            '<td style="font-size:9px;color:#444444;padding:2px 0;">{cam}</td>'
+            '<td style="font-size:9px;color:#99aabb;padding:2px 0;">{cam}</td>'
             '</tr>'.format(cam=camera)
         )
     if time_slider:
@@ -139,17 +139,17 @@ def _card_html(data):
             frame_label = time_slider
         meta_rows += (
             '<tr>'
-            '<td style="width:90px;font-size:9px;color:#888888;'
+            '<td style="width:90px;font-size:9px;color:#667788;'
             'padding:2px 4px 2px 0;">Time Slider</td>'
-            '<td style="font-size:9px;color:#444444;padding:2px 0;">{f}</td>'
+            '<td style="font-size:9px;color:#99aabb;padding:2px 0;">{f}</td>'
             '</tr>'.format(f=frame_label)
         )
     if cam_xform:
         meta_rows += (
             '<tr>'
-            '<td style="width:90px;font-size:9px;color:#888888;'
+            '<td style="width:90px;font-size:9px;color:#667788;'
             'padding:2px 4px 4px 0;vertical-align:top;">Cam Matrix</td>'
-            '<td style="font-size:8px;color:#aaaaaa;padding:2px 0;'
+            '<td style="font-size:8px;color:#556677;padding:2px 0;'
             'word-break:break-all;">{xf}</td>'
             '</tr>'.format(xf=_esc(cam_xform))
         )
@@ -157,7 +157,7 @@ def _card_html(data):
     if meta_rows:
         meta_block = (
             '<tr><td colspan="2" style="padding:4px 12px 4px 14px;'
-            'border-top:1px solid #eaeaea;">'
+            'border-top:1px solid #2e3a4a;">'
             '<table cellspacing="0" cellpadding="0" width="100%">{}</table>'
             '</td></tr>'.format(meta_rows)
         )
@@ -166,23 +166,21 @@ def _card_html(data):
     footer_block = ''
     if user or date:
         footer_block = (
-            '<tr><td colspan="2" style="font-size:9px;color:#999999;'
-            'border-top:1px solid #e0e0e0;padding:5px 12px 8px 14px;">'
+            '<tr><td colspan="2" style="font-size:9px;color:#556677;'
+            'border-top:1px solid #2e3a4a;padding:5px 12px 8px 14px;">'
             '{user} &nbsp;&middot;&nbsp; {date}'
             '</td></tr>'.format(user=user, date=date)
         )
 
     return '''
 <table width="100%" cellspacing="0" cellpadding="0"
- style="background:#f8f9fb;border:1px solid #dde0e8;margin-bottom:8px;">
+ style="background:#252d3a;border:1px solid #2e3a4a;border-left:4px solid {p_color};margin-bottom:8px;">
   <tr>
-    <!-- priority stripe -->
-    <td width="5" bgcolor="{p_color}" style="background:{p_color};">&nbsp;</td>
     <!-- header row (title + badge) -->
     <td style="padding:10px 12px 6px 14px;">
       <table width="100%" cellspacing="0" cellpadding="0">
         <tr>
-          <td style="font-size:13px;font-weight:bold;color:#1a1a2e;">{title}</td>
+          <td style="font-size:13px;font-weight:bold;color:#e8edf4;">{title}</td>
           <td align="right" width="56">
             <span style="background:{p_color};color:#ffffff;
                          font-size:9px;font-weight:bold;padding:2px 7px;">
@@ -282,7 +280,7 @@ def _build_html(columns_items, scene_name=''):
                 body += _card_html(card)
         else:
             body += (
-                '<p style="color:#aaaaaa;font-size:10px;'
+                '<p style="color:#556677;font-size:10px;'
                 'font-style:italic;margin:2px 0 10px 8px;">'
                 'No cards in this column.</p>'
             )
@@ -291,18 +289,18 @@ def _build_html(columns_items, scene_name=''):
 
     # Page-number note at the very end
     body += (
-        '<p style="font-size:9px;color:#bbbbbb;text-align:center;'
-        'margin-top:20px;border-top:1px solid #e0e0e0;padding-top:8px;">'
+        '<p style="font-size:9px;color:#445566;text-align:center;'
+        'margin-top:20px;border-top:1px solid #2e3a4a;padding-top:8px;">'
         'Generated by Mutant Tools &nbsp;&middot;&nbsp; mutanttools.com'
         '</p>'
     )
 
     return (
         '<!DOCTYPE html><html><head><meta charset="UTF-8">'
-        '<style>body{{font-family:Arial,Helvetica,sans-serif;'
-        'color:#333333;background:#ffffff;font-size:12px;}}'
+        '<style>html,body{{font-family:Arial,Helvetica,sans-serif;'
+        'color:#c8d4e0;background:#1a2130;font-size:12px;margin:0;padding:0;}}'
         'p{{margin:2px 0;}}</style>'
-        '</head><body>{}</body></html>'.format(body)
+        '</head><body style="background:#1a2130;">{}</body></html>'.format(body)
     )
 
 
@@ -318,7 +316,7 @@ def _get_printer():
         p.setOutputFormat(QPrinter.PdfFormat)
         try:
             p.setPageSize(QPageSize(QPageSize.A4))
-            p.setPageMargins(QtCore.QMarginsF(12, 12, 12, 12),
+            p.setPageMargins(QtCore.QMarginsF(0, 0, 0, 0),
                              QPageLayout.Millimeter)
         except Exception:
             pass
@@ -332,7 +330,7 @@ def _get_printer():
         p.setOutputFormat(QPrinter.PdfFormat)
         try:
             p.setPageSize(QPrinter.A4)
-            p.setPageMargins(12, 12, 12, 12, QPrinter.Millimeter)
+            p.setPageMargins(0, 0, 0, 0, QPrinter.Millimeter)
         except Exception:
             pass
         return p
@@ -384,11 +382,30 @@ def _column_for_node(node):
 # -------------------------------------------------------
 # File dialog
 
+def _scene_dir():
+    """Return the directory of the current scene, or ~ as fallback."""
+    full = cmds.file(q=True, sn=True) or ''
+    if full:
+        d = os.path.dirname(full)
+        if d and os.path.isdir(d):
+            return d
+    return os.path.expanduser('~')
+
+
+def _scene_prefix():
+    """Return a filesystem-safe scene name prefix like 'myScene_'."""
+    raw = cmds.file(q=True, sn=True, shortName=True) or ''
+    name = os.path.splitext(raw)[0]  # strip .ma / .mb
+    import re as _re
+    safe = _re.sub(r'[^A-Za-z0-9_-]', '_', name).strip('_')
+    return (safe + '_') if safe else ''
+
+
 def _ask_save_path(default='kanban_export'):
     path, _ = QtWidgets.QFileDialog.getSaveFileName(
         None,
         'Export Kanban to PDF',
-        os.path.expanduser('~/{}.pdf'.format(default)),
+        os.path.join(_scene_dir(), '{}.pdf'.format(default)),
         'PDF Files (*.pdf)',
     )
     return path or ''
@@ -405,7 +422,7 @@ def export_card_to_pdf(node):
         return
 
     title_safe = str(data.get('title', 'card')).replace(' ', '_')
-    path = _ask_save_path(default='kanban_{}'.format(title_safe))
+    path = _ask_save_path(default='{}kanban_{}'.format(_scene_prefix(), title_safe))
     if not path:
         return
 
@@ -423,7 +440,7 @@ def export_column_to_pdf(column_name):
     cards = [c for c in (kanban_util.get_note_data(n) for n in nodes) if c]
 
     path = _ask_save_path(
-        default='kanban_{}'.format(column_name.replace(' ', '_')))
+        default='{}kanban_{}'.format(_scene_prefix(), column_name.replace(' ', '_')))
     if not path:
         return
 
@@ -444,7 +461,7 @@ def export_all_to_pdf():
         cards = [c for c in (kanban_util.get_note_data(n) for n in nodes) if c]
         items.append((col, cards))
 
-    path = _ask_save_path(default='kanban_full_export')
+    path = _ask_save_path(default='{}kanban_full_export'.format(_scene_prefix()))
     if not path:
         return
 
