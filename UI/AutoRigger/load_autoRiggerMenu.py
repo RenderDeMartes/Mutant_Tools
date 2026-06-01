@@ -189,6 +189,9 @@ class AutoRiggerMenu(QtWidgets.QDialog):
 		self.fileMenu = QtWidgets.QMenu(self)
 		self.fileMenu.setTitle("File")
 
+		self.kanban_board = self.fileMenu.addAction("Kanban Board")
+		self.fileMenu.addSeparator()
+
 		# Guides submenu
 		self.guidesMenu = QtWidgets.QMenu("Guides", self)
 		self.fileMenu.addMenu(self.guidesMenu)
@@ -237,7 +240,6 @@ class AutoRiggerMenu(QtWidgets.QDialog):
 		self.dev_reload = self.fileMenu.addAction("Reload Blocks")
 		self.update_all_blocks = self.fileMenu.addAction("Update All Blocks")
 
-		# Settings submenu
 		self.settingsMenu = QtWidgets.QMenu("Settings", self)
 		self.fileMenu.addMenu(self.settingsMenu)
 
@@ -357,6 +359,10 @@ class AutoRiggerMenu(QtWidgets.QDialog):
 		#Dev Mode
 		self.toggle_dev.triggered.connect(lambda: mt.toggle_dev_mode())
 
+		#Kanban Board
+		self.kanban_board.triggered.connect(self._open_kanban)
+
+
 		#Visual Build
 		self.visual_build.toggled.connect(lambda state: cmds.optionVar(intValue=("mutant_visual_build", state)))
 
@@ -385,6 +391,21 @@ class AutoRiggerMenu(QtWidgets.QDialog):
 				return
 			parent = parent.parent()
 		cmds.warning('Could not find Mutant main window to toggle window mode.')
+
+	# -------------------------------------------------------------------
+	def _open_kanban(self, *args):
+		try:
+			import importlib;from importlib import reload
+		except:
+			import imp;from imp import reload
+		from Mutant_Tools.UI.Kanban import load_kanban
+		reload(load_kanban)
+		try:
+			self._cKanbanUI.close()
+		except:
+			pass
+		self._cKanbanUI = load_kanban.KanbanUI()
+		self._cKanbanUI.show()
 
 	# -------------------------------------------------------------------
 	def set_mutant_hotkeys(self, *args):

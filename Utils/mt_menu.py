@@ -313,6 +313,24 @@ def games(*args):
     cGamesCrowds.show()
     cGamesCrowds.ui.tabWidget.setCurrentIndex(2)
 
+def open_kanban(*args):
+    try:
+        import importlib;from importlib import reload
+    except:
+        import imp;from imp import reload
+
+    import Mutant_Tools
+    from Mutant_Tools.UI.Kanban import load_kanban
+    reload(load_kanban)
+
+    try:
+        cKanbanUI.close()
+    except:
+        pass
+    cKanbanUI = load_kanban.KanbanUI()
+    cKanbanUI.show()
+
+
 def helpers(*args):
     import Mutant_Tools.UI
 
@@ -381,7 +399,9 @@ def create_mutant_menu(*args):
 
                     },
 
-            "Misc" : {"Zombinator" : zombinator,
+            "Misc" : {"Kanban Board" : open_kanban,
+                      "Line_misc" : '',
+                      "Zombinator" : zombinator,
                       "ROM" : ROM,
                       "Scene Shelves" : shelves,
                     },
