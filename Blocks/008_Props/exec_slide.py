@@ -97,7 +97,7 @@ def build_slide_block():
     if mirror_mode == 'Right_Only':
         # Convert the source guide into right side while preserving mirror behavior.
         miror_grp = mt.mirror_group(new_guide, world=True)
-        cmds.makeIdentity(miror_grp, a=True, t=True, r=True, s=True)
+        #cmds.makeIdentity(miror_grp, a=True, t=True, r=True, s=True)
         cmds.parent(new_guide, w=True)
         cmds.delete(miror_grp)
         try:
@@ -111,7 +111,7 @@ def build_slide_block():
         right_guide = mt.duplicate_change_names(input=new_guide, hi=True, search=nc['left'], replace=nc['right'])[0]
         # Mirror the right guide's world position to the right side (same as Right_Only does).
         right_mirror_grp = mt.mirror_group(right_guide, world=True)
-        cmds.makeIdentity(right_mirror_grp, a=True, t=True, r=True, s=True)
+        #cmds.makeIdentity(right_mirror_grp, a=True, t=True, r=True, s=True)
         cmds.parent(right_guide, w=True)
         cmds.delete(right_mirror_grp)
         to_build.append(right_guide)
