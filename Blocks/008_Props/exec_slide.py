@@ -161,8 +161,10 @@ def build_slide_block():
                               name=side_name + nc['ctrl'],
                               size=size)
         mt.assign_color(color=color)
-        cmds.delete(cmds.parentConstraint(position_locator, slide_ctrl))
+        cmds.delete(cmds.parentConstraint(guide, slide_ctrl))
         slide_ctrl_root, slide_ctrl_auto = mt.root_grp(input=slide_ctrl, autoRoot=True)
+        if side_guide.startswith(nc['right']):
+            mirror_slide_ctrl_root = mt.mirror_group(input=slide_ctrl_root, world=True)
         mt.hide_attr(input=slide_ctrl, s=True, r=True)
 
         # if mirror_mode in ('True', 'Right_Only') and is_right_side:
@@ -239,9 +241,13 @@ def build_slide_block():
         clean_rig_grp  = cmds.group(n=side_name + '_Rig'  + nc['group'], em=True)
         clean_ctrl_grp = cmds.group(n=side_name + '_Ctrl' + nc['group'], em=True)
 
-        cmds.parent(slide_ctrl_root, clean_ctrl_grp)
+        if side_guide.startswith(nc['right']):
+            cmds.parent(mirror_slide_ctrl_root, clean_ctrl_grp)
+        else:
+            cmds.parent(slide_ctrl_root, clean_ctrl_grp)
 
-        # position_locator_root follows block_parent via clean_rig_grp constraint.
+
+        # position_locator_root follows block_pareant via clean_rig_grp constraint.
         # driver_locator is intentionally kept OUT of clean_rig_grp so the constraint
         # does not move it – its world position comes entirely from node_dcm.
         cmds.parent(position_locator_root, clean_rig_grp)
