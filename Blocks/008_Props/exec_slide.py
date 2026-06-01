@@ -109,6 +109,11 @@ def build_slide_block():
 
     elif mirror_mode == 'True':
         right_guide = mt.duplicate_change_names(input=new_guide, hi=True, search=nc['left'], replace=nc['right'])[0]
+        # Mirror the right guide's world position to the right side (same as Right_Only does).
+        right_mirror_grp = mt.mirror_group(right_guide, world=True)
+        cmds.makeIdentity(right_mirror_grp, a=True, t=True, r=True, s=True)
+        cmds.parent(right_guide, w=True)
+        cmds.delete(right_mirror_grp)
         to_build.append(right_guide)
 
     for side_guide in to_build:
@@ -193,7 +198,6 @@ def build_slide_block():
         # Fix Slide – build surface-following matrix
         node_pos  = cmds.shadingNode('pointOnSurfaceInfo', n=side_name + 'POS',  au=True)
         node_fbfm = cmds.shadingNode('fourByFourMatrix',   n=side_name + 'FBFM', au=True)
-        node_dcm  = cmds.shadingNode('decomposeMatrix',    n=side_name + 'DCM',  au=True)
 
         cmds.connectAttr('{}.positionX'.format(node_pos), '{}.in30'.format(node_fbfm), f=True)
         cmds.connectAttr('{}.positionY'.format(node_pos), '{}.in31'.format(node_fbfm), f=True)
@@ -207,43 +211,44 @@ def build_slide_block():
         cmds.connectAttr('{}.tangentVx'.format(node_pos), '{}.in20'.format(node_fbfm), f=True)
         cmds.connectAttr('{}.tangentVy'.format(node_pos), '{}.in21'.format(node_fbfm), f=True)
         cmds.connectAttr('{}.tangentVz'.format(node_pos), '{}.in22'.format(node_fbfm), f=True)
-        cmds.connectAttr('{}.output'.format(node_fbfm), '{}.inputMatrix'.format(node_dcm), f=True)
-
         cmds.connectAttr(closest_point_on_sruface_node + '.parameterV', node_pos + '.parameterV')
         cmds.connectAttr(closest_point_on_sruface_node + '.parameterU', node_pos + '.parameterU')
         cmds.connectAttr('{}.worldSpace'.format(slide_surface), '{}.inputSurface'.format(node_pos), f=True)
 
-        # For right side, wrap driver_locator in a mirror group before connecting DCM
-        # so the rig hierarchy sits in the correct world side from the start.
-        rig_mirror_grp = None
-        if mirror_mode in ('True', 'Right_Only') and is_right_side:
-            rig_mirror_grp = mt.mirror_group(input=driver_locator, world=True)
-
-        cmds.connectAttr(node_dcm + '.outputRotate',    driver_locator + '.rotate')
-        cmds.connectAttr(node_dcm + '.outputTranslate', driver_locator + '.translate')
-
+        # Decompose the world-space surface matrix directly.
+        # driver_locator is parented outside any constrained group (see below), so
+        # feeding it world-space translate/rotate from node_dcm causes no double-transform.
+        # Direction is also preserved correctly for both sides because node_pos already
+        # uses the side-resolved surface (worldSpace), so right-side output is naturally
+        # on the right in world space with no extra mirror group needed.
+        node_dcm = cmds.shadingNode('decomposeMatrix', n=side_name + 'DCM', au=True)
+        cmds.connectAttr(node_fbfm + '.output', node_dcm + '.inputMatrix', f=True)
 
         # Parent to base
+        misc_grp_name  = '{}{}'.format(setup['rig_groups']['misc'], nc['group'])
         clean_rig_grp  = cmds.group(n=side_name + '_Rig'  + nc['group'], em=True)
         clean_ctrl_grp = cmds.group(n=side_name + '_Ctrl' + nc['group'], em=True)
 
         cmds.parent(slide_ctrl_root, clean_ctrl_grp)
-        # For right side: driver_locator is already inside rig_mirror_grp; parent that instead.
 
-        # Mirror complete right-side ctrl hierarchy.
-        if mirror_mode in ('True', 'Right_Only') and is_right_side:
-            clean_ctrl_grp = mt.mirror_group(input=clean_ctrl_grp, world=True)
-
-        if rig_mirror_grp:
-            cmds.parent(position_locator_root, rig_mirror_grp, clean_rig_grp)
-        else:
-            cmds.parent(position_locator_root, driver_locator, clean_rig_grp)
+        # position_locator_root follows block_parent via clean_rig_grp constraint.
+        # driver_locator is intentionally kept OUT of clean_rig_grp so the constraint
+        # does not move it – its world position comes entirely from node_dcm.
+        cmds.parent(position_locator_root, clean_rig_grp)
 
         cmds.parentConstraint(block_parent, clean_ctrl_grp, mo=True)
         cmds.parentConstraint(block_parent, clean_rig_grp,  mo=True)
 
-        cmds.parent(clean_rig_grp,  '{}{}'.format(setup['rig_groups']['misc'], nc['group']))
+        cmds.parent(clean_rig_grp,  misc_grp_name)
         cmds.parent(clean_ctrl_grp, setup['base_groups']['control'] + nc['group'])
+
+        # Parent driver_locator directly under misc_grp (no parent constraint on it).
+        # When Mover_Ctrl / block_parent moves, the surface moves with the rig, the CPOS
+        # re-queries, node_pos updates, and node_dcm outputs the new world position –
+        # driver_locator follows without any double-transform or axis inversion.
+        cmds.parent(driver_locator, misc_grp_name)
+        cmds.connectAttr(node_dcm + '.outputTranslate', driver_locator + '.translate', f=True)
+        cmds.connectAttr(node_dcm + '.outputRotate',    driver_locator + '.rotate',    f=True)
 
         # Clean
         cmds.setAttr('{}.v'.format(position_locator), 0)
