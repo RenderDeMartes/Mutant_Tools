@@ -165,6 +165,16 @@ def build_slide_block():
         slide_ctrl_root, slide_ctrl_auto = mt.root_grp(input=slide_ctrl, autoRoot=True)
         mt.hide_attr(input=slide_ctrl, s=True, r=True)
 
+        # if mirror_mode in ('True', 'Right_Only') and is_right_side:
+        #     # ctrl_root is currently at the right-side world position but with the same
+        #     # orientation as the right guide.  Strategy: move it to the mirrored left-side
+        #     # position (negate X) with zero rotation so it matches the left ctrl, then
+        #     # mirror_group(world=True) reflects it back to the right with correct mirrored
+        #     # orientation.  slide_ctrl_root is updated to the new top mirror group so all
+        #     # downstream code (parenting, constraints) uses it unchanged.
+        #     cmds.delete(cmds.parentConstraint(guide, slide_ctrl_root))
+        #     slide_ctrl_root = mt.mirror_group(input=slide_ctrl_root, world=True)
+
         mt.line_attr(input=slide_ctrl, name='EnableAxis', lines=10)
         blend_nodes = []
         for axis in ['X', 'Y', 'Z']:
