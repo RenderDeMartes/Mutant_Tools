@@ -1,0 +1,17 @@
+{
+    "Name":  "SurfaceConstraint",
+    "Description":  "Create surface constraints from vertex skinning data",
+    "Icon":  "SurfaceConstraint.png",
+    "Enable":  "True",
+    "python_file":  "exec_surface_constraint.py",
+    "import":  "import exec_surface_constraint",
+    "imp.reload":  "reload(exec_surface_constraint)",
+    "exec_command":  "exec_surface_constraint.create_surface_constraint_block()",
+    "build_command":  "exec_surface_constraint.build_surface_constraint_block()",
+    "attrs":  {
+                  "FloatSetVertices_string":  "",
+                  "SetControls_string":  "",
+                  "MinWeight_float":  0.01,
+                  "Help_string":  "Overview:\n  Create surface constraints on controls/groups based on vertex skinning influences.\n\nHow To Use:\n  1. Fill SetVertices with space-separated vertex components (e.g., mesh.vtx[0] mesh.vtx[1] mesh.vtx[2])\n  2. Fill SetControls with space-separated control/group names (e.g., ctrl_A ctrl_B ctrl_C)\n  3. Vertices and controls must be in the same order - each vertex will drive the corresponding control\n  4. Constraints will be created on offset groups (not directly on the input controls)\n  5. Adjust MinWeight to filter influences. Number gets divided by 100 (default 1 = 0.01)\n\nFields:\n- SetVertices: space-separated vertex components (mesh.vtx[index] format)\n- SetControls: space-separated control/group names to constrain\n- MinWeight: minimum influence weight threshold to keep\n\nTips:\n- Make sure vertices are selected in the correct order\n- Ensure all geometry is properly skinned before building\n- Controls/groups must exist in the scene"
+              }
+}
