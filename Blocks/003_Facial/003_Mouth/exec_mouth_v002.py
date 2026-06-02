@@ -24,7 +24,7 @@ reload(postbuilds_faceinstall)
 #---------------------------------------------
 
 TAB_FOLDER = '003_Facial'
-PYBLOCK_NAME = 'exec_mouth'
+PYBLOCK_NAME = 'exec_mouth_v002'
 
 #Read name conventions as nc[''] and setup as seup['']
 PATH = os.path.dirname(__file__)
@@ -48,7 +48,7 @@ def create_mouth_block(name='Mouth'):
     for f in PATH_PARTS:
         FOLDER = os.path.join(FOLDER, f)
 
-    MODULE_FILE = os.path.join(os.path.dirname(__file__), '003_Mouth.json')
+    MODULE_FILE = os.path.join(os.path.dirname(__file__), '003_Mouth_v002.json')
     with open(MODULE_FILE) as module_file:
         module = json.load(module_file)
 

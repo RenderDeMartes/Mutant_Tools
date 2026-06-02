@@ -55,6 +55,10 @@ def build_orient_offset_block():
     if cmds.attributeQuery('LockOrientAttrs', node=config, exists=True):
         lock_orient_attrs = cmds.getAttr('{}.LockOrientAttrs'.format(config))
 
+    remap_scale = True
+    if cmds.attributeQuery('RemapScaleConnections', node=config, exists=True):
+        remap_scale = cmds.getAttr('{}.RemapScaleConnections'.format(config))
+
     if not controls_string:
         cmds.warning("No controls defined in SetControlsList.")
         return
@@ -194,6 +198,10 @@ def build_orient_offset_block():
         cmds.connectAttr('{}.outputMatrix'.format(ctrl_comp_s), '{}.i[1]'.format(m2))
         cmds.connectAttr('{}.outputMatrix'.format(orient_comp_r), '{}.i[2]'.format(m2))
         
+        # Decompose m2 to get the oriented scale for downstream remap
+        m2_dcmp = cmds.createNode('decomposeMatrix', name=name + '_M2_Decomp')
+        cmds.connectAttr('{}.matrixSum'.format(m2), '{}.imat'.format(m2_dcmp))
+        
         m_final = cmds.createNode('multMatrix', name=name + '_M_Final')
         cmds.connectAttr('{}.matrixSum'.format(m2), '{}.i[0]'.format(m_final))
         cmds.connectAttr('{}.matrixSum'.format(m1), '{}.i[1]'.format(m_final))
@@ -236,6 +244,95 @@ def build_orient_offset_block():
                             cmds.orientConstraint(ctrl, obj, rm=True)
                     except Exception as e:
                         cmds.warning("Failed to rewire {} to {}: {}".format(cns_type, obj, e))
+
+        # Remap direct scale connections through the orient rotation
+        if remap_scale:
+            # Nodes that are part of the orient offset graph - skip these
+            orient_graph_nodes = set([
+                ctrl_dcmp, ctrl_comp_tr, ctrl_comp_s, orient_dcmp, orient_comp_r,
+                orient_comp_r_inv, m1, m2, m_final, final_dcmp, m2_dcmp,
+                orient_node, driven_node, orient_root
+            ])
+            
+            axis_map = {'X': 'outputScaleX', 'Y': 'outputScaleY', 'Z': 'outputScaleZ'}
+            remap_count = 0
+            # Track nodes already remapped by compound handler to skip in per-axis
+            remapped_dest_nodes = set()
+            
+            # --- Step 1: Handle compound .scale connections ---
+            # Some blocks (e.g. Limb with ScaleTweakCtrls) connect ctrl.scale
+            # as a compound attribute. Per-axis queries won't find these.
+            # Use connections=True to get [src_plug, dest_plug, ...] pairs so we
+            # can filter to only TRUE compound connections (source is exactly
+            # 'ctrl.scale', not a per-axis child like 'ctrl.scaleX').
+            compound_plug = '{}.scale'.format(ctrl)
+            compound_pairs = cmds.listConnections(
+                compound_plug, source=False, destination=True,
+                plugs=True, connections=True
+            ) or []
+            
+            # Pairs come as [src, dst, src, dst, ...]
+            for i in range(0, len(compound_pairs), 2):
+                src_plug = compound_pairs[i]
+                dest_plug = compound_pairs[i + 1]
+                
+                # Only handle TRUE compound connections where source is .scale
+                # Skip per-axis children (.scaleX/Y/Z) - handled in Step 2
+                if src_plug != compound_plug:
+                    continue
+                
+                dest_node = dest_plug.split('.')[0]
+                if dest_node in orient_graph_nodes:
+                    continue
+                if cmds.nodeType(dest_node) in ['parentConstraint', 'scaleConstraint', 'pointConstraint', 'orientConstraint']:
+                    continue
+                
+                try:
+                    # Disconnect the compound connection
+                    cmds.disconnectAttr(compound_plug, dest_plug)
+                    
+                    # Reconnect per-axis through the oriented scale decompose
+                    # e.g. if dest_plug is "node.input2", per-axis is "node.input2X", etc.
+                    dest_base = dest_plug
+                    for axis in ['X', 'Y', 'Z']:
+                        src_axis_plug = '{}.{}'.format(m2_dcmp, axis_map[axis])
+                        dest_axis_plug = '{}{}'.format(dest_base, axis)
+                        try:
+                            cmds.connectAttr(src_axis_plug, dest_axis_plug)
+                        except Exception:
+                            pass
+                    remapped_dest_nodes.add(dest_node)
+                    remap_count += 1
+                except Exception as e:
+                    cmds.warning("Failed to remap compound scale connection {} -> {}: {}".format(compound_plug, dest_plug, e))
+            
+            # --- Step 2: Handle per-axis .scaleX/Y/Z connections ---
+            for axis in ['X', 'Y', 'Z']:
+                src_plug = '{}.scale{}'.format(ctrl, axis)
+                # Get all destination plugs connected from this ctrl scale axis
+                destinations = cmds.listConnections(src_plug, source=False, destination=True, plugs=True) or []
+                dest_nodes = cmds.listConnections(src_plug, source=False, destination=True) or []
+                
+                for dest_plug, dest_node in zip(destinations, dest_nodes):
+                    # Skip nodes that are part of the orient offset's own graph
+                    if dest_node in orient_graph_nodes:
+                        continue
+                    # Skip constraint nodes (already handled above)
+                    if cmds.nodeType(dest_node) in ['parentConstraint', 'scaleConstraint', 'pointConstraint', 'orientConstraint']:
+                        continue
+                    # Skip nodes already remapped by compound handler
+                    if dest_node in remapped_dest_nodes:
+                        continue
+                    
+                    try:
+                        cmds.disconnectAttr(src_plug, dest_plug)
+                        cmds.connectAttr('{}.{}'.format(m2_dcmp, axis_map[axis]), dest_plug)
+                        remap_count += 1
+                    except Exception as e:
+                        cmds.warning("Failed to remap scale connection {} -> {}: {}".format(src_plug, dest_plug, e))
+            
+            if remap_count > 0:
+                print('RemapScaleConnections: remapped {} direct scale connection(s) for {}'.format(remap_count, ctrl))
 
         if saved_orient:
             cmds.setAttr('{}.tx'.format(orient_node), saved_orient['t'][0])

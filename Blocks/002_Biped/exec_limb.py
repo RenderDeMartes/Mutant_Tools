@@ -137,6 +137,12 @@ def build_limb_block():
     else:
         create_ribbons = True
 
+    # compatible with older versions without ScaleTweakCtrls option
+    if cmds.attributeQuery('ScaleTweakCtrls', n=config, exists=True):
+        scale_tweak_ctrls = cmds.getAttr('{}.ScaleTweakCtrls'.format(config))
+    else:
+        scale_tweak_ctrls = False
+
     # use this group for later cleaning, just assign them when you create the top on hierarchy
     clean_rig_grp = ''
     clean_ctrl_grp = ''
@@ -548,7 +554,14 @@ def build_limb_block():
 
                 # transfer scale from twist to ibbon jnts
                 for num, jnt in enumerate(twist_joints):
-                    cmds.connectAttr('{}.scale'.format(jnt), '{}.scale'.format(fol_joints[num]))
+                    if scale_tweak_ctrls:
+                        tweak_ctrl = ribbon_ctrls[num]
+                        md_node = cmds.createNode('multiplyDivide', n='{}_scale_MD'.format(fol_joints[num]))
+                        cmds.connectAttr('{}.scale'.format(jnt), '{}.input1'.format(md_node))
+                        cmds.connectAttr('{}.scale'.format(tweak_ctrl), '{}.input2'.format(md_node))
+                        cmds.connectAttr('{}.output'.format(md_node), '{}.scale'.format(fol_joints[num]))
+                    else:
+                        cmds.connectAttr('{}.scale'.format(jnt), '{}.scale'.format(fol_joints[num]))
 
                 return {'ribbon_ctrl_grp': ribbon_ctrl_grp, 'ribbon_ctrls': ribbon_ctrls,
                         'ribbon_plane': ribbon_limb_nurb[0], 'fol_ribbon_grp': fol_grp, 'fol_joints': fol_joints,
@@ -581,6 +594,57 @@ def build_limb_block():
             cmds.pointConstraint(main_mid_ctrl, cmds.listRelatives(top_ribbon['second_ctrls'][1], p=True), mo=True)
             cmds.pointConstraint(main_mid_ctrl, cmds.listRelatives(low_ribbon['second_ctrls'][0], p=True), mo=True)
             cmds.connectAttr(ribbon_first_vis_attr, '{}.v'.format(cmds.listRelatives(main_mid_ctrl, shapes=True)[0]))
+
+            # --- Mid Bendy Scale Falloff ---
+            # Connect main_mid_ctrl scale to ribbon fol_joints with weighted falloff
+            # Weight is 1.0 at elbow, fading to 0.0 at shoulder/wrist
+            for ribbon_data, is_upper in [(top_ribbon, True), (low_ribbon, False)]:
+                fol_joints_list = ribbon_data['fol_joints']
+                n = len(fol_joints_list)
+
+                for idx, fol_jnt in enumerate(fol_joints_list):
+                    # Upper ribbon ramps up toward elbow, lower ramps down from elbow
+                    if n > 1:
+                        t = float(idx) / float(n - 1)
+                        weight = t if is_upper else (1.0 - t)
+                    else:
+                        weight = 1.0
+
+                    if weight < 0.001:
+                        continue  # Skip joints with negligible weight
+
+                    # BlendColors: lerp between (1,1,1) and mid_ctrl.scale by weight
+                    blend_node = cmds.createNode('blendColors', n='{}_MidBendyScale_Blend'.format(fol_jnt))
+                    cmds.connectAttr('{}.scaleX'.format(main_mid_ctrl), '{}.color1R'.format(blend_node))
+                    cmds.connectAttr('{}.scaleY'.format(main_mid_ctrl), '{}.color1G'.format(blend_node))
+                    cmds.connectAttr('{}.scaleZ'.format(main_mid_ctrl), '{}.color1B'.format(blend_node))
+                    cmds.setAttr('{}.color2'.format(blend_node), 1, 1, 1, type='double3')
+                    cmds.setAttr('{}.blender'.format(blend_node), weight)
+
+                    # Insert multiply into existing scale chain
+                    md_mid = cmds.createNode('multiplyDivide', n='{}_MidBendyScale_MD'.format(fol_jnt))
+
+                    # Find and reroute existing scale source (compound or per-axis)
+                    scale_src = cmds.listConnections('{}.scale'.format(fol_jnt), source=True, destination=False, plugs=True, skipConversionNodes=True)
+                    if scale_src:
+                        src_plug = scale_src[0]
+                        cmds.disconnectAttr(src_plug, '{}.scale'.format(fol_jnt))
+                        src_node, src_attr = src_plug.split('.', 1)
+                        for ax, color_ax in [('X', 'R'), ('Y', 'G'), ('Z', 'B')]:
+                            cmds.connectAttr('{}.{}{}'.format(src_node, src_attr, ax), '{}.input1{}'.format(md_mid, ax))
+                            cmds.connectAttr('{}.output{}'.format(blend_node, color_ax), '{}.input2{}'.format(md_mid, ax))
+                            cmds.connectAttr('{}.output{}'.format(md_mid, ax), '{}.scale{}'.format(fol_jnt, ax))
+                    else:
+                        # Fallback: try per-axis connections
+                        for ax, color_ax in [('X', 'R'), ('Y', 'G'), ('Z', 'B')]:
+                            ax_src = cmds.listConnections('{}.scale{}'.format(fol_jnt, ax), source=True, destination=False, plugs=True, skipConversionNodes=True)
+                            if ax_src:
+                                cmds.disconnectAttr(ax_src[0], '{}.scale{}'.format(fol_jnt, ax))
+                                cmds.connectAttr(ax_src[0], '{}.input1{}'.format(md_mid, ax))
+                            else:
+                                cmds.setAttr('{}.input1{}'.format(md_mid, ax), cmds.getAttr('{}.scale{}'.format(fol_jnt, ax)))
+                            cmds.connectAttr('{}.output{}'.format(blend_node, color_ax), '{}.input2{}'.format(md_mid, ax))
+                            cmds.connectAttr('{}.output{}'.format(md_mid, ax), '{}.scale{}'.format(fol_jnt, ax))
 
             # cmds.pointConstraint(start, cmds.listRelatives(top_ribbon['second_ctrls'][0], p=True), mo=True)
             # cmds.pointConstraint(end, cmds.listRelatives(low_ribbon['second_ctrls'][1], p=True), mo=True)

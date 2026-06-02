@@ -55,7 +55,7 @@ def create_set_defaults_block(name='SetDefaults'):
 
 # -------------------------
 
-def build_set_defaults_block():
+def build_set_defaults_block(force=False):
     nc, curve_data, setup = mt.import_configs()
     block = cmds.ls(sl=True)
     if not block:
@@ -73,6 +73,15 @@ def build_set_defaults_block():
     else:
         config = conns[0]
     block = block[0]
+
+    # Check if this block should run after the full build completes (post-build procedure)
+    run_after = False
+    if cmds.attributeQuery('RunAfterBuild', n=config, exists=True):
+        run_after = cmds.getAttr('{}.RunAfterBuild'.format(config))
+
+    if run_after and not force:
+        print('SetDefaults block {} deferred to run after build completes (post-build procedure)'.format(block))
+        return
 
     stored_string = cmds.getAttr('{}.SetDefaultsList'.format(config), asString=True)
 

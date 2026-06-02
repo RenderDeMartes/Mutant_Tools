@@ -268,6 +268,11 @@ class AutoRiggerMenu(QtWidgets.QDialog):
 		revert_state = cmds.optionVar(q="mutant_revert_on_fail") if cmds.optionVar(ex="mutant_revert_on_fail") else True
 		self.revert_on_fail.setChecked(revert_state)
 
+		self.show_block_tooltips = self.settingsMenu.addAction("Show Block Tooltips")
+		self.show_block_tooltips.setCheckable(True)
+		tooltips_state = cmds.optionVar(q="mutant_show_block_tooltips") if cmds.optionVar(ex="mutant_show_block_tooltips") else False
+		self.show_block_tooltips.setChecked(tooltips_state)
+
 		self.settingsMenu.addSeparator()
 
 		self.standard_window = self.settingsMenu.addAction("Use Standard Window")
@@ -374,6 +379,9 @@ class AutoRiggerMenu(QtWidgets.QDialog):
 
 		#Revert on Fail
 		self.revert_on_fail.toggled.connect(lambda state: cmds.optionVar(intValue=("mutant_revert_on_fail", state)))
+
+		#Show Block Tooltips
+		self.show_block_tooltips.toggled.connect(lambda state: cmds.optionVar(intValue=("mutant_show_block_tooltips", state)))
 
 		#Use Fast Skin (Rebuild)
 		self.use_fast_skin.toggled.connect(lambda state: cmds.optionVar(intValue=("mutant_use_fast_skin", state)))

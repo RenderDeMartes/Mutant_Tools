@@ -54,11 +54,20 @@ def create_spaceSwitches_block(name='target_switches'):
 
 
 
-def build_spaceSwitches_block():
+def build_spaceSwitches_block(force=False):
     nc, curve_data, setup = mt.import_configs()
     block = cmds.ls(sl=True)
     config = cmds.listConnections(block)[1]
     block = block[0]
+
+    # Check if this block should run after the full build completes
+    run_after = False
+    if cmds.attributeQuery('RunAfterBuild', n=config, exists=True):
+        run_after = cmds.getAttr('{}.RunAfterBuild'.format(config))
+
+    if run_after and not force:
+        print('SpaceSwitches block {} deferred to run after build completes'.format(block))
+        return
 
     # get the translate/rotate configuration to determine which type of constrain to use
 

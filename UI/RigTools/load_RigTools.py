@@ -540,6 +540,7 @@ class RigTools_UI(QtMutantWindow.Qt_Mutant):
 			button.setIcon(QtGui.QIcon(os.path.join(IconsPath, 'MayaIcons', icon)))
 			button.setIconSize(QtCore.QSize(30,30))
 			button.setToolTip(tooltip)
+			button.setAttribute(QtCore.Qt.WA_AlwaysShowToolTips, True)
 			#connect button
 			button.installEventFilter(self)
 			button.clicked.connect(partial(self.shelf_click, code))

@@ -235,7 +235,7 @@ def get_selection():
     return surf_tr
 
 
-def ribbonize(surf_tr, equal=1, num_of_Ctrls=5, num_of_Jnts=29, prefix="", constrain=1, add_fk=0, wire=0, middle_ctrl_pos='Original', ctrl_orientation='SurfaceNormal', ctrl_scales=False, joint_orient=False, fk_on_last=False):
+def ribbonize(surf_tr, equal=1, num_of_Ctrls=5, num_of_Jnts=29, prefix="", constrain=1, add_fk=0, wire=0, middle_ctrl_pos='Original', ctrl_orientation='SurfaceNormal', ctrl_scales=False, joint_orient=False, fk_on_last=False, gimbal=False):
     attrs = [".tx", ".ty", ".tz", ".rx", ".ry", ".rz", ".sx", ".sy", ".sz", ".v"]
 
     if prefix == "":
@@ -311,7 +311,31 @@ def ribbonize(surf_tr, equal=1, num_of_Ctrls=5, num_of_Jnts=29, prefix="", const
                          size=length / 5)
     main_Ctrl_offset = cmds.group(n=prefix + "Ctrl_Main_Offset_Grp", em=True)
     cmds.parent(main_Ctrl, main_Ctrl_offset)
-    cmds.parent(Ctrl_Grp, main_Ctrl)
+
+    main_drive = main_Ctrl
+    main_gimbal_Ctrl = None
+    if gimbal:
+        main_gimbal_Ctrl = mt.curve(input='',
+                                    type='circleX',
+                                    rename=True,
+                                    custom_name=True,
+                                    name=prefix + "Main_Gimbal_Ctrl",
+                                    size=(length / 5) * 0.8)
+        mt.assign_color(input=main_gimbal_Ctrl, color="blue")
+        cmds.parent(main_gimbal_Ctrl, main_Ctrl)
+        cmds.setAttr('{}.t'.format(main_gimbal_Ctrl), 0, 0, 0)
+        cmds.setAttr('{}.r'.format(main_gimbal_Ctrl), 0, 0, 0)
+        cmds.setAttr('{}.s'.format(main_gimbal_Ctrl), 1, 1, 1)
+
+        # Setup custom Gimbal Hide/Show enum on main_Ctrl
+        show_gimbal_attr = mt.new_enum(input=main_Ctrl, name='Gimbal', enums='Hide:Show')
+        cmds.connectAttr(show_gimbal_attr, '{}.v'.format(cmds.listRelatives(main_gimbal_Ctrl, shapes=True)[0]))
+
+        cmds.parent(Ctrl_Grp, main_gimbal_Ctrl)
+        main_drive = main_gimbal_Ctrl
+    else:
+        cmds.parent(Ctrl_Grp, main_Ctrl)
+
     #cmds.parent(main_Ctrl_offset, rig_Grp, final_group)
     cmds.parent(surf_tr, Ctrl_joints_Grp, follicles_Grp, rig_Grp)
 
@@ -476,21 +500,21 @@ def ribbonize(surf_tr, equal=1, num_of_Ctrls=5, num_of_Jnts=29, prefix="", const
 
         childs = cmds.listRelatives(Ctrl_joints_Grp, c=True)
         cmds.parent(childs, w=True)
-        cmds.delete(cmds.parentConstraint(main_Ctrl, Ctrl_joints_Grp))
+        cmds.delete(cmds.parentConstraint(main_drive, Ctrl_joints_Grp))
         mt.root_grp(input=Ctrl_joints_Grp)
         cmds.parent(childs, Ctrl_joints_Grp)
-        cmds.connectAttr('{}.translate'.format(main_Ctrl), '{}.translate'.format(Ctrl_joints_Grp))
-        cmds.connectAttr('{}.rotate'.format(main_Ctrl), '{}.rotate'.format(Ctrl_joints_Grp))
-        cmds.connectAttr('{}.scale'.format(main_Ctrl), '{}.scale'.format(Ctrl_joints_Grp))
+        cmds.connectAttr('{}.translate'.format(main_drive), '{}.translate'.format(Ctrl_joints_Grp))
+        cmds.connectAttr('{}.rotate'.format(main_drive), '{}.rotate'.format(Ctrl_joints_Grp))
+        cmds.connectAttr('{}.scale'.format(main_drive), '{}.scale'.format(Ctrl_joints_Grp))
 
-        #cmds.parentConstraint(main_Ctrl, Ctrl_joints_Grp, mo=True)
-        #cmds.scaleConstraint(main_Ctrl, Ctrl_joints_Grp)
+        #cmds.parentConstraint(main_drive, Ctrl_joints_Grp, mo=True)
+        #cmds.scaleConstraint(main_drive, Ctrl_joints_Grp)
 
         # scale the follicles with the main control
         for flt in fols_tr:
-            cmds.connectAttr(main_Ctrl + ".sx", flt + ".sx")
-            cmds.connectAttr(main_Ctrl + ".sx", flt + ".sy")
-            cmds.connectAttr(main_Ctrl + ".sx", flt + ".sz")
+            cmds.connectAttr(main_drive + ".sx", flt + ".sx")
+            cmds.connectAttr(main_drive + ".sx", flt + ".sy")
+            cmds.connectAttr(main_drive + ".sx", flt + ".sz")
 
     elif constrain == 1:
         for (c, j) in zip(controls, Ctrl_joints):
@@ -499,7 +523,7 @@ def ribbonize(surf_tr, equal=1, num_of_Ctrls=5, num_of_Jnts=29, prefix="", const
 
         # scale the follicles with the main control
         for flt in fols_tr:
-            cmds.scaleConstraint(main_Ctrl, flt)
+            cmds.scaleConstraint(main_drive, flt)
 
     # if joint_orient is enabled, orient bind joints to nearest control joint
     if joint_orient and Ctrl_joints:
@@ -549,7 +573,7 @@ def ribbonize(surf_tr, equal=1, num_of_Ctrls=5, num_of_Jnts=29, prefix="", const
                              prefix + "wire_crv")  # if name at the creation time, the shape doesn't get renamed
         cmds.delete(wire_crv, ch=True)
         wire = cmds.wire(surf_tr, gw=False, en=1.0, ce=0.0, li=0.0, dds=(0, 50), w=wire_crv, n=prefix + "wire")[0]
-        cmds.connectAttr(main_Ctrl + ".sx", wire + ".scale[0]")
+        cmds.connectAttr(main_drive + ".sx", wire + ".scale[0]")
 
         cps = param_from_length(wire_crv, num_of_Ctrls, "open", "uv", normalized=False)
 
@@ -591,6 +615,9 @@ def ribbonize(surf_tr, equal=1, num_of_Ctrls=5, num_of_Jnts=29, prefix="", const
     cmds.connectAttr(scale_Attr, main_Ctrl + ".sz")
 
     set_color(main_Ctrl, "yellow")
+    if gimbal:
+        set_color(main_gimbal_Ctrl, "blue")
+        lock_hide([main_gimbal_Ctrl], attrs[6:])
 
     #cmds.connectAttr(main_Ctrl_offset + ".sx", main_Ctrl_offset + ".sy")
     #cmds.connectAttr(main_Ctrl_offset + ".sx", main_Ctrl_offset + ".sz")

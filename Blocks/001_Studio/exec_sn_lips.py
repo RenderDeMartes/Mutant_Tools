@@ -23,8 +23,8 @@ reload(postbuilds_faceinstall)
 
 #---------------------------------------------
 
-TAB_FOLDER = '003_Facial'
-PYBLOCK_NAME = 'exec_mouth'
+TAB_FOLDER = '001_Studio'
+PYBLOCK_NAME = 'exec_sn_lips'
 
 #Read name conventions as nc[''] and setup as seup['']
 PATH = os.path.dirname(__file__)
@@ -38,7 +38,7 @@ for f in PATH_PARTS:
 
 # ---------------------------------------------
 
-def create_mouth_block(name='Mouth'):
+def create_sn_lips_block(name='sn_lips'):
 
     # Read name conventions as nc[''] and setup as seup['']
     PATH = os.path.dirname(__file__)
@@ -48,7 +48,7 @@ def create_mouth_block(name='Mouth'):
     for f in PATH_PARTS:
         FOLDER = os.path.join(FOLDER, f)
 
-    MODULE_FILE = os.path.join(os.path.dirname(__file__), '003_Mouth.json')
+    MODULE_FILE = os.path.join(os.path.dirname(__file__), '17_sn_lips.json')
     with open(MODULE_FILE) as module_file:
         module = json.load(module_file)
 
@@ -81,7 +81,7 @@ def create_mouth_block(name='Mouth'):
 
 #-------------------------
 
-def build_mouth_block():
+def build_sn_lips_block():
 
     nc, curve_data, setup = mt.import_configs()
 

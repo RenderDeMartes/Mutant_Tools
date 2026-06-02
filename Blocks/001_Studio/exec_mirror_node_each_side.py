@@ -64,7 +64,7 @@ def create_mirror_node_each_side_block(name='MirrorNodeEachSide'):
 
 #-------------------------
 
-def build_mirror_node_each_side_block():
+def build_mirror_node_each_side_block(force=False):
     """Find all nodes ending with Mirror_Grp and create matching groups on the opposite side.
 
     For each node ending with Mirror_Grp (e.g. R_Antenna_A_Ctrl_Offset_GrpMirror_Grp):
@@ -75,6 +75,26 @@ def build_mirror_node_each_side_block():
     """
 
     nc, curve_data, setup = mt.import_configs()
+
+    # Check for deferred execution (RunAfterBuild) if the block is currently selected
+    block = cmds.ls(sl=True)
+    if block:
+        conns = cmds.listConnections(block, type='network') or []
+        if not conns:
+            conns = cmds.listConnections(block) or []
+            config = conns[1] if len(conns) >= 2 else None
+        else:
+            config = conns[0]
+
+        if config:
+            run_after = False
+            if cmds.attributeQuery('RunAfterBuild', n=config, exists=True):
+                run_after = cmds.getAttr('{}.RunAfterBuild'.format(config))
+
+            if run_after and not force:
+                print('MirrorNodeEachSide block {} deferred to run after build completes'.format(block[0]))
+                return
+
     mirror_suffix = 'Mirror_Grp'
 
     # Find all nodes ending with Mirror_Grp

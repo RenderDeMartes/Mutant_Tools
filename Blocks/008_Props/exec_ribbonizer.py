@@ -175,6 +175,11 @@ def build_ribbonizer_block():
         except:
             fk_on_last = False
 
+        try:
+            gimbal = cmds.getAttr('{}.Gimbal'.format(config))
+        except:
+            gimbal = False
+
         ribbonize_kwargs = dict(
             equal=cmds.getAttr('{}.Equal'.format(config)),
             num_of_Ctrls=cmds.getAttr('{}.Ctrls'.format(config)),
@@ -187,6 +192,7 @@ def build_ribbonizer_block():
             ctrl_scales=ctrl_scales,
             joint_orient=joint_orient,
             fk_on_last=fk_on_last,
+            gimbal=gimbal,
         )
 
         if mirror_mode == 'Right_Only':

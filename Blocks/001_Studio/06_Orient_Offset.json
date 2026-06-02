@@ -11,8 +11,9 @@
     "attrs": {
         "SetControlsList_string": "",
         "AutoParentChildren_bool": "True",
+        "RemapScaleConnections_bool": "True",
         "HideOrientAttrs_bool": "False",
         "LockOrientAttrs_bool": "False",
-        "Help_string": "Overview:\n  Applies the matrix orient offset setup to a custom list of controls.\n\nHow To Use:\n  Select the controls in the scene and click 'Add Selected' below. Then click build.\n\nFields:\n- SetControlsList: List of controls to process.\n- AutoParentChildren: If true, existing children of the controls will be reparented under the new _Driven groups automatically.\n- HideOrientAttrs: If true, the proxy orient attributes on the control will be hidden on build.\n- LockOrientAttrs: If true, the proxy orient attributes on the control will be locked on build."
+        "Help_string": "Overview:\n  Applies the matrix orient offset setup to a custom list of controls.\n\nHow To Use:\n  Select the controls in the scene and click 'Add Selected' below. Then click build.\n\nFields:\n- SetControlsList: List of controls to process.\n- AutoParentChildren: If true, existing children of the controls will be reparented under the new _Driven groups automatically.\n- RemapScaleConnections: If true, detects direct scale connections going out of the control (e.g. multiplyDivide nodes from ScaleTweakCtrls) and remaps them through the orient rotation so scale axes match the new visual orientation.\n- HideOrientAttrs: If true, the proxy orient attributes on the control will be hidden on build.\n- LockOrientAttrs: If true, the proxy orient attributes on the control will be locked on build."
     }
 }

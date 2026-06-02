@@ -213,7 +213,8 @@ class ShelvesUI(QtMutantWindow.Qt_Mutant):
 				file_button.setFixedSize(90, 90)
 				h_layout.addWidget(file_button)
 				file_button.setToolTip(file_name)
-
+				file_button.setAttribute(QtCore.Qt.WA_AlwaysShowToolTips, True)
+ 
 				file_button.clicked.connect(partial(self.put_path_in_line, file))
 
 				icon_path = os.path.join(cShelves.folder, file_name.replace('ma', '1.jpg'))

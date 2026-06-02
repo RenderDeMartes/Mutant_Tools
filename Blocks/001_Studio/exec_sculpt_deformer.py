@@ -199,6 +199,11 @@ def build_sculpt_deformer_block(force=False):
                                name=side_name + nc['ctrl'],
                                size=size)
         mt.assign_color(color=color)
+
+        # Add Maximum Displacement and Dropoff Distance attributes to the controller
+        cmds.addAttr(sculpt_ctrl, ln='maxDisplacement', nn='Maximum Displacement', at='double', dv=1.0, k=True)
+        cmds.addAttr(sculpt_ctrl, ln='dropoffDistance', nn='Dropoff Distance', at='double', dv=1.0, k=True)
+
         cmds.delete(cmds.parentConstraint(side_sculptor, sculpt_ctrl))
         sculpt_ctrl_root, sculpt_ctrl_auto = mt.root_grp(input=sculpt_ctrl, autoRoot=True)
 
@@ -225,6 +230,10 @@ def build_sculpt_deformer_block(force=False):
                                             mode='stretch')
                 sculpt_node = sculpt_result[0]
                 sculpt_sphere = sculpt_result[1]
+
+                # Connect controller attributes to drive the sculpt deformer node attributes
+                cmds.connectAttr('{}.maxDisplacement'.format(sculpt_ctrl), '{}.maximumDisplacement'.format(sculpt_node))
+                cmds.connectAttr('{}.dropoffDistance'.format(sculpt_ctrl), '{}.dropoffDistance'.format(sculpt_node))
 
                 # Parent the sculpt sphere under the sculptor locator so it follows
                 # the ctrl through DAG hierarchy (avoids constraint conflicts)

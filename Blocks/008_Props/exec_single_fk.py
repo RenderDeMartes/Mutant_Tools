@@ -80,19 +80,22 @@ def _build_single_fk_side(name, loc_guide, config, nc, setup, is_mirror_side=Fal
         dict with 'root', 'ctrl', 'jnt', 'bind_jnt', 'rig_grp' keys (values may be None)
     """
 
-    def _resolve_parent_target(attr_name, default_target):
+    def _resolve_parent_target(attr_names, default_target):
         """Return a valid parent target from config attr or fallback to default."""
         target = default_target
 
-        if cmds.attributeQuery(attr_name, node=config, exists=True):
-            custom_target = cmds.getAttr('{}.{}'.format(config, attr_name))
-            if custom_target:
-                if cmds.objExists(custom_target):
-                    target = custom_target
-                else:
-                    cmds.warning('Parent target {} does not exist, falling back to {}'.format(custom_target, default_target))
-        else:
-            cmds.warning('Config attr {} not found on {}, using default {}'.format(attr_name, config, default_target))
+        if isinstance(attr_names, str):
+            attr_names = [attr_names]
+
+        for attr_name in attr_names:
+            if cmds.attributeQuery(attr_name, node=config, exists=True):
+                custom_target = cmds.getAttr('{}.{}'.format(config, attr_name))
+                if custom_target:
+                    if cmds.objExists(custom_target):
+                        target = custom_target
+                        break
+                    else:
+                        cmds.warning('Parent target {} does not exist, falling back to {}'.format(custom_target, default_target))
 
         return target
 
@@ -112,8 +115,8 @@ def _build_single_fk_side(name, loc_guide, config, nc, setup, is_mirror_side=Fal
     if is_mirror_side:
         root = mt.mirror_group(root, world=True)
 
-    default_ctrl_parent = '{}{}'.format(setup['main_ctrl_grp'], nc['group'])
-    ctrl_parent_target = _resolve_parent_target('SetCtrlParentHierarchy', default_ctrl_parent)
+    default_ctrl_parent = '{}{}'.format(setup['base_groups']['control'], nc['group'])
+    ctrl_parent_target = _resolve_parent_target(['SetCtrlParentHierarchy', 'SetCtrlParent_Hierarchy', 'SetCtrlParent'], default_ctrl_parent)
     if cmds.objExists(ctrl_parent_target):
         cmds.parent(root, ctrl_parent_target)
     else:
@@ -317,7 +320,7 @@ def _build_single_fk_side(name, loc_guide, config, nc, setup, is_mirror_side=Fal
 
         clean_rig_grp = cmds.group(em=True, name=name + '_Rig' + nc['group'])
         default_joint_parent = '{}{}'.format(setup['rig_groups']['misc'], nc['group'])
-        joint_parent_target = _resolve_parent_target('SetJointParentHierarchy', default_joint_parent)
+        joint_parent_target = _resolve_parent_target(['SetJointParentHierarchy', 'SetJointParent_Hierarchy', 'SetJointParent'], default_joint_parent)
         if cmds.objExists(joint_parent_target):
             cmds.parent(clean_rig_grp, joint_parent_target)
         else:
