@@ -136,6 +136,8 @@ def build_slide_block():
         cmds.delete(cmds.parentConstraint(guide, position_locator_root))
         if side_guide.startswith(nc['right']) and mirror_mode == 'True':
             mirror_position_locator_root = mt.mirror_group(input=position_locator_root, world=True)
+        elif side_guide.startswith(nc['right']) and mirror_mode == 'Right_Only':
+            mirror_position_locator_root = mt.mirror_group(input=position_locator_root, world=False)
 
         if slide_surface == 'new_plane':
             slide_surface = cmds.nurbsPlane(n=side_name + nc['nurb'])[0]
@@ -167,6 +169,8 @@ def build_slide_block():
         slide_ctrl_root, slide_ctrl_auto = mt.root_grp(input=slide_ctrl, autoRoot=True)
         if side_guide.startswith(nc['right']) and mirror_mode == 'True':
             mirror_slide_ctrl_root = mt.mirror_group(input=slide_ctrl_root, world=True)
+        elif side_guide.startswith(nc['right']) and mirror_mode == 'Right_Only':
+            mirror_slide_ctrl_root = mt.mirror_group(input=slide_ctrl_root, world=False)
         mt.hide_attr(input=slide_ctrl, s=True, r=True)
 
         # if mirror_mode in ('True', 'Right_Only') and is_right_side:
@@ -245,6 +249,8 @@ def build_slide_block():
 
         if side_guide.startswith(nc['right']) and mirror_mode == 'True':
             cmds.parent(mirror_slide_ctrl_root, clean_ctrl_grp)
+        elif side_guide.startswith(nc['right']) and mirror_mode == 'Right_Only':
+            cmds.parent(mirror_slide_ctrl_root, clean_ctrl_grp)
         else:
             cmds.parent(slide_ctrl_root, clean_ctrl_grp)
 
@@ -253,6 +259,8 @@ def build_slide_block():
         # driver_locator is intentionally kept OUT of clean_rig_grp so the constraint
         # does not move it – its world position comes entirely from node_dcm.
         if side_guide.startswith(nc['right']) and mirror_mode == 'True':
+            cmds.parent(mirror_position_locator_root, clean_rig_grp)
+        elif side_guide.startswith(nc['right']) and mirror_mode == 'Right_Only':
             cmds.parent(mirror_position_locator_root, clean_rig_grp)
         else:
             cmds.parent(position_locator_root, clean_rig_grp)
