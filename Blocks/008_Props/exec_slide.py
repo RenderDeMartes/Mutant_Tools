@@ -87,7 +87,7 @@ def build_slide_block():
         name = nc['left'] + name
 
     left_name = name
-    right_name = name.replace(nc['left'], nc['right'], 1) if name.startswith(nc['left']) else nc['right'] + name
+    right_name = name.replace(nc['left'], nc['right'], 1) if name.startswith(nc['left']) else (name if name.startswith(nc['right']) else nc['right'] + name)
 
     # Build side list from duplicated guides (same as other mirrored blocks).
     build_guide_name = '{}SlideBuildGuide{}'.format(left_name, nc['locator'])
@@ -134,8 +134,10 @@ def build_slide_block():
         position_locator = cmds.spaceLocator(n=side_name + 'SlideAim' + nc['locator'])[0]
         position_locator_root, position_locator_auto = mt.root_grp(input=position_locator, autoRoot=True)
         cmds.delete(cmds.parentConstraint(guide, position_locator_root))
-        if side_guide.startswith(nc['right']):
+        if side_guide.startswith(nc['right']) and mirror_mode == 'True':
             mirror_position_locator_root = mt.mirror_group(input=position_locator_root, world=True)
+        elif side_guide.startswith(nc['right']) and mirror_mode == 'Right_Only':
+            mirror_position_locator_root = mt.mirror_group(input=position_locator_root, world=False)
 
         if slide_surface == 'new_plane':
             slide_surface = cmds.nurbsPlane(n=side_name + nc['nurb'])[0]
@@ -165,8 +167,10 @@ def build_slide_block():
         mt.assign_color(color=color)
         cmds.delete(cmds.parentConstraint(guide, slide_ctrl))
         slide_ctrl_root, slide_ctrl_auto = mt.root_grp(input=slide_ctrl, autoRoot=True)
-        if side_guide.startswith(nc['right']):
+        if side_guide.startswith(nc['right']) and mirror_mode == 'True':
             mirror_slide_ctrl_root = mt.mirror_group(input=slide_ctrl_root, world=True)
+        elif side_guide.startswith(nc['right']) and mirror_mode == 'Right_Only':
+            mirror_slide_ctrl_root = mt.mirror_group(input=slide_ctrl_root, world=False)
         mt.hide_attr(input=slide_ctrl, s=True, r=True)
 
         # if mirror_mode in ('True', 'Right_Only') and is_right_side:
@@ -179,33 +183,46 @@ def build_slide_block():
         #     cmds.delete(cmds.parentConstraint(guide, slide_ctrl_root))
         #     slide_ctrl_root = mt.mirror_group(input=slide_ctrl_root, world=True)
 
-        mt.line_attr(input=slide_ctrl, name='EnableAxis', lines=10)
+        # AxisMode: read from config, default to 'Blend' for old templates without the attr.
+        if cmds.attributeQuery('AxisMode', node=config, exists=True):
+            axis_mode = cmds.getAttr('{}.AxisMode'.format(config), asString=True)
+        else:
+            axis_mode = 'Blend'
+
         blend_nodes = []
-        for axis in ['X', 'Y', 'Z']:
-            cmds.connectAttr('{}.rotate{}'.format(slide_ctrl, axis), '{}.rotate{}'.format(position_locator, axis), f=True)
+        if axis_mode == 'Blend':
+            mt.line_attr(input=slide_ctrl, name='EnableAxis', lines=10)
+            for axis in ['X', 'Y', 'Z']:
+                cmds.connectAttr('{}.rotate{}'.format(slide_ctrl, axis), '{}.rotate{}'.format(position_locator, axis), f=True)
 
-            axis_attr = mt.new_attr(input=slide_ctrl, name=axis, min=-0, max=1, default=1)
-            direct_blend_node = cmds.shadingNode(
-                'blendColors',
-                asUtility=True,
-                n='{}Slide{}Direct{}'.format(side_name, axis, nc['blend'])
-            )
-            cmds.connectAttr('{}.translate{}'.format(slide_ctrl, axis), '{}.color1.color1R'.format(direct_blend_node), f=1)
-            cmds.setAttr('{}.color2.color2R'.format(direct_blend_node), 0)
-            cmds.connectAttr('{}'.format(axis_attr), '{}.blender'.format(direct_blend_node), f=1)
-            cmds.connectAttr('{}.output.outputR'.format(direct_blend_node), '{}.translate{}'.format(position_locator, axis), f=1)
-            blend_nodes.append(direct_blend_node)
+                axis_attr = mt.new_attr(input=slide_ctrl, name=axis, min=-0, max=1, default=1)
+                direct_blend_node = cmds.shadingNode(
+                    'blendColors',
+                    asUtility=True,
+                    n='{}Slide{}Direct{}'.format(side_name, axis, nc['blend'])
+                )
+                cmds.connectAttr('{}.translate{}'.format(slide_ctrl, axis), '{}.color1.color1R'.format(direct_blend_node), f=1)
+                cmds.setAttr('{}.color2.color2R'.format(direct_blend_node), 0)
+                cmds.connectAttr('{}'.format(axis_attr), '{}.blender'.format(direct_blend_node), f=1)
+                cmds.connectAttr('{}.output.outputR'.format(direct_blend_node), '{}.translate{}'.format(position_locator, axis), f=1)
+                blend_nodes.append(direct_blend_node)
 
-            auto_blend_node = cmds.shadingNode(
-                'blendColors',
-                asUtility=True,
-                n='{}Slide{}Auto{}'.format(side_name, axis, nc['blend'])
-            )
-            cmds.connectAttr('{}.translate{}'.format(slide_ctrl_auto, axis), '{}.color1.color1R'.format(auto_blend_node), f=1)
-            cmds.setAttr('{}.color2.color2R'.format(auto_blend_node), 0)
-            cmds.connectAttr('{}'.format(axis_attr), '{}.blender'.format(auto_blend_node), f=1)
-            cmds.connectAttr('{}.output.outputR'.format(auto_blend_node), '{}.translate{}'.format(position_locator_auto, axis), f=1)
-            blend_nodes.append(auto_blend_node)
+                auto_blend_node = cmds.shadingNode(
+                    'blendColors',
+                    asUtility=True,
+                    n='{}Slide{}Auto{}'.format(side_name, axis, nc['blend'])
+                )
+                cmds.connectAttr('{}.translate{}'.format(slide_ctrl_auto, axis), '{}.color1.color1R'.format(auto_blend_node), f=1)
+                cmds.setAttr('{}.color2.color2R'.format(auto_blend_node), 0)
+                cmds.connectAttr('{}'.format(axis_attr), '{}.blender'.format(auto_blend_node), f=1)
+                cmds.connectAttr('{}.output.outputR'.format(auto_blend_node), '{}.translate{}'.format(position_locator_auto, axis), f=1)
+                blend_nodes.append(auto_blend_node)
+        else:
+            # Constraint mode: direct connections, no blend nodes or per-axis enable attrs.
+            for axis in ['X', 'Y', 'Z']:
+                cmds.connectAttr('{}.rotate{}'.format(slide_ctrl, axis),    '{}.rotate{}'.format(position_locator, axis),      f=True)
+                cmds.connectAttr('{}.translate{}'.format(slide_ctrl, axis), '{}.translate{}'.format(position_locator, axis),   f=True)
+                cmds.connectAttr('{}.translate{}'.format(slide_ctrl_auto, axis), '{}.translate{}'.format(position_locator_auto, axis), f=True)
 
         mt.assign_color(input=driver_locator, color=color)
 
@@ -243,7 +260,9 @@ def build_slide_block():
         clean_rig_grp  = cmds.group(n=side_name + '_Rig'  + nc['group'], em=True)
         clean_ctrl_grp = cmds.group(n=side_name + '_Ctrl' + nc['group'], em=True)
 
-        if side_guide.startswith(nc['right']):
+        if side_guide.startswith(nc['right']) and mirror_mode == 'True':
+            cmds.parent(mirror_slide_ctrl_root, clean_ctrl_grp)
+        elif side_guide.startswith(nc['right']) and mirror_mode == 'Right_Only':
             cmds.parent(mirror_slide_ctrl_root, clean_ctrl_grp)
         else:
             cmds.parent(slide_ctrl_root, clean_ctrl_grp)
@@ -252,7 +271,9 @@ def build_slide_block():
         # position_locator_root follows block_pareant via clean_rig_grp constraint.
         # driver_locator is intentionally kept OUT of clean_rig_grp so the constraint
         # does not move it – its world position comes entirely from node_dcm.
-        if side_guide.startswith(nc['right']):
+        if side_guide.startswith(nc['right']) and mirror_mode == 'True':
+            cmds.parent(mirror_position_locator_root, clean_rig_grp)
+        elif side_guide.startswith(nc['right']) and mirror_mode == 'Right_Only':
             cmds.parent(mirror_position_locator_root, clean_rig_grp)
         else:
             cmds.parent(position_locator_root, clean_rig_grp)

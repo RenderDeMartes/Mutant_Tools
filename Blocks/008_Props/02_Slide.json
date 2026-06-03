@@ -11,6 +11,7 @@
     "attrs":  {
                   "SetParent_string":  "new_locator",
                   "Mirror_enum":  "False:True:Right_Only",
+                  "AxisMode_enum":  "Blend:Constraint",
                   "SetSlideNurb_string":  "new_plane",
                   "CtrlSize_float":  "4",
                   "CtrlColor_enum":  "lightBlue:blue:white:purple:green:red:yellow:grey",
