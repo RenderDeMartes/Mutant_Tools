@@ -87,7 +87,7 @@ def build_slide_block():
         name = nc['left'] + name
 
     left_name = name
-    right_name = name.replace(nc['left'], nc['right'], 1) if name.startswith(nc['left']) else nc['right'] + name
+    right_name = name.replace(nc['left'], nc['right'], 1) if name.startswith(nc['left']) else (name if name.startswith(nc['right']) else nc['right'] + name)
 
     # Build side list from duplicated guides (same as other mirrored blocks).
     build_guide_name = '{}SlideBuildGuide{}'.format(left_name, nc['locator'])
