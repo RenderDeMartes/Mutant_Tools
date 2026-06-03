@@ -183,33 +183,46 @@ def build_slide_block():
         #     cmds.delete(cmds.parentConstraint(guide, slide_ctrl_root))
         #     slide_ctrl_root = mt.mirror_group(input=slide_ctrl_root, world=True)
 
-        mt.line_attr(input=slide_ctrl, name='EnableAxis', lines=10)
+        # AxisMode: read from config, default to 'Blend' for old templates without the attr.
+        if cmds.attributeQuery('AxisMode', node=config, exists=True):
+            axis_mode = cmds.getAttr('{}.AxisMode'.format(config), asString=True)
+        else:
+            axis_mode = 'Blend'
+
         blend_nodes = []
-        for axis in ['X', 'Y', 'Z']:
-            cmds.connectAttr('{}.rotate{}'.format(slide_ctrl, axis), '{}.rotate{}'.format(position_locator, axis), f=True)
+        if axis_mode == 'Blend':
+            mt.line_attr(input=slide_ctrl, name='EnableAxis', lines=10)
+            for axis in ['X', 'Y', 'Z']:
+                cmds.connectAttr('{}.rotate{}'.format(slide_ctrl, axis), '{}.rotate{}'.format(position_locator, axis), f=True)
 
-            axis_attr = mt.new_attr(input=slide_ctrl, name=axis, min=-0, max=1, default=1)
-            direct_blend_node = cmds.shadingNode(
-                'blendColors',
-                asUtility=True,
-                n='{}Slide{}Direct{}'.format(side_name, axis, nc['blend'])
-            )
-            cmds.connectAttr('{}.translate{}'.format(slide_ctrl, axis), '{}.color1.color1R'.format(direct_blend_node), f=1)
-            cmds.setAttr('{}.color2.color2R'.format(direct_blend_node), 0)
-            cmds.connectAttr('{}'.format(axis_attr), '{}.blender'.format(direct_blend_node), f=1)
-            cmds.connectAttr('{}.output.outputR'.format(direct_blend_node), '{}.translate{}'.format(position_locator, axis), f=1)
-            blend_nodes.append(direct_blend_node)
+                axis_attr = mt.new_attr(input=slide_ctrl, name=axis, min=-0, max=1, default=1)
+                direct_blend_node = cmds.shadingNode(
+                    'blendColors',
+                    asUtility=True,
+                    n='{}Slide{}Direct{}'.format(side_name, axis, nc['blend'])
+                )
+                cmds.connectAttr('{}.translate{}'.format(slide_ctrl, axis), '{}.color1.color1R'.format(direct_blend_node), f=1)
+                cmds.setAttr('{}.color2.color2R'.format(direct_blend_node), 0)
+                cmds.connectAttr('{}'.format(axis_attr), '{}.blender'.format(direct_blend_node), f=1)
+                cmds.connectAttr('{}.output.outputR'.format(direct_blend_node), '{}.translate{}'.format(position_locator, axis), f=1)
+                blend_nodes.append(direct_blend_node)
 
-            auto_blend_node = cmds.shadingNode(
-                'blendColors',
-                asUtility=True,
-                n='{}Slide{}Auto{}'.format(side_name, axis, nc['blend'])
-            )
-            cmds.connectAttr('{}.translate{}'.format(slide_ctrl_auto, axis), '{}.color1.color1R'.format(auto_blend_node), f=1)
-            cmds.setAttr('{}.color2.color2R'.format(auto_blend_node), 0)
-            cmds.connectAttr('{}'.format(axis_attr), '{}.blender'.format(auto_blend_node), f=1)
-            cmds.connectAttr('{}.output.outputR'.format(auto_blend_node), '{}.translate{}'.format(position_locator_auto, axis), f=1)
-            blend_nodes.append(auto_blend_node)
+                auto_blend_node = cmds.shadingNode(
+                    'blendColors',
+                    asUtility=True,
+                    n='{}Slide{}Auto{}'.format(side_name, axis, nc['blend'])
+                )
+                cmds.connectAttr('{}.translate{}'.format(slide_ctrl_auto, axis), '{}.color1.color1R'.format(auto_blend_node), f=1)
+                cmds.setAttr('{}.color2.color2R'.format(auto_blend_node), 0)
+                cmds.connectAttr('{}'.format(axis_attr), '{}.blender'.format(auto_blend_node), f=1)
+                cmds.connectAttr('{}.output.outputR'.format(auto_blend_node), '{}.translate{}'.format(position_locator_auto, axis), f=1)
+                blend_nodes.append(auto_blend_node)
+        else:
+            # Constraint mode: direct connections, no blend nodes or per-axis enable attrs.
+            for axis in ['X', 'Y', 'Z']:
+                cmds.connectAttr('{}.rotate{}'.format(slide_ctrl, axis),    '{}.rotate{}'.format(position_locator, axis),      f=True)
+                cmds.connectAttr('{}.translate{}'.format(slide_ctrl, axis), '{}.translate{}'.format(position_locator, axis),   f=True)
+                cmds.connectAttr('{}.translate{}'.format(slide_ctrl_auto, axis), '{}.translate{}'.format(position_locator_auto, axis), f=True)
 
         mt.assign_color(input=driver_locator, color=color)
 
