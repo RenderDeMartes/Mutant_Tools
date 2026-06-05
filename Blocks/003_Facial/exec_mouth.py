@@ -102,18 +102,8 @@ def build_mouth_block():
 
     ctrl_size = cmds.getAttr('{}.CtrlSize'.format(config)) / 2
 
-    upper_edge_str = cmds.getAttr('{}.SetUpperEdge'.format(config), asString=True).strip()
-    lower_edge_str = cmds.getAttr('{}.SetLowerEdge'.format(config), asString=True).strip()
-
-    has_upper = bool(upper_edge_str)
-    has_lower = bool(lower_edge_str)
-
-    if not has_upper and not has_lower:
-        cmds.error("Please supply at least SetUpperEdge or SetLowerEdge!")
-        return
-
-    upper_edge = upper_edge_str.split(',') if has_upper else []
-    lower_edge = lower_edge_str.split(',') if has_lower else []
+    upper_edge = cmds.getAttr('{}.SetUpperEdge'.format(config), asString=True).split(',')
+    lower_edge = cmds.getAttr('{}.SetLowerEdge'.format(config), asString=True).split(',')
     attrs_position = cmds.getAttr('{}.SetAttrsPosition'.format(config), asString=True)
 
     mirror_attr = cmds.getAttr('{}.Mirror'.format(config), asString=True)
@@ -138,7 +128,7 @@ def build_mouth_block():
         cmds.select(edge)
         linear_curve = cmds.polyToCurve(form=0,
                                         degree=1,
-                                        conformToSmoothMeshPreview=0,
+                                        conformToSmoothMeshPreview=1,
                                         n=name + '_Vtx' + nc['curve'],
                                         ch=False)[0]
         linear_curve_shape = cmds.listRelatives(linear_curve, s=True)[0]
@@ -164,6 +154,7 @@ def build_mouth_block():
         locators_grp = cmds.group(em=True, n='{}_FollowLocators{}'.format(name, nc['group']))
         tweek_ctrl_grp = cmds.group(em=True, n='{}_Tweeks{}{}'.format(name, nc['ctrl'], nc['group']))
         main_ctrl_grp = cmds.group(em=True, n='{}{}{}'.format(name, nc['ctrl'], nc['group']))
+        cmds.parent(tweek_ctrl_grp, main_ctrl_grp)
 
         for num in range(linear_curve_cvs):
             # Place joint at pivot and on vertex
@@ -185,20 +176,6 @@ def build_mouth_block():
             cmds.connectAttr('{}.worldSpace[0]'.format(linear_curve_shape), '{}.inputCurve'.format(poci))
             cmds.connectAttr('{}.position'.format(poci), '{}.translate'.format(end_locator))
             cmds.setAttr('{}.parameter'.format(poci), num)
-
-            # --- Tangent-follow rotation ---
-            # angleBetween gives the euler rotation from rest tangent to current tangent
-            rest_t = cmds.getAttr('{}.normalizedTangent'.format(poci))[0]
-
-            angle_node = cmds.createNode('angleBetween', n='{}_{}_TangentAngle'.format(name, num))
-            cmds.setAttr('{}.vector1'.format(angle_node), *rest_t)
-            cmds.connectAttr('{}.normalizedTangent'.format(poci), '{}.vector2'.format(angle_node))
-
-            # TangentFollow group wraps the locator - pivot follows locator position
-            tangent_grp = cmds.group(end_locator, n='{}_{}_TangentFollow{}'.format(name, num, nc['group']))
-            cmds.connectAttr('{}.translate'.format(end_locator), '{}.rotatePivot'.format(tangent_grp), f=True)
-            cmds.connectAttr('{}.translate'.format(end_locator), '{}.scalePivot'.format(tangent_grp), f=True)
-            cmds.connectAttr('{}.euler'.format(angle_node), '{}.rotate'.format(tangent_grp))
 
             # create controllers to control the curve
             ctrl = mt.curve(input=vtx_jnt,
@@ -222,7 +199,7 @@ def build_mouth_block():
             cmds.connectAttr('{}.translate'.format(ctrl), '{}.translate'.format(vtx_jnt))
             cmds.connectAttr('{}.scale'.format(ctrl), '{}.scale'.format(vtx_jnt))
             cmds.connectAttr('{}.rotate'.format(end_locator), '{}.rotate'.format(ctrl_root))
-            cmds.connectAttr('{}.translate'.format(end_locator), '{}.translate'.format(ctrl_root))
+            #cmds.connectAttr('{}.translate'.format(end_locator), '{}.translate'.format(ctrl_root))
 
             cmds.delete(cmds.parentConstraint(vtx_root, ctrl))
             cmds.parent(vtx_root, vtx_joints_grp)
@@ -443,34 +420,8 @@ def build_mouth_block():
                 cmds.connectAttr('{}.translate'.format(loc), "{}.scalePivot".format(lip_grp), f=True)
 
         #----------------------------
-        # Scale influence from mid controllers to tweak ctrls
         #----------------------------
-        for tweek_idx, tweek_ctrl in enumerate(tweek_controllers):
-            tweek_root = cmds.listRelatives(tweek_ctrl, p=True)[0]
-            vtx_jnt = vtx_joints[tweek_idx]
-            vtx_root = cmds.listRelatives(vtx_jnt, p=True)[0]
-
-            # Find 2 closest sec_ctrls by distance
-            distances = []
-            for sc in sec_ctrls:
-                d = mt.get_distance_between(tweek_ctrl, sc)
-                distances.append((d, sc))
-            distances.sort(key=lambda x: x[0])
-            d1, ctrl1 = distances[0]
-            d2, ctrl2 = distances[1]
-            total = d1 + d2 + 0.001
-
-            # blendColors: blender=0 uses color2, blender=1 uses color1
-            blender_val = d1 / total
-            bc = cmds.createNode('blendColors', n=tweek_ctrl.replace(nc['ctrl'], '_ScaleBlend'))
-            cmds.setAttr('{}.blender'.format(bc), blender_val)
-            cmds.connectAttr('{}.scale'.format(ctrl2), '{}.color1'.format(bc))
-            cmds.connectAttr('{}.scale'.format(ctrl1), '{}.color2'.format(bc))
-
-            # Visual: scale the tweak ctrl_root so the control reflects mid scale
-            cmds.connectAttr('{}.output'.format(bc), '{}.scale'.format(tweek_root))
-            # Functional: scale the vtx_root so the joint deformation picks it up
-            cmds.connectAttr('{}.output'.format(bc), '{}.scale'.format(vtx_root))
+        #----------------------------
 
         return {
                 'main_controllers_grp': main_ctrl_grp,
@@ -490,28 +441,20 @@ def build_mouth_block():
                 'main_locator_root': main_loc_root,
                 'aim_locators':vtx_locators,
                 'tweek_joints': vtx_joints,
-                'tweek_ctrls':tweek_controllers,
-                'tweek_ctrl_grp': tweek_ctrl_grp
+                'tweek_ctrls':tweek_controllers
                 }
 
     #---------------------------------------------------------------------
     #---------------------------------------------------------------------
 
-    upper_system = None
-    if has_upper:
-        upper_system = create_lips_system(name=name + '_Up',
-                                         edge=upper_edge,
-                                         color = 'yellow'
-                                         )
+    upper_system = create_lips_system(name=name + '_Up',
+                                     edge=upper_edge,
+                                     color = 'yellow'
+                                     )
 
-    lower_system = None
-    if has_lower:
-        lower_system = create_lips_system(name=name + '_Dw',
-                                         edge=lower_edge,
-                                         color = 'purple')
-
-    reference_system = upper_system if upper_system else lower_system
-    active_systems = [sys for sys in [upper_system, lower_system] if sys is not None]
+    lower_system = create_lips_system(name=name + '_Dw',
+                                     edge=lower_edge,
+                                     color = 'purple')
 
     #Clean Groups
     clean_ctrl_grp = cmds.group(em=True, name=name + nc['ctrl'] + nc['group'])
@@ -538,7 +481,7 @@ def build_mouth_block():
     cmds.select(center_ctrl + '.cv[0:8]')
     cmds.rotate(90,0,0)
     center_cluster = cmds.cluster()
-    cmds.delete(cmds.parentConstraint(reference_system['main_ctrl'], center_cluster))
+    cmds.delete(cmds.parentConstraint(upper_system['main_ctrl'], center_cluster))
     cmds.delete(center_ctrl, ch=True)
 
     cmds.connectAttr('{}.translate'.format(center_ctrl), '{}.translate'.format(center_grp))
@@ -557,7 +500,7 @@ def build_mouth_block():
     cmds.select(center_lips_ctrl + '.cv[0:8]')
     cmds.rotate(90,0,0)
     center_cluster = cmds.cluster()
-    cmds.delete(cmds.parentConstraint(reference_system['main_ctrl'], center_cluster))
+    cmds.delete(cmds.parentConstraint(upper_system['main_ctrl'], center_cluster))
     cmds.delete(center_lips_ctrl, ch=True)
 
     cmds.connectAttr('{}.translate'.format(center_lips_ctrl), '{}.translate'.format(center_lips_grp))
@@ -565,20 +508,6 @@ def build_mouth_block():
     cmds.connectAttr('{}.scale'.format(center_lips_ctrl), '{}.scale'.format(center_lips_grp))
 
     cmds.parent(center_lips_ctrl_root, center_ctrl)
-
-    # Create Lips_Ctrl above Lips_Center_Ctrl_Offset_Grp (center_ctrl_root)
-    lips_ctrl = mt.curve(input='',
-                         type='octagon',
-                         rename=True,
-                         custom_name=True,
-                         name=name + nc['ctrl'],
-                         size=ctrl_size * 1.3)
-    mt.assign_color(color='lightBlue')
-    lips_ctrl_root = mt.root_grp()[0]
-    cmds.delete(cmds.parentConstraint(mouth_center, lips_ctrl_root))
-    cmds.select(lips_ctrl + '.cv[0:8]')
-    cmds.rotate(90, 0, 0)
-    cmds.delete(lips_ctrl, ch=True)
 
 
     #Create Side Controllers
@@ -590,7 +519,7 @@ def build_mouth_block():
     for side in [nc['left'], nc['right']]:
         loc = cmds.spaceLocator(n=side + name + '_Main' + nc['locator'])[0]
         loc_root, loc_auto = mt.root_grp(autoRoot=True)
-        cmds.delete(cmds.parentConstraint(reference_system['sec_controllers'][-1], loc_root))
+        cmds.delete(cmds.parentConstraint(upper_system['sec_controllers'][-1], loc_root))
         cmds.delete(cmds.orientConstraint(orient_guide, loc_root))
 
         side_main_ctrl = mt.curve(input='',
@@ -671,7 +600,7 @@ def build_mouth_block():
             loc_root = mt.mirror_group(loc_root, world=True)
             left_main_ctrl_root = mt.mirror_group(left_main_ctrl_root, world=True)
 
-        # Restore original parenting of side locators to center_grp
+        #cmds.parent(loc_root, clean_rig_grp)
         cmds.parent(loc_root, center_grp)
         #cmds.parent(left_main_ctrl_root, clean_ctrl_grp)
         cmds.parent(left_main_ctrl_root, center_ctrl)
@@ -682,7 +611,7 @@ def build_mouth_block():
     #    print(ctrl, loc)
 
     #Make them follow corners an tops
-    for system in active_systems:
+    for system in [upper_system, lower_system]:
         joints = system['sec_joints']
         joints_roots = system['sec_joints_roots']
         ctrls = system['sec_controllers']
@@ -759,7 +688,7 @@ def build_mouth_block():
     left_rotation_mul_attr = mt.new_attr(input=side_controllers[0], name='SubAutoRotation', min=0, max=1, default=0.25)
     right_rotation_mul_attr = mt.new_attr(input=side_controllers[1], name='SubAutoRotation', min=0, max=1, default=0.25)
 
-    for system in active_systems:
+    for system in [upper_system, lower_system]:
         aim_locators = system['aim_locators']
         for num, loc in enumerate(aim_locators):
             print(loc)
@@ -787,35 +716,22 @@ def build_mouth_block():
         guide_attrs_position = cmds.spaceLocator(n=name + '_Attrs' + nc['locator'])[0]
     else:
         guide_attrs_position = attrs_position
-    if not cmds.attributeQuery('Mouth_Vis', n=guide_attrs_position, exists=True):
-        mt.line_attr(input=guide_attrs_position, name='Mouth_Vis')
-    if not cmds.attributeQuery('lipsMainCtrls', n=guide_attrs_position, exists=True):
-        main_ctrl_attr = mt.new_enum(input=guide_attrs_position, name='lipsMainCtrls', enums='Hide:Show', keyable=False)
-    else:
-        main_ctrl_attr = '{}.lipsMainCtrls'.format(guide_attrs_position)
-    if not cmds.attributeQuery('lipsCenterCtrls', n=guide_attrs_position, exists=True):
-        center_ctrl_attr = mt.new_enum(input=guide_attrs_position, name='lipsCenterCtrls', enums='Hide:Show', keyable=False)
-    else:
-        center_ctrl_attr = '{}.lipsCenterCtrls'.format(guide_attrs_position)
-    if not cmds.attributeQuery('lipsMidCtrls', n=guide_attrs_position, exists=True):
-        mid_ctrl_attr = mt.new_enum(input=guide_attrs_position, name='lipsMidCtrls', enums='Hide:Show', keyable=False)
-    else:
-        mid_ctrl_attr = '{}.lipsMidCtrls'.format(guide_attrs_position)
-    if not cmds.attributeQuery('lipsTweekCtrls', n=guide_attrs_position, exists=True):
-        show_tweeks_attr = mt.new_enum(input=guide_attrs_position, name='lipsTweekCtrls', enums='Hide:Show', keyable=False)
-    else:
-        show_tweeks_attr = '{}.lipsTweekCtrls'.format(guide_attrs_position)
+    mt.line_attr(input=guide_attrs_position, name='Mouth_Vis')
+    main_ctrl_attr = mt.new_enum(input=guide_attrs_position, name='lipsMainCtrls', enums='Hide:Show', keyable=False)
+    center_ctrl_attr = mt.new_enum(input=guide_attrs_position, name='lipsCenterCtrls', enums='Hide:Show', keyable=False)
+    mid_ctrl_attr = mt.new_enum(input=guide_attrs_position, name='lipsMidCtrls', enums='Hide:Show', keyable=False)
+    show_tweeks_attr = mt.new_enum(input=guide_attrs_position, name='lipsTweekCtrls', enums='Hide:Show', keyable=False)
 
     cmds.setAttr(main_ctrl_attr, 1)
 
-    for system in active_systems:
+    for system in [upper_system, lower_system]:
         for ctrl in system['sec_controllers']:
             shape = cmds.listRelatives(ctrl, s=True)[0]
             cmds.connectAttr(mid_ctrl_attr, '{}.v'.format(shape))
         for ctrl in system['tweek_ctrls']:
             shape = cmds.listRelatives(ctrl, s=True)[0]
             cmds.connectAttr(show_tweeks_attr, '{}.v'.format(shape))
-        for ctrl in [system['main_ctrl']]+[center_ctrl]+[lips_ctrl]+sub_side_controllers:
+        for ctrl in [system['main_ctrl']]+[center_ctrl]+sub_side_controllers:
             shape = cmds.listRelatives(ctrl, s=True)[0]
             cmds.connectAttr(main_ctrl_attr, '{}.v'.format(shape), f=True)
         for ctrl in [center_ctrl, center_lips_ctrl]:
@@ -827,54 +743,29 @@ def build_mouth_block():
         shape = cmds.listRelatives(ctrl, s=True)[0]
         cmds.connectAttr(main_ctrl_attr, '{}.v'.format(shape))
 
-    # Create Lips_Constrain_Grp above Lips_Ctrl's parent/offset group
-    lips_constrain_grp = cmds.group(em=True, name=name + '_Constrain' + nc['group'])
-    cmds.delete(cmds.parentConstraint(mouth_center, lips_constrain_grp))
-
-    # parent from GUI constrains Lips_Constrain_Grp instead of lips_ctrl_root (leaving offset group free)
-    cmds.parentConstraint(block_parent, lips_constrain_grp, mo=True)
-    cmds.scaleConstraint(block_parent, lips_constrain_grp, mo=True)
+    #parent ctrls to block parent
+    cmds.parentConstraint(block_parent, clean_ctrl_grp, mo=True)
 
     #Clean a bit
-    misc_grp = '{}{}'.format(setup['rig_groups']['misc'], nc['group'])
-    cmds.parent(clean_rig_grp, misc_grp)
+    cmds.parent(clean_rig_grp, '{}{}'.format(setup['rig_groups']['misc'], nc['group']))
     cmds.parent(clean_ctrl_grp, setup['base_groups']['control'] + nc['group'])
 
-    # Up vector locators go into rig group (once, outside the per-system loop)
-    cmds.parent(right_up_vector_locator, left_up_vector_locator, clean_rig_grp)
-
-    for system in active_systems:
-        # All rig items go into clean_rig_grp
-        cmds.parent(system['smooth_curve'],
-                    system['sec_joints_group'],
+    for system in [upper_system, lower_system]:
+        cmds.parent(system['linear_curve'], system['smooth_curve'],
                     system['wire_base'], system['follow_locs_grp'],
-                    system['linear_curve'],
-                    system['tweek_joints_groups'], system['tweek_ctrl_grp'],
+                    system['tweek_joints_groups'], system['sec_joints_group'],
+                    #system['main_locator_root'],
+                    right_up_vector_locator, left_up_vector_locator,
                     clean_rig_grp)
-        # Lips_Ctrl constrains only the FollowLocators groups
-        cmds.parentConstraint(lips_ctrl, system['follow_locs_grp'], mo=True)
-        cmds.scaleConstraint(lips_ctrl, system['follow_locs_grp'], mo=True)
-
-        # Lips_Ctrl parent constrains the Tweek Ctrl groups
-        cmds.parentConstraint(lips_ctrl, system['tweek_ctrl_grp'], mo=True)
-        
         cmds.parent(system['main_controllers_grp'], center_ctrl)
-        # Restore original parenting of main locator root to center_lips_grp
         cmds.parent(system['main_locator_root'], center_lips_grp)
 
-    cmds.parent(center_ctrl_root, lips_ctrl)
-    cmds.parent(lips_ctrl_root, lips_constrain_grp)
-    cmds.parent(lips_constrain_grp, clean_ctrl_grp)
+    cmds.parent(center_ctrl_root, clean_ctrl_grp)
     cmds.parent(center_root, clean_rig_grp)
 
     # create bind joints
     bind_jnt_grp = '{}{}'.format(setup['rig_groups']['bind_joints'], nc['group'])
-    active_joints = []
-    if upper_system:
-        active_joints += upper_system['tweek_joints']
-    if lower_system:
-        active_joints += lower_system['tweek_joints']
-    for jnt in active_joints:
+    for jnt in upper_system['tweek_joints'] + lower_system['tweek_joints']:
         cmds.select(cl=True)
         bind_joint = cmds.joint(n=jnt.replace(nc['joint'], nc['joint_bind']))
         cmds.parentConstraint(jnt, bind_joint)
