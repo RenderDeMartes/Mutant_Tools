@@ -80,34 +80,48 @@ except Exception as e:
 	cmds.warning('Error loading rstar.convention on load_AutoRigger')
 '''
 from Mutant_Tools.UI.AutoRigger import load_autoRiggerMenu
-reload(load_autoRiggerMenu)
-
 from Mutant_Tools.UI.CodeReader import load_codeReader
-reload(load_codeReader)
-log_ui = load_codeReader.Code_Reader(mode='view', code= '', config_attr = '')
-
 import Mutant_Tools.UI
 from Mutant_Tools.UI import QtMutantWindow
-reload(QtMutantWindow)
-
 import Mutant_Tools.UI.CustomWidgets.expandableWidget as expandableWidget
-reload(expandableWidget)
-
 import Mutant_Tools.UI.CustomWidgets.codeEditorWidget as codeEditorWidget
-reload(codeEditorWidget)
-
 from Mutant_Tools.Utils.Helpers import helpers
-reload(Mutant_Tools.Utils.Helpers.helpers)
 from Mutant_Tools.Utils.Helpers import decorators
-reload(decorators)
-mh = helpers.Helpers()
-
 import Mutant_Tools.Utils.IO
 from Mutant_Tools.Utils.IO import EasySkin
-reload(Mutant_Tools.Utils.IO.EasySkin)
-
 from Mutant_Tools.Utils.IO import CtrlUtils
-reload(Mutant_Tools.Utils.IO.CtrlUtils)
+
+# Read dev_mode early so reloads only happen during active development.
+# In production (dev_mode Off) skipping reloads avoids re-running all
+# module-level code on every UI open, which is the #1 startup cost.
+try:
+    _early_path = Path(os.path.dirname(__file__))
+    _early_folder = ''
+    for _p in _early_path.parts[:-2]:
+        _early_folder = os.path.join(_early_folder, _p)
+    with open(os.path.join(_early_folder, 'config', 'version.json')) as _vf:
+        _dev_mode = json.load(_vf).get('dev_mode', 'Off') == 'On'
+except Exception:
+    _dev_mode = False
+
+# QtMutantWindow must always be reloaded so Qt_Mutant stays fresh and
+# super(Qt_Mutant, self) resolves correctly in AutoRigger.__init__.
+# Its internal reload(load_autoRiggerMenu) is now guarded by _dev_mode
+# inside QtMutantWindow.py, so this is cheap in production.
+reload(QtMutantWindow)
+
+if _dev_mode:
+    reload(load_autoRiggerMenu)
+    reload(load_codeReader)
+    reload(expandableWidget)
+    reload(codeEditorWidget)
+    reload(Mutant_Tools.Utils.Helpers.helpers)
+    reload(decorators)
+    reload(Mutant_Tools.Utils.IO.EasySkin)
+    reload(Mutant_Tools.Utils.IO.CtrlUtils)
+
+log_ui = load_codeReader.Code_Reader(mode='view', code= '', config_attr = '')
+mh = helpers.Helpers()
 ctrls = CtrlUtils.Ctrls()
 
 #-------------------------------------------------------------------
@@ -153,23 +167,48 @@ Title = 'AutoRigger'
 import Mutant_Tools
 import Mutant_Tools.Utils.Rigging
 from Mutant_Tools.Utils.Rigging import main_mutant
-reload(Mutant_Tools.Utils.Rigging.main_mutant)
+if _dev_mode:
+    reload(Mutant_Tools.Utils.Rigging.main_mutant)
 
 mt = main_mutant.Mutant()
 
-import Mutant_Tools.UI.CustomWidgets.expandableWidget as expandableWidget
-reload(expandableWidget)
+#-------------------------------------------------------------------
+# Cache for block JSON data keyed by path. Values are (mtime, data) so
+# changed files are automatically re-read while unchanged ones are instant.
+_block_json_cache = {}
+
+def _load_block_json(path):
+    try:
+        mtime = os.path.getmtime(path)
+        entry = _block_json_cache.get(path)
+        if entry and entry[0] == mtime:
+            return entry[1]
+        with open(path, 'r') as f:
+            data = json.load(f)
+        _block_json_cache[path] = (mtime, data)
+        return data
+    except Exception:
+        return None
 
 #-------------------------------------------------------------------
-def add_sys_folders_remove_compiled():
-	#get all the paths for the blocks in the sys path
-	file_path = (str(__file__))
+_BLOCK_PATHS_READY = False
+
+def _ensure_block_sys_paths():
+	"""Fast path setup: ensure all block subfolders are importable."""
+	global _BLOCK_PATHS_READY
+	if _BLOCK_PATHS_READY:
+		return
 	blocks_root = os.path.join(FOLDER, 'Blocks')
 	for root, subdirs, files in os.walk(blocks_root):
 		if '__pycache__' in root or '.git' in root:
 			continue
 		if root not in sys.path:
 			sys.path.append(root)
+	_BLOCK_PATHS_READY = True
+
+def add_sys_folders_remove_compiled():
+	# Keep the path setup, then do expensive cleanup only when explicitly requested.
+	_ensure_block_sys_paths()
 
 	#Delete all pyc in the block folders so we dont need the imp.reload in the codes:
 	path = os.path.join(FOLDER, 'Blocks')
@@ -702,7 +741,8 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 
 		self.resize(605, 750)
 
-		#load blocks folders to sys and remove all the compiled info in BLOCKS and UI Folder
+		# Always ensure block folders are importable (fast). Full cache cleanup remains dev-only.
+		_ensure_block_sys_paths()
 		if mt.check_dev_mode():
 			add_sys_folders_remove_compiled()
 		self.reload_ready = False
@@ -1221,7 +1261,10 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		if self.reload_ready and not mt.check_dev_mode():
 			return True
 
-		add_sys_folders_remove_compiled()
+		if mt.check_dev_mode():
+			add_sys_folders_remove_compiled()
+		else:
+			_ensure_block_sys_paths()
 
 		#'create all the buttons in the tabs blocks'
 		blocks_folders = os.listdir(os.path.join(FOLDER, 'Blocks'))
@@ -1321,6 +1364,57 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		
 		sorted_versions = sorted(versions.keys())
 		return sorted_versions, versions
+
+	def _extract_module_name_from_import_command(self, import_command):
+		"""Extract module name from simple import command strings."""
+		if not import_command:
+			return None
+		match = re.search(r'\bimport\s+([A-Za-z_][A-Za-z0-9_]*)', import_command)
+		if match:
+			return match.group(1)
+		return None
+
+	def _module_file_exists(self, module_name):
+		"""Check if a module can be resolved from current sys.path without importing it."""
+		if not module_name:
+			return False
+		try:
+			import importlib.util
+			return importlib.util.find_spec(module_name) is not None
+		except:
+			return False
+
+	def _resolve_build_commands_for_legacy_versioning(self, import_command, build_command):
+		"""
+		Route legacy unversioned block commands to v001 when available.
+		This keeps older scenes building after non-versioned block files are removed.
+		"""
+		resolved_import = import_command
+		resolved_build = build_command
+
+		module_name = self._extract_module_name_from_import_command(import_command)
+		if not module_name:
+			return resolved_import, resolved_build
+
+		# Only remap legacy (non-versioned) module names.
+		if re.search(r'_v\d+$', module_name):
+			return resolved_import, resolved_build
+
+		v001_module = '{}_v001'.format(module_name)
+		if not self._module_file_exists(v001_module):
+			return resolved_import, resolved_build
+
+		# Keep import command style but replace the target module token.
+		resolved_import = re.sub(r'\bimport\s+{}'.format(re.escape(module_name)),
+								'import {}'.format(v001_module),
+								import_command,
+								count=1)
+
+		# Build command is typically exec_mod.build_name_block(); update module reference only.
+		if build_command:
+			resolved_build = build_command.replace('{}.'.format(module_name), '{}.'.format(v001_module), 1)
+
+		return resolved_import, resolved_build
 
 	def get_mutant_config_attr(self, attr, config):
 		attr_type = cmds.getAttr('{}.{}'.format(config, attr), type=True)
@@ -1509,6 +1603,8 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 				skipped += 1
 				continue
 
+			import_cmd, _ = self._resolve_build_commands_for_legacy_versioning(import_cmd, None)
+
 			module = json_modules.get(import_cmd)
 			if not module:
 				skipped += 1
@@ -1687,8 +1783,7 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 
 			if have_order:
 				order_path = os.path.join(FOLDER, 'Blocks', block_folder, 'order.json')
-				with open(order_path, "r") as order_path_file:
-					order_data = json.load(order_path_file)
+				order_data = _load_block_json(order_path)
 
 				files = []
 				for tittle in order_data:
@@ -1725,9 +1820,9 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 					button.installEventFilter(_block_tooltip_filter)
 
 				else:
-					#read the json file with block information
-					with open(block_file, "r") as block_info_file:
-						block = json.load(block_info_file)
+					block = _load_block_json(block_file)
+					if block is None:
+						continue
 
 					#create button
 					if block_info_item:
@@ -2297,10 +2392,11 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 				if v_match:
 					current_version = v_match.group(1)
 				else:
-					# If the block has no version suffix, it was created before versioning.
-					# Since their active code is version 2, default to the latest version (e.g. v002).
-					if sorted_versions:
-						current_version = sorted_versions[-1]
+					# If legacy block has no version suffix, treat it as v001 for compatibility.
+					if 'v001' in sorted_versions:
+						current_version = 'v001'
+					elif sorted_versions:
+						current_version = sorted_versions[0]
 			
 			version_row = QtWidgets.QHBoxLayout()
 			version_row.setContentsMargins(3, 5, 3, 5)
@@ -2355,6 +2451,40 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 			version_row.addWidget(version_dropdown)
 			version_row.addStretch()
 			v_layout.addLayout(version_row)
+
+			# Warning banner + update button when not on the latest version
+			latest_version = sorted_versions[-1]
+			if current_version != latest_version:
+				warn_widget = QtWidgets.QWidget()
+				warn_widget.setStyleSheet(
+					'background-color: #7a5800; border-radius: 4px; margin: 2px 0px;')
+				warn_layout = QtWidgets.QHBoxLayout(warn_widget)
+				warn_layout.setContentsMargins(8, 5, 8, 5)
+				warn_layout.setSpacing(6)
+
+				warn_icon = QtWidgets.QLabel('!')
+				warn_icon.setStyleSheet(
+					'color: #ffcc00; font-weight: bold; font-size: 14px; background: transparent;')
+				warn_icon.setFixedWidth(14)
+
+				warn_label = QtWidgets.QLabel(
+					'<b>{}</b> available'.format(latest_version))
+				warn_label.setStyleSheet('color: #ffcc00; background: transparent;')
+
+				update_btn = QtWidgets.QPushButton('Update to {}'.format(latest_version))
+				update_btn.setStyleSheet(
+					'background-color: #a07000; color: white;'
+					' border-radius: 3px; padding: 2px 10px;')
+				update_btn.setFixedHeight(22)
+				update_btn.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+				update_btn.clicked.connect(
+					lambda _=None, lv=latest_version: change_version(lv))
+
+				warn_layout.addWidget(warn_icon)
+				warn_layout.addWidget(warn_label)
+				warn_layout.addStretch()
+				warn_layout.addWidget(update_btn)
+				v_layout.addWidget(warn_widget)
 
 		# layout_separator = QtWidgets.QLabel()
 		# layout_separator.setStyleSheet("border : 5px solid grey; ")
@@ -2984,16 +3114,18 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 					# Generic block builder execution: call the block's Build_Command with force=True
 					executed = False
 					build_cmd = None
+					import_cmd = None
 					if cmds.attributeQuery('Build_Command', n=before_config, exists=True):
 						build_cmd = cmds.getAttr('{}.Build_Command'.format(before_config), asString=True)
+					if cmds.attributeQuery('Import_Command', n=before_config, exists=True):
+						import_cmd = cmds.getAttr('{}.Import_Command'.format(before_config), asString=True)
+
+					import_cmd, build_cmd = self._resolve_build_commands_for_legacy_versioning(import_cmd, build_cmd)
 					
 					if build_cmd:
 						build_cmd_force = build_cmd.replace('()', '(force=True)') if '()' in build_cmd else build_cmd
 						
 						# Ensure module is imported
-						import_cmd = None
-						if cmds.attributeQuery('Import_Command', n=before_config, exists=True):
-							import_cmd = cmds.getAttr('{}.Import_Command'.format(before_config), asString=True)
 						if import_cmd:
 							try:
 								exec(import_cmd)
@@ -3080,9 +3212,11 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 					continue
 				precode = cmds.getAttr('{}.precode'.format(config))
 				import_command = cmds.getAttr('{}.Import_Command'.format(config))
-				reload_command = import_command.replace('import', 'reload(')+')'.replace(' ', '')
 				buid_command = cmds.getAttr('{}.Build_Command'.format(config))
 				postcode = cmds.getAttr('{}.postcode'.format(config))
+
+				import_command, buid_command = self._resolve_build_commands_for_legacy_versioning(import_command, buid_command)
+				reload_command = import_command.replace('import', 'reload(')+')'.replace(' ', '')
 
 				self.ui.bar_label.setText(buid_command)
 				self.ui.bar_label.setToolTip(buid_command)
@@ -3222,16 +3356,18 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 					# Generic block builder execution: call the block's Build_Command with force=True
 					executed = False
 					build_cmd = None
+					import_cmd = None
 					if cmds.attributeQuery('Build_Command', n=deferred_config, exists=True):
 						build_cmd = cmds.getAttr('{}.Build_Command'.format(deferred_config), asString=True)
+					if cmds.attributeQuery('Import_Command', n=deferred_config, exists=True):
+						import_cmd = cmds.getAttr('{}.Import_Command'.format(deferred_config), asString=True)
+
+					import_cmd, build_cmd = self._resolve_build_commands_for_legacy_versioning(import_cmd, build_cmd)
 					
 					if build_cmd:
 						build_cmd_force = build_cmd.replace('()', '(force=True)') if '()' in build_cmd else build_cmd
 						
 						# Ensure module is imported
-						import_cmd = None
-						if cmds.attributeQuery('Import_Command', n=deferred_config, exists=True):
-							import_cmd = cmds.getAttr('{}.Import_Command'.format(deferred_config), asString=True)
 						if import_cmd:
 							try:
 								exec(import_cmd)
@@ -3610,16 +3746,22 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 			return
 
 		import_command = cmds.getAttr('{}.Import_Command'.format(config))
+		import_command, _ = self._resolve_build_commands_for_legacy_versioning(import_command, None)
 		build_file = import_command.replace('import ', '')
 
 		current_path = os.path.join(FOLDER, 'Blocks')
 		script_name = build_file + '.py'
+		file_path = None
 
 		# if we need find it first
 		for root, dirs, files in os.walk(current_path):
 			for name in files:
 				if name == script_name:
 					file_path = os.path.abspath(os.path.join(root, name))
+
+		if not file_path:
+			cmds.warning('Build script not found: {}'.format(script_name))
+			return
 
 		with open(file_path) as build_data:
 			build_script = build_data.read()

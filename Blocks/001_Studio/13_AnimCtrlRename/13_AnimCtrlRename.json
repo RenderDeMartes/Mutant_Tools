@@ -1,0 +1,19 @@
+{
+    "Name":  "AnimCtrlRename",
+    "Description":  "Renames animation controls and all their related nodes (shapes, constraints, offset groups, etc.) based on a search-and-replace list.",
+    "Icon":  "Rename.png",
+    "Enable":  "True",
+    "Tab":  "Studio",
+    "python_file":  "exec_anim_ctrl_rename_v001.py",
+    "import":  "import exec_anim_ctrl_rename_v001",
+    "imp.reload":  "reload(exec_anim_ctrl_rename_v001)",
+    "exec_command":  "exec_anim_ctrl_rename_v001.create_animctrlrename_block()",
+    "build_command":  "exec_anim_ctrl_rename_v001.build_animctrlrename_block()",
+    "attrs":  {
+                  "RunBeforeBuild_bool":  "False",
+                  "RunAfterBuild_bool":  "False",
+                  "Revert_bool":  "False",
+                  "RenameList_string":  "",
+                  "Help_string":  "Overview:\n  Renames animation controls and all their related nodes (shapes, constraints, offset groups, etc.) based on a search-and-replace list.\n\nHow To Use:\n  1. Create the block.\n  2. Paste a two-column spreadsheet (old_name and new_name) or select controls and click Add Selected.\n  3. Double-click any entry in the list to edit it manually if needed.\n  4. When you click Build, all controls and their related constraints/shapes will be renamed safely.\n\nFields:\n- RunBeforeBuild: Check True to run renaming before the main build begins.\n- RunAfterBuild: Check True to defer execution until after the full build finishes (so shape files and skins are loaded first before renaming).\n- Revert: Check True to reverse the renaming direction (e.g. for entry old = new, \u0027new\u0027 will be renamed to \u0027old\u0027).\n- RenameList: List of old_name = new_name entries."
+              }
+}

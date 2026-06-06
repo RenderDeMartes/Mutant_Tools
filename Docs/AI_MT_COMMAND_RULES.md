@@ -24,6 +24,23 @@ For a human-oriented walkthrough with many practical examples, see:
 
 ## 2) Mandatory `mt` Usage Rules
 
+### 2.0 Block versioning is mandatory (v001 baseline)
+For every block definition, use versioned implementation files:
+- `exec_<block>_v001.py`
+- `<prefix>_<BlockName>_v001.json`
+
+Keep the launcher block JSON without suffix (for example `003_Mouth.json`), but make it point to `v001` in these fields:
+- `python_file`
+- `import`
+- `imp.reload`
+- `exec_command`
+- `build_command`
+
+When creating a new version:
+1. Copy latest versioned exec/json (`v00X`) to next version (`v00X+1`).
+2. Update launcher JSON commands to the new version.
+3. Do not overwrite older version files; keep them buildable for old scenes.
+
 ### 2.1 Always bootstrap with config imports
 Inside block create/build functions, AI should use:
 - `nc, curve_data, setup = mt.import_configs()`
@@ -145,6 +162,8 @@ Follow these rules strictly:
 11) When adding a new attribute to a block JSON, always guard its getAttr in the build function with
     cmds.attributeQuery('AttrName', node=config, exists=True) so old saved rigs without the attr
     still build without errors (backwards compatibility).
+12) Block versioning is required: create/update versioned files (exec/json) and keep launcher JSON
+   pointing to the active version (starting at v001).
 
 When requirements are ambiguous, choose the simplest solution consistent with existing blocks.
 ```

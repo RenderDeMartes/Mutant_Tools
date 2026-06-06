@@ -1,0 +1,15 @@
+{
+    "Name":  "Wings",
+    "Description":  "Create Wings System RdM Wings",
+    "Icon":  "Wing.png",
+    "Enable":  "True",
+    "python_file":  "exec_wings_v001.py",
+    "import":  "import exec_wings_v001",
+    "imp.reload":  "reload(exec_wings_v001)",
+    "exec_command":  "exec_wings_v001.create_wings_block()",
+    "build_command":  "exec_wings_v001.build_wings_block()",
+    "attrs":  {
+                  "SetParent_string":  "new_locator",
+                  "Help_string":  "Overview:\n  Create Wings System RdM Wings.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetParent: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- Template parent examples: Spine_End_Jnt, Head_Jnt, L_Wrist_Jnt.\n\nTips:\n- start with defaults, build once, then tweak only the fields you need."
+              }
+}

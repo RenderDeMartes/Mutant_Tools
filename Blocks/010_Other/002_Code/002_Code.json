@@ -1,0 +1,17 @@
+{
+    "Name":  "Code",
+    "Description":  "Execute custom code",
+    "Icon":  "CODE.png",
+    "Enable":  "True",
+    "python_file":  "exec_code_v001.py",
+    "import":  "import exec_code_v001",
+    "imp.reload":  "reload(exec_code_v001)",
+    "exec_command":  "exec_code_v001.create_code_block()",
+    "build_command":  "exec_code_v001.build_code_block()",
+    "attrs":  {
+                  "Exec_enum":  "Python:Mel",
+                  "RunBeforeBuild_bool":  "False",
+                  "RunAfterBuild_bool":  "False",
+                  "Code_string":  ""
+              }
+}

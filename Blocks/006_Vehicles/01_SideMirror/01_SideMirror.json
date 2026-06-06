@@ -1,0 +1,18 @@
+{
+    "Name":  "L_SideMirror",
+    "Description":  "This will create side mirror controllers",
+    "Icon":  "SideMirror.png",
+    "Enable":  "True",
+    "python_file":  "exec_side_mirror_v001.py",
+    "import":  "import exec_side_mirror_v001",
+    "imp.reload":  "reload(exec_side_mirror_v001)",
+    "exec_command":  "exec_side_mirror_v001.create_side_mirror_block()",
+    "build_command":  "exec_side_mirror_v001.build_side_mirror_block()",
+    "attrs":  {
+                  "SetParent_string":  "new_locator",
+                  "Mirror_enum":  "True:False:Right_Only",
+                  "CtrlSize_float":  "4",
+                  "CtrlType_enum":  "circleX:bounding_cube",
+                  "Help_string":  "Overview:\n  This will create side mirror controllers.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetParent: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- Mirror: choose one option (for example: True, False, Right_Only).\n- CtrlSize: numeric value that controls size/amount/intensity (default 4).\n- CtrlType: choose one option (for example: circleX, bounding_cube).\n- Template parent examples: Spine_End_Jnt, Head_Jnt, L_Wrist_Jnt.\n\nTips:\n- start with defaults, build once, then tweak only the fields you need."
+              }
+}

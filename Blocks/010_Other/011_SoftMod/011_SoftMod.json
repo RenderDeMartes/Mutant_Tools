@@ -1,0 +1,17 @@
+{
+    "Name":  "SoftMod",
+    "Description":  "This will add a soft mod to a given vertex",
+    "Icon":  "SoftMod.png",
+    "Enable":  "True",
+    "python_file":  "exec_softMod_v001.py",
+    "import":  "import exec_softMod_v001 ",
+    "imp.reload":  "reload(exec_softMod_v001)",
+    "exec_command":  "exec_softMod_v001.create_softMod_block()",
+    "build_command":  "exec_softMod_v001.build_softMod_block()",
+    "attrs":  {
+                  "SetTargetVertex_string":  "",
+                  "SetControlParent_string":  "Ctrl_Grp",
+                  "Mirror_bool":  "False",
+                  "Help_string":  "Overview:\n  This will add a soft mod to a given vertex.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetTargetVertex: set the node/object name this block should use.\n- Mirror: turn this ON/OFF depending on whether you want that feature.\n- SetControlParent: set the node/object name this block should use.\n- Template parent examples: Spine_End_Jnt, Head_Jnt, L_Wrist_Jnt.\n\nTips:\n- if a field says left/right or mirror, use it to generate the opposite side quickly."
+              }
+}

@@ -1,0 +1,14 @@
+{
+    "Name":  "tortoiseTemplate",
+    "Description":  "Will Import the tortoise template",
+    "Icon":  "Tortoise.png",
+    "Enable":  "True",
+    "python_file":  "exec_tortoiseTemplate_v001.py",
+    "import":  "import exec_tortoiseTemplate_v001",
+    "imp.reload":  "reload(exec_tortoiseemplate)",
+    "exec_command":  "exec_tortoiseTemplate_v001.create_tortoisetemplate_block()",
+    "build_command":  "exec_tortoiseTemplate_v001.build_tortoisetemplate_block()",
+    "attrs":  {
+
+              }
+}

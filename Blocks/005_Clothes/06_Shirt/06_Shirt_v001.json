@@ -1,0 +1,17 @@
+{
+    "Name":  "Shirt",
+    "Description":  "Create a Shirt System",
+    "Icon":  "Shirt.png",
+    "Enable":  "True",
+    "python_file":  "exec_shirt_v001.py",
+    "import":  "import exec_shirt_v001",
+    "imp.reload":  "reload(exec_shirt_v001)",
+    "exec_command":  "exec_shirt_v001.create_shirt_block()",
+    "build_command":  "exec_shirt_v001.build_shirt_block()",
+    "attrs":  {
+                  "SetParent_string":  "new_locator",
+                  "SetGeo_string":  "new_cube",
+                  "WireDropoff_float":  "10",
+                  "Help_string":  "Overview:\n  Create a Shirt System.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetParent: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- SetGeo: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- WireDropoff: numeric value that controls size/amount/intensity (default 10).\n- Template parent examples: Spine_End_Jnt, Head_Jnt, L_Wrist_Jnt.\n\nTips:\n- start with defaults, build once, then tweak only the fields you need."
+              }
+}

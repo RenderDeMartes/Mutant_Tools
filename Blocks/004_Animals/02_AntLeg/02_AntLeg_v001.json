@@ -1,0 +1,16 @@
+{
+    "Name":  "L_Front_AntLeg",
+    "Description":  "This will create a AntLeg System",
+    "Icon":  "AntLeg.png",
+    "Enable":  "True",
+    "python_file":  "exec_antleg_v001.py",
+    "import":  "import exec_antleg_v001",
+    "imp.reload":  "reload(exec_antleg_v001)",
+    "exec_command":  "exec_antleg_v001.create_antleg_block()",
+    "build_command":  "exec_antleg_v001.build_antleg_block()",
+    "attrs":  {
+                  "SetParent_string":  "new_locator",
+                  "Mirror_enum":  "True:False:Right_Only",
+                  "Help_string":  "Overview:\n  This will create a AntLeg System.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetParent: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- Mirror: choose one option (for example: True, False, Right_Only).\n- Template parent examples: L_FrontDoor_Ctrl, Spine_End_Jnt, Head_Jnt.\n\nTips:\n- start with defaults, build once, then tweak only the fields you need."
+              }
+}

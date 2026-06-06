@@ -1,0 +1,14 @@
+{
+    "Name":  "pigTemplate",
+    "Description":  "Will Import the pig template",
+    "Icon":  "Pig.png",
+    "Enable":  "True",
+    "python_file":  "exec_pigTemplate_v001.py",
+    "import":  "import exec_pigTemplate_v001",
+    "imp.reload":  "reload(exec_pigemplate)",
+    "exec_command":  "exec_pigTemplate_v001.create_pigtemplate_block()",
+    "build_command":  "exec_pigTemplate_v001.build_pigtemplate_block()",
+    "attrs":  {
+
+              }
+}

@@ -1,0 +1,14 @@
+{
+    "Name":  "Root",
+    "Description":  "Create root joint at 0,0,0",
+    "Icon":  "Root.png",
+    "Enable":  "True",
+    "python_file":  "exec_root_v001.py",
+    "import":  "import exec_root_v001",
+    "imp.reload":  "reload(exec_root_v001)",
+    "exec_command":  "exec_root_v001.create_root_block()",
+    "build_command":  "exec_root_v001.build_root_block()",
+    "attrs":  {
+                  "SetParent_string":  "Bind_Joints_Grp"
+              }
+}

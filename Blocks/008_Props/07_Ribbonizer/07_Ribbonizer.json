@@ -1,0 +1,28 @@
+{
+    "Name":  "Ribbon",
+    "Description":  "Creates a ribbon, Copyright (C) 2018 Orkhan Ashrafov\n",
+    "Icon":  "Ribbon.png",
+    "Enable":  "True",
+    "python_file":  "exec_ribbonizer_v001.py",
+    "import":  "import exec_ribbonizer_v001",
+    "imp.reload":  "reload(exec_ribbonizer_v001)",
+    "exec_command":  "exec_ribbonizer_v001.create_ribbonizer_block()",
+    "build_command":  "exec_ribbonizer_v001.build_ribbonizer_block()",
+    "attrs":  {
+                  "SetParent_string":  "new_locator",
+                  "Mirror_enum":  "False:True:Right_Only",
+                  "Equal_bool":  "True",
+                  "Ctrls_float":  "5",
+                  "Joints_float":  "5",
+                  "Constraint_bool":  "True",
+                  "AddFk_bool":  "True",
+                  "FkOnLast_bool":  "False",
+                  "Wire_bool":  "False",
+                  "CtrlScales_bool":  "False",
+                  "JointOrient_bool":  "False",
+                  "MiddleCtrlPosition_enum":  "Original:Start:End",
+                  "CtrlOrientation_enum":  "SurfaceNormal:WorldForward",
+                  "Gimbal_bool":  "False",
+                  "Help_string":  "Overview:\n  Creates a ribbon, Copyright (C) 2018 Orkhan Ashrafov.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetParent: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- Mirror: True builds both L_ and R_ sides (auto-prefixes L_ if needed). Right_Only mirrors to the right side only. False builds as-is.\n- Equal: evenly spaces controls and joints along the ribbon. When OFF, spacing follows the surface parameterization.\n- Ctrls: number of IK controls along the ribbon (default 5).\n- Joints: number of bind joints along the ribbon (default 5).\n- Constraint: ON uses parentConstraint/scaleConstraint to link IK controls to their joints (supports offsets, more flexible). OFF uses direct attribute connections (lighter, no constraint overhead).\n- AddFk: adds an FK control chain on top of the IK controls for layered animation.\n- FkOnLast: when ON (and AddFk is ON), adds an FK control on the final IK control as well. Default is OFF, which skips the last control.\n- Wire: uses a wire deformer instead of a skinCluster to drive the ribbon surface. Needs at least 2 controls.\n- CtrlScales: when ON, unlocks scale attributes on the IK controls and connects them to the bind joints.\n- JointOrient: when ON, bind joints orient to the nearest control joint instead of the follicle surface normal.\n- MiddleCtrlPosition: where the main control is placed. Original uses the surface bounding box center. Start/End places it at the first/last bind joint.\n- CtrlOrientation: SurfaceNormal keeps the default follicle orientation (Z follows surface normal). WorldForward orients controls and joints so Z faces world-forward and Y faces world-up.\n- Gimbal: adds a nested gimbal control under the Ribbon Main Control for clean rotations.\n- Template parent examples: Spine_End_Jnt, Head_Jnt, L_Wrist_Jnt.\n\nTips:\n- if a field says left/right or mirror, use it to generate the opposite side quickly."
+              }
+}

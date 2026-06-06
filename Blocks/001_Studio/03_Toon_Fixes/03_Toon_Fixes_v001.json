@@ -1,0 +1,14 @@
+{
+    "Name":  "Toon_Fixes",
+    "Description":  "Fixes for Toon Chars",
+    "Icon":  "letter-b.png",
+    "Enable":  "True",
+    "python_file":  "exec_toon_fixes_v001.py",
+    "import":  "import exec_toon_fixes_v001",
+    "imp.reload":  "reload(exec_toon_fixes_v001)",
+    "exec_command":  "exec_toon_fixes_v001.create_toon_fixes_block()",
+    "build_command":  "exec_toon_fixes_v001.build_toon_fixes_block()",
+    "attrs":  {
+                  "Help_string":  "Overview:\n  Fixes for Toon Chars.\n\nHow To Use:\n  usually you can build directly with defaults, then adjust if needed."
+              }
+}

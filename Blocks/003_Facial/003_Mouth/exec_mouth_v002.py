@@ -29,7 +29,7 @@ PYBLOCK_NAME = 'exec_mouth_v002'
 #Read name conventions as nc[''] and setup as seup['']
 PATH = os.path.dirname(__file__)
 PATH = Path(PATH)
-PATH_PARTS = PATH.parts[:-2]
+PATH_PARTS = PATH.parts[:-3]
 FOLDER=''
 for f in PATH_PARTS:
     FOLDER = os.path.join(FOLDER, f)
@@ -43,7 +43,7 @@ def create_mouth_block(name='Mouth'):
     # Read name conventions as nc[''] and setup as seup['']
     PATH = os.path.dirname(__file__)
     PATH = Path(PATH)
-    PATH_PARTS = PATH.parts[:-2]
+    PATH_PARTS = PATH.parts[:-3]
     FOLDER = ''
     for f in PATH_PARTS:
         FOLDER = os.path.join(FOLDER, f)

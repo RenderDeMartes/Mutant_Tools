@@ -1,0 +1,19 @@
+{
+    "Name":  "L_Pelvis",
+    "Description":  "This will create a Pelvis System to connect your legs",
+    "Icon":  "Pelvis.png",
+    "Enable":  "True",
+    "python_file":  "exec_pelvis_v001.py",
+    "import":  "import exec_pelvis_v001",
+    "imp.reload":  "reload(exec_pelvis_v001)",
+    "exec_command":  "exec_pelvis_v001.create_pelvis_block()",
+    "build_command":  "exec_pelvis_v001.build_pelvis_block()",
+    "attrs":  {
+                  "SetParent_string":  "new_locator",
+                  "Mirror_enum":  "True:False:Right_Only",
+                  "CtrlType_enum":  "hexagon:sphere:cube:square:octagon:pringle:feet:hand:circleY:circleX:circleZ:3dArrow:2dArrow:mover:2dArrow:root:cog",
+                  "CtrlSize_float":  "4",
+                  "SetGameParent_string":  "",
+                  "Help_string":  "Overview:\n  This will create a Pelvis System to connect your legs.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetParent: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- Mirror: choose one option (for example: True, False, Right_Only).\n- CtrlType: choose one option (for example: hexagon, sphere, cube, square).\n- CtrlSize: numeric value that controls size/amount/intensity (default 4).\n- SetGameParent: set the node/object name this block should use.\n- Template parent examples: L_Pelvis_Jnt, L_Pelvis_Ctrl, L_LegSlideSlideDriver_Loc.\n\nTips:\n- start with defaults, build once, then tweak only the fields you need."
+              }
+}

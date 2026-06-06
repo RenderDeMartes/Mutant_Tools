@@ -1,0 +1,14 @@
+{
+    "Name":  "seagullTemplate",
+    "Description":  "Will Import the seagull template",
+    "Icon":  "Seagull.png",
+    "Enable":  "True",
+    "python_file":  "exec_seagullTemplate_v001.py",
+    "import":  "import exec_seagullTemplate_v001",
+    "imp.reload":  "reload(exec_seagullTemplate_v001)",
+    "exec_command":  "exec_seagullTemplate_v001.create_seagulltemplate_block()",
+    "build_command":  "exec_seagullTemplate_v001.build_seagulltemplate_block()",
+    "attrs":  {
+
+              }
+}

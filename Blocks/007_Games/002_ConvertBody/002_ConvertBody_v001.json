@@ -1,0 +1,16 @@
+{
+    "Name":  "ConvertBody",
+    "Description":  "Will convert Mutant Body Template to Games",
+    "Icon":  "BodyGames.png",
+    "Enable":  "True",
+    "python_file":  "exec_convertbody_v001.py",
+    "import":  "import exec_convertbody_v001",
+    "imp.reload":  "reload(exec_convertbody_v001)",
+    "exec_command":  "exec_convertbody_v001.create_convertbody_block()",
+    "build_command":  "exec_convertbody_v001.build_convertbody_block()",
+    "attrs":  {
+                  "Engine_enum":  "unity:unreal",
+                  "scale_enum":  "None:Direct:Constraints",
+                  "Help_string":  "Overview:\n  Will convert Mutant Body Template to Games.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- Engine: choose one option (for example: unity, unreal).\n- scale: choose one option (for example: None, Direct, Constraints).\n\nTips:\n- start with defaults, build once, then tweak only the fields you need."
+              }
+}

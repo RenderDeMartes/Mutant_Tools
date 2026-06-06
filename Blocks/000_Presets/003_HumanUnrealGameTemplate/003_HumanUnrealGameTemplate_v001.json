@@ -1,0 +1,14 @@
+{
+    "Name":  "humanUnrealGameTemplate",
+    "Description":  "Will import the Human Unreal Game Template to work on Game Engines",
+    "Icon":  "HumanGameUnreal.png",
+    "Enable":  "True",
+    "python_file":  "exec_humanUnrealGameTemplate_v001.py",
+    "import":  "import exec_humanUnrealGameTemplate_v001",
+    "imp.reload":  "reload(exec_humanUnrealGameTemplate_v001)",
+    "exec_command":  "exec_humanUnrealGameTemplate_v001.create_humanUnrealGameTemplate_block()",
+    "build_command":  "exec_humanUnrealGameTemplate_v001.build_humanUnrealGameTemplate_block()",
+    "attrs":  {
+
+              }
+}

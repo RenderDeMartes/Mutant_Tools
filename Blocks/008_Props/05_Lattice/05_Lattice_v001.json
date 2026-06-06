@@ -1,0 +1,21 @@
+{
+    "Name":  "Lattice",
+    "Description":  "Lattice Local Rig",
+    "Icon":  "Lattice.png",
+    "Enable":  "True",
+    "python_file":  "exec_lattice_v001.py",
+    "import":  "import exec_lattice_v001",
+    "imp.reload":  "reload(exec_lattice_v001)",
+    "exec_command":  "exec_lattice_v001.create_lattice_block()",
+    "build_command":  "exec_lattice_v001.build_lattice_block()",
+    "attrs":  {
+                  "SetGeo_string":  "new_cube",
+                  "SetParent_string":  "new_locator",
+                  "SetAttrsPosition_string":  "new_locator",
+                  "Local_bool":  "False",
+                  "Divisions_float":  "3",
+                  "CtrlSize_float":  "4",
+                  "CtrlColor_enum":  "purple:lightBlue:blue:white:green:red:yellow:grey",
+                  "Help_string":  "Overview:\n  Lattice Local Rig.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetGeo: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- SetParent: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- SetAttrsPosition: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- Local: turn this ON/OFF depending on whether you want that feature.\n- CtrlSize: numeric value that controls size/amount/intensity (default 4).\n- CtrlColor: choose one option (for example: purple, lightBlue, blue, white).\n- Template parent examples: Spine_End_Jnt, Head_Jnt, L_Wrist_Jnt.\n- Template attrs-position examples: Vis_Ctrl, L_Eyelids_Scale_Ctrl, L_Brow_Ctrl.\n\nTips:\n- if a field says left/right or mirror, use it to generate the opposite side quickly."
+              }
+}

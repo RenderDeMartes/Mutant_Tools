@@ -1,0 +1,15 @@
+{
+    "Name":  "Unselectable",
+    "Description":  "Make transforms Unselectable",
+    "Icon":  "Unselectable.png",
+    "Enable":  "True",
+    "python_file":  "exec_unselectable_v001.py",
+    "import":  "import exec_unselectable_v001",
+    "imp.reload":  "reload(exec_unselectable_v001)",
+    "exec_command":  "exec_unselectable_v001.create_unselectable_block()",
+    "build_command":  "exec_unselectable_v001.build_unselectable_block()",
+    "attrs":  {
+                  "SetGeo_string":  "",
+                  "LockAttr_string":  "Global_Ctrl.Geo"
+              }
+}

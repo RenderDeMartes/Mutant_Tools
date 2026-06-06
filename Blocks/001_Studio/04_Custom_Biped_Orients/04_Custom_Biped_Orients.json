@@ -1,0 +1,21 @@
+{
+    "Name":  "Custom_Biped_Orients",
+    "Description":  "Custom biped controller orient fixes",
+    "Icon":  "Custom_Biped_Orients.png",
+    "Enable":  "True",
+    "python_file":  "exec_custom_biped_orients_v001.py",
+    "import":  "import exec_custom_biped_orients_v001",
+    "imp.reload":  "reload(exec_custom_biped_orients_v001)",
+    "exec_command":  "exec_custom_biped_orients_v001.create_custom_biped_orients_block()",
+    "build_command":  "exec_custom_biped_orients_v001.build_custom_biped_orients_block()",
+    "attrs":  {
+                  "FixArms_bool":  "True",
+                  "FixClavicles_bool":  "True",
+                  "FixPelvis_bool":  "True",
+                  "FixLegs_bool":  "True",
+                  "FixToes_bool":  "True",
+                  "FixFingers_bool":  "True",
+                  "FixMisc_bool":  "True",
+                  "Help_string":  "Overview:\n  Custom biped controller orient fixes.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- FixArms: turn this ON/OFF depending on whether you want that feature.\n- FixClavicles: turn this ON/OFF depending on whether you want that feature.\n- FixPelvis: turn this ON/OFF depending on whether you want that feature.\n- FixLegs: turn this ON/OFF depending on whether you want that feature.\n- FixToes: turn this ON/OFF depending on whether you want that feature.\n- FixFingers: turn this ON/OFF depending on whether you want that feature.\n- FixMisc: turn this ON/OFF depending on whether you want that feature.\n\nTips:\n- if a field says left/right or mirror, use it to generate the opposite side quickly."
+              }
+}

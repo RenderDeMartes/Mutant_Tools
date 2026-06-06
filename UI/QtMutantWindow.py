@@ -61,7 +61,6 @@ except:
     import imp;from imp import reload
 
 from Mutant_Tools.UI.AutoRigger import load_autoRiggerMenu
-reload(load_autoRiggerMenu)
 
 #--------------------------------------------------------------------------------
 PATH = os.path.dirname(__file__)
@@ -70,6 +69,16 @@ PATH_PARTS = PATH.parts[:-1]
 FOLDER=''
 for p in PATH_PARTS:
     FOLDER = os.path.join(FOLDER, p)
+
+try:
+    with open(os.path.join(FOLDER, 'config', 'version.json')) as _vf:
+        _dev_mode = json.load(_vf).get('dev_mode', 'Off') == 'On'
+except Exception:
+    _dev_mode = False
+
+if _dev_mode:
+    reload(load_autoRiggerMenu)
+
 PATH = os.path.join(FOLDER, 'UI')
 ICONS_FOLDER = os.path.join(FOLDER,'Icons')
 
@@ -576,8 +585,7 @@ class Qt_Mutant(QtWidgets.QMainWindow):
             parent (QtWidgets.QWidget): Parent widget for the main window.
                 Defaults to the Maya main window.
         """
-        super(Qt_Mutant, self).__init__(parent)
-        #super().__init__(parent)
+        super().__init__(parent)
 
         self.setMouseTracking(True)
         self.grip_margin = 10

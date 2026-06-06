@@ -1,0 +1,18 @@
+{
+    "Name":  "PoseToAttr",
+    "Description":  "Will save current pose to an attr via SDK",
+    "Icon":  "AnimToAttr.png",
+    "Enable":  "True",
+    "python_file":  "exec_anim_to_attr_v001.py",
+    "import":  "import exec_anim_to_attr_v001",
+    "imp.reload":  "reload(exec_anim_to_attr_v001)",
+    "exec_command":  "exec_anim_to_attr_v001.create_animtoattr_block()",
+    "build_command":  "exec_anim_to_attr_v001.build_animtoattr_block()",
+    "attrs":  {
+                  "SetObject_string":  "",
+                  "NewAttrName_string":  "Pose",
+                  "SetNewAttrNode_string":  "new_locator",
+                  "AnimStep_string":  "0.5",
+                  "Help_string":  "Overview:\n  Will save current pose to an attr via SDK.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetObject: set the node/object name this block should use.\n- NewAttrName: set the node/object name this block should use.\n- SetNewAttrNode: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- AnimStep: set the node/object name this block should use.\n\nTips:\n- start with defaults, build once, then tweak only the fields you need."
+              }
+}

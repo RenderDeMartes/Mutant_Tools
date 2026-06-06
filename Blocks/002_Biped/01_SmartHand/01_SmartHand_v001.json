@@ -1,0 +1,16 @@
+{
+    "Name":  "SmartHand",
+    "Description":  "Control Fingers in a smarter way.",
+    "Icon":  "SmartHand.png",
+    "Enable":  "True",
+    "python_file":  "exec_smarthand_v001.py",
+    "import":  "import exec_smarthand_v001",
+    "imp.reload":  "reload(exec_smarthand_v001)",
+    "exec_command":  "exec_smarthand_v001.create_smarthand_block()",
+    "build_command":  "exec_smarthand_v001.build_smarthand_block()",
+    "attrs":  {
+                  "HandBlock_string":  "L_Hand",
+                  "Mode_enum":  "A:B",
+                  "Help_string":  "Overview:\n  Control Fingers in a smarter way.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- HandBlock: set the node/object name this block should use.\n\nTips:\n- start with defaults, build once, then tweak only the fields you need."
+              }
+}

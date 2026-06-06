@@ -1,0 +1,20 @@
+{
+    "Name":  "L_PupilDilation",
+    "Description":  "Will create pupil dilation system",
+    "Icon":  "Pupil.png",
+    "Enable":  "True",
+    "python_file":  "exec_pupil_dilation_v001.py",
+    "import":  "import exec_pupil_dilation_v001",
+    "imp.reload":  "reload(exec_pupil_dilation_v001)",
+    "exec_command":  "exec_pupil_dilation_v001.create_pupil_dilation_block()",
+    "build_command":  "exec_pupil_dilation_v001.build_pupil_dilation_block()",
+    "attrs":  {
+                  "SetEyeMesh_string":  "",
+                  "SetEyeEdgeRing_string":  "",
+                  "SetIrisEdgeLoop_string":  "",
+                  "SetBlendShapeNode_string":  "new_blendshape_node",
+                  "SetTargetCtrl_string":  "",
+                  "Mirror_bool":  "True",
+                  "Help_string":  "Overview:\n  Will create pupil dilation system.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetTargetCtrl: set the node/object name this block should use.\n- Mirror: turn this ON/OFF depending on whether you want that feature.\n- SetEyeMesh: set the node/object name this block should use.\n- SetEyeEdgeRing: set the node/object name this block should use.\n- SetIrisEdgeLoop: set the node/object name this block should use.\n- SetBlendShapeNode: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- Template target ctrl examples: Eyes_Main_Ctrl, Head_Ctrl, Neck_Ctrl.\n\nTips:\n- if a field says left/right or mirror, use it to generate the opposite side quickly."
+              }
+}

@@ -1,0 +1,14 @@
+{
+    "Name":  "Human_Fixes",
+    "Description":  "Fixes for Human Template",
+    "Icon":  "letter-a.png",
+    "Enable":  "True",
+    "python_file":  "exec_human_fixes_v001.py",
+    "import":  "import exec_human_fixes_v001",
+    "imp.reload":  "reload(exec_human_fixes_v001)",
+    "exec_command":  "exec_human_fixes_v001.create_human_fixes_block()",
+    "build_command":  "exec_human_fixes_v001.build_human_fixes_block()",
+    "attrs":  {
+                  "Help_string":  "Overview:\n  Fixes for Human Template.\n\nHow To Use:\n  usually you can build directly with defaults, then adjust if needed."
+              }
+}

@@ -1,0 +1,14 @@
+{
+    "Name":  "humanBodyTemplate",
+    "Description":  "Will import the Human Body Simple Template ",
+    "Icon":  "StickFigure.png",
+    "Enable":  "True",
+    "python_file":  "exec_humanSimpleBodyTemplate_v001.py",
+    "import":  "import exec_humanSimpleBodyTemplate_v001",
+    "imp.reload":  "reload(exec_humanSimpleBodyTemplate_v001)",
+    "exec_command":  "exec_humanSimpleBodyTemplate_v001.create_humanSimpleBodyTemplate_block()",
+    "build_command":  "exec_humanSimpleBodyTemplate_v001.build_humanSimpleBodyTemplate_block()",
+    "attrs":  {
+
+              }
+}
