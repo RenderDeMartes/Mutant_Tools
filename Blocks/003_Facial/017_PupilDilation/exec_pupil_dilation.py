@@ -184,7 +184,6 @@ def create_pupil_dilation_block(name='Pupil_Dilation'):
     PATH = os.path.dirname(__file__)
     PATH = Path(PATH)
     PATH_PARTS = PATH.parts[:-2]
-    PATH_PARTS = PATH.parts[:-3]
     FOLDER = ''
     for f in PATH_PARTS:
         FOLDER = os.path.join(FOLDER, f)
@@ -315,7 +314,6 @@ def build_pupil_dilation_block():
         cmds.parent(r_eye_center, r_clean_rig_grp)
         cmds.parent(r_eye_mesh_copy, r_clean_rig_grp)
         cmds.parent(r_jnts_parent, r_clean_rig_grp)
-
 
 
 
