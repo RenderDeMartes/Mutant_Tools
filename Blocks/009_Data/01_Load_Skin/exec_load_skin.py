@@ -102,8 +102,12 @@ def build_load_skin_block():
     try:
         ngmt.import_all_skins(path=path)
     except:
-        import ngSkinTools2
-        ngSkinTools2.open_ui()
+        try:
+            import ngSkinTools2
+            ngSkinTools2.open_ui()
+        except ImportError:
+            cmds.warning('ngSkinTools2 is not installed. Cannot open ng skin UI.')
+            return False
         ngmt.import_all_skins(path=path)
 
 #build_load_skin_block()

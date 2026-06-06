@@ -38,14 +38,24 @@ def eyelids_crowd():
      
 
 if not cmds.pluginInfo('ngSkinTools2', q=1, loaded=1):
+    try:
+        cmds.loadPlugin('ngSkinTools2')
+    except:
+        cmds.warning('Could not load ngSkinTools2 plugin. Please make sure it is installed and try again.')
 
-    cmds.loadPlugin('ngSkinTools2')
-
-
-import ngSkinTools2.api as ngskin2
+try:
+    import ngSkinTools2.api as ngskin2
+    _NGSKIN2_AVAILABLE = True
+except ImportError:
+    ngskin2 = None
+    _NGSKIN2_AVAILABLE = False
+    cmds.warning('ngSkinTools2 not found. create_global_eye_rig_bardel will be unavailable.')
 
 
 def create_global_eye_rig_bardel(local_mesh):
+    if not _NGSKIN2_AVAILABLE:
+        cmds.warning('ngSkinTools2 is required for create_global_eye_rig_bardel but is not installed.')
+        return
     
     hold_mat = cmds.createNode('holdMatrix', n='Head_Skl_Inverse')
     if not cmds.objExists('Head_Skl'):

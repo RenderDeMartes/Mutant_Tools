@@ -2,7 +2,13 @@ from __future__ import absolute_import
 import maya.cmds as cmds
 from maya.api import OpenMaya as om2
 import math
-import ngSkinTools2.api as ngskin2
+try:
+    import ngSkinTools2.api as ngskin2
+    _NGSKIN2_AVAILABLE = True
+except ImportError:
+    ngskin2 = None
+    _NGSKIN2_AVAILABLE = False
+    cmds.warning('ngSkinTools2 not found. Auto-skin helpers requiring it will be unavailable.')
 
 
 def get_component_index(component):
@@ -27,6 +33,9 @@ def traverseAndAdd(dag_path=None, edge=None, steps=10, joint_edges={}, current_s
 
 
 def get_closest_joint_per_vertex(mesh, vertices=[]):
+    if not _NGSKIN2_AVAILABLE:
+        cmds.warning('ngSkinTools2 is required for get_closest_joint_per_vertex but is not installed.')
+        return {}
     influences = ngskin2.list_influences(mesh)
     vertex_joint = {}
 
@@ -52,6 +61,9 @@ def get_closest_joint_per_vertex(mesh, vertices=[]):
 
 
 def skin_edge_loop_joints(mesh='', edge_loop='', joint_range=10):
+    if not _NGSKIN2_AVAILABLE:
+        cmds.warning('ngSkinTools2 is required for skin_edge_loop_joints but is not installed.')
+        return
     # get loop as array of ints and turn it into a set
     lips_loop_indices = [get_component_index(e) for e in edge_loop]
     lips_loop_indices = set(lips_loop_indices)

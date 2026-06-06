@@ -19,10 +19,19 @@ mt = main_mutant.Mutant()
 import maya.cmds as cmds
 from maya.api import OpenMaya as om2
 import math as math
-import ngSkinTools2.api as ngskin2
+try:
+    import ngSkinTools2.api as ngskin2
+    _NGSKIN2_AVAILABLE = True
+except ImportError:
+    ngskin2 = None
+    _NGSKIN2_AVAILABLE = False
+    cmds.warning('ngSkinTools2 not found. create_pupil_dilation will be unavailable.')
 
 
 def create_pupil_dilation(eye_center='', eye_tip='', edges=[], iris_loop=[], side='', eye_mesh='', ctrl=''):
+    if not _NGSKIN2_AVAILABLE:
+        cmds.warning('ngSkinTools2 is required for create_pupil_dilation but is not installed.')
+        return
     ####################### CREATE JOINTS ################################
 
     # sometimes the input feeds in incorrectly, if problem persists try cmds.filterExpand(sm=32)
