@@ -1,10 +1,13 @@
 from __future__ import absolute_import, division
 from maya import cmds, mel
 import json
+
 try:
-    import importlib;from importlib import reload
+    import importlib;
+    from importlib import reload
 except:
-    import imp;from imp import reload
+    import imp;
+    from imp import reload
 
 import os
 from pathlib import Path
@@ -12,6 +15,7 @@ from pathlib import Path
 import Mutant_Tools
 import Mutant_Tools.Utils.Rigging
 from Mutant_Tools.Utils.Rigging import main_mutant
+
 reload(Mutant_Tools.Utils.Rigging.main_mutant)
 
 mt = main_mutant.Mutant()
@@ -45,15 +49,14 @@ def create_pupil_dilation(eye_center='', eye_tip='', edges=[], iris_loop=[], sid
         cmds.delete(cluster)
         jnts.append(jnt)
 
-    #cmds.joint(jnts, e=1, oj='xyz', sao='yup', zso=1)
-    #cmds.setAttr('{}.jointOrient'.format(jnts[-1]), 0, 0, 0, type='double3')
+    # cmds.joint(jnts, e=1, oj='xyz', sao='yup', zso=1)
+    # cmds.setAttr('{}.jointOrient'.format(jnts[-1]), 0, 0, 0, type='double3')
 
     joints_parent = cmds.group(em=1, n='{}_PupilDilationJoints_grp'.format(side))
     cmds.delete(cmds.parentConstraint(eye_center, joints_parent))
     cmds.parent(jnts, joints_parent)
 
     for j in jnts:
-        
         cmds.setAttr('{}.ty'.format(j), 0)
         cmds.setAttr('{}.tz'.format(j), 0)
 
@@ -165,21 +168,22 @@ def create_pupil_dilation(eye_center='', eye_tip='', edges=[], iris_loop=[], sid
         cmds.connectAttr('{}.outFloat'.format(scale_reciprocate), '{}.sz'.format(j))
 
     return joints_parent
-    #---------------------------------------------
+    # ---------------------------------------------
+
 
 TAB_FOLDER = '003_Facial'
 PYBLOCK_NAME = 'exec_pupil_dilation'
 
 
-#---------------------------------------------
+# ---------------------------------------------
 
-def create_pupil_dilation_block(name = 'Pupil_Dilation'):
-
+def create_pupil_dilation_block(name='Pupil_Dilation'):
     nc, curve_data, setup = mt.import_configs()
 
     # Read name conventions as nc[''] and setup as setup['']
     PATH = os.path.dirname(__file__)
     PATH = Path(PATH)
+    PATH_PARTS = PATH.parts[:-2]
     PATH_PARTS = PATH.parts[:-3]
     FOLDER = ''
     for f in PATH_PARTS:
@@ -189,14 +193,14 @@ def create_pupil_dilation_block(name = 'Pupil_Dilation'):
     with open(MODULE_FILE) as module_file:
         module = json.load(module_file)
 
-
-    #name checks and block creation
-    name = mt.ask_name(text = module['Name'])
-    if cmds.objExists('{}{}'.format(name,nc['module'])):
+    # name checks and block creation
+    name = mt.ask_name(text=module['Name'])
+    if cmds.objExists('{}{}'.format(name, nc['module'])):
         cmds.warning('Name already exists.')
         return ''
 
-    block, config = mt.create_block(name = name, icon = 'Pupil',  attrs = module['attrs'], build_command = module['build_command'], import_command = module['import'])
+    block, config = mt.create_block(name=name, icon='Pupil', attrs=module['attrs'],
+                                    build_command=module['build_command'], import_command=module['import'])
 
     side = ''
     if nc['left'] in name:
@@ -204,21 +208,21 @@ def create_pupil_dilation_block(name = 'Pupil_Dilation'):
     elif nc['right'] in name:
         side = nc['right']
 
-    eye_center = mt.create_joint_guide(name = side + 'eyeCenter')
-    cmds.move(2,0,0)
-    eye_tip = mt.create_joint_guide(name = side + 'eyeTip')
-    cmds.move(2,0,5)
+    eye_center = mt.create_joint_guide(name=side + 'eyeCenter')
+    cmds.move(2, 0, 0)
+    eye_tip = mt.create_joint_guide(name=side + 'eyeTip')
+    cmds.move(2, 0, 5)
     cmds.parent(eye_tip, eye_center)
     cmds.parent(eye_center, block)
     cmds.select(block)
 
     print('{} Created Successfully'.format(name))
 
-#create_eyes_block()
+
+# create_eyes_block()
 
 
 def build_pupil_dilation_block():
-
     nc, curve_data, setup = mt.import_configs()
 
     mt.check_is_there_is_base()
@@ -231,7 +235,7 @@ def build_pupil_dilation_block():
     name = block.replace('_Block', '')
 
     # groups for later cleaning
-    clean_rig_grp = cmds.group(em=True, name=name+'_Rig'+nc['group'])
+    clean_rig_grp = cmds.group(em=True, name=name + '_Rig' + nc['group'])
     cmds.parent(clean_rig_grp, '{}{}'.format(setup['rig_groups']['misc'], nc['group']))
 
     mt.orient_joint(input=guide)
@@ -281,14 +285,16 @@ def build_pupil_dilation_block():
 
     check_ctrl_attrs(target_ctrl)
 
-    jnts_parent = create_pupil_dilation(eye_center=eye_center, eye_tip=eye_tip, edges=eye_edge_ring.split(','), iris_loop=iris_edge_loop.split(','), side='L', eye_mesh=eye_mesh_copy, ctrl=target_ctrl)
+    jnts_parent = create_pupil_dilation(eye_center=eye_center, eye_tip=eye_tip, edges=eye_edge_ring.split(','),
+                                        iris_loop=iris_edge_loop.split(','), side='L', eye_mesh=eye_mesh_copy,
+                                        ctrl=target_ctrl)
 
     cmds.parent(eye_center, clean_rig_grp)
     cmds.parent(eye_mesh_copy, clean_rig_grp)
     cmds.parent(jnts_parent, clean_rig_grp)
 
     if mirror:
-        #mirrorJoint -mirrorYZ -mirrorBehavior -searchReplace "L_" "R_";
+        # mirrorJoint -mirrorYZ -mirrorBehavior -searchReplace "L_" "R_";
         r_eye_center, r_eye_tip = cmds.mirrorJoint(eye_center, mirrorYZ=1, searchReplace=('L_', 'R_'))
         r_edges = eye_edge_ring.replace(nc['left'], nc['right'])
         r_iris_loop = iris_edge_loop.replace(nc['left'], nc['right'])
@@ -300,7 +306,8 @@ def build_pupil_dilation_block():
         r_target_ctrl = target_ctrl.replace(nc['left'], nc['right'])
         check_ctrl_attrs(r_target_ctrl)
         r_jnts_parent = create_pupil_dilation(eye_center=r_eye_center, eye_tip=r_eye_tip, edges=r_edges.split(','),
-                              iris_loop=r_iris_loop.split(','), side='R', eye_mesh=r_eye_mesh_copy, ctrl=r_target_ctrl)
+                                              iris_loop=r_iris_loop.split(','), side='R', eye_mesh=r_eye_mesh_copy,
+                                              ctrl=r_target_ctrl)
 
         r_clean_rig_grp = cmds.group(em=1, n=clean_rig_grp.replace(nc['left'], nc['right']))
         cmds.parent(r_clean_rig_grp, '{}{}'.format(setup['rig_groups']['misc'], nc['group']))
@@ -308,6 +315,7 @@ def build_pupil_dilation_block():
         cmds.parent(r_eye_center, r_clean_rig_grp)
         cmds.parent(r_eye_mesh_copy, r_clean_rig_grp)
         cmds.parent(r_jnts_parent, r_clean_rig_grp)
+
 
 
 
