@@ -1,0 +1,18 @@
+{
+    "Name":  "VisAttrs",
+    "Description":  "Creates visibility attributes (Off/On enum) on a target control and connects them to the visibility of specified nodes.",
+    "Icon":  "VisAttrs.png",
+    "Enable":  "True",
+    "Tab":  "Studio",
+    "python_file":  "exec_vis_attrs_v001.py",
+    "import":  "import exec_vis_attrs_v001",
+    "imp.reload":  "reload(exec_vis_attrs_v001)",
+    "exec_command":  "exec_vis_attrs_v001.create_vis_attrs_block()",
+    "build_command":  "exec_vis_attrs_v001.build_vis_attrs_block()",
+    "attrs":  {
+                  "SetTargetCtrl_string":  "",
+                  "VisAttrsList_string":  "",
+                  "DefaultOn_bool":  "True",
+                  "Help_string":  "Overview:\n  Creates visibility enum attributes (Off/On) on a target control and connects them to the visibility of specified nodes.\n\nHow To Use:\n  1. Create the block.\n  2. Select the control that will hold the visibility attributes, and click \u0027Add Selected\u0027 or type its name in SetTargetCtrl.\n  3. In VisAttrsList, specify the attribute name and the driven nodes in the format:\n     AttrName = Node1, Node2\n     Example:\n     Hair = L_Hair_Geo, R_Hair_Geo\n     Jacket = Jacket_Geo\n  4. When you click Build, the attributes will be added to the target control and connected to the nodes\u0027 visibility.\n\nFields:\n- SetTargetCtrl: The control that will hold the visibility attributes.\n- VisAttrsList: List of entries in the format: AttrName = Node1, Node2\n- DefaultOn: If True, attributes will default to On. If False, they will default to Off."
+              }
+}

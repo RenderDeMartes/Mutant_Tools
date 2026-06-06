@@ -80,34 +80,48 @@ except Exception as e:
 	cmds.warning('Error loading rstar.convention on load_AutoRigger')
 '''
 from Mutant_Tools.UI.AutoRigger import load_autoRiggerMenu
-reload(load_autoRiggerMenu)
-
 from Mutant_Tools.UI.CodeReader import load_codeReader
-reload(load_codeReader)
-log_ui = load_codeReader.Code_Reader(mode='view', code= '', config_attr = '')
-
 import Mutant_Tools.UI
 from Mutant_Tools.UI import QtMutantWindow
-reload(QtMutantWindow)
-
 import Mutant_Tools.UI.CustomWidgets.expandableWidget as expandableWidget
-reload(expandableWidget)
-
 import Mutant_Tools.UI.CustomWidgets.codeEditorWidget as codeEditorWidget
-reload(codeEditorWidget)
-
 from Mutant_Tools.Utils.Helpers import helpers
-reload(Mutant_Tools.Utils.Helpers.helpers)
 from Mutant_Tools.Utils.Helpers import decorators
-reload(decorators)
-mh = helpers.Helpers()
-
 import Mutant_Tools.Utils.IO
 from Mutant_Tools.Utils.IO import EasySkin
-reload(Mutant_Tools.Utils.IO.EasySkin)
-
 from Mutant_Tools.Utils.IO import CtrlUtils
-reload(Mutant_Tools.Utils.IO.CtrlUtils)
+
+# Read dev_mode early so reloads only happen during active development.
+# In production (dev_mode Off) skipping reloads avoids re-running all
+# module-level code on every UI open, which is the #1 startup cost.
+try:
+    _early_path = Path(os.path.dirname(__file__))
+    _early_folder = ''
+    for _p in _early_path.parts[:-2]:
+        _early_folder = os.path.join(_early_folder, _p)
+    with open(os.path.join(_early_folder, 'config', 'version.json')) as _vf:
+        _dev_mode = json.load(_vf).get('dev_mode', 'Off') == 'On'
+except Exception:
+    _dev_mode = False
+
+# QtMutantWindow must always be reloaded so Qt_Mutant stays fresh and
+# super(Qt_Mutant, self) resolves correctly in AutoRigger.__init__.
+# Its internal reload(load_autoRiggerMenu) is now guarded by _dev_mode
+# inside QtMutantWindow.py, so this is cheap in production.
+reload(QtMutantWindow)
+
+if _dev_mode:
+    reload(load_autoRiggerMenu)
+    reload(load_codeReader)
+    reload(expandableWidget)
+    reload(codeEditorWidget)
+    reload(Mutant_Tools.Utils.Helpers.helpers)
+    reload(decorators)
+    reload(Mutant_Tools.Utils.IO.EasySkin)
+    reload(Mutant_Tools.Utils.IO.CtrlUtils)
+
+log_ui = load_codeReader.Code_Reader(mode='view', code= '', config_attr = '')
+mh = helpers.Helpers()
 ctrls = CtrlUtils.Ctrls()
 
 #-------------------------------------------------------------------
@@ -153,21 +167,48 @@ Title = 'AutoRigger'
 import Mutant_Tools
 import Mutant_Tools.Utils.Rigging
 from Mutant_Tools.Utils.Rigging import main_mutant
-reload(Mutant_Tools.Utils.Rigging.main_mutant)
+if _dev_mode:
+    reload(Mutant_Tools.Utils.Rigging.main_mutant)
 
 mt = main_mutant.Mutant()
 
-import Mutant_Tools.UI.CustomWidgets.expandableWidget as expandableWidget
-reload(expandableWidget)
+#-------------------------------------------------------------------
+# Cache for block JSON data keyed by path. Values are (mtime, data) so
+# changed files are automatically re-read while unchanged ones are instant.
+_block_json_cache = {}
+
+def _load_block_json(path):
+    try:
+        mtime = os.path.getmtime(path)
+        entry = _block_json_cache.get(path)
+        if entry and entry[0] == mtime:
+            return entry[1]
+        with open(path, 'r') as f:
+            data = json.load(f)
+        _block_json_cache[path] = (mtime, data)
+        return data
+    except Exception:
+        return None
 
 #-------------------------------------------------------------------
+_BLOCK_PATHS_READY = False
+
+def _ensure_block_sys_paths():
+	"""Fast path setup: ensure all block subfolders are importable."""
+	global _BLOCK_PATHS_READY
+	if _BLOCK_PATHS_READY:
+		return
+	blocks_root = os.path.join(FOLDER, 'Blocks')
+	for root, subdirs, files in os.walk(blocks_root):
+		if '__pycache__' in root or '.git' in root:
+			continue
+		if root not in sys.path:
+			sys.path.append(root)
+	_BLOCK_PATHS_READY = True
+
 def add_sys_folders_remove_compiled():
-	#get all the paths for the blocks in the sys path
-	file_path = (str(__file__))
-	for folder in os.listdir(os.path.join(FOLDER , 'Blocks')):
-		blocks_path = os.path.join(FOLDER, 'Blocks', folder)
-		if blocks_path not in sys.path:
-			sys.path.append(blocks_path)
+	# Keep the path setup, then do expensive cleanup only when explicitly requested.
+	_ensure_block_sys_paths()
 
 	#Delete all pyc in the block folders so we dont need the imp.reload in the codes:
 	path = os.path.join(FOLDER, 'Blocks')
@@ -195,6 +236,28 @@ def add_sys_folders_remove_compiled():
 				#print (name + ': Have been deleted')
 				os.remove(os.path.join(path, name))
 	print ('Cache removed...')
+
+#-------------------------------------------------------------------
+
+class BlockTooltipFilter(QtCore.QObject):
+	"""Event filter that explicitly shows QToolTip.showText() on hover.
+	Maya's built-in tooltip system is unreliable inside custom PySide windows,
+	so this bypasses it entirely by catching ToolTip events and rendering
+	the tooltip manually."""
+	def eventFilter(self, obj, event):
+		if event.type() == QtCore.QEvent.ToolTip:
+			tip = obj.toolTip() if hasattr(obj, 'toolTip') else ''
+			if tip:
+				show_tips = cmds.optionVar(q='mutant_show_block_tooltips') if cmds.optionVar(ex='mutant_show_block_tooltips') else False
+				if show_tips:
+					QtWidgets.QToolTip.showText(event.globalPos(), tip, obj)
+				else:
+					QtWidgets.QToolTip.hideText()
+				return True
+		return super(BlockTooltipFilter, self).eventFilter(obj, event)
+
+# Singleton instance shared across all buttons
+_block_tooltip_filter = BlockTooltipFilter()
 
 #-------------------------------------------------------------------
 
@@ -275,6 +338,7 @@ class DraggableButton(QtWidgets.QPushButton):
 	def __init__(self, block_name, *args, **kwargs):
 		super(DraggableButton, self).__init__(*args, **kwargs)
 		self.block_name = block_name
+		self.setAttribute(QtCore.Qt.WA_AlwaysShowToolTips, True)
 
 	def mousePressEvent(self, event):
 		if event.button() == QtCore.Qt.LeftButton:
@@ -304,6 +368,32 @@ class DraggableTabButton(QtWidgets.QPushButton):
 	def __init__(self, json_path, *args, **kwargs):
 		super(DraggableTabButton, self).__init__(*args, **kwargs)
 		self.json_path = json_path
+		self.setAttribute(QtCore.Qt.WA_AlwaysShowToolTips, True)
+		self.setMouseTracking(True)
+		self._tooltip_timer = None
+
+	def enterEvent(self, event):
+		"""Show tooltip when mouse enters the button."""
+		super(DraggableTabButton, self).enterEvent(event)
+		tip = self.toolTip()
+		if tip:
+			show_tips = cmds.optionVar(q='mutant_show_block_tooltips') if cmds.optionVar(ex='mutant_show_block_tooltips') else False
+			if show_tips:
+				# Delay slightly so the cursor position is accurate
+				self._tooltip_timer = QtCore.QTimer.singleShot(300, lambda: self._show_tip())
+
+	def _show_tip(self):
+		"""Actually display the tooltip at current cursor position."""
+		if self.underMouse():
+			tip = self.toolTip()
+			if tip:
+				global_pos = QtGui.QCursor.pos()
+				QtWidgets.QToolTip.showText(global_pos, tip, self)
+
+	def leaveEvent(self, event):
+		"""Hide tooltip when mouse leaves the button."""
+		QtWidgets.QToolTip.hideText()
+		super(DraggableTabButton, self).leaveEvent(event)
 
 	def mousePressEvent(self, event):
 		if event.button() == QtCore.Qt.LeftButton:
@@ -312,10 +402,13 @@ class DraggableTabButton(QtWidgets.QPushButton):
 
 	def mouseMoveEvent(self, event):
 		if not (event.buttons() & QtCore.Qt.LeftButton):
+			super(DraggableTabButton, self).mouseMoveEvent(event)
 			return
 		if not hasattr(self, 'drag_start_position'):
+			super(DraggableTabButton, self).mouseMoveEvent(event)
 			return
 		if (event.pos() - self.drag_start_position).manhattanLength() < QtWidgets.QApplication.startDragDistance():
+			super(DraggableTabButton, self).mouseMoveEvent(event)
 			return
 
 		drag = QtGui.QDrag(self)
@@ -332,6 +425,8 @@ class DraggableTabButton(QtWidgets.QPushButton):
 
 		exec_func = getattr(drag, 'exec_', drag.exec)
 		exec_func(QtCore.Qt.CopyAction)
+
+print('[MutantTools] load_autoRigger loaded with block tooltip support')
 
 class DraggableLabel(QtWidgets.QLabel):
 	def __init__(self, block_name, text, *args, **kwargs):
@@ -646,7 +741,8 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 
 		self.resize(605, 750)
 
-		#load blocks folders to sys and remove all the compiled info in BLOCKS and UI Folder
+		# Always ensure block folders are importable (fast). Full cache cleanup remains dev-only.
+		_ensure_block_sys_paths()
 		if mt.check_dev_mode():
 			add_sys_folders_remove_compiled()
 		self.reload_ready = False
@@ -656,6 +752,15 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		self.current_block_folder = None
 		self.side_block_widgets = {}
 		self.side_block_edit_buttons = {}
+		self.side_block_labels = {}
+		self.selected_blocks = []
+		self.selection_anchor = None
+
+		# Debounce timer for search – avoids rebuilding the side panel on every keystroke
+		self._search_timer = QtCore.QTimer(self)
+		self._search_timer.setSingleShot(True)
+		self._search_timer.setInterval(250)  # ms
+		self._search_timer.timeout.connect(self._execute_search)
 
 		self.designer_loader_child(path=os.path.join(FOLDER,'UI','AutoRigger'), ui_file=UI_File)
 
@@ -718,16 +823,21 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 			self.ignore_next_selection_changed = False
 			return
 
-		sel = cmds.ls(sl=True)
-		if not sel:
+		sel = cmds.ls(sl=True) or []
+		selected_blocks = [s for s in sel if s in self.side_block_edit_buttons]
+		if not selected_blocks:
 			return
-		if self.current_selected_block == sel[0]:
+
+		self.selected_blocks = selected_blocks
+		self.selection_anchor = selected_blocks[-1]
+		self.update_side_block_highlight()
+
+		if self.current_selected_block == selected_blocks[0]:
 			return
 
 		try:
-			if str(sel[0]).endswith('_Block'):
-				self.create_properties_layout(block = cmds.ls(sl=True)[0], scroll_to_block=True)
-				self.current_selected_block = sel[0]
+			self.create_properties_layout(block=selected_blocks[0], scroll_to_block=True)
+			self.current_selected_block = selected_blocks[0]
 		except:
 			pass
 
@@ -765,9 +875,36 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 			return
 
 		# --- Horizontal splitter: side_scroll | properties ---
-		# Remove the max-width constraint on side_scroll so splitter controls it
+		# Create left side container to hold search bar on top, scroll area on bottom
+		self._left_widget = QtWidgets.QWidget()
+		left_layout = QtWidgets.QVBoxLayout(self._left_widget)
+		left_layout.setContentsMargins(0, 0, 0, 0)
+		left_layout.setSpacing(2)
+
+		# Create a container widget for the search bar
+		self._search_widget = QtWidgets.QWidget()
+		self._search_widget.setSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
+		
+		search_container_layout = QtWidgets.QHBoxLayout(self._search_widget)
+		search_container_layout.setContentsMargins(4, 4, 4, 2)
+		search_container_layout.setSpacing(2)
+		
+		# Reparent search layout elements to search_widget
+		search_container_layout.addWidget(self.ui.search_line)
+		search_container_layout.addWidget(self.ui.search_button)
+		
+
+		# Allow the search line edit to expand dynamically
+		self.ui.search_line.setMaximumWidth(16777215)
+		
+		left_layout.addWidget(self._search_widget)
+		left_layout.addWidget(self.ui.side_scroll)
+
+		# Set width constraints on the left container instead of directly on side_scroll
+		self._left_widget.setMaximumWidth(16777215)
+		self._left_widget.setMinimumWidth(120)
 		self.ui.side_scroll.setMaximumWidth(16777215)
-		self.ui.side_scroll.setMinimumWidth(120)
+		self.ui.side_scroll.setMinimumWidth(0)
 
 		# Collect all widgets from the right-side vertical layout into a container
 		right_widget = QtWidgets.QWidget()
@@ -784,7 +921,7 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 					right_layout.addLayout(child.layout())
 
 		self._h_splitter = QtWidgets.QSplitter(QtCore.Qt.Horizontal)
-		self._h_splitter.addWidget(self.ui.side_scroll)
+		self._h_splitter.addWidget(self._left_widget)
 		self._h_splitter.addWidget(right_widget)
 		self._h_splitter.setStretchFactor(0, 0)
 		self._h_splitter.setStretchFactor(1, 1)
@@ -1056,10 +1193,10 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		self.ui.postbuild.setIcon(QtGui.QIcon(os.path.join(IconsPath ,'POSTCODE.png')))
 		self.ui.reload_ui.setIcon(QtGui.QIcon(os.path.join(IconsPath ,'RELOAD.png')))
 		self.ui.log.setIcon(QtGui.QIcon(os.path.join(IconsPath ,'LOG.png')))
-		self.ui.search_button.setIcon(QtGui.QIcon(os.path.join(IconsPath, 'RELOAD.png')))
+		self.ui.search_button.setIcon(QtGui.QIcon(os.path.join(IconsPath ,'RELOAD.png')))
 		self.ui.search_button.setIconSize(QtCore.QSize(14, 14))
 		self.ui.search_button.setStyleSheet("QPushButton { border: none; background: transparent; } QPushButton:hover { background-color: rgba(255, 255, 255, 10); border-radius: 3px; }")
-		self.ui.search_button.setToolTip("Refresh and reset block search")
+		self.ui.search_button.setToolTip("Refresh and reset block search. Right-click to reload or update all blocks.")
 
 		# Built-in clear (X) button inside the search field
 		self.ui.search_line.setClearButtonEnabled(True)
@@ -1097,6 +1234,11 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		self.ui.search_button.clicked.connect(self.search_command)
 		self.ui.search_line.textChanged.connect(self.search_command)
 
+		# Context menu for search_button (Refresh) to reload all blocks
+		self.ui.search_button.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
+		self.ui.search_button.customContextMenuRequested.connect(self.show_search_button_menu)
+
+
 		# Ctrl+F shortcut to focus the search/filter field
 		try:
 			search_shortcut = QtGui.QShortcut(QtGui.QKeySequence('Ctrl+F'), self)
@@ -1104,13 +1246,25 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 			search_shortcut = QtWidgets.QShortcut(QtGui.QKeySequence('Ctrl+F'), self)
 		search_shortcut.activated.connect(self._focus_search)
 
+	def show_search_button_menu(self, pos):
+		"""Show right-click context menu on the search/refresh button to reload or update all blocks."""
+		menu = QtWidgets.QMenu(self)
+		reload_action = menu.addAction("Reload All Blocks")
+		reload_action.triggered.connect(self.reload_all_blocks)
+		update_action = menu.addAction("Update All Blocks")
+		update_action.triggered.connect(self.update_all_blocks_cmd)
+		menu.exec_(self.ui.search_button.mapToGlobal(pos))
+
 	#-------------------------------------------------------------------
 	def reload_all_blocks(self):
 
 		if self.reload_ready and not mt.check_dev_mode():
 			return True
 
-		add_sys_folders_remove_compiled()
+		if mt.check_dev_mode():
+			add_sys_folders_remove_compiled()
+		else:
+			_ensure_block_sys_paths()
 
 		#'create all the buttons in the tabs blocks'
 		blocks_folders = os.listdir(os.path.join(FOLDER, 'Blocks'))
@@ -1161,8 +1315,106 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 	def get_all_jsons(self):
 		import glob
 		main_path = os.path.join(FOLDER, 'Blocks')
-		json_paths = os.path.join(main_path, '*', '*.json')
-		return glob.glob(json_paths)
+		json_paths = os.path.join(main_path, '**', '*.json')
+		return glob.glob(json_paths, recursive=True)
+
+	def parse_block_filename(self, filename):
+		if not filename.endswith('.json') or 'Tittle' in filename or filename == 'order.json':
+			return None
+		basename = os.path.basename(filename)[:-5]
+		parts = basename.split('_')
+		if len(parts) < 2:
+			return None
+		prefix = parts[0]
+		version = None
+		if len(parts) >= 3 and re.match(r'^v\d+$', parts[-1]):
+			version = parts[-1]
+			base = '_'.join(parts[1:-1])
+		else:
+			base = '_'.join(parts[1:])
+		return {
+			'prefix': prefix,
+			'base': base,
+			'version': version,
+			'filename': filename
+		}
+
+	def get_block_versions(self, block):
+		config = self._get_block_config(block)
+		if not config:
+			return [], {}
+		
+		import_cmd = cmds.getAttr('{}.Import_Command'.format(config))
+		match = re.search(r'import\s+(\w+)', import_cmd)
+		if not match:
+			return [], {}
+		module_name = match.group(1)
+		
+		base_module = re.sub(r'_v\d+$', '', module_name)
+		base_name = base_module.replace('exec_', '')
+		
+		versions = {}
+		blocks_path = os.path.join(FOLDER, 'Blocks')
+		for root, dirs, files in os.walk(blocks_path):
+			for f in files:
+				info = self.parse_block_filename(f)
+				if info and info['base'].lower() == base_name.lower():
+					ver = info['version'] if info['version'] else 'v001'
+					versions[ver] = os.path.join(root, f)
+		
+		sorted_versions = sorted(versions.keys())
+		return sorted_versions, versions
+
+	def _extract_module_name_from_import_command(self, import_command):
+		"""Extract module name from simple import command strings."""
+		if not import_command:
+			return None
+		match = re.search(r'\bimport\s+([A-Za-z_][A-Za-z0-9_]*)', import_command)
+		if match:
+			return match.group(1)
+		return None
+
+	def _module_file_exists(self, module_name):
+		"""Check if a module can be resolved from current sys.path without importing it."""
+		if not module_name:
+			return False
+		try:
+			import importlib.util
+			return importlib.util.find_spec(module_name) is not None
+		except:
+			return False
+
+	def _resolve_build_commands_for_legacy_versioning(self, import_command, build_command):
+		"""
+		Route legacy unversioned block commands to v001 when available.
+		This keeps older scenes building after non-versioned block files are removed.
+		"""
+		resolved_import = import_command
+		resolved_build = build_command
+
+		module_name = self._extract_module_name_from_import_command(import_command)
+		if not module_name:
+			return resolved_import, resolved_build
+
+		# Only remap legacy (non-versioned) module names.
+		if re.search(r'_v\d+$', module_name):
+			return resolved_import, resolved_build
+
+		v001_module = '{}_v001'.format(module_name)
+		if not self._module_file_exists(v001_module):
+			return resolved_import, resolved_build
+
+		# Keep import command style but replace the target module token.
+		resolved_import = re.sub(r'\bimport\s+{}'.format(re.escape(module_name)),
+								'import {}'.format(v001_module),
+								import_command,
+								count=1)
+
+		# Build command is typically exec_mod.build_name_block(); update module reference only.
+		if build_command:
+			resolved_build = build_command.replace('{}.'.format(module_name), '{}.'.format(v001_module), 1)
+
+		return resolved_import, resolved_build
 
 	def get_mutant_config_attr(self, attr, config):
 		attr_type = cmds.getAttr('{}.{}'.format(config, attr), type=True)
@@ -1351,6 +1603,8 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 				skipped += 1
 				continue
 
+			import_cmd, _ = self._resolve_build_commands_for_legacy_versioning(import_cmd, None)
+
 			module = json_modules.get(import_cmd)
 			if not module:
 				skipped += 1
@@ -1504,58 +1758,89 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 				continue
 			#print (block_folder)
 			clean_folder_name = block_folder.split('_')[1]
-			files = sorted(os.listdir(os.path.join(FOLDER, 'Blocks', block_folder)))
+			
+			# Find all files recursively in this block category folder
+			all_files_in_category = []
+			for root, dirs, fnames in os.walk(os.path.join(FOLDER, 'Blocks', block_folder)):
+				if '__pycache__' in root or '.git' in root:
+					continue
+				for fn in fnames:
+					if fn.endswith('.json') and fn != 'order.json':
+						all_files_in_category.append(os.path.join(root, fn))
+
+			# Group files by their block 'base' name
+			grouped_files = {} # base -> list of (info, path)
+			for full_path in all_files_in_category:
+				fn = os.path.basename(full_path)
+				info = self.parse_block_filename(fn)
+				if info:
+					grouped_files.setdefault(info['base'].lower(), []).append((info, full_path))
+
 			have_order = False
-			if 'order.json' in files:
+			files_in_folder = os.listdir(os.path.join(FOLDER, 'Blocks', block_folder))
+			if 'order.json' in files_in_folder:
 				have_order = True
 
 			if have_order:
 				order_path = os.path.join(FOLDER, 'Blocks', block_folder, 'order.json')
-				with open(order_path, "r") as order_path:
-					order_data = json.load(order_path)
+				order_data = _load_block_json(order_path)
 
 				files = []
 				for tittle in order_data:
-					files.append(tittle+'_Tittle.json')
+					files.append((None, tittle+'_Tittle.json'))
 					order_files = order_data[tittle]
 					for f in order_files:
-						files.append(f)
+						f_info = self.parse_block_filename(f)
+						if f_info:
+							base_key = f_info['base'].lower()
+							if base_key in grouped_files:
+								ver_list = grouped_files[base_key]
+								ver_list.sort(key=lambda x: x[0]['version'] if x[0]['version'] else 'v001')
+								latest_info, latest_path = ver_list[-1]
+								files.append((latest_info, latest_path))
+							else:
+								files.append((None, os.path.join(FOLDER, 'Blocks', block_folder, f)))
+			else:
+				files = []
+				for base_key in sorted(grouped_files.keys()):
+					ver_list = grouped_files[base_key]
+					ver_list.sort(key=lambda x: x[0]['version'] if x[0]['version'] else 'v001')
+					latest_info, latest_path = ver_list[-1]
+					files.append((latest_info, latest_path))
 
-			for block_file in files:
-
-				if not '.json' in str(block_file): #if the file != a json continue with the next one
-					continue
-
-				if 'Tittle' in block_file:
+			for block_info_item, block_file in files:
+				if 'Tittle' in os.path.basename(block_file):
 					button = QFrame()
 					button.setFrameShape(QFrame.VLine)
 					button.setFrameShadow(QFrame.Sunken)
-					button.setToolTip(block_file.replace('_Tittle.json', ''))
+					button.setToolTip(os.path.basename(block_file).replace('_Tittle.json', ''))
 					button.setFixedHeight(15)
 					button.setContentsMargins(0, 0, 0, 0)
+					button.setAttribute(QtCore.Qt.WA_AlwaysShowToolTips, True)
+					button.installEventFilter(_block_tooltip_filter)
 
 				else:
-					#read the json file with block information
-					real_path =  os.path.join(FOLDER, 'Blocks', block_folder,  block_file)
-
-					with open(real_path, "r") as block_info:
-						block = json.load(block_info)
-						#reaload with json files info if dev mode is on, off loads faster
+					block = _load_block_json(block_file)
+					if block is None:
+						continue
 
 					#create button
-					block_name = str(block_file).split('_')[1].replace('.json', '')
-					button = DraggableTabButton(real_path)
-					button.clicked.connect(partial (self.create_new_block, real_path))
+					if block_info_item:
+						block_name = block_info_item['base']
+					else:
+						block_name = os.path.basename(block_file).split('_')[1].replace('.json', '')
+					
+					button = DraggableTabButton(block_file)
+					button.clicked.connect(partial(self.create_new_block, block_file))
 					button.setToolTip(self._block_tooltip_html(block))
 					button.setToolTipDuration(20000)
 					button.setFixedSize(40, 40)
-
+					button.installEventFilter(_block_tooltip_filter)
 
 					try:
 						button.setIcon(QtGui.QIcon(os.path.join(IconsPath ,block['Icon'])))
 						button.setIconSize((QtCore.QSize(35, 35)))
 						button.setStyleSheet("QPushButton { text-align:right; border: none; background: transparent; } QPushButton:hover { background-color: rgba(255, 255, 255, 5); border-radius: 4px; }")
-						#button.setText(block_name)
 					except:
 						button.setText(block_name)
 						button.setStyleSheet("QPushButton { border: none; background: transparent; } QPushButton:hover { background-color: rgba(255, 255, 255, 5); border-radius: 4px; }")
@@ -1628,6 +1913,9 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		new_blocks = set(self.side_block_widgets.keys()) - existing_blocks
 		if new_blocks:
 			new_block = list(new_blocks)[0]
+			self.selected_blocks = [new_block]
+			self.selection_anchor = new_block
+			self.update_side_block_highlight()
 			self.create_properties_layout(block=new_block, scroll_to_block=True)
 
 		cmds.undoInfo(closeChunk=True)
@@ -1640,6 +1928,7 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 			self.ui.side_layout.itemAt(i).widget().setParent(None)
 		self.side_block_widgets = {}
 		self.side_block_edit_buttons = {}
+		self.side_block_labels = {}
 
 		self.ui.side_scroll.setWidgetResizable(True)
 
@@ -1675,8 +1964,66 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		options.show()
 
 	def _on_block_right_click(self, block, layout, pos):
-		"""Triggered by right-clicking a block name button. Opens the same options popup as the gear icon."""
+		"""Triggered by right-clicking a block name button. Opens the options popup for the selected group or the clicked block."""
+		if not hasattr(self, 'selected_blocks'):
+			self.selected_blocks = []
+		if block not in self.selected_blocks:
+			self.selected_blocks = [block]
+			self.selection_anchor = block
+			self.update_side_block_highlight()
+			self.create_properties_layout(block)
 		self.options_side_buttonblock(block, layout)
+
+	def on_block_clicked(self, block_name):
+		modifiers = QtWidgets.QApplication.keyboardModifiers()
+		all_blocks = list(self.side_block_edit_buttons.keys())
+
+		if not hasattr(self, 'selected_blocks'):
+			self.selected_blocks = []
+		if not hasattr(self, 'selection_anchor') or not self.selection_anchor:
+			self.selection_anchor = block_name
+
+		if modifiers & QtCore.Qt.ShiftModifier and self.selection_anchor in all_blocks:
+			start_idx = all_blocks.index(self.selection_anchor)
+			end_idx = all_blocks.index(block_name)
+			step = 1 if start_idx <= end_idx else -1
+			self.selected_blocks = all_blocks[start_idx:end_idx+step:step]
+		elif modifiers & QtCore.Qt.ControlModifier:
+			if block_name in self.selected_blocks:
+				self.selected_blocks.remove(block_name)
+				if self.selection_anchor == block_name:
+					self.selection_anchor = self.selected_blocks[-1] if self.selected_blocks else None
+			else:
+				self.selected_blocks.append(block_name)
+				self.selection_anchor = block_name
+		else:
+			self.selected_blocks = [block_name]
+			self.selection_anchor = block_name
+
+		self.update_side_block_highlight()
+
+		# Sync with Maya selection
+		if self.selected_blocks:
+			self.ignore_next_selection_changed = True
+			cmds.select(self.selected_blocks)
+
+		self.create_properties_layout(block_name, scroll_to_block=False)
+
+	def toggle_selected_blocks_build(self):
+		if not hasattr(self, 'selected_blocks') or not self.selected_blocks:
+			cmds.warning("No blocks selected to toggle.")
+			return
+		first_block = self.selected_blocks[0]
+		first_visible = self.get_block_lod_visibility(first_block)
+		target_state = not first_visible
+		
+		cmds.undoInfo(openChunk=True)
+		for block in self.selected_blocks:
+			self.set_block_lod_visibility(block, target_state)
+		cmds.undoInfo(closeChunk=True)
+		
+		if self.current_block:
+			self.create_properties_layout(self.current_block, scroll_to_block=False)
 
 	#-------------------------------------------------------------------
 
@@ -1685,6 +2032,8 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		#search_data
 		search_text = self.ui.search_line.text()
 
+		# Suppress the SelectionChanged scriptJob during the internal select
+		self.ignore_next_selection_changed = True
 		cmds.select('Mutant_Build')
 		sel = cmds.ls(sl=True)
 		if not sel:
@@ -1786,6 +2135,7 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		btn_label.setAlignment(QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
 		btn_label.setAttribute(QtCore.Qt.WA_TransparentForMouseEvents)
 		btn_label.setStyleSheet('background: transparent; color: white;')
+		self.side_block_labels[pack_name] = btn_label
 
 		btn_layout.addWidget(btn_icon_label)
 		btn_layout.addWidget(btn_label, 1)
@@ -1808,7 +2158,7 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 
 		side_hbox.setLayout(h_layout)
 
-		edit_button.clicked.connect(partial (self.create_properties_layout, pack_name))
+		edit_button.clicked.connect(partial (self.on_block_clicked, pack_name))
 		options_button.clicked.connect(partial (self.options_side_buttonblock, pack_name, side_hbox))
 
 		# Right-click on the block name button also opens the options popup
@@ -1818,17 +2168,45 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		self.update_side_block_highlight()
 		self._update_block_disabled_visual(pack_name)
 
+	def _get_block_build_phase(self, block_name):
+		"""Return 'before', 'after', or None for a block's build phase."""
+		try:
+			config = self._get_block_config(block_name)
+			if not config:
+				return None
+			if cmds.attributeQuery('RunBeforeBuild', n=config, exists=True) and cmds.getAttr('{}.RunBeforeBuild'.format(config)):
+				return 'before'
+			if cmds.attributeQuery('RunAfterBuild', n=config, exists=True) and cmds.getAttr('{}.RunAfterBuild'.format(config)):
+				return 'after'
+		except:
+			pass
+		return None
+
 	def update_side_block_highlight(self):
 		active_style = "QPushButton { color: #DDE2EA; border: 1px solid rgba(180, 190, 205, 90); border-radius: 3px; background-color: rgba(180, 190, 205, 20); }"
 		default_style = "QPushButton { border: none; background: transparent; } QPushButton:hover { background-color: rgba(255, 255, 255, 5); border-radius: 3px; }"
 
+		if not hasattr(self, 'selected_blocks'):
+			self.selected_blocks = []
+
 		for block_name, button in self.side_block_edit_buttons.items():
 			if not button:
 				continue
-			if self.current_block and block_name == self.current_block:
+			if block_name in self.selected_blocks:
 				button.setStyleSheet(active_style)
 			else:
 				button.setStyleSheet(default_style)
+
+			# Tint the label text for pre/post-build blocks
+			label = self.side_block_labels.get(block_name)
+			if label:
+				phase = self._get_block_build_phase(block_name)
+				if phase == 'before':
+					label.setStyleSheet('background: transparent; color: #8CD6FF;')
+				elif phase == 'after':
+					label.setStyleSheet('background: transparent; color: #FFDE8C;')
+				else:
+					label.setStyleSheet('background: transparent; color: white;')
 
 	def move_outliner_to_block(self, source_block, target_block, drop_above):
 		try:
@@ -1837,21 +2215,30 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 				return
 			parent = parent[0]
 			
-			children = cmds.listRelatives(parent, children=True)
-			if source_block not in children or target_block not in children:
+			children = cmds.listRelatives(parent, children=True) or []
+			if target_block not in children:
 				return
+				
+			# If source_block is part of the current active selection, move all selected blocks together.
+			# Maintain their relative scene order.
+			if hasattr(self, 'selected_blocks') and self.selected_blocks and source_block in self.selected_blocks:
+				blocks_to_move = [c for c in children if c in self.selected_blocks]
+			else:
+				blocks_to_move = [source_block]
+				
+			# Keep other children in their original order
+			others = [c for c in children if c not in blocks_to_move]
 			
-			source_idx = children.index(source_block)
-			target_idx = children.index(target_block)
+			# Find insertion index in the "others" list
+			target_idx = others.index(target_block)
+			insert_idx = target_idx if drop_above else target_idx + 1
 			
-			# Put source at front (index 0)
-			cmds.reorder(source_block, front=True)
+			# Construct the desired sibling order
+			new_order = others[:insert_idx] + blocks_to_move + others[insert_idx:]
 			
-			current_tgt_idx = target_idx if source_idx < target_idx else target_idx + 1
-			new_idx = current_tgt_idx - 1 if drop_above else current_tgt_idx
-			
-			if new_idx > 0:
-				cmds.reorder(source_block, relative=new_idx)
+			# Apply the new order in Maya by moving each to the back one by one in order
+			for node in new_order:
+				cmds.reorder(node, back=True)
 				
 		except Exception as e:
 			cmds.warning('Could not reorder blocks: {}'.format(e))
@@ -1927,6 +2314,9 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 				QtWidgets.QApplication.processEvents()
 				scroll_bar.setValue(saved_scroll)
 				QtCore.QTimer.singleShot(50, lambda: self.ui.side_scroll.verticalScrollBar().setValue(saved_scroll))
+				self.selected_blocks = [new_block]
+				self.selection_anchor = new_block
+				self.update_side_block_highlight()
 				self.create_properties_layout(block=new_block)
 
 		except Exception as e:
@@ -1989,6 +2379,112 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		enable_row.addWidget(enable_check)
 		enable_row.addStretch()
 		v_layout.addLayout(enable_row)
+
+		# Add Version dropdown if versioned files exist
+		sorted_versions, versions_dict = self.get_block_versions(block)
+		if sorted_versions and len(sorted_versions) > 1:
+			import_cmd = cmds.getAttr('{}.Import_Command'.format(config))
+			current_version = 'v001'
+			match = re.search(r'import\s+(\w+)', import_cmd)
+			if match:
+				curr_mod = match.group(1)
+				v_match = re.search(r'_(v\d+)$', curr_mod)
+				if v_match:
+					current_version = v_match.group(1)
+				else:
+					# If legacy block has no version suffix, treat it as v001 for compatibility.
+					if 'v001' in sorted_versions:
+						current_version = 'v001'
+					elif sorted_versions:
+						current_version = sorted_versions[0]
+			
+			version_row = QtWidgets.QHBoxLayout()
+			version_row.setContentsMargins(3, 5, 3, 5)
+			version_label = QtWidgets.QLabel('Version: ')
+			version_label.setFixedHeight(30)
+			version_dropdown = QtWidgets.QComboBox()
+			version_dropdown.addItems(sorted_versions)
+			version_dropdown.setCurrentText(current_version)
+			version_dropdown.setStyleSheet('background-color: none;')
+			
+			def change_version(new_ver, blk=block, cfg=config, v_dict=versions_dict):
+				json_path = v_dict[new_ver]
+				with open(json_path, 'r') as f:
+					module = json.load(f)
+				
+				cmds.undoInfo(openChunk=True)
+				try:
+					import_cmd_attr = '{}.Import_Command'.format(cfg)
+					build_cmd_attr = '{}.Build_Command'.format(cfg)
+					
+					cmds.setAttr(import_cmd_attr, lock=False)
+					cmds.setAttr(import_cmd_attr, module['import'], type='string')
+					cmds.setAttr(import_cmd_attr, lock=True)
+					
+					cmds.setAttr(build_cmd_attr, lock=False)
+					cmds.setAttr(build_cmd_attr, module['build_command'], type='string')
+					cmds.setAttr(build_cmd_attr, lock=True)
+					
+					# Safe dynamic import/reload using importlib
+					import sys
+					import importlib
+					module_name = module['import'].replace('import ', '').strip()
+					if module_name in sys.modules:
+						mod = sys.modules[module_name]
+						importlib.reload(mod)
+					else:
+						mod = importlib.import_module(module_name)
+					
+					self.update_config(blk, cfg, module)
+					print('Successfully switched block {} to version {}'.format(blk, new_ver))
+				except Exception as e:
+					cmds.warning('Failed to switch version: {}'.format(e))
+				finally:
+					cmds.undoInfo(closeChunk=True)
+				
+				# Defer layout refresh to the next event loop tick to prevent Qt crashes.
+				# This avoids deleting the sender combobox widget from memory inside its own signal handler.
+				QtCore.QTimer.singleShot(0, lambda: self.create_properties_layout(blk, scroll_to_block=False))
+				
+			version_dropdown.currentTextChanged.connect(change_version)
+			version_row.addWidget(version_label)
+			version_row.addWidget(version_dropdown)
+			version_row.addStretch()
+			v_layout.addLayout(version_row)
+
+			# Warning banner + update button when not on the latest version
+			latest_version = sorted_versions[-1]
+			if current_version != latest_version:
+				warn_widget = QtWidgets.QWidget()
+				warn_widget.setStyleSheet(
+					'background-color: #7a5800; border-radius: 4px; margin: 2px 0px;')
+				warn_layout = QtWidgets.QHBoxLayout(warn_widget)
+				warn_layout.setContentsMargins(8, 5, 8, 5)
+				warn_layout.setSpacing(6)
+
+				warn_icon = QtWidgets.QLabel('!')
+				warn_icon.setStyleSheet(
+					'color: #ffcc00; font-weight: bold; font-size: 14px; background: transparent;')
+				warn_icon.setFixedWidth(14)
+
+				warn_label = QtWidgets.QLabel(
+					'<b>{}</b> available'.format(latest_version))
+				warn_label.setStyleSheet('color: #ffcc00; background: transparent;')
+
+				update_btn = QtWidgets.QPushButton('Update to {}'.format(latest_version))
+				update_btn.setStyleSheet(
+					'background-color: #a07000; color: white;'
+					' border-radius: 3px; padding: 2px 10px;')
+				update_btn.setFixedHeight(22)
+				update_btn.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+				update_btn.clicked.connect(
+					lambda _=None, lv=latest_version: change_version(lv))
+
+				warn_layout.addWidget(warn_icon)
+				warn_layout.addWidget(warn_label)
+				warn_layout.addStretch()
+				warn_layout.addWidget(update_btn)
+				v_layout.addWidget(warn_widget)
 
 		# layout_separator = QtWidgets.QLabel()
 		# layout_separator.setStyleSheet("border : 5px solid grey; ")
@@ -2453,6 +2949,8 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 
 	def checkBox_update_attr(self, checkBox,attr, *args):
 		cmds.setAttr(attr, checkBox.isChecked())
+		if 'RunBeforeBuild' in attr or 'RunAfterBuild' in attr:
+			self.update_side_block_highlight()
 
 	def enum_update_attr(self, comboBox, attr, *args):
 		cmds.setAttr(attr, comboBox.currentIndex())
@@ -2570,6 +3068,21 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 			self.ui.bar_label.resize(100, 200)
 			self.ui.bar_label.setText('Starting the Build')
 
+			#Load need plugins
+			self.force_load_of_dependency_plugins()
+
+			#Check rebuild (must run before pre-build blocks so the prompt is not skipped)
+			rebuild = self.check_if_previous_build()
+			if not rebuild:
+				return False
+
+			if rebuild == 'First Build':
+				load_io = False
+			elif rebuild == 'Just Rebuild':
+				load_io = False
+			else:
+				load_io = True
+
 			# Get blocks to build early so we can run pre-build blocks before EVERYTHING
 			blocks = self.get_blocks_to_build(mode = self.ui.build_method.currentText())
 
@@ -2601,16 +3114,18 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 					# Generic block builder execution: call the block's Build_Command with force=True
 					executed = False
 					build_cmd = None
+					import_cmd = None
 					if cmds.attributeQuery('Build_Command', n=before_config, exists=True):
 						build_cmd = cmds.getAttr('{}.Build_Command'.format(before_config), asString=True)
+					if cmds.attributeQuery('Import_Command', n=before_config, exists=True):
+						import_cmd = cmds.getAttr('{}.Import_Command'.format(before_config), asString=True)
+
+					import_cmd, build_cmd = self._resolve_build_commands_for_legacy_versioning(import_cmd, build_cmd)
 					
 					if build_cmd:
 						build_cmd_force = build_cmd.replace('()', '(force=True)') if '()' in build_cmd else build_cmd
 						
 						# Ensure module is imported
-						import_cmd = None
-						if cmds.attributeQuery('Import_Command', n=before_config, exists=True):
-							import_cmd = cmds.getAttr('{}.Import_Command'.format(before_config), asString=True)
 						if import_cmd:
 							try:
 								exec(import_cmd)
@@ -2635,20 +3150,10 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 							exec(before_code)
 					print('Pre-build block {} completed'.format(before_block))
 
-			#Load need plugins
-			self.force_load_of_dependency_plugins()
+			# Clean up and export after pre-build blocks are done
+			if load_io:
+				self.cleanup_and_export_previous_build()
 
-			#Check rebuild
-			rebuild = self.check_if_previous_build()
-			if not rebuild:
-				return False
-
-			if rebuild == 'First Build':
-				load_io = False
-			elif rebuild == 'Just Rebuild':
-				load_io = False
-			else:
-				load_io = True
 			#log
 			try:
 				clear_se = cmds.optionVar(q="mutant_clear_script_editor") if cmds.optionVar(ex="mutant_clear_script_editor") else True
@@ -2707,9 +3212,11 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 					continue
 				precode = cmds.getAttr('{}.precode'.format(config))
 				import_command = cmds.getAttr('{}.Import_Command'.format(config))
-				reload_command = import_command.replace('import', 'reload(')+')'.replace(' ', '')
 				buid_command = cmds.getAttr('{}.Build_Command'.format(config))
 				postcode = cmds.getAttr('{}.postcode'.format(config))
+
+				import_command, buid_command = self._resolve_build_commands_for_legacy_versioning(import_command, buid_command)
+				reload_command = import_command.replace('import', 'reload(')+')'.replace(' ', '')
 
 				self.ui.bar_label.setText(buid_command)
 				self.ui.bar_label.setToolTip(buid_command)
@@ -2849,16 +3356,18 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 					# Generic block builder execution: call the block's Build_Command with force=True
 					executed = False
 					build_cmd = None
+					import_cmd = None
 					if cmds.attributeQuery('Build_Command', n=deferred_config, exists=True):
 						build_cmd = cmds.getAttr('{}.Build_Command'.format(deferred_config), asString=True)
+					if cmds.attributeQuery('Import_Command', n=deferred_config, exists=True):
+						import_cmd = cmds.getAttr('{}.Import_Command'.format(deferred_config), asString=True)
+
+					import_cmd, build_cmd = self._resolve_build_commands_for_legacy_versioning(import_cmd, build_cmd)
 					
 					if build_cmd:
 						build_cmd_force = build_cmd.replace('()', '(force=True)') if '()' in build_cmd else build_cmd
 						
 						# Ensure module is imported
-						import_cmd = None
-						if cmds.attributeQuery('Import_Command', n=deferred_config, exists=True):
-							import_cmd = cmds.getAttr('{}.Import_Command'.format(deferred_config), asString=True)
 						if import_cmd:
 							try:
 								exec(import_cmd)
@@ -3102,81 +3611,84 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 				cancelButton='Cancel')
 
 			if delete_comfirm == 'Delete and Rebuild':
-
-				if cmds.listRelatives('Mutant_Build', p=True):
-					cmds.parent('Mutant_Build', w=True)
-
-				#IO
-
-				# Skeleton Hierarchy
-				if cmds.objExists('Skeleton'):
-					temp_folder = os.path.join(tempfile.gettempdir(), 'RebuildTemp')
-					if not os.path.exists(temp_folder):
-						os.mkdir(temp_folder)
-					skeleton_file = os.path.join(temp_folder, 'skeleton_hierarchy.txt')
-					# Save parent hierarchy to file
-					self.save_joint_parents("Skeleton", skeleton_file)
-
-				# Orient Values
-				try:
-					import json
-					scene_name = cmds.file(q=True, sceneName=True)
-					safe_scene = os.path.basename(scene_name).replace('.ma', '').replace('.mb', '') if scene_name else "untitled"
-					
-					temp_folder = os.path.join(tempfile.gettempdir(), 'RebuildTemp')
-					if not os.path.exists(temp_folder):
-						os.mkdir(temp_folder)
-					
-					orient_file = os.path.join(temp_folder, '{}_orient_values.json'.format(safe_scene))
-					orient_data = {}
-					for orient in cmds.ls('*_Orient', type='transform'):
-						orient_data[orient] = {
-							't': cmds.getAttr('{}.t'.format(orient))[0],
-							'r': cmds.getAttr('{}.r'.format(orient))[0],
-							's': cmds.getAttr('{}.s'.format(orient))[0]
-						}
-					with open(orient_file, 'w') as f:
-						json.dump(orient_data, f)
-				except Exception as e:
-					print("Failed to save orient values:", e)
-
-
-				# Controllers
-				temp_controllers_folder = os.path.join(tempfile.gettempdir(), 'RebuildTempCtrls')
-				if not os.path.exists(temp_controllers_folder):
-					os.mkdir(temp_controllers_folder)
-				ctrls.save_all(folder_path=os.path.join(temp_controllers_folder, 'tempControllers.json'),
-							   force_validate=True)
-
-				#Skins
-				temp_skin_folder = os.path.join(tempfile.gettempdir(), 'RebuildTempSkin')
-				if not os.path.exists(temp_skin_folder):
-					os.mkdir(temp_skin_folder)
-				else:
-					try:
-						import shutil
-						shutil.rmtree(temp_skin_folder)
-						print('Deleted: ', temp_skin_folder)
-					except:
-						pass
-				if not os.path.exists(temp_skin_folder):
-					os.mkdir(temp_skin_folder)
-				self._save_rebuild_skins(temp_skin_folder=temp_skin_folder)
-
-				#Delete
-				cmds.delete(build_grp)
-				if cmds.objExists('Mutant_Rig'):
-					cmds.delete('Mutant_Rig')
-
-				return temp_skin_folder, temp_controllers_folder
-
+				return 'Delete and Rebuild'
 			elif delete_comfirm == 'Just Rebuild':
 				return 'Just Rebuild'
-
 			else:
 				return False
 		else:
 			return 'First Build'
+
+	def cleanup_and_export_previous_build(self):
+		build_grp = 'Mutant_Tools_Grp'
+
+		if cmds.listRelatives('Mutant_Build', p=True):
+			cmds.parent('Mutant_Build', w=True)
+
+		#IO
+
+		# Skeleton Hierarchy
+		if cmds.objExists('Skeleton'):
+			temp_folder = os.path.join(tempfile.gettempdir(), 'RebuildTemp')
+			if not os.path.exists(temp_folder):
+				os.mkdir(temp_folder)
+			skeleton_file = os.path.join(temp_folder, 'skeleton_hierarchy.txt')
+			# Save parent hierarchy to file
+			self.save_joint_parents("Skeleton", skeleton_file)
+
+		# Orient Values
+		try:
+			import json
+			scene_name = cmds.file(q=True, sceneName=True)
+			safe_scene = os.path.basename(scene_name).replace('.ma', '').replace('.mb', '') if scene_name else "untitled"
+			
+			temp_folder = os.path.join(tempfile.gettempdir(), 'RebuildTemp')
+			if not os.path.exists(temp_folder):
+				os.mkdir(temp_folder)
+			
+			orient_file = os.path.join(temp_folder, '{}_orient_values.json'.format(safe_scene))
+			orient_data = {}
+			for orient in cmds.ls('*_Orient', type='transform'):
+				orient_data[orient] = {
+					't': cmds.getAttr('{}.t'.format(orient))[0],
+					'r': cmds.getAttr('{}.r'.format(orient))[0],
+					's': cmds.getAttr('{}.s'.format(orient))[0]
+				}
+			with open(orient_file, 'w') as f:
+				json.dump(orient_data, f)
+		except Exception as e:
+			print("Failed to save orient values:", e)
+
+
+		# Controllers
+		temp_controllers_folder = os.path.join(tempfile.gettempdir(), 'RebuildTempCtrls')
+		if not os.path.exists(temp_controllers_folder):
+			os.mkdir(temp_controllers_folder)
+		ctrls.save_all(folder_path=os.path.join(temp_controllers_folder, 'tempControllers.json'),
+					   force_validate=True)
+
+		#Skins
+		temp_skin_folder = os.path.join(tempfile.gettempdir(), 'RebuildTempSkin')
+		if not os.path.exists(temp_skin_folder):
+			os.mkdir(temp_skin_folder)
+		else:
+			try:
+				import shutil
+				shutil.rmtree(temp_skin_folder)
+				print('Deleted: ', temp_skin_folder)
+			except:
+				pass
+		if not os.path.exists(temp_skin_folder):
+			os.mkdir(temp_skin_folder)
+		self._save_rebuild_skins(temp_skin_folder=temp_skin_folder)
+
+		#Delete
+		if cmds.objExists(build_grp):
+			cmds.delete(build_grp)
+		if cmds.objExists('Mutant_Rig'):
+			cmds.delete('Mutant_Rig')
+
+		return temp_skin_folder, temp_controllers_folder
 
 
 	#-------------------------------------------------------------------
@@ -3234,16 +3746,22 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 			return
 
 		import_command = cmds.getAttr('{}.Import_Command'.format(config))
+		import_command, _ = self._resolve_build_commands_for_legacy_versioning(import_command, None)
 		build_file = import_command.replace('import ', '')
 
 		current_path = os.path.join(FOLDER, 'Blocks')
 		script_name = build_file + '.py'
+		file_path = None
 
 		# if we need find it first
 		for root, dirs, files in os.walk(current_path):
 			for name in files:
 				if name == script_name:
 					file_path = os.path.abspath(os.path.join(root, name))
+
+		if not file_path:
+			cmds.warning('Build script not found: {}'.format(script_name))
+			return
 
 		with open(file_path) as build_data:
 			build_script = build_data.read()
@@ -3302,6 +3820,11 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 	#-------------------------------------------------------------------
 
 	def search_command(self):
+		"""Debounced search – restarts the timer on each keystroke."""
+		self._search_timer.start()
+
+	def _execute_search(self):
+		"""Actually perform the search after the debounce delay expires."""
 		self.delete_side_buttons()
 		self.create_all_side_buttons()
 
@@ -3326,6 +3849,10 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		self.ui.build_btn.setParent(None)
 		self.ui.build_method.setParent(None)
 		self.ui.search_layout.setParent(None)
+		if hasattr(self, '_left_widget'):
+			self._left_widget.setParent(None)
+		if hasattr(self, '_search_widget'):
+			self._search_widget.setParent(None)
 		self.adjustSize()    
 		self.show()
 

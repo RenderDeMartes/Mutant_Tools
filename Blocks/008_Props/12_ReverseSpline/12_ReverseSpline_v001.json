@@ -1,0 +1,16 @@
+{
+    "Name":  "ReverseSpline",
+    "Description":  "This will create a ReverseSpline System",
+    "Icon":  "ReverseSpline.png",
+    "Enable":  "True",
+    "python_file":  "exec_reverse_spline_v001.py",
+    "import":  "import exec_reverse_spline_v001",
+    "imp.reload":  "reload(exec_reverse_spline_v001)",
+    "exec_command":  "exec_reverse_spline_v001.create_reverse_spline_block()",
+    "build_command":  "exec_reverse_spline_v001.build_reverse_spline_block()",
+    "attrs":  {
+                  "SetParent_string":  "new_locator",
+                  "CtrlSize_float":  "4",
+                  "Help_string":  "Overview:\n  This will create a ReverseSpline System.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetParent: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- CtrlSize: numeric value that controls size/amount/intensity (default 4).\n- Template parent examples: Spine_End_Jnt, Head_Jnt, L_Wrist_Jnt.\n\nCreate Step:\n- After creating the block, you will be prompted for the amount of joints.\n- This block enforces odd values only (5, 7, 9, 11, ...).\n- Maximum supported amount is 25 joints.\n\nTips:\n- start with defaults, build once, then tweak only the fields you need."
+              }
+}

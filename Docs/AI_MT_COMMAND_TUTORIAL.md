@@ -19,6 +19,42 @@ Every Mutant block script should follow this rhythm:
 
 ---
 
+## 0.1) Block Versioning Workflow (Required)
+
+All new and updated blocks must use explicit versioned files.
+
+Naming:
+- Exec file: `exec_<block>_v001.py`
+- Versioned JSON: `<prefix>_<BlockName>_v001.json`
+- Launcher JSON (kept unversioned): `<prefix>_<BlockName>.json`
+
+Launcher JSON must point to the active version in:
+- `python_file`
+- `import`
+- `imp.reload`
+- `exec_command`
+- `build_command`
+
+Example launcher mapping:
+
+```json
+{
+    "python_file": "exec_mouth_v001.py",
+    "import": "import exec_mouth_v001",
+    "imp.reload": "reload(exec_mouth_v001)",
+    "exec_command": "exec_mouth_v001.create_mouth_block()",
+    "build_command": "exec_mouth_v001.build_mouth_block()"
+}
+```
+
+When releasing a new block version:
+1. Copy current latest files (for example `v001`) to next (`v002`).
+2. Implement changes only in the new version.
+3. Repoint launcher JSON to the new version.
+4. Keep old versions untouched so old scenes can still rebuild.
+
+---
+
 ## 1) Boilerplate You Can Reuse
 
 ### Example 1 — Minimal imports and Mutant instance

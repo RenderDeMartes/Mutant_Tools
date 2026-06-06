@@ -1,0 +1,26 @@
+{
+    "Name":  "L_Shoulder,L_Elbow,L_Wrist",
+    "Description":  "This will create a Limb System",
+    "Icon":  "Limb.png",
+    "Enable":  "True",
+    "python_file":  "exec_limb_v001.py",
+    "import":  "import exec_limb_v001",
+    "imp.reload":  "reload(exec_limb_v001)",
+    "exec_command":  "exec_limb_v001.create_limb_block()",
+    "build_command":  "exec_limb_v001.build_limb_block()",
+    "attrs":  {
+                  "SetParent_string":  "new_locator",
+                  "Mirror_enum":  "True:False:Right_Only",
+                  "Ribbons_bool":  "True",
+                  "ScaleTweakCtrls_bool":  "False",
+                  "ForceIkWorld_bool":  "False",
+                  "CtrlSize_float":  "4",
+                  "TwistAmount_float":  "4",
+                  "IkCtrlType_enum":  "cube:sphere",
+                  "PVCtrlType_enum":  "sphere:cube",
+                  "IkTopCtrlType_enum":  "pin_cube:cube:sphere:circleY:circleX:circleY",
+                  "FKCtrlType_enum":  "bounding_cube:circleY:circleX:circleY:pin_cube",
+                  "SetGameParent_string":  "",
+                  "Help_string":  "Overview:\n  This will create a Limb System.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetParent: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- Mirror: choose one option (for example: True, False, Right_Only).\n- Ribbons: turn this ON/OFF depending on whether you want that feature.\n- CtrlSize: numeric value that controls size/amount/intensity (default 4).\n- TwistAmount: numeric value that controls size/amount/intensity (default 4).\n- IkCtrlType: choose one option (for example: cube, sphere).\n- Template parent examples: L_Wrist_Jnt, L_Elbow_Bnd_2_Bnd, R_Elbow_Bnd_2_Bnd.\n\nTips:\n- if a field says left/right or mirror, use it to generate the opposite side quickly."
+              }
+}

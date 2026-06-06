@@ -1,0 +1,14 @@
+{
+    "Name":  "humanBodyTemplate",
+    "Description":  "Will import the Human  Template to work on Game Engines",
+    "Icon":  "HumanGame.png",
+    "Enable":  "True",
+    "python_file":  "exec_humanGameTemplate_v001.py",
+    "import":  "import exec_humanGameTemplate_v001",
+    "imp.reload":  "reload(exec_humanGameTemplate_v001)",
+    "exec_command":  "exec_humanGameTemplate_v001.create_humanGameTemplate_block()",
+    "build_command":  "exec_humanGameTemplate_v001.build_humanGameTemplate_block()",
+    "attrs":  {
+
+              }
+}

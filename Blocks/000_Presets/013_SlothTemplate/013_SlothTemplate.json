@@ -1,0 +1,14 @@
+{
+    "Name":  "slothTemplate",
+    "Description":  "Will Import the sloth template",
+    "Icon":  "Sloth.png",
+    "Enable":  "True",
+    "python_file":  "exec_slothTemplate_v001.py",
+    "import":  "import exec_slothTemplate_v001",
+    "imp.reload":  "reload(exec_slothemplate)",
+    "exec_command":  "exec_slothTemplate_v001.create_slothtemplate_block()",
+    "build_command":  "exec_slothTemplate_v001.build_slothtemplate_block()",
+    "attrs":  {
+
+              }
+}

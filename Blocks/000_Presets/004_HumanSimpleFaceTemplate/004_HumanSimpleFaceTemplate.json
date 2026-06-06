@@ -1,0 +1,14 @@
+{
+    "Name":  "humanBodyTemplate",
+    "Description":  "Will import the Human Face Simple Template ",
+    "Icon":  "StickFigureFace.png",
+    "Enable":  "True",
+    "python_file":  "exec_humanSimpleFaceTemplate_v001.py",
+    "import":  "import exec_humanSimpleFaceTemplate_v001",
+    "imp.reload":  "reload(exec_humanSimpleFaceTemplate_v001)",
+    "exec_command":  "exec_humanSimpleFaceTemplate_v001.create_humanSimpleFaceTemplate_block()",
+    "build_command":  "exec_humanSimpleFaceTemplate_v001.build_humanSimpleFaceTemplate_block()",
+    "attrs":  {
+
+              }
+}

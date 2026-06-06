@@ -1,0 +1,23 @@
+{
+    "Name":  "L_Hand",
+    "Description":  "Hand Block with 5 fingers or less",
+    "Icon":  "Hand.png",
+    "Enable":  "True",
+    "python_file":  "exec_hand_v001.py",
+    "import":  "import exec_hand_v001",
+    "imp.reload":  "reload(exec_hand_v001)",
+    "exec_command":  "exec_hand_v001.create_hand_block()",
+    "build_command":  "exec_hand_v001.build_hand_block()",
+    "attrs":  {
+                  "SetParent_string":  "new_locator",
+                  "SetAttrsCtrl_string":  "new_ctrl",
+                  "CreateFingersAttrs_bool":  "True",
+                  "SetVisAttr_string":  "",
+                  "SetCtrlAttrsParent_string":  "L_Hand_Palm_Jnt",
+                  "CtrlSize_float":  "4",
+                  "CtrlType_enum":  "circleX:circleY:circleZ:bounding_cube:pin_cube",
+                  "Mirror_enum":  "True:False:Right_Only",
+                  "SetGameParent_string":  "",
+                  "Help_string":  "Overview:\n  Hand Block with 5 fingers or less.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetParent: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- SetAttrsCtrl: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- CreateFingersAttrs: turn this ON/OFF depending on whether you want that feature.\n- CtrlSize: numeric value that controls size/amount/intensity (default 4).\n- CtrlType: choose one option (for example: circleX, circleY, circleZ, bounding_cube).\n- Mirror: choose one option (for example: True, False, Right_Only).\n- Template parent examples: L_Hand_Ankle_Jnt, L_Hand_Palm_Jnt, Spine_End_Jnt.\n\nTips:\n- if a field says left/right or mirror, use it to generate the opposite side quickly."
+              }
+}

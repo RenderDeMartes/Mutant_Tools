@@ -1,0 +1,14 @@
+{
+    "Name":  "Stop",
+    "Description":  "This will stop the build when building to this block.",
+    "Icon":  "Stop.png",
+    "Enable":  "True",
+    "python_file":  "exec_stop_v001.py",
+    "import":  "import exec_stop_v001",
+    "imp.reload":  "reload(exec_stop_v001)",
+    "exec_command":  "exec_stop_v001.create_stop_block()",
+    "build_command":  "exec_stop_v001.build_stop_block()",
+    "attrs":  {
+
+              }
+}

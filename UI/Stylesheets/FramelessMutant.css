@@ -490,12 +490,12 @@ QToolBar {
  */
 
 QToolTip, QTipLabel {
-    border: 1px solid #9a9a66;
+    border: 1px solid #555555;
     border-radius: 3px;
-    background: #5c5c42;
-    color: #bbbbbb;
+    background: #2d2d2d;
+    color: #cccccc;
     margin: 0;
-    padding: 0;
+    padding: 4px;
 }
 
 /*

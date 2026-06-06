@@ -148,9 +148,10 @@ class AutoRiggerOptions(QtMutantWindow.Qt_Mutant):
 	# -------------------------------------------------------------------
 
 	def create_layout(self):
-
-		''
-
+		self.toggle_build_button = QtWidgets.QPushButton("Toggle Build On/Off")
+		self.toggle_build_button.setMinimumSize(QtCore.QSize(0, 30))
+		self.ui.verticalLayout.insertWidget(6, self.toggle_build_button)
+		self.adjustSize()
 
 	# -------------------------------------------------------------------
 
@@ -161,207 +162,295 @@ class AutoRiggerOptions(QtMutantWindow.Qt_Mutant):
 		self.ui.delete_build_button.clicked.connect(self.delete_build_cmd)
 		self.ui.change_name_button.clicked.connect(self.change_name_cmd)
 		self.ui.update_button.clicked.connect(self.update_cmd)
+		self.toggle_build_button.clicked.connect(self.toggle_build_cmd)
+
+	@undo
+	def toggle_build_cmd(self):
+		if self.autorigger_ui:
+			self.autorigger_ui.toggle_selected_blocks_build()
+		self.close()
 
 	# -------------------------------------------------------------------
 	@undo
 	def duplicate_cmd(self, block=None):
-		print(self.block,'Duplicate')
+		blocks_to_dup = []
 		if not block:
-			block = self.block
-		name = block.replace(nc['module'], '')
-		og_guides = cmds.listRelatives(block, c=True)
-		if og_guides:
-			cmds.parent(og_guides, w=True)
+			if self.autorigger_ui and hasattr(self.autorigger_ui, 'selected_blocks') and self.autorigger_ui.selected_blocks:
+				blocks_to_dup = list(self.autorigger_ui.selected_blocks)
+			else:
+				blocks_to_dup = [self.block]
+		else:
+			blocks_to_dup = [block]
 
-		#Dup block
-		new_name = mt.ask_name(text=name,
-							   ask_for='New Name',
-							   check_split=True)
+		new_selected_blocks = []
+		for b in blocks_to_dup:
+			if not cmds.objExists(b):
+				continue
+			print(b, 'Duplicate')
+			name = b.replace(nc['module'], '')
+			og_guides = cmds.listRelatives(b, c=True)
+			if og_guides:
+				cmds.parent(og_guides, w=True)
 
-		new_block = cmds.duplicate(block, name=new_name+nc['module'], un=True)
-		config = new_block[-1]
-		new_block = new_block[0]
-		config = cmds.listConnections(new_block)[1]
-		cmds.rename(config, new_name+'_Config')
+			#Dup block
+			new_name = mt.ask_name(text=name,
+								   ask_for='New Name for {}'.format(name),
+								   check_split=True)
+			if not new_name:
+				# If cancelled, restore guides and skip
+				if og_guides:
+					cmds.parent(og_guides, b)
+				continue
 
-		#Dup guides
-		if og_guides:
-			for guide in og_guides:
-				print(guide)
-				if guide.endswith("_Loc"):
-					new_guide = cmds.duplicate(guide, name=new_name + "_Loc")[0]
-				else:
-					new_guide = cmds.duplicate(guide, name=new_name + nc['guide'])[0]
+			new_block = cmds.duplicate(b, name=new_name+nc['module'], un=True)
+			config = new_block[-1]
+			new_block = new_block[0]
+			config = cmds.listConnections(new_block)[1]
+			cmds.rename(config, new_name+'_Config')
 
-				print(new_guide)
-				cmds.parent(new_guide, new_block)
+			#Dup guides
+			if og_guides:
+				for guide in og_guides:
+					print(guide)
+					if guide.endswith("_Loc"):
+						new_guide = cmds.duplicate(guide, name=new_name + "_Loc")[0]
+					else:
+						new_guide = cmds.duplicate(guide, name=new_name + nc['guide'])[0]
 
-				#rename all guides:
-				new_guide_childs = cmds.listRelatives(new_guide, ad=True)
-				new_guide_childs_full_name = cmds.listRelatives(new_guide, ad=True, f=True)
-				if new_guide_childs:
-					for g, full_g in zip(new_guide_childs, new_guide_childs_full_name):
-						cmds.rename(full_g, g.replace(name, new_name))
+					print(new_guide)
+					cmds.parent(new_guide, new_block)
 
-		#Restore
-		if og_guides:
-			cmds.parent(og_guides, block)
+					#rename all guides:
+					new_guide_childs = cmds.listRelatives(new_guide, ad=True)
+					new_guide_childs_full_name = cmds.listRelatives(new_guide, ad=True, f=True)
+					if new_guide_childs:
+						for g, full_g in zip(new_guide_childs, new_guide_childs_full_name):
+							cmds.rename(full_g, g.replace(name, new_name))
 
-		#Make the new block pretty on shapes
-		if og_guides:
-			shapes = cmds.listRelatives(new_guide, ad=True, type='shape')
-			if shapes:
-				for s in shapes:
-					if cmds.objectType(s)=="nurbsCurve":
-						cmds.setAttr("{}.lineWidth".format(s), int(setup['line_width']))
+			#Restore
+			if og_guides:
+				cmds.parent(og_guides, b)
 
-		# Reorder so the new block sits just below the original
+			#Make the new block pretty on shapes
+			if og_guides:
+				shapes = cmds.listRelatives(new_guide, ad=True, type='shape')
+				if shapes:
+					for s in shapes:
+						if cmds.objectType(s)=="nurbsCurve":
+							cmds.setAttr("{}.lineWidth".format(s), int(setup['line_width']))
+
+			# Reorder so the new block sits just below the original
+			try:
+				parent = cmds.listRelatives(new_block, parent=True)
+				if parent:
+					children = cmds.listRelatives(parent[0], children=True)
+					if b in children:
+						orig_idx = children.index(b)
+						cmds.reorder(new_block, front=True)
+						# After front, move relative to land right after original
+						new_idx = orig_idx + 1
+						if new_idx > 0:
+							cmds.reorder(new_block, relative=new_idx)
+			except Exception as e:
+				print('Could not reorder duplicated block: {}'.format(e))
+				
+			new_selected_blocks.append(new_block)
+
 		try:
-			parent = cmds.listRelatives(new_block, parent=True)
-			if parent:
-				children = cmds.listRelatives(parent[0], children=True)
-				if block in children:
-					orig_idx = children.index(block)
-					cmds.reorder(new_block, front=True)
-					# After front, move relative to land right after original
-					new_idx = orig_idx + 1
-					if new_idx > 0:
-						cmds.reorder(new_block, relative=new_idx)
-		except Exception as e:
-			print('Could not reorder duplicated block: {}'.format(e))
-
-		try:
-			self.autorigger_ui.create_layout()
+			if self.autorigger_ui:
+				self.autorigger_ui.create_layout()
 			mt.update_icons()
 		except Exception as e:
 			print('Duplicate refresh error: {}'.format(e))
 
-		cmds.select(new_block)
+		if new_selected_blocks:
+			cmds.select(new_selected_blocks)
+			if self.autorigger_ui:
+				self.autorigger_ui.selected_blocks = new_selected_blocks
+				self.autorigger_ui.selection_anchor = new_selected_blocks[-1]
 		self.close()
 
 	@undo
 	def delete_cmd(self):
-		print(self.block, 'Delete Block')
-		cmds.delete(self.block)
-		self.layout.setParent(None)
+		blocks_to_delete = []
+		if self.autorigger_ui and hasattr(self.autorigger_ui, 'selected_blocks') and self.autorigger_ui.selected_blocks:
+			blocks_to_delete = list(self.autorigger_ui.selected_blocks)
+		else:
+			blocks_to_delete = [self.block]
+
+		print('Deleting blocks:', blocks_to_delete)
+		
+		for b in blocks_to_delete:
+			if cmds.objExists(b):
+				cmds.delete(b)
+				if self.autorigger_ui:
+					widget = self.autorigger_ui.side_block_widgets.get(b)
+					if widget:
+						widget.setParent(None)
+
 		# Clear the properties panel so deleted block info doesn't linger
-		try:
-			self.autorigger_ui.current_block = None
-			self.autorigger_ui.delete_properties_layout()
-			self.autorigger_ui.ui.block_label.setText('Mutant Autorigger')
-		except Exception as e:
-			print('Could not clear properties: {}'.format(e))
+		if self.autorigger_ui:
+			try:
+				self.autorigger_ui.selected_blocks = []
+				self.autorigger_ui.selection_anchor = None
+				self.autorigger_ui.current_block = None
+				self.autorigger_ui.create_layout()
+				self.autorigger_ui.delete_properties_layout()
+				self.autorigger_ui.ui.block_label.setText('Mutant Autorigger')
+			except Exception as e:
+				print('Could not clear properties: {}'.format(e))
 		self.close()
 
 	@undo
 	def delete_build_cmd(self):
-		print(self.block, 'Delete Data')
-		if cmds.attributeQuery("notes", n=self.block, ex=True):
-			notes = cmds.getAttr("{}.notes".format(self.block))
-			nodes_list = str(notes)[1:-1]
-			nodes_list = nodes_list.replace("u'", "'")
-			nodes_list = nodes_list.replace("'", "")
-			for i in nodes_list.split(', '):
-				if cmds.objExists(i):
-					if cmds.nodeType(i) == 'skinCluster':
-						print('Skipped', i)
-						continue
-					cmds.delete(i)
-		print('Done Deleting:', self.block)
+		blocks_to_delete_build = []
+		if self.autorigger_ui and hasattr(self.autorigger_ui, 'selected_blocks') and self.autorigger_ui.selected_blocks:
+			blocks_to_delete_build = list(self.autorigger_ui.selected_blocks)
+		else:
+			blocks_to_delete_build = [self.block]
+
+		for b in blocks_to_delete_build:
+			print(b, 'Delete Data')
+			if not cmds.objExists(b):
+				continue
+			if cmds.attributeQuery("notes", n=b, ex=True):
+				notes = cmds.getAttr("{}.notes".format(b))
+				if notes:
+					nodes_list = str(notes)[1:-1]
+					nodes_list = nodes_list.replace("u'", "'")
+					nodes_list = nodes_list.replace("'", "")
+					for i in nodes_list.split(', '):
+						if cmds.objExists(i):
+							if cmds.nodeType(i) == 'skinCluster':
+								print('Skipped', i)
+								continue
+							try:
+								cmds.delete(i)
+							except Exception as e:
+								print('Could not delete node:', i, e)
+			print('Done Deleting data for:', b)
 
 	@undo
 	def change_name_cmd(self, block=None):
+		blocks_to_rename = []
 		if not block:
-			block = self.block
+			if self.autorigger_ui and hasattr(self.autorigger_ui, 'selected_blocks') and self.autorigger_ui.selected_blocks:
+				blocks_to_rename = list(self.autorigger_ui.selected_blocks)
+			else:
+				blocks_to_rename = [self.block]
+		else:
+			blocks_to_rename = [block]
 
-		print(block, 'Rename')
-		config = cmds.listConnections(block)[1]
-		name = block.replace(nc['module'], '')
-		guides = cmds.listRelatives(block, ad=True)
+		new_names = []
+		for b in blocks_to_rename:
+			if not cmds.objExists(b):
+				continue
+			print(b, 'Rename')
+			config = cmds.listConnections(b)[1]
+			name = b.replace(nc['module'], '')
+			guides = cmds.listRelatives(b, ad=True)
 
-		new_name = mt.ask_name( text=name,
-								ask_for='New Name',
-                       			check_split=True)
-		new_block = cmds.rename(block, block.replace(name, new_name))
-		cmds.rename(config, config.replace(name, new_name))
-		if guides:
-			for g in guides:
-				cmds.rename(g, g.replace(name, new_name))
+			new_name = mt.ask_name(text=name,
+									ask_for='New Name for {}'.format(name),
+									check_split=True)
+			if not new_name:
+				continue
+			new_block = cmds.rename(b, b.replace(name, new_name))
+			cmds.rename(config, config.replace(name, new_name))
+			if guides:
+				for g in guides:
+					cmds.rename(g, g.replace(name, new_name))
+			new_names.append(new_block)
 
 		try:
-			self.autorigger_ui.create_layout()
-			cmds.select(new_block)
+			if self.autorigger_ui:
+				self.autorigger_ui.create_layout()
+				if new_names:
+					self.autorigger_ui.selected_blocks = new_names
+					self.autorigger_ui.selection_anchor = new_names[-1]
+					cmds.select(new_names)
 		except:
 			pass
 
 
 	@undo
 	def update_cmd(self, block=None, auto_match_only=False):
+		blocks_to_update = []
 		if not block:
-			block = self.block
-
-		config = cmds.listConnections(block)[1]
-		import_cmds = cmds.getAttr('{}.Import_Command'.format(config))
-		desire_json = ''
-
-		#get all block jsons
-		jsons = self.get_all_jsons()
-		for j in jsons:
-			with open(j) as block_data:
-				block_data = json.load(block_data)
-			if block_data.get('import') == import_cmds:
-				desire_json = os.path.basename(j)
-				desire_json = desire_json.replace('.json', '')
-				break
-
-		if auto_match_only:
-			for file in jsons:
-				if desire_json and desire_json.lower() in file.lower():
-					desire_json = file
-					break
+			if self.autorigger_ui and hasattr(self.autorigger_ui, 'selected_blocks') and self.autorigger_ui.selected_blocks:
+				blocks_to_update = list(self.autorigger_ui.selected_blocks)
+			else:
+				blocks_to_update = [self.block]
 		else:
-			json_name = mt.ask_name(text=desire_json,
-									ask_for='Block Name, Example: 04_Limb',
-									check_split=False, allow_name_exists=True)
-			if not json_name:
-				return False
+			blocks_to_update = [block]
 
-			#Find the correct json
-			desire_json = None
-			for file in jsons:
-				if json_name.lower() in file.lower():
-					desire_json = file
-		print(desire_json)
-		if not desire_json:
-			cmds.error('No json found with that name')
+		jsons = self.get_all_jsons()
 
-		#Get json data
-		with open(desire_json) as module_file:
-			module = json.load(module_file)
+		for b in blocks_to_update:
+			if not cmds.objExists(b):
+				continue
+			config = cmds.listConnections(b)[1]
+			import_cmds = cmds.getAttr('{}.Import_Command'.format(config))
+			desire_json = ''
 
-		import pprint
-		pprint.pprint(module)
+			for j in jsons:
+				with open(j) as block_data:
+					block_data = json.load(block_data)
+				if block_data.get('import') == import_cmds:
+					desire_json = os.path.basename(j)
+					desire_json = desire_json.replace('.json', '')
+					break
 
-		#update the config
-		self.update_config(block, config, module)
-		try:
-			self.autorigger_ui.create_layout()
-		except:
-			pass
+			if auto_match_only:
+				for file in jsons:
+					if desire_json and desire_json.lower() in file.lower():
+						desire_json = file
+						break
+			else:
+				json_name = mt.ask_name(text=desire_json,
+										ask_for='Block Name for {}, Example: 04_Limb'.format(b),
+										check_split=False, allow_name_exists=True)
+				if not json_name:
+					continue
 
-		# Reselect the block and update the GUI
-		try:
-			import maya.utils
-			def reselect_and_refresh():
-				if cmds.objExists(block):
-					cmds.select(clear=True)
-					cmds.select(block)
-					if self.autorigger_ui:
-						self.autorigger_ui.current_selected_block = block
-						self.autorigger_ui.create_properties_layout(block=block, scroll_to_block=True)
-			maya.utils.executeDeferred(reselect_and_refresh)
-		except Exception as e:
-			print('Error refreshing UI after update:', e)
+				#Find the correct json
+				desire_json = None
+				for file in jsons:
+					if json_name.lower() in file.lower():
+						desire_json = file
+			print(desire_json)
+			if not desire_json:
+				cmds.warning('No json found for {}'.format(b))
+				continue
+
+			#Get json data
+			with open(desire_json) as module_file:
+				module = json.load(module_file)
+
+			#update the config
+			self.update_config(b, config, module)
+
+		if self.autorigger_ui:
+			try:
+				self.autorigger_ui.create_layout()
+			except:
+				pass
+
+			# Reselect the blocks and update the GUI
+			try:
+				import maya.utils
+				def reselect_and_refresh():
+					if blocks_to_update and cmds.objExists(blocks_to_update[-1]):
+						cmds.select(clear=True)
+						cmds.select(blocks_to_update)
+						if self.autorigger_ui:
+							self.autorigger_ui.selected_blocks = blocks_to_update
+							self.autorigger_ui.selection_anchor = blocks_to_update[-1]
+							self.autorigger_ui.current_selected_block = blocks_to_update[-1]
+							self.autorigger_ui.create_properties_layout(block=blocks_to_update[-1], scroll_to_block=True)
+				maya.utils.executeDeferred(reselect_and_refresh)
+			except Exception as e:
+				print('Error refreshing UI after update:', e)
 
 		self.close()
 
