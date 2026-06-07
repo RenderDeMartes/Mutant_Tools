@@ -224,3 +224,115 @@ class Mutant(modules.Modules_class):
 		except:
 			pass
 
+	# ---------------------------------------------------
+
+	def get_github_latest_release(self):
+		"""
+		Retrieves the latest release info from the Mutant_Tools GitHub repo's public API.
+		Works without any authentication (public repo), so it works on machines that
+		are not logged into GitHub.
+
+		Returns:
+			dict: The decoded JSON of the latest release (tag_name, zipball_url, html_url, etc.)
+		"""
+		url = 'https://api.github.com/repos/RenderDeMartes/Mutant_Tools/releases/latest'
+		request = urllib.request.Request(url, headers={'Accept': 'application/vnd.github+json',
+														'User-Agent': 'Mutant_Tools-Updater'})
+		response = urllib.request.urlopen(request, timeout=10)
+		return json.loads(response.read().decode('utf-8'))
+
+	# ---------------------------------------------------
+
+	def check_for_updates(self, silent=True):
+		"""
+		Compares the local version against the latest GitHub release. If a newer release
+		is available, asks the user if they want to download and install it automatically.
+
+		Args:
+			silent (bool): If False, also informs the user when no update is needed or the
+				check failed. If True (default, used on startup), stays quiet unless an
+				update is found.
+		"""
+		version_data = self.read_json(path=os.path.join(FOLDER, 'config'), json_file='version.json')
+
+		if version_data.get('dev_mode') not in (False, 'Off', 'off', 0, None):
+			if not silent:
+				cmds.confirmDialog(title='Mutant Tools', message='Dev mode is on, update check skipped.', button=['OK'])
+			return
+
+		try:
+			release = self.get_github_latest_release()
+		except Exception:
+			if not silent:
+				cmds.confirmDialog(title='Mutant Tools', message='Could not reach GitHub to check for updates.', button=['OK'])
+			return
+
+		latest_version = release.get('tag_name', '').lstrip('vV')
+		local_version = self.get_local_version()
+
+		if latest_version and latest_version != local_version:
+			answer = cmds.confirmDialog(
+				title='Update Available',
+				message='A new version of Mutant Tools is available ({} -> {}).\n\nDownload and install it now?'.format(local_version, latest_version),
+				button=['Update', 'Later'],
+				defaultButton='Update',
+				cancelButton='Later',
+				dismissString='Later')
+			if answer == 'Update':
+				self.install_github_release(release)
+		elif not silent:
+			cmds.confirmDialog(title='Mutant Tools', message='You are running the latest version ({}).'.format(local_version), button=['OK'])
+
+	# ---------------------------------------------------
+
+	def install_github_release(self, release):
+		"""
+		Downloads a GitHub release's source zip and installs it over the current
+		Mutant_Tools folder, mirroring the copy done by easy_install.py.
+
+		Args:
+			release (dict): A release dict as returned by get_github_latest_release().
+		"""
+		import zipfile
+		import tempfile
+		import shutil
+		from distutils.dir_util import copy_tree
+
+		zip_url = release.get('zipball_url')
+		if not zip_url:
+			OpenMaya.MGlobal.displayWarning('Mutant Tools: update download link not found.')
+			return
+
+		tmp_dir = tempfile.mkdtemp(prefix='mutant_tools_update_')
+		zip_path = os.path.join(tmp_dir, 'update.zip')
+
+		try:
+			request = urllib.request.Request(zip_url, headers={'User-Agent': 'Mutant_Tools-Updater'})
+			response = urllib.request.urlopen(request, timeout=120)
+			with open(zip_path, 'wb') as out_file:
+				shutil.copyfileobj(response, out_file)
+
+			with zipfile.ZipFile(zip_path, 'r') as zip_file:
+				zip_file.extractall(tmp_dir)
+
+			#GitHub zipballs are wrapped in a single top-level folder, eg RenderDeMartes-Mutant_Tools-<sha>
+			extracted_root = None
+			for entry in os.listdir(tmp_dir):
+				entry_path = os.path.join(tmp_dir, entry)
+				if os.path.isdir(entry_path):
+					extracted_root = entry_path
+					break
+
+			if not extracted_root:
+				OpenMaya.MGlobal.displayWarning('Mutant Tools: could not find extracted update files.')
+				return
+
+			copy_tree(extracted_root, FOLDER)
+			OpenMaya.MGlobal.displayInfo('Mutant Tools updated. Restart Maya to load the new version.')
+			cmds.confirmDialog(title='Mutant Tools', message='Update installed.\n\nPlease restart Maya to load the new version.', button=['OK'])
+
+		except Exception as e:
+			OpenMaya.MGlobal.displayWarning('Mutant Tools: update failed - {}'.format(e))
+		finally:
+			shutil.rmtree(tmp_dir, ignore_errors=True)
+

@@ -48,8 +48,8 @@ from Mutant_Tools.Utils.Rigging import main_mutant
 reload(Mutant_Tools.Utils.Rigging.main_mutant)
 
 mt = main_mutant.Mutant()
-#try:mt.compare_versions()
-#except:pass
+try:mt.check_for_updates(silent=True)
+except:pass
 # -------------------------------------------------------------------------------------------
 
 #Read name conventions as nc[''] and setup as seup['']
@@ -176,6 +176,9 @@ def contact(*args):
 
 def download_latest(*args):
     open_website('https://mutanttools.com/#download', 'open')
+
+def check_for_updates(*args):
+    mt.check_for_updates(silent=False)
 
 def open_rig_tools(*args):
     try:
@@ -378,6 +381,7 @@ def create_mutant_menu(*args):
             "Mutant Tools": {
                             "Open Website": help,
                             "Download Latest": download_latest,
+                            "Check for Updates": check_for_updates,
                             "Line": '',
                             ":)" : make_maya_pretty,
                             ";)": make_outliner_pretty,

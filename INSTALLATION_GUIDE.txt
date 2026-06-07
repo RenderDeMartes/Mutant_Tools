@@ -1,17 +1,38 @@
 Hi and welcome to Mutant Tools!
 
-Installing tools can be annoying sometimes, but here are a couple of videos to make your life easy:
+EASIEST WAY - Drag & Drop (recommended)
+----------------------------------------
+1. Unzip the Mutant Tools folder anywhere on your computer.
+2. Open Maya, then drag and drop the "easy_install.py" file straight into the Maya viewport.
+3. That's it. The installer will:
+   - copy the tools into your Maya scripts folder
+   - install the Bluetape Rigging shelf for you
+   - add the "Mutant-Tools" menu to Maya's menu bar (it loads automatically every time you open Maya)
+   - tell you when the install is done (or if something went wrong)
+
+Once installed, the Mutant-Tools menu will check for new versions on its own and ask you
+if you want to update - no need to repeat this process for future releases.
+
+Video walkthroughs if you'd rather watch:
 https://mutanttools.com/installation-guide/
 
-Basically, just copy and paste the Mutant_Tools folder into your Maya scripts folder:
-/home/user_name/maya/202X/scripts/Mutant_Tools
+MANUAL INSTALL (if drag & drop doesn't work for you)
+----------------------------------------
+1. Copy the "Mutant_Tools" folder into your Maya scripts folder (close Maya first):
+   /home/user_name/maya/202X/scripts/Mutant_Tools
 
-You can also drag and drop the easy_install.py file into the viewport to install automatically.
-Sometimes it fails, so we usually recommend doing it manually.
+2. Copy the shelf file into your shelf prefs folder (close Maya first):
+   shelf_Bluetape_Rigging.mel  ->  /home/user_name/maya/202X/prefs/shelves
 
-We also include a useful shelf file: shelf_Bluetape_Rigging.mel
-Copy and paste it into your shelf prefs folder (make sure Maya is closed):
-/home/user_name/maya/202X/prefs/shelves
+3. Open Maya. In the Script Editor (Python tab), run:
+
+   import Mutant_Tools.Utils.mt_menu as mt_menu
+   mt_menu.create_mutant_menu()
+   mt_menu.put_in_userSetup()
+
+   This adds the menu and makes it load automatically on every Maya startup.
+
+Need help? Join us on Discord, we're happy to walk you through it.
 
 Cheers
 Esteban.
