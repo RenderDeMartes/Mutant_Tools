@@ -294,6 +294,10 @@ class AutoRiggerMenu(QtWidgets.QDialog):
 
 		self.tutorialMenu.addSeparator()
 
+		self.check_for_updates = self.tutorialMenu.addAction("Check for Updates")
+
+		self.tutorialMenu.addSeparator()
+
 		self.riggers = self.tutorialMenu.addAction("Riggers")
 		self.developers = self.tutorialMenu.addAction("Developers")
 		self.tutorialMenu.addSeparator()
@@ -351,6 +355,7 @@ class AutoRiggerMenu(QtWidgets.QDialog):
 		self.discord.triggered.connect(lambda: self.cWebsiteViewer.open_link('https://discord.gg/pqGeYhUcAW'))
 		self.report_bug.triggered.connect(lambda: self.send_bugs())
 		self.request_feature.triggered.connect(lambda: self.send_requests())
+		self.check_for_updates.triggered.connect(lambda: mt.check_for_updates(silent=False))
 
 		self.riggers.triggered.connect(lambda: self.open_website('https://mutanttools.com/riggers/'))
 		self.developers.triggered.connect(lambda: self.open_website('https://mutanttools.com/mt_commands/'))
