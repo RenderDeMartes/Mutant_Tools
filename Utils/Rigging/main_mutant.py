@@ -243,6 +243,24 @@ class Mutant(modules.Modules_class):
 
 	# ---------------------------------------------------
 
+	@staticmethod
+	def _version_tuple(version_string):
+		parts = []
+		for chunk in str(version_string).split('.'):
+			digits = ''.join(char for char in chunk if char.isdigit())
+			parts.append(int(digits) if digits else 0)
+		return tuple(parts)
+
+	def _is_newer_version(self, candidate, current):
+		candidate_parts = self._version_tuple(candidate)
+		current_parts = self._version_tuple(current)
+		length = max(len(candidate_parts), len(current_parts))
+		candidate_parts += (0,) * (length - len(candidate_parts))
+		current_parts += (0,) * (length - len(current_parts))
+		return candidate_parts > current_parts
+
+	# ---------------------------------------------------
+
 	def check_for_updates(self, silent=True):
 		"""
 		Compares the local version against the latest GitHub release. If a newer release
@@ -270,7 +288,7 @@ class Mutant(modules.Modules_class):
 		latest_version = release.get('tag_name', '').lstrip('vV')
 		local_version = self.get_local_version()
 
-		if latest_version and latest_version != local_version:
+		if latest_version and self._is_newer_version(latest_version, local_version):
 			answer = cmds.confirmDialog(
 				title='Update Available',
 				message='A new version of Mutant Tools is available ({} -> {}).\n\nDownload and install it now?'.format(local_version, latest_version),
