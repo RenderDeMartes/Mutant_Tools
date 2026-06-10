@@ -319,7 +319,6 @@ class AutoRiggerMenu(QtWidgets.QDialog):
 		self.donateMenu = QtWidgets.QMenu(self)
 		self.donateMenu.setTitle("Donate")
 		self.paypal = self.donateMenu.addAction("Paypal")
-		self.crypto = self.donateMenu.addAction("Crypto")
 		self.menuBar.addMenu(self.donateMenu)
 
 		#add menu bar to layout
@@ -363,8 +362,7 @@ class AutoRiggerMenu(QtWidgets.QDialog):
 		self.use_mutant_hotkeys.triggered.connect(self.set_mutant_hotkeys)
 
 		#DONATE MENU
-		self.paypal.triggered.connect(lambda: self.open_website('https://www.paypal.com/paypalme/renderdemartes'))
-		self.crypto.triggered.connect(lambda: self.open_website('https://mutanttools.com/donate/'))
+		self.paypal.triggered.connect(lambda: self.donate_paypal())
 
 		#Dev Mode
 		self.toggle_dev.triggered.connect(lambda: mt.toggle_dev_mode())
@@ -481,7 +479,14 @@ class AutoRiggerMenu(QtWidgets.QDialog):
 
 	# -------------------------------------------------------------------
 
+	def donate_paypal(self):
+		import webbrowser
+		webbrowser.open('https://www.paypal.com/paypalme/renderdemartes')
+
 	def open_website(self, website = 'http://mutanttools.com/'):
+
+		from Mutant_Tools.UI.WebsiteViewer import load_website_viewer
+		reload(load_website_viewer)
 
 		self.get_web_viewer_state()
 

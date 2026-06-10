@@ -153,10 +153,8 @@ def install_ng(*args):
     open_website('https://www.ngskintools.com/get/', 'open')
 
 def donate_paypal(*args):
-    open_website('https://www.paypal.com/paypalme/renderdemartes', 'open')
-
-def donate_crypto(*args):
-    open_website('https://mutanttools.com/donate/')
+    import webbrowser
+    webbrowser.open('https://www.paypal.com/paypalme/renderdemartes')
 
 def join_discord(*args):
     open_website('https://discord.gg/pqGeYhUcAW', 'open')
@@ -425,8 +423,7 @@ def create_mutant_menu(*args):
                             },
 
             "Donate": {
-                     "Paypal": donate_paypal,
-                     "Crypto": donate_crypto
+                     "Paypal": donate_paypal
                     },
 
 
