@@ -1,0 +1,21 @@
+{
+    "Name":  "CtrlOnSelection",
+    "Description":  "Creates controllers on selected joints/objects with desired shape, color and scale. Works on multiple objects at once. Supports direct connect and constraints.",
+    "Icon":  "CtrlOnSelection.png",
+    "Enable":  "True",
+    "python_file":  "exec_ctrl_on_selection_v001.py",
+    "import":  "import exec_ctrl_on_selection_v001",
+    "imp.reload":  "reload(exec_ctrl_on_selection_v001)",
+    "exec_command":  "exec_ctrl_on_selection_v001.create_ctrl_on_selection_block()",
+    "build_command":  "exec_ctrl_on_selection_v001.build_ctrl_on_selection_block()",
+    "attrs":  {
+                  "SetJoints_string":  "",
+                  "SetParent_string":  "Ctrl_Grp",
+                  "Shape_enum":  "cube:sphere:circle:circleX:circleY:circleZ:square:cubePlus:rectangle:triangle:octagon:hexagon:pringle:pringle_point:circle_point:sun:feet:hand:halfCircle:3dArrow:2dArrow:curveArrow:cross:gear:pin_cube:mover:root:cog:vis:wheel:trapezoid:chair:squareSmooth:cylinder:happyFace:squarePointUp:circlePointUp:circlePointIn:circlePointOut:circleDoublePointIn:circleDoublePointOut:WrapperThing:CircleDoubleArrow:locator",
+                  "Color_enum":  "yellow:red:blue:green:white:purple:lightBlue:pink:grey:orange",
+                  "Scale_float":  "1",
+                  "Connection_enum":  "DirectConnect:ParentConstraint:ScaleConnect:ParentAndScale:None",
+                  "StripJointSuffix_bool":  "True",
+                  "Help_string":  "Overview:\n  Creates controllers positioned on selected joints or objects.\n  Works on multiple objects at once.\n\nHow To Use:\n  Select joints in scene, click 'Add Selected' to populate SetJoints.\n  Set desired shape, color and scale, then click Build.\n\nFields:\n- SetJoints: Comma-separated list of joints/objects to create controllers on.\n- SetParent: Node the ctrl offset group will follow via parentConstraint (mo=True).\n  Default is Ctrl_Grp. Leave empty to skip the constraint.\n- Shape: Curve shape for the controller.\n- Color: Override color for the controller.\n- Scale: Size multiplier (1-20).\n- Connection: How to connect the ctrl to the joint.\n  * DirectConnect: connectAttr ctrl.t/r/s -> joint.t/r/s.\n  * ParentConstraint: joint follows ctrl via parentConstraint (mo=True).\n  * ScaleConnect: joint scale follows ctrl scale via connectAttr.\n  * ParentAndScale: parentConstraint + scale connectAttr.\n  * None: no connection, ctrl is just positioned at the joint.\n- StripJointSuffix: strips _Jnt suffix before adding _Ctrl.\n  Example: L_Arm_Jnt -> L_Arm_Ctrl. If False: L_Arm_Jnt_Ctrl.\n\nTips:\n- DirectConnect is the default and most direct wiring.\n- ParentAndScale is preferred when you need mo offset flexibility."
+              }
+}

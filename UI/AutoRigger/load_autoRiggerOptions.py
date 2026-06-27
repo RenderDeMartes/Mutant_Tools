@@ -401,6 +401,9 @@ class AutoRiggerOptions(QtMutantWindow.Qt_Mutant):
 					desire_json = desire_json.replace('.json', '')
 					break
 
+			if not desire_json and b.endswith(nc['module']):
+				desire_json = b[:-len(nc['module'])]
+
 			if auto_match_only:
 				for file in jsons:
 					if desire_json and desire_json.lower() in file.lower():

@@ -1358,7 +1358,7 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		for root, dirs, files in os.walk(blocks_path):
 			for f in files:
 				info = self.parse_block_filename(f)
-				if info and info['base'].lower() == base_name.lower():
+				if info and info['base'].lower().replace('_', '') == base_name.lower().replace('_', ''):
 					ver = info['version'] if info['version'] else 'v001'
 					versions[ver] = os.path.join(root, f)
 		

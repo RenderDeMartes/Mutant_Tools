@@ -209,6 +209,7 @@ def build_smarthand_block():
             cmds.parent(miror_jnt_grp, setup['base_groups']['control'] + nc['group'])
 
         cmds.parentConstraint('{}_Wrist_Ctrl'.format(side_guide), root_grp, mo=True)
+        cmds.scaleConstraint('{}_Wrist_Ctrl'.format(side_guide), root_grp, mo=True)
 
 
     # build complete ----------------------------------------------------
