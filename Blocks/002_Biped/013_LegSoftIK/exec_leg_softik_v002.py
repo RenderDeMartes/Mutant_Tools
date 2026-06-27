@@ -658,6 +658,11 @@ def build_leg_softik_block():
             pma_node=data['pma_node'],
         )
 
+    # NormalScale locators: feed rig scale into Normalize_MultDiv nodes
+    cmds.connectAttr('L_Ankle_Ik_IKrp_NormalScale_Loc.scaleX', 'R_Hip_Ik_Jnt_R_Ankle_Ik_Jnt_Distance_Shape_Normalize_MultDiv.input2.input2X', force=True)
+    cmds.connectAttr('L_Ankle_Ik_IKrp_NormalScale_Loc.scaleY', 'R_Hip_Ik_Jnt_R_Ankle_Ik_Jnt_Distance_Shape_Normalize_MultDiv.input2.input2Y', force=True)
+    cmds.connectAttr('L_Ankle_Ik_IKrp_NormalScale_Loc.scaleZ', 'R_Hip_Ik_Jnt_R_Ankle_Ik_Jnt_Distance_Shape_Normalize_MultDiv.input2.input2Z', force=True)
+
     try:
         cmds.setAttr('L_KneeMid_Bendy_Ctrl|L_Hip_Jnt_Switch_Loc.Lower_Length', 0.995)
         cmds.setAttr('L_KneeMid_Bendy_Ctrl|L_Hip_Jnt_Switch_Loc.Upper_Length', 0.995)
