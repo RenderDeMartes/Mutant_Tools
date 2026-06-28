@@ -238,6 +238,22 @@ def build_chain_block():
                             cmds.parent(child, ctrl_root)
                             cmds.parentConstraint(ctrl, child, mo=True)
 
+                # Inverse parent scale so each ctrl's scale stays independent of block_parent.
+                # ctrl_root inherits block_parent scale via scaleConstraint below;
+                # each offset group cancels that out so world scale = ctrl.scale only.
+                _parent = block_parent[0] if isinstance(block_parent, list) else block_parent
+                md = cmds.createNode('multiplyDivide', name='{}_InverseScale_MD'.format(name))
+                cmds.setAttr('{}.operation'.format(md), 2)  # divide
+                cmds.setAttr('{}.input1X'.format(md), 1)
+                cmds.setAttr('{}.input1Y'.format(md), 1)
+                cmds.setAttr('{}.input1Z'.format(md), 1)
+                for axis in 'XYZ':
+                    cmds.connectAttr('{}.scale{}'.format(_parent, axis), '{}.input2{}'.format(md, axis))
+                for ctrl in fk_system:
+                    offset_grp = cmds.listRelatives(ctrl, parent=True)
+                    if offset_grp:
+                        cmds.connectAttr('{}.output'.format(md), '{}.scale'.format(offset_grp[0]), force=True)
+
             #Constriant after mirror
             cmds.parentConstraint(block_parent, ctrl_root, maintainOffset=1)
             cmds.scaleConstraint(block_parent, ctrl_root, maintainOffset=1)
