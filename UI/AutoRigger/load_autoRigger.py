@@ -3392,6 +3392,10 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 							exec(deferred_code)
 					print('Deferred block {} completed'.format(deferred_block))
 
+			# Auto Orient Deformers
+			if cmds.optionVar(q="mutant_auto_orient_deformers") if cmds.optionVar(ex="mutant_auto_orient_deformers") else False:
+				self._auto_orient_deformers_on_all_meshes()
+
 		except Exception:
 			import traceback
 			traceback.print_exc()
@@ -3554,6 +3558,80 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		except Exception as e:
 			cmds.warning('Fast rebuild skin load unavailable ({}). Falling back to EasySkin.'.format(e))
 			EasySkin.load_all_skins_from(folder_path=temp_skin_folder)
+
+	def _auto_orient_deformers_on_all_meshes(self):
+		"""Reorder deformers on all skinned meshes: blendShape first, then skinCluster, then nonLinear/deltaMush."""
+
+		def _affects_geometry(deformer, shape):
+			try:
+				geos = cmds.deformer(deformer, q=True, g=True) or []
+				return shape in geos or shape.split('|')[-1] in geos
+			except:
+				return False
+
+		def _deformer_priority(node):
+			node_type = cmds.nodeType(node)
+			if node_type == 'blendShape':
+				return 0
+			if node_type == 'skinCluster':
+				return 1
+			inherited = cmds.nodeType(node, inherited=True) or []
+			if 'nonLinear' in inherited:
+				return 2
+			if node_type == 'deltaMush':
+				return 3
+			return 999
+
+		def _get_deformers(shape):
+			history = cmds.listHistory(shape, pruneDagObjects=True) or []
+			deformers = []
+			for node in history:
+				try:
+					inherited = cmds.nodeType(node, inherited=True) or []
+				except:
+					continue
+				if 'geometryFilter' not in inherited:
+					continue
+				if _affects_geometry(node, shape):
+					deformers.append(node)
+			return deformers
+
+		def _reorder_mesh(shape):
+			deformers = _get_deformers(shape)
+			if len(deformers) < 2:
+				return
+			ordered = sorted(deformers, key=_deformer_priority, reverse=True)
+			changed = True
+			max_passes = len(ordered) * 5
+			passes = 0
+			while changed and passes < max_passes:
+				changed = False
+				passes += 1
+				for i in range(len(ordered) - 1):
+					first = ordered[i]
+					second = ordered[i + 1]
+					try:
+						cmds.reorderDeformers(first, second, shape)
+						changed = True
+					except:
+						pass
+
+		meshes = cmds.ls(type='mesh', long=True) or []
+		count = 0
+		for mesh in meshes:
+			try:
+				if cmds.getAttr(mesh + '.intermediateObject'):
+					continue
+			except:
+				continue
+			history = cmds.listHistory(mesh, pruneDagObjects=True) or []
+			has_skin = any(cmds.nodeType(x) == 'skinCluster' for x in history)
+			if not has_skin:
+				continue
+			count += 1
+			_reorder_mesh(mesh)
+
+		print('Auto Orient Deformers: processed {} skinned meshes.'.format(count))
 
 	def _reorder_loaded_skin_deformers(self):
 		skinned_geos = self._get_rebuild_skinned_geos()

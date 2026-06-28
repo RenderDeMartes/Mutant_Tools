@@ -273,6 +273,11 @@ class AutoRiggerMenu(QtWidgets.QDialog):
 		tooltips_state = cmds.optionVar(q="mutant_show_block_tooltips") if cmds.optionVar(ex="mutant_show_block_tooltips") else False
 		self.show_block_tooltips.setChecked(tooltips_state)
 
+		self.auto_orient_deformers = self.settingsMenu.addAction("Auto Orient Deformers")
+		self.auto_orient_deformers.setCheckable(True)
+		auto_orient_state = cmds.optionVar(q="mutant_auto_orient_deformers") if cmds.optionVar(ex="mutant_auto_orient_deformers") else False
+		self.auto_orient_deformers.setChecked(auto_orient_state)
+
 		self.settingsMenu.addSeparator()
 
 		self.standard_window = self.settingsMenu.addAction("Use Standard Window")
@@ -385,6 +390,9 @@ class AutoRiggerMenu(QtWidgets.QDialog):
 
 		#Show Block Tooltips
 		self.show_block_tooltips.toggled.connect(lambda state: cmds.optionVar(intValue=("mutant_show_block_tooltips", state)))
+
+		#Auto Orient Deformers
+		self.auto_orient_deformers.toggled.connect(lambda state: cmds.optionVar(intValue=("mutant_auto_orient_deformers", state)))
 
 		#Use Fast Skin (Rebuild)
 		self.use_fast_skin.toggled.connect(lambda state: cmds.optionVar(intValue=("mutant_use_fast_skin", state)))
