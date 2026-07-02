@@ -40,11 +40,17 @@ import json
 from pathlib import Path
 
 from maya import cmds as cmds
-from maya import OpenMaya as om
+import maya.OpenMayaUI as omui
 try:
     from maya.api import OpenMaya as om2
 except:
     om2 = None
+try:
+    from shiboken6 import wrapInstance
+    from PySide6 import QtCore, QtWidgets
+except ImportError:
+    from shiboken2 import wrapInstance
+    from PySide2 import QtCore, QtWidgets
 from Mutant_Tools.Utils.Helpers.decorators import undo
 
 import Mutant_Tools
@@ -75,6 +81,91 @@ with open(SETUP_FILE) as setup_file:
 	setup = json.load(setup_file)
 
 
+def _maya_main_window():
+    main_window_ptr = omui.MQtUtil.mainWindow()
+    return wrapInstance(int(main_window_ptr), QtWidgets.QWidget)
+
+
+class _CollapsibleSection(QtWidgets.QWidget):
+
+    def __init__(self, title, color, parent=None):
+        super(_CollapsibleSection, self).__init__(parent)
+
+        self.toggle_button = QtWidgets.QToolButton(text=title)
+        self.toggle_button.setCheckable(True)
+        self.toggle_button.setToolButtonStyle(QtCore.Qt.ToolButtonTextBesideIcon)
+        self.toggle_button.setArrowType(QtCore.Qt.RightArrow)
+        self.toggle_button.setStyleSheet("QToolButton { border: none; font-weight: bold; color: %s; }" % color)
+        self.toggle_button.clicked.connect(self._on_toggle)
+
+        self.content = QtWidgets.QListWidget()
+        self.content.setVisible(False)
+
+        layout = QtWidgets.QVBoxLayout(self)
+        layout.setContentsMargins(0, 0, 0, 0)
+        layout.addWidget(self.toggle_button)
+        layout.addWidget(self.content)
+
+    def _on_toggle(self):
+        self.set_expanded(self.toggle_button.isChecked())
+
+    def set_expanded(self, expanded):
+        self.toggle_button.setChecked(expanded)
+        self.toggle_button.setArrowType(QtCore.Qt.DownArrow if expanded else QtCore.Qt.RightArrow)
+        self.content.setVisible(expanded)
+
+    def add_entry(self, label, full_path):
+        item = QtWidgets.QListWidgetItem(label)
+        item.setData(QtCore.Qt.UserRole, full_path)
+        self.content.addItem(item)
+
+
+class SaveCtrlsReportDialog(QtWidgets.QDialog):
+
+    def __init__(self, saved, warnings, failed, parent=None):
+        super(SaveCtrlsReportDialog, self).__init__(parent)
+
+        self.setWindowTitle("Save Ctrls Report")
+        self.resize(560, 480)
+
+        layout = QtWidgets.QVBoxLayout(self)
+
+        summary = QtWidgets.QLabel("Saved: {}    Warnings: {}    Failed: {}".format(len(saved), len(warnings), len(failed)))
+        layout.addWidget(summary)
+
+        self.failed_section = _CollapsibleSection("Failed ({})".format(len(failed)), "#e05c4f")
+        for full_path, err in failed:
+            self.failed_section.add_entry("{} - {}".format(full_path.split('|')[-1], err), full_path)
+        self.failed_section.set_expanded(bool(failed))
+        layout.addWidget(self.failed_section)
+
+        self.warning_section = _CollapsibleSection("Duplicate Names ({})".format(len(warnings)), "#e0b400")
+        for full_path, msg in warnings:
+            self.warning_section.add_entry("{} - {}".format(full_path.split('|')[-1], msg), full_path)
+        self.warning_section.set_expanded(bool(warnings))
+        layout.addWidget(self.warning_section)
+
+        self.saved_section = _CollapsibleSection("Saved ({})".format(len(saved)), "#5cb85c")
+        for full_path in saved:
+            self.saved_section.add_entry(full_path.split('|')[-1], full_path)
+        self.saved_section.set_expanded(False)
+        layout.addWidget(self.saved_section)
+
+        for section in (self.failed_section, self.warning_section, self.saved_section):
+            section.content.itemClicked.connect(self._select_ctrl)
+
+        layout.addStretch()
+
+        close_btn = QtWidgets.QPushButton("Close")
+        close_btn.clicked.connect(self.close)
+        layout.addWidget(close_btn)
+
+    def _select_ctrl(self, item):
+        full_path = item.data(QtCore.Qt.UserRole)
+        if full_path and cmds.objExists(full_path):
+            cmds.select(full_path, replace=True)
+
+
 # ---------------------------------------------------------------------------
 
 class Ctrls(object):
@@ -92,17 +183,15 @@ class Ctrls(object):
 
     def validateCurve(self, crv=None):
         if cmds.nodeType(crv) == "transform" or cmds.nodeType(cmds.listRelatives(crv, c=1, s=1)[0]) == "nurbsCurve":
-            crvShapes = cmds.listRelatives(crv, c=1, s=1)
+            crvShapes = cmds.listRelatives(crv, c=1, s=1, fullPath=True)
 
         elif cmds.nodeType(crv) == "nurbsCurve":
-            crvShapes = cmds.listRelatives(cmds.listRelatives(crv, p=1)[0], c=1, s=1)
+            crvShapes = cmds.listRelatives(cmds.listRelatives(crv, p=1)[0], c=1, s=1, fullPath=True)
         if not crvShapes:
             return
         return_list = []
         for node in crvShapes:
-            if cmds.nodeType(node) == 'locator':
-                continue
-            else:
+            if cmds.nodeType(node) == 'nurbsCurve':
                 return_list.append(node)
 
         return return_list
@@ -138,16 +227,12 @@ class Ctrls(object):
     #---------------------------------------------------------------------------
 
     def getKnots(self, crvShape=None):
-        mObj = om.MObject()
-        sel = om.MSelectionList()
+        sel = om2.MSelectionList()
         sel.add(crvShape)
-        sel.getDependNode(0, mObj)
+        dagPath = sel.getDagPath(0)
 
-        fnCurve = om.MFnNurbsCurve(mObj)
-        tmpKnots = om.MDoubleArray()
-        fnCurve.getKnots(tmpKnots)
-
-        return [tmpKnots[i] for i in range(tmpKnots.length())]
+        fnCurve = om2.MFnNurbsCurve(dagPath)
+        return list(fnCurve.knots())
 
     #---------------------------------------------------------------------------
 
@@ -283,29 +368,71 @@ class Ctrls(object):
         #ctrls.save_all('C:\\Users\\PC\\Desktop\\ctrls.json')
         if not folder_path:
             path = mh.export_window(extension = ".json")
+            if not path:
+                return
             path = path[0]
         else:
             path = folder_path
         if not path:
             return
 
+        print("Mutant Tools: Saving Ctrls ...")
+
         all_ctrls = {}
+        saved_ctrls = []
+        failed_ctrls = []
+        warning_ctrls = []
+        seen_names = {}
         if ctrls == 'All':
             cmds.select('*{}'.format(nc['ctrl']))
-        for ctrl in cmds.ls(sl=True):
-            data = self.getShape(ctrl)
-            all_ctrls[ctrl] = data
-            
-            #Getting color information from ctrls
-            colors_data = self.get_ctrl_colors(long_name=False)
+        for ctrl in cmds.ls(sl=True, long=True):
+            try:
+                data = self.getShape(ctrl)
+            except (RuntimeError, ValueError) as e:
+                failed_ctrls.append((ctrl, str(e)))
+                continue
+            if not data:
+                # Not an actual controller (no nurbsCurve shape) - skip.
+                continue
 
-            #Creating export dictionary with data.
-            all_ctrl_data = {}
-            all_ctrl_data["ctrl_shape_data"] = all_ctrls
-            all_ctrl_data["ctrl_color_data"] = colors_data
+            short = ctrl.split('|')[-1]
+            if short in seen_names:
+                self.tagFullPath(ctrl)
+                self.tagFullPath(seen_names[short])
+                warning_ctrls.append((ctrl, "duplicated name with '{}' - only one was saved".format(seen_names[short])))
+                continue
 
+            seen_names[short] = ctrl
+            all_ctrls[short] = data
+            saved_ctrls.append(ctrl)
+
+        #Getting color information from ctrls
+        colors_data = self.get_ctrl_colors(long_name=False)
+
+        #Creating export dictionary with data.
+        all_ctrl_data = {}
+        all_ctrl_data["ctrl_shape_data"] = all_ctrls
+        all_ctrl_data["ctrl_color_data"] = colors_data
 
         self.saveData(path=path, data=all_ctrl_data, force_validate=force_validate)
+        print("Mutant Tools: Saved Ctrls -> {}".format(path))
+
+        self.showSaveReport(saved_ctrls, warning_ctrls, failed_ctrls)
+
+    #---------------------------------------------------------------------------
+
+    def tagFullPath(self, ctrl):
+        '''Stamps the ctrl's current full dag path onto itself so it can be identified later if its short name collides with another ctrl.'''
+        attr = 'mutantFullPath'
+        if not cmds.attributeQuery(attr, node=ctrl, exists=True):
+            cmds.addAttr(ctrl, longName=attr, dataType='string')
+        cmds.setAttr('{}.{}'.format(ctrl, attr), ctrl, type='string')
+
+    #---------------------------------------------------------------------------
+
+    def showSaveReport(self, saved_ctrls, warning_ctrls, failed_ctrls):
+        self._report_dialog = SaveCtrlsReportDialog(saved_ctrls, warning_ctrls, failed_ctrls, parent=_maya_main_window())
+        self._report_dialog.show()
 
     #---------------------------------------------------------------------------
     @undo
@@ -313,6 +440,8 @@ class Ctrls(object):
         #ctrls.load_all('C:\\Users\\PC\\Desktop\\ctrls.json')
         if path is None:
             path = mh.import_window(extension = ".json")
+            if not path:
+                return False
             path = path[0]
         if not path:
             return False

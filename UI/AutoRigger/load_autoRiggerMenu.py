@@ -237,6 +237,9 @@ class AutoRiggerMenu(QtWidgets.QDialog):
 		self.mirror_selected_ctrls = self.ctrlsMenu.addAction("Mirror Selected Ctrls")
 		self.fileMenu.addSeparator()
 
+		self.reload_tool_modules = self.fileMenu.addAction("Reload Tool Modules")
+		self.fileMenu.addSeparator()
+
 		self.dev_reload = self.fileMenu.addAction("Reload Blocks")
 		self.update_all_blocks = self.fileMenu.addAction("Update All Blocks")
 
@@ -355,6 +358,8 @@ class AutoRiggerMenu(QtWidgets.QDialog):
 		self.mirror_ctrls.triggered.connect(lambda: ctrls.mirror_all_ctrl_shapes())
 		self.mirror_selected_ctrls.triggered.connect(lambda: ctrls.mirror_all_ctrl_shapes(ctrls='Selected'))
 
+		self.reload_tool_modules.triggered.connect(self.reload_tool_modules_cmd)
+
 		#HELP MENU
 		self.discord.triggered.connect(lambda: self.cWebsiteViewer.open_link('https://discord.gg/pqGeYhUcAW'))
 		self.report_bug.triggered.connect(lambda: self.send_bugs())
@@ -410,6 +415,32 @@ class AutoRiggerMenu(QtWidgets.QDialog):
 				return
 			parent = parent.parent()
 		cmds.warning('Could not find Mutant main window to toggle window mode.')
+
+	# -------------------------------------------------------------------
+	def reload_tool_modules_cmd(self, *args):
+		global mh, skin, ngmt, ctrls, guides, mt
+
+		reload(Mutant_Tools.Utils.Helpers.helpers)
+		mh = helpers.Helpers()
+
+		reload(Mutant_Tools.Utils.IO.SkinUtils)
+		skin = SkinUtils.Skinning()
+
+		reload(Mutant_Tools.Utils.IO.NgSkinUtils)
+		ngmt = NgSkinUtils.NG_Mutant()
+
+		reload(Mutant_Tools.Utils.IO.CtrlUtils)
+		ctrls = CtrlUtils.Ctrls()
+
+		reload(Mutant_Tools.Utils.IO.Guides)
+		guides = Guides.Guides()
+
+		reload(Mutant_Tools.Utils.Rigging.main_mutant)
+		mt = main_mutant.Mutant()
+
+		reload(Mutant_Tools.Utils.IO.EasySkin)
+
+		print('Mutant Tools: tool modules reloaded.')
 
 	# -------------------------------------------------------------------
 	def _open_kanban(self, *args):
