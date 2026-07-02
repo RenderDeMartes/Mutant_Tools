@@ -431,6 +431,9 @@ class Ctrls(object):
     #---------------------------------------------------------------------------
 
     def showSaveReport(self, saved_ctrls, warning_ctrls, failed_ctrls):
+        if not warning_ctrls and not failed_ctrls:
+            cmds.inViewMessage(amg="Mutant Tools: Ctrls Saved", pos='midCenter', fade=True)
+            return
         self._report_dialog = SaveCtrlsReportDialog(saved_ctrls, warning_ctrls, failed_ctrls, parent=_maya_main_window())
         self._report_dialog.show()
 

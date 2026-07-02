@@ -682,21 +682,21 @@
                 }
             ]
         },
-        "L_Blink_Frame_Ctrl_Ctrl":{
+        "L_Blink_Frame_Ctrl":{
             "overrideEnabled":[
                 false,
                 6
             ],
             "shapes":[
                 {
-                    "L_Blink_Frame_Ctrl_CtrlShape":{
+                    "L_Blink_Frame_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
                 }
             ]
         },
-        "L_Btm_0_Cls_Ctrl_Ctrl":{
+        "L_Btm_0_Cls_Ctrl":{
             "overrideEnabled":[
                 true,
                 [
@@ -707,14 +707,14 @@
             ],
             "shapes":[
                 {
-                    "L_Btm_0_Cls_Ctrl_CtrlShape":{
+                    "L_Btm_0_Cls_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
                 }
             ]
         },
-        "L_Btm_1_Cls_Ctrl_Ctrl":{
+        "L_Btm_1_Cls_Ctrl":{
             "overrideEnabled":[
                 true,
                 [
@@ -725,14 +725,14 @@
             ],
             "shapes":[
                 {
-                    "L_Btm_1_Cls_Ctrl_CtrlShape":{
+                    "L_Btm_1_Cls_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
                 }
             ]
         },
-        "L_Btm_2_Cls_Ctrl_Ctrl":{
+        "L_Btm_2_Cls_Ctrl":{
             "overrideEnabled":[
                 true,
                 [
@@ -743,14 +743,14 @@
             ],
             "shapes":[
                 {
-                    "L_Btm_2_Cls_Ctrl_CtrlShape":{
+                    "L_Btm_2_Cls_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
                 }
             ]
         },
-        "L_Btm_EyeTweak_Ctrl_Ctrl":{
+        "L_Btm_EyeTweak_Ctrl":{
             "overrideEnabled":[
                 true,
                 [
@@ -761,7 +761,7 @@
             ],
             "shapes":[
                 {
-                    "L_Btm_EyeTweak_Ctrl_CtrlShape":{
+                    "L_Btm_EyeTweak_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
@@ -796,14 +796,14 @@
                 }
             ]
         },
-        "L_Clavicle_Ctrl_Ctrl":{
+        "L_Clavicle_Ctrl":{
             "overrideEnabled":[
                 false,
                 6
             ],
             "shapes":[
                 {
-                    "L_Clavicle_Ctrl_CtrlShape":{
+                    "L_Clavicle_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":[
                             false,
@@ -1539,14 +1539,14 @@
                 }
             ]
         },
-        "L_DynamicPivotJaw_Ctrl_Ctrl_Ctrl":{
+        "L_DynamicPivotJaw_Ctrl":{
             "overrideEnabled":[
                 false,
                 18
             ],
             "shapes":[
                 {
-                    "L_DynamicPivotJaw_Ctrl_Ctrl_CtrlShape":{
+                    "L_DynamicPivotJaw_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
@@ -1722,28 +1722,28 @@
                 }
             ]
         },
-        "L_FrSandal_Ctrl_Ctrl":{
+        "L_FrSandal_Ctrl":{
             "overrideEnabled":[
                 false,
                 6
             ],
             "shapes":[
                 {
-                    "L_FrSandal_Ctrl_CtrlShape":{
+                    "L_FrSandal_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
                 }
             ]
         },
-        "L_Fr_LeftLip_Ctrl_Ctrl":{
+        "L_Fr_LeftLip_Ctrl":{
             "overrideEnabled":[
                 false,
                 6
             ],
             "shapes":[
                 {
-                    "L_Fr_LeftLip_Ctrl_CtrlShape":{
+                    "L_Fr_LeftLip_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":[
                             false,
@@ -2088,7 +2088,7 @@
                 }
             ]
         },
-        "L_In_EyeTweak_Ctrl_Ctrl":{
+        "L_In_EyeTweak_Ctrl":{
             "overrideEnabled":[
                 true,
                 [
@@ -2099,21 +2099,21 @@
             ],
             "shapes":[
                 {
-                    "L_In_EyeTweak_Ctrl_CtrlShape":{
+                    "L_In_EyeTweak_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
                 }
             ]
         },
-        "L_Jaw_Ctrl_Ctrl_Ctrl":{
+        "L_Jaw_Ctrl":{
             "overrideEnabled":[
                 false,
                 6
             ],
             "shapes":[
                 {
-                    "L_Jaw_Ctrl_Ctrl_CtrlShape":{
+                    "L_Jaw_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":[
                             false,
@@ -2264,6 +2264,20 @@
                 }
             ]
         },
+        "L_LeftBrow_Ctrl":{
+            "overrideEnabled":[
+                false,
+                6
+            ],
+            "shapes":[
+                {
+                    "L_LeftBrow_CtrlShape":{
+                        "alwaysDrawOnTop":false,
+                        "shapeOverrideEnabled":false
+                    }
+                }
+            ]
+        },
         "L_LeftBrow_Ctrl_0_Ctrl":{
             "overrideEnabled":[
                 false,
@@ -2328,20 +2342,6 @@
             "shapes":[
                 {
                     "L_LeftBrow_Ctrl_4_CtrlShape":{
-                        "alwaysDrawOnTop":false,
-                        "shapeOverrideEnabled":false
-                    }
-                }
-            ]
-        },
-        "L_LeftBrow_Ctrl_Ctrl":{
-            "overrideEnabled":[
-                false,
-                6
-            ],
-            "shapes":[
-                {
-                    "L_LeftBrow_Ctrl_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
@@ -2474,35 +2474,35 @@
                 }
             ]
         },
-        "L_LeftDwMolar_A_Ctrl_Ctrl":{
+        "L_LeftDwMolar_A_Ctrl":{
             "overrideEnabled":[
                 false,
                 18
             ],
             "shapes":[
                 {
-                    "L_LeftDwMolar_A_Ctrl_CtrlShape":{
+                    "L_LeftDwMolar_A_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
                 }
             ]
         },
-        "L_LeftDwMolar_B_Ctrl_Ctrl":{
+        "L_LeftDwMolar_B_Ctrl":{
             "overrideEnabled":[
                 false,
                 18
             ],
             "shapes":[
                 {
-                    "L_LeftDwMolar_B_Ctrl_CtrlShape":{
+                    "L_LeftDwMolar_B_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
                 }
             ]
         },
-        "L_LeftLipEndSlide_Ctrl_Ctrl":{
+        "L_LeftLipEndSlide_Ctrl":{
             "overrideEnabled":[
                 true,
                 [
@@ -2513,7 +2513,7 @@
             ],
             "shapes":[
                 {
-                    "L_LeftLipEndSlide_Ctrl_CtrlShape":{
+                    "L_LeftLipEndSlide_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":[
                             false,
@@ -2523,7 +2523,7 @@
                 }
             ]
         },
-        "L_LeftLipMidSlide_Ctrl_Ctrl":{
+        "L_LeftLipMidSlide_Ctrl":{
             "overrideEnabled":[
                 true,
                 [
@@ -2534,7 +2534,7 @@
             ],
             "shapes":[
                 {
-                    "L_LeftLipMidSlide_Ctrl_CtrlShape":{
+                    "L_LeftLipMidSlide_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":[
                             false,
@@ -2544,7 +2544,7 @@
                 }
             ]
         },
-        "L_LeftLipSlide_Ctrl_Ctrl":{
+        "L_LeftLipSlide_Ctrl":{
             "overrideEnabled":[
                 true,
                 [
@@ -2555,7 +2555,7 @@
             ],
             "shapes":[
                 {
-                    "L_LeftLipSlide_Ctrl_CtrlShape":{
+                    "L_LeftLipSlide_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":[
                             false,
@@ -2565,14 +2565,14 @@
                 }
             ]
         },
-        "L_LeftLip_A_Ctrl_Ctrl":{
+        "L_LeftLip_A_Ctrl":{
             "overrideEnabled":[
                 false,
                 6
             ],
             "shapes":[
                 {
-                    "L_LeftLip_A_Ctrl_CtrlShape":{
+                    "L_LeftLip_A_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
@@ -2621,35 +2621,35 @@
                 }
             ]
         },
-        "L_LeftUpMolar_A_Ctrl_Ctrl":{
+        "L_LeftUpMolar_A_Ctrl":{
             "overrideEnabled":[
                 false,
                 18
             ],
             "shapes":[
                 {
-                    "L_LeftUpMolar_A_Ctrl_CtrlShape":{
+                    "L_LeftUpMolar_A_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
                 }
             ]
         },
-        "L_LeftUpMolar_B_Ctrl_Ctrl":{
+        "L_LeftUpMolar_B_Ctrl":{
             "overrideEnabled":[
                 false,
                 18
             ],
             "shapes":[
                 {
-                    "L_LeftUpMolar_B_Ctrl_CtrlShape":{
+                    "L_LeftUpMolar_B_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
                 }
             ]
         },
-        "L_LipEndSlide_Ctrl_Ctrl":{
+        "L_LipEndSlide_Ctrl":{
             "overrideEnabled":[
                 true,
                 [
@@ -2660,7 +2660,7 @@
             ],
             "shapes":[
                 {
-                    "L_LipEndSlide_Ctrl_CtrlShape":{
+                    "L_LipEndSlide_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":[
                             false,
@@ -2670,7 +2670,7 @@
                 }
             ]
         },
-        "L_LipMidSlide_Ctrl_Ctrl":{
+        "L_LipMidSlide_Ctrl":{
             "overrideEnabled":[
                 true,
                 [
@@ -2681,7 +2681,7 @@
             ],
             "shapes":[
                 {
-                    "L_LipMidSlide_Ctrl_CtrlShape":{
+                    "L_LipMidSlide_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":[
                             false,
@@ -2691,7 +2691,7 @@
                 }
             ]
         },
-        "L_LipSlide_Ctrl_Ctrl":{
+        "L_LipSlide_Ctrl":{
             "overrideEnabled":[
                 true,
                 [
@@ -2702,7 +2702,7 @@
             ],
             "shapes":[
                 {
-                    "L_LipSlide_Ctrl_CtrlShape":{
+                    "L_LipSlide_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":[
                             false,
@@ -2743,14 +2743,14 @@
                 }
             ]
         },
-        "L_LwrWrapSlide_Ctrl_Ctrl_Offset_Grp|L_LwrWrapSlide_Ctrl_Ctrl":{
+        "L_LwrWrapSlide_Ctrl_Offset_Grp|L_LwrWrapSlide_Ctrl":{
             "overrideEnabled":[
                 false,
                 9
             ],
             "shapes":[
                 {
-                    "L_LwrWrapSlide_Ctrl_Ctrl_Offset_Grp|L_LwrWrapSlide_Ctrl_Ctrl|L_LwrWrapSlide_Ctrl_CtrlShape":{
+                    "L_LwrWrapSlide_Ctrl_Offset_Grp|L_LwrWrapSlide_Ctrl|L_LwrWrapSlide_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":[
                             false,
@@ -2760,7 +2760,7 @@
                 }
             ]
         },
-        "L_Mid_0_Cls_Ctrl_Ctrl":{
+        "L_Mid_0_Cls_Ctrl":{
             "overrideEnabled":[
                 true,
                 [
@@ -2771,14 +2771,14 @@
             ],
             "shapes":[
                 {
-                    "L_Mid_0_Cls_Ctrl_CtrlShape":{
+                    "L_Mid_0_Cls_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
                 }
             ]
         },
-        "L_Mid_1_Cls_Ctrl_Ctrl":{
+        "L_Mid_1_Cls_Ctrl":{
             "overrideEnabled":[
                 true,
                 [
@@ -2789,7 +2789,7 @@
             ],
             "shapes":[
                 {
-                    "L_Mid_1_Cls_Ctrl_CtrlShape":{
+                    "L_Mid_1_Cls_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
@@ -2814,7 +2814,7 @@
                 }
             ]
         },
-        "L_Out_EyeTweak_Ctrl_Ctrl":{
+        "L_Out_EyeTweak_Ctrl":{
             "overrideEnabled":[
                 true,
                 [
@@ -2825,7 +2825,7 @@
             ],
             "shapes":[
                 {
-                    "L_Out_EyeTweak_Ctrl_CtrlShape":{
+                    "L_Out_EyeTweak_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
@@ -3001,6 +3001,20 @@
                 }
             ]
         },
+        "L_RightBrow_Ctrl":{
+            "overrideEnabled":[
+                false,
+                6
+            ],
+            "shapes":[
+                {
+                    "L_RightBrow_CtrlShape":{
+                        "alwaysDrawOnTop":false,
+                        "shapeOverrideEnabled":false
+                    }
+                }
+            ]
+        },
         "L_RightBrow_Ctrl_0_Ctrl":{
             "overrideEnabled":[
                 false,
@@ -3065,20 +3079,6 @@
             "shapes":[
                 {
                     "L_RightBrow_Ctrl_4_CtrlShape":{
-                        "alwaysDrawOnTop":false,
-                        "shapeOverrideEnabled":false
-                    }
-                }
-            ]
-        },
-        "L_RightBrow_Ctrl_Ctrl":{
-            "overrideEnabled":[
-                false,
-                6
-            ],
-            "shapes":[
-                {
-                    "L_RightBrow_Ctrl_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
@@ -3242,7 +3242,7 @@
                 }
             ]
         },
-        "L_RightLipEndSlide_Ctrl_Ctrl":{
+        "L_RightLipEndSlide_Ctrl":{
             "overrideEnabled":[
                 true,
                 [
@@ -3253,7 +3253,7 @@
             ],
             "shapes":[
                 {
-                    "L_RightLipEndSlide_Ctrl_CtrlShape":{
+                    "L_RightLipEndSlide_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":[
                             false,
@@ -3263,7 +3263,7 @@
                 }
             ]
         },
-        "L_RightLipMidSlide_Ctrl_Ctrl":{
+        "L_RightLipMidSlide_Ctrl":{
             "overrideEnabled":[
                 true,
                 [
@@ -3274,7 +3274,7 @@
             ],
             "shapes":[
                 {
-                    "L_RightLipMidSlide_Ctrl_CtrlShape":{
+                    "L_RightLipMidSlide_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":[
                             false,
@@ -3284,7 +3284,7 @@
                 }
             ]
         },
-        "L_RightLipSlide_Ctrl_Ctrl":{
+        "L_RightLipSlide_Ctrl":{
             "overrideEnabled":[
                 true,
                 [
@@ -3295,7 +3295,7 @@
             ],
             "shapes":[
                 {
-                    "L_RightLipSlide_Ctrl_CtrlShape":{
+                    "L_RightLipSlide_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":[
                             false,
@@ -3392,14 +3392,14 @@
                 }
             ]
         },
-        "L_Sandal_Ctrl_Ctrl":{
+        "L_Sandal_Ctrl":{
             "overrideEnabled":[
                 false,
                 6
             ],
             "shapes":[
                 {
-                    "L_Sandal_Ctrl_CtrlShape":{
+                    "L_Sandal_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":[
                             false,
@@ -3409,14 +3409,14 @@
                 }
             ]
         },
-        "L_Sandal_Ctrl_CtrlStrap_Ctrl_Ctrl":{
+        "L_Sandal_CtrlStrap_Ctrl":{
             "overrideEnabled":[
                 false,
                 6
             ],
             "shapes":[
                 {
-                    "L_Sandal_Ctrl_CtrlStrap_Ctrl_CtrlShape":{
+                    "L_Sandal_CtrlStrap_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
@@ -3561,14 +3561,14 @@
                 }
             ]
         },
-        "L_Shoulder_Jnt_Switch_CtrlSwing_Ctrl_Ctrl":{
+        "L_Shoulder_Jnt_Switch_CtrlSwing_Ctrl":{
             "overrideEnabled":[
                 false,
                 6
             ],
             "shapes":[
                 {
-                    "L_Shoulder_Jnt_Switch_CtrlSwing_Ctrl_CtrlShape":{
+                    "L_Shoulder_Jnt_Switch_CtrlSwing_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
@@ -3589,7 +3589,7 @@
                 }
             ]
         },
-        "L_Squash_Ctrl_Ctrl":{
+        "L_Squash_Ctrl":{
             "overrideEnabled":[
                 true,
                 [
@@ -3600,21 +3600,21 @@
             ],
             "shapes":[
                 {
-                    "L_Squash_Ctrl_CtrlShape":{
+                    "L_Squash_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
                 }
             ]
         },
-        "L_Squash_Ctrl_Deformer_Ctrl_Ctrl":{
+        "L_Squash_Ctrl_Deformer_Ctrl":{
             "overrideEnabled":[
                 false,
                 6
             ],
             "shapes":[
                 {
-                    "L_Squash_Ctrl_Deformer_Ctrl_CtrlShape":{
+                    "L_Squash_Ctrl_Deformer_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
@@ -3672,14 +3672,14 @@
                 }
             ]
         },
-        "L_TeethLwr_Ctrl_Ctrl":{
+        "L_TeethLwr_Ctrl":{
             "overrideEnabled":[
                 false,
                 9
             ],
             "shapes":[
                 {
-                    "L_TeethLwr_Ctrl_CtrlShape":{
+                    "L_TeethLwr_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":[
                             false,
@@ -3689,14 +3689,14 @@
                 }
             ]
         },
-        "L_TeethUpr_Ctrl_Ctrl":{
+        "L_TeethUpr_Ctrl":{
             "overrideEnabled":[
                 false,
                 9
             ],
             "shapes":[
                 {
-                    "L_TeethUpr_Ctrl_CtrlShape":{
+                    "L_TeethUpr_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":[
                             false,
@@ -3790,14 +3790,14 @@
                 }
             ]
         },
-        "L_Tongue1_Ctrl_Ctrl":{
+        "L_Tongue1_Ctrl":{
             "overrideEnabled":[
                 false,
                 18
             ],
             "shapes":[
                 {
-                    "L_Tongue1_Ctrl_CtrlShape":{
+                    "L_Tongue1_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":[
                             false,
@@ -3807,21 +3807,21 @@
                 }
             ]
         },
-        "L_TongueMain_Ctrl_Ctrl":{
+        "L_TongueMain_Ctrl":{
             "overrideEnabled":[
                 false,
                 18
             ],
             "shapes":[
                 {
-                    "L_TongueMain_Ctrl_CtrlShape":{
+                    "L_TongueMain_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
                 }
             ]
         },
-        "L_Top_0_Cls_Ctrl_Ctrl":{
+        "L_Top_0_Cls_Ctrl":{
             "overrideEnabled":[
                 true,
                 [
@@ -3832,14 +3832,14 @@
             ],
             "shapes":[
                 {
-                    "L_Top_0_Cls_Ctrl_CtrlShape":{
+                    "L_Top_0_Cls_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
                 }
             ]
         },
-        "L_Top_1_Cls_Ctrl_Ctrl":{
+        "L_Top_1_Cls_Ctrl":{
             "overrideEnabled":[
                 true,
                 [
@@ -3850,14 +3850,14 @@
             ],
             "shapes":[
                 {
-                    "L_Top_1_Cls_Ctrl_CtrlShape":{
+                    "L_Top_1_Cls_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
                 }
             ]
         },
-        "L_Top_2_Cls_Ctrl_Ctrl":{
+        "L_Top_2_Cls_Ctrl":{
             "overrideEnabled":[
                 true,
                 [
@@ -3868,14 +3868,14 @@
             ],
             "shapes":[
                 {
-                    "L_Top_2_Cls_Ctrl_CtrlShape":{
+                    "L_Top_2_Cls_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
                 }
             ]
         },
-        "L_Top_EyeTweak_Ctrl_Ctrl":{
+        "L_Top_EyeTweak_Ctrl":{
             "overrideEnabled":[
                 true,
                 [
@@ -3886,14 +3886,14 @@
             ],
             "shapes":[
                 {
-                    "L_Top_EyeTweak_Ctrl_CtrlShape":{
+                    "L_Top_EyeTweak_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
                 }
             ]
         },
-        "L_UpLeftLipMid1_Ctrl_Ctrl":{
+        "L_UpLeftLipMid1_Ctrl":{
             "overrideEnabled":[
                 true,
                 [
@@ -3904,14 +3904,14 @@
             ],
             "shapes":[
                 {
-                    "L_UpLeftLipMid1_Ctrl_CtrlShape":{
+                    "L_UpLeftLipMid1_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
                 }
             ]
         },
-        "L_UpLeftLipMid2_Ctrl_Ctrl":{
+        "L_UpLeftLipMid2_Ctrl":{
             "overrideEnabled":[
                 true,
                 [
@@ -3922,21 +3922,21 @@
             ],
             "shapes":[
                 {
-                    "L_UpLeftLipMid2_Ctrl_CtrlShape":{
+                    "L_UpLeftLipMid2_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
                 }
             ]
         },
-        "L_UpLeftLip_A_Ctrl_Ctrl":{
+        "L_UpLeftLip_A_Ctrl":{
             "overrideEnabled":[
                 false,
                 6
             ],
             "shapes":[
                 {
-                    "L_UpLeftLip_A_Ctrl_CtrlShape":{
+                    "L_UpLeftLip_A_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
@@ -4041,28 +4041,28 @@
                 }
             ]
         },
-        "L_UpMid1_LeftLipSlide_Ctrl_Ctrl":{
+        "L_UpMid1_LeftLipSlide_Ctrl":{
             "overrideEnabled":[
                 false,
                 18
             ],
             "shapes":[
                 {
-                    "L_UpMid1_LeftLipSlide_Ctrl_CtrlShape":{
+                    "L_UpMid1_LeftLipSlide_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
                 }
             ]
         },
-        "L_UpMid1_LipSlide_Ctrl_Ctrl":{
+        "L_UpMid1_LipSlide_Ctrl":{
             "overrideEnabled":[
                 false,
                 18
             ],
             "shapes":[
                 {
-                    "L_UpMid1_LipSlide_Ctrl_CtrlShape":{
+                    "L_UpMid1_LipSlide_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":[
                             false,
@@ -4072,14 +4072,14 @@
                 }
             ]
         },
-        "L_UpMid2_LeftLipSlide_Ctrl_Ctrl":{
+        "L_UpMid2_LeftLipSlide_Ctrl":{
             "overrideEnabled":[
                 false,
                 18
             ],
             "shapes":[
                 {
-                    "L_UpMid2_LeftLipSlide_Ctrl_CtrlShape":{
+                    "L_UpMid2_LeftLipSlide_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":[
                             false,
@@ -4089,14 +4089,14 @@
                 }
             ]
         },
-        "L_UpMid2_LipSlide_Ctrl_Ctrl":{
+        "L_UpMid2_LipSlide_Ctrl":{
             "overrideEnabled":[
                 false,
                 18
             ],
             "shapes":[
                 {
-                    "L_UpMid2_LipSlide_Ctrl_CtrlShape":{
+                    "L_UpMid2_LipSlide_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":[
                             false,
@@ -4205,14 +4205,14 @@
                 }
             ]
         },
-        "L_UpTeethTweakA_Ctrl_Ctrl":{
+        "L_UpTeethTweakA_Ctrl":{
             "overrideEnabled":[
                 false,
                 14
             ],
             "shapes":[
                 {
-                    "L_UpTeethTweakA_Ctrl_CtrlShape":{
+                    "L_UpTeethTweakA_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":[
                             false,
@@ -4222,56 +4222,56 @@
                 }
             ]
         },
-        "L_UpTeethTweakB_Ctrl_Ctrl":{
+        "L_UpTeethTweakB_Ctrl":{
             "overrideEnabled":[
                 false,
                 14
             ],
             "shapes":[
                 {
-                    "L_UpTeethTweakB_Ctrl_CtrlShape":{
+                    "L_UpTeethTweakB_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
                 }
             ]
         },
-        "L_UpTeethTweakC_Ctrl_Ctrl":{
+        "L_UpTeethTweakC_Ctrl":{
             "overrideEnabled":[
                 false,
                 14
             ],
             "shapes":[
                 {
-                    "L_UpTeethTweakC_Ctrl_CtrlShape":{
+                    "L_UpTeethTweakC_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
                 }
             ]
         },
-        "L_UpTeethTweakD_Ctrl_Ctrl":{
+        "L_UpTeethTweakD_Ctrl":{
             "overrideEnabled":[
                 false,
                 14
             ],
             "shapes":[
                 {
-                    "L_UpTeethTweakD_Ctrl_CtrlShape":{
+                    "L_UpTeethTweakD_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
                 }
             ]
         },
-        "L_UpTeethTweakE_Ctrl_Ctrl":{
+        "L_UpTeethTweakE_Ctrl":{
             "overrideEnabled":[
                 false,
                 14
             ],
             "shapes":[
                 {
-                    "L_UpTeethTweakE_Ctrl_CtrlShape":{
+                    "L_UpTeethTweakE_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":[
                             false,
@@ -4281,14 +4281,14 @@
                 }
             ]
         },
-        "L_UpTeethTweakMain_Ctrl_Ctrl":{
+        "L_UpTeethTweakMain_Ctrl":{
             "overrideEnabled":[
                 false,
                 22
             ],
             "shapes":[
                 {
-                    "L_UpTeethTweakMain_Ctrl_CtrlShape":{
+                    "L_UpTeethTweakMain_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":[
                             false,
@@ -4298,14 +4298,14 @@
                 }
             ]
         },
-        "L_Up_01_Blink_End_Local_Ctrl_Ctrl":{
+        "L_Up_01_Blink_End_Local_Ctrl":{
             "overrideEnabled":[
                 false,
                 17
             ],
             "shapes":[
                 {
-                    "L_Up_01_Blink_End_Local_Ctrl_CtrlShape":{
+                    "L_Up_01_Blink_End_Local_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
@@ -4326,14 +4326,14 @@
                 }
             ]
         },
-        "L_Up_02_Blink_End_Local_Ctrl_Ctrl":{
+        "L_Up_02_Blink_End_Local_Ctrl":{
             "overrideEnabled":[
                 false,
                 17
             ],
             "shapes":[
                 {
-                    "L_Up_02_Blink_End_Local_Ctrl_CtrlShape":{
+                    "L_Up_02_Blink_End_Local_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
@@ -4354,14 +4354,14 @@
                 }
             ]
         },
-        "L_Up_03_Blink_End_Local_Ctrl_Ctrl":{
+        "L_Up_03_Blink_End_Local_Ctrl":{
             "overrideEnabled":[
                 false,
                 17
             ],
             "shapes":[
                 {
-                    "L_Up_03_Blink_End_Local_Ctrl_CtrlShape":{
+                    "L_Up_03_Blink_End_Local_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
@@ -4382,35 +4382,35 @@
                 }
             ]
         },
-        "L_Up_04_Blink_End_Local_Ctrl_Ctrl":{
+        "L_Up_04_Blink_End_Local_Ctrl":{
             "overrideEnabled":[
                 false,
                 17
             ],
             "shapes":[
                 {
-                    "L_Up_04_Blink_End_Local_Ctrl_CtrlShape":{
+                    "L_Up_04_Blink_End_Local_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
                 }
             ]
         },
-        "L_Up_05_Blink_End_Local_Ctrl_Ctrl":{
+        "L_Up_05_Blink_End_Local_Ctrl":{
             "overrideEnabled":[
                 false,
                 17
             ],
             "shapes":[
                 {
-                    "L_Up_05_Blink_End_Local_Ctrl_CtrlShape":{
+                    "L_Up_05_Blink_End_Local_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
                 }
             ]
         },
-        "L_Up_LeftLipEndSlide_Ctrl_Ctrl":{
+        "L_Up_LeftLipEndSlide_Ctrl":{
             "overrideEnabled":[
                 true,
                 [
@@ -4421,7 +4421,7 @@
             ],
             "shapes":[
                 {
-                    "L_Up_LeftLipEndSlide_Ctrl_CtrlShape":{
+                    "L_Up_LeftLipEndSlide_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":[
                             false,
@@ -4431,7 +4431,7 @@
                 }
             ]
         },
-        "L_Up_LeftLipMidSlide_Ctrl_Ctrl":{
+        "L_Up_LeftLipMidSlide_Ctrl":{
             "overrideEnabled":[
                 true,
                 [
@@ -4442,7 +4442,7 @@
             ],
             "shapes":[
                 {
-                    "L_Up_LeftLipMidSlide_Ctrl_CtrlShape":{
+                    "L_Up_LeftLipMidSlide_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":[
                             false,
@@ -4452,7 +4452,7 @@
                 }
             ]
         },
-        "L_Up_LeftLipSlide_Ctrl_Ctrl":{
+        "L_Up_LeftLipSlide_Ctrl":{
             "overrideEnabled":[
                 true,
                 [
@@ -4463,7 +4463,7 @@
             ],
             "shapes":[
                 {
-                    "L_Up_LeftLipSlide_Ctrl_CtrlShape":{
+                    "L_Up_LeftLipSlide_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":[
                             false,
@@ -4620,14 +4620,14 @@
                 }
             ]
         },
-        "L_UprWrapSlide_Ctrl_Ctrl_Offset_Grp|L_UprWrapSlide_Ctrl_Ctrl":{
+        "L_UprWrapSlide_Ctrl_Offset_Grp|L_UprWrapSlide_Ctrl":{
             "overrideEnabled":[
                 false,
                 17
             ],
             "shapes":[
                 {
-                    "L_UprWrapSlide_Ctrl_Ctrl_Offset_Grp|L_UprWrapSlide_Ctrl_Ctrl|L_UprWrapSlide_Ctrl_CtrlShape":{
+                    "L_UprWrapSlide_Ctrl_Offset_Grp|L_UprWrapSlide_Ctrl|L_UprWrapSlide_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":[
                             false,
@@ -4762,6 +4762,20 @@
                 }
             ]
         },
+        "L_eyeBrow_Ctrl":{
+            "overrideEnabled":[
+                false,
+                6
+            ],
+            "shapes":[
+                {
+                    "L_eyeBrow_CtrlShape":{
+                        "alwaysDrawOnTop":false,
+                        "shapeOverrideEnabled":false
+                    }
+                }
+            ]
+        },
         "L_eyeBrow_Ctrl_0_Ctrl":{
             "overrideEnabled":[
                 false,
@@ -4826,20 +4840,6 @@
             "shapes":[
                 {
                     "L_eyeBrow_Ctrl_4_CtrlShape":{
-                        "alwaysDrawOnTop":false,
-                        "shapeOverrideEnabled":false
-                    }
-                }
-            ]
-        },
-        "L_eyeBrow_Ctrl_Ctrl":{
-            "overrideEnabled":[
-                false,
-                6
-            ],
-            "shapes":[
-                {
-                    "L_eyeBrow_Ctrl_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
@@ -4916,33 +4916,33 @@
                 }
             ]
         },
-        "L_pupil_CtrlSlide_Ctrl_Ctrl":{
+        "L_pupil_Ctrl":{
             "overrideEnabled":[
                 false,
                 6
             ],
             "shapes":[
                 {
-                    "L_pupil_CtrlSlide_Ctrl_CtrlShape":{
+                    "L_pupil_CtrlShape":{
+                        "alwaysDrawOnTop":false,
+                        "shapeOverrideEnabled":false
+                    }
+                }
+            ]
+        },
+        "L_pupil_CtrlSlide_Ctrl":{
+            "overrideEnabled":[
+                false,
+                6
+            ],
+            "shapes":[
+                {
+                    "L_pupil_CtrlSlide_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":[
                             false,
                             18
                         ]
-                    }
-                }
-            ]
-        },
-        "L_pupil_Ctrl_Ctrl":{
-            "overrideEnabled":[
-                false,
-                6
-            ],
-            "shapes":[
-                {
-                    "L_pupil_Ctrl_CtrlShape":{
-                        "alwaysDrawOnTop":false,
-                        "shapeOverrideEnabled":false
                     }
                 }
             ]
@@ -5046,42 +5046,42 @@
                 }
             ]
         },
-        "LeftFace_Global_Ctrl_Ctrl":{
+        "LeftFace_Global_Ctrl":{
             "overrideEnabled":[
                 false,
                 18
             ],
             "shapes":[
                 {
-                    "LeftFace_Global_Ctrl_CtrlShape":{
+                    "LeftFace_Global_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
                 }
             ]
         },
-        "LeftFace_Mover_Ctrl_Ctrl":{
+        "LeftFace_Mover_Ctrl":{
             "overrideEnabled":[
                 false,
                 18
             ],
             "shapes":[
                 {
-                    "LeftFace_Mover_Ctrl_CtrlShape":{
+                    "LeftFace_Mover_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
                 }
             ]
         },
-        "LeftFace_Mover_Gimbal_Ctrl_Ctrl":{
+        "LeftFace_Mover_Gimbal_Ctrl":{
             "overrideEnabled":[
                 false,
                 18
             ],
             "shapes":[
                 {
-                    "LeftFace_Mover_Gimbal_Ctrl_CtrlShape":{
+                    "LeftFace_Mover_Gimbal_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
@@ -5289,28 +5289,28 @@
                 }
             ]
         },
-        "M_DynamicPivotJaw_Ctrl_Ctrl_Ctrl":{
+        "M_DynamicPivotJaw_Ctrl":{
             "overrideEnabled":[
                 false,
                 18
             ],
             "shapes":[
                 {
-                    "M_DynamicPivotJaw_Ctrl_Ctrl_CtrlShape":{
+                    "M_DynamicPivotJaw_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
                 }
             ]
         },
-        "M_EyesAim_Ctrl_Ctrl":{
+        "M_EyesAim_Ctrl":{
             "overrideEnabled":[
                 false,
                 14
             ],
             "shapes":[
                 {
-                    "M_EyesAim_Ctrl_CtrlShape":{
+                    "M_EyesAim_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":[
                             false,
@@ -5320,56 +5320,56 @@
                 }
             ]
         },
-        "M_EyesGlobal_Ctrl_Ctrl_Ctrl":{
+        "M_EyesGlobal_Ctrl":{
             "overrideEnabled":[
                 false,
                 18
             ],
             "shapes":[
                 {
-                    "M_EyesGlobal_Ctrl_Ctrl_CtrlShape":{
+                    "M_EyesGlobal_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
                 }
             ]
         },
-        "M_EyesMover_Ctrl_CtrlGimbal_Ctrl_Ctrl":{
+        "M_EyesMover_Ctrl":{
             "overrideEnabled":[
                 false,
                 18
             ],
             "shapes":[
                 {
-                    "M_EyesMover_Ctrl_CtrlGimbal_Ctrl_CtrlShape":{
+                    "M_EyesMover_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
                 }
             ]
         },
-        "M_EyesMover_Ctrl_Ctrl_Ctrl":{
+        "M_EyesMover_CtrlGimbal_Ctrl":{
             "overrideEnabled":[
                 false,
                 18
             ],
             "shapes":[
                 {
-                    "M_EyesMover_Ctrl_Ctrl_CtrlShape":{
+                    "M_EyesMover_CtrlGimbal_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
                 }
             ]
         },
-        "M_FrDwLeftLip_Ctrl_Ctrl":{
+        "M_FrDwLeftLip_Ctrl":{
             "overrideEnabled":[
                 false,
                 9
             ],
             "shapes":[
                 {
-                    "M_FrDwLeftLip_Ctrl_CtrlShape":{
+                    "M_FrDwLeftLip_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":[
                             false,
@@ -5379,14 +5379,14 @@
                 }
             ]
         },
-        "M_FrUpLeftLip_Ctrl_Ctrl":{
+        "M_FrUpLeftLip_Ctrl":{
             "overrideEnabled":[
                 false,
                 17
             ],
             "shapes":[
                 {
-                    "M_FrUpLeftLip_Ctrl_CtrlShape":{
+                    "M_FrUpLeftLip_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":[
                             false,
@@ -5396,42 +5396,42 @@
                 }
             ]
         },
-        "M_FrontFaceGlobal_Ctrl_Ctrl_Ctrl":{
+        "M_FrontFaceGlobal_Ctrl":{
             "overrideEnabled":[
                 false,
                 18
             ],
             "shapes":[
                 {
-                    "M_FrontFaceGlobal_Ctrl_Ctrl_CtrlShape":{
+                    "M_FrontFaceGlobal_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
                 }
             ]
         },
-        "M_FrontFaceMover_Ctrl_CtrlGimbal_Ctrl_Ctrl":{
+        "M_FrontFaceMover_Ctrl":{
             "overrideEnabled":[
                 false,
                 18
             ],
             "shapes":[
                 {
-                    "M_FrontFaceMover_Ctrl_CtrlGimbal_Ctrl_CtrlShape":{
+                    "M_FrontFaceMover_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
                 }
             ]
         },
-        "M_FrontFaceMover_Ctrl_Ctrl_Ctrl":{
+        "M_FrontFaceMover_CtrlGimbal_Ctrl":{
             "overrideEnabled":[
                 false,
                 18
             ],
             "shapes":[
                 {
-                    "M_FrontFaceMover_Ctrl_Ctrl_CtrlShape":{
+                    "M_FrontFaceMover_CtrlGimbal_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
@@ -5677,21 +5677,21 @@
                 }
             ]
         },
-        "R_Blink_Frame_Ctrl_Ctrl":{
+        "R_Blink_Frame_Ctrl":{
             "overrideEnabled":[
                 false,
                 13
             ],
             "shapes":[
                 {
-                    "R_Blink_Frame_Ctrl_CtrlShape":{
+                    "R_Blink_Frame_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
                 }
             ]
         },
-        "R_Btm_0_Cls_Ctrl_Ctrl":{
+        "R_Btm_0_Cls_Ctrl":{
             "overrideEnabled":[
                 true,
                 [
@@ -5702,14 +5702,14 @@
             ],
             "shapes":[
                 {
-                    "R_Btm_0_Cls_Ctrl_CtrlShape":{
+                    "R_Btm_0_Cls_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
                 }
             ]
         },
-        "R_Btm_1_Cls_Ctrl_Ctrl":{
+        "R_Btm_1_Cls_Ctrl":{
             "overrideEnabled":[
                 true,
                 [
@@ -5720,14 +5720,14 @@
             ],
             "shapes":[
                 {
-                    "R_Btm_1_Cls_Ctrl_CtrlShape":{
+                    "R_Btm_1_Cls_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
                 }
             ]
         },
-        "R_Btm_2_Cls_Ctrl_Ctrl":{
+        "R_Btm_2_Cls_Ctrl":{
             "overrideEnabled":[
                 true,
                 [
@@ -5738,14 +5738,14 @@
             ],
             "shapes":[
                 {
-                    "R_Btm_2_Cls_Ctrl_CtrlShape":{
+                    "R_Btm_2_Cls_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
                 }
             ]
         },
-        "R_Btm_EyeTweak_Ctrl_Ctrl":{
+        "R_Btm_EyeTweak_Ctrl":{
             "overrideEnabled":[
                 true,
                 [
@@ -5756,7 +5756,7 @@
             ],
             "shapes":[
                 {
-                    "R_Btm_EyeTweak_Ctrl_CtrlShape":{
+                    "R_Btm_EyeTweak_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
@@ -5791,14 +5791,14 @@
                 }
             ]
         },
-        "R_Clavicle_Ctrl_Ctrl":{
+        "R_Clavicle_Ctrl":{
             "overrideEnabled":[
                 false,
                 13
             ],
             "shapes":[
                 {
-                    "R_Clavicle_Ctrl_CtrlShape":{
+                    "R_Clavicle_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
@@ -6578,28 +6578,28 @@
                 }
             ]
         },
-        "R_FrSandal_Ctrl_Ctrl":{
+        "R_FrSandal_Ctrl":{
             "overrideEnabled":[
                 false,
                 13
             ],
             "shapes":[
                 {
-                    "R_FrSandal_Ctrl_CtrlShape":{
+                    "R_FrSandal_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
                 }
             ]
         },
-        "R_Fr_LeftLip_Ctrl_Ctrl":{
+        "R_Fr_LeftLip_Ctrl":{
             "overrideEnabled":[
                 false,
                 13
             ],
             "shapes":[
                 {
-                    "R_Fr_LeftLip_Ctrl_CtrlShape":{
+                    "R_Fr_LeftLip_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":[
                             false,
@@ -6941,7 +6941,7 @@
                 }
             ]
         },
-        "R_In_EyeTweak_Ctrl_Ctrl":{
+        "R_In_EyeTweak_Ctrl":{
             "overrideEnabled":[
                 true,
                 [
@@ -6952,7 +6952,7 @@
             ],
             "shapes":[
                 {
-                    "R_In_EyeTweak_Ctrl_CtrlShape":{
+                    "R_In_EyeTweak_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
@@ -7085,6 +7085,20 @@
                 }
             ]
         },
+        "R_LeftBrow_Ctrl":{
+            "overrideEnabled":[
+                false,
+                13
+            ],
+            "shapes":[
+                {
+                    "R_LeftBrow_CtrlShape":{
+                        "alwaysDrawOnTop":false,
+                        "shapeOverrideEnabled":false
+                    }
+                }
+            ]
+        },
         "R_LeftBrow_Ctrl_0_Ctrl":{
             "overrideEnabled":[
                 false,
@@ -7149,20 +7163,6 @@
             "shapes":[
                 {
                     "R_LeftBrow_Ctrl_4_CtrlShape":{
-                        "alwaysDrawOnTop":false,
-                        "shapeOverrideEnabled":false
-                    }
-                }
-            ]
-        },
-        "R_LeftBrow_Ctrl_Ctrl":{
-            "overrideEnabled":[
-                false,
-                13
-            ],
-            "shapes":[
-                {
-                    "R_LeftBrow_Ctrl_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
@@ -7295,35 +7295,35 @@
                 }
             ]
         },
-        "R_LeftDwMolar_A_Ctrl_Ctrl":{
+        "R_LeftDwMolar_A_Ctrl":{
             "overrideEnabled":[
                 false,
                 18
             ],
             "shapes":[
                 {
-                    "R_LeftDwMolar_A_Ctrl_CtrlShape":{
+                    "R_LeftDwMolar_A_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
                 }
             ]
         },
-        "R_LeftDwMolar_B_Ctrl_Ctrl":{
+        "R_LeftDwMolar_B_Ctrl":{
             "overrideEnabled":[
                 false,
                 18
             ],
             "shapes":[
                 {
-                    "R_LeftDwMolar_B_Ctrl_CtrlShape":{
+                    "R_LeftDwMolar_B_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
                 }
             ]
         },
-        "R_LeftLipEndSlide_Ctrl_Ctrl":{
+        "R_LeftLipEndSlide_Ctrl":{
             "overrideEnabled":[
                 true,
                 [
@@ -7334,14 +7334,14 @@
             ],
             "shapes":[
                 {
-                    "R_LeftLipEndSlide_Ctrl_CtrlShape":{
+                    "R_LeftLipEndSlide_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
                 }
             ]
         },
-        "R_LeftLipMidSlide_Ctrl_Ctrl":{
+        "R_LeftLipMidSlide_Ctrl":{
             "overrideEnabled":[
                 true,
                 [
@@ -7352,14 +7352,14 @@
             ],
             "shapes":[
                 {
-                    "R_LeftLipMidSlide_Ctrl_CtrlShape":{
+                    "R_LeftLipMidSlide_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
                 }
             ]
         },
-        "R_LeftLipSlide_Ctrl_Ctrl":{
+        "R_LeftLipSlide_Ctrl":{
             "overrideEnabled":[
                 true,
                 [
@@ -7370,21 +7370,21 @@
             ],
             "shapes":[
                 {
-                    "R_LeftLipSlide_Ctrl_CtrlShape":{
+                    "R_LeftLipSlide_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
                 }
             ]
         },
-        "R_LeftLip_A_Ctrl_Ctrl":{
+        "R_LeftLip_A_Ctrl":{
             "overrideEnabled":[
                 false,
                 13
             ],
             "shapes":[
                 {
-                    "R_LeftLip_A_Ctrl_CtrlShape":{
+                    "R_LeftLip_A_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
@@ -7433,35 +7433,35 @@
                 }
             ]
         },
-        "R_LeftUpMolar_A_Jnt_Ctrl_Grp|R_UpMolar_A_Ctrl_Ctrl_Offset_Grp|R_UpMolar_A_Ctrl_Ctrl":{
+        "R_LeftUpMolar_A_Jnt_Ctrl_Grp|R_UpMolar_A_Ctrl_Offset_Grp|R_UpMolar_A_Ctrl":{
             "overrideEnabled":[
                 false,
                 18
             ],
             "shapes":[
                 {
-                    "R_LeftUpMolar_A_Jnt_Ctrl_Grp|R_UpMolar_A_Ctrl_Ctrl_Offset_Grp|R_UpMolar_A_Ctrl_Ctrl|R_UpMolar_A_Ctrl_CtrlShape":{
+                    "R_LeftUpMolar_A_Jnt_Ctrl_Grp|R_UpMolar_A_Ctrl_Offset_Grp|R_UpMolar_A_Ctrl|R_UpMolar_A_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
                 }
             ]
         },
-        "R_LeftUpMolar_B_Ctrl_Ctrl":{
+        "R_LeftUpMolar_B_Ctrl":{
             "overrideEnabled":[
                 false,
                 18
             ],
             "shapes":[
                 {
-                    "R_LeftUpMolar_B_Ctrl_CtrlShape":{
+                    "R_LeftUpMolar_B_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
                 }
             ]
         },
-        "R_LipEndSlide_Ctrl_Ctrl":{
+        "R_LipEndSlide_Ctrl":{
             "overrideEnabled":[
                 true,
                 [
@@ -7472,7 +7472,7 @@
             ],
             "shapes":[
                 {
-                    "R_LipEndSlide_Ctrl_CtrlShape":{
+                    "R_LipEndSlide_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":[
                             false,
@@ -7482,7 +7482,7 @@
                 }
             ]
         },
-        "R_LipMidSlide_Ctrl_Ctrl":{
+        "R_LipMidSlide_Ctrl":{
             "overrideEnabled":[
                 true,
                 [
@@ -7493,7 +7493,7 @@
             ],
             "shapes":[
                 {
-                    "R_LipMidSlide_Ctrl_CtrlShape":{
+                    "R_LipMidSlide_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":[
                             false,
@@ -7503,7 +7503,7 @@
                 }
             ]
         },
-        "R_LipSlide_Ctrl_Ctrl":{
+        "R_LipSlide_Ctrl":{
             "overrideEnabled":[
                 true,
                 [
@@ -7514,7 +7514,7 @@
             ],
             "shapes":[
                 {
-                    "R_LipSlide_Ctrl_CtrlShape":{
+                    "R_LipSlide_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":[
                             false,
@@ -7555,14 +7555,14 @@
                 }
             ]
         },
-        "R_LwrWrapSlide_Ctrl_Ctrl_Offset_Grp|R_LwrWrapSlide_Ctrl_Ctrl":{
+        "R_LwrWrapSlide_Ctrl_Offset_Grp|R_LwrWrapSlide_Ctrl":{
             "overrideEnabled":[
                 false,
                 9
             ],
             "shapes":[
                 {
-                    "R_LwrWrapSlide_Ctrl_Ctrl_Offset_Grp|R_LwrWrapSlide_Ctrl_Ctrl|R_LwrWrapSlide_Ctrl_CtrlShape":{
+                    "R_LwrWrapSlide_Ctrl_Offset_Grp|R_LwrWrapSlide_Ctrl|R_LwrWrapSlide_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":[
                             false,
@@ -7572,7 +7572,7 @@
                 }
             ]
         },
-        "R_Mid_0_Cls_Ctrl_Ctrl":{
+        "R_Mid_0_Cls_Ctrl":{
             "overrideEnabled":[
                 true,
                 [
@@ -7583,14 +7583,14 @@
             ],
             "shapes":[
                 {
-                    "R_Mid_0_Cls_Ctrl_CtrlShape":{
+                    "R_Mid_0_Cls_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
                 }
             ]
         },
-        "R_Mid_1_Cls_Ctrl_Ctrl":{
+        "R_Mid_1_Cls_Ctrl":{
             "overrideEnabled":[
                 true,
                 [
@@ -7601,7 +7601,7 @@
             ],
             "shapes":[
                 {
-                    "R_Mid_1_Cls_Ctrl_CtrlShape":{
+                    "R_Mid_1_Cls_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
@@ -7626,7 +7626,7 @@
                 }
             ]
         },
-        "R_Out_EyeTweak_Ctrl_Ctrl":{
+        "R_Out_EyeTweak_Ctrl":{
             "overrideEnabled":[
                 true,
                 [
@@ -7637,7 +7637,7 @@
             ],
             "shapes":[
                 {
-                    "R_Out_EyeTweak_Ctrl_CtrlShape":{
+                    "R_Out_EyeTweak_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
@@ -7798,6 +7798,20 @@
                 }
             ]
         },
+        "R_RightBrow_Ctrl":{
+            "overrideEnabled":[
+                false,
+                13
+            ],
+            "shapes":[
+                {
+                    "R_RightBrow_CtrlShape":{
+                        "alwaysDrawOnTop":false,
+                        "shapeOverrideEnabled":false
+                    }
+                }
+            ]
+        },
         "R_RightBrow_Ctrl_0_Ctrl":{
             "overrideEnabled":[
                 false,
@@ -7862,20 +7876,6 @@
             "shapes":[
                 {
                     "R_RightBrow_Ctrl_4_CtrlShape":{
-                        "alwaysDrawOnTop":false,
-                        "shapeOverrideEnabled":false
-                    }
-                }
-            ]
-        },
-        "R_RightBrow_Ctrl_Ctrl":{
-            "overrideEnabled":[
-                false,
-                13
-            ],
-            "shapes":[
-                {
-                    "R_RightBrow_Ctrl_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
@@ -8039,7 +8039,7 @@
                 }
             ]
         },
-        "R_RightLipEndSlide_Ctrl_Ctrl":{
+        "R_RightLipEndSlide_Ctrl":{
             "overrideEnabled":[
                 true,
                 [
@@ -8050,7 +8050,7 @@
             ],
             "shapes":[
                 {
-                    "R_RightLipEndSlide_Ctrl_CtrlShape":{
+                    "R_RightLipEndSlide_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":[
                             false,
@@ -8060,7 +8060,7 @@
                 }
             ]
         },
-        "R_RightLipMidSlide_Ctrl_Ctrl":{
+        "R_RightLipMidSlide_Ctrl":{
             "overrideEnabled":[
                 true,
                 [
@@ -8071,7 +8071,7 @@
             ],
             "shapes":[
                 {
-                    "R_RightLipMidSlide_Ctrl_CtrlShape":{
+                    "R_RightLipMidSlide_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":[
                             false,
@@ -8081,7 +8081,7 @@
                 }
             ]
         },
-        "R_RightLipSlide_Ctrl_Ctrl":{
+        "R_RightLipSlide_Ctrl":{
             "overrideEnabled":[
                 true,
                 [
@@ -8092,7 +8092,7 @@
             ],
             "shapes":[
                 {
-                    "R_RightLipSlide_Ctrl_CtrlShape":{
+                    "R_RightLipSlide_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":[
                             false,
@@ -8189,14 +8189,14 @@
                 }
             ]
         },
-        "R_Sandal_Ctrl_Ctrl":{
+        "R_Sandal_Ctrl":{
             "overrideEnabled":[
                 false,
                 13
             ],
             "shapes":[
                 {
-                    "R_Sandal_Ctrl_CtrlShape":{
+                    "R_Sandal_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":[
                             false,
@@ -8206,14 +8206,14 @@
                 }
             ]
         },
-        "R_Sandal_Ctrl_CtrlStrap_Ctrl_Ctrl":{
+        "R_Sandal_CtrlStrap_Ctrl":{
             "overrideEnabled":[
                 false,
                 13
             ],
             "shapes":[
                 {
-                    "R_Sandal_Ctrl_CtrlStrap_Ctrl_CtrlShape":{
+                    "R_Sandal_CtrlStrap_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
@@ -8346,14 +8346,14 @@
                 }
             ]
         },
-        "R_Shoulder_Jnt_Switch_CtrlSwing_Ctrl_Ctrl":{
+        "R_Shoulder_Jnt_Switch_CtrlSwing_Ctrl":{
             "overrideEnabled":[
                 false,
                 13
             ],
             "shapes":[
                 {
-                    "R_Shoulder_Jnt_Switch_CtrlSwing_Ctrl_CtrlShape":{
+                    "R_Shoulder_Jnt_Switch_CtrlSwing_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
@@ -8374,7 +8374,7 @@
                 }
             ]
         },
-        "R_Squash_Ctrl_Ctrl":{
+        "R_Squash_Ctrl":{
             "overrideEnabled":[
                 true,
                 [
@@ -8385,21 +8385,21 @@
             ],
             "shapes":[
                 {
-                    "R_Squash_Ctrl_CtrlShape":{
+                    "R_Squash_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
                 }
             ]
         },
-        "R_Squash_Ctrl_Deformer_Ctrl_Ctrl":{
+        "R_Squash_Ctrl_Deformer_Ctrl":{
             "overrideEnabled":[
                 false,
                 13
             ],
             "shapes":[
                 {
-                    "R_Squash_Ctrl_Deformer_Ctrl_CtrlShape":{
+                    "R_Squash_Ctrl_Deformer_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
@@ -8524,7 +8524,7 @@
                 }
             ]
         },
-        "R_Top_0_Cls_Ctrl_Ctrl":{
+        "R_Top_0_Cls_Ctrl":{
             "overrideEnabled":[
                 true,
                 [
@@ -8535,14 +8535,14 @@
             ],
             "shapes":[
                 {
-                    "R_Top_0_Cls_Ctrl_CtrlShape":{
+                    "R_Top_0_Cls_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
                 }
             ]
         },
-        "R_Top_1_Cls_Ctrl_Ctrl":{
+        "R_Top_1_Cls_Ctrl":{
             "overrideEnabled":[
                 true,
                 [
@@ -8553,14 +8553,14 @@
             ],
             "shapes":[
                 {
-                    "R_Top_1_Cls_Ctrl_CtrlShape":{
+                    "R_Top_1_Cls_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
                 }
             ]
         },
-        "R_Top_2_Cls_Ctrl_Ctrl":{
+        "R_Top_2_Cls_Ctrl":{
             "overrideEnabled":[
                 true,
                 [
@@ -8571,14 +8571,14 @@
             ],
             "shapes":[
                 {
-                    "R_Top_2_Cls_Ctrl_CtrlShape":{
+                    "R_Top_2_Cls_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
                 }
             ]
         },
-        "R_Top_EyeTweak_Ctrl_Ctrl":{
+        "R_Top_EyeTweak_Ctrl":{
             "overrideEnabled":[
                 true,
                 [
@@ -8589,14 +8589,14 @@
             ],
             "shapes":[
                 {
-                    "R_Top_EyeTweak_Ctrl_CtrlShape":{
+                    "R_Top_EyeTweak_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
                 }
             ]
         },
-        "R_UpLeftLipMid1_Ctrl_Ctrl":{
+        "R_UpLeftLipMid1_Ctrl":{
             "overrideEnabled":[
                 true,
                 [
@@ -8607,14 +8607,14 @@
             ],
             "shapes":[
                 {
-                    "R_UpLeftLipMid1_Ctrl_CtrlShape":{
+                    "R_UpLeftLipMid1_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
                 }
             ]
         },
-        "R_UpLeftLipMid2_Ctrl_Ctrl":{
+        "R_UpLeftLipMid2_Ctrl":{
             "overrideEnabled":[
                 true,
                 [
@@ -8625,21 +8625,21 @@
             ],
             "shapes":[
                 {
-                    "R_UpLeftLipMid2_Ctrl_CtrlShape":{
+                    "R_UpLeftLipMid2_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
                 }
             ]
         },
-        "R_UpLeftLip_A_Ctrl_Ctrl":{
+        "R_UpLeftLip_A_Ctrl":{
             "overrideEnabled":[
                 false,
                 13
             ],
             "shapes":[
                 {
-                    "R_UpLeftLip_A_Ctrl_CtrlShape":{
+                    "R_UpLeftLip_A_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
@@ -8730,14 +8730,14 @@
                 }
             ]
         },
-        "R_UpMid1_LeftLipSlide_Ctrl_Ctrl":{
+        "R_UpMid1_LeftLipSlide_Ctrl":{
             "overrideEnabled":[
                 false,
                 18
             ],
             "shapes":[
                 {
-                    "R_UpMid1_LeftLipSlide_Ctrl_CtrlShape":{
+                    "R_UpMid1_LeftLipSlide_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":[
                             false,
@@ -8747,14 +8747,14 @@
                 }
             ]
         },
-        "R_UpMid1_LipSlide_Ctrl_Ctrl":{
+        "R_UpMid1_LipSlide_Ctrl":{
             "overrideEnabled":[
                 false,
                 18
             ],
             "shapes":[
                 {
-                    "R_UpMid1_LipSlide_Ctrl_CtrlShape":{
+                    "R_UpMid1_LipSlide_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":[
                             false,
@@ -8764,14 +8764,14 @@
                 }
             ]
         },
-        "R_UpMid2_LeftLipSlide_Ctrl_Ctrl":{
+        "R_UpMid2_LeftLipSlide_Ctrl":{
             "overrideEnabled":[
                 false,
                 18
             ],
             "shapes":[
                 {
-                    "R_UpMid2_LeftLipSlide_Ctrl_CtrlShape":{
+                    "R_UpMid2_LeftLipSlide_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":[
                             false,
@@ -8781,14 +8781,14 @@
                 }
             ]
         },
-        "R_UpMid2_LipSlide_Ctrl_Ctrl":{
+        "R_UpMid2_LipSlide_Ctrl":{
             "overrideEnabled":[
                 false,
                 18
             ],
             "shapes":[
                 {
-                    "R_UpMid2_LipSlide_Ctrl_CtrlShape":{
+                    "R_UpMid2_LipSlide_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":[
                             false,
@@ -8798,14 +8798,14 @@
                 }
             ]
         },
-        "R_UpMolar_A_Ctrl_Ctrl_Offset_GrpMirror_Grp|R_UpMolar_A_Ctrl_Ctrl_Offset_Grp|R_UpMolar_A_Ctrl_Ctrl":{
+        "R_UpMolar_A_Ctrl_Offset_GrpMirror_Grp|R_UpMolar_A_Ctrl_Offset_Grp|R_UpMolar_A_Ctrl":{
             "overrideEnabled":[
                 false,
                 13
             ],
             "shapes":[
                 {
-                    "R_UpMolar_A_Ctrl_Ctrl_Offset_GrpMirror_Grp|R_UpMolar_A_Ctrl_Ctrl_Offset_Grp|R_UpMolar_A_Ctrl_Ctrl|R_UpMolar_A_Ctrl_CtrlShape":{
+                    "R_UpMolar_A_Ctrl_Offset_GrpMirror_Grp|R_UpMolar_A_Ctrl_Offset_Grp|R_UpMolar_A_Ctrl|R_UpMolar_A_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
@@ -8897,14 +8897,14 @@
                 }
             ]
         },
-        "R_Up_01_Blink_End_Local_Ctrl_Ctrl":{
+        "R_Up_01_Blink_End_Local_Ctrl":{
             "overrideEnabled":[
                 false,
                 17
             ],
             "shapes":[
                 {
-                    "R_Up_01_Blink_End_Local_Ctrl_CtrlShape":{
+                    "R_Up_01_Blink_End_Local_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
@@ -8925,14 +8925,14 @@
                 }
             ]
         },
-        "R_Up_02_Blink_End_Local_Ctrl_Ctrl":{
+        "R_Up_02_Blink_End_Local_Ctrl":{
             "overrideEnabled":[
                 false,
                 17
             ],
             "shapes":[
                 {
-                    "R_Up_02_Blink_End_Local_Ctrl_CtrlShape":{
+                    "R_Up_02_Blink_End_Local_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
@@ -8953,14 +8953,14 @@
                 }
             ]
         },
-        "R_Up_03_Blink_End_Local_Ctrl_Ctrl":{
+        "R_Up_03_Blink_End_Local_Ctrl":{
             "overrideEnabled":[
                 false,
                 17
             ],
             "shapes":[
                 {
-                    "R_Up_03_Blink_End_Local_Ctrl_CtrlShape":{
+                    "R_Up_03_Blink_End_Local_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
@@ -8981,35 +8981,35 @@
                 }
             ]
         },
-        "R_Up_04_Blink_End_Local_Ctrl_Ctrl":{
+        "R_Up_04_Blink_End_Local_Ctrl":{
             "overrideEnabled":[
                 false,
                 17
             ],
             "shapes":[
                 {
-                    "R_Up_04_Blink_End_Local_Ctrl_CtrlShape":{
+                    "R_Up_04_Blink_End_Local_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
                 }
             ]
         },
-        "R_Up_05_Blink_End_Local_Ctrl_Ctrl":{
+        "R_Up_05_Blink_End_Local_Ctrl":{
             "overrideEnabled":[
                 false,
                 17
             ],
             "shapes":[
                 {
-                    "R_Up_05_Blink_End_Local_Ctrl_CtrlShape":{
+                    "R_Up_05_Blink_End_Local_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
                 }
             ]
         },
-        "R_Up_LeftLipEndSlide_Ctrl_Ctrl":{
+        "R_Up_LeftLipEndSlide_Ctrl":{
             "overrideEnabled":[
                 true,
                 [
@@ -9020,7 +9020,7 @@
             ],
             "shapes":[
                 {
-                    "R_Up_LeftLipEndSlide_Ctrl_CtrlShape":{
+                    "R_Up_LeftLipEndSlide_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":[
                             false,
@@ -9030,7 +9030,7 @@
                 }
             ]
         },
-        "R_Up_LeftLipMidSlide_Ctrl_Ctrl":{
+        "R_Up_LeftLipMidSlide_Ctrl":{
             "overrideEnabled":[
                 true,
                 [
@@ -9041,7 +9041,7 @@
             ],
             "shapes":[
                 {
-                    "R_Up_LeftLipMidSlide_Ctrl_CtrlShape":{
+                    "R_Up_LeftLipMidSlide_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":[
                             false,
@@ -9051,7 +9051,7 @@
                 }
             ]
         },
-        "R_Up_LeftLipSlide_Ctrl_Ctrl":{
+        "R_Up_LeftLipSlide_Ctrl":{
             "overrideEnabled":[
                 true,
                 [
@@ -9062,7 +9062,7 @@
             ],
             "shapes":[
                 {
-                    "R_Up_LeftLipSlide_Ctrl_CtrlShape":{
+                    "R_Up_LeftLipSlide_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
@@ -9216,14 +9216,14 @@
                 }
             ]
         },
-        "R_UprWrapSlide_Ctrl_Ctrl_Offset_Grp|R_UprWrapSlide_Ctrl_Ctrl":{
+        "R_UprWrapSlide_Ctrl_Offset_Grp|R_UprWrapSlide_Ctrl":{
             "overrideEnabled":[
                 false,
                 17
             ],
             "shapes":[
                 {
-                    "R_UprWrapSlide_Ctrl_Ctrl_Offset_Grp|R_UprWrapSlide_Ctrl_Ctrl|R_UprWrapSlide_Ctrl_CtrlShape":{
+                    "R_UprWrapSlide_Ctrl_Offset_Grp|R_UprWrapSlide_Ctrl|R_UprWrapSlide_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":[
                             false,
@@ -9355,6 +9355,20 @@
                 }
             ]
         },
+        "R_eyeBrow_Ctrl":{
+            "overrideEnabled":[
+                false,
+                13
+            ],
+            "shapes":[
+                {
+                    "R_eyeBrow_CtrlShape":{
+                        "alwaysDrawOnTop":false,
+                        "shapeOverrideEnabled":false
+                    }
+                }
+            ]
+        },
         "R_eyeBrow_Ctrl_0_Ctrl":{
             "overrideEnabled":[
                 false,
@@ -9419,20 +9433,6 @@
             "shapes":[
                 {
                     "R_eyeBrow_Ctrl_4_CtrlShape":{
-                        "alwaysDrawOnTop":false,
-                        "shapeOverrideEnabled":false
-                    }
-                }
-            ]
-        },
-        "R_eyeBrow_Ctrl_Ctrl":{
-            "overrideEnabled":[
-                false,
-                13
-            ],
-            "shapes":[
-                {
-                    "R_eyeBrow_Ctrl_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
@@ -9509,33 +9509,33 @@
                 }
             ]
         },
-        "R_pupil_CtrlSlide_Ctrl_Ctrl":{
+        "R_pupil_Ctrl":{
             "overrideEnabled":[
                 false,
                 13
             ],
             "shapes":[
                 {
-                    "R_pupil_CtrlSlide_Ctrl_CtrlShape":{
+                    "R_pupil_CtrlShape":{
+                        "alwaysDrawOnTop":false,
+                        "shapeOverrideEnabled":false
+                    }
+                }
+            ]
+        },
+        "R_pupil_CtrlSlide_Ctrl":{
+            "overrideEnabled":[
+                false,
+                13
+            ],
+            "shapes":[
+                {
+                    "R_pupil_CtrlSlide_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":[
                             false,
                             13
                         ]
-                    }
-                }
-            ]
-        },
-        "R_pupil_Ctrl_Ctrl":{
-            "overrideEnabled":[
-                false,
-                13
-            ],
-            "shapes":[
-                {
-                    "R_pupil_Ctrl_CtrlShape":{
-                        "alwaysDrawOnTop":false,
-                        "shapeOverrideEnabled":false
                     }
                 }
             ]
@@ -9817,14 +9817,14 @@
                 }
             ]
         },
-        "RightTeeth_Lwr_Ctrl_Ctrl":{
+        "RightTeeth_Lwr_Ctrl":{
             "overrideEnabled":[
                 false,
                 9
             ],
             "shapes":[
                 {
-                    "RightTeeth_Lwr_Ctrl_CtrlShape":{
+                    "RightTeeth_Lwr_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":[
                             false,
@@ -9834,14 +9834,14 @@
                 }
             ]
         },
-        "RightTeeth_Upr_Ctrl_Ctrl":{
+        "RightTeeth_Upr_Ctrl":{
             "overrideEnabled":[
                 false,
                 9
             ],
             "shapes":[
                 {
-                    "RightTeeth_Upr_Ctrl_CtrlShape":{
+                    "RightTeeth_Upr_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":[
                             false,
@@ -9851,14 +9851,14 @@
                 }
             ]
         },
-        "RightTongue_01_Ctrl_Ctrl":{
+        "RightTongue_01_Ctrl":{
             "overrideEnabled":[
                 false,
                 18
             ],
             "shapes":[
                 {
-                    "RightTongue_01_Ctrl_CtrlShape":{
+                    "RightTongue_01_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":[
                             false,
@@ -10283,14 +10283,14 @@
                 }
             ]
         },
-        "Teeth_Lwr_Ctrl_Ctrl":{
+        "Teeth_Lwr_Ctrl":{
             "overrideEnabled":[
                 false,
                 9
             ],
             "shapes":[
                 {
-                    "Teeth_Lwr_Ctrl_CtrlShape":{
+                    "Teeth_Lwr_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":[
                             false,
@@ -10300,14 +10300,14 @@
                 }
             ]
         },
-        "Teeth_Upr_Ctrl_Ctrl":{
+        "Teeth_Upr_Ctrl":{
             "overrideEnabled":[
                 false,
                 9
             ],
             "shapes":[
                 {
-                    "Teeth_Upr_Ctrl_CtrlShape":{
+                    "Teeth_Upr_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":[
                             false,
@@ -10317,14 +10317,14 @@
                 }
             ]
         },
-        "Tongue_01_Ctrl_Ctrl":{
+        "Tongue_01_Ctrl":{
             "overrideEnabled":[
                 false,
                 18
             ],
             "shapes":[
                 {
-                    "Tongue_01_Ctrl_CtrlShape":{
+                    "Tongue_01_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":[
                             false,
@@ -10506,7 +10506,7 @@
                 }
             ]
         },
-        "Up_LeftLipEndSlide_Ctrl_Ctrl":{
+        "Up_LeftLipEndSlide_Ctrl":{
             "overrideEnabled":[
                 true,
                 [
@@ -10517,7 +10517,7 @@
             ],
             "shapes":[
                 {
-                    "Up_LeftLipEndSlide_Ctrl_CtrlShape":{
+                    "Up_LeftLipEndSlide_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":[
                             false,
@@ -10527,7 +10527,7 @@
                 }
             ]
         },
-        "Up_LeftLipMidSlide_Ctrl_Ctrl":{
+        "Up_LeftLipMidSlide_Ctrl":{
             "overrideEnabled":[
                 true,
                 [
@@ -10538,7 +10538,7 @@
             ],
             "shapes":[
                 {
-                    "Up_LeftLipMidSlide_Ctrl_CtrlShape":{
+                    "Up_LeftLipMidSlide_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":[
                             false,
@@ -10548,7 +10548,7 @@
                 }
             ]
         },
-        "Up_LeftLipSlide_Ctrl_Ctrl":{
+        "Up_LeftLipSlide_Ctrl":{
             "overrideEnabled":[
                 true,
                 [
@@ -10559,7 +10559,7 @@
             ],
             "shapes":[
                 {
-                    "Up_LeftLipSlide_Ctrl_CtrlShape":{
+                    "Up_LeftLipSlide_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":[
                             false,
@@ -10569,14 +10569,14 @@
                 }
             ]
         },
-        "Up_LeftLip_A_Ctrl_Ctrl":{
+        "Up_LeftLip_A_Ctrl":{
             "overrideEnabled":[
                 false,
                 17
             ],
             "shapes":[
                 {
-                    "Up_LeftLip_A_Ctrl_CtrlShape":{
+                    "Up_LeftLip_A_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
@@ -10779,68 +10779,68 @@
                 }
             ]
         },
-        "Wire_Up_Setup|L_LwrWrapSlide_Ctrl_Ctrl":{
+        "Wire_Up_Setup|L_LwrWrapSlide_Ctrl":{
             "overrideEnabled":false,
             "shapes":[
                 {
-                    "Wire_Up_Setup|L_LwrWrapSlide_Ctrl_Ctrl|L_LwrWrapSlide_Ctrl_CtrlShape":{
+                    "Wire_Up_Setup|L_LwrWrapSlide_Ctrl|L_LwrWrapSlide_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
                 },
                 {
-                    "L_LwrWrapSlide_Ctrl_CtrlShape4Orig":{
+                    "L_LwrWrapSlide_CtrlShape4Orig":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
                 }
             ]
         },
-        "Wire_Up_Setup|L_UprWrapSlide_Ctrl_Ctrl":{
+        "Wire_Up_Setup|L_UprWrapSlide_Ctrl":{
             "overrideEnabled":false,
             "shapes":[
                 {
-                    "Wire_Up_Setup|L_UprWrapSlide_Ctrl_Ctrl|L_UprWrapSlide_Ctrl_CtrlShape":{
+                    "Wire_Up_Setup|L_UprWrapSlide_Ctrl|L_UprWrapSlide_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
                 },
                 {
-                    "L_UprWrapSlide_Ctrl_CtrlShape3Orig":{
+                    "L_UprWrapSlide_CtrlShape3Orig":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
                 }
             ]
         },
-        "Wire_Up_Setup|R_LwrWrapSlide_Ctrl_Ctrl":{
+        "Wire_Up_Setup|R_LwrWrapSlide_Ctrl":{
             "overrideEnabled":false,
             "shapes":[
                 {
-                    "Wire_Up_Setup|R_LwrWrapSlide_Ctrl_Ctrl|R_LwrWrapSlide_Ctrl_CtrlShape":{
+                    "Wire_Up_Setup|R_LwrWrapSlide_Ctrl|R_LwrWrapSlide_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
                 },
                 {
-                    "R_LwrWrapSlide_Ctrl_CtrlShape2Orig":{
+                    "R_LwrWrapSlide_CtrlShape2Orig":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
                 }
             ]
         },
-        "Wire_Up_Setup|R_UprWrapSlide_Ctrl_Ctrl":{
+        "Wire_Up_Setup|R_UprWrapSlide_Ctrl":{
             "overrideEnabled":false,
             "shapes":[
                 {
-                    "Wire_Up_Setup|R_UprWrapSlide_Ctrl_Ctrl|R_UprWrapSlide_Ctrl_CtrlShape":{
+                    "Wire_Up_Setup|R_UprWrapSlide_Ctrl|R_UprWrapSlide_CtrlShape":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
                 },
                 {
-                    "R_UprWrapSlide_Ctrl_CtrlShape1Orig":{
+                    "R_UprWrapSlide_CtrlShape1Orig":{
                         "alwaysDrawOnTop":false,
                         "shapeOverrideEnabled":false
                     }
@@ -16626,7 +16626,7 @@
                 ]
             }
         ],
-        "L_Btm_0_Cls_Ctrl_Ctrl":[
+        "L_Btm_0_Cls_Ctrl":[
             {
                 "colour":0,
                 "degree":1,
@@ -17249,7 +17249,7 @@
                 ]
             }
         ],
-        "L_Btm_1_Cls_Ctrl_Ctrl":[
+        "L_Btm_1_Cls_Ctrl":[
             {
                 "colour":0,
                 "degree":1,
@@ -17872,7 +17872,7 @@
                 ]
             }
         ],
-        "L_Btm_2_Cls_Ctrl_Ctrl":[
+        "L_Btm_2_Cls_Ctrl":[
             {
                 "colour":0,
                 "degree":1,
@@ -18495,7 +18495,7 @@
                 ]
             }
         ],
-        "L_Btm_EyeTweak_Ctrl_Ctrl":[
+        "L_Btm_EyeTweak_Ctrl":[
             {
                 "colour":0,
                 "degree":1,
@@ -18756,7 +18756,7 @@
                 ]
             }
         ],
-        "L_Clavicle_Ctrl_Ctrl":[
+        "L_Clavicle_Ctrl":[
             {
                 "colour":6,
                 "degree":3,
@@ -29918,7 +29918,7 @@
                 ]
             }
         ],
-        "L_DynamicPivotJaw_Ctrl_Ctrl_Ctrl":[
+        "L_DynamicPivotJaw_Ctrl":[
             {
                 "colour":0,
                 "degree":1,
@@ -32720,7 +32720,7 @@
                 ]
             }
         ],
-        "L_FrSandal_Ctrl_Ctrl":[
+        "L_FrSandal_Ctrl":[
             {
                 "colour":0,
                 "degree":1,
@@ -32761,7 +32761,7 @@
                 ]
             }
         ],
-        "L_Fr_LeftLip_Ctrl_Ctrl":[
+        "L_Fr_LeftLip_Ctrl":[
             {
                 "colour":17,
                 "degree":1,
@@ -34903,7 +34903,7 @@
                 ]
             }
         ],
-        "L_In_EyeTweak_Ctrl_Ctrl":[
+        "L_In_EyeTweak_Ctrl":[
             {
                 "colour":0,
                 "degree":1,
@@ -35082,7 +35082,7 @@
                 ]
             }
         ],
-        "L_Jaw_Ctrl_Ctrl_Ctrl":[
+        "L_Jaw_Ctrl":[
             {
                 "colour":17,
                 "degree":3,
@@ -37076,6 +37076,113 @@
                 ]
             }
         ],
+        "L_LeftBrow_Ctrl":[
+            {
+                "colour":0,
+                "degree":1,
+                "form":0,
+                "knots":[
+                    0.0,
+                    1.0,
+                    2.0,
+                    3.0,
+                    4.0,
+                    5.0,
+                    6.0,
+                    7.0,
+                    8.0,
+                    9.0,
+                    10.0,
+                    11.0,
+                    12.0,
+                    13.0,
+                    14.0,
+                    15.0
+                ],
+                "points":[
+                    [
+                        -1.8287103042566035,
+                        0.3515709010045886,
+                        2.005716732499333
+                    ],
+                    [
+                        1.8287103042566093,
+                        0.314824844380223,
+                        1.9575811145844755
+                    ],
+                    [
+                        1.8287103042566093,
+                        0.314824844380223,
+                        1.0732409655121662
+                    ],
+                    [
+                        -1.8287103042566035,
+                        0.3515709010045886,
+                        1.1213765834270228
+                    ],
+                    [
+                        -1.8287103042566035,
+                        0.3515709010045886,
+                        2.005716732499333
+                    ],
+                    [
+                        -1.8287103042566035,
+                        -0.5327692744231127,
+                        2.005716732499333
+                    ],
+                    [
+                        1.8287103042566093,
+                        -0.5695153310474784,
+                        1.9575811145844755
+                    ],
+                    [
+                        1.8287103042566093,
+                        0.314824844380223,
+                        1.9575811145844755
+                    ],
+                    [
+                        1.8287103042566093,
+                        0.314824844380223,
+                        1.0732409655121662
+                    ],
+                    [
+                        1.8287103042566093,
+                        -0.5695153310474784,
+                        1.0732409655121662
+                    ],
+                    [
+                        1.8287103042566093,
+                        -0.5695153310474784,
+                        1.9575811145844755
+                    ],
+                    [
+                        -1.8287103042566035,
+                        -0.5327692744231127,
+                        2.005716732499333
+                    ],
+                    [
+                        -1.8287103042566035,
+                        -0.5327692744231127,
+                        1.1213765834270228
+                    ],
+                    [
+                        1.8287103042566093,
+                        -0.5695153310474784,
+                        1.0732409655121662
+                    ],
+                    [
+                        -1.8287103042566035,
+                        -0.5327692744231127,
+                        1.1213765834270228
+                    ],
+                    [
+                        -1.8287103042566035,
+                        0.3515709010045886,
+                        1.1213765834270228
+                    ]
+                ]
+            }
+        ],
         "L_LeftBrow_Ctrl_0_Ctrl":[
             {
                 "colour":0,
@@ -37277,113 +37384,6 @@
                         -0.8009843339561805,
                         0.7209449676055842,
                         0.29360569949680665
-                    ]
-                ]
-            }
-        ],
-        "L_LeftBrow_Ctrl_Ctrl":[
-            {
-                "colour":0,
-                "degree":1,
-                "form":0,
-                "knots":[
-                    0.0,
-                    1.0,
-                    2.0,
-                    3.0,
-                    4.0,
-                    5.0,
-                    6.0,
-                    7.0,
-                    8.0,
-                    9.0,
-                    10.0,
-                    11.0,
-                    12.0,
-                    13.0,
-                    14.0,
-                    15.0
-                ],
-                "points":[
-                    [
-                        -1.8287103042566035,
-                        0.3515709010045886,
-                        2.005716732499333
-                    ],
-                    [
-                        1.8287103042566093,
-                        0.314824844380223,
-                        1.9575811145844755
-                    ],
-                    [
-                        1.8287103042566093,
-                        0.314824844380223,
-                        1.0732409655121662
-                    ],
-                    [
-                        -1.8287103042566035,
-                        0.3515709010045886,
-                        1.1213765834270228
-                    ],
-                    [
-                        -1.8287103042566035,
-                        0.3515709010045886,
-                        2.005716732499333
-                    ],
-                    [
-                        -1.8287103042566035,
-                        -0.5327692744231127,
-                        2.005716732499333
-                    ],
-                    [
-                        1.8287103042566093,
-                        -0.5695153310474784,
-                        1.9575811145844755
-                    ],
-                    [
-                        1.8287103042566093,
-                        0.314824844380223,
-                        1.9575811145844755
-                    ],
-                    [
-                        1.8287103042566093,
-                        0.314824844380223,
-                        1.0732409655121662
-                    ],
-                    [
-                        1.8287103042566093,
-                        -0.5695153310474784,
-                        1.0732409655121662
-                    ],
-                    [
-                        1.8287103042566093,
-                        -0.5695153310474784,
-                        1.9575811145844755
-                    ],
-                    [
-                        -1.8287103042566035,
-                        -0.5327692744231127,
-                        2.005716732499333
-                    ],
-                    [
-                        -1.8287103042566035,
-                        -0.5327692744231127,
-                        1.1213765834270228
-                    ],
-                    [
-                        1.8287103042566093,
-                        -0.5695153310474784,
-                        1.0732409655121662
-                    ],
-                    [
-                        -1.8287103042566035,
-                        -0.5327692744231127,
-                        1.1213765834270228
-                    ],
-                    [
-                        -1.8287103042566035,
-                        0.3515709010045886,
-                        1.1213765834270228
                     ]
                 ]
             }
@@ -40819,7 +40819,7 @@
                 ]
             }
         ],
-        "L_LeftDwMolar_A_Ctrl_Ctrl":[
+        "L_LeftDwMolar_A_Ctrl":[
             {
                 "colour":0,
                 "degree":1,
@@ -40860,7 +40860,7 @@
                 ]
             }
         ],
-        "L_LeftDwMolar_B_Ctrl_Ctrl":[
+        "L_LeftDwMolar_B_Ctrl":[
             {
                 "colour":0,
                 "degree":1,
@@ -40901,7 +40901,7 @@
                 ]
             }
         ],
-        "L_LeftLipEndSlide_Ctrl_Ctrl":[
+        "L_LeftLipEndSlide_Ctrl":[
             {
                 "colour":18,
                 "degree":3,
@@ -40980,7 +40980,7 @@
                 ]
             }
         ],
-        "L_LeftLipMidSlide_Ctrl_Ctrl":[
+        "L_LeftLipMidSlide_Ctrl":[
             {
                 "colour":18,
                 "degree":3,
@@ -41059,7 +41059,7 @@
                 ]
             }
         ],
-        "L_LeftLipSlide_Ctrl_Ctrl":[
+        "L_LeftLipSlide_Ctrl":[
             {
                 "colour":18,
                 "degree":3,
@@ -41138,7 +41138,7 @@
                 ]
             }
         ],
-        "L_LeftLip_A_Ctrl_Ctrl":[
+        "L_LeftLip_A_Ctrl":[
             {
                 "colour":0,
                 "degree":1,
@@ -41998,7 +41998,7 @@
                 ]
             }
         ],
-        "L_LeftUpMolar_A_Ctrl_Ctrl":[
+        "L_LeftUpMolar_A_Ctrl":[
             {
                 "colour":0,
                 "degree":1,
@@ -42039,7 +42039,7 @@
                 ]
             }
         ],
-        "L_LeftUpMolar_B_Ctrl_Ctrl":[
+        "L_LeftUpMolar_B_Ctrl":[
             {
                 "colour":0,
                 "degree":1,
@@ -42080,7 +42080,7 @@
                 ]
             }
         ],
-        "L_LipEndSlide_Ctrl_Ctrl":[
+        "L_LipEndSlide_Ctrl":[
             {
                 "colour":18,
                 "degree":3,
@@ -42159,7 +42159,7 @@
                 ]
             }
         ],
-        "L_LipMidSlide_Ctrl_Ctrl":[
+        "L_LipMidSlide_Ctrl":[
             {
                 "colour":18,
                 "degree":3,
@@ -42238,7 +42238,7 @@
                 ]
             }
         ],
-        "L_LipSlide_Ctrl_Ctrl":[
+        "L_LipSlide_Ctrl":[
             {
                 "colour":18,
                 "degree":3,
@@ -42995,7 +42995,7 @@
                 ]
             }
         ],
-        "L_LwrWrapSlide_Ctrl_Ctrl":[
+        "L_LwrWrapSlide_Ctrl":[
             {
                 "colour":0,
                 "degree":3,
@@ -43823,7 +43823,7 @@
                 ]
             }
         ],
-        "L_Mid_0_Cls_Ctrl_Ctrl":[
+        "L_Mid_0_Cls_Ctrl":[
             {
                 "colour":0,
                 "degree":1,
@@ -44446,7 +44446,7 @@
                 ]
             }
         ],
-        "L_Mid_1_Cls_Ctrl_Ctrl":[
+        "L_Mid_1_Cls_Ctrl":[
             {
                 "colour":0,
                 "degree":1,
@@ -45134,7 +45134,7 @@
                 ]
             }
         ],
-        "L_Out_EyeTweak_Ctrl_Ctrl":[
+        "L_Out_EyeTweak_Ctrl":[
             {
                 "colour":0,
                 "degree":1,
@@ -47610,6 +47610,113 @@
                 ]
             }
         ],
+        "L_RightBrow_Ctrl":[
+            {
+                "colour":0,
+                "degree":1,
+                "form":0,
+                "knots":[
+                    0.0,
+                    1.0,
+                    2.0,
+                    3.0,
+                    4.0,
+                    5.0,
+                    6.0,
+                    7.0,
+                    8.0,
+                    9.0,
+                    10.0,
+                    11.0,
+                    12.0,
+                    13.0,
+                    14.0,
+                    15.0
+                ],
+                "points":[
+                    [
+                        -1.8372665054073734,
+                        0.607655997892469,
+                        2.718360537379055
+                    ],
+                    [
+                        1.8372665054073734,
+                        0.5441440245098983,
+                        2.635162818641126
+                    ],
+                    [
+                        1.8372665054073734,
+                        0.5441440245098983,
+                        1.106667160367491
+                    ],
+                    [
+                        -1.8372665054073734,
+                        0.607655997892469,
+                        1.1898648791054205
+                    ],
+                    [
+                        -1.8372665054073734,
+                        0.607655997892469,
+                        2.718360537379055
+                    ],
+                    [
+                        -1.8372665054073734,
+                        -0.9208397059338888,
+                        2.718360537379055
+                    ],
+                    [
+                        1.8372665054073734,
+                        -0.984351679316461,
+                        2.635162818641126
+                    ],
+                    [
+                        1.8372665054073734,
+                        0.5441440245098983,
+                        2.635162818641126
+                    ],
+                    [
+                        1.8372665054073734,
+                        0.5441440245098983,
+                        1.106667160367491
+                    ],
+                    [
+                        1.8372665054073734,
+                        -0.984351679316461,
+                        1.106667160367491
+                    ],
+                    [
+                        1.8372665054073734,
+                        -0.984351679316461,
+                        2.635162818641126
+                    ],
+                    [
+                        -1.8372665054073734,
+                        -0.9208397059338888,
+                        2.718360537379055
+                    ],
+                    [
+                        -1.8372665054073734,
+                        -0.9208397059338888,
+                        1.1898648791054205
+                    ],
+                    [
+                        1.8372665054073734,
+                        -0.984351679316461,
+                        1.106667160367491
+                    ],
+                    [
+                        -1.8372665054073734,
+                        -0.9208397059338888,
+                        1.1898648791054205
+                    ],
+                    [
+                        -1.8372665054073734,
+                        0.607655997892469,
+                        1.1898648791054205
+                    ]
+                ]
+            }
+        ],
         "L_RightBrow_Ctrl_0_Ctrl":[
             {
                 "colour":0,
@@ -47811,113 +47918,6 @@
                         -0.9953497770241758,
                         0.9540568831693018,
                         0.3249060053967673
-                    ]
-                ]
-            }
-        ],
-        "L_RightBrow_Ctrl_Ctrl":[
-            {
-                "colour":0,
-                "degree":1,
-                "form":0,
-                "knots":[
-                    0.0,
-                    1.0,
-                    2.0,
-                    3.0,
-                    4.0,
-                    5.0,
-                    6.0,
-                    7.0,
-                    8.0,
-                    9.0,
-                    10.0,
-                    11.0,
-                    12.0,
-                    13.0,
-                    14.0,
-                    15.0
-                ],
-                "points":[
-                    [
-                        -1.8372665054073734,
-                        0.607655997892469,
-                        2.718360537379055
-                    ],
-                    [
-                        1.8372665054073734,
-                        0.5441440245098983,
-                        2.635162818641126
-                    ],
-                    [
-                        1.8372665054073734,
-                        0.5441440245098983,
-                        1.106667160367491
-                    ],
-                    [
-                        -1.8372665054073734,
-                        0.607655997892469,
-                        1.1898648791054205
-                    ],
-                    [
-                        -1.8372665054073734,
-                        0.607655997892469,
-                        2.718360537379055
-                    ],
-                    [
-                        -1.8372665054073734,
-                        -0.9208397059338888,
-                        2.718360537379055
-                    ],
-                    [
-                        1.8372665054073734,
-                        -0.984351679316461,
-                        2.635162818641126
-                    ],
-                    [
-                        1.8372665054073734,
-                        0.5441440245098983,
-                        2.635162818641126
-                    ],
-                    [
-                        1.8372665054073734,
-                        0.5441440245098983,
-                        1.106667160367491
-                    ],
-                    [
-                        1.8372665054073734,
-                        -0.984351679316461,
-                        1.106667160367491
-                    ],
-                    [
-                        1.8372665054073734,
-                        -0.984351679316461,
-                        2.635162818641126
-                    ],
-                    [
-                        -1.8372665054073734,
-                        -0.9208397059338888,
-                        2.718360537379055
-                    ],
-                    [
-                        -1.8372665054073734,
-                        -0.9208397059338888,
-                        1.1898648791054205
-                    ],
-                    [
-                        1.8372665054073734,
-                        -0.984351679316461,
-                        1.106667160367491
-                    ],
-                    [
-                        -1.8372665054073734,
-                        -0.9208397059338888,
-                        1.1898648791054205
-                    ],
-                    [
-                        -1.8372665054073734,
-                        0.607655997892469,
-                        1.1898648791054205
                     ]
                 ]
             }
@@ -51432,7 +51432,7 @@
                 ]
             }
         ],
-        "L_RightLipEndSlide_Ctrl_Ctrl":[
+        "L_RightLipEndSlide_Ctrl":[
             {
                 "colour":18,
                 "degree":3,
@@ -51511,7 +51511,7 @@
                 ]
             }
         ],
-        "L_RightLipMidSlide_Ctrl_Ctrl":[
+        "L_RightLipMidSlide_Ctrl":[
             {
                 "colour":18,
                 "degree":3,
@@ -51590,7 +51590,7 @@
                 ]
             }
         ],
-        "L_RightLipSlide_Ctrl_Ctrl":[
+        "L_RightLipSlide_Ctrl":[
             {
                 "colour":18,
                 "degree":3,
@@ -52608,7 +52608,7 @@
                 ]
             }
         ],
-        "L_Sandal_Ctrl_Ctrl":[
+        "L_Sandal_Ctrl":[
             {
                 "colour":29,
                 "degree":3,
@@ -52735,7 +52735,7 @@
                 ]
             }
         ],
-        "L_Sandal_Ctrl_CtrlStrap_Ctrl_Ctrl":[
+        "L_Sandal_CtrlStrap_Ctrl":[
             {
                 "colour":0,
                 "degree":1,
@@ -55525,7 +55525,7 @@
                 ]
             }
         ],
-        "L_Shoulder_Jnt_Switch_CtrlSwing_Ctrl_Ctrl":[
+        "L_Shoulder_Jnt_Switch_CtrlSwing_Ctrl":[
             {
                 "colour":0,
                 "degree":1,
@@ -55739,7 +55739,7 @@
                 ]
             }
         ],
-        "L_Squash_Ctrl_Ctrl":[
+        "L_Squash_Ctrl":[
             {
                 "colour":0,
                 "degree":1,
@@ -55810,7 +55810,7 @@
                 ]
             }
         ],
-        "L_Squash_Ctrl_Deformer_Ctrl_Ctrl":[
+        "L_Squash_Ctrl_Deformer_Ctrl":[
             {
                 "colour":0,
                 "degree":1,
@@ -56106,7 +56106,7 @@
                 ]
             }
         ],
-        "L_TeethLwr_Ctrl_Ctrl":[
+        "L_TeethLwr_Ctrl":[
             {
                 "colour":14,
                 "degree":3,
@@ -56161,7 +56161,7 @@
                 ]
             }
         ],
-        "L_TeethUpr_Ctrl_Ctrl":[
+        "L_TeethUpr_Ctrl":[
             {
                 "colour":17,
                 "degree":3,
@@ -56690,7 +56690,7 @@
                 ]
             }
         ],
-        "L_Tongue1_Ctrl_Ctrl":[
+        "L_Tongue1_Ctrl":[
             {
                 "colour":9,
                 "degree":3,
@@ -56769,7 +56769,7 @@
                 ]
             }
         ],
-        "L_TongueMain_Ctrl_Ctrl":[
+        "L_TongueMain_Ctrl":[
             {
                 "colour":0,
                 "degree":1,
@@ -56840,7 +56840,7 @@
                 ]
             }
         ],
-        "L_Top_0_Cls_Ctrl_Ctrl":[
+        "L_Top_0_Cls_Ctrl":[
             {
                 "colour":0,
                 "degree":1,
@@ -57463,7 +57463,7 @@
                 ]
             }
         ],
-        "L_Top_1_Cls_Ctrl_Ctrl":[
+        "L_Top_1_Cls_Ctrl":[
             {
                 "colour":0,
                 "degree":1,
@@ -58086,7 +58086,7 @@
                 ]
             }
         ],
-        "L_Top_2_Cls_Ctrl_Ctrl":[
+        "L_Top_2_Cls_Ctrl":[
             {
                 "colour":0,
                 "degree":1,
@@ -58709,7 +58709,7 @@
                 ]
             }
         ],
-        "L_Top_EyeTweak_Ctrl_Ctrl":[
+        "L_Top_EyeTweak_Ctrl":[
             {
                 "colour":0,
                 "degree":1,
@@ -58888,7 +58888,7 @@
                 ]
             }
         ],
-        "L_UpLeftLipMid1_Ctrl_Ctrl":[
+        "L_UpLeftLipMid1_Ctrl":[
             {
                 "colour":0,
                 "degree":1,
@@ -59511,7 +59511,7 @@
                 ]
             }
         ],
-        "L_UpLeftLipMid2_Ctrl_Ctrl":[
+        "L_UpLeftLipMid2_Ctrl":[
             {
                 "colour":0,
                 "degree":1,
@@ -60134,7 +60134,7 @@
                 ]
             }
         ],
-        "L_UpLeftLip_A_Ctrl_Ctrl":[
+        "L_UpLeftLip_A_Ctrl":[
             {
                 "colour":0,
                 "degree":1,
@@ -62863,7 +62863,7 @@
                 ]
             }
         ],
-        "L_UpMid1_LeftLipSlide_Ctrl_Ctrl":[
+        "L_UpMid1_LeftLipSlide_Ctrl":[
             {
                 "colour":0,
                 "degree":3,
@@ -62942,7 +62942,7 @@
                 ]
             }
         ],
-        "L_UpMid1_LipSlide_Ctrl_Ctrl":[
+        "L_UpMid1_LipSlide_Ctrl":[
             {
                 "colour":15,
                 "degree":3,
@@ -63021,7 +63021,7 @@
                 ]
             }
         ],
-        "L_UpMid2_LeftLipSlide_Ctrl_Ctrl":[
+        "L_UpMid2_LeftLipSlide_Ctrl":[
             {
                 "colour":15,
                 "degree":3,
@@ -63100,7 +63100,7 @@
                 ]
             }
         ],
-        "L_UpMid2_LipSlide_Ctrl_Ctrl":[
+        "L_UpMid2_LipSlide_Ctrl":[
             {
                 "colour":15,
                 "degree":3,
@@ -65192,7 +65192,7 @@
                 ]
             }
         ],
-        "L_UpTeethTweakA_Ctrl_Ctrl":[
+        "L_UpTeethTweakA_Ctrl":[
             {
                 "colour":17,
                 "degree":3,
@@ -65271,7 +65271,7 @@
                 ]
             }
         ],
-        "L_UpTeethTweakB_Ctrl_Ctrl":[
+        "L_UpTeethTweakB_Ctrl":[
             {
                 "colour":0,
                 "degree":1,
@@ -65378,7 +65378,7 @@
                 ]
             }
         ],
-        "L_UpTeethTweakC_Ctrl_Ctrl":[
+        "L_UpTeethTweakC_Ctrl":[
             {
                 "colour":0,
                 "degree":1,
@@ -65485,7 +65485,7 @@
                 ]
             }
         ],
-        "L_UpTeethTweakD_Ctrl_Ctrl":[
+        "L_UpTeethTweakD_Ctrl":[
             {
                 "colour":0,
                 "degree":1,
@@ -65592,7 +65592,7 @@
                 ]
             }
         ],
-        "L_UpTeethTweakE_Ctrl_Ctrl":[
+        "L_UpTeethTweakE_Ctrl":[
             {
                 "colour":17,
                 "degree":3,
@@ -65671,7 +65671,7 @@
                 ]
             }
         ],
-        "L_UpTeethTweakMain_Ctrl_Ctrl":[
+        "L_UpTeethTweakMain_Ctrl":[
             {
                 "colour":17,
                 "degree":3,
@@ -65750,7 +65750,7 @@
                 ]
             }
         ],
-        "L_Up_01_Blink_End_Local_Ctrl_Ctrl":[
+        "L_Up_01_Blink_End_Local_Ctrl":[
             {
                 "colour":0,
                 "degree":1,
@@ -66452,7 +66452,7 @@
                 ]
             }
         ],
-        "L_Up_02_Blink_End_Local_Ctrl_Ctrl":[
+        "L_Up_02_Blink_End_Local_Ctrl":[
             {
                 "colour":0,
                 "degree":1,
@@ -67154,7 +67154,7 @@
                 ]
             }
         ],
-        "L_Up_03_Blink_End_Local_Ctrl_Ctrl":[
+        "L_Up_03_Blink_End_Local_Ctrl":[
             {
                 "colour":0,
                 "degree":1,
@@ -67856,7 +67856,7 @@
                 ]
             }
         ],
-        "L_Up_04_Blink_End_Local_Ctrl_Ctrl":[
+        "L_Up_04_Blink_End_Local_Ctrl":[
             {
                 "colour":0,
                 "degree":1,
@@ -68479,7 +68479,7 @@
                 ]
             }
         ],
-        "L_Up_05_Blink_End_Local_Ctrl_Ctrl":[
+        "L_Up_05_Blink_End_Local_Ctrl":[
             {
                 "colour":0,
                 "degree":1,
@@ -69102,7 +69102,7 @@
                 ]
             }
         ],
-        "L_Up_LeftLipEndSlide_Ctrl_Ctrl":[
+        "L_Up_LeftLipEndSlide_Ctrl":[
             {
                 "colour":18,
                 "degree":3,
@@ -69181,7 +69181,7 @@
                 ]
             }
         ],
-        "L_Up_LeftLipMidSlide_Ctrl_Ctrl":[
+        "L_Up_LeftLipMidSlide_Ctrl":[
             {
                 "colour":18,
                 "degree":3,
@@ -69260,7 +69260,7 @@
                 ]
             }
         ],
-        "L_Up_LeftLipSlide_Ctrl_Ctrl":[
+        "L_Up_LeftLipSlide_Ctrl":[
             {
                 "colour":18,
                 "degree":3,
@@ -69892,7 +69892,7 @@
                 ]
             }
         ],
-        "L_UprWrapSlide_Ctrl_Ctrl":[
+        "L_UprWrapSlide_Ctrl":[
             {
                 "colour":0,
                 "degree":3,
@@ -71659,6 +71659,85 @@
                 ]
             }
         ],
+        "L_eyeBrow_Ctrl":[
+            {
+                "colour":0,
+                "degree":3,
+                "form":2,
+                "knots":[
+                    -2.0,
+                    -1.0,
+                    0.0,
+                    1.0,
+                    2.0,
+                    3.0,
+                    4.0,
+                    5.0,
+                    6.0,
+                    7.0,
+                    8.0,
+                    9.0,
+                    10.0
+                ],
+                "points":[
+                    [
+                        1.380337786375899,
+                        0.25576076363653544,
+                        2.2528426593532247
+                    ],
+                    [
+                        0.01401793207509136,
+                        0.6198091125017623,
+                        2.2528426593532247
+                    ],
+                    [
+                        -1.361002577786293,
+                        0.4034732987741363,
+                        2.2528426593532247
+                    ],
+                    [
+                        -1.9399354498053332,
+                        -0.43535650178129104,
+                        2.2528426593532247
+                    ],
+                    [
+                        -1.3834792664667113,
+                        -1.272054362753087,
+                        2.2528426593532247
+                    ],
+                    [
+                        -0.004704794361764436,
+                        -0.7071595932330631,
+                        2.2528426593532247
+                    ],
+                    [
+                        1.357861097695475,
+                        -1.2720044261679888,
+                        2.2528426593532247
+                    ],
+                    [
+                        1.9369052722736455,
+                        -0.49958451081930755,
+                        2.2528426593532247
+                    ],
+                    [
+                        1.380337786375899,
+                        0.25576076363653544,
+                        2.2528426593532247
+                    ],
+                    [
+                        0.01401793207509136,
+                        0.6198091125017623,
+                        2.2528426593532247
+                    ],
+                    [
+                        -1.361002577786293,
+                        0.4034732987741363,
+                        2.2528426593532247
+                    ]
+                ]
+            }
+        ],
         "L_eyeBrow_Ctrl_0_Ctrl":[
             {
                 "colour":0,
@@ -71860,85 +71939,6 @@
                         -0.6972687057721992,
                         0.6042910692469012,
                         0.27159015312473156
-                    ]
-                ]
-            }
-        ],
-        "L_eyeBrow_Ctrl_Ctrl":[
-            {
-                "colour":0,
-                "degree":3,
-                "form":2,
-                "knots":[
-                    -2.0,
-                    -1.0,
-                    0.0,
-                    1.0,
-                    2.0,
-                    3.0,
-                    4.0,
-                    5.0,
-                    6.0,
-                    7.0,
-                    8.0,
-                    9.0,
-                    10.0
-                ],
-                "points":[
-                    [
-                        1.380337786375899,
-                        0.25576076363653544,
-                        2.2528426593532247
-                    ],
-                    [
-                        0.01401793207509136,
-                        0.6198091125017623,
-                        2.2528426593532247
-                    ],
-                    [
-                        -1.361002577786293,
-                        0.4034732987741363,
-                        2.2528426593532247
-                    ],
-                    [
-                        -1.9399354498053332,
-                        -0.43535650178129104,
-                        2.2528426593532247
-                    ],
-                    [
-                        -1.3834792664667113,
-                        -1.272054362753087,
-                        2.2528426593532247
-                    ],
-                    [
-                        -0.004704794361764436,
-                        -0.7071595932330631,
-                        2.2528426593532247
-                    ],
-                    [
-                        1.357861097695475,
-                        -1.2720044261679888,
-                        2.2528426593532247
-                    ],
-                    [
-                        1.9369052722736455,
-                        -0.49958451081930755,
-                        2.2528426593532247
-                    ],
-                    [
-                        1.380337786375899,
-                        0.25576076363653544,
-                        2.2528426593532247
-                    ],
-                    [
-                        0.01401793207509136,
-                        0.6198091125017623,
-                        2.2528426593532247
-                    ],
-                    [
-                        -1.361002577786293,
-                        0.4034732987741363,
-                        2.2528426593532247
                     ]
                 ]
             }
@@ -73426,86 +73426,7 @@
                 ]
             }
         ],
-        "L_pupil_CtrlSlide_Ctrl_Ctrl":[
-            {
-                "colour":18,
-                "degree":3,
-                "form":2,
-                "knots":[
-                    -2.0,
-                    -1.0,
-                    0.0,
-                    1.0,
-                    2.0,
-                    3.0,
-                    4.0,
-                    5.0,
-                    6.0,
-                    7.0,
-                    8.0,
-                    9.0,
-                    10.0
-                ],
-                "points":[
-                    [
-                        1.119771348797771,
-                        -0.8754347087081493,
-                        0.6222250872556594
-                    ],
-                    [
-                        0.018195765254357392,
-                        -1.3313401670219187,
-                        0.7014176082380863
-                    ],
-                    [
-                        -1.084985164930791,
-                        -0.8715590089681395,
-                        0.7537160708684489
-                    ],
-                    [
-                        -1.543537136353015,
-                        0.23458947861984406,
-                        0.7484839732490368
-                    ],
-                    [
-                        -1.0888608646716635,
-                        1.3391326195664497,
-                        0.6887872310301203
-                    ],
-                    [
-                        0.012714718871750463,
-                        1.795038077880221,
-                        0.6095947100476933
-                    ],
-                    [
-                        1.1158956490568985,
-                        1.3352569198264395,
-                        0.5572962474173307
-                    ],
-                    [
-                        1.5744476204791231,
-                        0.22910843223845848,
-                        0.5625283450367426
-                    ],
-                    [
-                        1.119771348797771,
-                        -0.8754347087081493,
-                        0.6222250872556594
-                    ],
-                    [
-                        0.018195765254357392,
-                        -1.3313401670219187,
-                        0.7014176082380863
-                    ],
-                    [
-                        -1.084985164930791,
-                        -0.8715590089681395,
-                        0.7537160708684489
-                    ]
-                ]
-            }
-        ],
-        "L_pupil_Ctrl_Ctrl":[
+        "L_pupil_Ctrl":[
             {
                 "colour":0,
                 "degree":1,
@@ -73812,6 +73733,85 @@
                         2.3757272769510258e-08,
                         0.4650108750000136,
                         0.24999999999999967
+                    ]
+                ]
+            }
+        ],
+        "L_pupil_CtrlSlide_Ctrl":[
+            {
+                "colour":18,
+                "degree":3,
+                "form":2,
+                "knots":[
+                    -2.0,
+                    -1.0,
+                    0.0,
+                    1.0,
+                    2.0,
+                    3.0,
+                    4.0,
+                    5.0,
+                    6.0,
+                    7.0,
+                    8.0,
+                    9.0,
+                    10.0
+                ],
+                "points":[
+                    [
+                        1.119771348797771,
+                        -0.8754347087081493,
+                        0.6222250872556594
+                    ],
+                    [
+                        0.018195765254357392,
+                        -1.3313401670219187,
+                        0.7014176082380863
+                    ],
+                    [
+                        -1.084985164930791,
+                        -0.8715590089681395,
+                        0.7537160708684489
+                    ],
+                    [
+                        -1.543537136353015,
+                        0.23458947861984406,
+                        0.7484839732490368
+                    ],
+                    [
+                        -1.0888608646716635,
+                        1.3391326195664497,
+                        0.6887872310301203
+                    ],
+                    [
+                        0.012714718871750463,
+                        1.795038077880221,
+                        0.6095947100476933
+                    ],
+                    [
+                        1.1158956490568985,
+                        1.3352569198264395,
+                        0.5572962474173307
+                    ],
+                    [
+                        1.5744476204791231,
+                        0.22910843223845848,
+                        0.5625283450367426
+                    ],
+                    [
+                        1.119771348797771,
+                        -0.8754347087081493,
+                        0.6222250872556594
+                    ],
+                    [
+                        0.018195765254357392,
+                        -1.3313401670219187,
+                        0.7014176082380863
+                    ],
+                    [
+                        -1.084985164930791,
+                        -0.8715590089681395,
+                        0.7537160708684489
                     ]
                 ]
             }
@@ -74366,7 +74366,7 @@
                 ]
             }
         ],
-        "LeftFace_Global_Ctrl_Ctrl":[
+        "LeftFace_Global_Ctrl":[
             {
                 "colour":0,
                 "degree":1,
@@ -74623,7 +74623,7 @@
                 ]
             }
         ],
-        "LeftFace_Mover_Ctrl_Ctrl":[
+        "LeftFace_Mover_Ctrl":[
             {
                 "colour":0,
                 "degree":1,
@@ -74784,7 +74784,7 @@
                 ]
             }
         ],
-        "LeftFace_Mover_Gimbal_Ctrl_Ctrl":[
+        "LeftFace_Mover_Gimbal_Ctrl":[
             {
                 "colour":0,
                 "degree":1,
@@ -76371,7 +76371,7 @@
                 ]
             }
         ],
-        "M_DynamicPivotJaw_Ctrl_Ctrl_Ctrl":[
+        "M_DynamicPivotJaw_Ctrl":[
             {
                 "colour":0,
                 "degree":1,
@@ -76994,7 +76994,7 @@
                 ]
             }
         ],
-        "M_EyesAim_Ctrl_Ctrl":[
+        "M_EyesAim_Ctrl":[
             {
                 "colour":17,
                 "degree":3,
@@ -77073,7 +77073,7 @@
                 ]
             }
         ],
-        "M_EyesGlobal_Ctrl_Ctrl_Ctrl":[
+        "M_EyesGlobal_Ctrl":[
             {
                 "colour":0,
                 "degree":1,
@@ -77330,168 +77330,7 @@
                 ]
             }
         ],
-        "M_EyesMover_Ctrl_CtrlGimbal_Ctrl_Ctrl":[
-            {
-                "colour":0,
-                "degree":1,
-                "form":0,
-                "knots":[
-                    0.0,
-                    1.0,
-                    2.0,
-                    3.0,
-                    4.0,
-                    5.0,
-                    6.0,
-                    7.0,
-                    8.0,
-                    9.0,
-                    10.0,
-                    11.0,
-                    12.0,
-                    13.0,
-                    14.0,
-                    15.0,
-                    16.0,
-                    17.0,
-                    18.0,
-                    19.0,
-                    20.0,
-                    21.0,
-                    22.0,
-                    23.0,
-                    24.0
-                ],
-                "points":[
-                    [
-                        -2.1377628,
-                        0.015261516,
-                        -1.9925100000000002
-                    ],
-                    [
-                        -1.3390344,
-                        0.009559404,
-                        -4.227228
-                    ],
-                    [
-                        -2.8851587999999997,
-                        0.009559728,
-                        -3.464262
-                    ],
-                    [
-                        -0.06034032,
-                        0.0071277120000000005,
-                        -6.7844952
-                    ],
-                    [
-                        2.7233280000000004,
-                        0.009559728,
-                        -3.464262
-                    ],
-                    [
-                        1.1772036,
-                        0.009559404,
-                        -4.227228
-                    ],
-                    [
-                        1.8721692,
-                        0.0,
-                        -2.0067984
-                    ],
-                    [
-                        4.1463144,
-                        0.009559404,
-                        -1.2581208000000002
-                    ],
-                    [
-                        3.3833484,
-                        0.009559728,
-                        -2.8042452
-                    ],
-                    [
-                        6.7241556,
-                        0.0071277120000000005,
-                        0.0
-                    ],
-                    [
-                        3.3833484,
-                        0.009559728,
-                        2.8042452
-                    ],
-                    [
-                        4.1463144,
-                        0.009559404,
-                        1.2581208000000002
-                    ],
-                    [
-                        1.8794016,
-                        0.015261516,
-                        1.9698876
-                    ],
-                    [
-                        1.1772036,
-                        0.009559404,
-                        4.227228
-                    ],
-                    [
-                        2.7233280000000004,
-                        0.009559728,
-                        3.464262
-                    ],
-                    [
-                        -0.060339960000000005,
-                        0.0071277120000000005,
-                        6.7844952
-                    ],
-                    [
-                        -2.8851587999999997,
-                        0.009559728,
-                        3.464262
-                    ],
-                    [
-                        -1.3390344,
-                        0.009559404,
-                        4.227228
-                    ],
-                    [
-                        -2.1451932,
-                        0.015261516,
-                        2.0085804
-                    ],
-                    [
-                        -4.3081452,
-                        0.009559404,
-                        1.2581208000000002
-                    ],
-                    [
-                        -3.5451792,
-                        0.009559728,
-                        2.8042452
-                    ],
-                    [
-                        -6.8448348,
-                        0.0071277120000000005,
-                        0.0
-                    ],
-                    [
-                        -3.5451792,
-                        0.009559728,
-                        -2.8042452
-                    ],
-                    [
-                        -4.3081452,
-                        0.009559404,
-                        -1.2581208000000002
-                    ],
-                    [
-                        -2.1406068,
-                        0.015254064,
-                        -1.9915452
-                    ]
-                ]
-            }
-        ],
-        "M_EyesMover_Ctrl_Ctrl_Ctrl":[
+        "M_EyesMover_Ctrl":[
             {
                 "colour":0,
                 "degree":1,
@@ -77652,7 +77491,168 @@
                 ]
             }
         ],
-        "M_FrDwLeftLip_Ctrl_Ctrl":[
+        "M_EyesMover_CtrlGimbal_Ctrl":[
+            {
+                "colour":0,
+                "degree":1,
+                "form":0,
+                "knots":[
+                    0.0,
+                    1.0,
+                    2.0,
+                    3.0,
+                    4.0,
+                    5.0,
+                    6.0,
+                    7.0,
+                    8.0,
+                    9.0,
+                    10.0,
+                    11.0,
+                    12.0,
+                    13.0,
+                    14.0,
+                    15.0,
+                    16.0,
+                    17.0,
+                    18.0,
+                    19.0,
+                    20.0,
+                    21.0,
+                    22.0,
+                    23.0,
+                    24.0
+                ],
+                "points":[
+                    [
+                        -2.1377628,
+                        0.015261516,
+                        -1.9925100000000002
+                    ],
+                    [
+                        -1.3390344,
+                        0.009559404,
+                        -4.227228
+                    ],
+                    [
+                        -2.8851587999999997,
+                        0.009559728,
+                        -3.464262
+                    ],
+                    [
+                        -0.06034032,
+                        0.0071277120000000005,
+                        -6.7844952
+                    ],
+                    [
+                        2.7233280000000004,
+                        0.009559728,
+                        -3.464262
+                    ],
+                    [
+                        1.1772036,
+                        0.009559404,
+                        -4.227228
+                    ],
+                    [
+                        1.8721692,
+                        0.0,
+                        -2.0067984
+                    ],
+                    [
+                        4.1463144,
+                        0.009559404,
+                        -1.2581208000000002
+                    ],
+                    [
+                        3.3833484,
+                        0.009559728,
+                        -2.8042452
+                    ],
+                    [
+                        6.7241556,
+                        0.0071277120000000005,
+                        0.0
+                    ],
+                    [
+                        3.3833484,
+                        0.009559728,
+                        2.8042452
+                    ],
+                    [
+                        4.1463144,
+                        0.009559404,
+                        1.2581208000000002
+                    ],
+                    [
+                        1.8794016,
+                        0.015261516,
+                        1.9698876
+                    ],
+                    [
+                        1.1772036,
+                        0.009559404,
+                        4.227228
+                    ],
+                    [
+                        2.7233280000000004,
+                        0.009559728,
+                        3.464262
+                    ],
+                    [
+                        -0.060339960000000005,
+                        0.0071277120000000005,
+                        6.7844952
+                    ],
+                    [
+                        -2.8851587999999997,
+                        0.009559728,
+                        3.464262
+                    ],
+                    [
+                        -1.3390344,
+                        0.009559404,
+                        4.227228
+                    ],
+                    [
+                        -2.1451932,
+                        0.015261516,
+                        2.0085804
+                    ],
+                    [
+                        -4.3081452,
+                        0.009559404,
+                        1.2581208000000002
+                    ],
+                    [
+                        -3.5451792,
+                        0.009559728,
+                        2.8042452
+                    ],
+                    [
+                        -6.8448348,
+                        0.0071277120000000005,
+                        0.0
+                    ],
+                    [
+                        -3.5451792,
+                        0.009559728,
+                        -2.8042452
+                    ],
+                    [
+                        -4.3081452,
+                        0.009559404,
+                        -1.2581208000000002
+                    ],
+                    [
+                        -2.1406068,
+                        0.015254064,
+                        -1.9915452
+                    ]
+                ]
+            }
+        ],
+        "M_FrDwLeftLip_Ctrl":[
             {
                 "colour":22,
                 "degree":1,
@@ -77711,7 +77711,7 @@
                 ]
             }
         ],
-        "M_FrUpLeftLip_Ctrl_Ctrl":[
+        "M_FrUpLeftLip_Ctrl":[
             {
                 "colour":22,
                 "degree":1,
@@ -77770,7 +77770,7 @@
                 ]
             }
         ],
-        "M_FrontFaceGlobal_Ctrl_Ctrl_Ctrl":[
+        "M_FrontFaceGlobal_Ctrl":[
             {
                 "colour":0,
                 "degree":1,
@@ -78027,168 +78027,7 @@
                 ]
             }
         ],
-        "M_FrontFaceMover_Ctrl_CtrlGimbal_Ctrl_Ctrl":[
-            {
-                "colour":0,
-                "degree":1,
-                "form":0,
-                "knots":[
-                    0.0,
-                    1.0,
-                    2.0,
-                    3.0,
-                    4.0,
-                    5.0,
-                    6.0,
-                    7.0,
-                    8.0,
-                    9.0,
-                    10.0,
-                    11.0,
-                    12.0,
-                    13.0,
-                    14.0,
-                    15.0,
-                    16.0,
-                    17.0,
-                    18.0,
-                    19.0,
-                    20.0,
-                    21.0,
-                    22.0,
-                    23.0,
-                    24.0
-                ],
-                "points":[
-                    [
-                        -2.1377628,
-                        0.015261516,
-                        -1.9925100000000002
-                    ],
-                    [
-                        -1.3390344,
-                        0.009559404,
-                        -4.227228
-                    ],
-                    [
-                        -2.8851587999999997,
-                        0.009559728,
-                        -3.464262
-                    ],
-                    [
-                        -0.06034032,
-                        0.0071277120000000005,
-                        -6.7844952
-                    ],
-                    [
-                        2.7233280000000004,
-                        0.009559728,
-                        -3.464262
-                    ],
-                    [
-                        1.1772036,
-                        0.009559404,
-                        -4.227228
-                    ],
-                    [
-                        1.8721692,
-                        0.0,
-                        -2.0067984
-                    ],
-                    [
-                        4.1463144,
-                        0.009559404,
-                        -1.2581208000000002
-                    ],
-                    [
-                        3.3833484,
-                        0.009559728,
-                        -2.8042452
-                    ],
-                    [
-                        6.7241556,
-                        0.0071277120000000005,
-                        0.0
-                    ],
-                    [
-                        3.3833484,
-                        0.009559728,
-                        2.8042452
-                    ],
-                    [
-                        4.1463144,
-                        0.009559404,
-                        1.2581208000000002
-                    ],
-                    [
-                        1.8794016,
-                        0.015261516,
-                        1.9698876
-                    ],
-                    [
-                        1.1772036,
-                        0.009559404,
-                        4.227228
-                    ],
-                    [
-                        2.7233280000000004,
-                        0.009559728,
-                        3.464262
-                    ],
-                    [
-                        -0.060339960000000005,
-                        0.0071277120000000005,
-                        6.7844952
-                    ],
-                    [
-                        -2.8851587999999997,
-                        0.009559728,
-                        3.464262
-                    ],
-                    [
-                        -1.3390344,
-                        0.009559404,
-                        4.227228
-                    ],
-                    [
-                        -2.1451932,
-                        0.015261516,
-                        2.0085804
-                    ],
-                    [
-                        -4.3081452,
-                        0.009559404,
-                        1.2581208000000002
-                    ],
-                    [
-                        -3.5451792,
-                        0.009559728,
-                        2.8042452
-                    ],
-                    [
-                        -6.8448348,
-                        0.0071277120000000005,
-                        0.0
-                    ],
-                    [
-                        -3.5451792,
-                        0.009559728,
-                        -2.8042452
-                    ],
-                    [
-                        -4.3081452,
-                        0.009559404,
-                        -1.2581208000000002
-                    ],
-                    [
-                        -2.1406068,
-                        0.015254064,
-                        -1.9915452
-                    ]
-                ]
-            }
-        ],
-        "M_FrontFaceMover_Ctrl_Ctrl_Ctrl":[
+        "M_FrontFaceMover_Ctrl":[
             {
                 "colour":0,
                 "degree":1,
@@ -78345,6 +78184,167 @@
                         -2.378452,
                         0.01694896,
                         -2.212828
+                    ]
+                ]
+            }
+        ],
+        "M_FrontFaceMover_CtrlGimbal_Ctrl":[
+            {
+                "colour":0,
+                "degree":1,
+                "form":0,
+                "knots":[
+                    0.0,
+                    1.0,
+                    2.0,
+                    3.0,
+                    4.0,
+                    5.0,
+                    6.0,
+                    7.0,
+                    8.0,
+                    9.0,
+                    10.0,
+                    11.0,
+                    12.0,
+                    13.0,
+                    14.0,
+                    15.0,
+                    16.0,
+                    17.0,
+                    18.0,
+                    19.0,
+                    20.0,
+                    21.0,
+                    22.0,
+                    23.0,
+                    24.0
+                ],
+                "points":[
+                    [
+                        -2.1377628,
+                        0.015261516,
+                        -1.9925100000000002
+                    ],
+                    [
+                        -1.3390344,
+                        0.009559404,
+                        -4.227228
+                    ],
+                    [
+                        -2.8851587999999997,
+                        0.009559728,
+                        -3.464262
+                    ],
+                    [
+                        -0.06034032,
+                        0.0071277120000000005,
+                        -6.7844952
+                    ],
+                    [
+                        2.7233280000000004,
+                        0.009559728,
+                        -3.464262
+                    ],
+                    [
+                        1.1772036,
+                        0.009559404,
+                        -4.227228
+                    ],
+                    [
+                        1.8721692,
+                        0.0,
+                        -2.0067984
+                    ],
+                    [
+                        4.1463144,
+                        0.009559404,
+                        -1.2581208000000002
+                    ],
+                    [
+                        3.3833484,
+                        0.009559728,
+                        -2.8042452
+                    ],
+                    [
+                        6.7241556,
+                        0.0071277120000000005,
+                        0.0
+                    ],
+                    [
+                        3.3833484,
+                        0.009559728,
+                        2.8042452
+                    ],
+                    [
+                        4.1463144,
+                        0.009559404,
+                        1.2581208000000002
+                    ],
+                    [
+                        1.8794016,
+                        0.015261516,
+                        1.9698876
+                    ],
+                    [
+                        1.1772036,
+                        0.009559404,
+                        4.227228
+                    ],
+                    [
+                        2.7233280000000004,
+                        0.009559728,
+                        3.464262
+                    ],
+                    [
+                        -0.060339960000000005,
+                        0.0071277120000000005,
+                        6.7844952
+                    ],
+                    [
+                        -2.8851587999999997,
+                        0.009559728,
+                        3.464262
+                    ],
+                    [
+                        -1.3390344,
+                        0.009559404,
+                        4.227228
+                    ],
+                    [
+                        -2.1451932,
+                        0.015261516,
+                        2.0085804
+                    ],
+                    [
+                        -4.3081452,
+                        0.009559404,
+                        1.2581208000000002
+                    ],
+                    [
+                        -3.5451792,
+                        0.009559728,
+                        2.8042452
+                    ],
+                    [
+                        -6.8448348,
+                        0.0071277120000000005,
+                        0.0
+                    ],
+                    [
+                        -3.5451792,
+                        0.009559728,
+                        -2.8042452
+                    ],
+                    [
+                        -4.3081452,
+                        0.009559404,
+                        -1.2581208000000002
+                    ],
+                    [
+                        -2.1406068,
+                        0.015254064,
+                        -1.9915452
                     ]
                 ]
             }
@@ -80373,7 +80373,7 @@
                 ]
             }
         ],
-        "R_Btm_0_Cls_Ctrl_Ctrl":[
+        "R_Btm_0_Cls_Ctrl":[
             {
                 "colour":0,
                 "degree":1,
@@ -80996,7 +80996,7 @@
                 ]
             }
         ],
-        "R_Btm_1_Cls_Ctrl_Ctrl":[
+        "R_Btm_1_Cls_Ctrl":[
             {
                 "colour":0,
                 "degree":1,
@@ -81619,7 +81619,7 @@
                 ]
             }
         ],
-        "R_Btm_2_Cls_Ctrl_Ctrl":[
+        "R_Btm_2_Cls_Ctrl":[
             {
                 "colour":0,
                 "degree":1,
@@ -82242,7 +82242,7 @@
                 ]
             }
         ],
-        "R_Btm_EyeTweak_Ctrl_Ctrl":[
+        "R_Btm_EyeTweak_Ctrl":[
             {
                 "colour":0,
                 "degree":1,
@@ -82503,7 +82503,7 @@
                 ]
             }
         ],
-        "R_Clavicle_Ctrl_Ctrl":[
+        "R_Clavicle_Ctrl":[
             {
                 "colour":0,
                 "degree":3,
@@ -95207,7 +95207,7 @@
                 ]
             }
         ],
-        "R_FrSandal_Ctrl_Ctrl":[
+        "R_FrSandal_Ctrl":[
             {
                 "colour":0,
                 "degree":1,
@@ -95248,7 +95248,7 @@
                 ]
             }
         ],
-        "R_Fr_LeftLip_Ctrl_Ctrl":[
+        "R_Fr_LeftLip_Ctrl":[
             {
                 "colour":17,
                 "degree":1,
@@ -97390,7 +97390,7 @@
                 ]
             }
         ],
-        "R_In_EyeTweak_Ctrl_Ctrl":[
+        "R_In_EyeTweak_Ctrl":[
             {
                 "colour":0,
                 "degree":1,
@@ -99508,6 +99508,113 @@
                 ]
             }
         ],
+        "R_LeftBrow_Ctrl":[
+            {
+                "colour":0,
+                "degree":1,
+                "form":0,
+                "knots":[
+                    0.0,
+                    1.0,
+                    2.0,
+                    3.0,
+                    4.0,
+                    5.0,
+                    6.0,
+                    7.0,
+                    8.0,
+                    9.0,
+                    10.0,
+                    11.0,
+                    12.0,
+                    13.0,
+                    14.0,
+                    15.0
+                ],
+                "points":[
+                    [
+                        -1.8287103042566035,
+                        0.35157090100456523,
+                        2.005716732499333
+                    ],
+                    [
+                        1.8287103042566093,
+                        0.31482484438020003,
+                        1.9575811145844755
+                    ],
+                    [
+                        1.8287103042566093,
+                        0.31482484438020003,
+                        1.0732409655121662
+                    ],
+                    [
+                        -1.8287103042566035,
+                        0.35157090100456523,
+                        1.1213765834270228
+                    ],
+                    [
+                        -1.8287103042566035,
+                        0.35157090100456523,
+                        2.005716732499333
+                    ],
+                    [
+                        -1.8287103042566035,
+                        -0.5327692744231342,
+                        2.005716732499333
+                    ],
+                    [
+                        1.8287103042566093,
+                        -0.5695153310474995,
+                        1.9575811145844755
+                    ],
+                    [
+                        1.8287103042566093,
+                        0.31482484438020003,
+                        1.9575811145844755
+                    ],
+                    [
+                        1.8287103042566093,
+                        0.31482484438020003,
+                        1.0732409655121662
+                    ],
+                    [
+                        1.8287103042566093,
+                        -0.5695153310474995,
+                        1.0732409655121662
+                    ],
+                    [
+                        1.8287103042566093,
+                        -0.5695153310474995,
+                        1.9575811145844755
+                    ],
+                    [
+                        -1.8287103042566035,
+                        -0.5327692744231342,
+                        2.005716732499333
+                    ],
+                    [
+                        -1.8287103042566035,
+                        -0.5327692744231342,
+                        1.1213765834270228
+                    ],
+                    [
+                        1.8287103042566093,
+                        -0.5695153310474995,
+                        1.0732409655121662
+                    ],
+                    [
+                        -1.8287103042566035,
+                        -0.5327692744231342,
+                        1.1213765834270228
+                    ],
+                    [
+                        -1.8287103042566035,
+                        0.35157090100456523,
+                        1.1213765834270228
+                    ]
+                ]
+            }
+        ],
         "R_LeftBrow_Ctrl_0_Ctrl":[
             {
                 "colour":0,
@@ -99709,113 +99816,6 @@
                         -0.8009843339562134,
                         -0.7340674981811648,
                         0.29360569949681137
-                    ]
-                ]
-            }
-        ],
-        "R_LeftBrow_Ctrl_Ctrl":[
-            {
-                "colour":0,
-                "degree":1,
-                "form":0,
-                "knots":[
-                    0.0,
-                    1.0,
-                    2.0,
-                    3.0,
-                    4.0,
-                    5.0,
-                    6.0,
-                    7.0,
-                    8.0,
-                    9.0,
-                    10.0,
-                    11.0,
-                    12.0,
-                    13.0,
-                    14.0,
-                    15.0
-                ],
-                "points":[
-                    [
-                        -1.8287103042566035,
-                        0.35157090100456523,
-                        2.005716732499333
-                    ],
-                    [
-                        1.8287103042566093,
-                        0.31482484438020003,
-                        1.9575811145844755
-                    ],
-                    [
-                        1.8287103042566093,
-                        0.31482484438020003,
-                        1.0732409655121662
-                    ],
-                    [
-                        -1.8287103042566035,
-                        0.35157090100456523,
-                        1.1213765834270228
-                    ],
-                    [
-                        -1.8287103042566035,
-                        0.35157090100456523,
-                        2.005716732499333
-                    ],
-                    [
-                        -1.8287103042566035,
-                        -0.5327692744231342,
-                        2.005716732499333
-                    ],
-                    [
-                        1.8287103042566093,
-                        -0.5695153310474995,
-                        1.9575811145844755
-                    ],
-                    [
-                        1.8287103042566093,
-                        0.31482484438020003,
-                        1.9575811145844755
-                    ],
-                    [
-                        1.8287103042566093,
-                        0.31482484438020003,
-                        1.0732409655121662
-                    ],
-                    [
-                        1.8287103042566093,
-                        -0.5695153310474995,
-                        1.0732409655121662
-                    ],
-                    [
-                        1.8287103042566093,
-                        -0.5695153310474995,
-                        1.9575811145844755
-                    ],
-                    [
-                        -1.8287103042566035,
-                        -0.5327692744231342,
-                        2.005716732499333
-                    ],
-                    [
-                        -1.8287103042566035,
-                        -0.5327692744231342,
-                        1.1213765834270228
-                    ],
-                    [
-                        1.8287103042566093,
-                        -0.5695153310474995,
-                        1.0732409655121662
-                    ],
-                    [
-                        -1.8287103042566035,
-                        -0.5327692744231342,
-                        1.1213765834270228
-                    ],
-                    [
-                        -1.8287103042566035,
-                        0.35157090100456523,
-                        1.1213765834270228
                     ]
                 ]
             }
@@ -103251,7 +103251,7 @@
                 ]
             }
         ],
-        "R_LeftDwMolar_A_Ctrl_Ctrl":[
+        "R_LeftDwMolar_A_Ctrl":[
             {
                 "colour":0,
                 "degree":1,
@@ -103292,7 +103292,7 @@
                 ]
             }
         ],
-        "R_LeftDwMolar_B_Ctrl_Ctrl":[
+        "R_LeftDwMolar_B_Ctrl":[
             {
                 "colour":0,
                 "degree":1,
@@ -103333,7 +103333,7 @@
                 ]
             }
         ],
-        "R_LeftLipEndSlide_Ctrl_Ctrl":[
+        "R_LeftLipEndSlide_Ctrl":[
             {
                 "colour":0,
                 "degree":3,
@@ -103412,7 +103412,7 @@
                 ]
             }
         ],
-        "R_LeftLipMidSlide_Ctrl_Ctrl":[
+        "R_LeftLipMidSlide_Ctrl":[
             {
                 "colour":0,
                 "degree":3,
@@ -103491,7 +103491,7 @@
                 ]
             }
         ],
-        "R_LeftLipSlide_Ctrl_Ctrl":[
+        "R_LeftLipSlide_Ctrl":[
             {
                 "colour":0,
                 "degree":3,
@@ -103570,7 +103570,7 @@
                 ]
             }
         ],
-        "R_LeftLip_A_Ctrl_Ctrl":[
+        "R_LeftLip_A_Ctrl":[
             {
                 "colour":0,
                 "degree":1,
@@ -104430,7 +104430,7 @@
                 ]
             }
         ],
-        "R_LeftUpMolar_B_Ctrl_Ctrl":[
+        "R_LeftUpMolar_B_Ctrl":[
             {
                 "colour":0,
                 "degree":1,
@@ -104471,7 +104471,7 @@
                 ]
             }
         ],
-        "R_LipEndSlide_Ctrl_Ctrl":[
+        "R_LipEndSlide_Ctrl":[
             {
                 "colour":13,
                 "degree":3,
@@ -104550,7 +104550,7 @@
                 ]
             }
         ],
-        "R_LipMidSlide_Ctrl_Ctrl":[
+        "R_LipMidSlide_Ctrl":[
             {
                 "colour":13,
                 "degree":3,
@@ -104629,7 +104629,7 @@
                 ]
             }
         ],
-        "R_LipSlide_Ctrl_Ctrl":[
+        "R_LipSlide_Ctrl":[
             {
                 "colour":13,
                 "degree":3,
@@ -105386,7 +105386,7 @@
                 ]
             }
         ],
-        "R_LwrWrapSlide_Ctrl_Ctrl":[
+        "R_LwrWrapSlide_Ctrl":[
             {
                 "colour":0,
                 "degree":3,
@@ -106214,7 +106214,7 @@
                 ]
             }
         ],
-        "R_Mid_0_Cls_Ctrl_Ctrl":[
+        "R_Mid_0_Cls_Ctrl":[
             {
                 "colour":0,
                 "degree":1,
@@ -106837,7 +106837,7 @@
                 ]
             }
         ],
-        "R_Mid_1_Cls_Ctrl_Ctrl":[
+        "R_Mid_1_Cls_Ctrl":[
             {
                 "colour":0,
                 "degree":1,
@@ -107525,7 +107525,7 @@
                 ]
             }
         ],
-        "R_Out_EyeTweak_Ctrl_Ctrl":[
+        "R_Out_EyeTweak_Ctrl":[
             {
                 "colour":0,
                 "degree":1,
@@ -110001,6 +110001,113 @@
                 ]
             }
         ],
+        "R_RightBrow_Ctrl":[
+            {
+                "colour":0,
+                "degree":1,
+                "form":0,
+                "knots":[
+                    0.0,
+                    1.0,
+                    2.0,
+                    3.0,
+                    4.0,
+                    5.0,
+                    6.0,
+                    7.0,
+                    8.0,
+                    9.0,
+                    10.0,
+                    11.0,
+                    12.0,
+                    13.0,
+                    14.0,
+                    15.0
+                ],
+                "points":[
+                    [
+                        -1.8372665054073734,
+                        0.6076559978924508,
+                        2.718360537379055
+                    ],
+                    [
+                        1.8372665054073734,
+                        0.5441440245098804,
+                        2.635162818641126
+                    ],
+                    [
+                        1.8372665054073734,
+                        0.5441440245098804,
+                        1.106667160367491
+                    ],
+                    [
+                        -1.8372665054073734,
+                        0.6076559978924508,
+                        1.1898648791054205
+                    ],
+                    [
+                        -1.8372665054073734,
+                        0.6076559978924508,
+                        2.718360537379055
+                    ],
+                    [
+                        -1.8372665054073734,
+                        -0.9208397059339068,
+                        2.718360537379055
+                    ],
+                    [
+                        1.8372665054073734,
+                        -0.984351679316479,
+                        2.635162818641126
+                    ],
+                    [
+                        1.8372665054073734,
+                        0.5441440245098804,
+                        2.635162818641126
+                    ],
+                    [
+                        1.8372665054073734,
+                        0.5441440245098804,
+                        1.106667160367491
+                    ],
+                    [
+                        1.8372665054073734,
+                        -0.984351679316479,
+                        1.106667160367491
+                    ],
+                    [
+                        1.8372665054073734,
+                        -0.984351679316479,
+                        2.635162818641126
+                    ],
+                    [
+                        -1.8372665054073734,
+                        -0.9208397059339068,
+                        2.718360537379055
+                    ],
+                    [
+                        -1.8372665054073734,
+                        -0.9208397059339068,
+                        1.1898648791054205
+                    ],
+                    [
+                        1.8372665054073734,
+                        -0.984351679316479,
+                        1.106667160367491
+                    ],
+                    [
+                        -1.8372665054073734,
+                        -0.9208397059339068,
+                        1.1898648791054205
+                    ],
+                    [
+                        -1.8372665054073734,
+                        0.6076559978924508,
+                        1.1898648791054205
+                    ]
+                ]
+            }
+        ],
         "R_RightBrow_Ctrl_0_Ctrl":[
             {
                 "colour":0,
@@ -110202,113 +110309,6 @@
                         -0.9953497770241774,
                         -0.9685783621369197,
                         0.32490600539676634
-                    ]
-                ]
-            }
-        ],
-        "R_RightBrow_Ctrl_Ctrl":[
-            {
-                "colour":0,
-                "degree":1,
-                "form":0,
-                "knots":[
-                    0.0,
-                    1.0,
-                    2.0,
-                    3.0,
-                    4.0,
-                    5.0,
-                    6.0,
-                    7.0,
-                    8.0,
-                    9.0,
-                    10.0,
-                    11.0,
-                    12.0,
-                    13.0,
-                    14.0,
-                    15.0
-                ],
-                "points":[
-                    [
-                        -1.8372665054073734,
-                        0.6076559978924508,
-                        2.718360537379055
-                    ],
-                    [
-                        1.8372665054073734,
-                        0.5441440245098804,
-                        2.635162818641126
-                    ],
-                    [
-                        1.8372665054073734,
-                        0.5441440245098804,
-                        1.106667160367491
-                    ],
-                    [
-                        -1.8372665054073734,
-                        0.6076559978924508,
-                        1.1898648791054205
-                    ],
-                    [
-                        -1.8372665054073734,
-                        0.6076559978924508,
-                        2.718360537379055
-                    ],
-                    [
-                        -1.8372665054073734,
-                        -0.9208397059339068,
-                        2.718360537379055
-                    ],
-                    [
-                        1.8372665054073734,
-                        -0.984351679316479,
-                        2.635162818641126
-                    ],
-                    [
-                        1.8372665054073734,
-                        0.5441440245098804,
-                        2.635162818641126
-                    ],
-                    [
-                        1.8372665054073734,
-                        0.5441440245098804,
-                        1.106667160367491
-                    ],
-                    [
-                        1.8372665054073734,
-                        -0.984351679316479,
-                        1.106667160367491
-                    ],
-                    [
-                        1.8372665054073734,
-                        -0.984351679316479,
-                        2.635162818641126
-                    ],
-                    [
-                        -1.8372665054073734,
-                        -0.9208397059339068,
-                        2.718360537379055
-                    ],
-                    [
-                        -1.8372665054073734,
-                        -0.9208397059339068,
-                        1.1898648791054205
-                    ],
-                    [
-                        1.8372665054073734,
-                        -0.984351679316479,
-                        1.106667160367491
-                    ],
-                    [
-                        -1.8372665054073734,
-                        -0.9208397059339068,
-                        1.1898648791054205
-                    ],
-                    [
-                        -1.8372665054073734,
-                        0.6076559978924508,
-                        1.1898648791054205
                     ]
                 ]
             }
@@ -113864,7 +113864,7 @@
                 ]
             }
         ],
-        "R_RightLipEndSlide_Ctrl_Ctrl":[
+        "R_RightLipEndSlide_Ctrl":[
             {
                 "colour":13,
                 "degree":3,
@@ -113943,7 +113943,7 @@
                 ]
             }
         ],
-        "R_RightLipMidSlide_Ctrl_Ctrl":[
+        "R_RightLipMidSlide_Ctrl":[
             {
                 "colour":13,
                 "degree":3,
@@ -114022,7 +114022,7 @@
                 ]
             }
         ],
-        "R_RightLipSlide_Ctrl_Ctrl":[
+        "R_RightLipSlide_Ctrl":[
             {
                 "colour":13,
                 "degree":3,
@@ -115040,7 +115040,7 @@
                 ]
             }
         ],
-        "R_Sandal_Ctrl_Ctrl":[
+        "R_Sandal_Ctrl":[
             {
                 "colour":12,
                 "degree":3,
@@ -115167,7 +115167,7 @@
                 ]
             }
         ],
-        "R_Sandal_Ctrl_CtrlStrap_Ctrl_Ctrl":[
+        "R_Sandal_CtrlStrap_Ctrl":[
             {
                 "colour":0,
                 "degree":1,
@@ -117957,7 +117957,7 @@
                 ]
             }
         ],
-        "R_Shoulder_Jnt_Switch_CtrlSwing_Ctrl_Ctrl":[
+        "R_Shoulder_Jnt_Switch_CtrlSwing_Ctrl":[
             {
                 "colour":0,
                 "degree":1,
@@ -118171,7 +118171,7 @@
                 ]
             }
         ],
-        "R_Squash_Ctrl_Ctrl":[
+        "R_Squash_Ctrl":[
             {
                 "colour":0,
                 "degree":1,
@@ -118242,7 +118242,7 @@
                 ]
             }
         ],
-        "R_Squash_Ctrl_Deformer_Ctrl_Ctrl":[
+        "R_Squash_Ctrl_Deformer_Ctrl":[
             {
                 "colour":0,
                 "degree":1,
@@ -118957,7 +118957,7 @@
                 ]
             }
         ],
-        "R_Top_0_Cls_Ctrl_Ctrl":[
+        "R_Top_0_Cls_Ctrl":[
             {
                 "colour":0,
                 "degree":1,
@@ -119580,7 +119580,7 @@
                 ]
             }
         ],
-        "R_Top_1_Cls_Ctrl_Ctrl":[
+        "R_Top_1_Cls_Ctrl":[
             {
                 "colour":0,
                 "degree":1,
@@ -120203,7 +120203,7 @@
                 ]
             }
         ],
-        "R_Top_2_Cls_Ctrl_Ctrl":[
+        "R_Top_2_Cls_Ctrl":[
             {
                 "colour":0,
                 "degree":1,
@@ -120826,7 +120826,7 @@
                 ]
             }
         ],
-        "R_Top_EyeTweak_Ctrl_Ctrl":[
+        "R_Top_EyeTweak_Ctrl":[
             {
                 "colour":0,
                 "degree":1,
@@ -121005,7 +121005,7 @@
                 ]
             }
         ],
-        "R_UpLeftLipMid1_Ctrl_Ctrl":[
+        "R_UpLeftLipMid1_Ctrl":[
             {
                 "colour":0,
                 "degree":1,
@@ -121628,7 +121628,7 @@
                 ]
             }
         ],
-        "R_UpLeftLipMid2_Ctrl_Ctrl":[
+        "R_UpLeftLipMid2_Ctrl":[
             {
                 "colour":0,
                 "degree":1,
@@ -122251,7 +122251,7 @@
                 ]
             }
         ],
-        "R_UpLeftLip_A_Ctrl_Ctrl":[
+        "R_UpLeftLip_A_Ctrl":[
             {
                 "colour":0,
                 "degree":1,
@@ -124901,7 +124901,7 @@
                 ]
             }
         ],
-        "R_UpMid1_LeftLipSlide_Ctrl_Ctrl":[
+        "R_UpMid1_LeftLipSlide_Ctrl":[
             {
                 "colour":12,
                 "degree":3,
@@ -124980,7 +124980,7 @@
                 ]
             }
         ],
-        "R_UpMid1_LipSlide_Ctrl_Ctrl":[
+        "R_UpMid1_LipSlide_Ctrl":[
             {
                 "colour":12,
                 "degree":3,
@@ -125059,7 +125059,7 @@
                 ]
             }
         ],
-        "R_UpMid2_LeftLipSlide_Ctrl_Ctrl":[
+        "R_UpMid2_LeftLipSlide_Ctrl":[
             {
                 "colour":12,
                 "degree":3,
@@ -125138,7 +125138,7 @@
                 ]
             }
         ],
-        "R_UpMid2_LipSlide_Ctrl_Ctrl":[
+        "R_UpMid2_LipSlide_Ctrl":[
             {
                 "colour":12,
                 "degree":3,
@@ -125217,7 +125217,7 @@
                 ]
             }
         ],
-        "R_UpMolar_A_Ctrl_Ctrl":[
+        "R_UpMolar_A_Ctrl":[
             {
                 "colour":0,
                 "degree":1,
@@ -127271,7 +127271,7 @@
                 ]
             }
         ],
-        "R_Up_01_Blink_End_Local_Ctrl_Ctrl":[
+        "R_Up_01_Blink_End_Local_Ctrl":[
             {
                 "colour":0,
                 "degree":1,
@@ -127973,7 +127973,7 @@
                 ]
             }
         ],
-        "R_Up_02_Blink_End_Local_Ctrl_Ctrl":[
+        "R_Up_02_Blink_End_Local_Ctrl":[
             {
                 "colour":0,
                 "degree":1,
@@ -128675,7 +128675,7 @@
                 ]
             }
         ],
-        "R_Up_03_Blink_End_Local_Ctrl_Ctrl":[
+        "R_Up_03_Blink_End_Local_Ctrl":[
             {
                 "colour":0,
                 "degree":1,
@@ -129377,7 +129377,7 @@
                 ]
             }
         ],
-        "R_Up_04_Blink_End_Local_Ctrl_Ctrl":[
+        "R_Up_04_Blink_End_Local_Ctrl":[
             {
                 "colour":0,
                 "degree":1,
@@ -130000,7 +130000,7 @@
                 ]
             }
         ],
-        "R_Up_05_Blink_End_Local_Ctrl_Ctrl":[
+        "R_Up_05_Blink_End_Local_Ctrl":[
             {
                 "colour":0,
                 "degree":1,
@@ -130623,7 +130623,7 @@
                 ]
             }
         ],
-        "R_Up_LeftLipEndSlide_Ctrl_Ctrl":[
+        "R_Up_LeftLipEndSlide_Ctrl":[
             {
                 "colour":12,
                 "degree":3,
@@ -130702,7 +130702,7 @@
                 ]
             }
         ],
-        "R_Up_LeftLipMidSlide_Ctrl_Ctrl":[
+        "R_Up_LeftLipMidSlide_Ctrl":[
             {
                 "colour":12,
                 "degree":3,
@@ -130781,7 +130781,7 @@
                 ]
             }
         ],
-        "R_Up_LeftLipSlide_Ctrl_Ctrl":[
+        "R_Up_LeftLipSlide_Ctrl":[
             {
                 "colour":0,
                 "degree":3,
@@ -131413,7 +131413,7 @@
                 ]
             }
         ],
-        "R_UprWrapSlide_Ctrl_Ctrl":[
+        "R_UprWrapSlide_Ctrl":[
             {
                 "colour":0,
                 "degree":3,
@@ -133564,6 +133564,85 @@
                 ]
             }
         ],
+        "R_eyeBrow_Ctrl":[
+            {
+                "colour":0,
+                "degree":3,
+                "form":2,
+                "knots":[
+                    -2.0,
+                    -1.0,
+                    0.0,
+                    1.0,
+                    2.0,
+                    3.0,
+                    4.0,
+                    5.0,
+                    6.0,
+                    7.0,
+                    8.0,
+                    9.0,
+                    10.0
+                ],
+                "points":[
+                    [
+                        1.380337786375899,
+                        0.25576076363653544,
+                        2.252842659353246
+                    ],
+                    [
+                        0.01401793207509136,
+                        0.6198091125017635,
+                        2.252842659353246
+                    ],
+                    [
+                        -1.361002577786293,
+                        0.40347329877413907,
+                        2.252842659353246
+                    ],
+                    [
+                        -1.9399354498053332,
+                        -0.43535650178128826,
+                        2.252842659353246
+                    ],
+                    [
+                        -1.3834792664667113,
+                        -1.272054362753084,
+                        2.252842659353246
+                    ],
+                    [
+                        -0.004704794361764436,
+                        -0.7071595932330621,
+                        2.252842659353246
+                    ],
+                    [
+                        1.357861097695475,
+                        -1.2720044261679888,
+                        2.252842659353246
+                    ],
+                    [
+                        1.9369052722736455,
+                        -0.49958451081930755,
+                        2.252842659353246
+                    ],
+                    [
+                        1.380337786375899,
+                        0.25576076363653544,
+                        2.252842659353246
+                    ],
+                    [
+                        0.01401793207509136,
+                        0.6198091125017635,
+                        2.252842659353246
+                    ],
+                    [
+                        -1.361002577786293,
+                        0.40347329877413907,
+                        2.252842659353246
+                    ]
+                ]
+            }
+        ],
         "R_eyeBrow_Ctrl_0_Ctrl":[
             {
                 "colour":0,
@@ -133765,85 +133844,6 @@
                         -0.6972687057722401,
                         -0.6164296281866929,
                         0.27159015312472773
-                    ]
-                ]
-            }
-        ],
-        "R_eyeBrow_Ctrl_Ctrl":[
-            {
-                "colour":0,
-                "degree":3,
-                "form":2,
-                "knots":[
-                    -2.0,
-                    -1.0,
-                    0.0,
-                    1.0,
-                    2.0,
-                    3.0,
-                    4.0,
-                    5.0,
-                    6.0,
-                    7.0,
-                    8.0,
-                    9.0,
-                    10.0
-                ],
-                "points":[
-                    [
-                        1.380337786375899,
-                        0.25576076363653544,
-                        2.252842659353246
-                    ],
-                    [
-                        0.01401793207509136,
-                        0.6198091125017635,
-                        2.252842659353246
-                    ],
-                    [
-                        -1.361002577786293,
-                        0.40347329877413907,
-                        2.252842659353246
-                    ],
-                    [
-                        -1.9399354498053332,
-                        -0.43535650178128826,
-                        2.252842659353246
-                    ],
-                    [
-                        -1.3834792664667113,
-                        -1.272054362753084,
-                        2.252842659353246
-                    ],
-                    [
-                        -0.004704794361764436,
-                        -0.7071595932330621,
-                        2.252842659353246
-                    ],
-                    [
-                        1.357861097695475,
-                        -1.2720044261679888,
-                        2.252842659353246
-                    ],
-                    [
-                        1.9369052722736455,
-                        -0.49958451081930755,
-                        2.252842659353246
-                    ],
-                    [
-                        1.380337786375899,
-                        0.25576076363653544,
-                        2.252842659353246
-                    ],
-                    [
-                        0.01401793207509136,
-                        0.6198091125017635,
-                        2.252842659353246
-                    ],
-                    [
-                        -1.361002577786293,
-                        0.40347329877413907,
-                        2.252842659353246
                     ]
                 ]
             }
@@ -135331,86 +135331,7 @@
                 ]
             }
         ],
-        "R_pupil_CtrlSlide_Ctrl_Ctrl":[
-            {
-                "colour":13,
-                "degree":3,
-                "form":2,
-                "knots":[
-                    -2.0,
-                    -1.0,
-                    0.0,
-                    1.0,
-                    2.0,
-                    3.0,
-                    4.0,
-                    5.0,
-                    6.0,
-                    7.0,
-                    8.0,
-                    9.0,
-                    10.0
-                ],
-                "points":[
-                    [
-                        1.1197713487977892,
-                        -0.8754347087081454,
-                        0.6222250872556581
-                    ],
-                    [
-                        0.01819576525437571,
-                        -1.3313401670219147,
-                        0.701417608238085
-                    ],
-                    [
-                        -1.0849851649307727,
-                        -0.8715590089681355,
-                        0.7537160708684476
-                    ],
-                    [
-                        -1.5435371363529968,
-                        0.23458947861984666,
-                        0.7484839732490357
-                    ],
-                    [
-                        -1.0888608646716456,
-                        1.339132619566453,
-                        0.6887872310301193
-                    ],
-                    [
-                        0.012714718871769344,
-                        1.7950380778802222,
-                        0.6095947100476923
-                    ],
-                    [
-                        1.115895649056917,
-                        1.3352569198264426,
-                        0.5572962474173297
-                    ],
-                    [
-                        1.5744476204791413,
-                        0.22910843223846136,
-                        0.5625283450367415
-                    ],
-                    [
-                        1.1197713487977892,
-                        -0.8754347087081454,
-                        0.6222250872556581
-                    ],
-                    [
-                        0.01819576525437571,
-                        -1.3313401670219147,
-                        0.701417608238085
-                    ],
-                    [
-                        -1.0849851649307727,
-                        -0.8715590089681355,
-                        0.7537160708684476
-                    ]
-                ]
-            }
-        ],
-        "R_pupil_Ctrl_Ctrl":[
+        "R_pupil_Ctrl":[
             {
                 "colour":0,
                 "degree":1,
@@ -135711,6 +135632,85 @@
                         2.5429026749220505e-08,
                         0.4650108749999999,
                         0.24999999999999944
+                    ]
+                ]
+            }
+        ],
+        "R_pupil_CtrlSlide_Ctrl":[
+            {
+                "colour":13,
+                "degree":3,
+                "form":2,
+                "knots":[
+                    -2.0,
+                    -1.0,
+                    0.0,
+                    1.0,
+                    2.0,
+                    3.0,
+                    4.0,
+                    5.0,
+                    6.0,
+                    7.0,
+                    8.0,
+                    9.0,
+                    10.0
+                ],
+                "points":[
+                    [
+                        1.1197713487977892,
+                        -0.8754347087081454,
+                        0.6222250872556581
+                    ],
+                    [
+                        0.01819576525437571,
+                        -1.3313401670219147,
+                        0.701417608238085
+                    ],
+                    [
+                        -1.0849851649307727,
+                        -0.8715590089681355,
+                        0.7537160708684476
+                    ],
+                    [
+                        -1.5435371363529968,
+                        0.23458947861984666,
+                        0.7484839732490357
+                    ],
+                    [
+                        -1.0888608646716456,
+                        1.339132619566453,
+                        0.6887872310301193
+                    ],
+                    [
+                        0.012714718871769344,
+                        1.7950380778802222,
+                        0.6095947100476923
+                    ],
+                    [
+                        1.115895649056917,
+                        1.3352569198264426,
+                        0.5572962474173297
+                    ],
+                    [
+                        1.5744476204791413,
+                        0.22910843223846136,
+                        0.5625283450367415
+                    ],
+                    [
+                        1.1197713487977892,
+                        -0.8754347087081454,
+                        0.6222250872556581
+                    ],
+                    [
+                        0.01819576525437571,
+                        -1.3313401670219147,
+                        0.701417608238085
+                    ],
+                    [
+                        -1.0849851649307727,
+                        -0.8715590089681355,
+                        0.7537160708684476
                     ]
                 ]
             }
@@ -137568,7 +137568,7 @@
                 ]
             }
         ],
-        "RightTeeth_Lwr_Ctrl_Ctrl":[
+        "RightTeeth_Lwr_Ctrl":[
             {
                 "colour":14,
                 "degree":3,
@@ -137623,7 +137623,7 @@
                 ]
             }
         ],
-        "RightTeeth_Upr_Ctrl_Ctrl":[
+        "RightTeeth_Upr_Ctrl":[
             {
                 "colour":17,
                 "degree":3,
@@ -137678,7 +137678,7 @@
                 ]
             }
         ],
-        "RightTongue_01_Ctrl_Ctrl":[
+        "RightTongue_01_Ctrl":[
             {
                 "colour":9,
                 "degree":3,
@@ -140163,7 +140163,7 @@
                 ]
             }
         ],
-        "Teeth_Lwr_Ctrl_Ctrl":[
+        "Teeth_Lwr_Ctrl":[
             {
                 "colour":14,
                 "degree":3,
@@ -140218,7 +140218,7 @@
                 ]
             }
         ],
-        "Teeth_Upr_Ctrl_Ctrl":[
+        "Teeth_Upr_Ctrl":[
             {
                 "colour":17,
                 "degree":3,
@@ -140273,7 +140273,7 @@
                 ]
             }
         ],
-        "Tongue_01_Ctrl_Ctrl":[
+        "Tongue_01_Ctrl":[
             {
                 "colour":9,
                 "degree":3,
@@ -141353,7 +141353,7 @@
                 ]
             }
         ],
-        "Up_LeftLipEndSlide_Ctrl_Ctrl":[
+        "Up_LeftLipEndSlide_Ctrl":[
             {
                 "colour":20,
                 "degree":3,
@@ -141432,7 +141432,7 @@
                 ]
             }
         ],
-        "Up_LeftLipMidSlide_Ctrl_Ctrl":[
+        "Up_LeftLipMidSlide_Ctrl":[
             {
                 "colour":20,
                 "degree":3,
@@ -141511,7 +141511,7 @@
                 ]
             }
         ],
-        "Up_LeftLipSlide_Ctrl_Ctrl":[
+        "Up_LeftLipSlide_Ctrl":[
             {
                 "colour":20,
                 "degree":3,
@@ -141590,7 +141590,7 @@
                 ]
             }
         ],
-        "Up_LeftLip_A_Ctrl_Ctrl":[
+        "Up_LeftLip_A_Ctrl":[
             {
                 "colour":0,
                 "degree":1,
