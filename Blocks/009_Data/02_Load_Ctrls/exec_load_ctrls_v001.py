@@ -104,6 +104,7 @@ def build_load_ctrls_block():
         'Game': 'Game.json',
         'Pig': 'Pig.json',
         'Shot': 'Shot.json',
+        'Neat': 'Neat.json',
     }
 
     try:
