@@ -2015,7 +2015,16 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 			layout_separator.setFixedHeight(1)
 			v_layout.addWidget(layout_separator)
 			#label
-			label = QtWidgets.QLabel(attr + ': ')
+			label_text = attr
+			is_surface_constraint_block = False
+			if cmds.attributeQuery('Build_Command', node=config, exists=True):
+				build_cmd = cmds.getAttr('{}.Build_Command'.format(config), asString=True) or ''
+				is_surface_constraint_block = 'build_surface_constraint_block' in build_cmd
+			if attr == 'SetNodeList' and is_surface_constraint_block:
+				label_text = 'Vertices'
+			elif attr == 'SetControls':
+				label_text = 'Controls'
+			label = QtWidgets.QLabel(label_text + ': ')
 			label.setFixedHeight(50)
 			v_layout.addLayout(h_layout)
 			h_layout.addWidget(label)
@@ -2152,7 +2161,12 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 							update_attr_from_list(lw, ea)
 							return
 						
-						sel = cmds.ls(sl=True)
+						try:
+							if cmds.selectPref(tso=True, q=True) == 0:
+								cmds.selectPref(tso=True)
+							sel = cmds.ls(sl=True, fl=True, orderedSelection=True) or []
+						except Exception:
+							sel = cmds.ls(sl=True, fl=True) or []
 						if not sel: return
 						existing = []
 						for i in range(lw.count()):
