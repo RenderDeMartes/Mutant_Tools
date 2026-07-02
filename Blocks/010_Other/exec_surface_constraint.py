@@ -9,6 +9,7 @@ except:
     from imp import reload
 
 import os
+import re
 from pathlib import Path
 
 import Mutant_Tools
@@ -156,14 +157,26 @@ def build_surface_constraint_block():
     block = block[0]
     name = block.replace(nc['module'], '')
 
-    # Get attributes from config
-    vertices_str = cmds.getAttr('{}.FloatSetVertices'.format(config), asString=True).replace(' ', ' ')
-    controls_str = cmds.getAttr('{}.SetControls'.format(config), asString=True)
+    # Get attributes from config (support both old and new attr names)
+    vertices_attr = 'SetNodeList'
+    if not cmds.attributeQuery(vertices_attr, node=config, exists=True):
+        vertices_attr = 'SetFlatVertices'
+    if not cmds.attributeQuery(vertices_attr, node=config, exists=True):
+        vertices_attr = 'FloatSetVertices'
+
+    controls_attr = 'SetControls'
+    if not cmds.attributeQuery(controls_attr, node=config, exists=True):
+        controls_attr = 'SetControls'
+
+    vertices_str = cmds.getAttr('{}.{}'.format(config, vertices_attr), asString=True) or ''
+    controls_str = cmds.getAttr('{}.{}'.format(config, controls_attr), asString=True) or ''
     min_weight = cmds.getAttr('{}.MinWeight'.format(config))/100
 
-    # Parse vertices and controls
-    vertices_list = [v.strip() for v in vertices_str.split(',') if v.strip()]
-    controls_list = [c.strip() for c in controls_str.split(',') if c.strip()]
+    # Parse vertices and controls while preserving the intended order from the selection field.
+    # The Add Selected workflow stores the list in reverse, so we flip the vertex list here.
+    vertices_list = [v.strip() for v in re.split(r'[,\s]+', vertices_str) if v.strip()]
+    vertices_list.reverse()
+    controls_list = [c.strip() for c in re.split(r'[,\s]+', controls_str) if c.strip()]
 
     # Validate matching lengths
     if len(vertices_list) != len(controls_list):
@@ -219,20 +232,36 @@ def _build_surface_constraints(name, vertices, controls, min_weight, nc):
             # Create offset group for the control
             offset_group = mt.root_grp(input=ctrl, custom=True, custom_name='_surfConstr')[0]
 
-            # Zero out the control's rotations and scales only if they're not locked
+            # Zero out the control's rotations and scales only if they are not locked or driven by connections
             for attr in ['rx', 'ry', 'rz']:
-                if not cmds.getAttr('{}.{}'.format(ctrl, attr), lock=True):
+                if (
+                    not cmds.getAttr('{}.{}'.format(ctrl, attr), lock=True)
+                    and not cmds.listConnections('{}.{}'.format(ctrl, attr), s=True, d=False, p=True)
+                    and not cmds.listConnections('{}.rotate'.format(ctrl), s=True, d=False, p=True)
+                ):
                     cmds.setAttr('{}.{}'.format(ctrl, attr), 0)
             for attr in ['sx', 'sy', 'sz']:
-                if not cmds.getAttr('{}.{}'.format(ctrl, attr), lock=True):
+                if (
+                    not cmds.getAttr('{}.{}'.format(ctrl, attr), lock=True)
+                    and not cmds.listConnections('{}.{}'.format(ctrl, attr), s=True, d=False, p=True)
+                    and not cmds.listConnections('{}.scale'.format(ctrl), s=True, d=False, p=True)
+                ):
                     cmds.setAttr('{}.{}'.format(ctrl, attr), 1)
 
             # Zero out the offset group rotations and reset scales to 1
             for attr in ['rx', 'ry', 'rz']:
-                if not cmds.getAttr('{}.{}'.format(offset_group, attr), lock=True):
+                if (
+                    not cmds.getAttr('{}.{}'.format(offset_group, attr), lock=True)
+                    and not cmds.listConnections('{}.{}'.format(offset_group, attr), s=True, d=False, p=True)
+                    and not cmds.listConnections('{}.rotate'.format(offset_group), s=True, d=False, p=True)
+                ):
                     cmds.setAttr('{}.{}'.format(offset_group, attr), 0)
             for attr in ['sx', 'sy', 'sz']:
-                if not cmds.getAttr('{}.{}'.format(offset_group, attr), lock=True):
+                if (
+                    not cmds.getAttr('{}.{}'.format(offset_group, attr), lock=True)
+                    and not cmds.listConnections('{}.{}'.format(offset_group, attr), s=True, d=False, p=True)
+                    and not cmds.listConnections('{}.scale'.format(offset_group), s=True, d=False, p=True)
+                ):
                     cmds.setAttr('{}.{}'.format(offset_group, attr), 1)
 
             # Create parent constraint on the offset group
