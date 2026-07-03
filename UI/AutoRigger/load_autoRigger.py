@@ -3757,7 +3757,7 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		if not os.path.exists(temp_controllers_folder):
 			os.mkdir(temp_controllers_folder)
 		ctrls.save_all(folder_path=os.path.join(temp_controllers_folder, 'tempControllers.json'),
-					   force_validate=True)
+					   force_validate=True, show_report=False)
 
 		#Skins
 		temp_skin_folder = os.path.join(tempfile.gettempdir(), 'RebuildTempSkin')

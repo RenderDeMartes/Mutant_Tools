@@ -238,6 +238,7 @@ class Ctrls(object):
 
     def setShape(self, crv, crvShapeList):
         crvShapes = self.validateCurve(crv)
+        oldShapeNames = [shape.split('|')[-1] for shape in crvShapes]
 
         oldColour = cmds.getAttr(crvShapes[0] + ".overrideColor")
         cmds.delete(crvShapes)
@@ -249,8 +250,8 @@ class Ctrls(object):
             cmds.setAttr(newShape + ".lineWidth", int(setup['line_width']))
             cmds.delete(tmpCrv)
 
-        #newShape = cmds.rename(newShape, crv + "Shape" + str(i + 1).zfill(2))
-        newShape = cmds.rename(newShape, crvShapes[0])
+            oldName = oldShapeNames[i] if i < len(oldShapeNames) else oldShapeNames[0]
+            newShape = cmds.rename(newShape, oldName)
 
         #cmds.setAttr(newShape + ".overrideEnabled", 1)
 
@@ -364,7 +365,7 @@ class Ctrls(object):
         cmds.select(crv)
 
     #---------------------------------------------------------------------------
-    def save_all(self, ctrls='All', folder_path=None, force_validate=False):
+    def save_all(self, ctrls='All', folder_path=None, force_validate=False, show_report=True):
         #ctrls.save_all('C:\\Users\\PC\\Desktop\\ctrls.json')
         if not folder_path:
             path = mh.export_window(extension = ".json")
@@ -417,7 +418,8 @@ class Ctrls(object):
         self.saveData(path=path, data=all_ctrl_data, force_validate=force_validate)
         print("Mutant Tools: Saved Ctrls -> {}".format(path))
 
-        self.showSaveReport(saved_ctrls, warning_ctrls, failed_ctrls)
+        if show_report:
+            self.showSaveReport(saved_ctrls, warning_ctrls, failed_ctrls)
 
     #---------------------------------------------------------------------------
 
