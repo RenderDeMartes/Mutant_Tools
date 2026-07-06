@@ -2559,9 +2559,11 @@ class Kinematics_class(tools.Tools_class):
 			# -----------------------------
 			mdl, in1_attr, in2_attr, out_attr = self.create_mdl_compat("{0}_multD".format(hdl))
 
+			mult_nice = {"Squash": "Squash", "Bend_Front_Back": "Bend Front", "Bend_Side": "Bend Side"}[section]
+
 			mult_attr = "{}_mult".format(n_hdl)
 			if not cmds.attributeQuery(mult_attr, node=ctrl, exists=True):
-				cmds.addAttr(ctrl, ln=mult_attr, at="double", k=True, dv=n_mult)
+				cmds.addAttr(ctrl, ln=mult_attr, nn=mult_nice, at="double", k=True, dv=n_mult)
 
 			cmds.connectAttr(f"{ctrl}.{mult_attr}", f"{mdl}.{in2_attr}", f=True)
 
