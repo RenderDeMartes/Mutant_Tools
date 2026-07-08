@@ -241,6 +241,12 @@ def build_ribbon_tweakers_block():
     if cmds.attributeQuery('FlipRight', n=config, exists=True):
         flip_right = cmds.getAttr('{}.FlipRight'.format(config))
 
+    # orient axes to world (zero that rotate axis on the ctrl root instead of following the follicle)
+    orient_world_axes = {}
+    for axis in ('X', 'Y', 'Z'):
+        attr = 'Orient{}ToWorld'.format(axis)
+        orient_world_axes[axis] = bool(cmds.getAttr('{}.{}'.format(config, attr))) if cmds.attributeQuery(attr, n=config, exists=True) else False
+
     resolved_names = _resolve_custom_names(raw_custom_names, count, 'Twk')
 
     # Pass 1: build all ctrls, rig joints and bind joints.
@@ -270,6 +276,9 @@ def build_ribbon_tweakers_block():
         ctrl_root = ctrl_roots[0]
 
         cmds.delete(cmds.parentConstraint(fol, ctrl_root, mo=False))
+        for axis, do_orient in orient_world_axes.items():
+            if do_orient:
+                cmds.setAttr('{}.rotate{}'.format(ctrl_root, axis), 0)
         cmds.parentConstraint(fol, ctrl_root, mo=True)
 
         pending_ctrl_roots.append((ctrl_root, ctrl_roots, fol, do_flip))

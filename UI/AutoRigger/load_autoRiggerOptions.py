@@ -63,6 +63,7 @@ except:
     import imp;from imp import reload
 
 import sys
+import re
 import json
 import Mutant_Tools
 import Mutant_Tools.UI
@@ -373,6 +374,98 @@ class AutoRiggerOptions(QtMutantWindow.Qt_Mutant):
 			pass
 
 
+	def _version_from_filename(self, filepath):
+		"""Return the 'vNNN' suffix of a block json filename, or 'v001' if unversioned."""
+		basename = os.path.basename(filepath)[:-5]  # strip .json
+		parts = basename.split('_')
+		if len(parts) >= 3 and re.match(r'^v\d+$', parts[-1]):
+			return parts[-1]
+		return 'v001'
+
+	def _tab_from_filename(self, filepath):
+		"""Return the tab folder name (e.g. '008_Props') a block json lives under."""
+		return os.path.basename(os.path.dirname(os.path.dirname(filepath)))
+
+	def _build_block_catalog(self, jsons):
+		"""Group block jsons by Tab folder -> 'Name' field -> version, for the update picker."""
+		catalog = {}
+		for j in jsons:
+			base = os.path.basename(j)
+			if base.lower() == 'order.json' or 'Tittle' in base:
+				continue
+			try:
+				with open(j) as f:
+					data = json.load(f)
+			except Exception:
+				continue
+			name = data.get('Name')
+			if not name:
+				continue
+			tab = self._tab_from_filename(j)
+			catalog.setdefault(tab, {}).setdefault(name, {})[self._version_from_filename(j)] = j
+		return catalog
+
+	def _pick_block_json(self, catalog, block_label='', current_tab=None, current_name=None, current_version=None):
+		"""Tab/Type/Version picker dialog so the user chooses exactly which block json to update to."""
+		if not catalog:
+			cmds.warning('No block jsons found.')
+			return None
+
+		tabs = sorted(catalog.keys())
+
+		dialog = QtWidgets.QDialog(self)
+		dialog.setWindowTitle('Update {}'.format(block_label))
+		layout = QtWidgets.QFormLayout(dialog)
+
+		tab_box = QtWidgets.QComboBox()
+		type_box = QtWidgets.QComboBox()
+		version_box = QtWidgets.QComboBox()
+
+		def refresh_names(tab, select_name=None):
+			type_box.blockSignals(True)
+			type_box.clear()
+			names = sorted(catalog.get(tab, {}).keys())
+			type_box.addItems(names)
+			if select_name in names:
+				type_box.setCurrentText(select_name)
+			type_box.blockSignals(False)
+			refresh_versions(type_box.currentText())
+
+		def refresh_versions(name, select_version=None):
+			version_box.clear()
+			versions = sorted(catalog.get(tab_box.currentText(), {}).get(name, {}).keys())
+			version_box.addItems(versions)
+			if select_version:
+				idx = version_box.findText(select_version)
+				if idx >= 0:
+					version_box.setCurrentIndex(idx)
+
+		tab_box.addItems(tabs)
+		if current_tab in tabs:
+			tab_box.setCurrentText(current_tab)
+		refresh_names(tab_box.currentText(), select_name=current_name)
+		if current_version:
+			idx = version_box.findText(current_version)
+			if idx >= 0:
+				version_box.setCurrentIndex(idx)
+
+		tab_box.currentTextChanged.connect(lambda t: refresh_names(t))
+		type_box.currentTextChanged.connect(lambda n: refresh_versions(n))
+
+		layout.addRow('Tab:', tab_box)
+		layout.addRow('Block Type:', type_box)
+		layout.addRow('Version:', version_box)
+
+		buttons = QtWidgets.QDialogButtonBox(QtWidgets.QDialogButtonBox.Ok | QtWidgets.QDialogButtonBox.Cancel)
+		buttons.accepted.connect(dialog.accept)
+		buttons.rejected.connect(dialog.reject)
+		layout.addRow(buttons)
+
+		if dialog.exec_() != QtWidgets.QDialog.Accepted:
+			return None
+
+		return catalog.get(tab_box.currentText(), {}).get(type_box.currentText(), {}).get(version_box.currentText())
+
 	@undo
 	def update_cmd(self, block=None, auto_match_only=False):
 		blocks_to_update = []
@@ -385,6 +478,7 @@ class AutoRiggerOptions(QtMutantWindow.Qt_Mutant):
 			blocks_to_update = [block]
 
 		jsons = self.get_all_jsons()
+		catalog = self._build_block_catalog(jsons)
 
 		for b in blocks_to_update:
 			if not cmds.objExists(b):
@@ -392,13 +486,21 @@ class AutoRiggerOptions(QtMutantWindow.Qt_Mutant):
 			config = cmds.listConnections(b)[1]
 			import_cmds = cmds.getAttr('{}.Import_Command'.format(config))
 			desire_json = ''
+			current_tab = None
+			current_name = None
+			current_version = None
 
 			for j in jsons:
-				with open(j) as block_data:
-					block_data = json.load(block_data)
+				try:
+					with open(j) as block_data:
+						block_data = json.load(block_data)
+				except Exception:
+					continue
 				if block_data.get('import') == import_cmds:
-					desire_json = os.path.basename(j)
-					desire_json = desire_json.replace('.json', '')
+					current_tab = self._tab_from_filename(j)
+					current_name = block_data.get('Name')
+					current_version = self._version_from_filename(j)
+					desire_json = os.path.basename(j).replace('.json', '')
 					break
 
 			if not desire_json and b.endswith(nc['module']):
@@ -410,17 +512,13 @@ class AutoRiggerOptions(QtMutantWindow.Qt_Mutant):
 						desire_json = file
 						break
 			else:
-				json_name = mt.ask_name(text=desire_json,
-										ask_for='Block Name for {}, Example: 04_Limb'.format(b),
-										check_split=False, allow_name_exists=True)
-				if not json_name:
+				desire_json = self._pick_block_json(catalog, block_label=b,
+													current_tab=current_tab,
+													current_name=current_name,
+													current_version=current_version)
+				if not desire_json:
 					continue
 
-				#Find the correct json
-				desire_json = None
-				for file in jsons:
-					if json_name.lower() in file.lower():
-						desire_json = file
 			print(desire_json)
 			if not desire_json:
 				cmds.warning('No json found for {}'.format(b))
@@ -575,9 +673,9 @@ class AutoRiggerOptions(QtMutantWindow.Qt_Mutant):
 	def get_all_jsons(self):
 		import glob
 		main_path = os.path.join(FOLDER, 'Blocks')
-		json_paths = os.path.join(main_path, '*', '*.json')
+		json_paths = os.path.join(main_path, '**', '*.json')
 
-		jsons = glob.glob(json_paths)
+		jsons = glob.glob(json_paths, recursive=True)
 
 		return jsons
 
