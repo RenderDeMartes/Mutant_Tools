@@ -5,7 +5,7 @@
   "Games" : ["003_HumanGameTemplate.json", "003_HumanUnrealGameTemplate.json"],
   "Animals" : ["005_minotaurTemplate.json", "006_QuadTemplate.json", "008_SeagullTemplate.json",
               "011_ChamaleonTemplate.json", "012_TortoiseTemplate.json", "013_SlothTemplate.json",
-              "013_PigTemplate.json"],
+              "013_PigTemplate.json", "014_BirdTemplate.json"],
   "Vehicles" : ["007_CarTemplate.json"],
   "Props" : ["009_PropTemplate.json", "010_HeroPropTemplate.json"]
 

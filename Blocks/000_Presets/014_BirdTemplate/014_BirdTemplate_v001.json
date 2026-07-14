@@ -1,0 +1,14 @@
+{
+    "Name":  "birdTemplate",
+    "Description":  "Will Import the bird template",
+    "Icon":  "Bird.png",
+    "Enable":  "True",
+    "python_file":  "exec_birdTemplate_v001.py",
+    "import":  "import exec_birdTemplate_v001",
+    "imp.reload":  "reload(exec_birdTemplate_v001)",
+    "exec_command":  "exec_birdTemplate_v001.create_birdtemplate_block()",
+    "build_command":  "exec_birdTemplate_v001.build_birdtemplate_block()",
+    "attrs":  {
+
+              }
+}
