@@ -86,7 +86,7 @@ ICONS_FOLDER = os.path.join(FOLDER,'Icons')
 
 python_version = sys.version[0]
 
-HOTKEYS_CONFIG_FILE = os.path.join(FOLDER, 'Config', 'hotkeys.json')
+HOTKEYS_CONFIG_FILE = os.path.join(FOLDER, 'config', 'hotkeys.json')
 
 
 def _default_mutant_hotkeys_config():
