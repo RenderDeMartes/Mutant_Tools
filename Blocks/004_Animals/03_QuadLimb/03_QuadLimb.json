@@ -12,11 +12,12 @@
                   "SetParent_string":  "new_locator",
                   "Mirror_enum":  "True:False:Right_Only",
                   "DogMode_enum":  "Back:Front",
+                  "ForcePoleVectorDistance_enum":  "Off:Leg_Distance:Half_Leg_Distance:Third_Leg_Distance:Double_Leg_Distance:Positive_1_5",
                   "CtrlSize_float":  "4",
                   "TwistAmount_float":  "4",
                   "CreateRibbons_bool":  "True",
                   "AutoOrient_bool":  "True",
                   "IkOrient_enum":  "World:FootY",
-                  "Help_string":  "Overview:\n  Create a Quadruped Leg.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetParent: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- Mirror: choose one option (for example: True, False, Right_Only).\n- DogMode: choose one option (for example: Back, Front).\n- CtrlSize: numeric value that controls size/amount/intensity (default 4).\n- TwistAmount: numeric value that controls size/amount/intensity (default 4).\n- CreateRibbons: turn this ON/OFF depending on whether you want that feature.\n- Template parent examples: L_Hand_Ankle_Jnt, L_Foot_Ankle_Jnt, L_FrAnkle_Jnt.\n\nTips:\n- if a field says left/right or mirror, use it to generate the opposite side quickly."
+                  "Help_string":  "Overview:\n  Create a Quadruped Leg.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetParent: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- Mirror: choose one option (for example: True, False, Right_Only).\n- DogMode: choose one option (for example: Back, Front).\n- ForcePoleVectorDistance: choose one option (Off, Leg_Distance, Half_Leg_Distance, Third_Leg_Distance, Double_Leg_Distance, Positive_1_5). Off = default pole vector distance; Leg/Half/Third/Double force the pole vector locator to a distance based on the leg's own length, direction auto-flipped by DogMode (Front = Z+, Back = Z-) to keep the IK pole vector stable; Positive_1_5 forces a fixed Z+1.5 regardless of DogMode.\n- CtrlSize: numeric value that controls size/amount/intensity (default 4).\n- TwistAmount: numeric value that controls size/amount/intensity (default 4).\n- CreateRibbons: turn this ON/OFF depending on whether you want that feature.\n- Template parent examples: L_Hand_Ankle_Jnt, L_Foot_Ankle_Jnt, L_FrAnkle_Jnt.\n\nTips:\n- if a field says left/right or mirror, use it to generate the opposite side quickly."
               }
 }

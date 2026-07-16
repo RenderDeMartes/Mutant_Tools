@@ -231,6 +231,12 @@ def build_quadlimb_block():
         else:
             dog_mode = 'Back'
 
+        # compatible with older versions without ForcePoleVectorDistance
+        if cmds.attributeQuery('ForcePoleVectorDistance', n=config, exists=True):
+            force_pv_distance = cmds.getAttr(config + '.ForcePoleVectorDistance', asString=True)
+        else:
+            force_pv_distance = 'Off'
+
         # compatible with older versions without ribbons
         if cmds.attributeQuery('CreateRibbons', n=config, exists=True):
             create_ribbons = cmds.getAttr(config + '.CreateRibbons')
@@ -311,6 +317,22 @@ def build_quadlimb_block():
                                           bone_two=[ik_joints[1]],
                                           bone_three=[ik_joints[2]],
                                           back_distance=2)
+
+        if force_pv_distance == 'Positive_1_5':
+            cmds.setAttr('{}.tz'.format(pv_loc), 1.5)
+        elif force_pv_distance != 'Off':
+            leg_distance = mt.get_distance_between(ik_joints[0], ik_joints[1]) + mt.get_distance_between(ik_joints[1], ik_joints[2])
+            pv_distance_scale = {
+                'Leg_Distance': 1.0,
+                'Half_Leg_Distance': 0.5,
+                'Third_Leg_Distance': 1.0 / 3.0,
+                'Double_Leg_Distance': 2.0,
+            }[force_pv_distance]
+            pv_magnitude = leg_distance * pv_distance_scale
+            # Front pushes the loc to Z+, Back pushes it to Z- to keep the IK pole vector stable
+            pv_signed_z = pv_magnitude if dog_mode == 'Front' else pv_magnitude * -1
+            cmds.setAttr('{}.tz'.format(pv_loc), pv_signed_z)
+
         pv_constraint = cmds.poleVectorConstraint(pv_loc, backwards_ik[0])
 
         pos_ik = cmds.xform(ik_joints[0], q=True, t=True, ws=True)[2]
