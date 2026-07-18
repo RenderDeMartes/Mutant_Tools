@@ -696,10 +696,18 @@ def build_limb_block():
                                                aimVector=(-1, 0, 0), upVector=(0, 1, 0),
                                                worldUpType='object', worldUpObject=dummy_up, mo=False), dummy_up)
             if mode == 'Legs':
-                cmds.delete(cmds.aimConstraint(limb_b, main_ik_root,
-                                               aimVector=(0, 1, 0), upVector=(0, 1, 0),
+                # Old aim used Y for both aim + up (same axis) -> up-vector math degenerate, Y drifted off world.
+                # Aim a horizontal axis at a height-matched dummy so up (Y) stays exact world (0,1,0); only rotateY changes.
+                knee_pos = cmds.xform(limb_b, q=True, ws=True, t=True)
+                root_pos = cmds.xform(main_ik_root, q=True, ws=True, t=True)
+                dummy_aim = cmds.spaceLocator(n=main_ik_root + '_AimDummy')[0]
+                cmds.xform(dummy_aim, ws=True, t=(knee_pos[0], root_pos[1], knee_pos[2]))
+                cmds.delete(cmds.aimConstraint(dummy_aim, main_ik_root,
+                                               aimVector=(0, 0, 1), upVector=(0, 1, 0),
                                                worldUpType='vector', mo=False))
+                cmds.delete(dummy_aim)
                 cmds.setAttr('{}.rotateX'.format(main_ik_root), 0)
+                cmds.setAttr('{}.rotateZ'.format(main_ik_root), 0)
         cmds.parent(main_ik_root, grandfather)
         cmds.parent(cmds.listRelatives(old_main_ik, p=True)[0], main_ik_ctrl)
 
