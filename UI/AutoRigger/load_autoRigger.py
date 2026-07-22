@@ -762,6 +762,12 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		self._search_timer.setInterval(250)  # ms
 		self._search_timer.timeout.connect(self._execute_search)
 
+		# Debounce timer for the block-library Search tab
+		self._library_search_timer = QtCore.QTimer(self)
+		self._library_search_timer.setSingleShot(True)
+		self._library_search_timer.setInterval(200)  # ms
+		self._library_search_timer.timeout.connect(self.create_search_results)
+
 		self.designer_loader_child(path=os.path.join(FOLDER,'UI','AutoRigger'), ui_file=UI_File)
 
 		self.create_menus()
@@ -1100,7 +1106,7 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 			'presets_layout', 'studio_layout', 'biped_layout',
 			'facial_layout', 'animals_layout', 'vehicles_layout',
 			'clothes_layout', 'props_layout', 'games_layout',
-			'data_layout', 'other_layout'
+			'data_layout', 'other_layout', 'search_results_layout'
 		]
 
 		for name in layout_names:
@@ -1176,6 +1182,8 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 
 	def create_layout(self):
 		self.create_block_buttons()
+		try:self.create_search_results()
+		except Exception as e: print(e)
 		self.delete_side_buttons()
 
 		try:self.create_all_side_buttons()
@@ -1233,6 +1241,9 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 
 		self.ui.search_button.clicked.connect(self.search_command)
 		self.ui.search_line.textChanged.connect(self.search_command)
+
+		# Block-library Search tab
+		self.ui.library_search_line.textChanged.connect(lambda _: self._library_search_timer.start())
 
 		# Context menu for search_button (Refresh) to reload all blocks
 		self.ui.search_button.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
@@ -1874,6 +1885,91 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 
 				if not have_order:
 					button.setFixedSize(42, 42)
+
+	def _iter_latest_block_files(self):
+		"""Yield (block_folder, block_json_path) for the latest version of every
+		block across all tab folders, for use by the block-library Search tab."""
+		blocks_root = os.path.join(FOLDER, 'Blocks')
+		avoid_folders = ['.DS_Store', 'OldSystems']
+		for block_folder in os.listdir(blocks_root):
+			if block_folder in avoid_folders or not os.path.isdir(os.path.join(blocks_root, block_folder)):
+				continue
+
+			grouped_files = {}  # base -> list of (info, path)
+			for root, dirs, fnames in os.walk(os.path.join(blocks_root, block_folder)):
+				if '__pycache__' in root or '.git' in root:
+					continue
+				for fn in fnames:
+					if not fn.endswith('.json') or fn == 'order.json':
+						continue
+					info = self.parse_block_filename(fn)
+					if info:
+						grouped_files.setdefault(info['base'].lower(), []).append((info, os.path.join(root, fn)))
+
+			for ver_list in grouped_files.values():
+				ver_list.sort(key=lambda x: x[0]['version'] if x[0]['version'] else 'v001')
+				_, latest_path = ver_list[-1]
+				yield block_folder, latest_path
+
+	def create_search_results(self, query=None):
+		"""Populate the Search tab with blocks whose name, description or help text match the query."""
+		layout = self.ui.search_results_layout
+
+		for i in reversed(range(layout.count())):
+			item = layout.itemAt(i)
+			if item.widget():
+				item.widget().setParent(None)
+
+		if query is None:
+			query = self.ui.library_search_line.text()
+		query = query.strip().lower()
+
+		if not query:
+			return
+
+		matches = []
+		for block_folder, block_file in self._iter_latest_block_files():
+			block = _load_block_json(block_file)
+			if not block:
+				continue
+
+			name = str(block.get('Name', ''))
+			description = str(block.get('Description', ''))
+			help_text = ''
+			if isinstance(block.get('attrs'), dict):
+				help_text = str(block['attrs'].get('Help_string', ''))
+
+			haystack = (name + ' ' + description + ' ' + help_text).lower()
+			if query in haystack:
+				matches.append((block, block_file))
+
+		matches.sort(key=lambda bf: str(bf[0].get('Name', '')).lower())
+
+		for block, block_file in matches:
+			button = DraggableTabButton(block_file)
+			button.clicked.connect(partial(self.create_new_block, block_file))
+			button.setToolTip(self._block_tooltip_html(block))
+			button.setToolTipDuration(20000)
+			button.setFixedSize(42, 42)
+			button.installEventFilter(_block_tooltip_filter)
+
+			try:
+				button.setIcon(QtGui.QIcon(os.path.join(IconsPath, block['Icon'])))
+				button.setIconSize(QtCore.QSize(35, 35))
+				button.setStyleSheet("QPushButton { text-align:right; border: none; background: transparent; } QPushButton:hover { background-color: rgba(255, 255, 255, 5); border-radius: 4px; }")
+			except Exception:
+				button.setText(str(block.get('Name', '')))
+				button.setStyleSheet("QPushButton { border: none; background: transparent; } QPushButton:hover { background-color: rgba(255, 255, 255, 5); border-radius: 4px; }")
+
+			if block.get('Enable') == 'False':
+				button.setEnabled(False)
+
+			layout.addWidget(button)
+
+		if not matches:
+			placeholder = QLabel('No blocks found for "{}"'.format(self.ui.library_search_line.text()))
+			placeholder.setStyleSheet('color: #888888; padding: 8px;')
+			layout.addWidget(placeholder)
 
 	#-------------------------------------------------------------------
 	def create_new_block(self,bock_path):
