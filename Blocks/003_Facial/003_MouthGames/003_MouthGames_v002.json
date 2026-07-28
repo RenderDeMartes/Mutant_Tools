@@ -1,0 +1,21 @@
+{
+    "Name":  "Mouth",
+    "Description":  "Create JaW and Lips System for Games",
+    "Icon":  "MouthGames.png",
+    "Enable":  "True",
+    "python_file":  "exec_mouthgames_v002.py",
+    "import":  "import exec_mouthgames_v002",
+    "imp.reload":  "reload(exec_mouthgames_v002)",
+    "exec_command":  "exec_mouthgames_v002.create_mouthgames_block()",
+    "build_command":  "exec_mouthgames_v002.build_mouthgames_block()",
+    "attrs":  {
+                  "SetParent_string":  "new_locator",
+                  "SetAttrsPosition_string":  "new_locator",
+                  "SetUpperEdge_string":  "",
+                  "SetLowerEdge_string":  "",
+                  "TweakCtrlsAmount_float":  7,
+                  "MidCtrlsAmount_float":  5,
+                  "CtrlSize_float":  4,
+                  "Help_string":  "Overview:\n  Create JaW and Lips System for Games.\n  v002: tweak locators no longer compute their own orient off the curve at all -- fourByFourMatrix, motionPath, and an aimConstraint parallel-transport chain were all tried and each eventually hit a point whose tangent went singular against whatever reference it used, causing a flip as the jaw opened. Interior locators now just take a flat orientConstraint straight from jaw_ctrl (lower) / jaw_top_locator (upper), same rigid rotation as the corners already used from their puller locators. Nothing computed from geometry, nothing left to flip.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetParent: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- SetAttrsPosition: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- TweakCtrlsAmount: numeric value that controls size/amount/intensity (default 7).\n- MidCtrlsAmount: numeric value that controls size/amount/intensity (default 5).\n- CtrlSize: numeric value that controls size/amount/intensity (default 4).\n- SetUpperEdge: set the node/object name this block should use.\n- Template parent examples: Jaw_Jnt, Head_Jnt, Head_Ctrl.\n- Template attrs-position examples: Lips_Center_Ctrl, Vis_Ctrl, Mouth_Jaw_Ctrl.\n\nTips:\n- start with defaults, build once, then tweak only the fields you need."
+              }
+}
