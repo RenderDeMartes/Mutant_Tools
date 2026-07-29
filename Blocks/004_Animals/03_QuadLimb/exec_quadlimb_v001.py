@@ -621,11 +621,11 @@ def build_quadlimb_block():
                                         amount=twist_amount, mode='down')
 
         for jnt in upper_upper_twist['joints']:
-            cmds.connectAttr('{}.scale'.format(ik_joints[0]), '{}.scale'.format(jnt))
+            cmds.connectAttr('{}.scale'.format(main_joints[0]), '{}.scale'.format(jnt))
         for jnt in upper_twist['joints']:
-            cmds.connectAttr('{}.scale'.format(ik_joints[1]), '{}.scale'.format(jnt))
+            cmds.connectAttr('{}.scale'.format(main_joints[1]), '{}.scale'.format(jnt))
         for jnt in lower_twist['joints']:
-            cmds.connectAttr('{}.scale'.format(ik_joints[2]), '{}.scale'.format(jnt))
+            cmds.connectAttr('{}.scale'.format(main_joints[2]), '{}.scale'.format(jnt))
 
         #add ribbon
         top_top_ribbon = mt.create_mid_ribbons(name=limb_a, first_joint=limb_a, last_joint=limb_b,
