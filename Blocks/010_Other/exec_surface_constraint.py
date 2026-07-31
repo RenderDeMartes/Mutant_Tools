@@ -25,6 +25,7 @@ TAB_FOLDER = '010_Other'
 PYBLOCK_NAME = 'exec_surface_constraint'
 
 #---------------------------------------------
+#---------------------------------------------
 
 
 def get_vertex_skin_data(vertex, minimum_weight=0.01):
