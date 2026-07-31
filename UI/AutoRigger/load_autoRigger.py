@@ -2455,7 +2455,7 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		v_layout = QtWidgets.QVBoxLayout()
 		side_hbox.setLayout(v_layout)
 
-		#get all attrs inf cofig node and get type so we can create UI depending of the type of attr
+		#get all attrs inf cofig node and get type so we can create UI depending of the type of attribute
 
 		self.check_precode(block)
 		self.check_postcode(block)
