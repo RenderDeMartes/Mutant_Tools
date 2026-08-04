@@ -949,3 +949,8 @@ def build_limb_block():
         # #Bendy
         # mt.proxy_this_attrs(attrs_from=switch_locator, attrs_to=main_mid_ctrl,
         #                     attrs_to_proxy=['_________', 'BendyMain', 'BendyOffsets', 'BendyEnds', 'BendyTweeks'])
+
+        # Bendy Vis Attrs -> Mid Bendy Ctrl (R_KneeMidBendy / L_ElbowMidBendy)
+        if create_ribbons:
+            mt.proxy_this_attrs(attrs_from=switch_locator, attrs_to=main_mid_ctrl,
+                                attrs_to_proxy=['BendyMain', 'BendyOffsets', 'BendyEnds', 'BendyTweeks'])
