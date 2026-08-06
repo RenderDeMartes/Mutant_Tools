@@ -41,23 +41,31 @@ class CollapsibleGroup(QtWidgets.QWidget):
         self.toggle_btn.setText("{}  {}".format(arrow, self._title))
 
 
-# -------- Selectable name label --------
+# -------- Selectable name field --------
 
-class _NameLabel(QtWidgets.QLabel):
-    """Read-only expression-name label: mouse/keyboard selectable (so the text
-    can be copied and pasted into the ARKit reference site's search), but
-    never editable. Still re-emits the click so the owning row's multi-select
-    click handling keeps working exactly as before.
+class _NameEdit(QtWidgets.QLineEdit):
+    """Read-only expression-name field: selectable/copyable (so it can be
+    pasted into the ARKit reference site's search), but never editable —
+    typing is blocked.
+
+    A real QLineEdit reliably grabs the mouse for its own drag-to-select,
+    unlike a plain QLabel with TextSelectableByMouse, whose press/drag can
+    leak up to the frameless Mutant window's own click-and-drag-to-move
+    handling (the whole window would start moving instead of selecting
+    text). Still re-emits the click so the owning row's multi-select click
+    handling keeps working exactly as before.
     """
 
     clicked = QtCore.Signal()
 
     def __init__(self, text):
         super().__init__(text)
-        self.setTextInteractionFlags(
-            QtCore.Qt.TextSelectableByMouse | QtCore.Qt.TextSelectableByKeyboard
-        )
+        self.setReadOnly(True)
+        self.setFrame(False)
         self.setCursor(QtCore.Qt.IBeamCursor)
+        self.setStyleSheet(
+            "QLineEdit { background: transparent; color: white; border: none; }"
+        )
 
     def mousePressEvent(self, event):
         if event.button() == QtCore.Qt.LeftButton:
@@ -96,9 +104,8 @@ class ExpressionRow(QtWidgets.QWidget):
         layout.setContentsMargins(14, 3, 6, 3)
         layout.setSpacing(6)
 
-        self.label = _NameLabel(name)
+        self.label = _NameEdit(name)
         self.label.setMinimumWidth(150)
-        self.label.setStyleSheet("color: white;")
         self.label.clicked.connect(lambda: self.clicked.emit(self))
 
         self.slider = QtWidgets.QSlider(QtCore.Qt.Horizontal)
