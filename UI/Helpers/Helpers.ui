@@ -2629,6 +2629,32 @@
                   </widget>
                  </item>
                  <item>
+                  <widget class="Line" name="line_arkkit">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="arkkit_btn">
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>30</height>
+                    </size>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">text-align: left;</string>
+                   </property>
+                   <property name="text">
+                    <string>ArkKit</string>
+                   </property>
+                   <property name="toolTip">
+                    <string>Author the 52 ARKit facial blendshapes from a face rig.</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
                   <spacer name="verticalSpacer_11">
                    <property name="orientation">
                     <enum>Qt::Vertical</enum>

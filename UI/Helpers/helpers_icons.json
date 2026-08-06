@@ -45,5 +45,6 @@
   "ring_reset" : "Ring",
   "middle_reset" : "Middle",
   "index_reset" : "Index",
-  "thumb_reset" : "Thumb"
+  "thumb_reset" : "Thumb",
+  "arkkit_btn" : "Blendshape"
 }

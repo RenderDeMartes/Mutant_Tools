@@ -320,6 +320,7 @@ class HelperUI(QtMutantWindow.Qt_Mutant):
 		self.ui.fari_deformersWeightsEditor.clicked.connect(self.fari_deformersWeightsEditor)
 		self.ui.dont_press.clicked.connect(self.dont_press)
 		self.ui.switch_ikfk.clicked.connect(self.switch_ikfk)
+		self.ui.arkkit_btn.clicked.connect(self.open_arkkit)
 
 
 		#Clothes Tab
@@ -1986,6 +1987,25 @@ class HelperUI(QtMutantWindow.Qt_Mutant):
 		from Mutant_Tools.Utils.Animation import ikfk_match
 		reload(ikfk_match)
 		ikfk_match.ikfk_match_callback()
+
+	def open_arkkit(self):
+		try:
+			import importlib;
+			from importlib import reload
+		except:
+			import imp;
+			from imp import reload
+
+		import Mutant_Tools
+		from Mutant_Tools.UI.ArkKit import load_arkkit
+		reload(load_arkkit)
+
+		try:
+			cArkKitUI.close()
+		except:
+			pass
+		cArkKitUI = load_arkkit.ArkKitUI()
+		cArkKitUI.show()
 
 	# CLOSE EVENTS _________________________________
 	def closeEvent(self, event):

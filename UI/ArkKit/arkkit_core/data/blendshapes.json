@@ -1,0 +1,68 @@
+{
+    "Eyes": [
+        "eyeBlinkLeft",
+        "eyeLookDownLeft",
+        "eyeLookInLeft",
+        "eyeLookOutLeft",
+        "eyeLookUpLeft",
+        "eyeSquintLeft",
+        "eyeWideLeft",
+        "eyeBlinkRight",
+        "eyeLookDownRight",
+        "eyeLookInRight",
+        "eyeLookOutRight",
+        "eyeLookUpRight",
+        "eyeSquintRight",
+        "eyeWideRight"
+    ],
+    "Brows": [
+        "browDownLeft",
+        "browDownRight",
+        "browInnerUp",
+        "browOuterUpLeft",
+        "browOuterUpRight"
+    ],
+    "Nose": [
+        "noseSneerLeft",
+        "noseSneerRight"
+    ],
+    "Cheeks": [
+        "cheekPuff",
+        "cheekSquintLeft",
+        "cheekSquintRight"
+    ],
+    "Jaw": [
+        "jawForward",
+        "jawLeft",
+        "jawRight",
+        "jawOpen"
+    ],
+    "Mouth": [
+        "mouthClose",
+        "mouthFunnel",
+        "mouthPucker",
+        "mouthLeft",
+        "mouthRight",
+        "mouthSmileLeft",
+        "mouthSmileRight",
+        "mouthFrownLeft",
+        "mouthFrownRight",
+        "mouthDimpleLeft",
+        "mouthDimpleRight",
+        "mouthStretchLeft",
+        "mouthStretchRight",
+        "mouthRollLower",
+        "mouthRollUpper",
+        "mouthShrugLower",
+        "mouthShrugUpper",
+        "mouthPressLeft",
+        "mouthPressRight",
+        "mouthLowerDownLeft",
+        "mouthLowerDownRight",
+        "mouthUpperUpLeft",
+        "mouthUpperUpRight"
+    ],
+    "Tongue": [
+        "tongueOut"
+    ]
+}

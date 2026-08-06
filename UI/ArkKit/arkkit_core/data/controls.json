@@ -1,0 +1,14 @@
+{
+    "_comment": [
+        "List every rig control node whose channel-box attributes drive the face.",
+        "ArkKit captures each control's keyable / settable / unlocked / numeric",
+        "attributes when you press 'Set Defaults', and records per-expression",
+        "deltas against those same attributes.",
+        "",
+        "You can edit this list by hand, or use the 'Add Selected -> Controls'",
+        "button in the tool to append whatever is currently selected in Maya.",
+        "Names may be short ('jaw_ctrl') or namespaced ('rig:jaw_ctrl')."
+    ],
+    "controls": [
+    ]
+}
