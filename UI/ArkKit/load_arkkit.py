@@ -564,6 +564,16 @@ class ArkKitUI(QtMutantWindow.Qt_Mutant):
 	def slider_changed(self, name, value):
 		if self.recording is not None:
 			return
+
+		# Group-drag: dragging a selected row's slider drives every other
+		# selected row's slider to the same weight, so a multi-selection
+		# moves together.
+		row = self.rows_by_name.get(name)
+		if row is not None and row.selected:
+			for r in self.get_selected():
+				if r is not row:
+					r.set_value(value)
+
 		self.apply_blend()
 
 	def apply_blend(self):

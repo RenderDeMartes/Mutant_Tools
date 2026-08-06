@@ -41,6 +41,30 @@ class CollapsibleGroup(QtWidgets.QWidget):
         self.toggle_btn.setText("{}  {}".format(arrow, self._title))
 
 
+# -------- Selectable name label --------
+
+class _NameLabel(QtWidgets.QLabel):
+    """Read-only expression-name label: mouse/keyboard selectable (so the text
+    can be copied and pasted into the ARKit reference site's search), but
+    never editable. Still re-emits the click so the owning row's multi-select
+    click handling keeps working exactly as before.
+    """
+
+    clicked = QtCore.Signal()
+
+    def __init__(self, text):
+        super().__init__(text)
+        self.setTextInteractionFlags(
+            QtCore.Qt.TextSelectableByMouse | QtCore.Qt.TextSelectableByKeyboard
+        )
+        self.setCursor(QtCore.Qt.IBeamCursor)
+
+    def mousePressEvent(self, event):
+        if event.button() == QtCore.Qt.LeftButton:
+            self.clicked.emit()
+        super().mousePressEvent(event)
+
+
 # -------- Expression Row --------
 
 class ExpressionRow(QtWidgets.QWidget):
@@ -72,9 +96,10 @@ class ExpressionRow(QtWidgets.QWidget):
         layout.setContentsMargins(14, 3, 6, 3)
         layout.setSpacing(6)
 
-        self.label = QtWidgets.QLabel(name)
+        self.label = _NameLabel(name)
         self.label.setMinimumWidth(150)
         self.label.setStyleSheet("color: white;")
+        self.label.clicked.connect(lambda: self.clicked.emit(self))
 
         self.slider = QtWidgets.QSlider(QtCore.Qt.Horizontal)
         self.slider.setRange(0, config.SLIDER_RESOLUTION)
@@ -101,8 +126,9 @@ class ExpressionRow(QtWidgets.QWidget):
     # -------- events --------
 
     def mousePressEvent(self, event):
-        # Clicks that reach the row background (or the label, which ignores
-        # them) count as a selection click.
+        # Clicks that reach the row background count as a selection click.
+        # The name label handles its own click separately (see _NameLabel)
+        # since it consumes mouse presses for text selection.
         self.clicked.emit(self)
         super().mousePressEvent(event)
 
