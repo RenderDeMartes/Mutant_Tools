@@ -1,66 +1,66 @@
 {
-    "Eyes": [
-        "eyeBlinkLeft",
-        "eyeLookDownLeft",
-        "eyeLookInLeft",
-        "eyeLookOutLeft",
-        "eyeLookUpLeft",
-        "eyeSquintLeft",
-        "eyeWideLeft",
-        "eyeBlinkRight",
-        "eyeLookDownRight",
-        "eyeLookInRight",
-        "eyeLookOutRight",
-        "eyeLookUpRight",
-        "eyeSquintRight",
-        "eyeWideRight"
-    ],
     "Brows": [
+        "browInnerUp",
         "browDownLeft",
         "browDownRight",
-        "browInnerUp",
         "browOuterUpLeft",
         "browOuterUpRight"
     ],
-    "Nose": [
-        "noseSneerLeft",
-        "noseSneerRight"
+    "Eyes": [
+        "eyeLookUpLeft",
+        "eyeLookUpRight",
+        "eyeLookDownLeft",
+        "eyeLookDownRight",
+        "eyeLookInLeft",
+        "eyeLookInRight",
+        "eyeLookOutLeft",
+        "eyeLookOutRight",
+        "eyeBlinkLeft",
+        "eyeBlinkRight",
+        "eyeSquintRight",
+        "eyeSquintLeft",
+        "eyeWideLeft",
+        "eyeWideRight"
     ],
     "Cheeks": [
         "cheekPuff",
         "cheekSquintLeft",
         "cheekSquintRight"
     ],
+    "Nose": [
+        "noseSneerLeft",
+        "noseSneerRight"
+    ],
     "Jaw": [
+        "jawOpen",
         "jawForward",
         "jawLeft",
-        "jawRight",
-        "jawOpen"
+        "jawRight"
     ],
     "Mouth": [
-        "mouthClose",
         "mouthFunnel",
         "mouthPucker",
         "mouthLeft",
         "mouthRight",
+        "mouthRollUpper",
+        "mouthRollLower",
+        "mouthShrugUpper",
+        "mouthShrugLower",
+        "mouthClose",
         "mouthSmileLeft",
         "mouthSmileRight",
         "mouthFrownLeft",
         "mouthFrownRight",
         "mouthDimpleLeft",
         "mouthDimpleRight",
-        "mouthStretchLeft",
-        "mouthStretchRight",
-        "mouthRollLower",
-        "mouthRollUpper",
-        "mouthShrugLower",
-        "mouthShrugUpper",
-        "mouthPressLeft",
-        "mouthPressRight",
+        "mouthUpperUpLeft",
+        "mouthUpperUpRight",
         "mouthLowerDownLeft",
         "mouthLowerDownRight",
-        "mouthUpperUpLeft",
-        "mouthUpperUpRight"
+        "mouthPressLeft",
+        "mouthPressRight",
+        "mouthStretchLeft",
+        "mouthStretchRight"
     ],
     "Tongue": [
         "tongueOut"
