@@ -322,6 +322,13 @@ class HelperUI(QtMutantWindow.Qt_Mutant):
 		self.ui.switch_ikfk.clicked.connect(self.switch_ikfk)
 		self.ui.arkkit_btn.clicked.connect(self.open_arkkit)
 
+		#Mocap Tab
+		self.ui.fix_legs_orients.clicked.connect(self.fix_legs_orients_mocap)
+		self.ui.l_thumb_orient_plus.clicked.connect(partial(self.nudge_thumb_orient, 'l', 1))
+		self.ui.l_thumb_orient_minus.clicked.connect(partial(self.nudge_thumb_orient, 'l', -1))
+		self.ui.r_thumb_orient_plus.clicked.connect(partial(self.nudge_thumb_orient, 'r', 1))
+		self.ui.r_thumb_orient_minus.clicked.connect(partial(self.nudge_thumb_orient, 'r', -1))
+
 
 		#Clothes Tab
 		self.ui.create_skirt_mirror_offsets.clicked.connect(self.create_skirt_mirror_offsets)
@@ -707,6 +714,32 @@ class HelperUI(QtMutantWindow.Qt_Mutant):
 	@undo
 	def fix_legs(self):
 		cWrap.fix_limb_legs_orientation()
+
+	@undo
+	def fix_legs_orients_mocap(self):
+		from Mutant_Tools.UI.Helpers.helpers_utils import mocap_helpers
+		reload(mocap_helpers)
+		mocap_helpers.fix_legs_orient()
+
+	@undo
+	def nudge_thumb_orient(self, side, sign):
+		from Mutant_Tools.UI.Helpers.helpers_utils import mocap_helpers
+		reload(mocap_helpers)
+
+		if side == 'l':
+			amount_field = self.ui.l_thumb_orient_amount
+			joints = mocap_helpers.THUMB_JOINTS_L
+		else:
+			amount_field = self.ui.r_thumb_orient_amount
+			joints = mocap_helpers.THUMB_JOINTS_R
+
+		try:
+			amount = float(amount_field.text())
+		except ValueError:
+			cmds.warning('Thumb orient amount must be a number')
+			return
+
+		mocap_helpers.nudge_thumb_orient(joints, amount * sign)
 
 	@undo
 	def fix_spine(self):

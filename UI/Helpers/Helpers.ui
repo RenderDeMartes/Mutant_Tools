@@ -2629,32 +2629,6 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="Line" name="line_arkkit">
-                   <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="arkkit_btn">
-                   <property name="minimumSize">
-                    <size>
-                     <width>0</width>
-                     <height>30</height>
-                    </size>
-                   </property>
-                   <property name="styleSheet">
-                    <string notr="true">text-align: left;</string>
-                   </property>
-                   <property name="text">
-                    <string>ArkKit</string>
-                   </property>
-                   <property name="toolTip">
-                    <string>Author the 52 ARKit facial blendshapes from a face rig.</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
                   <spacer name="verticalSpacer_11">
                    <property name="orientation">
                     <enum>Qt::Vertical</enum>
@@ -2776,6 +2750,172 @@
               </layout>
              </widget>
             </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="tab_8">
+          <attribute name="title">
+           <string>Mocap</string>
+          </attribute>
+          <layout class="QGridLayout" name="gridLayout_17">
+           <item row="0" column="0">
+            <layout class="QVBoxLayout" name="verticalLayout_13">
+             <item>
+              <widget class="QPushButton" name="fix_legs_orients">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>30</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">text-align: left;</string>
+               </property>
+               <property name="text">
+                <string>Fix Legs Orients</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_15">
+               <item>
+                <widget class="QLabel" name="label_l_thumb_orient">
+                 <property name="text">
+                  <string>L Thumb Orient</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="l_thumb_orient_amount">
+                 <property name="maximumSize">
+                  <size>
+                   <width>40</width>
+                   <height>30</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>5</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="l_thumb_orient_plus">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>30</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>+</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="l_thumb_orient_minus">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>30</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>-</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_16">
+               <item>
+                <widget class="QLabel" name="label_r_thumb_orient">
+                 <property name="text">
+                  <string>R Thumb Orient</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="r_thumb_orient_amount">
+                 <property name="maximumSize">
+                  <size>
+                   <width>40</width>
+                   <height>30</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>5</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="r_thumb_orient_plus">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>30</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>+</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="r_thumb_orient_minus">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>30</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>-</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <widget class="Line" name="line_arkkit">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="arkkit_btn">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>30</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">text-align: left;</string>
+               </property>
+               <property name="text">
+                <string>ArkKit</string>
+               </property>
+               <property name="toolTip">
+                <string>Author the 52 ARKit facial blendshapes from a face rig.</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item row="1" column="0">
+            <spacer name="verticalSpacer_12">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
            </item>
           </layout>
          </widget>
