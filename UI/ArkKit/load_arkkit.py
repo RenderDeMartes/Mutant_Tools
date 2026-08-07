@@ -118,6 +118,7 @@ class ArkKitUI(QtMutantWindow.Qt_Mutant):
 		self.rows = []                 # ExpressionRow, in config.EXPRESSIONS order
 		self.rows_by_name = {}
 		self.recording = None          # name of the row currently recording, or None
+		self.combo_mode = False        # while True, other rows stay live during recording
 		self.last_clicked = None       # for shift range-select
 		self.last_export_dir = config.EXPORTS_DIR
 
@@ -198,6 +199,19 @@ class ArkKitUI(QtMutantWindow.Qt_Mutant):
 		)
 		self.add_controls_btn.clicked.connect(self.add_selected_controls)
 		setup_row.addWidget(self.add_controls_btn)
+
+		self.combo_mode_chk = QtWidgets.QCheckBox("Combo Mode")
+		self.combo_mode_chk.setToolTip(
+			"OFF: recording isolates one shape — other rows lock and the pose\n"
+			"resets to defaults + this expression's existing delta.\n"
+			"ON: other rows stay live while recording, so you can dial in an\n"
+			"already-recorded shape as a reference pose (e.g. Jaw while\n"
+			"recording MouthClose) and still tweak the rig by hand.\n"
+			"That reference row's own contribution is subtracted back out on\n"
+			"stop — only this expression's own difference gets saved."
+		)
+		self.combo_mode_chk.toggled.connect(self.set_combo_mode)
+		setup_row.addWidget(self.combo_mode_chk)
 
 		self.status_label = QtWidgets.QLabel()
 		self.status_label.setStyleSheet("color: #B0BEC5;")
@@ -414,6 +428,9 @@ class ArkKitUI(QtMutantWindow.Qt_Mutant):
 			btn.setEnabled(not busy)
 		self.search.setEnabled(not busy)
 
+	def set_combo_mode(self, state):
+		self.combo_mode = bool(state)
+
 	# ====================================================================
 	# CONTROLS / DEFAULTS
 	# ====================================================================
@@ -496,44 +513,71 @@ class ArkKitUI(QtMutantWindow.Qt_Mutant):
 
 		self.recording = name
 
-		# Zero every slider, then pose the rig to defaults + this expression's
-		# existing delta (so an already-recorded shape is refined, not lost).
-		for row in self.rows:
-			row.set_value(0)
+		if not self.combo_mode:
+			# Zero every slider, then pose the rig to defaults + this expression's
+			# existing delta (so an already-recorded shape is refined, not lost).
+			for row in self.rows:
+				row.set_value(0)
 
-		pose = dict(self.defaults)
-		existing = self.deltas.get(name, {})
-		for plug, d in existing.items():
-			pose[plug] = self.defaults.get(plug, 0.0) + d
+			pose = dict(self.defaults)
+			existing = self.deltas.get(name, {})
+			for plug, d in existing.items():
+				pose[plug] = self.defaults.get(plug, 0.0) + d
 
-		cmds.undoInfo(openChunk=True)
-		try:
-			self._apply_pose(pose)
-		finally:
-			cmds.undoInfo(closeChunk=True)
+			cmds.undoInfo(openChunk=True)
+			try:
+				self._apply_pose(pose)
+			finally:
+				cmds.undoInfo(closeChunk=True)
 
 		# Lock the whole UI; keep only this row's record button live.
+		# In combo mode, rows stay unlocked so other recorded shapes can be
+		# dialed in and blended with the live pose while this one records.
 		self._set_busy(True)
 		for row in self.rows:
-			row.set_locked(True)
+			row.set_locked(not self.combo_mode)
 			row.set_recording(False)
 
 		active = self.rows_by_name[name]
 		active.set_recording(True)
 		active.record_btn.setEnabled(True)
-		active.set_value(1)  # visual: this shape is being authored at full weight
+		if not self.combo_mode:
+			active.set_value(1)  # visual: this shape is being authored at full weight
 
 	def stop_record(self):
 		name = self.recording
 		if name is None:
 			return
 
-		# Compute delta = current - default for every captured channel.
+		# In combo mode another row (e.g. Jaw) may be dialed in as a live
+		# reference pose. Subtract its contribution back out per-channel so
+		# only THIS expression's own difference is saved — otherwise the
+		# reference shape's own controllers would get baked into this one.
+		other_contribution = {}
+		if self.combo_mode:
+			for row in self.rows:
+				if row.name == name:
+					continue
+				w = row.get_value()
+				if w <= 0.0:
+					continue
+				other_delta = self.deltas.get(row.name)
+				if not other_delta:
+					continue
+				for plug, dv in other_delta.items():
+					other_contribution[plug] = other_contribution.get(plug, 0.0) + dv * w
+
+		# Compute delta = current - (default + other rows' contribution)
+		# for every captured channel.
 		delta = {}
 		for plug, dval in self.defaults.items():
 			cur = utils.get_plug_value(plug)
-			if cur is not None and abs(cur - dval) > config.DELTA_EPSILON:
-				delta[plug] = cur - dval
+			if cur is None:
+				continue
+			base = dval + other_contribution.get(plug, 0.0)
+			diff = cur - base
+			if abs(diff) > config.DELTA_EPSILON:
+				delta[plug] = diff
 
 		data_node.write_expression(name, delta)
 		self.deltas[name] = delta
@@ -549,10 +593,11 @@ class ArkKitUI(QtMutantWindow.Qt_Mutant):
 		active = self.rows_by_name[name]
 		active.set_has_data(bool(delta))
 
-		# Preview the freshly recorded shape at full weight; others stay at 0.
-		for row in self.rows:
-			row.set_value(1 if row.name == name else 0)
-		self.apply_blend()
+		if not self.combo_mode:
+			# Preview the freshly recorded shape at full weight; others stay at 0.
+			for row in self.rows:
+				row.set_value(1 if row.name == name else 0)
+			self.apply_blend()
 
 		print("[ArkKit] Recorded '{}' — {} changed channels.".format(name, len(delta)))
 		self.update_status_label()
@@ -562,7 +607,7 @@ class ArkKitUI(QtMutantWindow.Qt_Mutant):
 	# ====================================================================
 
 	def slider_changed(self, name, value):
-		if self.recording is not None:
+		if self.recording is not None and not self.combo_mode:
 			return
 
 		# Group-drag: dragging a selected row's slider drives every other
@@ -584,7 +629,7 @@ class ArkKitUI(QtMutantWindow.Qt_Mutant):
 		to default. This keeps slider dragging fluid even with many controls,
 		instead of re-writing every captured channel on every tick.
 		"""
-		if self.recording is not None or not self.defaults:
+		if (self.recording is not None and not self.combo_mode) or not self.defaults:
 			return
 
 		pose = {}
