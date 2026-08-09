@@ -56,6 +56,7 @@ except:
 	from PySide2 import QtWidgets
 	from PySide2.QtWidgets import *
 
+import maya.OpenMaya as om
 import maya.OpenMayaUI as omui
 from maya import cmds
 import os
@@ -66,6 +67,11 @@ try:
 except:
 	import imp;from imp import reload
 
+try:
+	import maya.api.OpenMaya as api_om
+except Exception:
+	api_om = om
+
 from pathlib import Path
 
 # -------------------------------------------------------------------
@@ -74,6 +80,7 @@ from pathlib import Path
 FOLDER_NAME = 'ArkKit'
 Title = 'ArkKit'
 REFERENCE_URL = 'https://arkit-face-blendshapes.com/'
+REFERENCE_CONTEXT_URL = 'https://miniface.org/faces?utm_source=pooyadeperson&utm_medium=cheekPuff'
 
 PATH = os.path.dirname(__file__)
 PATH = Path(PATH)
@@ -155,9 +162,13 @@ class ArkKitUI(QtMutantWindow.Qt_Mutant):
 		self.reference_btn = QtWidgets.QPushButton("ARKit Reference ↗")
 		self.reference_btn.setToolTip(
 			"Open {} in the default browser — the ARKit blendshape reference\n"
-			"this tool's 52 expressions are based on.".format(REFERENCE_URL)
+			"this tool's 52 expressions are based on.\n\n"
+			"Right-click to open the Miniface reference page instead."
+			.format(REFERENCE_URL)
 		)
 		self.reference_btn.clicked.connect(self.open_reference_site)
+		self.reference_btn.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
+		self.reference_btn.customContextMenuRequested.connect(self.open_reference_context_site)
 		header_row.addWidget(self.reference_btn)
 
 		version_label = QtWidgets.QLabel("v{}".format(config.VERSION))
@@ -184,7 +195,15 @@ class ArkKitUI(QtMutantWindow.Qt_Mutant):
 		setup_row = QtWidgets.QHBoxLayout()
 		main.addLayout(setup_row)
 
-		self.set_defaults_btn = QtWidgets.QPushButton("Set Defaults")
+		self.add_controls_btn = QtWidgets.QPushButton("Add Selected → Controls")
+		self.add_controls_btn.setToolTip(
+			"Append the currently selected nodes to the control list.\n"
+			"Then press Save Defaults to (re)capture."
+		)
+		self.add_controls_btn.clicked.connect(self.add_selected_controls)
+		setup_row.addWidget(self.add_controls_btn)
+
+		self.set_defaults_btn = QtWidgets.QPushButton("Save Defaults")
 		self.set_defaults_btn.setToolTip(
 			"Capture the current pose of every listed control's keyable channels\n"
 			"as the neutral default, and create the ArkKit_Data node."
@@ -192,13 +211,14 @@ class ArkKitUI(QtMutantWindow.Qt_Mutant):
 		self.set_defaults_btn.clicked.connect(self.set_defaults)
 		setup_row.addWidget(self.set_defaults_btn)
 
-		self.add_controls_btn = QtWidgets.QPushButton("Add Selected → Controls")
-		self.add_controls_btn.setToolTip(
-			"Append the currently selected nodes to the control list.\n"
-			"Then press Set Defaults to (re)capture."
+		self.snapshot_btn = QtWidgets.QPushButton("Snapshot Mirror *")
+		self.snapshot_btn.setToolTip(
+			"Learn how each control channel mirrors, by probing the rig at its\n"
+			"default pose. Run once (re-run if you change controls or MIRROR_AXIS).\n"
+			"Stored on the ArkKit_Data node."
 		)
-		self.add_controls_btn.clicked.connect(self.add_selected_controls)
-		setup_row.addWidget(self.add_controls_btn)
+		self.snapshot_btn.clicked.connect(self.snapshot_mirror)
+		setup_row.addWidget(self.snapshot_btn)
 
 		self.combo_mode_chk = QtWidgets.QCheckBox("Combo Mode")
 		self.combo_mode_chk.setToolTip(
@@ -211,7 +231,6 @@ class ArkKitUI(QtMutantWindow.Qt_Mutant):
 			"stop — only this expression's own difference gets saved."
 		)
 		self.combo_mode_chk.toggled.connect(self.set_combo_mode)
-		setup_row.addWidget(self.combo_mode_chk)
 
 		self.status_label = QtWidgets.QLabel()
 		self.status_label.setStyleSheet("color: #B0BEC5;")
@@ -261,14 +280,8 @@ class ArkKitUI(QtMutantWindow.Qt_Mutant):
 		mirror_row = QtWidgets.QHBoxLayout()
 		main.addLayout(mirror_row)
 
-		self.snapshot_btn = QtWidgets.QPushButton("Snapshot Mirror *")
-		self.snapshot_btn.setToolTip(
-			"Learn how each control channel mirrors, by probing the rig at its\n"
-			"default pose. Run once (re-run if you change controls or MIRROR_AXIS).\n"
-			"Stored on the ArkKit_Data node."
-		)
-		self.snapshot_btn.clicked.connect(self.snapshot_mirror)
-		mirror_row.addWidget(self.snapshot_btn)
+		self.combo_mode_chk.setChecked(self.combo_mode)
+		mirror_row.addWidget(self.combo_mode_chk)
 
 		self.mirror_btn = QtWidgets.QPushButton("Mirror → Opposite")
 		self.mirror_btn.setToolTip(
@@ -368,6 +381,26 @@ class ArkKitUI(QtMutantWindow.Qt_Mutant):
 		)
 		bake_row.addWidget(self.update_btn)
 
+		bake_row_2 = QtWidgets.QHBoxLayout()
+		geo_layout.addLayout(bake_row_2)
+
+		self.delete_node_btn = QtWidgets.QPushButton("Delete ARK Node")
+		self.delete_node_btn.setToolTip(
+			"Look for the ArkKit blendShape node on the currently selected meshes\n"
+			"and delete it if it exists."
+		)
+		self.delete_node_btn.clicked.connect(self.delete_ark_nodes)
+		bake_row_2.addWidget(self.delete_node_btn)
+
+		self.delete_empty_targets_btn = QtWidgets.QPushButton("Delete Empty Targets")
+		self.delete_empty_targets_btn.setToolTip(
+			"Rebuild the selected mesh's blendShape node without targets that\n"
+			"do not deform the mesh at weight 1.0. Preserves surviving aliases,\n"
+			"values, connections, and deform stack order where possible."
+		)
+		self.delete_empty_targets_btn.clicked.connect(self.delete_empty_targets)
+		bake_row_2.addWidget(self.delete_empty_targets_btn)
+
 		# Buttons disabled while a recording is active. Symmetrize is
 		# deliberately NOT here — symmetrizing the live pose mid-record is a
 		# core part of authoring.
@@ -375,7 +408,8 @@ class ArkKitUI(QtMutantWindow.Qt_Mutant):
 			self.set_defaults_btn, self.add_controls_btn, self.zero_btn,
 			self.delete_btn, self.export_btn, self.import_btn,
 			self.add_geo_btn, self.remove_geo_btn, self.generate_btn,
-			self.update_btn, self.refresh_btn, self.snapshot_btn, self.mirror_btn,
+			self.update_btn, self.delete_node_btn, self.delete_empty_targets_btn,
+			self.refresh_btn, self.snapshot_btn, self.mirror_btn,
 		]
 
 	def create_connections(self):
@@ -383,6 +417,9 @@ class ArkKitUI(QtMutantWindow.Qt_Mutant):
 
 	def open_reference_site(self):
 		webbrowser.open(REFERENCE_URL)
+
+	def open_reference_context_site(self, pos=None):
+		webbrowser.open(REFERENCE_CONTEXT_URL)
 
 	# ====================================================================
 	# REFRESH / STATUS
@@ -451,7 +488,7 @@ class ArkKitUI(QtMutantWindow.Qt_Mutant):
 			amg="ArkKit: added <hl>{}</hl> control(s).".format(added),
 			pos="midCenter", fade=True,
 		)
-		# Persist immediately so it survives even before Set Defaults.
+		# Persist immediately so it survives even before Save Defaults.
 		data_node.write_controls(self.controls)
 		self.update_status_label()
 
@@ -508,7 +545,7 @@ class ArkKitUI(QtMutantWindow.Qt_Mutant):
 
 	def start_record(self, name):
 		if not self.defaults:
-			cmds.warning("ArkKit: press 'Set Defaults' before recording.")
+			cmds.warning("ArkKit: press 'Save Defaults' before recording.")
 			return
 
 		self.recording = name
@@ -707,13 +744,95 @@ class ArkKitUI(QtMutantWindow.Qt_Mutant):
 		print("[ArkKit] Deleted {} expression(s).".format(len(selected)))
 		self.update_status_label()
 
+
+	# ====================================================================
+	# DELETE ARK NODE
+	# ====================================================================
+
+	def delete_ark_nodes(self):
+		if self.recording is not None:
+			cmds.warning("ArkKit: stop recording before deleting ArkKit nodes.")
+			return
+
+		selected_geos = utils.selected_meshes()
+		if not selected_geos:
+			cmds.warning("ArkKit: select at least one mesh with an ArkKit blendshape node.")
+			return
+
+		deleted = 0
+		cmds.undoInfo(openChunk=True)
+		try:
+			for geo in selected_geos:
+				if not cmds.objExists(geo):
+					continue
+				bs = self._find_arkkit_bs(geo)
+				if not bs:
+					continue
+				try:
+					cmds.delete(bs)
+					deleted += 1
+				except Exception:
+					pass
+		finally:
+			cmds.undoInfo(closeChunk=True)
+
+		if deleted:
+			msg = "ArkKit: deleted {} ArkKit node(s).".format(deleted)
+			print("[ArkKit] " + msg)
+			cmds.inViewMessage(amg=msg, pos="midCenter", fade=True)
+		else:
+			cmds.warning("ArkKit: no ArkKit blendshape nodes found on the selected meshes.")
+
+	def delete_empty_targets(self):
+		if self.recording is not None:
+			cmds.warning("ArkKit: stop recording before deleting empty targets.")
+			return
+
+		selected_geos = utils.selected_meshes()
+		if not selected_geos:
+			cmds.warning("ArkKit: select at least one mesh with an ArkKit blendshape node.")
+			return
+
+		removed_total = 0
+		updated_nodes = []
+		failed = []
+
+		cmds.undoInfo(openChunk=True)
+		try:
+			for geo in selected_geos:
+				if not cmds.objExists(geo):
+					failed.append(geo + " (missing)")
+					continue
+				result = self._cleanup_blendshape_empty_targets(mesh=geo)
+				if result is None:
+					failed.append(geo)
+					continue
+				new_bs, removed = result
+				if removed:
+					removed_total += len(removed)
+					updated_nodes.append(new_bs)
+		finally:
+			cmds.undoInfo(closeChunk=True)
+
+		if removed_total:
+			msg = "ArkKit: deleted {} empty target(s).".format(removed_total)
+			print("[ArkKit] " + msg)
+			if updated_nodes:
+				print("[ArkKit] Updated blendShape node(s): " + ", ".join(updated_nodes))
+			cmds.inViewMessage(amg=msg, pos="midCenter", fade=True)
+		else:
+			cmds.warning("ArkKit: no empty blendshape targets found on the selected meshes.")
+
+		if failed:
+			cmds.warning("ArkKit: skipped " + ", ".join(failed))
+
 	# ====================================================================
 	# MIRROR / SYMMETRIZE
 	# ====================================================================
 
 	def snapshot_mirror(self):
 		if not self.defaults:
-			cmds.warning("ArkKit: press 'Set Defaults' before snapshotting mirror.")
+			cmds.warning("ArkKit: press 'Save Defaults' before snapshotting mirror.")
 			return
 		if not self.controls:
 			cmds.warning("ArkKit: no controls to snapshot.")
@@ -979,12 +1098,14 @@ class ArkKitUI(QtMutantWindow.Qt_Mutant):
 
 	# ---- update helpers ----
 
-	def _find_arkkit_bs(self, geo):
+	def _find_arkkit_bs(self, geo, blendshape=None):
 		"""Return the ArkKit blendShape node deforming ``geo``, or None.
 
 		Prefers the conventionally-named ``<geo>_ArkKit_BS`` node; otherwise
 		falls back to the first blendShape in the geo's history.
 		"""
+		if blendshape and cmds.objExists(blendshape) and cmds.nodeType(blendshape) == "blendShape":
+			return blendshape
 		short = geo.split("|")[-1]
 		candidate = "{}{}".format(short, config.BLENDSHAPE_SUFFIX)
 		if cmds.objExists(candidate) and cmds.nodeType(candidate) == "blendShape":
@@ -1027,6 +1148,238 @@ class ArkKitUI(QtMutantWindow.Qt_Mutant):
 		cmds.disconnectAttr(src, plug)
 		return True
 
+	def _dag(self, node):
+		sl = api_om.MSelectionList()
+		sl.add(node)
+		return sl.getDagPath(0)
+
+	def _mesh_shape(self, node):
+		if not cmds.objExists(node):
+			return None
+		if cmds.nodeType(node) == "mesh":
+			return node
+		for shape in (cmds.listRelatives(node, s=True, ni=True, f=True) or []):
+			if cmds.nodeType(shape) == "mesh":
+				return shape
+		return None
+
+	def _mesh_xform(self, node):
+		if not cmds.objExists(node):
+			return None
+		if cmds.nodeType(node) == "transform":
+			return node
+		parents = cmds.listRelatives(node, p=True, f=True) or []
+		return parents[0] if parents else None
+
+	def _points_world(self, mesh_shape):
+		fn = api_om.MFnMesh(self._dag(mesh_shape))
+		points = fn.getPoints(api_om.MSpace.kWorld)
+		return [(p.x, p.y, p.z) for p in points]
+
+	def _weight_indices(self, bs):
+		return sorted(set(cmds.getAttr(bs + ".weight", mi=True) or []))
+
+	def _set_all_weights(self, bs, value):
+		for index in self._weight_indices(bs):
+			try:
+				cmds.setAttr("{}.w[{}]".format(bs, index), value)
+			except Exception:
+				pass
+
+	def _save_weights(self, bs):
+		values = {}
+		for index in self._weight_indices(bs):
+			try:
+				values[index] = cmds.getAttr("{}.w[{}]".format(bs, index))
+			except Exception:
+				values[index] = 0.0
+		return values
+
+	def _alias_map(self, bs):
+		aliases = cmds.aliasAttr(bs, q=True) or []
+		result = {}
+		for i in range(0, len(aliases) - 1, 2):
+			alias = aliases[i]
+			plug = aliases[i + 1]
+			match = re.search(r"\[(\d+)\]", plug)
+			if match:
+				result[int(match.group(1))] = alias
+		return result
+
+	def _capture_weight_inputs(self, bs):
+		source_map = {}
+		for index in self._weight_indices(bs):
+			weight_plug = "{}.weight[{}]".format(bs, index)
+			source = cmds.listConnections(weight_plug, s=True, d=False, p=True) or []
+			if source:
+				source_map[index] = source[0]
+		return source_map
+
+	def _deformer_neighbors(self, mesh, target_deformer):
+		history = cmds.listHistory(mesh, pruneDagObjects=True) or []
+		def_nodes = [node for node in history if cmds.nodeType(node) in (
+			"blendShape", "skinCluster", "cluster", "ffd", "nonLinear", "wire",
+			"sculpt", "deltaMush", "wrap", "lattice", "shrinkWrap", "tweak"
+		)]
+		if target_deformer not in def_nodes:
+			return None, None
+		index = def_nodes.index(target_deformer)
+		prev_def = def_nodes[index - 1] if index > 0 else None
+		next_def = def_nodes[index + 1] if index + 1 < len(def_nodes) else None
+		return prev_def, next_def
+
+	def _is_non_deforming(self, shape, bs, index, base_points, tolerance):
+		self._set_all_weights(bs, 0.0)
+		cmds.setAttr("{}.w[{}]".format(bs, index), 1.0)
+		try:
+			cmds.dgeval(bs + ".outputGeometry[0]")
+		except Exception:
+			pass
+		current = self._points_world(shape)
+		if len(current) != len(base_points):
+			return False
+		for base_point, current_point in zip(base_points, current):
+			if (abs(base_point[0] - current_point[0]) > tolerance or
+				abs(base_point[1] - current_point[1]) > tolerance or
+				abs(base_point[2] - current_point[2]) > tolerance):
+				return False
+		return True
+
+	def _capture_target_mesh(self, mesh, bs, index, alias):
+		self._set_all_weights(bs, 0.0)
+		cmds.setAttr("{}.w[{}]".format(bs, index), 1.0)
+		try:
+			cmds.dgeval(bs + ".outputGeometry[0]")
+		except Exception:
+			pass
+		safe = alias.replace(":", "_").replace("|", "_")
+		return cmds.duplicate(mesh, rr=True, n="TMP_KEEP_{}".format(safe))[0]
+
+	def _new_index_by_alias(self, bs, alias):
+		aliases = cmds.aliasAttr(bs, q=True) or []
+		for i in range(0, len(aliases) - 1, 2):
+			if aliases[i] == alias:
+				plug = aliases[i + 1]
+				return int(plug.split("[")[-1].split("]")[0])
+		return None
+
+	def _cleanup_blendshape_empty_targets(self, mesh=None, blendshape=None, tolerance=1e-5):
+		mesh = self._mesh_xform(mesh) or mesh
+		if not mesh:
+			selected = utils.selected_meshes()
+			mesh = selected[0] if selected else None
+		if not mesh:
+			cmds.warning("ArkKit: select mesh or pass mesh='name'.")
+			return None
+
+		old_bs = self._find_arkkit_bs(mesh, blendshape)
+		if not old_bs:
+			cmds.warning("ArkKit: no blendShape found.")
+			return None
+
+		shape = self._mesh_shape(mesh)
+		if not shape:
+			cmds.warning("ArkKit: no mesh shape found.")
+			return None
+
+		old_name = old_bs
+		old_alias = self._alias_map(old_bs)
+		old_values = self._save_weights(old_bs)
+		old_inputs = self._capture_weight_inputs(old_bs)
+		prev_def, next_def = self._deformer_neighbors(mesh, old_bs)
+
+		keep = []
+		empty = []
+		temp_dups = []
+
+		cmds.undoInfo(openChunk=True)
+		try:
+			self._set_all_weights(old_bs, 0.0)
+			try:
+				cmds.dgeval(old_bs + ".outputGeometry[0]")
+			except Exception:
+				pass
+			base_points = self._points_world(shape)
+
+			for index in self._weight_indices(old_bs):
+				try:
+					if self._is_non_deforming(shape, old_bs, index, base_points, tolerance):
+						empty.append(index)
+					else:
+						keep.append(index)
+				except Exception:
+					keep.append(index)
+
+			if not keep:
+				cmds.warning("ArkKit: all targets detected empty. Abort.")
+				return None
+
+			if not empty:
+				print("[ArkKit] No empty targets found on {}.".format(mesh))
+				return old_bs, []
+
+			for index in keep:
+				alias = old_alias.get(index, "target_{}".format(index))
+				dup = self._capture_target_mesh(mesh, old_bs, index, alias)
+				temp_dups.append((index, alias, dup))
+
+			self._set_all_weights(old_bs, 0.0)
+			try:
+				cmds.lockNode(old_bs, lock=False)
+			except Exception:
+				pass
+			cmds.delete(old_bs)
+
+			target_meshes = [entry[2] for entry in temp_dups]
+			new_bs = cmds.blendShape(target_meshes, mesh, n=old_name)[0]
+
+			try:
+				if prev_def and cmds.objExists(prev_def):
+					cmds.reorderDeformers(prev_def, new_bs, mesh)
+				elif next_def and cmds.objExists(next_def):
+					cmds.reorderDeformers(new_bs, next_def, mesh)
+			except Exception:
+				pass
+
+			for new_index, (_old_index, alias, _dup) in enumerate(temp_dups):
+				try:
+					cmds.aliasAttr(alias, "{}.weight[{}]".format(new_bs, new_index))
+				except Exception:
+					pass
+
+			for old_index, alias in old_alias.items():
+				if old_index not in keep:
+					continue
+				new_index = self._new_index_by_alias(new_bs, alias)
+				if new_index is None:
+					continue
+
+				new_weight = "{}.weight[{}]".format(new_bs, new_index)
+				source = old_inputs.get(old_index)
+				if source and cmds.objExists(source.split(".")[0]):
+					try:
+						if not cmds.isConnected(source, new_weight):
+							cmds.connectAttr(source, new_weight, force=True)
+						continue
+					except Exception:
+						pass
+
+				try:
+					cmds.setAttr(new_weight, old_values.get(old_index, 0.0))
+				except Exception:
+					pass
+
+			cmds.delete(target_meshes)
+
+			print("Old blendShape:", old_name)
+			print("Removed empty indices:", sorted(empty))
+			print("Kept indices:", sorted(keep))
+			print("New blendShape:", new_bs)
+			return new_bs, empty
+
+		finally:
+			cmds.undoInfo(closeChunk=True)
+
 	def update_blendshapes(self, invert=False):
 		"""Re-bake targets on the EXISTING blendshape node(s) from recorded data.
 
@@ -1037,7 +1390,7 @@ class ArkKitUI(QtMutantWindow.Qt_Mutant):
 			cmds.warning("ArkKit: stop recording before updating blendshapes.")
 			return
 		if not self.defaults:
-			cmds.warning("ArkKit: no defaults captured — press Set Defaults first.")
+			cmds.warning("ArkKit: no defaults captured — press Savee Defaults first.")
 			return
 
 		geos = self._geo_items()
