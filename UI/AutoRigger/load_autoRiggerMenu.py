@@ -288,6 +288,17 @@ class AutoRiggerMenu(QtWidgets.QDialog):
 		std_win_state = cmds.optionVar(q="mutant_standard_window") if cmds.optionVar(ex="mutant_standard_window") else False
 		self.standard_window.setChecked(std_win_state)
 
+		self.fileMenu.addSeparator()
+
+		# MCP submenu (AI bridge)
+		self.mcpMenu = QtWidgets.QMenu("MCP", self)
+		self.fileMenu.addMenu(self.mcpMenu)
+
+		self.start_mcp_bridge = self.mcpMenu.addAction("Start Bridge")
+		self.stop_mcp_bridge = self.mcpMenu.addAction("Stop Bridge")
+		self.mcpMenu.addSeparator()
+		self.copy_mcp_setup = self.mcpMenu.addAction("Copy Claude Code Setup Command")
+
 		self.menuBar.addMenu(self.fileMenu)
 
 		# -------------------------------------------------------------------
@@ -328,6 +339,8 @@ class AutoRiggerMenu(QtWidgets.QDialog):
 		self.donateMenu.setTitle("Donate")
 		self.paypal = self.donateMenu.addAction("Paypal")
 		self.menuBar.addMenu(self.donateMenu)
+
+		# -------------------------------------------------------------------
 
 		#add menu bar to layout
 		self.ui.menuLayout.insertWidget(0, self.menuBar)
@@ -405,6 +418,11 @@ class AutoRiggerMenu(QtWidgets.QDialog):
 		#Standard Window
 		self.standard_window.toggled.connect(self._toggle_standard_window)
 
+		#MCP (AI bridge)
+		self.start_mcp_bridge.triggered.connect(self._start_mcp_bridge)
+		self.stop_mcp_bridge.triggered.connect(self._stop_mcp_bridge)
+		self.copy_mcp_setup.triggered.connect(self._copy_mcp_setup)
+
 	# -------------------------------------------------------------------
 	def _toggle_standard_window(self, state):
 		"""Find the parent Qt_Mutant window and toggle its window mode."""
@@ -415,6 +433,60 @@ class AutoRiggerMenu(QtWidgets.QDialog):
 				return
 			parent = parent.parent()
 		cmds.warning('Could not find Mutant main window to toggle window mode.')
+
+	# -------------------------------------------------------------------
+	def _start_mcp_bridge(self, *args):
+		"""Open the Mutant MCP command port so an MCP client can drive this Maya session."""
+		try:
+			from Mutant_Tools.Dev.MayaMCP import maya_listener
+			reload(maya_listener)
+			port = maya_listener.start_bridge()
+			if port:
+				print('Mutant MCP bridge listening on port {}.'.format(port))
+		except Exception as e:
+			cmds.warning('Could not start Mutant MCP bridge: {}'.format(e))
+
+	def _stop_mcp_bridge(self, *args):
+		try:
+			from Mutant_Tools.Dev.MayaMCP import maya_listener
+			reload(maya_listener)
+			maya_listener.stop_bridge()
+		except Exception as e:
+			cmds.warning('Could not stop Mutant MCP bridge: {}'.format(e))
+
+	def _copy_mcp_setup(self, *args):
+		"""Copy the `claude mcp add` command for this repo's mcp_server.py to the clipboard.
+
+		Offers to start the bridge first so the copied command can pin its port
+		via MUTANT_MCP_PORT -- otherwise the server falls back to auto-discovery,
+		which fails once more than one Maya session is running.
+		"""
+		try:
+			from Mutant_Tools.Dev.MayaMCP import maya_listener
+			reload(maya_listener)
+
+			port = maya_listener.get_active_port()
+			if port is None:
+				answer = cmds.confirmDialog(
+					title='Mutant MCP',
+					message='Bridge is not running. Start it now so the copied '
+							'command can be pinned to this Maya session\'s port?',
+					button=['Start Bridge', 'Copy Without Port'],
+					defaultButton='Start Bridge',
+					cancelButton='Copy Without Port',
+					dismissString='Copy Without Port')
+				if answer == 'Start Bridge':
+					port = maya_listener.start_bridge()
+
+			mcp_server = os.path.join(FOLDER, 'Dev', 'MayaMCP', 'mcp_server.py')
+			if port:
+				command = 'claude mcp add mutant-maya -e MUTANT_MCP_PORT={} -- python "{}"'.format(port, mcp_server)
+			else:
+				command = 'claude mcp add mutant-maya -- python "{}"'.format(mcp_server)
+			QtWidgets.QApplication.clipboard().setText(command)
+			print('Copied to clipboard: {}'.format(command))
+		except Exception as e:
+			cmds.warning('Could not copy MCP setup command: {}'.format(e))
 
 	# -------------------------------------------------------------------
 	def reload_tool_modules_cmd(self, *args):
