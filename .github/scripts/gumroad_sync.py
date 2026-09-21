@@ -125,6 +125,41 @@ def upload(token, path):
     return done["file_url"]
 
 
+def resolve_product(token, wanted):
+    """Return (id, product) for `wanted`, however the seller identified it.
+
+    GET /v2/products/:id only resolves an external id or a *unique* permalink -
+    Gumroad's auto-generated code. The slug in a product's own URL is usually the
+    *custom* permalink, which that endpoint rejects with "The product was not
+    found" even though the model has a by_general_permalink scope covering both.
+    So fall back to the list and match on anything a person might reasonably have
+    pasted.
+    """
+    try:
+        product = _api("GET", "/products/%s" % wanted, token).get("product", {})
+        return wanted, product
+    except GumroadError:
+        pass
+
+    products = _api("GET", "/products", token).get("products", []) or []
+    for product in products:
+        candidates = {
+            str(product.get("id") or ""),
+            str(product.get("custom_permalink") or ""),
+            str(product.get("unique_permalink") or ""),
+            str(product.get("short_url") or "").rstrip("/").rsplit("/", 1)[-1],
+        }
+        if wanted in candidates - {""}:
+            resolved = product.get("id") or wanted
+            print("resolved %r to product id %s" % (wanted, resolved))
+            return resolved, product
+
+    names = ", ".join(
+        "%s (%s)" % (p.get("name"), str(p.get("short_url") or "").rstrip("/").rsplit("/", 1)[-1])
+        for p in products) or "none"
+    raise GumroadError("no product matches %r. This account has: %s" % (wanted, names))
+
+
 def attach(token, product_id, file_url, display_name):
     """Point the product at the new file.
 
@@ -179,7 +214,7 @@ def main():
         return 1
 
     try:
-        product = _api("GET", "/products/%s" % product_id, token).get("product", {})
+        product_id, product = resolve_product(token, product_id)
         print("product: %s (%s)" % (product.get("name"), product.get("short_url") or product_id))
 
         if args.dry_run:
