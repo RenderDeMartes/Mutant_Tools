@@ -1,0 +1,97 @@
+name: Release
+
+# Push a tag, get a release: a versioned zip attached on GitHub, and the same
+# zip pushed onto the Gumroad product so the two never drift again.
+#
+#   git tag v1.7 && git push origin v1.7
+#
+# The zip is built here rather than uploaded from a laptop because the repo is
+# ~390 MB. Gumroad is skipped automatically when its secrets are not set, so the
+# GitHub half of the release still works on its own.
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Existing tag to (re)build and publish, e.g. v1.6"
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    env:
+      GUMROAD_ACCESS_TOKEN: ${{ secrets.GUMROAD_ACCESS_TOKEN }}
+      GUMROAD_PRODUCT_ID: ${{ secrets.GUMROAD_PRODUCT_ID }}
+
+    steps:
+      - name: Work out which tag we are releasing
+        id: tag
+        run: |
+          TAG="${{ github.event.inputs.tag || github.ref_name }}"
+          echo "tag=$TAG"            >> "$GITHUB_OUTPUT"
+          echo "version=${TAG#v}"    >> "$GITHUB_OUTPUT"
+
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ steps.tag.outputs.tag }}
+          fetch-depth: 1
+
+      - name: Check the tag matches config/version.json
+        run: |
+          TAG_VERSION="${{ steps.tag.outputs.version }}"
+          JSON_VERSION=$(python -c "import json;print(json.load(open('config/version.json'))['version'])")
+          echo "tag=$TAG_VERSION  config/version.json=$JSON_VERSION"
+          if [ "$TAG_VERSION" != "$JSON_VERSION" ]; then
+            echo "::error::Tag v$TAG_VERSION does not match config/version.json ($JSON_VERSION)."
+            echo "::error::The in-Maya updater compares the release tag against that file, so they have to agree."
+            exit 1
+          fi
+
+      - name: Warn if dev mode is on
+        run: |
+          DEV=$(python -c "import json;print(json.load(open('config/version.json')).get('dev_mode'))")
+          if [ "$DEV" != "Off" ] && [ "$DEV" != "False" ] && [ "$DEV" != "false" ]; then
+            echo "::warning::config/version.json has dev_mode=$DEV - shipped copies will not check for updates."
+          fi
+
+      - name: Build the zip
+        id: build
+        run: |
+          VERSION="${{ steps.tag.outputs.version }}"
+          ZIP="Mutant_Tools_${VERSION}.zip"
+          # One top-level folder, because that is what people unzip and drag from.
+          # easy_install.py copes with any folder name, but a tidy one is kinder.
+          mkdir -p build/Mutant_Tools
+          rsync -a --exclude='.git' --exclude='.github' --exclude='build' ./ build/Mutant_Tools/
+          ( cd build && zip -qr "../$ZIP" Mutant_Tools )
+          echo "zip=$ZIP" >> "$GITHUB_OUTPUT"
+          ls -lh "$ZIP"
+
+      - name: Publish the GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG="${{ steps.tag.outputs.tag }}"
+          ZIP="${{ steps.build.outputs.zip }}"
+          # The release may already exist if it was drafted in the UI first.
+          gh release view "$TAG" >/dev/null 2>&1 \
+            || gh release create "$TAG" --title "Mutant Tools ${{ steps.tag.outputs.version }}" --generate-notes
+          gh release upload "$TAG" "$ZIP" --clobber
+
+      - name: Push the same zip to Gumroad
+        if: env.GUMROAD_ACCESS_TOKEN != '' && env.GUMROAD_PRODUCT_ID != ''
+        run: |
+          python .github/scripts/gumroad_sync.py \
+            "${{ steps.build.outputs.zip }}" \
+            --version "${{ steps.tag.outputs.version }}" \
+            --ensure-link
+
+      - name: Say why Gumroad was skipped
+        if: env.GUMROAD_ACCESS_TOKEN == '' || env.GUMROAD_PRODUCT_ID == ''
+        run: |
+          echo "::notice::Gumroad not synced - set the GUMROAD_ACCESS_TOKEN and GUMROAD_PRODUCT_ID repository secrets to enable it."
