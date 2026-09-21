@@ -166,8 +166,20 @@ def attach(token, product_id, file_url, display_name):
     `files` is the product's whole desired file list, not an addition - anything
     left out is removed. That is what we want: one zip, replaced each release.
     """
-    result = _api("PUT", "/products/%s" % product_id, token,
-                  {"files": [{"url": file_url, "display_name": display_name}]})
+    try:
+        result = _api("PUT", "/products/%s" % product_id, token,
+                      {"files": [{"url": file_url, "display_name": display_name}]})
+    except GumroadError as exc:
+        if "still referenced in rich content" in str(exc):
+            raise GumroadError(
+                "the product's Content page still embeds the previous file, and Gumroad "
+                "will not remove a file an embed points at.\n"
+                "        Fix it once, by hand: Gumroad -> the product -> Content -> delete the "
+                "embedded file block.\n"
+                "        The file stays in the product's file list; only the inline embed goes. "
+                "After that every release swaps the zip on its own.\n"
+                "        Gumroad said: %s" % exc)
+        raise
     product = result.get("product", {})
     print("attached to %r" % (product.get("name") or product_id))
     return product
