@@ -185,6 +185,63 @@ def attach(token, product_id, file_url, display_name):
     return product
 
 
+def _only_file_embeds(pages):
+    """True when the content holds nothing but file embeds (or nothing at all).
+
+    Used to decide whether this script may rewrite the content page. Anything a
+    human wrote - a paragraph, a heading, a licence key node - makes it False.
+    """
+    def walk(node):
+        if not isinstance(node, dict):
+            return False
+        kind = node.get("type")
+        if kind in ("fileEmbed", "fileEmbedGroup"):
+            return True
+        if kind == "doc" or "content" in node:
+            children = node.get("content") or []
+            return all(walk(c) for c in children) if children else True
+        # a bare empty paragraph is the editor's blank placeholder
+        return kind == "paragraph" and not node.get("content")
+
+    for page in pages or []:
+        description = page.get("description")
+        nodes = description.get("content", []) if isinstance(description, dict) else (description or [])
+        if not all(walk(n) for n in nodes):
+            return False
+    return True
+
+
+def embed_file(token, product_id, file_url):
+    """Put the new file on the buyer-facing content page.
+
+    Attaching a file to `files` is not enough: rich content is what buyers
+    actually render, so a file with no embed is invisible to them.
+
+    This only ever writes when the existing content is empty or is nothing but
+    file embeds. If the seller has written anything on that page, it is left
+    alone and the caller is told to embed by hand - losing someone's product
+    copy to a release script would be far worse than a manual step.
+    """
+    product = _api("GET", "/products/%s" % product_id, token).get("product", {})
+    files = product.get("files") or []
+    match = next((f for f in files if f.get("url") == file_url), None) or (files[-1] if files else None)
+    if not match or not match.get("id"):
+        print("  could not identify the uploaded file on the product; skipping the embed")
+        return False
+
+    pages = product.get("rich_content") or []
+    if not _only_file_embeds(pages):
+        print("  content page has seller-written content - leaving it untouched.")
+        print("  Embed the new file by hand once: product -> Content -> Upload files -> pick the new zip.")
+        return False
+
+    node = {"type": "fileEmbed", "attrs": {"id": match["id"], "uid": match["id"]}}
+    doc = {"type": "doc", "content": [node]}
+    _api("PUT", "/products/%s" % product_id, token, {"rich_content": [{"description": doc}]})
+    print("  embedded %s on the content page" % (match.get("display_name") or match["id"]))
+    return True
+
+
 def ensure_link(token, product_id, product=None):
     """Append a link to the GitHub releases page, once.
 
@@ -237,6 +294,7 @@ def main():
 
         file_url = upload(token, args.zip_path)
         attach(token, product_id, file_url, "Mutant Tools %s.zip" % args.version)
+        embed_file(token, product_id, file_url)
         if args.ensure_link:
             ensure_link(token, product_id)
     except GumroadError as exc:
