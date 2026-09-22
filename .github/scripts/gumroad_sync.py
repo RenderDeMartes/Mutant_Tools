@@ -211,6 +211,33 @@ def _only_file_embeds(pages):
     return True
 
 
+EMPTY_DOC = {"type": "doc", "content": []}
+
+
+def clear_embeds(token, product_id):
+    """Drop the old file embed so the file it points at can be replaced.
+
+    Gumroad refuses to remove a file while rich content embeds it, and says to
+    "send both changes together" - but the new file has no id until the PUT that
+    creates it, so a single combined request cannot name it. Clearing the embed
+    first uses only documented behaviour: removing content is always allowed,
+    and with no embed left the file becomes removable.
+
+    Returns False without touching anything if the seller has written content.
+    """
+    product = _api("GET", "/products/%s" % product_id, token).get("product", {})
+    pages = product.get("rich_content") or []
+    if not pages:
+        return True
+    if not _only_file_embeds(pages):
+        print("  content page has seller-written content - not clearing it")
+        return False
+    _api("PUT", "/products/%s" % product_id, token,
+         {"rich_content": [{"description": EMPTY_DOC}]})
+    print("  cleared the previous file embed")
+    return True
+
+
 def embed_file(token, product_id, file_url):
     """Put the new file on the buyer-facing content page.
 
@@ -293,6 +320,9 @@ def main():
             return 0
 
         file_url = upload(token, args.zip_path)
+        # Order matters: the embed left by the previous release pins the old
+        # file in place, so it has to go before the file list can be replaced.
+        clear_embeds(token, product_id)
         attach(token, product_id, file_url, "Mutant Tools %s.zip" % args.version)
         embed_file(token, product_id, file_url)
         if args.ensure_link:
