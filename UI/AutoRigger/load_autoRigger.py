@@ -2272,6 +2272,8 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 				return None
 			if cmds.attributeQuery('RunBeforeBuild', n=config, exists=True) and cmds.getAttr('{}.RunBeforeBuild'.format(config)):
 				return 'before'
+			if cmds.attributeQuery('RunBeforeLoadCtrls', n=config, exists=True) and cmds.getAttr('{}.RunBeforeLoadCtrls'.format(config)):
+				return 'before_ctrls'
 			if cmds.attributeQuery('RunAfterBuild', n=config, exists=True) and cmds.getAttr('{}.RunAfterBuild'.format(config)):
 				return 'after'
 		except:
@@ -2299,6 +2301,8 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 				phase = self._get_block_build_phase(block_name)
 				if phase == 'before':
 					label.setStyleSheet('background: transparent; color: #8CD6FF;')
+				elif phase == 'before_ctrls':
+					label.setStyleSheet('background: transparent; color: #B8F0A0;')
 				elif phase == 'after':
 					label.setStyleSheet('background: transparent; color: #FFDE8C;')
 				else:
@@ -3059,7 +3063,7 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 
 	def checkBox_update_attr(self, checkBox,attr, *args):
 		cmds.setAttr(attr, checkBox.isChecked())
-		if 'RunBeforeBuild' in attr or 'RunAfterBuild' in attr:
+		if 'RunBeforeBuild' in attr or 'RunAfterBuild' in attr or 'RunBeforeLoadCtrls' in attr:
 			self.update_side_block_highlight()
 
 	def enum_update_attr(self, comboBox, attr, *args):
@@ -3123,6 +3127,62 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		if len(all_conns) == 1:
 			return all_conns[0]
 		return None
+
+	def _run_phase_block(self, block, phase_label):
+		"""Run a phase-deferred block by calling its Build_Command with force=True.
+		Falls back to the Code block's Exec/Code attrs for legacy blocks."""
+		print('Running {}: {}'.format(phase_label, block))
+		self.ui.bar_label.setText('{}: {}'.format(phase_label, block))
+		cmds.select(block)
+		config = self._get_block_config(block)
+		if not config:
+			cmds.warning("Could not find configuration for {} block {}. Skipping.".format(phase_label, block))
+			return
+
+		executed = False
+		build_cmd = None
+		import_cmd = None
+		if cmds.attributeQuery('Build_Command', n=config, exists=True):
+			build_cmd = cmds.getAttr('{}.Build_Command'.format(config), asString=True)
+		if cmds.attributeQuery('Import_Command', n=config, exists=True):
+			import_cmd = cmds.getAttr('{}.Import_Command'.format(config), asString=True)
+
+		import_cmd, build_cmd = self._resolve_build_commands_for_legacy_versioning(import_cmd, build_cmd)
+
+		if build_cmd:
+			build_cmd_force = build_cmd.replace('()', '(force=True)') if '()' in build_cmd else build_cmd
+
+			# Explicit namespace: an exec'd import inside a method is not
+			# guaranteed to be visible to a later bare eval().
+			ns = dict(globals())
+
+			# Ensure module is imported
+			if import_cmd:
+				try:
+					exec(import_cmd, ns)
+					reload_cmd = import_cmd.replace('import ', 'reload(') + ')'
+					exec(reload_cmd, ns)
+				except:
+					pass
+
+			try:
+				eval(build_cmd_force, ns)
+				executed = True
+			except Exception as e:
+				# No legacy Code attr to fall back on -- let the build fail visibly
+				if not cmds.attributeQuery('Code', n=config, exists=True):
+					raise
+				print('Could not execute {} block via build command: {}. Error: {}. Falling back to default legacy execution.'.format(phase_label, build_cmd_force, e))
+
+		if not executed and cmds.attributeQuery('Code', n=config, exists=True):
+			# Legacy fallback for custom Code blocks
+			pl = cmds.getAttr('{}.Exec'.format(config), asString=True)
+			code = cmds.getAttr('{}.Code'.format(config), asString=True)
+			if pl != 'Python':
+				mel.eval(code)
+			else:
+				exec(code)
+		print('{} block {} completed'.format(phase_label, block))
 
 	#-------------------------------------------------------------------
 
@@ -3288,6 +3348,9 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 
 			#collect deferred code blocks to run after the entire build + IO completes
 			deferred_code_blocks = []
+			#blocks that run after skins load but before controllers load (e.g. renames
+			#that the saved controller shapes are keyed on)
+			before_ctrls_blocks = []
 
 			#select each block and run the build command and make progress bar move
 			for num, block in enumerate(blocks):
@@ -3350,6 +3413,8 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 					skip_pre_post = True
 				if cmds.attributeQuery('RunBeforeBuild', n=config, exists=True) and cmds.getAttr('{}.RunBeforeBuild'.format(config)):
 					skip_pre_post = True
+				if cmds.attributeQuery('RunBeforeLoadCtrls', n=config, exists=True) and cmds.getAttr('{}.RunBeforeLoadCtrls'.format(config)):
+					skip_pre_post = True
 
 				if precode:
 					if skip_pre_post:
@@ -3391,7 +3456,10 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 				#check if this is a deferred code block
 				try:
 					block_config = self._get_block_config(block)
-					if block_config and cmds.attributeQuery('RunAfterBuild', n=block_config, exists=True):
+					# RunBeforeLoadCtrls wins over RunAfterBuild so a block never runs twice
+					if block_config and cmds.attributeQuery('RunBeforeLoadCtrls', n=block_config, exists=True) and cmds.getAttr('{}.RunBeforeLoadCtrls'.format(block_config)):
+						before_ctrls_blocks.append(block)
+					elif block_config and cmds.attributeQuery('RunAfterBuild', n=block_config, exists=True):
 						if cmds.getAttr('{}.RunAfterBuild'.format(block_config)):
 							deferred_code_blocks.append(block)
 				except:
@@ -3431,14 +3499,31 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 			if cmds.objExists('Mutant_Rig'):
 				cmds.parent('Mutant_Rig', 'Miscellaneous_Grp')
 
-			#IO
+			#IO -- skins first, then RunBeforeLoadCtrls blocks, then controllers
+			if load_io:
+				if not cmds.about(batch=True):
+					mel.eval("paneLayout -e -manage false $gMainPane")
+				try:
+					self._load_rebuild_skins(temp_skin_folder=os.path.join(tempfile.gettempdir(), 'RebuildTempSkin'))
+					self._reorder_loaded_skin_deformers()
+				finally:
+					if not cmds.about(batch=True):
+						mel.eval("paneLayout -e -manage true $gMainPane")
+
+			#Run RunBeforeLoadCtrls blocks (also on first builds, where there is nothing to load)
+			if before_ctrls_blocks:
+				print('------------------------------------------------------------------------------------')
+				print('Running {} block(s) before loading controllers...'.format(len(before_ctrls_blocks)))
+				print('------------------------------------------------------------------------------------')
+				for before_ctrls_block in before_ctrls_blocks:
+					failed_block = before_ctrls_block + ' (Before Load Ctrls)'
+					self._run_phase_block(before_ctrls_block, 'Before Load Ctrls')
+
 			if load_io:
 				if not cmds.about(batch=True):
 					mel.eval("paneLayout -e -manage false $gMainPane")
 				try:
 					ctrls.load_all(path=os.path.join(tempfile.gettempdir(), 'RebuildTempCtrls', 'tempControllers.json'))
-					self._load_rebuild_skins(temp_skin_folder=os.path.join(tempfile.gettempdir(), 'RebuildTempSkin'))
-					self._reorder_loaded_skin_deformers()
 					# Load parent hierarchy
 					temp_folder = os.path.join(tempfile.gettempdir(), 'RebuildTemp')
 					skeleton_file = os.path.join(temp_folder, 'skeleton_hierarchy.txt')

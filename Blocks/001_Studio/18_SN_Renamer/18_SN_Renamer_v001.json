@@ -1,0 +1,15 @@
+{
+    "Name": "SN_Renamer",
+    "Description": "Rename controls to the show naming convention (mapping embedded in the block)",
+    "Icon": "Rename.png",
+    "Enable": "True",
+    "python_file": "exec_sn_renamer_v001.py",
+    "import": "import exec_sn_renamer_v001",
+    "imp.reload": "reload(exec_sn_renamer_v001)",
+    "exec_command": "exec_sn_renamer_v001.create_sn_renamer_block()",
+    "build_command": "exec_sn_renamer_v001.build_sn_renamer_block()",
+    "attrs": {
+        "RunBeforeLoadCtrls_bool": "True",
+        "RunAfterBuild_bool": "False"
+    }
+}
