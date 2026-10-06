@@ -593,6 +593,9 @@ class Tools_class(object):
 
 		global_ctrl = 'Global{}'.format(self.nc['ctrl'])
 
+		#Mutant tag, so save/load ctrls finds it even if it gets renamed later
+		self.tag_mutant_controller(ctrl)
+
 		#Tag as controller
 		if tag and cmds.nodeType(ctrl) != 'joint':
 			if cmds.objExists(ctrl+'_tag'):
@@ -710,6 +713,11 @@ class Tools_class(object):
 		return True
 
 	#----------------------------------------------------------------------------------------------------------------
+	def tag_mutant_controller(self, ctrl):
+		"""Add the hidden locked MutantController attr, save/load ctrls use it besides the _Ctrl ending."""
+		from Mutant_Tools.Utils.IO import CtrlUtils
+		CtrlUtils.tag_controller(ctrl)
+
 	def controller(self, input='', name='', shape='cube', color = setup['main_color'], size = 1, gimbal=True, world=True):
 		"""Create a controller.
 
@@ -798,6 +806,7 @@ class Tools_class(object):
 				self.hide_attr(input=c, v=True)
 			except:
 				pass
+			self.tag_mutant_controller(c)
 
 		#change gimbal and world ctrl size
 		if world:

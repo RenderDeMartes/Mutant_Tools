@@ -80,6 +80,55 @@ SETUP_FILE = os.path.join(FOLDER, 'config', 'rig_setup.json')
 with open(SETUP_FILE) as setup_file:
 	setup = json.load(setup_file)
 
+# ---------------------------------------------------------------------------
+# A controller is anything named *_Ctrl, or any node tagged with a hidden locked
+# MutantController = True attr (renamed controllers, like the SN_Renamer ones).
+
+CTRL_TAG_ATTR = 'MutantController'
+
+
+def tag_controller(node):
+    '''Mark a node as a Mutant controller so save/load finds it whatever its name is.
+    Locked and out of the channel box, visible in the Attribute Editor (Extra Attributes).'''
+    attr = '{}.{}'.format(node, CTRL_TAG_ATTR)
+    exists = cmds.attributeQuery(CTRL_TAG_ATTR, node=node, exists=True)
+    if exists and cmds.attributeQuery(CTRL_TAG_ATTR, node=node, hidden=True):
+        # older tags were fully hidden, the hidden flag can not be edited so recreate it
+        cmds.setAttr(attr, lock=False)
+        cmds.deleteAttr(attr)
+        exists = False
+    if not exists:
+        cmds.addAttr(node, longName=CTRL_TAG_ATTR, attributeType='bool', defaultValue=True)
+    cmds.setAttr(attr, lock=False)
+    cmds.setAttr(attr, True, keyable=False, channelBox=False, lock=True)
+
+
+def is_controller(node):
+    if node.split('|')[-1].endswith(nc['ctrl']):
+        return True
+    return cmds.attributeQuery(CTRL_TAG_ATTR, node=node, exists=True) and \
+        bool(cmds.getAttr('{}.{}'.format(node, CTRL_TAG_ATTR)))
+
+
+def get_all_ctrls(long=False):
+    '''All controllers in the scene: *_Ctrl names plus MutantController tagged nodes.'''
+    named = cmds.ls('*{}'.format(nc['ctrl']), long=True) or []
+    tagged = cmds.ls('*.{}'.format(CTRL_TAG_ATTR), objectsOnly=True, long=True) or []
+    tagged = [n for n in tagged if cmds.getAttr('{}.{}'.format(n, CTRL_TAG_ATTR))]
+    ctrls = list(dict.fromkeys(named + tagged))
+    if long or not ctrls:
+        return ctrls
+    return cmds.ls(ctrls) or []
+
+
+def select_all_ctrls():
+    ctrls = get_all_ctrls(long=True)
+    if ctrls:
+        cmds.select(ctrls, r=True)
+    else:
+        cmds.select(cl=True)
+    return ctrls
+
 
 def _maya_main_window():
     main_window_ptr = omui.MQtUtil.mainWindow()
@@ -385,7 +434,7 @@ class Ctrls(object):
         warning_ctrls = []
         seen_names = {}
         if ctrls == 'All':
-            cmds.select('*{}'.format(nc['ctrl']))
+            select_all_ctrls()
         for ctrl in cmds.ls(sl=True, long=True):
             try:
                 data = self.getShape(ctrl)
@@ -469,7 +518,7 @@ class Ctrls(object):
         except:
             data = all_data
 
-        cmds.select('*{}'.format(nc['ctrl']))
+        select_all_ctrls()
         for ctrl in cmds.ls(sl=True):
             try:
                 shape_data = data[ctrl]
@@ -534,7 +583,7 @@ class Ctrls(object):
         vis_data = self.save_all_vis_connections()
         colors_data = self.get_ctrl_colors(True)
 
-        cmds.select('*{}'.format(nc['ctrl']))
+        select_all_ctrls()
         for ctrl in cmds.ls(sl=True):
             cmds.select(ctrl)
             self.mirrorCtlShapes()
@@ -548,7 +597,7 @@ class Ctrls(object):
     def mirror_all_ctrl_shapes(self, ctrls ='All'):
         # Get ctrls
         if ctrls == 'All':
-            ctrls = cmds.ls('*{}'.format(nc['ctrl']))
+            ctrls = get_all_ctrls()
         else:
             ctrls = cmds.ls(sl=True)
         print(ctrls)
@@ -603,14 +652,13 @@ class Ctrls(object):
     #---------------------------------------------------------------------------
     def save_all_vis_connections(self, ctrls=''):
         if not ctrls:
-            cmds.select('*{}'.format(nc['ctrl']))
-            ctrls = cmds.ls(sl=True)
+            ctrls = get_all_ctrls()
 
         connections = {}
         to_delete =[]
         no_shapes_ctrl = []
         for ctrl in ctrls:
-            if not ctrl.endswith(nc['ctrl']):
+            if not is_controller(ctrl):
                 continue
             shapes = cmds.listRelatives(ctrl, s=True)
             if not shapes:
@@ -675,9 +723,9 @@ class Ctrls(object):
         if not selection:
             # Getting all transforms in scene with the *trl termination.
             if long_name:
-                selection = cmds.ls("*_*trl", type="transform", l=True)
+                selection = list(dict.fromkeys((cmds.ls("*_*trl", type="transform", l=True) or []) + get_all_ctrls(long=True)))
             else:
-                selection = cmds.ls("*_*trl", type="transform")
+                selection = list(dict.fromkeys((cmds.ls("*_*trl", type="transform") or []) + get_all_ctrls()))
 
         all_ctrls = selection
 
@@ -855,7 +903,7 @@ class Ctrls(object):
         data = {}
 
         if ctrls == 'All':
-            all_ctrls = cmds.ls('*{}'.format(nc['ctrl']), type='transform')
+            all_ctrls = cmds.ls(get_all_ctrls(), type='transform')
         elif ctrls == 'Selected':
             all_ctrls = cmds.ls(sl=True, type='transform')
         else:
