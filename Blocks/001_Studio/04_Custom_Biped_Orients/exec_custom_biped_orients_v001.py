@@ -115,6 +115,14 @@ def build_custom_biped_orients_block():
             cmds.warning('Custom Biped Orients: no ctrls provided for {}.'.format(section_name))
             return
 
+        # blocks built with Orients = SN (Limb v002) already have their OrientChange group, skip them
+        already_done = [ctrl for ctrl in ctrls if cmds.objExists(ctrl) and
+                        (cmds.listRelatives(ctrl, p=True) or [''])[0].endswith('OrientChange' + nc['group'])]
+        if already_done:
+            print('Custom Biped Orients: already oriented, skipped {}'.format(already_done))
+            ctrls = [ctrl for ctrl in ctrls if ctrl not in already_done]
+            right_ctrls = [ctrl for ctrl in right_ctrls if ctrl not in already_done]
+
         constraints_data = []
         constraints_to_delete = []
 
