@@ -3,6 +3,7 @@ from maya import cmds
 import maya.mel as mel
 import maya.api.OpenMaya as om
 import json
+import math
 try:
     import importlib;from importlib import reload
 except:
@@ -92,6 +93,18 @@ def create_limb_block(name='Limb'):
 # constraint the block made is swapped for matrix nodes, they are cheaper to evaluate and keep the
 # viewport fps up. The swap keeps the result on the same translate/rotate/scale channels, so
 # anything reading them (ik fk blend, twist readers, aim locators) keeps working.
+
+# Helper nodes shared inside one build (world position, inverse scale...). Kept in memory, not looked up by
+# name: after a rebuild the scene can still hold same named nodes from the old build, disconnected from the
+# deleted controllers, reusing them broke the rig (IK handle stuck at the origin). Reset on every build.
+_BUILD_CACHE = {}
+
+
+def _cached(key, create):
+    if key not in _BUILD_CACHE or not cmds.objExists(_BUILD_CACHE[key].split('.')[0]):
+        _BUILD_CACHE[key] = create()
+    return _BUILD_CACHE[key]
+
 
 CONSTRAINT_TYPES = ['parentConstraint', 'pointConstraint', 'orientConstraint', 'scaleConstraint', 'aimConstraint']
 AXES = 'XYZ'
@@ -183,11 +196,11 @@ def _parent_space_for_rotate(driven):
     parent = (cmds.listRelatives(driven, p=True) or [None])[0]
     if (cmds.nodeType(driven) == 'joint' and parent and cmds.nodeType(parent) == 'joint'
             and cmds.getAttr(driven + '.segmentScaleCompensate')):
-        node = parent + '_Scale_ComposeMatrix'
-        if not cmds.objExists(node):
-            cmds.createNode('composeMatrix', n=node)
+        def create():
+            node = cmds.createNode('composeMatrix', n=parent + '_Scale_ComposeMatrix')
             cmds.connectAttr(parent + '.scale', node + '.inputScale')
-        items.append(node + '.outputMatrix')
+            return node + '.outputMatrix'
+        items.append(_cached(('parent_scale', parent), create))
     return items
 
 
@@ -281,8 +294,8 @@ def _build_matrix_network(info, unscaled_targets=()):
         aim = cmds.createNode('aimMatrix', n=name + '_AimMatrix')
         compose = cmds.createNode('composeMatrix', n=name + '_Position_ComposeMatrix')
         cmds.connectAttr(driven + '.translate', compose + '.inputTranslate')
-        _mult_matrix(name + '_Position_MultMatrix', [compose + '.outputMatrix', driven + '.parentMatrix[0]'])
-        cmds.connectAttr(name + '_Position_MultMatrix.matrixSum', aim + '.inputMatrix')
+        position = _mult_matrix(name + '_Position_MultMatrix', [compose + '.outputMatrix', driven + '.parentMatrix[0]'])
+        cmds.connectAttr(position, aim + '.inputMatrix')
         cmds.setAttr(aim + '.primaryInputAxis', *cmds.aimConstraint(con, q=True, aimVector=True))
         cmds.setAttr(aim + '.primaryMode', 1)
         cmds.connectAttr(target + '.worldMatrix[0]', aim + '.primaryTargetMatrix')
@@ -351,11 +364,11 @@ def follicles_to_uv_pins(follicles):
 # and the Start/End bendy controllers are added on top as offsets.
 
 def _world_position(node):
-    plug = node + '_WorldPosition_DecomposeMatrix'
-    if not cmds.objExists(plug):
-        cmds.createNode('decomposeMatrix', n=plug)
-        cmds.connectAttr(node + '.worldMatrix[0]', plug + '.inputMatrix')
-    return plug + '.outputTranslate'
+    def create():
+        decompose = cmds.createNode('decomposeMatrix', n=node + '_WorldPosition_DecomposeMatrix')
+        cmds.connectAttr(node + '.worldMatrix[0]', decompose + '.inputMatrix')
+        return decompose + '.outputTranslate'
+    return _cached(('world_position', node), create)
 
 
 def _vector_op(name, a, b, operation):
@@ -605,6 +618,127 @@ def bendy_move(name, ctrl):
 
 
 # -------------------------
+# Arms Soft IK: same math as the LegSoftIK block, but the IK handle is pulled back along the real
+# shoulder -> goal direction (the leg block uses the ankle group Y axis, only right for legs).
+#   softD = D                                  if D <= L - s
+#           L - s * e^(-(D - (L - s)) / s)     if D >  L - s
+#   no stretch: the handle moves back D - softD, the arm eases to straight instead of popping
+#   stretch:    stretch starts at L - s with a D / softD factor, the hand stays on the controller
+# D and L in normalized units (rig scale removed), L uses Upper/Lower_Length, s = ArmsSoftIk * 2% of L.
+
+SOFT_IK_RANGE = 0.02  # ArmsSoftIk 10 = soft zone of 20% of the arm length
+
+
+def _clamp(name, value, low, high):
+    node = cmds.createNode('clamp', n=name)
+    cmds.setAttr(node + '.minR', low)
+    cmds.setAttr(node + '.maxR', high)
+    _plug_or_value(node + '.inputR', value)
+    return node + '.outputR'
+
+
+def _divide_scalar(name, a, b):
+    node = cmds.createNode('multiplyDivide', n=name)
+    cmds.setAttr(node + '.operation', 2)
+    _plug_or_value(node + '.input1X', a)
+    _plug_or_value(node + '.input2X', b)
+    return node + '.outputX'
+
+
+def arms_soft_ik(name, ik_handle, ik_joints, stretch_data, soft_attr, upper_length, lower_length, rig_scale):
+    """Soft IK on an arm built with streatchy_ik. rig_scale: plug of the limb world scale (X)."""
+    distance = stretch_data[5]
+    start_loc, end_loc = stretch_data[2][0], stretch_data[3][0]
+    # stretch nodes found by their connections, not by name (a rebuild can leave same named old nodes)
+    normalize_md = [n for n in cmds.listConnections(distance + '.distance', s=False, d=True, type='multiplyDivide') or []
+                    if 'Normalize' in n][0]
+    normalized = normalize_md + '.outputX'
+    condition = None
+    for node in cmds.listConnections(normalized, s=False, d=True, type='multiplyDivide') or []:
+        condition = (cmds.listConnections(node + '.outputX', s=False, d=True, type='condition') or [None])[0] or condition
+
+    # chain length with the length multipliers
+    rest = [abs(cmds.getAttr(j + '.translateX')) for j in ik_joints[1:]]
+    chain = _add(name + '_Chain_AddDoubleLinear', _mult(name + '_Upper_MultDoubleLinear', upper_length, rest[0]),
+                 _mult(name + '_Lower_MultDoubleLinear', lower_length, rest[1]))
+    soft = _mult(name + '_Soft_MultDoubleLinear', _mult(name + '_SoftRange_MultDoubleLinear', soft_attr, SOFT_IK_RANGE), chain)
+    safe_soft = _clamp(name + '_SafeSoft_Clamp', soft, 1e-4, 1e6)
+    threshold = _add(name + '_Threshold_AddDoubleLinear', chain, _mult(name + '_NegSoft_MultDoubleLinear', soft, -1))
+
+    # chain - s * e^(-max(0, D - threshold) / s)
+    over = _clamp(name + '_Over_Clamp', _add(name + '_Over_AddDoubleLinear', normalized,
+                                             _mult(name + '_NegThreshold_MultDoubleLinear', threshold, -1)), 0, 1e6)
+    exponent = _mult(name + '_Exponent_MultDoubleLinear', _divide_scalar(name + '_Exponent_MultiplyDivide', over, safe_soft), -1)
+    power = cmds.createNode('multiplyDivide', n=name + '_Exp_MultiplyDivide')
+    cmds.setAttr(power + '.operation', 3)
+    cmds.setAttr(power + '.input1X', math.e)
+    cmds.connectAttr(exponent, power + '.input2X')
+    soft_exp = _mult(name + '_SoftExp_MultDoubleLinear', soft, power + '.outputX')
+    eased = _add(name + '_Eased_AddDoubleLinear', chain, _mult(name + '_NegSoftExp_MultDoubleLinear', soft_exp, -1))
+    soft_on = cmds.createNode('condition', n=name + '_SoftOn_Condition')
+    cmds.setAttr(soft_on + '.operation', 2)
+    cmds.connectAttr(soft, soft_on + '.firstTerm')
+    cmds.setAttr(soft_on + '.secondTerm', 1e-4)
+    cmds.connectAttr(eased, soft_on + '.colorIfTrueR')
+    cmds.connectAttr(chain, soft_on + '.colorIfFalseR')
+    soft_dist = cmds.createNode('condition', n=name + '_SoftDist_Condition')
+    cmds.setAttr(soft_dist + '.operation', 2)
+    cmds.connectAttr(normalized, soft_dist + '.firstTerm')
+    cmds.connectAttr(threshold, soft_dist + '.secondTerm')
+    cmds.connectAttr(soft_on + '.outColorR', soft_dist + '.colorIfTrueR')
+    cmds.connectAttr(normalized, soft_dist + '.colorIfFalseR')
+    soft_dist += '.outColorR'
+
+    # stretch: starts at the soft threshold, factor D / softD (with no soft it is the old D / L)
+    cmds.connectAttr(threshold, condition + '.secondTerm', f=True)
+    cmds.connectAttr(_divide_scalar(name + '_StretchFactor_MultiplyDivide', normalized, soft_dist),
+                     condition + '.colorIfTrueR', f=True)
+    # no stretch: pull the handle back D - softD towards the shoulder (the stretch condition picks it)
+    cmds.connectAttr(_add(name + '_Pull_AddDoubleLinear', normalized, _mult(name + '_NegSoftDist_MultDoubleLinear', soft_dist, -1)),
+                     condition + '.colorIfFalseG', f=True)
+    cmds.setAttr(condition + '.colorIfTrueG', 0)
+    pull = _mult(name + '_PullWorld_MultDoubleLinear', condition + '.outColorG', rig_scale)
+
+    # goal position from the handle current driver (its world matrix), moved back along shoulder -> goal
+    source = cmds.listConnections(ik_handle + '.translateX', s=True, d=False)[0]
+    local = cmds.listConnections(source + '.inputMatrix', s=True, d=False)[0]
+    world = cmds.listConnections(local + '.matrixIn[0]', s=True, d=False, p=True)[0]
+    goal = cmds.createNode('decomposeMatrix', n=name + '_Goal_DecomposeMatrix')
+    cmds.connectAttr(world, goal + '.inputMatrix')
+    direction = cmds.createNode('vectorProduct', n=name + '_Direction_VectorProduct')
+    cmds.setAttr(direction + '.operation', 0)
+    cmds.setAttr(direction + '.normalizeOutput', 1)
+    cmds.connectAttr(_vector_op(name + '_Direction_PlusMinusAverage', _world_position(end_loc), _world_position(start_loc), 2),
+                     direction + '.input1')
+    soft_goal = _vector_op(name + '_SoftGoal_PlusMinusAverage', goal + '.outputTranslate',
+                           _vector_scale(name + '_Pull_MultiplyDivide', direction + '.output', pull), 2)
+    compose = cmds.createNode('composeMatrix', n=name + '_SoftGoal_ComposeMatrix')
+    cmds.connectAttr(soft_goal, compose + '.inputTranslate')
+    _connect_channels(name, ik_handle, compose + '.outputMatrix', ['translateX', 'translateY', 'translateZ'], 'translate')
+
+
+# -------------------------
+# Limb global scale
+
+def scale_around(node, follow, scale_ctrl):
+    """node follows 'follow' (like a parent + scale constraint) and is scaled by scale_ctrl own scale around
+    scale_ctrl current world position, so it does not inherit where scale_ctrl moves, only its scale."""
+    parent = cmds.listRelatives(node, p=True)[0]
+    name = node + '_ScaleAround'
+    pivot = cmds.createNode('composeMatrix', n=name + '_Pivot_ComposeMatrix')
+    cmds.connectAttr(_world_position(scale_ctrl), pivot + '.inputTranslate')
+    pivot_inverse = cmds.createNode('inverseMatrix', n=name + '_Pivot_InverseMatrix')
+    cmds.connectAttr(pivot + '.outputMatrix', pivot_inverse + '.inputMatrix')
+    scale = cmds.createNode('composeMatrix', n=name + '_Scale_ComposeMatrix')
+    cmds.connectAttr(scale_ctrl + '.scale', scale + '.inputScale')
+    rest = _world(parent) * _world(follow).inverse()
+    offset = _mult_matrix(name + '_MultMatrix', [rest, follow + '.worldMatrix[0]', pivot_inverse + '.outputMatrix',
+                                                 scale + '.outputMatrix', pivot + '.outputMatrix',
+                                                 parent + '.worldInverseMatrix[0]'])
+    cmds.connectAttr(offset, node + '.offsetParentMatrix', f=True)
+
+
+# -------------------------
 # Studio orients: same result as the Custom_Biped_Orients block (FixArms / FixLegs), so limbs do not need it.
 
 SN_ORIENTS = {'Arms': [[-90, -90, 0], [-90, -90, 0], [0, 0, -90]],
@@ -651,8 +785,7 @@ def apply_custom_orients(ctrls, rotates, right_ctrls):
 # it scales the bind joints around it instead, uniform or non uniform, axes matched to the joints at rest.
 
 def _inverse_scale_matrix(ctrl):
-    node = ctrl + '_InverseScale_ComposeMatrix'
-    if not cmds.objExists(node):
+    def create():
         # clamp so scaling a controller to 0 never divides by zero
         clamp = cmds.createNode('clamp', n=ctrl + '_InverseScale_Clamp')
         cmds.setAttr(clamp + '.min', 0.001, 0.001, 0.001)
@@ -662,17 +795,16 @@ def _inverse_scale_matrix(ctrl):
         cmds.setAttr(divide + '.operation', 2)
         cmds.setAttr(divide + '.input1', 1, 1, 1)
         cmds.connectAttr(clamp + '.output', divide + '.input2')
-        cmds.createNode('composeMatrix', n=node)
-        cmds.connectAttr(divide + '.output', node + '.inputScale')
-    return node + '.outputMatrix'
+        compose = cmds.createNode('composeMatrix', n=ctrl + '_InverseScale_ComposeMatrix')
+        cmds.connectAttr(divide + '.output', compose + '.inputScale')
+        return compose + '.outputMatrix'
+    return _cached(('inverse_scale', ctrl), create)
 
 
 def _unscaled_world(ctrl):
     """World matrix of a controller without its own scale (its parents scale is kept)."""
-    node = ctrl + '_Unscaled_MultMatrix'
-    if cmds.objExists(node):
-        return node + '.matrixSum'
-    return _mult_matrix(node, [_inverse_scale_matrix(ctrl), ctrl + '.worldMatrix[0]'])
+    return _cached(('unscaled_world', ctrl), lambda: _mult_matrix(
+        ctrl + '_Unscaled_MultMatrix', [_inverse_scale_matrix(ctrl), ctrl + '.worldMatrix[0]']))
 
 
 def _axis_map(ctrl_matrix, joint_matrix):
@@ -836,6 +968,7 @@ def build_limb_block():
     nc, curve_data, setup = mt.import_configs()
 
     mt.check_is_there_is_base()
+    _BUILD_CACHE.clear()
     # constraints made before this block (base rig, other blocks) are left alone
     old_constraints = set(cmds.ls(type='constraint'))
     old_follicles = set(cmds.ls(type='follicle'))
@@ -890,6 +1023,12 @@ def build_limb_block():
         scale_tweak_ctrls = cmds.getAttr('{}.ScaleTweakCtrls'.format(config))
     else:
         scale_tweak_ctrls = False
+
+    # Arms Soft IK only when the block asks for it (off by default, older blocks do not have the attr)
+    if cmds.attributeQuery('ArmsSoftIk', n=config, exists=True):
+        use_arms_soft_ik = cmds.getAttr('{}.ArmsSoftIk'.format(config))
+    else:
+        use_arms_soft_ik = False
 
     # Default: Mutant orients, SN: studio orients (what the Custom_Biped_Orients block did for limbs)
     if cmds.attributeQuery('Orients', n=config, exists=True):
@@ -1019,6 +1158,11 @@ def build_limb_block():
         switch_shapes.append(switch_locator)
 
         fk_ctrl = ikfk['ik_fk'][3][0]
+
+        # Arms Soft IK (legs use the LegSoftIK block): 0 off, 10 = soft zone of 20% of the arm length
+        soft_ik_attr = None
+        if mode == 'Arms' and use_arms_soft_ik:
+            soft_ik_attr = mt.new_attr(input=switch_locator, name='ArmsSoftIk', min=0, max=10, default=0)
         fk_offset = ikfk['ik_fk'][5][0]
         fk_root, fk_auto = mt.root_grp(input=ikfk['ik_fk'][3][0], autoRoot=True)
 
@@ -1725,11 +1869,12 @@ def build_limb_block():
 
         # the right side is built on the left and flipped, so the global scale controller is placed now, on the
         # final limb start, and the controllers follow it from here
+        # it follows the block parent (clavicle / parent locator), the rig scale comes from the Global
         cmds.delete(cmds.parentConstraint(ikfk['ik_fk'][0][0], limb_global_root, mo=False))
-        cmds.parentConstraint('Rig_Ctrl_Grp', limb_global_root, mo=True)
+        cmds.parentConstraint(block_parent, limb_global_root, mo=True)
         cmds.scaleConstraint('Rig_Ctrl_Grp', limb_global_root, mo=True)
-        cmds.parentConstraint(limb_global_ctrl, clean_ctrl_grp, mo=True)
-        cmds.scaleConstraint(limb_global_ctrl, clean_ctrl_grp, mo=True)
+        # controllers keep following the rig (ik stays in world), they only get scaled around the scale controller
+        scale_around(clean_ctrl_grp, 'Rig_Ctrl_Grp', limb_global_ctrl)
 
         upper_count = len(top_ribbon['fol_joints'] if create_ribbons else ikfk['upper_twist']['joints'])
         limbs_data.append({'mode': mode, 'right': side_guide.startswith(nc['right']),
@@ -1740,7 +1885,10 @@ def build_limb_block():
                            'ribbons': [top_ribbon, low_ribbon] if create_ribbons else None,
                            'tweak_ctrls': top_ribbon['ribbon_ctrls'] + low_ribbon['ribbon_ctrls'] if create_ribbons else [],
                            'main_joints': ikfk['ik_fk'][0], 'mid_ctrl': main_mid_ctrl if create_ribbons else None,
-                           'curve_attrs': curve_attrs if create_ribbons else None})
+                           'curve_attrs': curve_attrs if create_ribbons else None,
+                           'soft_ik_attr': soft_ik_attr, 'ik_handle': ikfk['ik_fk'][4][3], 'ik_joints': ikfk['ik_fk'][1],
+                           'stretch_data': ikfk['ik_fk'][4][5], 'rig_scale': limb_scale_node + '.outputScaleX',
+                           'lengths': (switch_locator + '.Upper_Length', switch_locator + '.Lower_Length')})
 
     # studio orients for the fk controllers
     if orients == 'SN':
@@ -1850,6 +1998,13 @@ def build_limb_block():
     kept = constraints_to_matrix(new_constraints, unscaled_targets=set(scaled_ctrls))
     replaced = len([c for c in new_constraints if not cmds.objExists(c)])
     print('Limb matrix swap: {} constraints replaced, {} kept {}'.format(replaced, len(kept), kept))
+
+    # arms soft ik, after the swap: it moves the ik handle from its matrix driver
+    for data in limbs_data:
+        if data['soft_ik_attr']:
+            arms_soft_ik(data['ik_handle'].replace(nc['ik_rp'], '_SoftIk'), data['ik_handle'], data['ik_joints'],
+                         data['stretch_data'], data['soft_ik_attr'], data['lengths'][0], data['lengths'][1],
+                         data['rig_scale'])
 
     # bind joints get the controllers scale (after the swap, it multiplies into their scale channels)
     for data in limbs_data:
