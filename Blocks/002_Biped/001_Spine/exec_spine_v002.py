@@ -209,6 +209,82 @@ def _follow_blend(node, driver_a, driver_b, weight, name):
     return _blend_matrix(name + '_BlendMatrix', carry_a, carry_b, weight)
 
 
+def _plug_or_value(node_attr, value):
+    if isinstance(value, str):
+        cmds.connectAttr(value, node_attr, f=True)
+    else:
+        cmds.setAttr(node_attr, value)
+
+
+def _mult(name, a, b):
+    """a * b, plugs or numbers. Returns the output plug."""
+    node = cmds.createNode('multDoubleLinear', n=name)
+    _plug_or_value(node + '.input1', a)
+    _plug_or_value(node + '.input2', b)
+    return node + '.output'
+
+
+def _add(name, a, b):
+    node = cmds.createNode('addDoubleLinear', n=name)
+    _plug_or_value(node + '.input1', a)
+    _plug_or_value(node + '.input2', b)
+    return node + '.output'
+
+
+def _divide(name, a, b):
+    node = cmds.createNode('multiplyDivide', n=name)
+    cmds.setAttr(node + '.operation', 2)
+    _plug_or_value(node + '.input1X', a)
+    _plug_or_value(node + '.input2X', b)
+    return node + '.outputX'
+
+
+def _lerp(name, a, b, weight):
+    """a when weight is 0, b when weight is 1 (plugs or numbers)."""
+    node = cmds.createNode('blendTwoAttr', n=name)
+    _plug_or_value(node + '.input[0]', a)
+    _plug_or_value(node + '.input[1]', b)
+    _plug_or_value(node + '.attributesBlender', weight)
+    return node + '.output'
+
+
+def _greater_pick(name, first, second, if_true, if_false):
+    """if_true when first > second, else if_false (plugs or numbers)."""
+    node = cmds.createNode('condition', n=name)
+    cmds.setAttr(node + '.operation', 2)
+    _plug_or_value(node + '.firstTerm', first)
+    _plug_or_value(node + '.secondTerm', second)
+    _plug_or_value(node + '.colorIfTrueR', if_true)
+    _plug_or_value(node + '.colorIfFalseR', if_false)
+    return node + '.outColorR'
+
+
+def _no_twist_frame(ctrl, name, parent_plug=None):
+    """Orientation of a controller without its own rotateY (twist), so twist can be read from the channel
+    instead, which keeps going past 180 degrees."""
+    compose = cmds.createNode('composeMatrix', n=name + '_NoTwist_ComposeMatrix')
+    cmds.connectAttr(ctrl + '.rotateX', compose + '.inputRotateX')
+    cmds.connectAttr(ctrl + '.rotateZ', compose + '.inputRotateZ')
+    cmds.connectAttr(ctrl + '.rotateOrder', compose + '.inputRotateOrder')
+    return _mult_matrix(name + '_NoTwist_MultMatrix',
+                        [compose + '.outputMatrix', parent_plug or ctrl + '.parentMatrix[0]'])
+
+
+def _dag_path(node):
+    selection = om.MSelectionList()
+    selection.add(node)
+    return selection.getDagPath(0)
+
+
+def _path_point(name, curve_shape, u_value):
+    """World position at a fraction of the curve arc length (motionPath in fraction mode)."""
+    motion_path = cmds.createNode('motionPath', n=name + '_MotionPath')
+    cmds.connectAttr(curve_shape + '.worldSpace[0]', motion_path + '.geometryPath')
+    cmds.setAttr(motion_path + '.fractionMode', 1)
+    _plug_or_value(motion_path + '.uValue', u_value)
+    return _compose_translate(name + '_Path_ComposeMatrix', motion_path + '.allCoordinates')
+
+
 def _lerp_profile(profile, g):
     low = min(int(g), len(profile) - 2)
     return profile[low] + (profile[low + 1] - profile[low]) * (g - low)
@@ -474,20 +550,25 @@ def build_spine_block():
                                       spine_ik_ctrls[3] + '_Follow'),
                         spine_ik_ctrls[3] + '_Follow_OffsetMatrix')
 
-    # Mid twist: belly ik root takes its Y rotation from a blend between bottom and top iks
+    # Pivot slide: moves the bottom/top ik rotate pivot towards the belly (1 = at the belly)
+    for ctrl in [base_ik_ctrl, chest_ctrl]:
+        pivot_attr = mt.new_attr(input=ctrl, name='PivotSlide', min=-1, max=1, default=0)
+        to_belly = om.MPoint(*guide_pos[2]) * ctrls_rest[ctrl].inverse()
+        pivot_md = cmds.createNode('multiplyDivide', n=ctrl + '_PivotSlide_MultiplyDivide')
+        cmds.setAttr(pivot_md + '.input1', to_belly.x, to_belly.y, to_belly.z)
+        for axis in 'XYZ':
+            cmds.connectAttr(pivot_attr, '{}.input2{}'.format(pivot_md, axis))
+        cmds.connectAttr(pivot_md + '.output', ctrl + '.rotatePivot')
+
+    # Twist is read from the bottom/top ik rotateY channels so it keeps going past 180 degrees,
+    # the belly ik gets a twist group driven by a blend of both channels.
     mt.line_attr(input=spine_attrs_loc, name='Twist')
     mid_twist_attr = mt.new_attr(input=spine_attrs_loc, name='MidTwist', min=0, max=1, default=0.5)
 
-    belly_ik_root = cmds.listRelatives(spine_ik_ctrls[2], p=True)[0]
-    mid_twist_world = _follow_blend(belly_ik_root, base_ik_ctrl, chest_ctrl, mid_twist_attr,
-                                    spine_ik_ctrls[2] + '_MidTwist')
-    belly_ik_parent = cmds.listRelatives(belly_ik_root, p=True)[0]
-    mid_twist_local = _mult_matrix(spine_ik_ctrls[2] + '_MidTwist_Local_MultMatrix',
-                                   [mid_twist_world, belly_ik_parent + '.worldInverseMatrix[0]',
-                                    _scale_matrix(belly_ik_parent)])
-    mid_twist_decompose = cmds.createNode('decomposeMatrix', n=spine_ik_ctrls[2] + '_MidTwist_DecomposeMatrix')
-    cmds.connectAttr(mid_twist_local, mid_twist_decompose + '.inputMatrix')
-    cmds.connectAttr(mid_twist_decompose + '.outputRotateY', belly_ik_root + '.rotateY')
+    belly_twist_grp = mt.root_grp(input=spine_ik_ctrls[2], custom=True,
+                                  custom_name='{}_Belly_IK_Twist{}'.format(name, nc['group']))[0]
+    cmds.connectAttr(_lerp(name + '_MidTwist_BlendTwoAttr', base_ik_ctrl + '.rotateY', chest_ctrl + '.rotateY',
+                           mid_twist_attr), belly_twist_grp + '.rotateY')
 
     # global scale matrix, shared by everything that lives in world space
     global_scale_node = cmds.createNode('composeMatrix', n=name + '_GlobalScale_ComposeMatrix')
@@ -508,47 +589,92 @@ def build_spine_block():
         guide_params.append(cmds.getAttr('{}.result.parameter'.format(near_point_node)))
     cmds.delete(near_point_node)
 
-    # rest of the guide chain is not needed anymore, joints get rebuilt flat with the same names
+    # rest of the guide chain is not needed anymore
     cmds.delete(new_guide)
 
     joints_grp = cmds.group(em=True, n=name + '_Joints' + nc['group'], p=clean_rig_grp)
     cmds.setAttr(joints_grp + '.inheritsTransform', 0)
 
+    # Stretch and squash: SSMultiplier 0 keeps the spine length and volume, 1 is the normal effect and
+    # higher values push the volume change further (length can not go past the curve). Joints sit at arc
+    # length fractions of the curve, so when they do not stretch they slide along it.
+    # one section for stretch and squash
+    mt.line_attr(input=spine_attrs_loc, name='StretchSquash')
+    ss_multiplier_attr = mt.new_attr(input=spine_attrs_loc, name='SSMultiplier', min=0, max=10, default=1)
+    stretch_clamp = cmds.createNode('clamp', n=name + '_Stretch_Clamp')
+    cmds.setAttr(stretch_clamp + '.maxR', 1)
+    cmds.connectAttr(ss_multiplier_attr, stretch_clamp + '.inputR')
+    stretch_attr = stretch_clamp + '.outputR'
+
+    curve_info_node = cmds.createNode('curveInfo', n=name + '_CurveInfo')
+    cmds.connectAttr('{}.worldSpace[0]'.format(spine_cv_shape), '{}.inputCurve'.format(curve_info_node))
+    current_length = _divide(name + '_Normalize', curve_info_node + '.arcLength', global_ctrl + '.scaleX')
+    rest_length = cmds.getAttr(current_length)
+
+    stretched_length = _add(name + '_Stretch_Add', rest_length,
+                            _mult(name + '_Stretch_Mult', _add(name + '_Excess_Add', current_length, -rest_length),
+                                  stretch_attr))
+    spine_length = _greater_pick(name + '_Stretch_Condition', current_length, rest_length,
+                                 stretched_length, current_length)
+    length_ratio = _divide(name + '_LengthRatio', spine_length, current_length)
+
+    curve_fn = om.MFnNurbsCurve(_dag_path(spine_cv_shape))
+    total_length = curve_fn.length()
+    fractions = [curve_fn.findLengthFromParam(_lerp_profile(guide_params, g)) / total_length for g, label in layout]
+
+    # driver joints (internal), the Spine_*_Jnt names are the output joints built at the end
     driver_joints = []
     curve_points = []
+    ahead_points = []
     rest_matrices = []
-    for g, label in layout:
-        jnt = cmds.createNode('joint', n='{}_{}{}'.format(name, label, nc['joint']), p=joints_grp)
+    last = len(layout) - 1
+    for j, (g, label) in enumerate(layout):
+        jnt = cmds.createNode('joint', n='{}_{}_Drv{}'.format(name, label, nc['joint']), p=joints_grp)
+        cmds.setAttr(jnt + '.drawStyle', 2)
         driver_joints.append(jnt)
 
-        poci = cmds.createNode('pointOnCurveInfo', n=jnt.replace(nc['joint'], '_POCI'))
-        cmds.connectAttr('{}.worldSpace[0]'.format(spine_cv_shape), '{}.inputCurve'.format(poci))
-        cmds.setAttr('{}.parameter'.format(poci), _lerp_profile(guide_params, g))
-        curve_points.append(_compose_translate(jnt.replace(nc['joint'], '_POCI_ComposeMatrix'),
-                                               poci + '.result.position'))
+        point = ahead = None
+        if j > 0:
+            u_value = _mult(jnt + '_U_Mult', length_ratio, fractions[j])
+            point = _path_point(jnt, spine_cv_shape, u_value)
+            if j < last:
+                # a point a bit further along the curve gives the tangent, it keeps turning smoothly
+                # even when the spine curls over itself
+                ahead = _path_point(jnt + '_Ahead', spine_cv_shape, _add(jnt + '_Ahead_Add', u_value, 0.01))
+        curve_points.append(point)
+        ahead_points.append(ahead)
 
         # rest orientation from the guide segment, joints on a guide sit on the guide, in-betweens on the curve
         rest = om.MTransformationMatrix(guide_rest[min(int(g), 4)])
         if g == int(g):
             position = guide_pos[int(g)]
         else:
-            position = cmds.getAttr(poci + '.result.position')[0]
+            position = cmds.getAttr(point.split('.')[0] + '.inputTranslate')[0]
         rest.setTranslation(om.MVector(*position), om.MSpace.kWorld)
         rest_matrices.append(rest.asMatrix())
 
-    # Up vectors come from the orientation of bottom ik, belly ik and top ik (not from positions),
-    # so moving the iks around never adds twist, only rotating them does.
-    twist_anchors = {}
-    for g_anchor, anchor in {0: base_ik_ctrl, 2: spine_ik_ctrls[2], 4: chest_ctrl}.items():
-        twist_anchors[g_anchor] = _no_scale(anchor + '_Twist_PickMatrix', anchor + '.worldMatrix[0]')
+    # Up vectors come from the orientation of bottom ik, belly ik and top ik without their own twist
+    # (moving the iks never adds twist), the twist is added from their rotateY channels.
+    twist_anchors = {0: _no_twist_frame(base_ik_ctrl, base_ik_ctrl),
+                     2: _no_twist_frame(spine_ik_ctrls[2], spine_ik_ctrls[2], belly_twist_grp + '.parentMatrix[0]'),
+                     4: _no_twist_frame(chest_ctrl, chest_ctrl)}
+    twist_values = {0: base_ik_ctrl + '.rotateY',
+                    2: _add(name + '_BellyTwist_Add', belly_twist_grp + '.rotateY', spine_ik_ctrls[2] + '.rotateY'),
+                    4: chest_ctrl + '.rotateY'}
 
     for j, (g, label) in enumerate(layout):
         jnt = driver_joints[j]
 
-        if j == 0 or j == len(layout) - 1:
-            # Root and End take their orientation from their ik controllers, no aim, so they can not flip
-            ik_ctrl = spine_ik_ctrls[0] if j == 0 else spine_ik_ctrls[-1]
-            source = _no_scale(jnt + '_PickMatrix', ik_ctrl + '.worldMatrix[0]')
+        if j == 0:
+            # Root takes its orientation from its ik controller, no aim, so it can not flip
+            source = _no_scale(jnt + '_PickMatrix', spine_ik_ctrls[0] + '.worldMatrix[0]')
+        elif j == last:
+            # End: position along the curve (it respects Stretch), orientation from its ik controller
+            rotation = cmds.createNode('pickMatrix', n=jnt + '_Rotate_PickMatrix')
+            cmds.connectAttr(spine_ik_ctrls[-1] + '.worldMatrix[0]', rotation + '.inputMatrix')
+            for flag in ['useTranslate', 'useScale', 'useShear']:
+                cmds.setAttr('{}.{}'.format(rotation, flag), 0)
+            source = _mult_matrix(jnt + '_End_MultMatrix', [rotation + '.outputMatrix', curve_points[j]])
         else:
             # up frame is world aligned at rest, -Z (back) is the up direction
             up_rest = om.MMatrix()
@@ -556,20 +682,26 @@ def build_spine_block():
             carry_low = _carry(jnt + '_Up_A_MultMatrix', up_rest, twist_anchors[low])
             if g == low:
                 up_plug = carry_low
+                twist = twist_values[low]
             else:
                 carry_high = _carry(jnt + '_Up_B_MultMatrix', up_rest, twist_anchors[low + 2])
                 up_plug = _blend_matrix(jnt + '_Up_BlendMatrix', carry_low, carry_high, (g - low) / 2.0)
+                twist = _lerp(jnt + '_Twist_BlendTwoAttr', twist_values[low], twist_values[low + 2], (g - low) / 2.0)
 
             aim = cmds.createNode('aimMatrix', n=jnt + '_AimMatrix')
             cmds.connectAttr(curve_points[j], aim + '.inputMatrix')
-            cmds.connectAttr(curve_points[j + 1], aim + '.primaryTargetMatrix')
+            cmds.connectAttr(ahead_points[j], aim + '.primaryTargetMatrix')
             cmds.connectAttr(up_plug, aim + '.secondaryTargetMatrix')
             cmds.setAttr(aim + '.primaryInputAxis', 0, 1, 0)
             cmds.setAttr(aim + '.secondaryInputAxis', 0, 0, -1)
             cmds.setAttr(aim + '.secondaryTargetVector', 0, 0, -1)
             cmds.setAttr(aim + '.primaryMode', 1)
             cmds.setAttr(aim + '.secondaryMode', 2)
-            source = aim + '.outputMatrix'
+
+            # twist around the aim axis
+            twist_compose = cmds.createNode('composeMatrix', n=jnt + '_Twist_ComposeMatrix')
+            cmds.connectAttr(twist, twist_compose + '.inputRotateY')
+            source = _mult_matrix(jnt + '_Twist_MultMatrix', [twist_compose + '.outputMatrix', aim + '.outputMatrix'])
 
         scaled_source = _mult_matrix(jnt + '_Scaled_MultMatrix', [global_scale, source])
         offset = rest_matrices[j] * _plug_matrix(scaled_source).inverse()
@@ -578,35 +710,21 @@ def build_spine_block():
         cmds.setAttr(jnt + '.radius', 1)
 
     # ---------------------------------------------------------------------------------
-    # Volumen Preservation
-    curve_info_node = cmds.createNode('curveInfo', n=name + '_CurveInfo')
-    cmds.connectAttr('{}.worldSpace[0]'.format(spine_cv_shape), '{}.inputCurve'.format(curve_info_node))
-    curve_lenght = cmds.getAttr('{}.arcLength'.format(curve_info_node))
+    # Volumen Preservation: scale = (rest length / length) ^ (joint squash * SSMultiplier)
+    squash_ratio = _divide(name + '_Squash_Ratio', rest_length, spine_length)
 
-    # rest length / current length, normalized by the global scale
-    normal_md = cmds.createNode('multiplyDivide', n=name + '_Normalize')
-    cmds.setAttr(normal_md + '.operation', 2)
-    cmds.connectAttr(curve_info_node + '.arcLength', normal_md + '.input1X')
-    cmds.connectAttr(global_ctrl + '.scaleX', normal_md + '.input2X')
-    squash_md = cmds.createNode('multiplyDivide', n=name + '_Squash_MultiplyDivide')
-    cmds.setAttr(squash_md + '.operation', 2)
-    cmds.setAttr(squash_md + '.input1X', curve_lenght)
-    cmds.connectAttr(normal_md + '.outputX', squash_md + '.input2X')
 
-    mt.line_attr(input=spine_attrs_loc, name='Squash')
-
-    squash_remaps = {}
-
+    squash_powers = {}
     for (g, label), jnt in reversed(list(zip(layout, driver_joints))):
-        clean_name = jnt.replace(name, '').replace(nc['joint'], '') + 'Squash'
-        squash_attr = mt.new_attr(input=spine_attrs_loc, name=clean_name, min=0, max=1, default=1)
+        squash_attr = mt.new_attr(input=spine_attrs_loc, name='_{}Squash'.format(label), min=0, max=1, default=1)
         cmds.setAttr(squash_attr, _lerp_profile(SQUASH_PROFILE, g))
 
-        remap_node = cmds.createNode('remapValue', name=jnt + '_RemapValue')
-        cmds.setAttr(remap_node + '.outputMin', 1)
-        cmds.connectAttr(squash_md + '.outputX', remap_node + '.outputMax')
-        cmds.connectAttr(squash_attr, remap_node + '.inputValue')
-        squash_remaps[jnt] = remap_node
+        power = cmds.createNode('multiplyDivide', n='{}_{}_Squash_Power'.format(name, label))
+        cmds.setAttr(power + '.operation', 3)
+        cmds.connectAttr(squash_ratio, power + '.input1X')
+        cmds.connectAttr(_mult('{}_{}_Squash_Mult'.format(name, label), squash_attr, ss_multiplier_attr),
+                         power + '.input2X')
+        squash_powers[jnt] = power + '.outputX'
 
     # Controllers scale: every fk and ik controller scales the joints around it (falloff of one guide),
     # works with uniform and non uniform scale, controller axes are matched to the joint axes at rest.
@@ -639,7 +757,7 @@ def build_spine_block():
         cmds.connectAttr(product, scale_md + '.input1')
         for axis in 'XYZ':
             if axis in squash_axes:
-                cmds.connectAttr(squash_remaps[jnt] + '.outColor.outColorR', '{}.input2{}'.format(scale_md, axis))
+                cmds.connectAttr(squash_powers[jnt], '{}.input2{}'.format(scale_md, axis))
             else:
                 cmds.setAttr('{}.input2{}'.format(scale_md, axis), 1)
         cmds.connectAttr(scale_md + '.output', jnt + '.scale')
@@ -677,7 +795,7 @@ def build_spine_block():
         chest_candidates = [(abs(g - 3), jnt) for (g, label), jnt in zip(layout, driver_joints) if 2 < g < 4]
         chest_jnt = min(chest_candidates)[1] if chest_candidates else None
 
-        breath_lines = []
+        breath_targets = []
         for jnt, amount_attr, prefix in [(belly_jnt, breath_belly, 'Belly'), (chest_jnt, breath_chest, 'Chest')]:
             if not jnt:
                 continue
@@ -688,25 +806,57 @@ def build_spine_block():
             add_yz_output = mt.get_add_double_linear_attrs(add_yz)[2]
             cmds.connectAttr('{}.{}'.format(add_yz, add_yz_output), '{}.input2{}'.format(scale_mds[jnt], squash_axes[1]), f=True)
             for node in [add_x, add_yz]:
-                breath_lines.append('{}.{} = $breath * 0.07 *{};'.format(
-                    node, mt.get_add_double_linear_attrs(node)[1], amount_attr))
+                breath_targets.append(('{}.{}'.format(node, mt.get_add_double_linear_attrs(node)[1]), amount_attr))
 
-        # breathing expression
-        breath_exp = cmds.expression(n=name + '_breath' + nc['expression'],
-                                     s="""//Breath_attrs
-                                            $freq = {}/2;
-                                            $amount = {} * {};
-                                            $breath = sin(time*$freq)*$amount;
-                                            //Apply_it_to_the_nodes
-                                            {}
-                                            {}.rotateX = -1 * sin(time*$freq*$amount)*$amount*{}-{}/2;
-                                            """.format(breath_frequency,
-                                                       breath_amount,
-                                                       breath_auto,
-                                                       '\n'.join(breath_lines),
-                                                       chest_offset, chest_rotate, chest_rotate
-                                                       ).replace(' ', '')
-                                     )
+        # breathing with math nodes, an expression would slow down and break parallel evaluation
+        try:
+            sin_test = cmds.createNode('sin')
+            cmds.delete(sin_test)
+            has_sin_node = True
+        except RuntimeError:
+            has_sin_node = False
+
+        if has_sin_node:
+            def sin_degrees(node_name, degrees_plug):
+                node = cmds.createNode('sin', n=node_name)
+                cmds.connectAttr(degrees_plug, node + '.input')
+                return node + '.output'
+
+            # time1 comes in frames, the breath is tuned in seconds
+            seconds = _divide(name + '_Breath_Seconds', 'time1.outTime', mel.eval('currentTimeUnitToFPS()'))
+            frequency = _mult(name + '_Breath_Frequency', breath_frequency, 0.5)
+            amount = _mult(name + '_Breath_Amount', breath_amount, breath_auto)
+            # the sin node works in degrees
+            phase = _mult(name + '_Breath_Phase_Degrees',
+                          _mult(name + '_Breath_Phase', seconds, frequency), 57.2957795)
+            breath_value = _mult(name + '_Breath_Value', sin_degrees(name + '_Breath_Sin', phase), amount)
+            breath_value = _mult(name + '_Breath_Scaled', breath_value, 0.07)
+            for num, (target, amount_attr) in enumerate(breath_targets):
+                cmds.connectAttr(_mult('{}_Breath_Target{:02d}_Mult'.format(name, num), breath_value, amount_attr),
+                                 target, f=True)
+
+            chest_sin = sin_degrees(name + '_ChestBreath_Sin', _mult(name + '_ChestBreath_Phase', phase, amount))
+            chest_rotation = _mult(name + '_ChestBreath_Rotate',
+                                   _mult(name + '_ChestBreath_Amount', chest_sin, amount), chest_rotate)
+            cmds.connectAttr(_mult(name + '_ChestBreath_Negate', chest_rotation, -1), chest_offset + '.rotateX')
+        else:
+            breath_lines = ['{} = $breath * 0.07 *{};'.format(target, amount_attr)
+                            for target, amount_attr in breath_targets]
+            breath_exp = cmds.expression(n=name + '_breath' + nc['expression'],
+                                         s="""//Breath_attrs
+                                                $freq = {}/2;
+                                                $amount = {} * {};
+                                                $breath = sin(time*$freq)*$amount;
+                                                //Apply_it_to_the_nodes
+                                                {}
+                                                {}.rotateX = -1 * sin(time*$freq*$amount)*$amount*{};
+                                                """.format(breath_frequency,
+                                                           breath_amount,
+                                                           breath_auto,
+                                                           '\n'.join(breath_lines),
+                                                           chest_offset, chest_rotate
+                                                           ).replace(' ', '')
+                                         )
 
     # ---------------------------------------------------------------------------------
     # Tweakers: one extra controller per joint between the driver joints and the bind joints,
@@ -717,11 +867,11 @@ def build_spine_block():
         tweakers_grp = cmds.group(em=True, n=name + '_Tweakers' + nc['group'], p=clean_ctrl_grp)
         cmds.setAttr(tweakers_grp + '.inheritsTransform', 0)
 
-        for jnt in driver_joints:
+        for (g, label), jnt in zip(layout, driver_joints):
             ctrl = mt.curve(input=jnt,
                             type='circle' + twist_axis,
                             rename=True,
-                            custom_name=True, name=jnt.replace(nc['joint'], '_Tweak' + nc['ctrl']),
+                            custom_name=True, name='{}_{}_Tweak{}'.format(name, label, nc['ctrl']),
                             size=ctrl_size * 1.1
                             )
             mt.assign_color(ctrl, 'pink')
@@ -748,10 +898,10 @@ def build_spine_block():
 
     # bind joints, driven by decomposed matrices so the values stay on t/r/s for game export
     bind_joints = []
-    for jnt, source in zip(driver_joints, bind_sources):
+    for (g, label), source in zip(layout, bind_sources):
         parent = bind_joints[-1] if bind_joints else None
-        bind_joint = cmds.createNode('joint', n=jnt.replace(nc['joint'], nc['joint_bind']), p=parent) if parent \
-            else cmds.createNode('joint', n=jnt.replace(nc['joint'], nc['joint_bind']))
+        bind_name = '{}_{}{}'.format(name, label, nc['joint_bind'])
+        bind_joint = cmds.createNode('joint', n=bind_name, p=parent) if parent else cmds.createNode('joint', n=bind_name)
         cmds.setAttr('{}.segmentScaleCompensate'.format(bind_joint), 0)
         cmds.setAttr('{}.inheritsTransform'.format(bind_joint), 0)
         cmds.setAttr('{}.radius'.format(bind_joint), 2)
@@ -763,6 +913,15 @@ def build_spine_block():
         cmds.connectAttr(decompose + '.outputRotate', bind_joint + '.rotate')
         cmds.connectAttr(decompose + '.outputScale', bind_joint + '.scale')
         bind_joints.append(bind_joint)
+
+    # output joints: same result as the bind joints (tweakers and controllers scale included),
+    # other blocks parent to these (Spine_End_Jnt...) so they follow everything the spine does
+    output_joints = []
+    for (g, label), source in zip(layout, bind_sources):
+        output_joint = cmds.createNode('joint', n='{}_{}{}'.format(name, label, nc['joint']), p=joints_grp)
+        cmds.connectAttr(source, output_joint + '.offsetParentMatrix')
+        cmds.setAttr(output_joint + '.radius', 1)
+        output_joints.append(output_joint)
 
     # game parents for bind joints
     if cmds.objExists(game_parent):
