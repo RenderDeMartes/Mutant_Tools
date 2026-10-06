@@ -701,6 +701,27 @@ def arms_soft_ik(name, ik_handle, ik_joints, stretch_data, soft_attr, upper_leng
 
 
 # -------------------------
+# Limb global scale
+
+def scale_around(node, follow, scale_ctrl):
+    """node follows 'follow' (like a parent + scale constraint) and is scaled by scale_ctrl own scale around
+    scale_ctrl current world position, so it does not inherit where scale_ctrl moves, only its scale."""
+    parent = cmds.listRelatives(node, p=True)[0]
+    name = node + '_ScaleAround'
+    pivot = cmds.createNode('composeMatrix', n=name + '_Pivot_ComposeMatrix')
+    cmds.connectAttr(_world_position(scale_ctrl), pivot + '.inputTranslate')
+    pivot_inverse = cmds.createNode('inverseMatrix', n=name + '_Pivot_InverseMatrix')
+    cmds.connectAttr(pivot + '.outputMatrix', pivot_inverse + '.inputMatrix')
+    scale = cmds.createNode('composeMatrix', n=name + '_Scale_ComposeMatrix')
+    cmds.connectAttr(scale_ctrl + '.scale', scale + '.inputScale')
+    rest = _world(parent) * _world(follow).inverse()
+    offset = _mult_matrix(name + '_MultMatrix', [rest, follow + '.worldMatrix[0]', pivot_inverse + '.outputMatrix',
+                                                 scale + '.outputMatrix', pivot + '.outputMatrix',
+                                                 parent + '.worldInverseMatrix[0]'])
+    cmds.connectAttr(offset, node + '.offsetParentMatrix', f=True)
+
+
+# -------------------------
 # Studio orients: same result as the Custom_Biped_Orients block (FixArms / FixLegs), so limbs do not need it.
 
 SN_ORIENTS = {'Arms': [[-90, -90, 0], [-90, -90, 0], [0, 0, -90]],
@@ -1832,11 +1853,12 @@ def build_limb_block():
 
         # the right side is built on the left and flipped, so the global scale controller is placed now, on the
         # final limb start, and the controllers follow it from here
+        # it follows the block parent (clavicle / parent locator), the rig scale comes from the Global
         cmds.delete(cmds.parentConstraint(ikfk['ik_fk'][0][0], limb_global_root, mo=False))
-        cmds.parentConstraint('Rig_Ctrl_Grp', limb_global_root, mo=True)
+        cmds.parentConstraint(block_parent, limb_global_root, mo=True)
         cmds.scaleConstraint('Rig_Ctrl_Grp', limb_global_root, mo=True)
-        cmds.parentConstraint(limb_global_ctrl, clean_ctrl_grp, mo=True)
-        cmds.scaleConstraint(limb_global_ctrl, clean_ctrl_grp, mo=True)
+        # controllers keep following the rig (ik stays in world), they only get scaled around the scale controller
+        scale_around(clean_ctrl_grp, 'Rig_Ctrl_Grp', limb_global_ctrl)
 
         upper_count = len(top_ribbon['fol_joints'] if create_ribbons else ikfk['upper_twist']['joints'])
         limbs_data.append({'mode': mode, 'right': side_guide.startswith(nc['right']),
