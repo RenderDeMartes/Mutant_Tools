@@ -3,7 +3,6 @@ from maya import cmds
 import maya.mel as mel
 import maya.api.OpenMaya as om
 import json
-import math
 try:
     import importlib;from importlib import reload
 except:
@@ -606,101 +605,6 @@ def bendy_move(name, ctrl):
 
 
 # -------------------------
-# Arms Soft IK: same math as the LegSoftIK block, but the IK handle is pulled back along the real
-# shoulder -> goal direction (the leg block uses the ankle group Y axis, only right for legs).
-#   softD = D                                  if D <= L - s
-#           L - s * e^(-(D - (L - s)) / s)     if D >  L - s
-#   no stretch: the handle moves back D - softD, the arm eases to straight instead of popping
-#   stretch:    stretch starts at L - s with a D / softD factor, the hand stays on the controller
-# D and L in normalized units (rig scale removed), L uses Upper/Lower_Length, s = ArmsSoftIk * 2% of L.
-
-SOFT_IK_RANGE = 0.02  # ArmsSoftIk 10 = soft zone of 20% of the arm length
-
-
-def _clamp(name, value, low, high):
-    node = cmds.createNode('clamp', n=name)
-    cmds.setAttr(node + '.minR', low)
-    cmds.setAttr(node + '.maxR', high)
-    _plug_or_value(node + '.inputR', value)
-    return node + '.outputR'
-
-
-def _divide_scalar(name, a, b):
-    node = cmds.createNode('multiplyDivide', n=name)
-    cmds.setAttr(node + '.operation', 2)
-    _plug_or_value(node + '.input1X', a)
-    _plug_or_value(node + '.input2X', b)
-    return node + '.outputX'
-
-
-def arms_soft_ik(name, ik_handle, ik_joints, stretch_data, soft_attr, upper_length, lower_length, rig_scale):
-    """Soft IK on an arm built with streatchy_ik. rig_scale: plug of the limb world scale (X)."""
-    distance = stretch_data[5]
-    start_loc, end_loc = stretch_data[2][0], stretch_data[3][0]
-    normalized = distance + '_Normalize_MultDiv.outputX'
-    condition = ik_handle + '_Condition'
-
-    # chain length with the length multipliers
-    rest = [abs(cmds.getAttr(j + '.translateX')) for j in ik_joints[1:]]
-    chain = _add(name + '_Chain_AddDoubleLinear', _mult(name + '_Upper_MultDoubleLinear', upper_length, rest[0]),
-                 _mult(name + '_Lower_MultDoubleLinear', lower_length, rest[1]))
-    soft = _mult(name + '_Soft_MultDoubleLinear', _mult(name + '_SoftRange_MultDoubleLinear', soft_attr, SOFT_IK_RANGE), chain)
-    safe_soft = _clamp(name + '_SafeSoft_Clamp', soft, 1e-4, 1e6)
-    threshold = _add(name + '_Threshold_AddDoubleLinear', chain, _mult(name + '_NegSoft_MultDoubleLinear', soft, -1))
-
-    # chain - s * e^(-max(0, D - threshold) / s)
-    over = _clamp(name + '_Over_Clamp', _add(name + '_Over_AddDoubleLinear', normalized,
-                                             _mult(name + '_NegThreshold_MultDoubleLinear', threshold, -1)), 0, 1e6)
-    exponent = _mult(name + '_Exponent_MultDoubleLinear', _divide_scalar(name + '_Exponent_MultiplyDivide', over, safe_soft), -1)
-    power = cmds.createNode('multiplyDivide', n=name + '_Exp_MultiplyDivide')
-    cmds.setAttr(power + '.operation', 3)
-    cmds.setAttr(power + '.input1X', math.e)
-    cmds.connectAttr(exponent, power + '.input2X')
-    soft_exp = _mult(name + '_SoftExp_MultDoubleLinear', soft, power + '.outputX')
-    eased = _add(name + '_Eased_AddDoubleLinear', chain, _mult(name + '_NegSoftExp_MultDoubleLinear', soft_exp, -1))
-    soft_on = cmds.createNode('condition', n=name + '_SoftOn_Condition')
-    cmds.setAttr(soft_on + '.operation', 2)
-    cmds.connectAttr(soft, soft_on + '.firstTerm')
-    cmds.setAttr(soft_on + '.secondTerm', 1e-4)
-    cmds.connectAttr(eased, soft_on + '.colorIfTrueR')
-    cmds.connectAttr(chain, soft_on + '.colorIfFalseR')
-    soft_dist = cmds.createNode('condition', n=name + '_SoftDist_Condition')
-    cmds.setAttr(soft_dist + '.operation', 2)
-    cmds.connectAttr(normalized, soft_dist + '.firstTerm')
-    cmds.connectAttr(threshold, soft_dist + '.secondTerm')
-    cmds.connectAttr(soft_on + '.outColorR', soft_dist + '.colorIfTrueR')
-    cmds.connectAttr(normalized, soft_dist + '.colorIfFalseR')
-    soft_dist += '.outColorR'
-
-    # stretch: starts at the soft threshold, factor D / softD (with no soft it is the old D / L)
-    cmds.connectAttr(threshold, condition + '.secondTerm', f=True)
-    cmds.connectAttr(_divide_scalar(name + '_StretchFactor_MultiplyDivide', normalized, soft_dist),
-                     condition + '.colorIfTrueR', f=True)
-    # no stretch: pull the handle back D - softD towards the shoulder (the stretch condition picks it)
-    cmds.connectAttr(_add(name + '_Pull_AddDoubleLinear', normalized, _mult(name + '_NegSoftDist_MultDoubleLinear', soft_dist, -1)),
-                     condition + '.colorIfFalseG', f=True)
-    cmds.setAttr(condition + '.colorIfTrueG', 0)
-    pull = _mult(name + '_PullWorld_MultDoubleLinear', condition + '.outColorG', rig_scale)
-
-    # goal position from the handle current driver (its world matrix), moved back along shoulder -> goal
-    source = cmds.listConnections(ik_handle + '.translateX', s=True, d=False)[0]
-    local = cmds.listConnections(source + '.inputMatrix', s=True, d=False)[0]
-    world = cmds.listConnections(local + '.matrixIn[0]', s=True, d=False, p=True)[0]
-    goal = cmds.createNode('decomposeMatrix', n=name + '_Goal_DecomposeMatrix')
-    cmds.connectAttr(world, goal + '.inputMatrix')
-    direction = cmds.createNode('vectorProduct', n=name + '_Direction_VectorProduct')
-    cmds.setAttr(direction + '.operation', 0)
-    cmds.setAttr(direction + '.normalizeOutput', 1)
-    cmds.connectAttr(_vector_op(name + '_Direction_PlusMinusAverage', _world_position(end_loc), _world_position(start_loc), 2),
-                     direction + '.input1')
-    soft_goal = _vector_op(name + '_SoftGoal_PlusMinusAverage', goal + '.outputTranslate',
-                           _vector_scale(name + '_Pull_MultiplyDivide', direction + '.output', pull), 2)
-    compose = cmds.createNode('composeMatrix', n=name + '_SoftGoal_ComposeMatrix')
-    cmds.connectAttr(soft_goal, compose + '.inputTranslate')
-    _connect_channels(name, ik_handle, compose + '.outputMatrix', ['translateX', 'translateY', 'translateZ'], 'translate')
-
-
-# -------------------------
 # Studio orients: same result as the Custom_Biped_Orients block (FixArms / FixLegs), so limbs do not need it.
 
 SN_ORIENTS = {'Arms': [[-90, -90, 0], [-90, -90, 0], [0, 0, -90]],
@@ -987,12 +891,6 @@ def build_limb_block():
     else:
         scale_tweak_ctrls = False
 
-    # Arms Soft IK only when the block asks for it (off by default, older blocks do not have the attr)
-    if cmds.attributeQuery('ArmsSoftIk', n=config, exists=True):
-        use_arms_soft_ik = cmds.getAttr('{}.ArmsSoftIk'.format(config))
-    else:
-        use_arms_soft_ik = False
-
     # Default: Mutant orients, SN: studio orients (what the Custom_Biped_Orients block did for limbs)
     if cmds.attributeQuery('Orients', n=config, exists=True):
         orients = cmds.getAttr('{}.Orients'.format(config), asString=True)
@@ -1121,11 +1019,6 @@ def build_limb_block():
         switch_shapes.append(switch_locator)
 
         fk_ctrl = ikfk['ik_fk'][3][0]
-
-        # Arms Soft IK (legs use the LegSoftIK block): 0 off, 10 = soft zone of 20% of the arm length
-        soft_ik_attr = None
-        if mode == 'Arms' and use_arms_soft_ik:
-            soft_ik_attr = mt.new_attr(input=switch_locator, name='ArmsSoftIk', min=0, max=10, default=0)
         fk_offset = ikfk['ik_fk'][5][0]
         fk_root, fk_auto = mt.root_grp(input=ikfk['ik_fk'][3][0], autoRoot=True)
 
@@ -1847,10 +1740,7 @@ def build_limb_block():
                            'ribbons': [top_ribbon, low_ribbon] if create_ribbons else None,
                            'tweak_ctrls': top_ribbon['ribbon_ctrls'] + low_ribbon['ribbon_ctrls'] if create_ribbons else [],
                            'main_joints': ikfk['ik_fk'][0], 'mid_ctrl': main_mid_ctrl if create_ribbons else None,
-                           'curve_attrs': curve_attrs if create_ribbons else None,
-                           'soft_ik_attr': soft_ik_attr, 'ik_handle': ikfk['ik_fk'][4][3], 'ik_joints': ikfk['ik_fk'][1],
-                           'stretch_data': ikfk['ik_fk'][4][5], 'rig_scale': limb_scale_node + '.outputScaleX',
-                           'lengths': (switch_locator + '.Upper_Length', switch_locator + '.Lower_Length')})
+                           'curve_attrs': curve_attrs if create_ribbons else None})
 
     # studio orients for the fk controllers
     if orients == 'SN':
@@ -1960,13 +1850,6 @@ def build_limb_block():
     kept = constraints_to_matrix(new_constraints, unscaled_targets=set(scaled_ctrls))
     replaced = len([c for c in new_constraints if not cmds.objExists(c)])
     print('Limb matrix swap: {} constraints replaced, {} kept {}'.format(replaced, len(kept), kept))
-
-    # arms soft ik, after the swap: it moves the ik handle from its matrix driver
-    for data in limbs_data:
-        if data['soft_ik_attr']:
-            arms_soft_ik(data['ik_handle'].replace(nc['ik_rp'], '_SoftIk'), data['ik_handle'], data['ik_joints'],
-                         data['stretch_data'], data['soft_ik_attr'], data['lengths'][0], data['lengths'][1],
-                         data['rig_scale'])
 
     # bind joints get the controllers scale (after the swap, it multiplies into their scale channels)
     for data in limbs_data:
