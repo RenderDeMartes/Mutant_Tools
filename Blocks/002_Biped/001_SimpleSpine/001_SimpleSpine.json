@@ -3,7 +3,7 @@
     "Description":  "This will create a Simpler IK FK Spine System",
     "Icon":  "SimpleSpine.png",
     "Enable":  "True",
-    "python_file":  "exec_spine_v001.py",
+    "python_file":  "exec_simple_spine.py",
     "import":  "import exec_simple_spine",
     "imp.reload":  "reload(exec_simple_spine)",
     "exec_command":  "exec_simple_spine.create_spine_block()",
