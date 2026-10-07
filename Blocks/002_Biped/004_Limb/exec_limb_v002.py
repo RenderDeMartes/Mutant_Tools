@@ -1966,10 +1966,6 @@ def build_limb_block():
                 items = [(fk_ctrl, fk_on)]
                 if is_upper:
                     items.append((data['top_ik_ctrl'], ik_on))
-                elif t > 1e-4:
-                    items.append((data['fk_ctrls'][2], _weight_plug(jnt + '_WristFkScale_MultDoubleLinear', t, fk_on)))
-                    for ctrl in [data['ik_ctrl'], data['sub_ik_ctrl']]:
-                        items.append((ctrl, _weight_plug('{}_{}Scale_MultDoubleLinear'.format(jnt, ctrl), t, ik_on)))
                 if data['bendy_ctrls']:
                     start_ctrl, end_ctrl = data['bendy_ctrls'][0 if is_upper else 1]
                     if 1 - t > 1e-4:
@@ -1977,6 +1973,11 @@ def build_limb_block():
                     if t > 1e-4:
                         items.append((end_ctrl, t))
                 influences[jnt] = items
+
+        # wrist controllers do not scale the arm, only the wrist joint (the hand follows it)
+        wrist = data['main_joints'][2]
+        influences[wrist] = [(data['fk_ctrls'][2], fk_on)] + [(ctrl, ik_on) for ctrl in [data['ik_ctrl'], data['sub_ik_ctrl']]]
+        data['wrist_joint'] = wrist
 
         # bendy tweakers: each one scales its own bind joint
         for tweak_ctrl, jnt in zip(data['tweak_ctrls'], data['upper_binds'] + data['lower_binds']):
@@ -2008,7 +2009,7 @@ def build_limb_block():
 
     # bind joints get the controllers scale (after the swap, it multiplies into their scale channels)
     for data in limbs_data:
-        scale_bind_joints(data['upper_binds'] + data['lower_binds'], data['scale_influences'])
+        scale_bind_joints(data['upper_binds'] + data['lower_binds'] + [data['wrist_joint']], data['scale_influences'])
 
     # break the switch shape cycle so the limb evaluates in parallel
     for switch_shape in switch_shapes:
