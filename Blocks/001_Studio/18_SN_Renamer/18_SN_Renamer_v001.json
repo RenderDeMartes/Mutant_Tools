@@ -1,7 +1,7 @@
 {
     "Name": "SN_Renamer",
     "Description": "Rename controls to the show naming convention (mapping embedded in the block)",
-    "Icon": "Rename.png",
+    "Icon": "SN_Rename.png",
     "Enable": "True",
     "python_file": "exec_sn_renamer_v001.py",
     "import": "import exec_sn_renamer_v001",
