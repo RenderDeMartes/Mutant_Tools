@@ -342,8 +342,9 @@ def _inverse_scale_matrix(name, scale_plug, rest_scale):
     return compose + '.outputMatrix'
 
 
-def free_controller_scale(ctrls, skip=()):
-    """Like Spine / Limb v002: a ctrl scale scales its own joint, the ctrls under it do not inherit it."""
+def free_controller_scale(ctrls, skip=(), inherit=False):
+    """Like Spine / Limb v002: a ctrl scale scales its own joint, the ctrls under it do not inherit it.
+    inherit: the ctrls under it do inherit it (FingerScale = Finger), only the scale channels are opened."""
     for ctrl in ctrls:
         for axis in [''] + list(AXES):
             cmds.setAttr('{}.scale{}'.format(ctrl, axis), lock=False)
@@ -353,6 +354,8 @@ def free_controller_scale(ctrls, skip=()):
         if all(v > 0 for v in rest):
             cmds.transformLimits(ctrl, sx=(0.001, 1), sy=(0.001, 1), sz=(0.001, 1),
                                  esx=(True, False), esy=(True, False), esz=(True, False))
+        if inherit:
+            continue
         inverse = None
         for child in cmds.listRelatives(ctrl, c=True, type='transform') or []:
             if child in skip or cmds.listConnections(child + '.offsetParentMatrix', s=True, d=False):
@@ -624,6 +627,18 @@ def finger_ik(side_guide, finger, joints, tip, fk_ctrls, parent_ctrl, switch_plu
     stretch_end = cmds.createNode('transform', n=name + '_StretchEnd' + nc['null'], p=ik_ctrl)
     cmds.xform(stretch_end, ws=True, t=list(_position(ik_joints[2]))[:3])
 
+    # no flip: the pole vector is in the handle parent space (the IK ctrl), so it turned with the ctrl and
+    # not with the hand. Keep the rest pole vector fixed to the finger base (it follows the hand) and give
+    # it to the handle in the ctrl space every frame: the finger plane stays with the hand.
+    pole = om.MVector(cmds.getAttr(handle + '.poleVector')[0])
+    base_pole = pole * _world(ik_ctrl) * _world(stretch_start).inverse()
+    to_ctrl = _mult_matrix(name + '_Pole_MultMatrix', [stretch_start + '.worldMatrix[0]', ik_ctrl + '.worldInverseMatrix[0]'])
+    pole_vector = cmds.createNode('vectorProduct', n=name + '_Pole_VectorProduct')
+    cmds.setAttr(pole_vector + '.operation', 3)  # vector matrix product
+    cmds.setAttr(pole_vector + '.input1', *base_pole)
+    cmds.connectAttr(to_ctrl, pole_vector + '.matrix')
+    cmds.connectAttr(pole_vector + '.output', handle + '.poleVector', f=True)
+
     # FK ctrls of the IK bones show in FK, the IK ctrl in IK
     fk_vis = _condition(name + '_Fk_Vis' + nc['condition'], switch_plug, 4, 1)
     ik_vis = _condition(name + '_Ik_Vis' + nc['condition'], switch_plug, 2, 0)
@@ -765,6 +780,8 @@ def build_hand_block():
     # blocks made before this attr keep the v001 cups
     auto_cups = get_attr('AutoCupPlacement', False)
     hand_poses = get_attr('HandPoses', True)
+    # Phalanx: a finger ctrl scales its own joint. Finger: it scales the rest of the finger too
+    finger_scale = get_attr('FingerScale', 'Phalanx', as_string=True)
 
     # duplicate_and_remove_guides drops every 1 of the duplicated names (Index_01 -> Index_0), put them back
     for jnt in cmds.listRelatives(new_guide, ad=True, type='joint') or []:
@@ -1171,10 +1188,16 @@ def build_hand_block():
         for finger, data in ik_data.items():
             drive(data['joints'][2], _offset_world(data['joints'][2], data['ctrl']), channels=('rotate',))
 
-        # controllers scale their own joint only, the IK chains do not take the scale of the joint above them
-        scale_ctrls = [ctrl for chain in finger_chains for ctrl in chain['ctrls']] + cup_ctrls
-        free_controller_scale(scale_ctrls, skip=set(targets.values()))
+        # controllers scale their own joint only (cups always, fingers with FingerScale = Phalanx), the IK
+        # chains do not take the scale of the joint above them. FingerScale = Finger: the finger ctrls scale
+        # goes down the finger, the IK chain under a finger joint takes it too.
+        whole_finger = finger_scale == 'Finger'
+        finger_ctrls = [ctrl for chain in finger_chains for ctrl in chain['ctrls']]
+        free_controller_scale(finger_ctrls, skip=set(targets.values()), inherit=whole_finger)
+        free_controller_scale(cup_ctrls, skip=set(targets.values()))
         for finger, data in ik_data.items():
+            if whole_finger and data['parent_ctrl'] in finger_ctrls:
+                continue
             parent_jnt = cmds.listRelatives(data['joints'][0], p=True)[0]
             inverse = _inverse_scale_matrix(data['joints'][0], parent_jnt + '.scale', cmds.getAttr(parent_jnt + '.scale')[0])
             cmds.connectAttr(inverse, data['joints'][0] + '.offsetParentMatrix', f=True)
