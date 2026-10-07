@@ -279,13 +279,23 @@ def _offset_world_plug(name, driven, source):
     return _mult_matrix(name, _offset_world(driven, source))
 
 
-def drive(driven, world_items, channels=('translate', 'rotate', 'scale')):
+def drive(driven, world_items, channels=('translate', 'rotate', 'scale'), reparentable=False):
     """driven channels follow a world matrix (list of multMatrix items): local = world * parent inverse.
-    The joint orient is taken out of the rotation."""
-    local = _mult_matrix(driven + '_Local_MultMatrix', list(world_items) + [driven + '.parentInverseMatrix[0]'])
+    The joint orient is taken out of the rotation.
+    Nothing of the driven node goes back into its own nodes (its parentInverseMatrix / rotateOrder would be a
+    cycle for the evaluation manager, every joint its own cluster): the parent worldInverseMatrix and a
+    fixed rotate order. reparentable keeps the driven parentInverseMatrix, for nodes other tools re parent
+    (the bind root under a game parent)."""
+    parent = (cmds.listRelatives(driven, p=True) or [None])[0]
+    if reparentable:
+        parent_inverse = [driven + '.parentInverseMatrix[0]']
+    else:
+        parent_inverse = [parent + '.worldInverseMatrix[0]'] if parent else []
+    local = _mult_matrix(driven + '_Local_MultMatrix', list(world_items) + parent_inverse)
     decompose = cmds.createNode('decomposeMatrix', n=driven + '_Local_DecomposeMatrix')
     cmds.connectAttr(local, decompose + '.inputMatrix')
-    cmds.connectAttr(driven + '.rotateOrder', decompose + '.inputRotateOrder')
+    rotate_order = cmds.getAttr(driven + '.rotateOrder')
+    cmds.setAttr(decompose + '.inputRotateOrder', rotate_order)
     if 'translate' in channels:
         cmds.connectAttr(decompose + '.outputTranslate', driven + '.translate', f=True)
     if 'scale' in channels:
@@ -300,7 +310,7 @@ def drive(driven, world_items, channels=('translate', 'rotate', 'scale')):
                 rotate_local = _mult_matrix(driven + '_Rotate_MultMatrix', [local, orient.asMatrix().inverse()])
                 rotate_decompose = cmds.createNode('decomposeMatrix', n=driven + '_Rotate_DecomposeMatrix')
                 cmds.connectAttr(rotate_local, rotate_decompose + '.inputMatrix')
-                cmds.connectAttr(driven + '.rotateOrder', rotate_decompose + '.inputRotateOrder')
+                cmds.setAttr(rotate_decompose + '.inputRotateOrder', rotate_order)
                 rotate = rotate_decompose + '.outputRotate'
         cmds.connectAttr(rotate, driven + '.rotate', f=True)
 
@@ -594,7 +604,10 @@ def finger_ik(side_guide, finger, joints, tip, fk_ctrls, parent_ctrl, switch_plu
     cmds.setAttr(ik_ctrl + '.scale', 1, 1, 1)
     ik_root = mt.root_grp(input=ik_ctrl)[0]
     mt.hide_attr(input=ik_ctrl, s=True, v=True)
+    mt.line_attr(input=ik_ctrl, name='IK', lines=10)
     twist = mt.new_attr(input=ik_ctrl, name='Twist', min=-360, max=360, default=0)
+    stretch = mt.new_attr(input=ik_ctrl, name='Stretch', min=0, max=1, default=0)
+    volume = mt.new_attr(input=ik_ctrl, name='Volume', min=0, max=1, default=0)
 
     handle, effector = cmds.ikHandle(sj=ik_joints[0], ee=ik_joints[2], sol='ikRPsolver', n=name + nc['ik_rp'])
     cmds.rename(effector, name + nc['effector'])
@@ -603,6 +616,13 @@ def finger_ik(side_guide, finger, joints, tip, fk_ctrls, parent_ctrl, switch_plu
     _rest_pole_vector(handle, ik_joints[:2], chain[:2])
     cmds.setAttr(handle + '.visibility', 0)
     cmds.connectAttr(twist, handle + '.twist')
+
+    # stretch measures from the chain start (next to the IK, not under it, no cycle) to the handle
+    stretch_start = cmds.createNode('transform', n=name + '_StretchStart' + nc['null'],
+                                    p=cmds.listRelatives(ik_joints[0], p=True)[0])
+    cmds.xform(stretch_start, ws=True, t=list(_position(ik_joints[0]))[:3])
+    stretch_end = cmds.createNode('transform', n=name + '_StretchEnd' + nc['null'], p=ik_ctrl)
+    cmds.xform(stretch_end, ws=True, t=list(_position(ik_joints[2]))[:3])
 
     # FK ctrls of the IK bones show in FK, the IK ctrl in IK
     fk_vis = _condition(name + '_Fk_Vis' + nc['condition'], switch_plug, 4, 1)
@@ -613,7 +633,79 @@ def finger_ik(side_guide, finger, joints, tip, fk_ctrls, parent_ctrl, switch_plu
     for shape in _shapes(ik_ctrl):
         cmds.connectAttr(ik_vis, shape + '.visibility', f=True)
 
-    return {'ctrl': ik_ctrl, 'joints': ik_joints, 'handle': handle, 'chain': chain, 'ik_on': ik_vis}
+    return {'ctrl': ik_ctrl, 'joints': ik_joints, 'handle': handle, 'chain': chain, 'ik_on': ik_vis,
+            'parent_ctrl': parent_ctrl, 'name': name, 'stretch': stretch, 'volume': volume,
+            'stretch_start': stretch_start, 'stretch_end': stretch_end}
+
+
+def ik_stretch(data):
+    """Stretch: past the full length of the 2 solved bones they grow to reach the handle (0 off, 1 on).
+    Volume: the stretched bones get thinner (1 / sqrt of the stretch). Returns the volume scale matrix
+    plug per solved bone, local to the rig joint (the bone axis keeps 1)."""
+    ik_joints, chain = data['joints'], data['chain']
+    name = data['name']
+    rest_translates = [cmds.getAttr(jnt + '.translate')[0] for jnt in ik_joints[1:3]]
+    length = sum(om.MVector(t).length() for t in rest_translates)
+
+    # handle place in the chain start space (the hand scale and the Global scale cancel out)
+    local = _mult_matrix(name + '_Stretch_MultMatrix', [data['stretch_end'] + '.worldMatrix[0]',
+                                                        data['stretch_start'] + '.worldInverseMatrix[0]'])
+    decompose = cmds.createNode('decomposeMatrix', n=name + '_Stretch_DecomposeMatrix')
+    cmds.connectAttr(local, decompose + '.inputMatrix')
+    distance = cmds.createNode('distanceBetween', n=name + '_Stretch_DistanceBetween')
+    cmds.connectAttr(decompose + '.outputTranslate', distance + '.point1')
+    ratio = cmds.createNode('multiplyDivide', n=name + '_Stretch_MultiplyDivide')
+    cmds.setAttr(ratio + '.operation', 2)
+    cmds.connectAttr(distance + '.distance', ratio + '.input1X')
+    cmds.setAttr(ratio + '.input2X', length)
+    clamp = cmds.createNode('clamp', n=name + '_Stretch_Clamp')
+    cmds.setAttr(clamp + '.minR', 1)
+    cmds.setAttr(clamp + '.maxR', 1e6)
+    cmds.connectAttr(ratio + '.outputX', clamp + '.inputR')
+    factor = cmds.createNode('blendColors', n=name + '_Stretch_BlendColors')
+    cmds.connectAttr(data['stretch'], factor + '.blender')
+    cmds.connectAttr(clamp + '.outputR', factor + '.color1R')
+    cmds.setAttr(factor + '.color2R', 1)
+    for jnt, rest in zip(ik_joints[1:3], rest_translates):
+        grow = cmds.createNode('multiplyDivide', n=jnt + '_Stretch_MultiplyDivide')
+        cmds.setAttr(grow + '.input1', *rest)
+        for axis in AXES:
+            cmds.connectAttr(factor + '.outputR', grow + '.input2' + axis)
+        cmds.connectAttr(grow + '.output', jnt + '.translate', f=True)
+
+    power = cmds.createNode('multiplyDivide', n=name + '_Volume_MultiplyDivide')
+    cmds.setAttr(power + '.operation', 3)
+    cmds.connectAttr(factor + '.outputR', power + '.input1X')
+    cmds.setAttr(power + '.input2X', -0.5)
+    thin = cmds.createNode('blendColors', n=name + '_Volume_BlendColors')
+    cmds.connectAttr(data['volume'], thin + '.blender')
+    cmds.connectAttr(power + '.outputX', thin + '.color1R')
+    cmds.setAttr(thin + '.color2R', 1)
+    scales = []
+    for jnt, child in zip(chain[:2], chain[1:3]):
+        along = cmds.getAttr(child + '.translate')[0]
+        bone_axis = AXES[max(range(3), key=lambda i: abs(along[i]))]
+        compose = cmds.createNode('composeMatrix', n=jnt + '_Volume_ComposeMatrix')
+        for axis in AXES:
+            if axis != bone_axis:
+                cmds.connectAttr(thin + '.outputR', compose + '.inputScale' + axis)
+        scales.append(compose + '.outputMatrix')
+    return scales
+
+
+def ik_follow_space(data, space):
+    """The IK ctrl stays in place when the hand moves, it only follows space (Rig_Ctrl_Grp: Mover / Global).
+    It stays under the finger ctrl in the outliner, its top group offset parent matrix takes the hand out."""
+    top = data['ctrl']
+    while cmds.listRelatives(top, p=True)[0] != data['parent_ctrl']:
+        top = cmds.listRelatives(top, p=True)[0]
+    # world = local * offset * parent world, the offset keeps world = rest * space world
+    # (the parent worldInverseMatrix, its own parentInverseMatrix does not update through the offset)
+    local = om.MMatrix(cmds.xform(top, q=True, os=True, m=True))
+    rest = local.inverse() * _world(top) * _world(space).inverse()
+    parent = cmds.listRelatives(top, p=True)[0]
+    follow = _mult_matrix(top + '_Space_MultMatrix', [rest, space + '.worldMatrix[0]', parent + '.worldInverseMatrix[0]'])
+    cmds.connectAttr(follow, top + '.offsetParentMatrix', f=True)
 
 
 def ik_rest_worlds(data):
@@ -621,12 +713,15 @@ def ik_rest_worlds(data):
     joints rolled against the rig joints, a constant correction measured at rest keeps the switch pop free.
     Then the solver is turned off while the finger is in full FK (cheaper)."""
     worlds = []
-    for ik_jnt, jnt in zip(data['joints'][:3], data['chain'][:3]):
+    volume_scales = ik_stretch(data) + [None]
+    for ik_jnt, jnt, volume in zip(data['joints'][:3], data['chain'][:3], volume_scales):
         correction = _world(jnt) * _world(ik_jnt).inverse()
-        if correction.isEquivalent(om.MMatrix(), 1e-3):
-            worlds.append(ik_jnt + '.worldMatrix[0]')
-        else:
-            worlds.append(_mult_matrix(ik_jnt + '_Rest_MultMatrix', [correction, ik_jnt + '.worldMatrix[0]']))
+        items = [ik_jnt + '.worldMatrix[0]']
+        if not correction.isEquivalent(om.MMatrix(), 1e-3):
+            items.insert(0, correction)
+        if volume:
+            items.insert(0, volume)
+        worlds.append(items[0] if len(items) == 1 else _mult_matrix(ik_jnt + '_Rest_MultMatrix', items))
     cmds.connectAttr(data['ik_on'], data['handle'] + '.ikBlend', f=True)
     return worlds
 
@@ -1029,13 +1124,18 @@ def build_hand_block():
 
         #clean ctrls
         cmds.parent(clean_ctrl_grp, setup['base_groups']['control'] + nc['group'])
-        cmds.scaleConstraint('Rig_Ctrl_Grp', clean_ctrl_grp, mo=True)
+        # the block parent scales the hand (a parent under the Global brings the Global scale with it)
+        cmds.scaleConstraint(block_parent, clean_ctrl_grp, mo=True)
 
         #parent rig
         cmds.parent(clean_rig_grp, '{}{}'.format(setup['rig_groups']['misc'], nc['group']))
 
         # v001 constraints evaluated once with the rig already mirrored, then gone
         settle_rest_pose(side_guide, rest_constraints, [hand_grp] if hand_grp else [])
+
+        # IK finger ctrls do not move with the hand, only with the Mover / Global
+        for data in ik_data.values():
+            ik_follow_space(data, setup['main_ctrl_grp'] + nc['group'])
 
 
         # Wire everything with matrix nodes (rig in rest pose) ---------------------
@@ -1078,6 +1178,7 @@ def build_hand_block():
             parent_jnt = cmds.listRelatives(data['joints'][0], p=True)[0]
             inverse = _inverse_scale_matrix(data['joints'][0], parent_jnt + '.scale', cmds.getAttr(parent_jnt + '.scale')[0])
             cmds.connectAttr(inverse, data['joints'][0] + '.offsetParentMatrix', f=True)
+            cmds.connectAttr(inverse, data['stretch_start'] + '.offsetParentMatrix', f=True)
 
         # bind joints: the root follows the palm in world space, the rest copies the rig joints channels
         # (no nodes). The mirrored side keeps the v001 flipped axes, every bind joint follows its rig joint.
@@ -1086,12 +1187,13 @@ def build_hand_block():
             cmds.setAttr('{}.segmentScaleCompensate'.format(jnt), 0)
         offsets = sorted(v001_bind_offsets(all_binds, nc).items(), key=lambda item: all_binds.index(item[0]))
         if all(offset.isEquivalent(om.MMatrix(), 1e-4) for jnt, offset in offsets):
-            drive(bind_joints[0], [side_guide + '.worldMatrix[0]'])
+            drive(bind_joints[0], [side_guide + '.worldMatrix[0]'], reparentable=True)
             for jnt in all_binds[1:]:
                 copy_local_channels(jnt.replace(nc['joint_bind'], nc['joint']), jnt)
         else:
             for jnt, offset in offsets:
-                drive(jnt, [offset, jnt.replace(nc['joint_bind'], nc['joint']) + '.worldMatrix[0]'])
+                drive(jnt, [offset, jnt.replace(nc['joint_bind'], nc['joint']) + '.worldMatrix[0]'],
+                      reparentable=jnt == bind_joints[0])
 
     # build complete ----------------------------------------------------
     print ('Build {} Success'.format(block))

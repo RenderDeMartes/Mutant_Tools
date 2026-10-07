@@ -92,6 +92,15 @@ def insert_group(ctrl, custom_name):
     return grp
 
 
+def smart_group(ctrl, custom_name):
+    """insert_group with its rest transform moved to the offset parent matrix, its channels start at zero
+    (a root group less per ctrl)."""
+    grp = insert_group(ctrl, custom_name)
+    cmds.setAttr(grp + '.offsetParentMatrix', cmds.xform(grp, q=True, os=True, m=True), type='matrix')
+    cmds.xform(grp, os=True, m=[1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1])
+    return grp
+
+
 def original_frame(ctrl):
     """Node with the ctrl orientation before an OrientChange group."""
     orient_change = _orient_change(ctrl)
@@ -183,51 +192,27 @@ def build_smarthand_block():
 
         mt.hide_attr(main_ctrl, t=True, s=True, rotate_order=True)
 
+        spread_values = {'Middle': -0.15, 'Pinky': 0.6, 'Ring': 0.15, 'Index': -0.6}
         for finger in fingers:
             for num in range(1, 4):
                 ctrl = '{}_{}_0{}_Ctrl'.format(side_guide, finger, num)
                 if not cmds.objExists(ctrl):
                     continue
-                cmds.select(cl=True)
-                curl_root = insert_group(ctrl, ctrl.replace('_Ctrl', '_SmartCurl_RootGrp'))
-                curl = insert_group(ctrl, ctrl.replace('_Ctrl', '_SmartCurl_Grp'))
-                cmds.select(cl=True)
-                side_to_side_root = insert_group(ctrl, ctrl.replace('_Ctrl', '_Sides_RootGrp'))
-                side_to_side = insert_group(ctrl, ctrl.replace('_Ctrl', '_Sides_Grp'))
-                cmds.select(cl=True)
-                spread_root = insert_group(ctrl, ctrl.replace('_Ctrl', '_SmartSpread_RootGrp'))
-                spread = insert_group(ctrl, ctrl.replace('_Ctrl', '_SmartSpread_Grp'))
-
-                attr = main_ctrl + '.rotate' + axes['Curl']
-
-                mt.connect_md_node(in_x1=attr,
-                                   in_x2=1.0,
-                                   out_x=curl+'.rotateZ'
-                                   , mode='mult', name='', force=True)
-
+                # one group does curl (Z) and sides (Y, phalanx 1 only) with rotate order yzx, the same as the
+                # v001 curl > sides groups. The rest place goes in its offset parent matrix (no root groups).
+                curl = smart_group(ctrl, ctrl.replace('_Ctrl', '_SmartCurl_Grp'))
+                cmds.connectAttr(main_ctrl + '.rotate' + axes['Curl'], curl + '.rotateZ')
                 if num > 1:
                     continue
-                
-                attr = main_ctrl + '.rotate' + axes['Sides']
-                mt.connect_md_node(in_x1=attr,
-                                   in_x2=1.0,
-                                   out_x=side_to_side+'.rotateY'
-                                   , mode='mult', name='', force=True)
+                cmds.setAttr(curl + '.rotateOrder', 1)  # yzx: sides then curl
+                cmds.connectAttr(main_ctrl + '.rotate' + axes['Sides'], curl + '.rotateY')
 
-                if finger == 'Middle':
-                    value = -0.15
-                elif finger == 'Pinky':
-                    value = 0.6
-                elif finger == 'Ring':
-                    value = 0.15
-                elif finger == 'Index':
-                    value = -0.6
-
-                attr = main_ctrl + '.rotate' + axes['Spread']
-                mt.connect_md_node(in_x1=attr,
-                                   in_x2=value,
-                                   out_x=spread + '.rotateZ',
-                                   mode='mult', name='', force=True)
+                # spread under them, the main ctrl rotation times the finger value
+                spread = insert_group(ctrl, ctrl.replace('_Ctrl', '_SmartSpread_Grp'))
+                mult = cmds.createNode('multDoubleLinear', n=ctrl.replace('_Ctrl', '_SmartSpread_MultDoubleLinear'))
+                cmds.connectAttr(main_ctrl + '.rotate' + axes['Spread'], mult + '.input1')
+                cmds.setAttr(mult + '.input2', spread_values[finger])
+                cmds.connectAttr(mult + '.output', spread + '.rotateZ')
 
         # prefix for right hand
         if str(side_guide).startswith(nc['right']):
