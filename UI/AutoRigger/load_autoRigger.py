@@ -90,6 +90,7 @@ from Mutant_Tools.Utils.Helpers import decorators
 import Mutant_Tools.Utils.IO
 from Mutant_Tools.Utils.IO import EasySkin
 from Mutant_Tools.Utils.IO import CtrlUtils
+from Mutant_Tools.Utils.Rigging import block_hooks
 
 # Read dev_mode early so reloads only happen during active development.
 # In production (dev_mode Off) skipping reloads avoids re-running all
@@ -3062,12 +3063,22 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 
 
 	def checkBox_update_attr(self, checkBox,attr, *args):
-		cmds.setAttr(attr, checkBox.isChecked())
+		self.set_config_attr_with_hook(attr, checkBox.isChecked())
 		if 'RunBeforeBuild' in attr or 'RunAfterBuild' in attr or 'RunBeforeLoadCtrls' in attr:
 			self.update_side_block_highlight()
 
 	def enum_update_attr(self, comboBox, attr, *args):
-		cmds.setAttr(attr, comboBox.currentIndex())
+		self.set_config_attr_with_hook(attr, comboBox.currentIndex())
+
+	def set_config_attr_with_hook(self, attr, value):
+		"""setAttr on a block config attr, then the block on_attr_changed hook if it has one (one undo step)."""
+		config, attr_name = attr.split('.', 1)
+		cmds.undoInfo(openChunk=True)
+		try:
+			cmds.setAttr(attr, value)
+			block_hooks.run_attr_changed(config, attr_name)
+		finally:
+			cmds.undoInfo(closeChunk=True)
 
 	#-------------------------------------------------------------------
 	def get_block_lod_visibility(self, block):
