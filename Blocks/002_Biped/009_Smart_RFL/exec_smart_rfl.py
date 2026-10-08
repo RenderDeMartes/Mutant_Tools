@@ -322,6 +322,8 @@ def build_smart_rfl_block():
                     continue
                 if 'Switch_IK_FK' == attr:
                     continue
+                if 'MutantController' == attr:
+                    continue
                 if '__' in attr:
                     if cmds.getAttr('{}.{}'.format(side_guide, attr), asString=True) == 'Switch' :
                         continue
