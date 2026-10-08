@@ -225,6 +225,19 @@ def _bind_follow(bind):
     return decompose, cmds.listConnections(decompose + '.inputMatrix', s=True, d=False, p=True)[0]
 
 
+def limb_scale_ctrl(limb_ankle):
+    """Limb v002 GlobalScale controller (L_Leg_GlobalScale_Ctrl) that scale constrains the limb joints group,
+    so the foot scales with the leg. Global_Ctrl when the limb has none."""
+    node = limb_ankle if cmds.objExists(limb_ankle) else None
+    while node:
+        for con in set(cmds.listConnections(node + '.scaleX', s=True, d=False, type='scaleConstraint') or []):
+            for target in cmds.scaleConstraint(con, q=True, targetList=True) or []:
+                if 'GlobalScale' in target:
+                    return target
+        node = (cmds.listRelatives(node, p=True) or [None])[0]
+    return 'Global_Ctrl'
+
+
 def add_foot_scale(limb_ankle, toes_ctrl, ankle_bind, ball_bind):
     if not cmds.objExists(limb_ankle):
         cmds.warning('Foot: {} not found, the ankle controllers do not scale the foot'.format(limb_ankle))
@@ -824,16 +837,19 @@ def build_foot_block():
         #parent rig
         cmds.parent(clean_rig_grp, '{}{}'.format(setup['rig_groups']['misc'], nc['group']))
 
-        #scale
-        cmds.scaleConstraint('Global_Ctrl', clean_rig_grp, mo=True)
-        cmds.scaleConstraint('Global_Ctrl', clean_ctrl_grp, mo=True)
+        # limb ankle joint (Limb v002 puts the IK / SubIk / FK ankle controllers scale on it)
+        limb_ankle = parent_fk.replace(nc['fk'].replace(nc['joint'], '') + nc['ctrl'], nc['joint'])
+
+        #scale: the limb GlobalScale ctrl (it has the Global scale too), so the RFL pivots / ik goal and the
+        #foot joints scale with the leg and the ik does not stretch when the leg is scaled
+        scale_ctrl = limb_scale_ctrl(limb_ankle)
+        cmds.scaleConstraint(scale_ctrl, clean_rig_grp, mo=True)
+        cmds.scaleConstraint(scale_ctrl, clean_ctrl_grp, mo=True)
 
         #put everything in the asset container
         mt.put_inside_rig_container([toes_contidion_node, roll_contidion_node, roll_reverse_contidion_node, rollneg_contidion_node, toes_substract_node, back_heel_contidion_node])
 
         toes_data.append((share_ctrl, shared_toes_jnt, str(side_guide).startswith(nc['right'])))
-        # limb ankle joint (Limb v002 puts the IK / SubIk / FK ankle controllers scale on it)
-        limb_ankle = parent_fk.replace(nc['fk'].replace(nc['joint'], '') + nc['ctrl'], nc['joint'])
         scale_data.append((limb_ankle, share_ctrl, ankle_bind_joint, ball_bind_joint))
 
     # studio orients for the toes controllers
