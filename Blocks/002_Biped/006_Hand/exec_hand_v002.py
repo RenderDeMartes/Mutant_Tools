@@ -606,7 +606,9 @@ def finger_ik(side_guide, finger, joints, tip, fk_ctrls, parent_ctrl, switch_plu
     cmds.xform(ik_ctrl, ws=True, t=list(_position(tip))[:3])
     cmds.setAttr(ik_ctrl + '.scale', 1, 1, 1)
     ik_root = mt.root_grp(input=ik_ctrl)[0]
-    mt.hide_attr(input=ik_ctrl, s=True, v=True)
+    mt.hide_attr(input=ik_ctrl, v=True)
+    # the ctrl scale only scales the last bone (ik_tip_scale), the IK lives in its unscaled space
+    ik_space = cmds.createNode('transform', n=name + '_IkSpace' + nc['null'], p=ik_ctrl)
     mt.line_attr(input=ik_ctrl, name='IK', lines=10)
     twist = mt.new_attr(input=ik_ctrl, name='Twist', min=-360, max=360, default=0)
     stretch = mt.new_attr(input=ik_ctrl, name='Stretch', min=0, max=1, default=0)
@@ -614,7 +616,7 @@ def finger_ik(side_guide, finger, joints, tip, fk_ctrls, parent_ctrl, switch_plu
 
     handle, effector = cmds.ikHandle(sj=ik_joints[0], ee=ik_joints[2], sol='ikRPsolver', n=name + nc['ik_rp'])
     cmds.rename(effector, name + nc['effector'])
-    cmds.parent(handle, ik_ctrl)
+    cmds.parent(handle, ik_space)
     # after the parent, parenting the handle resets its pole vector
     _rest_pole_vector(handle, ik_joints[:2], chain[:2])
     cmds.setAttr(handle + '.visibility', 0)
@@ -624,15 +626,15 @@ def finger_ik(side_guide, finger, joints, tip, fk_ctrls, parent_ctrl, switch_plu
     stretch_start = cmds.createNode('transform', n=name + '_StretchStart' + nc['null'],
                                     p=cmds.listRelatives(ik_joints[0], p=True)[0])
     cmds.xform(stretch_start, ws=True, t=list(_position(ik_joints[0]))[:3])
-    stretch_end = cmds.createNode('transform', n=name + '_StretchEnd' + nc['null'], p=ik_ctrl)
+    stretch_end = cmds.createNode('transform', n=name + '_StretchEnd' + nc['null'], p=ik_space)
     cmds.xform(stretch_end, ws=True, t=list(_position(ik_joints[2]))[:3])
 
     # no flip: the pole vector is in the handle parent space (the IK ctrl), so it turned with the ctrl and
     # not with the hand. Keep the rest pole vector fixed to the finger base (it follows the hand) and give
     # it to the handle in the ctrl space every frame: the finger plane stays with the hand.
     pole = om.MVector(cmds.getAttr(handle + '.poleVector')[0])
-    base_pole = pole * _world(ik_ctrl) * _world(stretch_start).inverse()
-    to_ctrl = _mult_matrix(name + '_Pole_MultMatrix', [stretch_start + '.worldMatrix[0]', ik_ctrl + '.worldInverseMatrix[0]'])
+    base_pole = pole * _world(ik_space) * _world(stretch_start).inverse()
+    to_ctrl = _mult_matrix(name + '_Pole_MultMatrix', [stretch_start + '.worldMatrix[0]', ik_space + '.worldInverseMatrix[0]'])
     pole_vector = cmds.createNode('vectorProduct', n=name + '_Pole_VectorProduct')
     cmds.setAttr(pole_vector + '.operation', 3)  # vector matrix product
     cmds.setAttr(pole_vector + '.input1', *base_pole)
@@ -648,7 +650,7 @@ def finger_ik(side_guide, finger, joints, tip, fk_ctrls, parent_ctrl, switch_plu
     for shape in _shapes(ik_ctrl):
         cmds.connectAttr(ik_vis, shape + '.visibility', f=True)
 
-    return {'ctrl': ik_ctrl, 'joints': ik_joints, 'handle': handle, 'chain': chain, 'ik_on': ik_vis,
+    return {'ctrl': ik_ctrl, 'space': ik_space, 'joints': ik_joints, 'handle': handle, 'chain': chain, 'ik_on': ik_vis,
             'parent_ctrl': parent_ctrl, 'name': name, 'stretch': stretch, 'volume': volume,
             'stretch_start': stretch_start, 'stretch_end': stretch_end}
 
@@ -723,19 +725,49 @@ def ik_follow_space(data, space):
     cmds.connectAttr(follow, top + '.offsetParentMatrix', f=True)
 
 
+def ik_tip_scale(data):
+    """The IK ctrl scale scales the last bone (finger 03, thumb 02), every axis on its own (squash the finger
+    pad for a touch). Each joint axis takes the ctrl axis closest to it at rest (Orients = SN turns the ctrl,
+    not its children: measured on the ctrl), so a ctrl axis scales that same direction. The ctrl children
+    live in an unscaled space: the scale never moves the IK. Returns the scale matrix plug per IK bone
+    (None for the first two)."""
+    ctrl, space = data['ctrl'], data['space']
+    for axis in [''] + list(AXES):
+        cmds.setAttr('{}.scale{}'.format(ctrl, axis), lock=False)
+    for axis in AXES:
+        cmds.setAttr('{}.scale{}'.format(ctrl, axis), keyable=True)
+    rest = cmds.getAttr(ctrl + '.scale')[0]
+    cmds.transformLimits(ctrl, sx=(0.001, 1), sy=(0.001, 1), sz=(0.001, 1),
+                         esx=(True, False), esy=(True, False), esz=(True, False))
+    cmds.connectAttr(_inverse_scale_matrix(space, ctrl + '.scale', rest), space + '.offsetParentMatrix', f=True)
+
+    ctrl_world = _world(ctrl)
+    ctrl_axes = [om.MVector(ctrl_world[i * 4], ctrl_world[i * 4 + 1], ctrl_world[i * 4 + 2]).normal() for i in range(3)]
+    jnt = data['chain'][2]
+    jnt_world = _world(jnt)
+    compose = cmds.createNode('composeMatrix', n=jnt + '_IkScale_ComposeMatrix')
+    for i, axis in enumerate(AXES):
+        jnt_axis = om.MVector(jnt_world[i * 4], jnt_world[i * 4 + 1], jnt_world[i * 4 + 2]).normal()
+        closest = max(range(3), key=lambda j: abs(jnt_axis * ctrl_axes[j]))
+        cmds.connectAttr('{}.scale{}'.format(ctrl, AXES[closest]), compose + '.inputScale' + axis)
+    return [None, None, compose + '.outputMatrix']
+
+
 def ik_rest_worlds(data):
     """IK joint world plugs for the blend. The mirror and the v001 rest settle can leave the solved IK
     joints rolled against the rig joints, a constant correction measured at rest keeps the switch pop free.
     Then the solver is turned off while the finger is in full FK (cheaper)."""
     worlds = []
     volume_scales = ik_stretch(data) + [None]
-    for ik_jnt, jnt, volume in zip(data['joints'][:3], data['chain'][:3], volume_scales):
+    tip_scales = ik_tip_scale(data)
+    for ik_jnt, jnt, volume, scale in zip(data['joints'][:3], data['chain'][:3], volume_scales, tip_scales):
         correction = _world(jnt) * _world(ik_jnt).inverse()
         items = [ik_jnt + '.worldMatrix[0]']
         if not correction.isEquivalent(om.MMatrix(), 1e-3):
             items.insert(0, correction)
-        if volume:
-            items.insert(0, volume)
+        for matrix in (volume, scale):
+            if matrix:
+                items.insert(0, matrix)
         worlds.append(items[0] if len(items) == 1 else _mult_matrix(ik_jnt + '_Rest_MultMatrix', items))
     cmds.connectAttr(data['ik_on'], data['handle'] + '.ikBlend', f=True)
     return worlds
@@ -1184,9 +1216,9 @@ def build_hand_block():
             else:
                 drive(jnt, _offset_world(jnt, ctrl))
 
-        # the last IK bone follows the IK ctrl rotation
+        # the last IK bone follows the IK ctrl rotation (its unscaled space)
         for finger, data in ik_data.items():
-            drive(data['joints'][2], _offset_world(data['joints'][2], data['ctrl']), channels=('rotate',))
+            drive(data['joints'][2], _offset_world(data['joints'][2], data['space']), channels=('rotate',))
 
         # controllers scale their own joint only (cups always, fingers with FingerScale = Phalanx), the IK
         # chains do not take the scale of the joint above them. FingerScale = Finger: the finger ctrls scale
