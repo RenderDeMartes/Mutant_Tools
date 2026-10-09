@@ -699,7 +699,8 @@ class Modules_class(kinematics.Kinematics_class):
 		cmds.parent(mover_offset, global_ctrl)
 		cmds.parent(global_offset, 'Ctrl_Grp')
 
-		vis_Attr = self.new_attr(input= mover_ctrl, name = 'Gimbal', min = 0 , max = 1, default = 0) 
+		vis_Attr = self.new_attr(input= mover_ctrl, name = 'Gimbal', min = 0 , max = 1, default = 0, keyable = False)
+		cmds.setAttr(vis_Attr, e = True, channelBox = True)
 		cmds.connectAttr(vis_Attr, cmds.listRelatives(gimbal_ctrl,s=True)[0]+'.v')
 
 		#group for ctrls inside the gimal
