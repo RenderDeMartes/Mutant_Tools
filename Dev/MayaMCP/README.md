@@ -194,6 +194,19 @@ Connection failure before sending returns `status="not_sent"`. No operation is
 forcibly cancelled. Restarting the sidecar loses job tracking and does not stop
 Maya execution. Keep it running until jobs finish.
 
+## Scripts without an MCP client
+
+`run_in_maya.py` sends a script file (or `-c` code) straight to the
+listener and prints stdout/traceback — handy from a shell or another agent:
+
+```
+python Dev/MayaMCP/run_in_maya.py script.py --port 7501
+```
+
+`guide_fit.py` holds helpers for fitting block guides to a model
+(calibrated snapshots, mesh shell / tube-centre analysis, constrained
+limb and hand solvers). Workflow and rules: [GUIDE_FITTING.md](GUIDE_FITTING.md).
+
 ## Changing the port range
 
 The listener scans ports starting at 7501 (see `_DEFAULT_PORT` in
