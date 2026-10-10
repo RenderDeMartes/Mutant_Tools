@@ -62,6 +62,14 @@ straight chain (thumb direction especially is template-locked).
    res, T = gf.fit_hand_points(W, {'Index': [k, j2, j3, tip], 'Middle': ..., 'Ring': ..., 'Pinky': ...},
                                thumb=[mcp, ip, tip])
    ```
+   User default: keep the limb as above (rz bend), then pass
+   `up=(0, 1, 0)` to `fit_hand_points` and call `gf.roll_to_up('L_Wrist_Guide')`
+   so palm, fingers and wrist have Y (green) up; thumb and cups keep the
+   template. The palm only aims X with no roll (fingers inherit it; Y tilts
+   only by the fingers' pitch). `fit_limb(..., up=...)` also exists (bend
+   becomes ry) but the user didn't want it.
+   To fix an already-placed hand without losing manual tweaks: use the
+   current guide world positions as targets and run `fit_hand(..., up=...)`.
    `fit_hand_points` builds weighted targets (tips 1.5, joints 1, thumb 0.3,
    roots/cups weak), puts the palm on the wrist and optimises its rotation
    (Nelder-Mead), projecting every tx. `res` = per-guide residual distance.
@@ -69,8 +77,10 @@ straight chain (thumb direction especially is template-locked).
 5. **Check**: `gf.show_targets(T)` (locators in `fit_targets_grp`) and snap
    again with guides on. Iterate on targets, not on the solver.
 6. **Save as a new version**: `gf.save_as(path_v00N, build_visible=<orig>)`
-   deletes `fit_targets_grp`, restores `Mutant_Build.v`, saves .ma. Never
-   overwrite the previous version.
+   deletes `fit_targets_grp`, restores `Mutant_Build.v`, saves .ma. It
+   refuses existing files or versions the pipeline registered (`.json`):
+   the user saves wip versions from their own tool too, so always list the
+   folder and take the next free number.
 
 ## Gotchas
 - Don't name scratch scripts `inspect.py` (shadows stdlib, mayapy crashes).

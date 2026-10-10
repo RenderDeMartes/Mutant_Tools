@@ -242,6 +242,16 @@ def set_world_rotation(node, world_rot):
     mc.setAttr(node + '.r', *[math.degrees(a) for a in (e.x, e.y, e.z)])
 
 
+def roll_to_up(node, up=(0, 1, 0)):
+    """Roll node around its own X so its Y points as close to `up` as possible.
+
+    Only changes node.r (jointOrient kept); X direction is unchanged.
+    """
+    x = axis_of(world_rot(node), 0)
+    set_world_rotation(node, frame_matrix(x, x ^ om.MVector(up)))
+    return list(mc.getAttr(node + '.r')[0])
+
+
 def world_rot(node):
     return _rot_only(om.MMatrix(mc.xform(node, q=True, ws=True, m=True)))
 
@@ -253,24 +263,36 @@ def axis_of(m, i):
 # --------------------------------------------------------------------------
 # Limb: shoulder (t + r), elbow (tx + rz), wrist (tx)
 # --------------------------------------------------------------------------
-def fit_limb(shoulder, elbow, wrist, S, E, W, bend_axis='z'):
+def fit_limb(shoulder, elbow, wrist, S, E, W, bend_axis='z', up=None):
     """Place a 3-joint limb guide chain on world targets S, E, W.
 
     Shoulder gets translate + rotate, elbow only tx and one bend rotation,
     wrist only tx. jointOrient untouched. The bend-plane normal is picked on
     the same side as the shoulder's current bend axis so nothing flips.
+
+    up: world vector the guides' Y axis should point to (e.g. (0, 1, 0)).
+    Forces bend_axis='y' and a bend plane whose normal is `up` made
+    perpendicular to shoulder->wrist; E is projected onto that plane, so an
+    elbow offset along `up` is dropped.
     """
     S, E, W = om.MVector(S), om.MVector(E), om.MVector(W)
-    bi = 'xyz'.index(bend_axis)
-    cur = world_rot(shoulder)
-    hint = axis_of(cur, bi)
-    upper, lower = E - S, W - E
-    n = upper ^ lower
-    if n.length() < 1e-4 * upper.length() * lower.length():
-        n = hint - upper.normal() * (hint * upper.normal())  # straight limb
-    n = n.normal()
-    if n * hint < 0:
-        n = -n
+    if up is not None:
+        bend_axis = 'y'
+        d = (W - S).normal()
+        n = om.MVector(up)
+        n = (n - d * (n * d)).normal()
+        E = E - n * ((E - S) * n)
+        upper, lower = E - S, W - E
+    else:
+        bi = 'xyz'.index(bend_axis)
+        hint = axis_of(world_rot(shoulder), bi)
+        upper, lower = E - S, W - E
+        n = upper ^ lower
+        if n.length() < 1e-4 * upper.length() * lower.length():
+            n = hint - upper.normal() * (hint * upper.normal())  # straight limb
+        n = n.normal()
+        if n * hint < 0:
+            n = -n
     mc.xform(shoulder, ws=True, t=list(S))
     if bend_axis == 'z':
         set_world_rotation(shoulder, frame_matrix(upper, n))
@@ -408,7 +430,7 @@ def _nelder_mead(f, x0, step, iters=600, tol=1e-7):
 
 def fit_hand(palm, targets, weights=None, palm_pos=None, x_hint=None,
              z_hint=None, fixed_tx=None, free_pos=False, free_t=(),
-             apply=True):
+             up=None, apply=True):
     """Fit a hand guide tree: palm translate+rotate, children tx only.
 
     targets : {guide: world pos} -- any subset (knuckles, joints, tips).
@@ -420,6 +442,9 @@ def fit_hand(palm, targets, weights=None, palm_pos=None, x_hint=None,
     fixed_tx: {guide: tx} for guides without targets (cups, ...).
     free_t  : guides allowed full translate (e.g. finger roots '_00'), see
               HandModel.solve. Rotations of children are never touched.
+    up      : world vector for the palm's Y axis (e.g. (0, 1, 0)); the palm
+              then only aims X, roll stays locked to Y as close to `up` as
+              possible (fingers inherit it).
     Returns per-guide residual distances.
     """
     weights = weights or {}
@@ -431,6 +456,9 @@ def fit_hand(palm, targets, weights=None, palm_pos=None, x_hint=None,
     def build(x):
         r = om.MEulerRotation(x[0], x[1], x[2]).asMatrix()
         m = r * m0
+        if up is not None:
+            ax = axis_of(m, 0)
+            m = frame_matrix(ax, ax ^ om.MVector(up))
         pos = p0 + om.MVector(x[3], x[4], x[5]) if free_pos else p0
         m[12], m[13], m[14] = pos.x, pos.y, pos.z
         return m
@@ -491,11 +519,12 @@ def hand_targets(wrist, fingers, thumb=None, prefix='L_Hand_',
     return T, Wt, free
 
 
-def fit_hand_points(wrist, fingers, thumb=None, prefix='L_Hand_', **kw):
+def fit_hand_points(wrist, fingers, thumb=None, prefix='L_Hand_', up=None, **kw):
     """One call: hand_targets() + fit_hand() with palm at the wrist.
 
     Palm X hint = wrist -> middle (or first) knuckle, Z hint = pinky -> index
-    knuckle line (thumb side). Extra kwargs go to hand_targets().
+    knuckle line (thumb side). `up` goes to fit_hand(); extra kwargs go to
+    hand_targets().
     """
     V = om.MVector
     T, Wt, free = hand_targets(wrist, fingers, thumb, prefix, **kw)
@@ -507,7 +536,7 @@ def fit_hand_points(wrist, fingers, thumb=None, prefix='L_Hand_', **kw):
     if zh.length() < 1e-4:
         zh = None
     return fit_hand(prefix + 'Palm_Guide', T, Wt, palm_pos=list(wrist),
-                    x_hint=V(mid) - V(wrist), z_hint=zh, free_t=free), T
+                    x_hint=V(mid) - V(wrist), z_hint=zh, free_t=free, up=up), T
 
 
 def finger_points(knuckle, tip, ratios=(0.45, 0.30, 0.25)):
@@ -531,8 +560,17 @@ def show_targets(targets, size=0.3, grp='fit_targets_grp'):
     return mc.group(locs, n=grp)
 
 
-def save_as(path, build_visible=None, grp='fit_targets_grp'):
-    """Remove fit helpers, optionally set Mutant_Build visibility, save .ma."""
+def save_as(path, build_visible=None, grp='fit_targets_grp', overwrite=False):
+    """Remove fit helpers, optionally set Mutant_Build visibility, save .ma.
+
+    Refuses to replace an existing file (or one the pipeline already
+    registered with a .json) unless overwrite=True -- pick the next version.
+    """
+    import os
+    stem = os.path.splitext(path)[0]
+    if not overwrite and (os.path.exists(path) or os.path.exists(stem + '.json')):
+        raise RuntimeError('%s already exists (or has a .json); use a new '
+                           'version or overwrite=True' % path)
     if mc.objExists(grp):
         mc.delete(grp)
     if build_visible is not None and mc.objExists('Mutant_Build'):
