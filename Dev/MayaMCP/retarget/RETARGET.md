@@ -76,3 +76,59 @@ The IK hinge cannot bend backwards: where the source hyperextends an elbow or
 knee, the pole stays on the natural side (no 180 flip) and that joint is off
 by a few cm. The FK controls are keyed too, so switching that limb to FK
 gives the exact pose.
+
+# Polish: cartoon, feet, hands, FK arms (`anim_polish.py`)
+
+After retargeting, `polish_clip()` on the open clip does, in order:
+
+1. **Arms to FK** — the retarget keys FK too; the shoulder switches are keyed
+   to FK so arms are edited with FK arcs.
+2. **`cartoon_filter`** — Cartoon Animation Filter (Wang et al. 2006):
+   `x' = x + k * (x - blur_sigma(x))`, after a light pre-blur so mocap jitter
+   is not amplified. Adds anticipation/overshoot/follow-through; slow, large
+   motion (root travel, flips) is untouched. `cyclic=True` wraps loops.
+   Mover and fingers are not filtered.
+3. **`exaggerate`** (loops) — rotations scaled about their average.
+4. **`plant_feet`** — sole geometry from `foot_setup(mesh)`: vertices of the
+   lower boot, behind the ball in ankle-control space, in front of it in
+   ball-joint space (they bend with the toes). Contact = near the ground and
+   slow. Contact runs go onto the ground, flat (and toes straight) when heel
+   and ball are both down, pinned when the run barely travels. Every frame is
+   pushed out of the ground.
+5. **`relax_fingers`** — curl cascade on -rz (index least, pinky most) plus a
+   bit of the mocap motion around its average.
+
+```python
+from Mutant_Tools.Dev.MayaMCP.retarget import anim_polish as ap
+ap.polish_clip(k=1.2, sigma=3.0, cyclic=True, exaggeration=1.25)   # a loop
+ap.polish_clip(k=0.8, sigma=2.5)                                   # a one-shot (flip, roll)
+ap.side_playblast(out_dir, 'Run', 0, 58)                           # side view tracking COG
+```
+
+`polish_clip` modifies the clip in place: run it once per clip (keep the
+retargeted file to start over).
+
+Settings used on Coins100's MegaMuffin:
+
+| Clip | k | sigma | cyclic | exaggeration |
+|---|---|---|---|---|
+| Idle | 1.4 | 4 | yes | 1.5 |
+| Walk_Fwd | 1.2 | 3 | yes | 1.25 |
+| Run_Fwd | 1.0 | 2.5 | yes | 1.2 |
+| Fall_Loop | 1.2 | 3 | yes | 1.3 |
+| Hanging_Idle (no planting) | 1.2 | 3 | yes | 1.4 |
+| Jump / Land | 1.2 / 1.3 | 2.5 | no | - |
+| Dash | 1.0 | 2.5 | no | - |
+| BackFlip / Roll | 0.8 | 2.5 | no | - |
+
+# Cartoon walk cycle from scratch (`cartoon_walk.py`)
+
+`cartoon_walk.build()` keys a walk-in-place loop as editable key poses
+(contact / down / passing / up), curves set to cycle: heel strike pivoting on
+the heel, flat stance sliding back at constant speed, toe-off hinging on the
+ball joint with the toes kept flat, big COG bounce and sway, hips vs chest
+counter-rotation, late head nod and belly jiggle, arms bent and swinging
+(posed in IK, matched to FK, switched to FK), relaxed fingers trailing the
+swing. Everything is a parameter (period, stride, lift, bounce, swing, ...).
+`heel_z` is the back of the boot sole in world Z at rest and `heel_round`
+compensates a rounded heel; check contacts after changing the boots.
