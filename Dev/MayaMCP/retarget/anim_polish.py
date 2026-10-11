@@ -52,11 +52,11 @@ def body_controls(arms='fk', cape=7):
     c = ['COG_Ctrl', 'Spine_Bottom_Ik_Ctrl', 'Spine_Base_FK_Ctrl', 'Spine_Belly_FK_Ctrl', 'Spine_Chest_FK_Ctrl',
          'Neck_Ctrl', 'Head_Ctrl', 'Belly_Ctrl']
     for S in ('L', 'R'):
-        c += ['%s_Clavicle_Ctrl' % S, '%s_Ankle_Ik_Ctrl' % S, '%s_Ankle_Ik_PoleVector_Ctrl' % S, '%s_Foot_Toes_Ctrl' % S]
+        c += ['%s_Clavicle_Ctrl' % S, '%s_Ankle_Ik_Ctrl' % S, '%s_Foot_Toes_Ctrl' % S]
         if arms == 'fk':
             c += ['%s_Shoulder_Fk_Ctrl' % S, '%s_Elbow_Fk_Ctrl' % S, '%s_Wrist_Fk_Ctrl' % S]
         else:
-            c += ['%s_Wrist_Ik_Ctrl' % S, '%s_Wrist_Ik_PoleVector_Ctrl' % S]
+            c += ['%s_Wrist_Ik_Ctrl' % S]
     c += ['Cape_0%d_Ctrl' % i for i in range(1, cape + 1)]
     return [x for x in c if mc.objExists(x)]
 
@@ -227,7 +227,18 @@ def _yaw_only(W):
                        z.x * sz, z.y * sz, z.z * sz, 0, W[12], W[13], W[14], 1])
 
 
-def plant_feet(feet, start, end, ground=0.0, contact=3.0, speed=3.0, lock_travel=12.0, flat=5.0, min_run=3):
+def _scale_delta(m, w):
+    """A rigid offset matrix scaled by w (0 = identity, 1 = m): slerped rotation, lerped translation."""
+    tm = om.MTransformationMatrix(m)
+    q = om.MQuaternion.slerp(om.MQuaternion(), tm.rotation(asQuaternion=True), w)
+    t = tm.translation(om.MSpace.kTransform) * w
+    out = om.MTransformationMatrix()
+    out.setRotation(q)
+    out.setTranslation(t, om.MSpace.kTransform)
+    return out.asMatrix()
+
+
+def plant_feet(feet, start, end, ground=0.0, contact=3.0, speed=3.0, lock_travel=12.0, flat=5.0, min_run=3, blend=0):
     """Clean foot contacts on ankle IK controls (feet from foot_setup()).
 
     A frame is in contact when the sole is within `contact` of the ground and
@@ -235,7 +246,9 @@ def plant_feet(feet, start, end, ground=0.0, contact=3.0, speed=3.0, lock_travel
     put on the ground, flattened (toes straight too) when heel and ball are
     both down (within `flat`), and pinned in place if the run travels less
     than `lock_travel` (treadmill/in-place slides keep sliding). Every frame
-    is also pushed out of the ground. Returns the contact runs per foot.
+    is also pushed out of the ground. The correction fades in and out over
+    `blend` frames around each run (off by default: blending between short runs can swing the knee). Returns the
+    contact runs per foot.
     """
     report = {}
     for foot in feet:
@@ -279,12 +292,27 @@ def plant_feet(feet, start, end, ground=0.0, contact=3.0, speed=3.0, lock_travel
             for f in range(a, b + 1):
                 m = om.MMatrix(W[f])
                 h = heel_ball(m)
-                if abs(h[0] - h[1]) < flat:
+                up = om.MVector(m[4], m[5], m[6]).normal()
+                if abs(h[0] - h[1]) < flat and up.y > 0.7:      # only a foot that is right way up
                     m = _yaw_only(m)
                     flatten.add(f)
                 if lock:
                     m[12], m[14] = lx, lz
                 target[f] = m
+        # fade the run's correction (as a local offset of the control) in and out
+        fades = {}
+        for a, b in runs:
+            for edge, step in ((a, -1), (b, 1)):
+                delta = target[edge] * W[edge].inverse()
+                for i in range(1, blend + 1):
+                    f = edge + step * i
+                    if f < start or f > end or f in target:
+                        continue
+                    w = 1.0 - i / float(blend + 1)
+                    if w > fades.get(f, (0, None))[0]:
+                        fades[f] = (w, delta)
+        for f, (w, delta) in fades.items():
+            target[f] = _scale_delta(delta, w) * W[f]
         for f in range(start, end + 1):
             mc.currentTime(f)
             if f in flatten and mc.objExists(toes):
@@ -385,14 +413,164 @@ def cycle_curves(ctrls):
 
 
 # --------------------------------------------------------------------------
+# Limb stability: no elbow twist, no knee pops or flips
+# --------------------------------------------------------------------------
+MUTANT_LEGS = {'L': ('thigh_l', 'calf_l', 'foot_l', 'ball_l', 'L_Ankle_Ik_PoleVector_Ctrl'),
+               'R': ('thigh_r', 'calf_r', 'foot_r', 'ball_r', 'R_Ankle_Ik_PoleVector_Ctrl')}
+
+
+def _key_times(plugs, start, end):
+    t = set()
+    for p in plugs:
+        t.update(int(round(x)) for x in (mc.keyframe(p, q=True, tc=True) or []))
+    t = sorted(x for x in t if start <= x <= end)
+    return t or list(range(start, end + 1))
+
+
+def untwist_elbows(start, end, chains=None):
+    """Make the FK elbow a hinge: drop its twist about the forearm and give it to the wrist.
+
+    The hand keeps its world orientation; the forearm twist joints spread the
+    twist instead of the elbow wringing. Works on the elbow's own key times.
+    """
+    chains = chains or MUTANT_ARM_CHAINS
+    for chain in chains.values():
+        elbow, wrist, hand = chain[1][0], chain[2][0], _export_joint(chain[2][1])
+        frames = _key_times([elbow + '.r' + a for a in 'xyz'], start, end)
+        mc.currentTime(frames[0])
+        em = _M(elbow)
+        b = om.MVector(mc.xform(wrist, q=True, ws=True, t=True)) - om.MVector(em[12], em[13], em[14])
+        b = (b * om.MTransformationMatrix(em).asRotateMatrix().inverse()).normal()   # forearm axis, elbow space
+        ro = mc.getAttr(elbow + '.rotateOrder')
+        for f in frames:
+            mc.currentTime(f)
+            hw = _M(hand)
+            off = _M(wrist) * hw.inverse()
+            r = [math.radians(v) for v in mc.getAttr(elbow + '.r')[0]]
+            q = om.MEulerRotation(r[0], r[1], r[2], ro).asQuaternion()
+            d = q.x * b.x + q.y * b.y + q.z * b.z
+            if q.w * q.w + d * d < 1e-12:
+                continue
+            tw = om.MQuaternion(b.x * d, b.y * d, b.z * d, q.w).normalizeIt()
+            e = (tw.inverse() * q).asEulerRotation().reorderIt(ro)
+            mc.setAttr(elbow + '.r', *[math.degrees(v) for v in (e.x, e.y, e.z)])
+            t0 = mc.getAttr(wrist + '.t')[0]
+            mc.xform(wrist, ws=True, m=list(off * hw))
+            mc.setAttr(wrist + '.t', *t0)
+            for a in ('sx', 'sy', 'sz'):
+                if _free(wrist, a):
+                    mc.setAttr(wrist + '.' + a, 1)
+            mc.setKeyframe(elbow, at=['rx', 'ry', 'rz'], t=f)
+            mc.setKeyframe(wrist, at=['rx', 'ry', 'rz'], t=f)
+        cv = mc.listConnections([elbow, wrist], s=True, d=False, type='animCurveTA') or []
+        if cv:
+            mc.filterCurve(cv, filter='euler')
+
+
+def clamp_leg_reach(start, end, legs=None, cog='COG_Ctrl', reach=0.97, sigma=2.0):
+    """Lower the COG wherever a leg would straighten past `reach` of its length.
+
+    A fully straight IK leg pops (and stretches); keeping it just short of
+    straight stops the knee snapping. Feet stay where they are. Returns the
+    largest drop in cm.
+    """
+    legs = legs or MUTANT_LEGS
+    mc.currentTime(start)
+    lengths = {}
+    for S, (th, ca, fo, _, _) in legs.items():
+        th, ca, fo = [_export_joint(j) for j in (th, ca, fo)]
+        a, b, c = [om.MVector(mc.xform(j, q=True, ws=True, t=True)) for j in (th, ca, fo)]
+        lengths[S] = ((b - a).length() + (c - b).length(), th, fo)
+    need = []
+    for f in range(start, end + 1):
+        mc.currentTime(f)
+        h = 0.0
+        for L, th, fo in lengths.values():
+            v = om.MVector(mc.xform(th, q=True, ws=True, t=True)) - om.MVector(mc.xform(fo, q=True, ws=True, t=True))
+            r = reach * L
+            xz = math.hypot(v.x, v.z)
+            if v.length() > r and xz < r:
+                h = max(h, v.y - math.sqrt(r * r - xz * xz))
+        need.append(h)
+    if max(need) <= 0:
+        return 0.0
+    grown = [max(need[max(0, i - 2):i + 3]) for i in range(len(need))]
+    drop = [max(a, b) for a, b in zip(_gauss(grown, sigma, False), need)]
+    _resample(_plugs([cog], ('ty',)), start, end)
+    curve = mc.listConnections(cog + '.ty', s=True, d=False, type='animCurve')[0]
+    _edit_deg(curve, start, end, lambda vals: [v - h for v, h in zip(vals, drop)])
+    return max(need)
+
+
+def knee_poles(start, end, legs=None, dist=50.0, foot_weight=0.5, pelvis='pelvis'):
+    """Key each knee pole so the knee points between the body's front and the foot's (no flips).
+
+    Both directions turn with the character (flips, rolls), are taken
+    perpendicular to the hip-ankle line, and the result is kept continuous
+    from frame to frame, so the pole never swaps sides.
+    """
+    legs = legs or MUTANT_LEGS
+    pj = _export_joint(pelvis)
+    mc.currentTime(start)
+    # the pelvis axis that points forward (+Z) at rest is found on the clip's first frame
+    pm = _M(pj)
+    axes = [om.MVector(pm[i * 4], pm[i * 4 + 1], pm[i * 4 + 2]).normal() for i in range(3)]
+    k = max(range(3), key=lambda i: abs(axes[i].z))
+    sign = 1 if axes[k].z > 0 else -1
+    for th, ca, fo, ba, pole in legs.values():
+        th, ca, fo, ba = [_export_joint(j) for j in (th, ca, fo, ba)]
+        mc.cutKey(pole, at=['tx', 'ty', 'tz'], cl=True)
+        last = None
+        for f in range(start, end + 1):
+            mc.currentTime(f)
+            a, kn, c, bl = [om.MVector(mc.xform(j, q=True, ws=True, t=True)) for j in (th, ca, fo, ba)]
+            line = (c - a).normal()
+            m = _M(pj)
+            body = om.MVector(m[k * 4], m[k * 4 + 1], m[k * 4 + 2]) * sign
+            foot = bl - c
+
+            def perp(v):
+                v = v - line * (v * line)
+                return v.normal() if v.length() > 1e-4 else om.MVector()
+            fwd = perp(body) * (1 - foot_weight) + perp(foot) * foot_weight
+            if fwd.length() < 1e-3:
+                fwd = last or perp(body)
+            fwd = fwd.normal()
+            if last is not None and fwd * last < 0.5:
+                fwd = (fwd + last * 2).normal()      # no sudden swaps
+            last = fwd
+            ratio = (kn - a).length() / ((kn - a).length() + (c - kn).length())
+            p = a + (c - a) * ratio + fwd * dist
+            mc.xform(pole, ws=True, t=(p.x, p.y, p.z))
+            mc.setKeyframe(pole, at=['tx', 'ty', 'tz'], t=f)
+
+
+def fix_limbs(start=None, end=None, arms=True, reach=0.97, poles=True):
+    """Elbow hinge (FK arms), no straight-leg pops, flip-free knee poles."""
+    start = int(mc.playbackOptions(q=True, min=True)) if start is None else start
+    end = int(mc.playbackOptions(q=True, max=True)) if end is None else end
+    out = {}
+    if reach:
+        out['cog_lowered_cm'] = round(clamp_leg_reach(start, end, reach=reach), 1)
+    if poles:
+        knee_poles(start, end)
+    if arms:
+        untwist_elbows(start, end)
+    mc.currentTime(start)
+    return out
+
+
+# --------------------------------------------------------------------------
 # One call per clip
 # --------------------------------------------------------------------------
 def polish_clip(k=1.0, sigma=3.0, cyclic=False, exaggeration=1.0, feet_mesh='Boots', plant=True,
-                fingers=True, arms_fk=True, start=None, end=None, **plant_kw):
+                fingers=True, arms_fk=True, rebuild_poles=True, start=None, end=None, **plant_kw):
     """Cartoon-filter the body, exaggerate loops, plant feet, relax hands, arms to FK.
 
     Works on the open scene (a clip retargeted with skeleton_retarget, keyed
-    on every frame, FK and IK both keyed). Returns a short report.
+    on every frame, FK and IK both keyed). Knee poles are never filtered;
+    rebuild_poles=False keeps the retargeted ones (best for flips, rolls and
+    tucks, where the knee does not follow the body's front). Returns a report.
     """
     start = int(mc.playbackOptions(q=True, min=True)) if start is None else start
     end = int(mc.playbackOptions(q=True, max=True)) if end is None else end
@@ -406,9 +584,14 @@ def polish_clip(k=1.0, sigma=3.0, cyclic=False, exaggeration=1.0, feet_mesh='Boo
     n = cartoon_filter(ctrls, start, end, k=k, sigma=sigma, cyclic=cyclic)
     if exaggeration != 1.0:
         exaggerate(ctrls, start, end, factor=exaggeration)
+    clamp_leg_reach(start, end)
     runs = {}
     if plant and feet_mesh and mc.objExists(feet_mesh):
         runs = plant_feet(foot_setup(feet_mesh, frame=start), start, end, **plant_kw)
+    if rebuild_poles:
+        knee_poles(start, end)   # else the retargeted poles (unfiltered) are kept
+    if arms_fk:
+        untwist_elbows(start, end)
     if fingers:
         relax_fingers(start, end)
     mc.currentTime(start)

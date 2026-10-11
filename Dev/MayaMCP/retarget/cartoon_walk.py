@@ -94,7 +94,7 @@ def _key(ctrl, f, attrs=TR):
 
 
 def build(period=28, stride=26.0, lift=26.0, heel_z=-24.0, ground=0.0, heel_round=0.058,
-          bounce=(-8, -18, -15, -8, -1, -4), sway=6.0, hip_yaw=15.0, hip_roll=9.0,
+          bounce=(-8, -18, -15, -9, -6, -7), sway=6.0, hip_yaw=15.0, hip_roll=9.0,
           chest_yaw=20.0, chest_roll=7.0, chest_lean=8.0, chest_dip=6.0, head_nod=8.0, belly=4.0,
           swing=50.0, flop=32.0, arm_down=22.0, arm_reach=0.86, arm_pump=0.1, arms_fk=True,
           fingers=True, cycles=3):
@@ -208,6 +208,7 @@ def build(period=28, stride=26.0, lift=26.0, heel_z=-24.0, ground=0.0, heel_roun
     ap.cycle_curves(owned)
     if arms_fk:
         ap.match_fk_to_ik(ap.MUTANT_ARM_CHAINS, arm_frames)
+        ap.untwist_elbows(0, period)
         ap.cycle_curves([c for chain in ap.MUTANT_ARM_CHAINS.values() for c, _ in chain])
     if fingers:
         _cyclic_fingers(period)

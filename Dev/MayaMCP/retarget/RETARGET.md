@@ -132,3 +132,36 @@ counter-rotation, late head nod and belly jiggle, arms bent and swinging
 swing. Everything is a parameter (period, stride, lift, bounce, swing, ...).
 `heel_z` is the back of the boot sole in world Z at rest and `heel_round`
 compensates a rounded heel; check contacts after changing the boots.
+
+# Limb stability (no flipping arms or legs)
+
+`polish_clip` also runs these (or call `fix_limbs()` on any clip):
+
+- **`untwist_elbows`** — the FK elbow becomes a hinge: its twist about the
+  forearm (swing-twist decomposition) is removed and handed to the wrist,
+  which keeps the hand's world orientation. The forearm twist joints spread
+  it instead of the elbow wringing.
+- **`clamp_leg_reach`** — wherever a leg would straighten past 97% of its
+  length, the COG is lowered (smoothed) so the IK knee never snaps straight.
+- **`knee_poles`** — rebuilds knee poles pointing between the pelvis' front
+  and the foot's, perpendicular to the hip-ankle line, continuous frame to
+  frame. Good for locomotion; for flips, rolls and tucks keep the retargeted
+  poles instead (`rebuild_poles=False`). Poles are never cartoon-filtered:
+  amplifying them is what flipped knees.
+- `plant_feet` only flattens a foot that is right way up, and `flat=0`
+  disables flattening (Walk_Fwd: flattening at heel strike snapped the knee).
+
+Checking: compare each limb joint's local rotation with the rig's rest pose
+per frame; a twist change above ~15 deg/frame about the bone axis, or any
+local rotation change above ~30 deg/frame outside genuinely fast moves, is a
+flip. On MegaMuffin all clips pass except Run and Roll, which stay at their
+mocap's own speed (fast pumps and a tumble).
+
+# Back to Unreal
+
+Bake the export skeleton (`|root`), delete its constraints, rename joints
+whose Unreal names differ (`head` -> `head1`), export the skeleton only
+(FBX 2020, Y up, cm, baked animation) and reimport over the existing
+AnimSequence assets (`AssetImportTask` with `replace_existing`, skeleton
+set, animation only), restoring `enable_root_motion` and friends after the
+import. Montages, blend spaces and AnimBPs keep pointing at the same assets.
