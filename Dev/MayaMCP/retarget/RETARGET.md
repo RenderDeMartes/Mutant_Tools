@@ -121,18 +121,6 @@ Settings used on Coins100's MegaMuffin:
 | Dash | 1.0 | 2.5 | no | - |
 | BackFlip / Roll | 0.8 | 2.5 | no | - |
 
-# Cartoon walk cycle from scratch (`cartoon_walk.py`)
-
-`cartoon_walk.build()` keys a walk-in-place loop as editable key poses
-(contact / down / passing / up), curves set to cycle: heel strike pivoting on
-the heel, flat stance sliding back at constant speed, toe-off hinging on the
-ball joint with the toes kept flat, big COG bounce and sway, hips vs chest
-counter-rotation, late head nod and belly jiggle, arms bent and swinging
-(posed in IK, matched to FK, switched to FK), relaxed fingers trailing the
-swing. Everything is a parameter (period, stride, lift, bounce, swing, ...).
-`heel_z` is the back of the boot sole in world Z at rest and `heel_round`
-compensates a rounded heel; check contacts after changing the boots.
-
 # Limb stability (no flipping arms or legs)
 
 `polish_clip` also runs these (or call `fix_limbs()` on any clip):
