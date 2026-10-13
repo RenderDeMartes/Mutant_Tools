@@ -1,21 +1,23 @@
 {
-    "Name":  "Neck,Head",
-    "Description":  "This will create a Neck and a Head System (v002: fixes a ribbon-follicle rotation flip and a near-parallel aim/up singularity that could twist or flip the neck)",
-    "Icon":  "HeadNeck.png",
-    "Enable":  "True",
-    "python_file":  "exec_head_v002.py",
-    "import":  "import exec_head_v002",
-    "imp.reload":  "reload(exec_head_v002)",
-    "exec_command":  "exec_head_v002.create_head_block()",
-    "build_command":  "exec_head_v002.build_head_block()",
-    "attrs":  {
-                  "SetParent_string":  "new_locator",
-                  "HeadCtrlType_enum":  "octagon:hexagon:square:sphere:cube:pringle:feet:hand:circleY:circleX:circleZ:3dArrow:2dArrow:mover:2dArrow:root:cog",
-                  "Ribbon_bool":  "True",
-                  "SecundaryRibbon_float":  "3",
-                  "CtrlSize_float":  "4",
-                  "CtrlColor_enum":  "yellow:lightBlue:blue:white:purple:green:red:grey",
-                  "SetGameParent_string":  "",
-                  "Help_string":  "Overview:\n  This will create a Neck and a Head System.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetParent: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- HeadCtrlType: choose one option (for example: octagon, hexagon, square, sphere).\n- Ribbon: turn this ON/OFF depending on whether you want that feature.\n- SecundaryRibbon: numeric value that controls size/amount/intensity (default 3).\n- CtrlSize: numeric value that controls size/amount/intensity (default 4).\n- CtrlColor: choose one option (for example: yellow, lightBlue, blue, white).\n- Template parent examples: Head_Jnt, L_Hand_Ankle_Jnt, Head_Ctrl.\n\nTips:\n- if a field says left/right or mirror, use it to generate the opposite side quickly."
-              }
+    "Name": "Neck,Head",
+    "Description": "This will create a Neck and a Head System (v003: neck joints start on the Neck guide, matrix based for faster playback, squash and stretch, Default/SN orients)",
+    "Icon": "HeadNeck.png",
+    "Enable": "True",
+    "python_file": "exec_head_v003.py",
+    "import": "import exec_head_v003",
+    "imp.reload": "reload(exec_head_v003)",
+    "exec_command": "exec_head_v003.create_head_block()",
+    "build_command": "exec_head_v003.build_head_block()",
+    "attrs": {
+        "SetParent_string": "new_locator",
+        "HeadCtrlType_enum": "octagon:hexagon:square:sphere:cube:pringle:feet:hand:circleY:circleX:circleZ:3dArrow:2dArrow:mover:2dArrow:root:cog",
+        "Ribbon_bool": "True",
+        "SecundaryRibbon_float": "3",
+        "CtrlSize_float": "4",
+        "CtrlColor_enum": "yellow:lightBlue:blue:white:purple:green:red:grey",
+        "SetGameParent_string": "",
+        "SquashStretch_bool": "True",
+        "Orients_enum": "Default:SN",
+        "Help_string": "Overview:\n  This will create a Neck and a Head System.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetParent: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- HeadCtrlType: choose one option (for example: octagon, hexagon, square, sphere).\n- Ribbon: ON adds one sub controller per neck joint (Neck_1_Ctrl...), shown with Neck_Ctrl Vis.\n- SecundaryRibbon: how many neck joints (default 3). The first one sits on the Neck guide, Head_Bnd on the Head guide.\n- CtrlSize: numeric value that controls size/amount/intensity (default 4).\n- CtrlColor: choose one option (for example: yellow, lightBlue, blue, white).\n- SquashStretch: adds Volume on Neck_Ctrl, the neck gets thinner when it stretches and thicker when it squashes.\n- Orients: Default keeps Neck_Ctrl along the neck, SN aligns the neck controllers to the world like the spine and uses xzy rotate orders on Neck_Ctrl / Head_Ctrl.\n- Neck_Ctrl Stretch: 1 lets Head_Ctrl stretch the neck, 0 keeps the neck length (the head joint stays on the line to Head_Ctrl).\n- Neck_Ctrl Bend: how much of the head swing the neck joints take, more near the head (0 = like v002).\n- Template parent examples: Head_Jnt, L_Hand_Ankle_Jnt, Head_Ctrl.\n\nTips:\n- if a field says left/right or mirror, use it to generate the opposite side quickly."
+    }
 }
