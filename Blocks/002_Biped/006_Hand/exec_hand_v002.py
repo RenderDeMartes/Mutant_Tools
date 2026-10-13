@@ -1156,8 +1156,6 @@ def build_hand_block():
         else:
             clean_rig_grp = side_guide
             clean_ctrl_grp = ctrls_grp
-        # follow the block parent like v001 (SmartHand looks for this constraint), 2 constraints per hand
-        cmds.parentConstraint(block_parent, ctrls_grp, mo = True)
 
         #game parents for bind joints
         game_parent = cmds.getAttr('{}.SetGameParent'.format(config))
@@ -1172,9 +1170,21 @@ def build_hand_block():
                 cmds.parent(bind_joints[0], bind_jnt_grp)
 
         #clean ctrls
-        cmds.parent(clean_ctrl_grp, setup['base_groups']['control'] + nc['group'])
-        # the block parent scales the hand (a parent under the Global brings the Global scale with it)
-        cmds.scaleConstraint(block_parent, clean_ctrl_grp, mo=True)
+        # follow the block parent with its whole world matrix: move, rotate and scale, a non uniform scale
+        # on a rotated parent (L_Wrist_Jnt) included, constraints can not carry that
+        # (a parent under the Global brings the Global scale with it)
+        control_grp = setup['base_groups']['control'] + nc['group']
+        follow_grp = cmds.createNode('transform', n=side_guide + '_Parent_Follow' + nc['group'], p=control_grp)
+        cmds.parent(clean_ctrl_grp, follow_grp)
+        follow = _mult_matrix(follow_grp + '_MultMatrix', [_world(block_parent).inverse(),
+                                                           block_parent + '.worldMatrix[0]',
+                                                           control_grp + '.worldInverseMatrix[0]'])
+        cmds.connectAttr(follow, follow_grp + '.offsetParentMatrix')
+        # the ctrls keep a parentConstraint like v001 (SmartHand looks for it), to a still target under the
+        # follow group so it only holds the rest place
+        parent_target = cmds.createNode('transform', n=side_guide + '_Parent_Target' + nc['null'], p=follow_grp)
+        cmds.xform(parent_target, ws=True, m=list(_world(ctrls_grp)))
+        cmds.parentConstraint(parent_target, ctrls_grp, mo=True)
 
         #parent rig
         cmds.parent(clean_rig_grp, '{}{}'.format(setup['rig_groups']['misc'], nc['group']))
