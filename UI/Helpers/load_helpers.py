@@ -256,7 +256,6 @@ class HelperUI(QtMutantWindow.Qt_Mutant):
 		self.ui.place_push_loc_btn.clicked.connect(self.place_push_locators)
 		self.ui.place_push_loc_slider.valueChanged.connect(self.update_place_push_loc_label)
 		self.ui.mirror_push_joints_grp_btn.clicked.connect(self.mirror_push_joints_grp)
-		self.ui.skin_to_other_button.clicked.connect(self.copy_skin_from_first_to_rest)
 
 		self.ui.remove_duplicate_names.clicked.connect(self.remove_dup_names)
 		self.ui.studio_tag_ctrls.clicked.connect(self.tag_controllers)
@@ -321,6 +320,11 @@ class HelperUI(QtMutantWindow.Qt_Mutant):
 		self.ui.dont_press.clicked.connect(self.dont_press)
 		self.ui.switch_ikfk.clicked.connect(self.switch_ikfk)
 		self.ui.arkkit_btn.clicked.connect(self.open_arkkit)
+
+		#Geo Update Tab
+		self.ui.skin_to_other_button.clicked.connect(self.copy_skin_from_first_to_rest)
+		self.ui.save_skin_joints.clicked.connect(self.save_skin_joints)
+		self.ui.load_skin_joints.clicked.connect(self.load_skin_joints)
 
 		#Mocap Tab
 		self.ui.fix_legs_orients.clicked.connect(self.fix_legs_orients_mocap)
@@ -1052,6 +1056,90 @@ class HelperUI(QtMutantWindow.Qt_Mutant):
 			print(f"Copied weights from {source} → {target}")
 
 		print("✅ Skinning copied successfully from first geometry to all others.")
+
+	def skin_joints_json(self):
+		import tempfile
+		return os.path.join(tempfile.gettempdir(), 'mutant_skin_joints.json')
+
+	def save_skin_joints(self):
+		"""Save the skinCluster influences of the selected geos to a temp json,
+		so another Maya session can select them with load_skin_joints."""
+		sel = cmds.ls(sl=True, long=True)
+		if not sel:
+			cmds.error('Select at least one skinned geo.')
+
+		joints = []
+		for geo in sel:
+			skin_clusters = cmds.ls(cmds.listHistory(geo, pdo=True) or [], type='skinCluster')
+			if not skin_clusters:
+				cmds.warning('No skinCluster found on {}, skipping.'.format(geo))
+				continue
+			for inf in cmds.skinCluster(skin_clusters[0], q=True, inf=True) or []:
+				if inf not in joints:
+					joints.append(inf)
+
+		if not joints:
+			cmds.error('No skin joints found on the selection.')
+
+		data = {'scene': cmds.file(q=True, sn=True), 'joints': []}
+		for jnt in joints:
+			data['joints'].append({
+				'name': jnt.split('|')[-1].split(':')[-1],
+				'translate': cmds.xform(jnt, q=True, ws=True, t=True),
+				'rotate': cmds.xform(jnt, q=True, ws=True, ro=True),
+				'radius': cmds.getAttr('{}.radius'.format(jnt)) if cmds.attributeQuery('radius', n=jnt, ex=True) else 1.0,
+			})
+
+		path = self.skin_joints_json()
+		with open(path, 'w') as f:
+			json.dump(data, f, indent=4)
+
+		print('Saved {} skin joints to {}'.format(len(joints), path))
+
+	@undo
+	def load_skin_joints(self):
+		"""Select the joints saved with save_skin_joints. Missing joints can be
+		created at the saved world position, parented to the world."""
+		path = self.skin_joints_json()
+		if not os.path.exists(path):
+			cmds.error('No saved skin joints found, use Save Skin Joints first. ({})'.format(path))
+
+		with open(path, 'r') as f:
+			data = json.load(f)
+
+		found = []
+		missing = []
+		for jnt_data in data['joints']:
+			name = jnt_data['name']
+			matches = cmds.ls(name, long=True) or cmds.ls('*:{}'.format(name), long=True)
+			if matches:
+				if len(matches) > 1:
+					cmds.warning('{} matches several nodes: {}'.format(name, matches))
+				found.extend(matches)
+			else:
+				missing.append(jnt_data)
+
+		if missing:
+			print('Missing skin joints: {}'.format([j['name'] for j in missing]))
+			answer = cmds.confirmDialog(title='Missing Joints',
+										message='{} of {} joints are missing in this scene.\nCreate them in the world?'.format(len(missing), len(data['joints'])),
+										button=['Create', 'Skip'], defaultButton='Create',
+										cancelButton='Skip', dismissString='Skip')
+			if answer == 'Create':
+				for jnt_data in missing:
+					cmds.select(cl=True)
+					jnt = cmds.joint(name=jnt_data['name'], radius=jnt_data.get('radius', 1.0))
+					cmds.xform(jnt, ws=True, t=jnt_data['translate'])
+					cmds.xform(jnt, ws=True, ro=jnt_data['rotate'])
+					cmds.makeIdentity(jnt, apply=True, r=True)
+					found.append(cmds.ls(jnt, long=True)[0])
+
+		if not found:
+			cmds.select(cl=True)
+			cmds.warning('None of the saved skin joints were found or created.')
+			return
+		cmds.select(found, r=True)
+		print('Selected {} skin joints from {}'.format(len(found), data.get('scene') or path))
 
 
 	def unreferece_geo(self):
