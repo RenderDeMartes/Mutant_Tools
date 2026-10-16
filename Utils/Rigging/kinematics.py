@@ -2500,6 +2500,14 @@ class Kinematics_class(tools.Tools_class):
 		cmds.parent(bend_pivot, def_grp)
 		cmds.parent(squash_pivot, def_grp)
 
+		# the deformers sit on the geo: bottom center of its bounding box (their size from nonLinear goes
+		# from there to the top with lowBound 0 / highBound 2)
+		geo_box = cmds.exactWorldBoundingBox(geo)
+		geo_bottom = [(geo_box[0] + geo_box[3]) / 2.0, geo_box[1], (geo_box[2] + geo_box[5]) / 2.0]
+		geo_top = [geo_bottom[0], geo_box[4], geo_bottom[2]]
+		for pivot in [bend_pivot, squash_pivot]:
+			cmds.xform(pivot, ws=True, t=geo_bottom)
+
 		if bend_guide:
 			cmds.delete(cmds.parentConstraint(bend_guide, bend_pivot, mo=False))
 		if squash_guide:
@@ -2606,15 +2614,14 @@ class Kinematics_class(tools.Tools_class):
 		# -----------------------------
 		# 🔹 CONSTRAINTS / CLEANUP
 		# -----------------------------
-		cmds.parentConstraint(parent_grp, off_def_grp, mo=False)
+		# keep the deformers where they are (mo=False moved them by the parent position)
+		cmds.parentConstraint(parent_grp, off_def_grp, mo=True)
 
+		# the controller: on the custom pivot guide, else on top of the geo
 		if ctrl_guide:
 			cmds.delete(cmds.pointConstraint(ctrl_guide, ctrl_grp, mo=False))
 		else:
-			cmds.delete(cmds.pointConstraint(parent_grp, ctrl_grp, mo=False))
-
-			if cmds.objExists('HeadEnd_Guide'):
-				cmds.delete(cmds.pointConstraint('HeadEnd_Guide', ctrl_grp, mo=False))
+			cmds.xform(ctrl_grp, ws=True, t=geo_top)
 
 		cmds.parentConstraint(parent_grp, ctrl_grp, mo=True)
 

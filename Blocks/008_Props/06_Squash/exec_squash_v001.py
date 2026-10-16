@@ -64,9 +64,11 @@ def create_squash_block(name = 'Squash'):
     #cmds.getAttr('{}.AttrName'.format(config), asString = True) #for enums
     #joint_one = mt.create_joint_guide(name = name) #guide base with shapes
 
+    # the custom pivot is only the controller (Squash_Loc), the bend / squash guides are not used
     if cmds.attributeQuery('UseCustomPivots', node=config, exists=True):
-        cmds.connectAttr(config + '.UseCustomPivots', bend_guide + '.v')
-        cmds.connectAttr(config + '.UseCustomPivots', squash_guide + '.v')
+        cmds.connectAttr(config + '.UseCustomPivots', loc_guide + '.v')
+    for guide in [bend_guide, squash_guide]:
+        cmds.setAttr(guide + '.v', 0)
 
     cmds.select(block)
 
@@ -128,9 +130,11 @@ def build_squash_block():
     except:
         use_custom_pivots = False
 
+    # the custom pivot is only the controller, the deformers always sit on the geo
+    bend_guide = None
+    squash_guide = None
     if not use_custom_pivots:
-        bend_guide = None
-        squash_guide = None
+        loc_guide = None
 
     geos_attr = cmds.getAttr('{}.SetGeo'.format(config), asString=True)
     if geos_attr:
