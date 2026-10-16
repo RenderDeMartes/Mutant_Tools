@@ -209,6 +209,67 @@ def _create_ctrl(joint, name, curve_type, size, color, rest_matrix):
     offset_grp = mt.root_grp(input=ctrl, replace_nc=False)[0]
     return ctrl, offset_grp
 
+
+def _attr_spec(node, attr):
+    plug = '{}.{}'.format(node, attr)
+    spec = {'type': cmds.attributeQuery(attr, n=node, attributeType=True),
+            'keyable': cmds.getAttr(plug, keyable=True), 'channel_box': cmds.getAttr(plug, channelBox=True),
+            'lock': cmds.getAttr(plug, lock=True), 'value': cmds.getAttr(plug),
+            'default': cmds.attributeQuery(attr, n=node, listDefault=True)[0],
+            'outputs': cmds.listConnections(plug, s=False, d=True, p=True) or [],
+            'inputs': cmds.listConnections(plug, s=True, d=False, p=True) or []}
+    if spec['type'] == 'enum':
+        spec['enum'] = cmds.attributeQuery(attr, n=node, listEnum=True)[0]
+    for key in ['min', 'max']:
+        if cmds.attributeQuery(attr, n=node, **{key + 'Exists': True}):
+            spec[key] = cmds.attributeQuery(attr, n=node, **{key: True})[0]
+    return spec
+
+
+def attrs_on_ctrls(holder, attrs, shape_name, ctrls):
+    """Attrs on every controller, like the Limb v002 switch shape: the real attrs go to a data node (not in
+    the hierarchy, no evaluation cycle) and a locator shape instanced under every controller keeps proxies
+    of them, in the same order. The holder gets the shape too, so the attrs stay where they were."""
+    data_node = cmds.createNode('network', n=shape_name + '_Data')
+    specs = []
+    for attr in attrs:
+        spec = _attr_spec(holder, attr)
+        kwargs = {'ln': attr, 'at': spec['type']}
+        if spec['type'] == 'enum':
+            kwargs['en'] = spec['enum']
+        else:
+            kwargs['dv'] = spec['default']
+        for key in ['min', 'max']:
+            if key in spec:
+                kwargs[key] = spec[key]
+        cmds.addAttr(data_node, **kwargs)
+        cmds.setAttr('{}.{}'.format(data_node, attr), spec['value'])
+        specs.append((attr, spec))
+    for attr, spec in specs:
+        cmds.setAttr('{}.{}'.format(holder, attr), lock=False)
+        cmds.deleteAttr(holder, at=attr)
+
+    shape = cmds.createNode('locator', n=shape_name, p=holder, skipSelect=True)
+    for attr in ['lpx', 'lpy', 'lpz', 'lsx', 'lsy', 'lsz']:
+        cmds.setAttr('{}.{}'.format(shape, attr), lock=True, channelBox=False, keyable=False)
+    cmds.setAttr(shape + '.visibility', 0)
+    for attr, spec in specs:
+        source = '{}.{}'.format(data_node, attr)
+        cmds.addAttr(shape, ln=attr, proxy=source)
+        for plug in spec['inputs']:
+            cmds.connectAttr(plug, source, f=True)
+        for plug in spec['outputs']:
+            cmds.connectAttr(source, plug, f=True)
+        cmds.setAttr('{}.{}'.format(shape, attr), keyable=spec['keyable'])
+        if not spec['keyable']:
+            cmds.setAttr('{}.{}'.format(shape, attr), channelBox=spec['channel_box'])
+        if spec['lock']:
+            cmds.setAttr(source, lock=True)
+    for ctrl in ctrls:
+        if ctrl != holder:
+            cmds.parent(shape, ctrl, s=True, add=True)
+    return shape, data_node
+
 #-------------------------
 
 def build_head_block():
@@ -281,12 +342,17 @@ def build_head_block():
     head_ctrl, head_offset_grp = _create_ctrl(head_joint, str(head_joint).replace(nc['joint'], nc['ctrl']), ctrl_type,
                                               ctrl_size, ctrl_color, _orient_matrix(head_rest, 'SN'))
     cmds.parent(head_offset_grp, neck_ctrl)
+    # where the neck enters the head: rides Head_Ctrl, moving it changes that point without moving the head
+    neck_end_ctrl, neck_end_offset_grp = _create_ctrl(head_joint, '{}_End{}'.format(name, nc['ctrl']), 'circleY',
+                                                      ctrl_size * 0.85, ctrl_color, _orient_matrix(head_rest, 'SN'))
+    cmds.parent(neck_end_offset_grp, head_ctrl)
 
     #blends#changed name to offset since blends are now a dif block
     mt.root_grp(input=neck_ctrl, custom=True, custom_name='_Ofset', autoRoot=False, replace_nc=False)
     mt.root_grp(input=head_ctrl, custom=True, custom_name='_Ofset', autoRoot=False, replace_nc=False)
     mt.root_grp(input=neck_ctrl, autoRoot=True)
     mt.root_grp(input=head_ctrl, autoRoot=True)
+    mt.root_grp(input=neck_end_ctrl, autoRoot=True)
 
     cmds.parent(neck_offset_grp, setup['base_groups']['control'] + nc['group'])
 
@@ -300,15 +366,19 @@ def build_head_block():
 
     neck_world = neck_ctrl + '.worldMatrix[0]'
     head_world = head_ctrl + '.worldMatrix[0]'
+    neck_end_world = neck_end_ctrl + '.worldMatrix[0]'
     neck_ctrl_rest = _world(neck_ctrl)
     head_ctrl_rest = _world(head_ctrl)
+    neck_end_ctrl_rest = _world(neck_end_ctrl)
 
     #Attrs ------------------------------
+    # attrs Neck_Ctrl already has are not neck attrs (they stay on it)
+    holder_attrs = set(cmds.listAttr(neck_ctrl, ud=True) or [])
     mt.line_attr(neck_ctrl, 'Neck')
     # Stretch 0: the neck keeps its length, the head joint stays on the line to Head_Ctrl
     stretch_attr = mt.new_attr(input=neck_ctrl, name='Stretch', min=0, max=1, default=1)
-    # how much of the head swing the neck joints take, more near the head (rotation only, no joint moves)
-    bend_attr = mt.new_attr(input=neck_ctrl, name='Bend', min=0, max=1, default=0)
+    # Neck_End_Ctrl rotation multiplier for the neck curve
+    curve_attr = mt.new_attr(input=neck_ctrl, name='CurveAmount', min=0, max=5, default=2)
     volume_attr = None
     if squash_stretch:
         volume_attr = mt.new_attr(input=neck_ctrl, name='Volume', min=0, max=1, default=1)
@@ -326,7 +396,8 @@ def build_head_block():
         return _pick('{}_{}_PickMatrix'.format(name, label), carried, translate=True)
 
     start = point('Start', neck_pos, neck_world, neck_ctrl_rest)
-    head_point = point('Head', head_pos, head_world, head_ctrl_rest)
+    # the neck goes to Neck_End_Ctrl (Head_Ctrl carries it)
+    head_point = point('Head', head_pos, neck_end_world, neck_end_ctrl_rest)
 
     # length of the neck against its rest length in the current scale of the neck controller (global included)
     distance = cmds.createNode('distanceBetween', n=name + '_Length_DistanceBetween')
@@ -358,7 +429,8 @@ def build_head_block():
     cmds.connectAttr(reach, end + '.wtMatrix[1].weightIn')
     end = end + '.matrixSum'
 
-    # head joint: Head_Ctrl rotation and scale, on the end of the neck
+    # head joint: Head_Ctrl, moved by what Stretch 0 takes off the neck end (none with Stretch on), so
+    # Neck_End_Ctrl moves the neck end only
     head_inverse = cmds.createNode('inverseMatrix', n=name + '_Head_InverseMatrix')
     cmds.connectAttr(head_point, head_inverse + '.inputMatrix')
     head_source = _mult_matrix(str(head_joint) + '_World_MultMatrix',
@@ -367,23 +439,8 @@ def build_head_block():
 
     # twist goes from the neck to the head along the neck: rotation since rest of both controllers
     neck_delta = _mult_matrix(name + '_NeckDelta_MultMatrix', [neck_ctrl_rest.inverse(), neck_world])
-    head_delta = _mult_matrix(name + '_HeadDelta_MultMatrix', [head_ctrl_rest.inverse(), head_world])
+    head_delta = _mult_matrix(name + '_HeadDelta_MultMatrix', [neck_end_ctrl_rest.inverse(), neck_end_world])
     neck_scale = _pick(name + '_NeckScale_PickMatrix', neck_world, scale=True)
-
-    # head swing on top of the neck (no twist, no neck rotation): shortest rotation from the head Y the neck
-    # carries to the head Y now
-    neck_rotation = _pick(name + '_NeckRotation_PickMatrix', neck_delta, rotate=True)
-    swing = cmds.createNode('aimMatrix', n=name + '_HeadSwing_AimMatrix')
-    cmds.connectAttr(neck_rotation, swing + '.inputMatrix')
-    cmds.setAttr(swing + '.primaryInputAxis', head_ctrl_rest[4], head_ctrl_rest[5], head_ctrl_rest[6])
-    cmds.setAttr(swing + '.primaryMode', 2)
-    cmds.setAttr(swing + '.primaryTargetVector', 0, 1, 0)
-    cmds.connectAttr(head_world, swing + '.primaryTargetMatrix')
-    cmds.setAttr(swing + '.secondaryMode', 0)
-    neck_rotation_inverse = cmds.createNode('inverseMatrix', n=name + '_NeckRotation_InverseMatrix')
-    cmds.connectAttr(neck_rotation, neck_rotation_inverse + '.inputMatrix')
-    swing = _mult_matrix(name + '_HeadSwing_MultMatrix',
-                         [neck_rotation_inverse + '.outputMatrix', swing + '.outputMatrix'])
 
     #Squash and stretch -----------------
     squash_matrices = [None, None]
@@ -407,21 +464,55 @@ def build_head_block():
             cmds.connectAttr(power + '.outputX', compose + '.inputScaleZ')
             squash_matrices[i] = compose + '.outputMatrix'
 
+    #Neck_End_Ctrl curve and scale ------
+    # its own rotation (not the head one, a head nod does not bow the neck) turns the end tangent of a
+    # Bezier from the neck to the head: P1 stays on the straight line, P2 turns around Neck_End_Ctrl.
+    # Straight at rest, so the joints sit where they did without it.
+    end_local = neck_end_ctrl + '.matrix'
+    end_pivot = _mult_matrix(name + '_EndPivot_MultMatrix',
+                             [_pick(name + '_EndPivot_PickMatrix', end_local, translate=True),
+                              neck_end_ctrl + '.parentMatrix[0]'])
+    end_pivot_inverse = cmds.createNode('inverseMatrix', n=name + '_EndPivot_InverseMatrix')
+    cmds.connectAttr(end_pivot, end_pivot_inverse + '.inputMatrix')
+    straight_p2 = _weighted_sum(name + '_StraightP2_WtAddMatrix', [(start, 1.0 / 3), (end, 2.0 / 3)])
+    # CurveAmount multiplies the Neck_End_Ctrl rotation that turns P2
+    end_rotate = cmds.createNode('multiplyDivide', n=name + '_CurveAmount_MultiplyDivide')
+    cmds.connectAttr(neck_end_ctrl + '.rotate', end_rotate + '.input1')
+    for axis in 'XYZ':
+        cmds.connectAttr(curve_attr, end_rotate + '.input2' + axis)
+    end_rotation = cmds.createNode('composeMatrix', n=name + '_EndRotate_ComposeMatrix')
+    cmds.connectAttr(end_rotate + '.output', end_rotation + '.inputRotate')
+    cmds.connectAttr(neck_end_ctrl + '.rotateOrder', end_rotation + '.inputRotateOrder')
+    p2 = _mult_matrix(name + '_P2_MultMatrix', [straight_p2, end_pivot_inverse + '.outputMatrix',
+                                                end_rotation + '.outputMatrix', end_pivot])
+    p2 = _pick(name + '_P2_PickMatrix', p2, translate=True)
+    # its own scale scales the neck joints with a falloff, none on the first joint, more near the head
+    end_scale = _pick(name + '_EndScale_PickMatrix', end_local, scale=True)
+
     #Neck frames ------------------------
     # joints are spread evenly from the Neck guide (first joint on it) to the Head guide (Head_Bnd),
-    # Y aims at the head
+    # on the Bezier, Y aims at the next joint (the last one at the head)
+    positions = []
+    for j in range(joint_count):
+        t = float(j) / joint_count
+        label = '{}_{}'.format(name, j + 1)
+        # cubic Bezier weights with P1 = 2/3 start + 1/3 end
+        b0, b1, b2, b3 = (1 - t) ** 3, 3 * (1 - t) ** 2 * t, 3 * (1 - t) * t ** 2, t ** 3
+        positions.append(_weighted_sum(label + '_Position_WtAddMatrix',
+                                       [(start, b0 + b1 * 2.0 / 3), (end, b3 + b1 / 3.0), (p2, b2)]))
+
     frames = []
     for j in range(joint_count):
         t = float(j) / joint_count
         label = '{}_{}'.format(name, j + 1)
-        position = _weighted_sum(label + '_Position_WtAddMatrix', [(start, 1.0 - t), (end, t)])
+        position = positions[j]
         twist = _blend_matrix(label + '_Twist_BlendMatrix', neck_delta, head_delta, t)
 
         aim = cmds.createNode('aimMatrix', n=label + '_AimMatrix')
         cmds.connectAttr(position, aim + '.inputMatrix')
         cmds.setAttr(aim + '.primaryInputAxis', 0, 1, 0)
         cmds.setAttr(aim + '.primaryMode', 1)
-        cmds.connectAttr(end, aim + '.primaryTargetMatrix')
+        cmds.connectAttr(positions[j + 1] if j + 1 < joint_count else end, aim + '.primaryTargetMatrix')
         # Z keeps the neck joint Z, turned by the blended twist
         cmds.setAttr(aim + '.secondaryInputAxis', 0, 0, 1)
         cmds.setAttr(aim + '.secondaryMode', 2)
@@ -429,18 +520,13 @@ def build_head_block():
         cmds.connectAttr(twist, aim + '.secondaryTargetMatrix')
         frame = aim + '.outputMatrix'
 
+        frame_items = [neck_scale, frame]
         if t > 0:
-            # Bend: part of the head swing, turned around the joint
-            bend_weight = _mult(label + '_Bend_MultDoubleLinear', bend_attr, t)
-            bend = cmds.createNode('blendMatrix', n=label + '_Bend_BlendMatrix')
-            cmds.connectAttr(swing, bend + '.target[0].targetMatrix')
-            cmds.connectAttr(bend_weight, bend + '.target[0].weight')
-            position_inverse = cmds.createNode('inverseMatrix', n=label + '_Position_InverseMatrix')
-            cmds.connectAttr(position, position_inverse + '.inputMatrix')
-            frame = _mult_matrix(label + '_Bend_MultMatrix', [frame, position_inverse + '.outputMatrix',
-                                                               bend + '.outputMatrix', position])
-
-        frames.append(_mult_matrix(label + '_Frame_MultMatrix', [neck_scale, frame]))
+            falloff = cmds.createNode('blendMatrix', n=label + '_EndScale_BlendMatrix')
+            cmds.connectAttr(end_scale, falloff + '.target[0].targetMatrix')
+            cmds.setAttr(falloff + '.target[0].weight', t)
+            frame_items.insert(0, falloff + '.outputMatrix')
+        frames.append(_mult_matrix(label + '_Frame_MultMatrix', frame_items))
 
     #Sub controllers --------------------
     ctrl_grp = cmds.group(em=True, n='{}{}{}'.format(name, nc['ctrl'], nc['group']), p=neck_ctrl)
@@ -502,6 +588,14 @@ def build_head_block():
             cmds.connectAttr(vis_attr, shape + '.v')
     if not sub_ctrl_list:
         cmds.delete(ctrl_grp)
+    neck_end_vis = mt.new_enum(input=neck_ctrl, name='NeckEndVis', enums='Hide:Show', keyable=False, default=0)
+    for shape in cmds.listRelatives(neck_end_ctrl, s=True) or []:
+        cmds.connectAttr(neck_end_vis, shape + '.v')
+
+    # neck attrs on every neck controller (instanced shape with proxies, like the Limb)
+    neck_attrs = [attr for attr in cmds.listAttr(neck_ctrl, ud=True) or [] if attr not in holder_attrs]
+    attrs_on_ctrls(neck_ctrl, neck_attrs, '{}_Attrs{}'.format(name, nc['locator']),
+                   [head_ctrl, neck_end_ctrl] + sub_ctrl_list)
 
     cmds.select(cl=True)
 
