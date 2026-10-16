@@ -840,9 +840,18 @@ class VersionDiffDialog(QtWidgets.QDialog):
 		for box in (self.from_box, self.to_box):
 			for v in versions:
 				box.addItem(v + ('  (current)' if v == from_version else ''), v)
-		self.from_box.setCurrentIndex(versions.index(from_version) if from_version in versions else 0)
+		self.setAttribute(QtCore.Qt.WA_DeleteOnClose)
+		current_index = versions.index(from_version) if from_version in versions else 0
 		target = to_version if to_version in versions else versions[-1]
-		self.to_box.setCurrentIndex(versions.index(target))
+		target_index = versions.index(target)
+		if target_index == current_index:
+			# already on the latest: show what this version changed from the one before
+			if current_index > 0:
+				current_index -= 1
+			elif len(versions) > 1:
+				target_index = 1
+		self.from_box.setCurrentIndex(current_index)
+		self.to_box.setCurrentIndex(target_index)
 		row.addWidget(QtWidgets.QLabel('From'))
 		row.addWidget(self.from_box, 1)
 		row.addWidget(QtWidgets.QLabel('To'))
