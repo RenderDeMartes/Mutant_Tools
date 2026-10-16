@@ -582,19 +582,15 @@ def bendy_segment_path(name, start, end, other, curve, tweak_ctrls, start_offset
         cmds.connectAttr(offsets_slope, tangent + '.input3D[1]')
         cmds.connectAttr(bend_slope, tangent + '.input3D[2]')
         tangent += '.output3D'
-        root_matrix = _world(root_grp)
-        primary_axis, along = _closest_axis(rest_ctrl, rest_chord)
-        root_axes = [om.MVector(root_matrix[i * 4], root_matrix[i * 4 + 1], root_matrix[i * 4 + 2]).normal() for i in range(3)]
-        root_up = min(range(3), key=lambda k: abs(root_axes[k] * along))
-        secondary_axis, _ = _closest_axis(rest_ctrl, root_axes[root_up])
+        # the root group frame (ribbon twist) turned the shortest way onto the tangent, no up vector: a fixed up
+        # flipped the twist when the tangent lined up with it (mid bendy pulled close to the shoulder / wrist)
+        primary_axis, _ = _closest_axis(_world(root_grp), rest_chord)
         aim = cmds.createNode('aimMatrix', n=point + '_AimMatrix')
+        cmds.connectAttr(root_grp + '.worldMatrix[0]', aim + '.inputMatrix')
         cmds.setAttr(aim + '.primaryInputAxis', *primary_axis)
         cmds.setAttr(aim + '.primaryMode', 2)
         cmds.connectAttr(tangent, aim + '.primaryTargetVector')
-        cmds.setAttr(aim + '.secondaryInputAxis', *secondary_axis)
-        cmds.setAttr(aim + '.secondaryMode', 2)
-        cmds.setAttr(aim + '.secondaryTargetVector', *[1 if k == root_up else 0 for k in range(3)])
-        cmds.connectAttr(root_grp + '.worldMatrix[0]', aim + '.secondaryTargetMatrix')
+        cmds.setAttr(aim + '.secondaryMode', 0)
 
         # old drivers out: blended parent constraint, aim constraint and the forward aim
         for constraint in set(cmds.listConnections(auto_grp, type='constraint', s=True, d=False) or []):
@@ -814,8 +810,8 @@ def _axis_map(ctrl_matrix, joint_matrix):
     return [max(range(3), key=lambda k: abs(axis * ctrl_axes[k])) for axis in joint_axes]
 
 
-def free_controller_scale(ctrls):
-    """Unlock the scale and stop the children from inheriting it."""
+def free_controller_scale(ctrls, inherit_scale=()):
+    """Unlock the scale and stop the children from inheriting it (except the ctrls in inherit_scale)."""
     for ctrl in ctrls:
         for axis in [''] + list(AXES):
             cmds.setAttr('{}.scale{}'.format(ctrl, axis), lock=False)
@@ -824,10 +820,45 @@ def free_controller_scale(ctrls):
         # a zero scale can not be compensated on the children
         cmds.transformLimits(ctrl, sx=(0.001, 1), sy=(0.001, 1), sz=(0.001, 1),
                              esx=(True, False), esy=(True, False), esz=(True, False))
+        if ctrl in inherit_scale:
+            continue
         for child in cmds.listRelatives(ctrl, c=True, type='transform') or []:
             if cmds.listConnections(child + '.offsetParentMatrix', s=True, d=False):
                 continue
             cmds.connectAttr(_inverse_scale_matrix(ctrl), child + '.offsetParentMatrix', f=True)
+
+
+def twist_follow_length(main_joints, upper_twist, lower_twist, axis, ribbons):
+    """The twist chains follow the bone length (the fk shoulder / elbow scale moves the elbow / wrist), so the
+    twist joints, the ribbons and the bind joints stretch with the bone. The length is read from the main joint
+    translate, the ik stretch (main joint scale) is not counted twice.
+    ribbons: the twist joints scale along the bone (the ribbon surface stretches up to the elbow / wrist, the
+    bind drivers read the main joint scale). No ribbons: the twist joints are the bind drivers, only their
+    spacing changes."""
+    for parent, child, twist_joints in [(main_joints[0], main_joints[1], upper_twist),
+                                        (main_joints[1], main_joints[2], lower_twist)]:
+        rest = cmds.getAttr('{}.translate{}'.format(child, axis))
+        if abs(rest) < 1e-6:
+            continue
+        ratio = cmds.createNode('multiplyDivide', n=child + '_BoneLength_MultiplyDivide')
+        cmds.setAttr(ratio + '.operation', 2)
+        cmds.connectAttr('{}.translate{}'.format(child, axis), ratio + '.input1X')
+        cmds.setAttr(ratio + '.input2X', rest)
+        if ribbons:
+            for jnt in twist_joints:
+                # the main joint scale comes in as one compound, split it to put the length on the bone axis
+                for source in cmds.listConnections(jnt + '.scale', s=True, d=False, p=True) or []:
+                    cmds.disconnectAttr(source, jnt + '.scale')
+                    for other in AXES.replace(axis, ''):
+                        cmds.connectAttr('{}{}'.format(source, other), '{}.scale{}'.format(jnt, other))
+                length_scale = _mult(jnt + '_BoneLength_MultDoubleLinear', ratio + '.outputX',
+                                     '{}.scale{}'.format(parent, axis))
+                cmds.connectAttr(length_scale, '{}.scale{}'.format(jnt, axis), f=True)
+            continue
+        for jnt in twist_joints[1:]:
+            spacing = _mult(jnt + '_BoneLength_MultDoubleLinear', ratio + '.outputX',
+                            cmds.getAttr('{}.translate{}'.format(jnt, axis)))
+            cmds.connectAttr(spacing, '{}.translate{}'.format(jnt, axis), f=True)
 
 
 def scale_bind_joints(bind_joints, influences):
@@ -963,6 +994,291 @@ def constraints_to_matrix(constraints, unscaled_targets=()):
 
 # -------------------------
 
+# -------------------------
+# SN bendys (Bendys = SN): the studio bendy system, 5 controllers per limb instead of the Mutant ribbons.
+# 1 start (no twist), 2 upper mid, 3 mid (half upper / half lower), 4 lower mid, 5 end (lower orient).
+# Each one: Root (follows the limb) > Offset > Auto > Orient > Ctrl, and Auto > Output > Jnt. The Output copies
+# the controller move in the Auto axes, the Orient group only turns the controller shape axes.
+# Curve path per segment (start -> Bendy_3 -> end, like the Default bendy path): straight lines (curve 0) to the
+# arc through Bendy_1 / 3 / 5 (curve 1), curve = AutoCurve + Upper / LowerCurve, faded by the Start / End ease.
+# Bendy_2 / 4 Auto ride the middle of their path. Bendy_1, Bendy_3 (once per segment) and Bendy_5 frames aim
+# along the path tangent, turned towards where Bendy_2 / 4 really are (their controllers move them), and their
+# own controller rotation goes on top. The bendy move (frame from its unmoved frame, identity at rest) is what
+# the bind joints (same as Default) get, blended by where they are along the limb, like the studio skin layer.
+# The controllers get the shoulder fk controller orient (orient_sn_bendys, after the fk orients are set).
+
+
+def create_sn_bendys(prefix, joints, size, color, vis_attr, switch_locator, ease_names):
+    """Builds the 5 bendys at rest and the curve attrs (no drivers yet, see connect_sn_bendys)."""
+    nc, curve_data, setup = mt.import_configs()
+    start, mid, end = joints
+    # (position targets, orient targets)
+    places = [([start], [start]), ([start, mid], [start]), ([mid], [start, mid]), ([mid, end], [mid]), ([end], [mid])]
+
+    ctrl_grp = cmds.group(em=True, n='{}_Bendys{}{}'.format(prefix, nc['ctrl'], nc['group']))
+    bendys = []
+    for num, (position, orient) in enumerate(places):
+        name = '{}_Bendy_{}'.format(prefix, num + 1)
+        cmds.select(cl=True)  # mt.curve matches the selection, the groups place it
+        ctrl = mt.curve(input='', type='circleY', rename=True, custom_name=True, name=name + nc['ctrl'],
+                        size=size / 1.5)
+        mt.assign_color(ctrl, color)
+        groups = {'name': name}
+        child = ctrl
+        for key, label in [('orient', '_Orient'), ('auto', nc['auto']), ('offset', nc['offset']), ('root', nc['root'])]:
+            groups[key] = cmds.group(child, n='{}{}{}'.format(ctrl, label, nc['group']))
+            child = groups[key]
+        cmds.parent(groups['root'], ctrl_grp)
+        cmds.delete(cmds.pointConstraint(position, groups['root'], mo=False))
+        cmds.delete(cmds.orientConstraint(orient, groups['root'], mo=False))
+
+        output = cmds.group(em=True, n=name + '_Output' + nc['group'])
+        cmds.parent(output, groups['auto'], r=True)
+        cmds.select(output)
+        jnt = cmds.joint(n=name + nc['joint'])
+        cmds.setAttr(jnt + '.drawStyle', 2)
+        # Output = the controller move seen from the Auto group: Orient inverse * Ctrl * Orient
+        local = _mult_matrix(name + '_Output_MultMatrix',
+                             [groups['orient'] + '.inverseMatrix', ctrl + '.matrix', groups['orient'] + '.matrix'])
+        decompose = cmds.createNode('decomposeMatrix', n=name + '_Output_DecomposeMatrix')
+        cmds.connectAttr(local, decompose + '.inputMatrix')
+        for attr in ['Translate', 'Rotate', 'Scale']:
+            cmds.connectAttr('{}.output{}'.format(decompose, attr), '{}.{}'.format(output, attr.lower()))
+
+        cmds.connectAttr(vis_attr, cmds.listRelatives(ctrl, shapes=True)[0] + '.v')
+        cmds.select(ctrl)
+        mt.shape_with_attr(input=ctrl, obj_name=switch_locator.replace(nc['locator'], ''), attr_name='')
+        groups.update({'ctrl': ctrl, 'output': output, 'jnt': jnt})
+        bendys.append(groups)
+
+    # curve attrs on the switch locator (proxied on Bendy_3), AutoCurve 0 straight lines, 1 the arc
+    # defaults: AutoCurve 0, both eases 10 (with curve on, the limb leaves the shoulder / wrist straight)
+    mt.line_attr(input=switch_locator, name='BendyCurve')
+    attrs = {'curve': mt.new_attr(input=switch_locator, name='AutoCurve', min=0, max=1, default=0),
+             'upper': mt.new_attr(input=switch_locator, name='UpperCurve', min=-10, max=10, default=0),
+             'lower': mt.new_attr(input=switch_locator, name='LowerCurve', min=-10, max=10, default=0),
+             'start_ease': mt.new_attr(input=switch_locator, name=ease_names[0], min=0, max=10, default=10),
+             'end_ease': mt.new_attr(input=switch_locator, name=ease_names[1], min=0, max=10, default=10)}
+    return {'ctrl_grp': ctrl_grp, 'bendys': bendys, 'attrs': attrs,
+            'attr_names': [plug.split('.')[-1] for plug in attrs.values()]}
+
+
+def orient_sn_bendys(bendys, shoulder_ctrl):
+    """Controllers axes like the shoulder fk controller, the shapes stay where they are. Only the Orient group
+    turns, the Output reads the controller through it so the bendy moves stay the same."""
+    for bendy in bendys:
+        shape = cmds.listRelatives(bendy['ctrl'], shapes=True)[0]
+        cvs = cmds.ls(shape + '.cv[*]', fl=True)
+        positions = [cmds.xform(cv, q=True, ws=True, t=True) for cv in cvs]
+        # in the Auto space (both mirrored on the right side, so no flip is left)
+        local = om.MTransformationMatrix(_world(shoulder_ctrl) * _world(bendy['auto']).inverse()).rotation()
+        cmds.setAttr(bendy['orient'] + '.rotate', *[math.degrees(v) for v in (local.x, local.y, local.z)])
+        for cv, position in zip(cvs, positions):
+            cmds.xform(cv, ws=True, t=position)
+
+
+def _sn_path(name, start, end, other, curve, ease, ease_at_start, u_values):
+    """Default bendy path math (straight -> arc through start, end, other) at some u values.
+    Returns {u: (position plug, tangent plug)}, the tangent goes start -> end."""
+    chord = _vector_op(name + '_Chord_PlusMinusAverage', end, start, 2)
+    normal = cmds.createNode('vectorProduct', n=name + '_Normal_VectorProduct')
+    cmds.setAttr(normal + '.operation', 2)
+    cmds.setAttr(normal + '.normalizeOutput', 1)
+    cmds.connectAttr(chord, normal + '.input1')
+    cmds.connectAttr(_vector_op(name + '_ToOther_PlusMinusAverage', other, start, 2), normal + '.input2')
+    normal += '.output'
+    # inscribed angle at the other point: the arc start -> end turns twice this
+    angle = cmds.createNode('angleBetween', n=name + '_Inscribed_AngleBetween')
+    cmds.connectAttr(_vector_op(name + '_OtherStart_PlusMinusAverage', start, other, 2), angle + '.vector1')
+    cmds.connectAttr(_vector_op(name + '_OtherEnd_PlusMinusAverage', end, other, 2), angle + '.vector2')
+    angle += '.angle'
+    sin_angle = _sin(name + '_Sin', angle)
+
+    points = {}
+    for u in u_values:
+        point = '{}_{}'.format(name, int(round(u * 100)))
+        # curve here, the ease fades it towards the eased end: curve * (1 - ease * distance^2)
+        distance = (1 - u) if ease_at_start else u
+        point_curve = curve
+        if distance > 1e-6:
+            fade = _add(point + '_Ease_AddDoubleLinear', _mult(point + '_Ease_MultDoubleLinear', ease, -distance * distance), 1)
+            point_curve = _mult(point + '_Curve_MultDoubleLinear', curve, fade)
+        straight = _vector_lerp(point + '_Straight_BlendColors', start, end, u)
+        chord_dir = _rotate_vector(point + '_ArcChord', chord, normal, _scaled_angle(point + '_ArcChord_Angle', angle, -(1 - u)))
+        ratio = cmds.createNode('multiplyDivide', n=point + '_ArcRatio_MultiplyDivide')
+        cmds.setAttr(ratio + '.operation', 2)
+        cmds.connectAttr(_sin(point + '_SinU', _scaled_angle(point + '_U_Angle', angle, u)), ratio + '.input1X')
+        cmds.connectAttr(sin_angle, ratio + '.input2X')
+        # straight limb: sin is 0, the arc is the straight line
+        safe_ratio = cmds.createNode('condition', n=point + '_ArcRatio_Condition')
+        cmds.setAttr(safe_ratio + '.operation', 2)
+        cmds.connectAttr(sin_angle, safe_ratio + '.firstTerm')
+        cmds.setAttr(safe_ratio + '.secondTerm', 1e-5)
+        cmds.connectAttr(ratio + '.outputX', safe_ratio + '.colorIfTrueR')
+        cmds.setAttr(safe_ratio + '.colorIfFalseR', u)
+        arc = _vector_op(point + '_Arc_PlusMinusAverage', start,
+                         _vector_scale(point + '_ArcChord_MultiplyDivide', chord_dir, safe_ratio + '.outColorR'), 1)
+        position = _vector_mix(point + '_Curve', straight, arc, point_curve)
+        tangent_arc = _rotate_vector(point + '_ArcTangent', chord, normal,
+                                     _scaled_angle(point + '_ArcTangent_Angle', angle, -(1 - 2 * u)))
+        tangent = _vector_mix(point + '_Tangent', chord, tangent_arc, point_curve)
+        points[u] = (position, tangent)
+    return points
+
+
+def _turn_vector(name, vector, from_vector, to_vector):
+    """vector turned by the shortest rotation from from_vector to to_vector."""
+    between = cmds.createNode('angleBetween', n=name + '_AngleBetween')
+    cmds.connectAttr(from_vector, between + '.vector1')
+    cmds.connectAttr(to_vector, between + '.vector2')
+    return _rotate_vector(name, vector, between + '.axis', between + '.angle')
+
+
+def _direction(name, vector, matrix):
+    """vector through a matrix (no translation)."""
+    product = cmds.createNode('vectorProduct', n=name + '_VectorProduct')
+    cmds.setAttr(product + '.operation', 3)
+    cmds.connectAttr(vector, product + '.input1')
+    cmds.connectAttr(matrix, product + '.matrix')
+    return product + '.output'
+
+
+def _local_axis(matrix, direction):
+    """A world direction in a matrix local axes (normalized), for aimMatrix input axes."""
+    return tuple((om.MVector(direction) * matrix.inverse()).normal())
+
+
+def _aim_frame(name, input_matrix, axis, vector):
+    """input_matrix turned the shortest way so its axis points along vector (no up vector)."""
+    aim = cmds.createNode('aimMatrix', n=name + '_AimMatrix')
+    cmds.connectAttr(input_matrix, aim + '.inputMatrix')
+    cmds.setAttr(aim + '.primaryInputAxis', *axis)
+    cmds.setAttr(aim + '.primaryMode', 2)
+    cmds.connectAttr(vector, aim + '.primaryTargetVector')
+    cmds.setAttr(aim + '.secondaryMode', 0)
+    return aim + '.outputMatrix'
+
+
+def connect_sn_bendys(data, joints, start_no_twist):
+    """Roots follow the limb, then the curve path drives Bendy_2 / 4 and the bendy frames. Call it in the final
+    pose (after the right side flips), the root constraints keep the rest offsets and get swapped to matrix nodes.
+    Adds data['moves']: (upper segment moves, lower segment moves), 3 world matrix plugs each."""
+    start, mid, end = joints
+    b = data['bendys']
+    attrs = data['attrs']
+    cmds.parentConstraint(start_no_twist, b[0]['root'], mo=True)
+    for num, position, orient in [(1, [start, mid], [start]), (2, [mid], [start, mid]),
+                                  (3, [mid, end], [mid]), (4, [end], [mid])]:
+        cmds.pointConstraint(position, b[num]['root'], mo=True)
+        orient_con = cmds.orientConstraint(orient, b[num]['root'], mo=True)[0]
+        cmds.setAttr(orient_con + '.interpType', 2)  # shortest
+
+    positions = [_world_position(bendy['output']) for bendy in b]
+    jnt_positions = [_world_position(bendy['jnt']) for bendy in b]
+    offset_positions = [_world_position(bendy['offset']) for bendy in b]
+    rest = [om.MVector(cmds.xform(bendy['offset'], q=True, ws=True, t=True)) for bendy in b]
+    prefix = b[0]['name'].rsplit('_', 1)[0]
+
+    def segment_curve(label, offset):
+        total = cmds.createNode('clamp', n='{}_{}Curve_Clamp'.format(prefix, label))
+        cmds.setAttr(total + '.minR', -1)
+        cmds.setAttr(total + '.maxR', 1)
+        cmds.connectAttr(_add('{}_{}Curve_AddDoubleLinear'.format(prefix, label), attrs['curve'],
+                              _mult('{}_{}Curve_MultDoubleLinear'.format(prefix, label), offset, 0.1)), total + '.inputR')
+        return total + '.outputR'
+
+    paths = [_sn_path(prefix + '_UpperPath', positions[0], positions[2], positions[4], segment_curve('Upper', attrs['upper']),
+                      _mult(prefix + '_StartEase_MultDoubleLinear', attrs['start_ease'], 0.1), True, [0.0, 0.5, 1.0]),
+             _sn_path(prefix + '_LowerPath', positions[2], positions[4], positions[0], segment_curve('Lower', attrs['lower']),
+                      _mult(prefix + '_EndEase_MultDoubleLinear', attrs['end_ease'], 0.1), False, [0.0, 0.5, 1.0])]
+
+    # Bendy_2 / 4 Auto: on the middle of the path, along its tangent
+    for num, path, (a, c) in [(1, paths[0], (0, 2)), (3, paths[1], (2, 4))]:
+        offset = b[num]['offset']
+        position, tangent = path[0.5]
+        axis = _local_axis(_world(offset), rest[c] - rest[a])
+        turned = _aim_frame(b[num]['name'] + '_Path', offset + '.worldMatrix[0]', axis, tangent)
+        frame = cmds.createNode('pickMatrix', n=b[num]['name'] + '_Path_PickMatrix')
+        cmds.connectAttr(turned, frame + '.inputMatrix')
+        cmds.setAttr(frame + '.useTranslate', 0)
+        compose = cmds.createNode('composeMatrix', n=b[num]['name'] + '_Path_ComposeMatrix')
+        cmds.connectAttr(position, compose + '.inputTranslate')
+        local = _mult_matrix(b[num]['name'] + '_Path_MultMatrix',
+                             [frame + '.outputMatrix', compose + '.outputMatrix', offset + '.worldInverseMatrix[0]'])
+        decompose = cmds.createNode('decomposeMatrix', n=b[num]['name'] + '_Path_DecomposeMatrix')
+        cmds.connectAttr(local, decompose + '.inputMatrix')
+        for attr in ['Translate', 'Rotate', 'Scale']:
+            cmds.connectAttr('{}.output{}'.format(decompose, attr), '{}.{}'.format(b[num]['auto'], attr.lower()), f=True)
+
+    def end_frame(label, num, path_point, sign, mid_num, path_mid):
+        """Bendy frame on a segment end: along the path tangent (sign -1 points back along the segment), turned
+        towards where the mid bendy really is, the controller rotation on top. Returns its move plug."""
+        bendy = b[num]
+        name = '{}_{}'.format(bendy['name'], label)
+        tangent = path_point[1]
+        if sign < 0:
+            tangent = _vector_scale(name + '_Back_MultiplyDivide', tangent, -1)
+        here = positions[num]
+        to_path_mid = _vector_op(name + '_ToPathMid_PlusMinusAverage', path_mid[0], here, 2)
+        to_mid = _vector_op(name + '_ToMid_PlusMinusAverage', jnt_positions[mid_num], here, 2)
+        tangent = _turn_vector(name + '_ToMid', tangent, to_path_mid, to_mid)
+        # controller rotation: the tangent goes through it (Auto -> Output), the aim then keeps it on top
+        ctrl_turn = _mult_matrix(name + '_CtrlTurn_MultMatrix',
+                                 [bendy['auto'] + '.worldInverseMatrix[0]', bendy['output'] + '.worldMatrix[0]'])
+        tangent = _direction(name + '_CtrlTurn', tangent, ctrl_turn)
+        axis = _local_axis(_world(bendy['output']), rest[mid_num] - rest[num])
+        moved = _aim_frame(name, bendy['output'] + '.worldMatrix[0]', axis, tangent)
+        # unmoved frame: the Offset aiming at the unmoved mid bendy (the straight bone)
+        to_unmoved = _vector_op(name + '_ToUnmoved_PlusMinusAverage', offset_positions[mid_num], offset_positions[num], 2)
+        unmoved = _aim_frame(name + '_Unmoved', bendy['offset'] + '.worldMatrix[0]', axis, to_unmoved)
+        unmoved_inverse = cmds.createNode('inverseMatrix', n=name + '_Unmoved_InverseMatrix')
+        cmds.connectAttr(unmoved, unmoved_inverse + '.inputMatrix')
+        return _mult_matrix(name + '_Move_MultMatrix', [unmoved_inverse + '.outputMatrix', moved])
+
+    def mid_move(num):
+        bendy = b[num]
+        return _mult_matrix(bendy['name'] + '_Move_MultMatrix',
+                            [bendy['offset'] + '.worldInverseMatrix[0]', bendy['jnt'] + '.worldMatrix[0]'])
+
+    upper = [end_frame('Start', 0, paths[0][0.0], 1, 1, paths[0][0.5]), mid_move(1),
+             end_frame('Upper', 2, paths[0][1.0], -1, 1, paths[0][0.5])]
+    lower = [end_frame('Lower', 2, paths[1][0.0], 1, 3, paths[1][0.5]), mid_move(3),
+             end_frame('End', 4, paths[1][1.0], -1, 3, paths[1][0.5])]
+    data['moves'] = (upper, lower)
+
+
+def sn_bendy_binds(data, joints, upper_joints, lower_joints):
+    """Bind driver joints (the follicle joints under the twist ribbon) get the bendy moves blended by their place
+    along the segment: start -> mid bendy -> end of the segment, linear like a smooth skin layer. The main joint
+    scale (ik stretch) is multiplied on top, like the Default bendys."""
+    positions = [om.MVector(cmds.xform(j, q=True, ws=True, t=True)) for j in joints]
+    upper_moves, lower_moves = data['moves']
+    for segment, fol_joints, main_jnt, (a, b) in [(upper_moves, upper_joints, joints[0], positions[0:2]),
+                                                  (lower_moves, lower_joints, joints[1], positions[1:3])]:
+        bone = b - a
+        for jnt in fol_joints:
+            follicle = cmds.listRelatives(jnt, p=True)[0]
+            t = (om.MVector(cmds.xform(jnt, q=True, ws=True, t=True)) - a) * bone / (bone * bone)
+            t = min(max(t, 0.0), 1.0)
+            pair, weight = ((segment[0], segment[1]), t * 2) if t <= 0.5 else ((segment[1], segment[2]), t * 2 - 1)
+            moved = [_mult_matrix('{}_{}_Bendy_MultMatrix'.format(jnt, num),
+                                  [follicle + '.worldMatrix[0]', bendy_move])
+                     for num, bendy_move in enumerate(pair)]
+            blend = cmds.createNode('blendMatrix', n=jnt + '_Bendy_BlendMatrix')
+            cmds.connectAttr(moved[0], blend + '.inputMatrix')
+            cmds.connectAttr(moved[1], blend + '.target[0].targetMatrix')
+            cmds.setAttr(blend + '.target[0].weight', weight)
+            local = _mult_matrix(jnt + '_Bendy_Local_MultMatrix', [blend + '.outputMatrix', follicle + '.worldInverseMatrix[0]'])
+            decompose = cmds.createNode('decomposeMatrix', n=jnt + '_Bendy_DecomposeMatrix')
+            cmds.connectAttr(local, decompose + '.inputMatrix')
+            for attr in ['Translate', 'Rotate']:
+                cmds.connectAttr('{}.output{}'.format(decompose, attr), '{}.{}'.format(jnt, attr.lower()), f=True)
+            scale = cmds.createNode('multiplyDivide', n=jnt + '_Bendy_Scale_MultiplyDivide')
+            cmds.connectAttr(decompose + '.outputScale', scale + '.input1')
+            cmds.connectAttr(main_jnt + '.scale', scale + '.input2')
+            cmds.connectAttr(scale + '.output', jnt + '.scale', f=True)
+
+
 def build_limb_block():
 
     nc, curve_data, setup = mt.import_configs()
@@ -1035,6 +1351,13 @@ def build_limb_block():
         orients = cmds.getAttr('{}.Orients'.format(config), asString=True)
     else:
         orients = 'Default'
+
+    # Default: Mutant bendys (ribbons, handles, tweakers), SN: the studio bendys (5 controllers per limb)
+    if cmds.attributeQuery('Bendys', n=config, exists=True):
+        bendys = cmds.getAttr('{}.Bendys'.format(config), asString=True)
+    else:
+        bendys = 'Default'
+    sn_bendys = bool(create_ribbons) and bendys == 'SN'
 
     # use this group for later cleaning, just assign them when you create the top on hierarchy
     clean_rig_grp = ''
@@ -1185,38 +1508,10 @@ def build_limb_block():
 
             mt.line_attr(input=switch_locator, name='Bendy_Vis')
             ribbon_first_vis_attr = mt.new_enum(input=switch_locator, name='BendyMain', enums='Hide:Show', keyable=False)
-            ribbon_second_vis_attr = mt.new_enum(input=switch_locator, name='BendyOffsets', enums='Hide:Show', keyable=False)
-            ribbon_ends_vis_attr = mt.new_enum(input=switch_locator, name='BendyEnds', enums='Hide:Show', keyable=False)
-            ribbon_third_vis_attr = mt.new_enum(input=switch_locator, name='BendyTweeks', enums='Hide:Show', keyable=False)
-
-            # for dev set to 0 at the end
             cmds.setAttr(ribbon_first_vis_attr, 1)
-            cmds.setAttr(ribbon_second_vis_attr, 0)
-            cmds.setAttr(ribbon_third_vis_attr, 0)
-            cmds.setAttr(ribbon_ends_vis_attr, 0)
 
-            # Bendy curve attrs (v002, replace the old AutoBend handle automation)
-            # BendyCurve: 0 straight lines through the mid bendy controller, 10 a perfect arc
-            # AutoCurve: extra curve the more the limb bends (all of it at 90 degrees)
-            # Upper/LowerCurve: per segment offset, negative bows the other way (S shapes)
-            # Start/End Ease: keeps the limb leaving the shoulder / wrist straight
-            mt.line_attr(input=switch_locator, name='BendyCurve')
-            ease_names = {'Arms': ['ShoulderEase', 'WristEase'], 'Legs': ['HipEase', 'AnkleEase']}.get(mode, ['StartEase', 'EndEase'])
-            curve_attrs = {
-                'curve': mt.new_attr(input=switch_locator, name='BendyCurve', min=0, max=10, default=0),
-                'auto': mt.new_attr(input=switch_locator, name='AutoCurve', min=0, max=10, default=0),
-                'upper': mt.new_attr(input=switch_locator, name='UpperCurve', min=-10, max=10, default=0),
-                'lower': mt.new_attr(input=switch_locator, name='LowerCurve', min=-10, max=10, default=0),
-                'start_ease': mt.new_attr(input=switch_locator, name=ease_names[0], min=0, max=10, default=0),
-                'end_ease': mt.new_attr(input=switch_locator, name=ease_names[1], min=0, max=10, default=0)}
-            curve_attr_names = [plug.split('.')[-1] for plug in curve_attrs.values()]
-
-            # cmds.setAttr(bendy_shoulder_attr, 5)
-            # cmds.setAttr(bendy_elbow_shoulder_attr, -2)
-            # cmds.setAttr(bendy_elbow_wrist_attr, 2)
-            # cmds.setAttr(bendy_wrist_attr, -5)
-
-            def create_mid_ribbons(name, first_joint, last_joint, twist_joints, aim):
+            def create_twist_ribbon(name, first_joint, last_joint, twist_joints):
+                """Twist surface (skinned to the twist joints) with one follicle + joint per bind joint."""
 
                 # main tweek Ribbons
                 ribbon_limb_nurb = cmds.nurbsPlane(ch=1, d=1, v=1, p=(0, 0, 0), u=1, w=1, ax=(0, 0, 1), lr=1,
@@ -1255,6 +1550,53 @@ def build_limb_block():
                     cmds.connectAttr(limb_scale, fol_new_name+'.scale')
                 # Bind twist to bendy surfaces
                 cmds.skinCluster(twist_joints[:-1], ribbon_limb_nurb[0], sm=0, bm=1, tsb=True)
+                return ribbon_limb_nurb, fol_grp, fol_joints
+
+        if sn_bendys:
+            name = '{}'.format(str(side_guide).replace(nc['joint'], ''))
+            start, mid, end = ikfk['ik_fk'][0]
+            top_ribbon, low_ribbon = [{'ribbon_plane': plane[0], 'fol_ribbon_grp': fol_grp, 'fol_joints': fol_joints}
+                                      for plane, fol_grp, fol_joints in
+                                      [create_twist_ribbon(start, start, mid, ikfk['upper_twist']['joints']),
+                                       create_twist_ribbon(mid, mid, end, ikfk['lower_twist']['joints'])]]
+            sn_ease_names = {'Arms': ['ShoulderEase', 'WristEase'], 'Legs': ['HipEase', 'AnkleEase']}.get(mode, ['StartEase', 'EndEase'])
+            sn_bendy_data = create_sn_bendys('{}_{}'.format(side_prefix, limb_label), ikfk['ik_fk'][0], ctrl_size,
+                                             sec_color, ribbon_first_vis_attr, switch_locator, sn_ease_names)
+        elif create_ribbons:
+            ribbon_second_vis_attr = mt.new_enum(input=switch_locator, name='BendyOffsets', enums='Hide:Show', keyable=False)
+            ribbon_ends_vis_attr = mt.new_enum(input=switch_locator, name='BendyEnds', enums='Hide:Show', keyable=False)
+            ribbon_third_vis_attr = mt.new_enum(input=switch_locator, name='BendyTweeks', enums='Hide:Show', keyable=False)
+
+            # for dev set to 0 at the end
+            cmds.setAttr(ribbon_first_vis_attr, 1)
+            cmds.setAttr(ribbon_second_vis_attr, 0)
+            cmds.setAttr(ribbon_third_vis_attr, 0)
+            cmds.setAttr(ribbon_ends_vis_attr, 0)
+
+            # Bendy curve attrs (v002, replace the old AutoBend handle automation)
+            # BendyCurve: 0 straight lines through the mid bendy controller, 10 a perfect arc
+            # AutoCurve: extra curve the more the limb bends (all of it at 90 degrees)
+            # Upper/LowerCurve: per segment offset, negative bows the other way (S shapes)
+            # Start/End Ease: keeps the limb leaving the shoulder / wrist straight
+            mt.line_attr(input=switch_locator, name='BendyCurve')
+            ease_names = {'Arms': ['ShoulderEase', 'WristEase'], 'Legs': ['HipEase', 'AnkleEase']}.get(mode, ['StartEase', 'EndEase'])
+            curve_attrs = {
+                'curve': mt.new_attr(input=switch_locator, name='BendyCurve', min=0, max=10, default=0),
+                'auto': mt.new_attr(input=switch_locator, name='AutoCurve', min=0, max=10, default=0),
+                'upper': mt.new_attr(input=switch_locator, name='UpperCurve', min=-10, max=10, default=0),
+                'lower': mt.new_attr(input=switch_locator, name='LowerCurve', min=-10, max=10, default=0),
+                'start_ease': mt.new_attr(input=switch_locator, name=ease_names[0], min=0, max=10, default=0),
+                'end_ease': mt.new_attr(input=switch_locator, name=ease_names[1], min=0, max=10, default=0)}
+            curve_attr_names = [plug.split('.')[-1] for plug in curve_attrs.values()]
+
+            # cmds.setAttr(bendy_shoulder_attr, 5)
+            # cmds.setAttr(bendy_elbow_shoulder_attr, -2)
+            # cmds.setAttr(bendy_elbow_wrist_attr, 2)
+            # cmds.setAttr(bendy_wrist_attr, -5)
+
+            def create_mid_ribbons(name, first_joint, last_joint, twist_joints, aim):
+
+                ribbon_limb_nurb, fol_grp, fol_joints = create_twist_ribbon(name, first_joint, last_joint, twist_joints)
 
                 tweks_ribbon_ctrl_grp = cmds.group(em=True, n=name + '_Ribbons' + nc['ctrl'] + nc['group'])
                 ribbon_ctrls = []
@@ -1483,7 +1825,9 @@ def build_limb_block():
                 for num, jnt in enumerate(twist_joints):
                     # v002: the tweak controller scale is added on the bind joint with the other controllers
                     # (axis matched, non uniform), always on, ScaleTweakCtrls is not used anymore
-                    cmds.connectAttr('{}.scale'.format(jnt), '{}.scale'.format(fol_joints[num]))
+                    # the main joint scale (what the twist joints get), the twist joints also carry the bone
+                    # length (twist_follow_length) and that is not a scale for the bind joints
+                    cmds.connectAttr('{}.scale'.format(first_joint), '{}.scale'.format(fol_joints[num]))
 
                 return {'ribbon_ctrl_grp': ribbon_ctrl_grp, 'ribbon_ctrls': ribbon_ctrls,
                         'ribbon_plane': ribbon_limb_nurb[0], 'fol_ribbon_grp': fol_grp, 'fol_joints': fol_joints,
@@ -1643,7 +1987,11 @@ def build_limb_block():
         clean_ctrl_grp = cmds.group(em=True, n=side_guide.replace(nc['joint'], nc['ctrl']) + nc['group'])
 
         # clean ribbons
-        if create_ribbons:
+        if sn_bendys:
+            cmds.parent(top_ribbon['ribbon_plane'], top_ribbon['fol_ribbon_grp'],
+                        low_ribbon['ribbon_plane'], low_ribbon['fol_ribbon_grp'], clean_rig_grp)
+            cmds.parent(sn_bendy_data['ctrl_grp'], clean_ctrl_grp)
+        elif create_ribbons:
             cmds.parent(top_ribbon['ribbon_plane'], top_ribbon['clean_rig_grp'], top_ribbon['fol_ribbon_grp'],
                         clean_rig_grp)
             cmds.parent(low_ribbon['ribbon_plane'], low_ribbon['clean_rig_grp'], low_ribbon['fol_ribbon_grp'],
@@ -1758,12 +2106,19 @@ def build_limb_block():
         cmds.parentConstraint(block_parent, main_jnt_grp, mo=True)
         cmds.delete(temp_locator)
 
+        # SN bendys follow the limb from here (after the right side flips, so the offsets are the final ones)
+        if sn_bendys:
+            connect_sn_bendys(sn_bendy_data, ikfk['ik_fk'][0], ikfk['upper_twist']['joints'][0])
+            sn_bendy_binds(sn_bendy_data, ikfk['ik_fk'][0], top_ribbon['fol_joints'], low_ribbon['fol_joints'])
+
         # create bind Joints for the skin -------------------------
         # bind joints
         bind_joints = []
         bind_joint = ''
 
-        if create_ribbons:
+        if sn_bendys:
+            to_bind = top_ribbon['fol_joints'] + low_ribbon['fol_joints']
+        elif create_ribbons:
             to_bind = top_ribbon['fol_joints'] + low_ribbon['fol_joints']
             # Fix issue with orient in the aims up vectors
             cmds.parent(top_ribbon['ribbon_ctrl_grp'], top_ribbon['clean_ctrl_grp'], clean_ctrl_grp)
@@ -1863,9 +2218,12 @@ def build_limb_block():
         #                     attrs_to_proxy=['_________', 'BendyMain', 'BendyOffsets', 'BendyEnds', 'BendyTweeks'])
 
         # Bendy Vis Attrs -> Mid Bendy Ctrl (R_KneeMidBendy / L_ElbowMidBendy)
-        if create_ribbons:
+        if create_ribbons and not sn_bendys:
             mt.proxy_this_attrs(attrs_from=switch_locator, attrs_to=main_mid_ctrl,
                                 attrs_to_proxy=['BendyMain', 'BendyOffsets', 'BendyEnds', 'BendyTweeks'] + curve_attr_names)
+        elif sn_bendys:
+            mt.proxy_this_attrs(attrs_from=switch_locator, attrs_to=sn_bendy_data['bendys'][2]['ctrl'],
+                                attrs_to_proxy=sn_bendy_data['attr_names'])
 
         # the right side is built on the left and flipped, so the global scale controller is placed now, on the
         # final limb start, and the controllers follow it from here
@@ -1877,15 +2235,18 @@ def build_limb_block():
         scale_around(clean_ctrl_grp, 'Rig_Ctrl_Grp', limb_global_ctrl)
 
         upper_count = len(top_ribbon['fol_joints'] if create_ribbons else ikfk['upper_twist']['joints'])
+        mutant_bendys = create_ribbons and not sn_bendys
         limbs_data.append({'mode': mode, 'right': side_guide.startswith(nc['right']),
                            'fk_ctrls': ikfk['ik_fk'][3], 'ik_ctrl': main_ik_ctrl, 'sub_ik_ctrl': old_main_ik,
                            'top_ik_ctrl': ikfk['ik_fk'][4][2], 'switch': switch_locator + '.Switch_IK_FK',
                            'upper_binds': bind_joints[:upper_count], 'lower_binds': bind_joints[upper_count:],
-                           'bendy_ctrls': [top_ribbon['second_ctrls'], low_ribbon['second_ctrls']] if create_ribbons else None,
-                           'ribbons': [top_ribbon, low_ribbon] if create_ribbons else None,
-                           'tweak_ctrls': top_ribbon['ribbon_ctrls'] + low_ribbon['ribbon_ctrls'] if create_ribbons else [],
-                           'main_joints': ikfk['ik_fk'][0], 'mid_ctrl': main_mid_ctrl if create_ribbons else None,
-                           'curve_attrs': curve_attrs if create_ribbons else None,
+                           'bendy_ctrls': [top_ribbon['second_ctrls'], low_ribbon['second_ctrls']] if mutant_bendys else None,
+                           'ribbons': [top_ribbon, low_ribbon] if mutant_bendys else None,
+                           'tweak_ctrls': top_ribbon['ribbon_ctrls'] + low_ribbon['ribbon_ctrls'] if mutant_bendys else [],
+                           'main_joints': ikfk['ik_fk'][0], 'mid_ctrl': main_mid_ctrl if mutant_bendys else None,
+                           'curve_attrs': curve_attrs if mutant_bendys else None,
+                           'sn_bendys': sn_bendy_data['bendys'] if sn_bendys else None,
+                           'twist_joints': (ikfk['upper_twist']['joints'], ikfk['lower_twist']['joints']),
                            'soft_ik_attr': soft_ik_attr, 'ik_handle': ikfk['ik_fk'][4][3], 'ik_joints': ikfk['ik_fk'][1],
                            'stretch_data': ikfk['ik_fk'][4][5], 'rig_scale': limb_scale_node + '.outputScaleX',
                            'lengths': (switch_locator + '.Upper_Length', switch_locator + '.Lower_Length')})
@@ -1898,6 +2259,11 @@ def build_limb_block():
                 continue
             right_ctrls = data['fk_ctrls'] if data['right'] else []
             apply_custom_orients(data['fk_ctrls'], SN_ORIENTS[data['mode']], right_ctrls)
+
+    # sn bendys: same axes as the shoulder fk controller (after its orient is final)
+    for data in limbs_data:
+        if data['sn_bendys']:
+            orient_sn_bendys(data['sn_bendys'], data['fk_ctrls'][0])
 
     # bendy path: straight or arc through start -> mid bendy controller -> end, no wobble
     for data in limbs_data:
@@ -1962,8 +2328,9 @@ def build_limb_block():
         for binds, is_upper in segments:
             for num, jnt in enumerate(binds):
                 t = float(num) / (len(binds) - 1) if len(binds) > 1 else 1.0
-                fk_ctrl = data['fk_ctrls'][0] if is_upper else data['fk_ctrls'][1]
-                items = [(fk_ctrl, fk_on)]
+                # fk is a normal hierarchy: the shoulder scales the whole limb, the elbow the lower part
+                fk_ctrls = data['fk_ctrls'][:1] if is_upper else data['fk_ctrls'][:2]
+                items = [(fk_ctrl, fk_on) for fk_ctrl in fk_ctrls]
                 if is_upper:
                     items.append((data['top_ik_ctrl'], ik_on))
                 if data['bendy_ctrls']:
@@ -1976,7 +2343,7 @@ def build_limb_block():
 
         # wrist controllers do not scale the arm, only the wrist joint (the hand follows it)
         wrist = data['main_joints'][2]
-        influences[wrist] = [(data['fk_ctrls'][2], fk_on)] + [(ctrl, ik_on) for ctrl in [data['ik_ctrl'], data['sub_ik_ctrl']]]
+        influences[wrist] = [(ctrl, fk_on) for ctrl in data['fk_ctrls']] + [(ctrl, ik_on) for ctrl in [data['ik_ctrl'], data['sub_ik_ctrl']]]
         data['wrist_joint'] = wrist
 
         # bendy tweakers: each one scales its own bind joint
@@ -1987,7 +2354,8 @@ def build_limb_block():
         if data['bendy_ctrls']:
             ctrls += data['bendy_ctrls'][0] + data['bendy_ctrls'][1]
         ctrls += data['tweak_ctrls']
-        free_controller_scale(ctrls)
+        # fk shoulder / elbow scale is inherited by the fk controllers under them (the limb gets longer)
+        free_controller_scale(ctrls, inherit_scale=data['fk_ctrls'][:2])
         scaled_ctrls += ctrls
         data['scale_influences'] = influences
 
@@ -2009,6 +2377,8 @@ def build_limb_block():
 
     # bind joints get the controllers scale (after the swap, it multiplies into their scale channels)
     for data in limbs_data:
+        twist_follow_length(data['main_joints'], data['twist_joints'][0], data['twist_joints'][1], setup['twist_axis'].upper(),
+                            ribbons=bool(data['tweak_ctrls'] or data['sn_bendys']))
         scale_bind_joints(data['upper_binds'] + data['lower_binds'] + [data['wrist_joint']], data['scale_influences'])
 
     # break the switch shape cycle so the limb evaluates in parallel
