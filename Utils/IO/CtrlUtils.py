@@ -660,14 +660,12 @@ class Ctrls(object):
         for ctrl in ctrls:
             if not is_controller(ctrl):
                 continue
-            shapes = cmds.listRelatives(ctrl, s=True)
+            # the curve shapes only (full paths: other shapes like a clusterHandleShape can share a short name)
+            shapes = cmds.listRelatives(ctrl, s=True, f=True, type='nurbsCurve')
             if not shapes:
                 no_shapes_ctrl.append(ctrl)
                 continue
-            for shape in shapes:
-                if cmds.nodeType(shape) == 'nurbsCurve':
-                    break
-            vis_connection = cmds.listConnections(shape + '.v', p=True)
+            vis_connection = cmds.listConnections(shapes[0] + '.v', p=True)
             if not vis_connection:
                 continue
             if vis_connection:
@@ -689,13 +687,12 @@ class Ctrls(object):
 
     def load_all_vis_connections(self, ctrls_data):
         for ctrl in ctrls_data:
-            shape = cmds.listRelatives(ctrl, s=True)
-            if shape:
-                shape = shape[0]
-            else:
-                continue
+            # every curve shape of the ctrl (not the first shape, it can be a locator / clusterHandle)
+            shapes = cmds.listRelatives(ctrl, s=True, f=True, type='nurbsCurve') or []
             connection = ctrls_data[ctrl]
-            if connection:
+            if not connection:
+                continue
+            for shape in shapes:
                 try:
                     cmds.connectAttr(connection, shape + '.v', f=True)
                 except Exception as e:
