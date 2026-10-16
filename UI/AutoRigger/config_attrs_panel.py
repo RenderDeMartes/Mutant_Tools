@@ -785,6 +785,89 @@ class ConfigCardsPanel(QtCore.QObject):
 				section['set_open'](not _section_collapsed(key, section['collapsed_default']), store=False)
 
 
+#-------------------------------------------------------------------
+DIFF_STYLE = {
+	'added': ('+', '#7CC77C'),
+	'removed': ('-', '#E07070'),
+	'changed': ('~', MODIFIED),
+	'info': ('i', '#9CC7FF'),
+}
+
+
+DIFF_BROWSER_QSS = 'QTextBrowser { background: #2B2B2B; border: 1px solid #555555; border-radius: 3px; }'
+
+
+def diff_html(rows, title=''):
+	"""HTML list of config_update.diff_modules rows."""
+	import html as html_lib
+	parts = ['<html><body style="font-family: Segoe UI, Arial; font-size: 12px; color: #DDDDDD;">']
+	if title:
+		parts.append('<p style="margin:0 0 6px 0;"><b>{}</b></p>'.format(html_lib.escape(title)))
+	if not rows:
+		parts.append('<p style="color:#8A8A8A;">No differences in the block attrs.</p>')
+	for kind, attr, text in rows:
+		sign, color = DIFF_STYLE.get(kind, ('', '#DDDDDD'))
+		parts.append('<p style="margin:0 0 4px 0;"><span style="color:{0}; font-weight:bold;">{1}</span> '
+					 '<b>{2}</b> <span style="color:#AAAAAA;">{3}</span></p>'.format(
+			color, sign, html_lib.escape(pretty_attr_name(attr) if kind != 'info' else attr), html_lib.escape(str(text))))
+	parts.append('</body></html>')
+	return ''.join(parts)
+
+
+def _read_json(path):
+	try:
+		with open(path) as f:
+			return json.load(f)
+	except Exception:
+		return {}
+
+
+class VersionDiffDialog(QtWidgets.QDialog):
+	"""Compare two versions of a block json, and what happens to the values of this block."""
+
+	def __init__(self, parent, block, config, versions_dict, from_version, to_version=None):
+		super(VersionDiffDialog, self).__init__(parent)
+		self.setWindowTitle('{} versions'.format(block))
+		self.resize(460, 380)
+		self.config = config
+		self.versions_dict = versions_dict
+		versions = sorted(versions_dict)
+
+		layout = QtWidgets.QVBoxLayout(self)
+		row = QtWidgets.QHBoxLayout()
+		self.from_box = QtWidgets.QComboBox()
+		self.to_box = QtWidgets.QComboBox()
+		for box in (self.from_box, self.to_box):
+			for v in versions:
+				box.addItem(v + ('  (current)' if v == from_version else ''), v)
+		self.from_box.setCurrentIndex(versions.index(from_version) if from_version in versions else 0)
+		target = to_version if to_version in versions else versions[-1]
+		self.to_box.setCurrentIndex(versions.index(target))
+		row.addWidget(QtWidgets.QLabel('From'))
+		row.addWidget(self.from_box, 1)
+		row.addWidget(QtWidgets.QLabel('To'))
+		row.addWidget(self.to_box, 1)
+		layout.addLayout(row)
+
+		self.browser = QtWidgets.QTextBrowser()
+		self.browser.setStyleSheet(DIFF_BROWSER_QSS)
+		layout.addWidget(self.browser, 1)
+		close_btn = QtWidgets.QPushButton('Close')
+		close_btn.clicked.connect(self.close)
+		layout.addWidget(close_btn, 0, QtCore.Qt.AlignRight)
+
+		self.from_box.currentIndexChanged.connect(self.refresh)
+		self.to_box.currentIndexChanged.connect(self.refresh)
+		self.refresh()
+
+	def refresh(self, *args):
+		old_v = self.from_box.currentData()
+		new_v = self.to_box.currentData()
+		rows = config_update.diff_modules(_read_json(self.versions_dict[old_v]),
+										  _read_json(self.versions_dict[new_v]), self.config)
+		self.browser.setHtml(diff_html(rows, '{} -> {}'.format(old_v, new_v)))
+
+
 def build_cards(ui, block, config, attrs, v_layout):
 	"""Entry point used by load_autoRigger.create_properties_layout."""
 	return ConfigCardsPanel(ui, block, config, attrs, v_layout)

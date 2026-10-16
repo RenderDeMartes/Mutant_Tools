@@ -2501,6 +2501,19 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 			version_dropdown.currentTextChanged.connect(change_version)
 			version_row.addWidget(version_label)
 			version_row.addWidget(version_dropdown)
+
+			# eye: what changes between versions and what happens to the values of this block
+			diff_btn = QtWidgets.QToolButton()
+			eye_icon = QtGui.QIcon(':/visible.png')
+			if eye_icon.isNull():
+				diff_btn.setText('Diff')
+			else:
+				diff_btn.setIcon(eye_icon)
+			diff_btn.setToolTip('Show the differences between versions')
+			diff_btn.setAutoRaise(True)
+			diff_btn.clicked.connect(lambda _=None, blk=block, cfg=config, vd=versions_dict, cv=current_version:
+									 config_attrs_panel.VersionDiffDialog(self, blk, cfg, vd, cv).show())
+			version_row.addWidget(diff_btn)
 			version_row.addStretch()
 			v_layout.addLayout(version_row)
 

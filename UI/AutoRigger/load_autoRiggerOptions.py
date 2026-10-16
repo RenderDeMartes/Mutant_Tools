@@ -406,21 +406,55 @@ class AutoRiggerOptions(QtMutantWindow.Qt_Mutant):
 			catalog.setdefault(tab, {}).setdefault(name, {})[self._version_from_filename(j)] = j
 		return catalog
 
-	def _pick_block_json(self, catalog, block_label='', current_tab=None, current_name=None, current_version=None):
-		"""Tab/Type/Version picker dialog so the user chooses exactly which block json to update to."""
+	def _pick_block_json(self, catalog, block_label='', current_tab=None, current_name=None, current_version=None,
+						 current_json=None, config=None):
+		"""Tab/Type/Version picker dialog so the user chooses exactly which block json to update to.
+		Defaults to the latest version and shows what changes from the current json."""
 		if not catalog:
 			cmds.warning('No block jsons found.')
 			return None
 
+		from Mutant_Tools.UI.AutoRigger import config_attrs_panel
+		from Mutant_Tools.UI.AutoRigger import config_update
+
 		tabs = sorted(catalog.keys())
+		current_module = {}
+		if current_json:
+			try:
+				with open(current_json) as f:
+					current_module = json.load(f)
+			except Exception:
+				current_module = {}
 
 		dialog = QtWidgets.QDialog(self)
 		dialog.setWindowTitle('Update {}'.format(block_label))
-		layout = QtWidgets.QFormLayout(dialog)
+		dialog.resize(460, 420)
+		main_layout = QtWidgets.QVBoxLayout(dialog)
+		layout = QtWidgets.QFormLayout()
+		main_layout.addLayout(layout)
 
 		tab_box = QtWidgets.QComboBox()
 		type_box = QtWidgets.QComboBox()
 		version_box = QtWidgets.QComboBox()
+		diff_browser = QtWidgets.QTextBrowser()
+		diff_browser.setStyleSheet(config_attrs_panel.DIFF_BROWSER_QSS)
+
+		def selected_json():
+			return catalog.get(tab_box.currentText(), {}).get(type_box.currentText(), {}).get(version_box.currentData())
+
+		def refresh_diff(*args):
+			path = selected_json()
+			if not path:
+				diff_browser.setHtml('')
+				return
+			try:
+				with open(path) as f:
+					new_module = json.load(f)
+			except Exception:
+				new_module = {}
+			rows = config_update.diff_modules(current_module, new_module, config)
+			title = '{} -> {}'.format(current_version or 'current', version_box.currentData())
+			diff_browser.setHtml(config_attrs_panel.diff_html(rows, title))
 
 		def refresh_names(tab, select_name=None):
 			type_box.blockSignals(True)
@@ -432,40 +466,46 @@ class AutoRiggerOptions(QtMutantWindow.Qt_Mutant):
 			type_box.blockSignals(False)
 			refresh_versions(type_box.currentText())
 
-		def refresh_versions(name, select_version=None):
+		def refresh_versions(name):
+			version_box.blockSignals(True)
 			version_box.clear()
 			versions = sorted(catalog.get(tab_box.currentText(), {}).get(name, {}).keys())
-			version_box.addItems(versions)
-			if select_version:
-				idx = version_box.findText(select_version)
-				if idx >= 0:
-					version_box.setCurrentIndex(idx)
+			is_current_type = tab_box.currentText() == current_tab and name == current_name
+			for v in versions:
+				label = v + ('  (current)' if is_current_type and v == current_version else '')
+				if v == versions[-1]:
+					label += '  latest'
+				version_box.addItem(label, v)
+			# latest by default
+			version_box.setCurrentIndex(len(versions) - 1)
+			version_box.blockSignals(False)
+			refresh_diff()
 
 		tab_box.addItems(tabs)
 		if current_tab in tabs:
 			tab_box.setCurrentText(current_tab)
 		refresh_names(tab_box.currentText(), select_name=current_name)
-		if current_version:
-			idx = version_box.findText(current_version)
-			if idx >= 0:
-				version_box.setCurrentIndex(idx)
 
 		tab_box.currentTextChanged.connect(lambda t: refresh_names(t))
 		type_box.currentTextChanged.connect(lambda n: refresh_versions(n))
+		version_box.currentIndexChanged.connect(refresh_diff)
 
 		layout.addRow('Tab:', tab_box)
 		layout.addRow('Block Type:', type_box)
 		layout.addRow('Version:', version_box)
+		main_layout.addWidget(QtWidgets.QLabel('Changes (your values are kept, removed ones go to the backup):'))
+		main_layout.addWidget(diff_browser, 1)
 
 		buttons = QtWidgets.QDialogButtonBox(QtWidgets.QDialogButtonBox.Ok | QtWidgets.QDialogButtonBox.Cancel)
+		buttons.button(QtWidgets.QDialogButtonBox.Ok).setText('Update')
 		buttons.accepted.connect(dialog.accept)
 		buttons.rejected.connect(dialog.reject)
-		layout.addRow(buttons)
+		main_layout.addWidget(buttons)
 
 		if dialog.exec_() != QtWidgets.QDialog.Accepted:
 			return None
 
-		return catalog.get(tab_box.currentText(), {}).get(type_box.currentText(), {}).get(version_box.currentText())
+		return selected_json()
 
 	@undo
 	def update_cmd(self, block=None, auto_match_only=False):
@@ -490,6 +530,7 @@ class AutoRiggerOptions(QtMutantWindow.Qt_Mutant):
 			current_tab = None
 			current_name = None
 			current_version = None
+			current_json = None
 
 			for j in jsons:
 				try:
@@ -502,6 +543,7 @@ class AutoRiggerOptions(QtMutantWindow.Qt_Mutant):
 					current_name = block_data.get('Name')
 					current_version = self._version_from_filename(j)
 					desire_json = os.path.basename(j).replace('.json', '')
+					current_json = j
 					break
 
 			if not desire_json and b.endswith(nc['module']):
@@ -516,7 +558,9 @@ class AutoRiggerOptions(QtMutantWindow.Qt_Mutant):
 				desire_json = self._pick_block_json(catalog, block_label=b,
 													current_tab=current_tab,
 													current_name=current_name,
-													current_version=current_version)
+													current_version=current_version,
+													current_json=current_json,
+													config=config)
 				if not desire_json:
 					continue
 

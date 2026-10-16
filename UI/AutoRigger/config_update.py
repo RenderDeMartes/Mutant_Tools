@@ -155,9 +155,102 @@ def _create_attr(mt, config, attr_name, kind, default):
 
 
 #-------------------------------------------------------------------
+def _json_attrs(module):
+	"""attr name -> (kind, default) of a block json."""
+	attrs = {}
+	for key, default in (module or {}).get('attrs', {}).items():
+		if '_' in key:
+			name, kind = key.rsplit('_', 1)
+			attrs[name] = (kind, default)
+	return attrs
+
+
+def _current_value(config, attr):
+	if not config or not cmds.objExists(config) or not cmds.attributeQuery(attr, node=config, exists=True):
+		return None
+	path = '{}.{}'.format(config, attr)
+	try:
+		if cmds.getAttr(path, type=True) == 'enum':
+			return cmds.getAttr(path, asString=True)
+		return cmds.getAttr(path)
+	except Exception:
+		return None
+
+
+def diff_modules(old_module, new_module, config=None):
+	"""What changes going from old_module to new_module (block jsons), and what happens to the
+	values on config. Returns a list of (kind, attr, text), kind is added, removed, changed, info."""
+	old_attrs = _json_attrs(old_module)
+	new_attrs = _json_attrs(new_module)
+	backup = read_backup(config) if config and cmds.objExists(config) else {}
+	rows = []
+
+	old_desc = (old_module or {}).get('Description', '')
+	new_desc = (new_module or {}).get('Description', '')
+	if new_desc and new_desc != old_desc:
+		rows.append(('info', 'Description', new_desc))
+
+	for name, (kind, default) in new_attrs.items():
+		if name in JSON_ONLY:
+			continue
+		old_key = _find(old_attrs, name, set())
+		if old_key is None:
+			text = 'new {}, default {}'.format(kind, str(default).split(':')[0] if kind == 'enum' else default or '""')
+			backup_key = _find(backup, name, set())
+			if backup_key is not None:
+				text += ', your backed up value {} comes back'.format(backup[backup_key].get('value'))
+			rows.append(('added', name, text))
+			continue
+		old_kind, old_default = old_attrs[old_key]
+		changes = []
+		if old_key != name:
+			changes.append('renamed from {}'.format(old_key))
+		if old_kind != kind:
+			changes.append('type {} -> {}'.format(old_kind, kind))
+		if kind == 'enum' and old_kind == 'enum':
+			old_options = str(old_default).split(':')
+			new_options = str(default).split(':')
+			added = [o for o in new_options if o not in old_options]
+			removed = [o for o in old_options if o not in new_options]
+			if added:
+				changes.append('new options: ' + ', '.join(added))
+			if removed:
+				changes.append('options gone: ' + ', '.join(removed))
+			if old_options[:1] != new_options[:1]:
+				changes.append('default {} -> {}'.format(old_options[0], new_options[0]))
+			value = _current_value(config, old_key)
+			if value is not None and value in removed and value not in config_previews.extended_options(name, new_options):
+				changes.append('your value {} goes to the backup'.format(value))
+		elif str(old_default) != str(default):
+			changes.append('default {} -> {}'.format(old_default or '""', default or '""'))
+			value = _current_value(config, old_key)
+			if value is not None and str(value) != str(default):
+				changes.append('your value {} is kept'.format(value))
+		if changes:
+			rows.append(('changed', name, ', '.join(changes)))
+
+	for name, (kind, default) in old_attrs.items():
+		if name in JSON_ONLY or _find(new_attrs, name, set()) is not None:
+			continue
+		value = _current_value(config, name)
+		text = 'removed'
+		if value not in (None, '') and str(value) != str(default).split(':')[0]:
+			text += ', your value {} is kept in the backup'.format(value)
+		rows.append(('removed', name, text))
+	return rows
+
+
+#-------------------------------------------------------------------
 def update_config(mt, block, config, module, icons_folder=None):
 	"""Rebuild the config attrs from module['attrs'] keeping the user values. Returns a report dict."""
 	attrs_in_json = module.get('attrs', {})
+	# point the block to the code of this json (version change / update)
+	for attr, key in (('Import_Command', 'import'), ('Build_Command', 'build_command')):
+		if module.get(key) and cmds.attributeQuery(attr, node=config, exists=True):
+			path = '{}.{}'.format(config, attr)
+			cmds.setAttr(path, lock=False)
+			cmds.setAttr(path, module[key], type='string')
+			cmds.setAttr(path, lock=True)
 	current = snapshot(config)
 	backup = read_backup(config)
 	report = {'kept': [], 'restored': [], 'backed_up': [], 'defaults': []}
