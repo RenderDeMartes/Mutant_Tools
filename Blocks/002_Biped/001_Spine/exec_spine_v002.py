@@ -515,9 +515,13 @@ def build_spine_block():
     show_ik_ctrls_attr = mt.new_enum(input=spine_attrs_loc, name='ikCtrls', enums='Hide:Show', keyable=False)
     show_extra_ik_ctrls_attr = mt.new_enum(input=spine_attrs_loc, name='ikCtrlsExtra', enums='Hide:Show', keyable=False)
     show_fk_ctrls_attr = mt.new_enum(input=spine_attrs_loc, name='fkCtrls', enums='Hide:Show', keyable=False)
-    cmds.setAttr(show_ik_ctrls_attr, 1)
+    # DefaultCtrls: which controllers are visible after the build (Both, IK or FK)
+    default_ctrls = 'Both'
+    if cmds.attributeQuery('DefaultCtrls', n=config, exists=True):
+        default_ctrls = cmds.getAttr(config + '.DefaultCtrls', asString=True)
+    cmds.setAttr(show_ik_ctrls_attr, int(default_ctrls != 'FK'))
     cmds.setAttr(show_extra_ik_ctrls_attr, 0)
-    cmds.setAttr(show_fk_ctrls_attr, 1)
+    cmds.setAttr(show_fk_ctrls_attr, int(default_ctrls != 'IK'))
     if do_tweakers:
         show_tweak_ctrls_attr = mt.new_enum(input=spine_attrs_loc, name='tweakCtrls', enums='Hide:Show', keyable=False)
         cmds.setAttr(show_tweak_ctrls_attr, 0)
@@ -549,6 +553,25 @@ def build_spine_block():
                         _follow_blend(chest_mid_root, spine_ik_ctrls[4], spine_ik_ctrls[2], mid01_attr,
                                       spine_ik_ctrls[3] + '_Follow'),
                         spine_ik_ctrls[3] + '_Follow_OffsetMatrix')
+
+    # Belly IK follow (0-1, animatable): BellyFollow 0 keeps it under the base fk, 1 follows the root ik
+    # (BellyFollowChest 0) or the end ik (1), half way by default. Attrs on the spine attrs and proxied on the
+    # belly ik controller.
+    mt.line_attr(input=spine_attrs_loc, name='BellyFollow')
+    belly_follow_attr = mt.new_attr(input=spine_attrs_loc, name='BellyFollow', min=0, max=1, default=1)
+    belly_chest_attr = mt.new_attr(input=spine_attrs_loc, name='BellyFollowChest', min=0, max=1, default=0.5)
+    for attr in ['BellyFollow', 'BellyFollowChest']:
+        cmds.addAttr(spine_ik_ctrls[2], ln=attr, proxy='{}.{}'.format(spine_attrs_loc, attr))
+
+    belly_root = cmds.listRelatives(spine_ik_ctrls[2], p=True)[0]
+    belly_rest = _world(belly_root)
+    belly_off = _carry(spine_ik_ctrls[2] + '_FollowOff_MultMatrix', belly_rest, _unscaled_world(base_ctrl))
+    belly_on = _follow_blend(belly_root, spine_ik_ctrls[0], spine_ik_ctrls[-1], belly_chest_attr,
+                             spine_ik_ctrls[2] + '_Follow')
+    _drive_parent_space(belly_root,
+                        _blend_matrix(spine_ik_ctrls[2] + '_FollowOn_BlendMatrix', belly_off, belly_on,
+                                      belly_follow_attr),
+                        spine_ik_ctrls[2] + '_Follow_OffsetMatrix')
 
     # Pivot slide: moves the bottom/top ik rotate pivot towards the belly (1 = at the belly)
     for ctrl in [base_ik_ctrl, chest_ctrl]:
