@@ -517,6 +517,67 @@ def _shapes(ctrl):
     return cmds.listRelatives(ctrl, s=True, f=True) or []
 
 
+def _attr_spec(node, attr):
+    plug = '{}.{}'.format(node, attr)
+    spec = {'type': cmds.attributeQuery(attr, n=node, attributeType=True),
+            'keyable': cmds.getAttr(plug, keyable=True), 'channel_box': cmds.getAttr(plug, channelBox=True),
+            'lock': cmds.getAttr(plug, lock=True), 'value': cmds.getAttr(plug),
+            'default': cmds.attributeQuery(attr, n=node, listDefault=True)[0],
+            'outputs': cmds.listConnections(plug, s=False, d=True, p=True) or [],
+            'inputs': cmds.listConnections(plug, s=True, d=False, p=True) or []}
+    if spec['type'] == 'enum':
+        spec['enum'] = cmds.attributeQuery(attr, n=node, listEnum=True)[0]
+    for key in ['min', 'max']:
+        if cmds.attributeQuery(attr, n=node, **{key + 'Exists': True}):
+            spec[key] = cmds.attributeQuery(attr, n=node, **{key: True})[0]
+    return spec
+
+
+def hand_attrs_on_ctrls(holder, attrs, shape_name, ctrls):
+    """Hand attrs on every hand controller, like the Limb v002 switch shape: the real attrs go to a data node
+    (not in the hierarchy, no evaluation cycle) and a locator shape instanced under every controller keeps
+    proxies of them, in the same order. The holder gets the shape too, so the attrs stay where they were."""
+    data_node = cmds.createNode('network', n=shape_name + '_Data')
+    specs = []
+    for attr in attrs:
+        spec = _attr_spec(holder, attr)
+        kwargs = {'ln': attr, 'at': spec['type']}
+        if spec['type'] == 'enum':
+            kwargs['en'] = spec['enum']
+        else:
+            kwargs['dv'] = spec['default']
+        for key in ['min', 'max']:
+            if key in spec:
+                kwargs[key] = spec[key]
+        cmds.addAttr(data_node, **kwargs)
+        cmds.setAttr('{}.{}'.format(data_node, attr), spec['value'])
+        specs.append((attr, spec))
+    for attr, spec in specs:
+        cmds.setAttr('{}.{}'.format(holder, attr), lock=False)
+        cmds.deleteAttr(holder, at=attr)
+
+    shape = cmds.createNode('locator', n=shape_name, p=holder, skipSelect=True)
+    for attr in ['lpx', 'lpy', 'lpz', 'lsx', 'lsy', 'lsz']:
+        cmds.setAttr('{}.{}'.format(shape, attr), lock=True, channelBox=False, keyable=False)
+    cmds.setAttr(shape + '.visibility', 0)
+    for attr, spec in specs:
+        source = '{}.{}'.format(data_node, attr)
+        cmds.addAttr(shape, ln=attr, proxy=source)
+        for plug in spec['inputs']:
+            cmds.connectAttr(plug, source, f=True)
+        for plug in spec['outputs']:
+            cmds.connectAttr(source, plug, f=True)
+        cmds.setAttr('{}.{}'.format(shape, attr), keyable=spec['keyable'])
+        if not spec['keyable']:
+            cmds.setAttr('{}.{}'.format(shape, attr), channelBox=spec['channel_box'])
+        if spec['lock']:
+            cmds.setAttr(source, lock=True)
+    for ctrl in ctrls:
+        if ctrl != holder:
+            cmds.parent(shape, ctrl, s=True, add=True)
+    return shape, data_node
+
+
 def _condition(name, plug, operation, value):
     """1 when plug <operation> value. operation: 2 greater than, 4 less than."""
     node = cmds.createNode('condition', n=name)
@@ -899,6 +960,8 @@ def build_hand_block():
 
         #create ctrl attrs
         if create_fingers_attrs:
+            # attrs already on the holder are not hand attrs (SetAttrsCtrl can be another controller)
+            holder_attrs = set(cmds.listAttr(ctrl_with_attrs, ud=True) or [])
             mt.line_attr(input = ctrl_with_attrs, name='Curl', lines = 10)
 
         #--------------------------------
@@ -1102,6 +1165,8 @@ def build_hand_block():
                                   name=side_guide.replace('Palm','Wrist').replace(nc['joint'],nc['ctrl']),
                                   size=ctrl_size)
         mt.assign_color(color=sec_color)
+        if not create_fingers_attrs:
+            holder_attrs = set(cmds.listAttr(main_hand_ctrl, ud=True) or [])
         main_hand_root = mt.root_grp()[0]
         mt.match(main_hand_root, side_guide, r=True, t=True)
         cmds.parent(ctrls_grp, main_hand_ctrl)
@@ -1138,6 +1203,15 @@ def build_hand_block():
                 ik_data[finger] = finger_ik(side_guide, finger, chain['joints'], chain['tip'], chain['ctrls'],
                                             parent_ctrl, switch_plug, ctrl_size, color, nc)
                 ik_data[finger]['switch'] = switch_plug
+
+        # cup ctrls visibility (hidden by default), only the shapes so the fingers under them stay visible
+        if cup_ctrls:
+            vis_node = ctrl_with_attrs if create_fingers_attrs else main_hand_ctrl
+            mt.line_attr(input=vis_node, name='Vis', lines=10)
+            cup_vis = mt.new_enum(input=vis_node, name='CupCtrls', enums='Hide:Show', keyable=False, default=0)
+            for ctrl in cup_ctrls:
+                for shape in _shapes(ctrl):
+                    cmds.connectAttr(cup_vis, shape + '.visibility', f=True)
 
         # Orients (before the mirror, same as Custom_Biped_Orients on a v001 hand) -------------
         if orients == 'SN':
@@ -1259,6 +1333,15 @@ def build_hand_block():
             for jnt, offset in offsets:
                 drive(jnt, [offset, jnt.replace(nc['joint_bind'], nc['joint']) + '.worldMatrix[0]'],
                       reparentable=jnt == bind_joints[0])
+
+        # hand attrs on every hand controller (instanced shape with proxies, like the Limb)
+        holder = ctrl_with_attrs if create_fingers_attrs else main_hand_ctrl
+        hand_attrs = [attr for attr in cmds.listAttr(holder, ud=True) or [] if attr not in holder_attrs]
+        if hand_attrs:
+            hand_ctrls = [main_hand_ctrl] + [ctrl for chain in finger_chains for ctrl in chain['ctrls']]
+            hand_ctrls += cup_ctrls + [data['ctrl'] for data in ik_data.values()]
+            hand_attrs_on_ctrls(holder, hand_attrs, side_guide.replace('Palm' + nc['joint'], 'Attrs' + nc['locator']),
+                                hand_ctrls)
 
     # build complete ----------------------------------------------------
     print ('Build {} Success'.format(block))
