@@ -80,6 +80,9 @@ except Exception as e:
 	cmds.warning('Error loading rstar.convention on load_AutoRigger')
 '''
 from Mutant_Tools.UI.AutoRigger import load_autoRiggerMenu
+from Mutant_Tools.UI.AutoRigger import config_previews
+from Mutant_Tools.UI.AutoRigger import config_update
+from Mutant_Tools.UI.AutoRigger import config_attrs_panel
 from Mutant_Tools.UI.CodeReader import load_codeReader
 import Mutant_Tools.UI
 from Mutant_Tools.UI import QtMutantWindow
@@ -113,6 +116,9 @@ reload(QtMutantWindow)
 
 if _dev_mode:
     reload(load_autoRiggerMenu)
+    reload(config_previews)
+    reload(config_update)
+    reload(config_attrs_panel)
     reload(load_codeReader)
     reload(expandableWidget)
     reload(codeEditorWidget)
@@ -1490,69 +1496,8 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 			return None
 
 	def update_config(self, block, config, module):
-		attrs_in_json = module.get('attrs', {})
-		attrs_in_config = cmds.listAttr(config, ud=True) or []
-
-		skips = ['precode', 'postcode', 'Build_Command', 'Import_Command']
-		attrs_to_recreate = []
-		existing_values = {}
-
-		# Phase 1: snapshot existing values; drop attrs not in JSON
-		for attr in attrs_in_config:
-			if attr in skips:
-				continue
-			clean_attr = self.get_mutant_config_attr(attr, config)
-			if clean_attr not in attrs_in_json:
-				if cmds.attributeQuery(attr, node=config, exists=True):
-					try:
-						cmds.deleteAttr('{}.{}'.format(config, attr))
-					except Exception as e:
-						print('Could not delete {}.{}: {}'.format(config, attr, e))
-			else:
-				attrs_to_recreate.append(attr)
-				existing_values[clean_attr] = self.get_config_attr_value(config=config, attr=attr, attr_key=clean_attr)
-
-		# Phase 2: delete attrs that will be rebuilt from JSON
-		for attr in attrs_to_recreate:
-			if cmds.attributeQuery(attr, node=config, exists=True):
-				try:
-					cmds.deleteAttr('{}.{}'.format(config, attr))
-				except Exception as e:
-					print('Could not delete {}.{}: {}'.format(config, attr, e))
-
-		# Phase 3: recreate from JSON, then restore the saved value (or keep JSON default for new attrs)
-		for attr in attrs_in_json:
-			attr_name = attr.rsplit('_', 1)[0]
-			try:
-				if 'string' in attr:
-					mt.string_attr(input=config, name=attr_name, string=module['attrs'][attr])
-				elif 'enum' in attr:
-					mt.new_enum(input=config, name=attr_name, enums=module['attrs'][attr])
-				elif 'float' in attr:
-					mt.new_attr_interger(input=config, name=attr_name, min=1, max=20, default=int(float(module['attrs'][attr])))
-				elif 'bool' in attr:
-					mt.new_boolean(input=config, name=attr_name, dv=module['attrs'][attr])
-			except Exception as e:
-				print('Could not create {}.{}: {}'.format(config, attr_name, e))
-				continue
-
-			value_to_set = module['attrs'][attr]
-			if attr in existing_values and existing_values[attr] is not None:
-				value_to_set = existing_values[attr]
-
-			self.set_config_attr_value(config=config, attr=attr_name, attr_key=attr, value=value_to_set)
-
-		# Update block icon if provided in JSON
-		if 'Icon' in module:
-			icon_name = module['Icon']
-			if not icon_name.endswith('.png'):
-				icon_name += '.png'
-			icon_path = os.path.join(FOLDER, 'Icons', icon_name)
-			if cmds.attributeQuery('iconName', node=block, exists=True):
-				try:
-					cmds.setAttr('{}.iconName'.format(block), icon_path, type="string")
-				except Exception as e:
-					print('Could not update icon for {}: {}'.format(block, e))
+		"""Rebuild the config attrs from the block json keeping the user values (see config_update)."""
+		return config_update.update_config(mt, block, config, module, icons_folder=os.path.join(FOLDER, 'Icons'))
 
 	def update_all_blocks_cmd(self):
 		if not cmds.objExists('Mutant_Build'):
@@ -2479,6 +2424,12 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		enable_row.addWidget(enable_label)
 		enable_row.addWidget(enable_check)
 		enable_row.addStretch()
+		cards_view = config_attrs_panel.get_panel_style() == 'cards'
+		style_btn = QtWidgets.QPushButton('Classic View' if cards_view else 'Card View')
+		style_btn.setToolTip('Switch how the block attrs are shown')
+		style_btn.setFixedHeight(22)
+		style_btn.clicked.connect(lambda _=None, blk=block, cv=cards_view: self._toggle_attrs_panel_style(blk, cv))
+		enable_row.addWidget(style_btn)
 		v_layout.addLayout(enable_row)
 
 		# Add Version dropdown if versioned files exist
@@ -2592,406 +2543,422 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		# layout_separator.setFixedHeight(1)
 		# v_layout.addWidget(layout_separator)
 
-		for attr in attrs:
+		if config_attrs_panel.get_panel_style() == 'cards':
+			self._attrs_panel = config_attrs_panel.build_cards(self, block, config, attrs, v_layout)
+		else:
+			for attr in attrs:
+				self._add_classic_attr_row(v_layout, config, attr)
 
-			edit_attr =  '{}.{}'.format(config, attr)
+	#-------------------------------------------------------------------
+	def _toggle_attrs_panel_style(self, block, cards_view):
+		config_attrs_panel.set_panel_style('classic' if cards_view else 'cards')
+		# rebuild on the next tick, the button is inside the panel being rebuilt
+		QtCore.QTimer.singleShot(0, lambda: self.create_properties_layout(block, scroll_to_block=False))
 
-			#if the attrs is locked dont create anyting for it
-			if cmds.getAttr(edit_attr,settable = True ) == False:
-				continue
-			#if attr is any of this continue
-			skips = ['precode', 'postcode']
-			if attr in skips: continue
+	def _add_classic_attr_row(self, v_layout, config, attr, separator=True, label_text=None):
+		"""Add the classic widget row for one config attr (label + widget by attr type)."""
+		edit_attr =  '{}.{}'.format(config, attr)
 
-			#main horizontal layout for each attr. they all have a label and the if is to add specific
-			h_layout = QtWidgets.QHBoxLayout()
-			h_layout.setContentsMargins(3, 5, 3, 5)
-			#divisor
+		#if the attrs is locked dont create anyting for it
+		if cmds.getAttr(edit_attr,settable = True ) == False:
+			return
+		#if attr is any of this continue
+		skips = ['precode', 'postcode']
+		if attr in skips: return
+
+		#main horizontal layout for each attr. they all have a label and the if is to add specific
+		h_layout = QtWidgets.QHBoxLayout()
+		h_layout.setContentsMargins(3, 5, 3, 5)
+		#divisor
+		if separator:
 			layout_separator = QtWidgets.QLabel()
 			layout_separator.setStyleSheet("border : 5px solid grey; ")
 			layout_separator.setFixedHeight(1)
 			v_layout.addWidget(layout_separator)
-			#label
-			label_text = attr
-			is_surface_constraint_block = False
-			if cmds.attributeQuery('Build_Command', node=config, exists=True):
-				build_cmd = cmds.getAttr('{}.Build_Command'.format(config), asString=True) or ''
-				is_surface_constraint_block = 'build_surface_constraint_block' in build_cmd
-			if attr == 'SetNodeList' and is_surface_constraint_block:
-				label_text = 'Vertices'
-			elif attr == 'SetControls':
-				label_text = 'Controls'
-			label = QtWidgets.QLabel(label_text + ': ')
-			label.setFixedHeight(50)
-			v_layout.addLayout(h_layout)
-			h_layout.addWidget(label)
+		#label
+		custom_label = label_text
+		label_text = attr
+		is_surface_constraint_block = False
+		if cmds.attributeQuery('Build_Command', node=config, exists=True):
+			build_cmd = cmds.getAttr('{}.Build_Command'.format(config), asString=True) or ''
+			is_surface_constraint_block = 'build_surface_constraint_block' in build_cmd
+		if attr == 'SetNodeList' and is_surface_constraint_block:
+			label_text = 'Vertices'
+		elif attr == 'SetControls':
+			label_text = 'Controls'
+		if custom_label:
+			label_text = custom_label
+		label = QtWidgets.QLabel(label_text + ': ')
+		label.setFixedHeight(50)
+		v_layout.addLayout(h_layout)
+		h_layout.addWidget(label)
 
-			#check Attrs type and create a layout diferente for each one
-			attr_type = cmds.getAttr('{}.{}'.format(config,attr), type = True)
+		#check Attrs type and create a layout diferente for each one
+		attr_type = cmds.getAttr('{}.{}'.format(config,attr), type = True)
 
 
-			#-----------------------------------------------------------------
-			if attr_type == 'string':
+		#-----------------------------------------------------------------
+		if attr_type == 'string':
 
-				#Main strings attrs UI
-				#print (attr + ': is string')
-				line_edit = QtWidgets.QLineEdit(cmds.getAttr('{}.{}'.format(config, attr)))
-				line_edit.textChanged.connect(partial(self.lineEdit_update_attr,line_edit, edit_attr))
-				h_layout.addWidget(line_edit)
+			#Main strings attrs UI
+			#print (attr + ': is string')
+			line_edit = QtWidgets.QLineEdit(cmds.getAttr('{}.{}'.format(config, attr)))
+			line_edit.textChanged.connect(partial(self.lineEdit_update_attr,line_edit, edit_attr))
+			h_layout.addWidget(line_edit)
 
-				if 'Set' in attr and 'List' not in attr: #if set in name it will create a greab button
-					set_button = QtWidgets.QPushButton('Set Selection')
-					set_button.setFixedSize(80,30)
-					set_button.clicked.connect(partial(self.lineEdit_get_selection,line_edit, edit_attr))
+			if 'Set' in attr and 'List' not in attr: #if set in name it will create a greab button
+				set_button = QtWidgets.QPushButton('Set Selection')
+				set_button.setFixedSize(80,30)
+				set_button.clicked.connect(partial(self.lineEdit_get_selection,line_edit, edit_attr))
 
+				select_button = QtWidgets.QPushButton()
+				select_button.setFixedSize(20, 20)
+				select_button.setIcon(QtGui.QIcon(os.path.join(IconsPath, 'Cursor.png')))
+				select_button.clicked.connect(partial(self.lineEdit_sel_selection,line_edit, edit_attr))
+
+				h_layout.addWidget(set_button)
+				h_layout.addWidget(select_button)
+
+			if 'File' in attr:
+				file_button = QtWidgets.QPushButton('Browse')
+				file_button.setFixedSize(80,35)
+				file_button.clicked.connect(partial(self.lineEdit_get_file,line_edit, edit_attr))
+				h_layout.addWidget(file_button)
+
+			if 'Path' in attr:
+				file_button = QtWidgets.QPushButton('Browse')
+				file_button.setFixedSize(80,35)
+				file_button.clicked.connect(partial(self.lineEdit_get_path,line_edit, edit_attr))
+				h_layout.addWidget(file_button)
+
+			if 'List' in attr:
+				line_edit.setParent(None)
+				
+				list_widget = QtWidgets.QListWidget()
+				list_widget.setSelectionMode(QtWidgets.QAbstractItemView.ExtendedSelection)
+				list_widget.setMinimumHeight(100)
+
+				def add_item_to_list(text, lw=list_widget, at_top=False):
+					item = QtWidgets.QListWidgetItem(text)
+					item.setFlags(item.flags() | QtCore.Qt.ItemIsEditable)
+					if at_top:
+						lw.insertItem(0, item)
+					else:
+						lw.addItem(item)
+				
+				current_text = cmds.getAttr(edit_attr)
+				if current_text:
+					items = [i.strip() for i in current_text.split(',') if i.strip()]
+					for item_text in items:
+						add_item_to_list(item_text)
+					
+				def update_attr_from_list(lw=list_widget, ea=edit_attr):
+					items = []
+					for i in range(lw.count()):
+						items.append(lw.item(i).text())
+					cmds.setAttr(ea, ','.join(items), type='string')
+
+				list_widget.itemChanged.connect(lambda item, lw=list_widget, ea=edit_attr: update_attr_from_list(lw, ea))
+					
+				def add_selected_to_list(lw=list_widget, ea=edit_attr, attr_name=attr):
+					if 'Defaults' in attr_name:
+						# Special: capture selected channel box attrs + values
+						sel = cmds.ls(sl=True)
+						if not sel:
+							cmds.warning('Select objects first.')
+							return
+						main_attrs = cmds.channelBox('mainChannelBox', q=True, sma=True) or []
+						shape_attrs = cmds.channelBox('mainChannelBox', q=True, ssa=True) or []
+						history_attrs = cmds.channelBox('mainChannelBox', q=True, sha=True) or []
+						output_attrs = cmds.channelBox('mainChannelBox', q=True, soa=True) or []
+						all_attrs = main_attrs + shape_attrs + history_attrs + output_attrs
+						if not all_attrs:
+							cmds.warning('Highlight attributes in the Channel Box first.')
+							return
+						existing = [lw.item(i).text() for i in range(lw.count())]
+						added = 0
+						for node in sel:
+							for cb_attr in all_attrs:
+								full = '{}.{}'.format(node, cb_attr)
+								if not cmds.objExists(full):
+									return
+								try:
+									attr_type = cmds.getAttr(full, type=True)
+									if attr_type == 'enum':
+										val = cmds.getAttr(full, asString=True)
+									else:
+										val = cmds.getAttr(full)
+									entry = '{} = {}'.format(full, val)
+									# Replace if same attr already stored
+									replaced = False
+									for idx in range(lw.count()):
+										if lw.item(idx).text().startswith(full + ' ='):
+											lw.takeItem(idx)
+											add_item_to_list(entry, at_top=True)
+											replaced = True
+											break
+									if not replaced:
+										add_item_to_list(entry, at_top=True)
+									added += 1
+								except:
+									pass
+						if added == 0:
+							cmds.warning('No valid attributes found.')
+						update_attr_from_list(lw, ea)
+						return
+					elif 'Rename' in attr_name:
+						sel = cmds.ls(sl=True)
+						if not sel:
+							cmds.warning('Select controls first.')
+							return
+						for s in sel:
+							entry = '{} = {}'.format(s, s)
+							replaced = False
+							for idx in range(lw.count()):
+								if lw.item(idx).text().startswith(s + ' ='):
+									lw.takeItem(idx)
+									add_item_to_list(entry, at_top=True)
+									replaced = True
+									break
+							if not replaced:
+								add_item_to_list(entry, at_top=True)
+						update_attr_from_list(lw, ea)
+						return
+					
+					try:
+						if cmds.selectPref(tso=True, q=True) == 0:
+							cmds.selectPref(tso=True)
+						sel = cmds.ls(sl=True, fl=True, orderedSelection=True) or []
+					except Exception:
+						sel = cmds.ls(sl=True, fl=True) or []
+					if not sel: return
+					existing = []
+					for i in range(lw.count()):
+						existing.append(lw.item(i).text())
+					for s in sel:
+						if s not in existing:
+							add_item_to_list(s, at_top=True)
+					update_attr_from_list(lw, ea)
+					
+				def remove_selected_from_list(lw=list_widget, ea=edit_attr):
+					selected_items = lw.selectedItems()
+					if not selected_items: return
+					for item in selected_items:
+						lw.takeItem(lw.row(item))
+					update_attr_from_list(lw, ea)
+					
+				def select_all_in_list(lw=list_widget):
+					items = [lw.item(i).text() for i in range(lw.count())]
+					# For rename lists or default lists, extract the object name part before '='
+					existing = []
+					for it in items:
+						obj_name = it.split('=')[0].strip() if '=' in it else it
+						if cmds.objExists(obj_name):
+							existing.append(obj_name)
+					if existing:
+						cmds.select(existing)
+					else:
+						cmds.select(clear=True)
+
+				def handle_paste(lw=list_widget, ea=edit_attr, attr_name=attr):
+					clipboard = QtWidgets.QApplication.clipboard()
+					clipboard_text = clipboard.text()
+					if not clipboard_text:
+						cmds.warning('Clipboard is empty.')
+						return
+					
+					# Split text into lines
+					lines = clipboard_text.split('\n')
+					added = 0
+					for line in lines:
+						line = line.strip()
+						if not line:
+							return
+						
+						# Try to split by tab, equals, comma, or colon
+						parts = []
+						if '\t' in line:
+							parts = [p.strip() for p in line.split('\t') if p.strip()]
+						elif '=' in line:
+							parts = [p.strip() for p in line.split('=') if p.strip()]
+						elif ',' in line:
+							parts = [p.strip() for p in line.split(',') if p.strip()]
+						elif ':' in line:
+							parts = [p.strip() for p in line.split(':') if p.strip()]
+						else:
+							parts = [p.strip() for p in line.split() if p.strip()]
+						
+						if not parts:
+							return
+							
+						if 'Rename' in attr_name:
+							if len(parts) >= 2:
+								orig = parts[0]
+								new_n = parts[1]
+								entry = '{} = {}'.format(orig, new_n)
+							else:
+								orig = parts[0]
+								entry = '{} = {}'.format(orig, orig)
+						else:
+							# For other lists, just use the first column or full line
+							orig = parts[0]
+							entry = line
+							
+						# Avoid duplicates (or replace)
+						replaced = False
+						# Match prefix if it has '='
+						match_prefix = orig + ' =' if '=' in entry else entry
+						for idx in range(lw.count()):
+							if '=' in entry:
+								if lw.item(idx).text().startswith(match_prefix):
+									lw.item(idx).setText(entry)
+									replaced = True
+									break
+							else:
+								if lw.item(idx).text() == entry:
+									replaced = True
+									break
+						if not replaced:
+							add_item_to_list(entry)
+						added += 1
+						
+					if added > 0:
+						update_attr_from_list(lw, ea)
+						print('Pasted {} entries successfully.'.format(added))
+
+				def handle_copy(lw=list_widget):
+					items = []
+					for i in range(lw.count()):
+						items.append(lw.item(i).text())
+					text = '\n'.join(items)
+					clipboard = QtWidgets.QApplication.clipboard()
+					clipboard.setText(text)
+					print('Copied {} entries to clipboard.'.format(lw.count()))
+
+				def clear_list(lw=list_widget, ea=edit_attr):
+					lw.clear()
+					update_attr_from_list(lw, ea)
+					print('List cleared successfully.')
+
+				# Create copy and paste shortcuts on the list widget
+				copy_shortcut = QtGui.QShortcut(QtGui.QKeySequence("Ctrl+C"), list_widget)
+				copy_shortcut.activated.connect(lambda lw=list_widget: handle_copy(lw))
+
+				paste_shortcut = QtGui.QShortcut(QtGui.QKeySequence("Ctrl+V"), list_widget)
+				paste_shortcut.activated.connect(lambda lw=list_widget, ea=edit_attr, an=attr: handle_paste(lw, ea, an))
+
+				list_v_layout = QtWidgets.QVBoxLayout()
+				list_v_layout.addWidget(list_widget)
+				
+				resizer_widget = ListResizer(list_widget)
+				list_v_layout.addWidget(resizer_widget)
+				
+				btn_h_layout = QtWidgets.QHBoxLayout()
+				add_btn = QtWidgets.QPushButton('Add Selected')
+				add_btn.clicked.connect(add_selected_to_list)
+				remove_btn = QtWidgets.QPushButton('Remove Selected')
+				remove_btn.clicked.connect(remove_selected_from_list)
+				clear_btn = QtWidgets.QPushButton('Clear')
+				clear_btn.setToolTip("Clear all entries from this list")
+				clear_btn.clicked.connect(lambda checked=False, lw=list_widget, ea=edit_attr: clear_list(lw, ea))
+				btn_h_layout.addWidget(add_btn)
+				btn_h_layout.addWidget(remove_btn)
+				btn_h_layout.addWidget(clear_btn)
+
+				copy_btn = QtWidgets.QPushButton('Copy')
+				copy_btn.setToolTip("Copy all list entries to clipboard")
+				copy_btn.clicked.connect(lambda checked=False, lw=list_widget: handle_copy(lw))
+				btn_h_layout.addWidget(copy_btn)
+
+				paste_btn = QtWidgets.QPushButton('Paste')
+				paste_btn.setToolTip("Paste entries from clipboard (supports spreadsheet columns, tab/comma/equals/colon separated values)")
+				paste_btn.clicked.connect(lambda checked=False, lw=list_widget, ea=edit_attr, an=attr: handle_paste(lw, ea, an))
+				btn_h_layout.addWidget(paste_btn)
+				
+				if 'Set' in attr:
 					select_button = QtWidgets.QPushButton()
 					select_button.setFixedSize(20, 20)
 					select_button.setIcon(QtGui.QIcon(os.path.join(IconsPath, 'Cursor.png')))
-					select_button.clicked.connect(partial(self.lineEdit_sel_selection,line_edit, edit_attr))
+					select_button.clicked.connect(lambda checked=False, lw=list_widget: select_all_in_list(lw))
+					btn_h_layout.addWidget(select_button)
 
-					h_layout.addWidget(set_button)
-					h_layout.addWidget(select_button)
+				list_v_layout.addLayout(btn_h_layout)
+				
+				h_layout.addLayout(list_v_layout)
 
-				if 'File' in attr:
-					file_button = QtWidgets.QPushButton('Browse')
-					file_button.setFixedSize(80,35)
-					file_button.clicked.connect(partial(self.lineEdit_get_file,line_edit, edit_attr))
-					h_layout.addWidget(file_button)
+			if attr == 'Code':  # if code in name it will create a larger box
+				line_edit.setParent(None)
+				h_layout.removeWidget(label)
+				code_v_layout = QtWidgets.QVBoxLayout()
+				label.setFixedHeight(25)
+				label.setStyleSheet("font-weight: bold; color: #9CC7FF;")
+				code_v_layout.addWidget(label)
+				code_editor = codeEditorWidget.IDECodeEditor(max_height_limit=None)
+				code_editor.setPlainText(cmds.getAttr('{}.{}'.format(config, attr)))
+				code_editor.set_language('python')
+				code_editor.textChanged.connect(partial(self.lineEdit_update_attr, code_editor, edit_attr))
+				# Restore saved code block height if available
+				if cmds.optionVar(ex='mutant_code_block_height'):
+					saved_h = cmds.optionVar(q='mutant_code_block_height')
+					if saved_h > 50:
+						code_editor.setFixedHeight(saved_h)
+				code_v_layout.addWidget(code_editor)
+				resizer_widget = ListResizer(code_editor)
+				code_v_layout.addWidget(resizer_widget)
+				h_layout.addLayout(code_v_layout)
 
-				if 'Path' in attr:
-					file_button = QtWidgets.QPushButton('Browse')
-					file_button.setFixedSize(80,35)
-					file_button.clicked.connect(partial(self.lineEdit_get_path,line_edit, edit_attr))
-					h_layout.addWidget(file_button)
+			if attr == 'Help':  # if non string do a code box but non editable
+				line_edit.setParent(None)
+				help_browser = QtWidgets.QTextBrowser()
+				help_browser.setOpenExternalLinks(True)
+				help_browser.setReadOnly(True)
+				help_browser.setMinimumHeight(180)
+				help_browser.setFrameShape(QtWidgets.QFrame.NoFrame)
+				help_browser.setHtml(self._help_html(cmds.getAttr('{}.{}'.format(config, attr))))
+				h_layout.addWidget(help_browser)
 
-				if 'List' in attr:
-					line_edit.setParent(None)
-					
-					list_widget = QtWidgets.QListWidget()
-					list_widget.setSelectionMode(QtWidgets.QAbstractItemView.ExtendedSelection)
-					list_widget.setMinimumHeight(100)
+		#-----------------------------------------------------------------
+		elif attr_type == 'enum':
+			#get all the options in the config combo box and add them to a custom qt cumbo box
+			#print (attr + ': is enum')
+			enums = cmds.attributeQuery(attr, node=config, listEnum = True)[0]
+			enums = str(enums).split(':')
+			#print (enums)
+			enum_box = QtWidgets.QComboBox()
+			enum_box.addItems(enums)
+			enum_box.setCurrentIndex(cmds.getAttr(edit_attr))
+			enum_box.setStyleSheet('background-color: none;')
+			enum_box.currentIndexChanged.connect(partial(self.enum_update_attr,enum_box,edit_attr))
 
-					def add_item_to_list(text, lw=list_widget, at_top=False):
-						item = QtWidgets.QListWidgetItem(text)
-						item.setFlags(item.flags() | QtCore.Qt.ItemIsEditable)
-						if at_top:
-							lw.insertItem(0, item)
-						else:
-							lw.addItem(item)
-					
-					current_text = cmds.getAttr(edit_attr)
-					if current_text:
-						items = [i.strip() for i in current_text.split(',') if i.strip()]
-						for item_text in items:
-							add_item_to_list(item_text)
-						
-					def update_attr_from_list(lw=list_widget, ea=edit_attr):
-						items = []
-						for i in range(lw.count()):
-							items.append(lw.item(i).text())
-						cmds.setAttr(ea, ','.join(items), type='string')
+			h_layout.addWidget(enum_box)
 
-					list_widget.itemChanged.connect(lambda item, lw=list_widget, ea=edit_attr: update_attr_from_list(lw, ea))
-						
-					def add_selected_to_list(lw=list_widget, ea=edit_attr, attr_name=attr):
-						if 'Defaults' in attr_name:
-							# Special: capture selected channel box attrs + values
-							sel = cmds.ls(sl=True)
-							if not sel:
-								cmds.warning('Select objects first.')
-								return
-							main_attrs = cmds.channelBox('mainChannelBox', q=True, sma=True) or []
-							shape_attrs = cmds.channelBox('mainChannelBox', q=True, ssa=True) or []
-							history_attrs = cmds.channelBox('mainChannelBox', q=True, sha=True) or []
-							output_attrs = cmds.channelBox('mainChannelBox', q=True, soa=True) or []
-							all_attrs = main_attrs + shape_attrs + history_attrs + output_attrs
-							if not all_attrs:
-								cmds.warning('Highlight attributes in the Channel Box first.')
-								return
-							existing = [lw.item(i).text() for i in range(lw.count())]
-							added = 0
-							for node in sel:
-								for cb_attr in all_attrs:
-									full = '{}.{}'.format(node, cb_attr)
-									if not cmds.objExists(full):
-										continue
-									try:
-										attr_type = cmds.getAttr(full, type=True)
-										if attr_type == 'enum':
-											val = cmds.getAttr(full, asString=True)
-										else:
-											val = cmds.getAttr(full)
-										entry = '{} = {}'.format(full, val)
-										# Replace if same attr already stored
-										replaced = False
-										for idx in range(lw.count()):
-											if lw.item(idx).text().startswith(full + ' ='):
-												lw.takeItem(idx)
-												add_item_to_list(entry, at_top=True)
-												replaced = True
-												break
-										if not replaced:
-											add_item_to_list(entry, at_top=True)
-										added += 1
-									except:
-										pass
-							if added == 0:
-								cmds.warning('No valid attributes found.')
-							update_attr_from_list(lw, ea)
-							return
-						elif 'Rename' in attr_name:
-							sel = cmds.ls(sl=True)
-							if not sel:
-								cmds.warning('Select controls first.')
-								return
-							for s in sel:
-								entry = '{} = {}'.format(s, s)
-								replaced = False
-								for idx in range(lw.count()):
-									if lw.item(idx).text().startswith(s + ' ='):
-										lw.takeItem(idx)
-										add_item_to_list(entry, at_top=True)
-										replaced = True
-										break
-								if not replaced:
-									add_item_to_list(entry, at_top=True)
-							update_attr_from_list(lw, ea)
-							return
-						
-						try:
-							if cmds.selectPref(tso=True, q=True) == 0:
-								cmds.selectPref(tso=True)
-							sel = cmds.ls(sl=True, fl=True, orderedSelection=True) or []
-						except Exception:
-							sel = cmds.ls(sl=True, fl=True) or []
-						if not sel: return
-						existing = []
-						for i in range(lw.count()):
-							existing.append(lw.item(i).text())
-						for s in sel:
-							if s not in existing:
-								add_item_to_list(s, at_top=True)
-						update_attr_from_list(lw, ea)
-						
-					def remove_selected_from_list(lw=list_widget, ea=edit_attr):
-						selected_items = lw.selectedItems()
-						if not selected_items: return
-						for item in selected_items:
-							lw.takeItem(lw.row(item))
-						update_attr_from_list(lw, ea)
-						
-					def select_all_in_list(lw=list_widget):
-						items = [lw.item(i).text() for i in range(lw.count())]
-						# For rename lists or default lists, extract the object name part before '='
-						existing = []
-						for it in items:
-							obj_name = it.split('=')[0].strip() if '=' in it else it
-							if cmds.objExists(obj_name):
-								existing.append(obj_name)
-						if existing:
-							cmds.select(existing)
-						else:
-							cmds.select(clear=True)
+		#-----------------------------------------------------------------
+		elif attr_type == 'long':
+			#print (attr + ': is long')
 
-					def handle_paste(lw=list_widget, ea=edit_attr, attr_name=attr):
-						clipboard = QtWidgets.QApplication.clipboard()
-						clipboard_text = clipboard.text()
-						if not clipboard_text:
-							cmds.warning('Clipboard is empty.')
-							return
-						
-						# Split text into lines
-						lines = clipboard_text.split('\n')
-						added = 0
-						for line in lines:
-							line = line.strip()
-							if not line:
-								continue
-							
-							# Try to split by tab, equals, comma, or colon
-							parts = []
-							if '\t' in line:
-								parts = [p.strip() for p in line.split('\t') if p.strip()]
-							elif '=' in line:
-								parts = [p.strip() for p in line.split('=') if p.strip()]
-							elif ',' in line:
-								parts = [p.strip() for p in line.split(',') if p.strip()]
-							elif ':' in line:
-								parts = [p.strip() for p in line.split(':') if p.strip()]
-							else:
-								parts = [p.strip() for p in line.split() if p.strip()]
-							
-							if not parts:
-								continue
-								
-							if 'Rename' in attr_name:
-								if len(parts) >= 2:
-									orig = parts[0]
-									new_n = parts[1]
-									entry = '{} = {}'.format(orig, new_n)
-								else:
-									orig = parts[0]
-									entry = '{} = {}'.format(orig, orig)
-							else:
-								# For other lists, just use the first column or full line
-								orig = parts[0]
-								entry = line
-								
-							# Avoid duplicates (or replace)
-							replaced = False
-							# Match prefix if it has '='
-							match_prefix = orig + ' =' if '=' in entry else entry
-							for idx in range(lw.count()):
-								if '=' in entry:
-									if lw.item(idx).text().startswith(match_prefix):
-										lw.item(idx).setText(entry)
-										replaced = True
-										break
-								else:
-									if lw.item(idx).text() == entry:
-										replaced = True
-										break
-							if not replaced:
-								add_item_to_list(entry)
-							added += 1
-							
-						if added > 0:
-							update_attr_from_list(lw, ea)
-							print('Pasted {} entries successfully.'.format(added))
+			int_label = QtWidgets.QLabel(str(cmds.getAttr(edit_attr)))
+			int_slider = QtWidgets.QSlider(QtCore.Qt.Horizontal)
+			int_slider.setValue(cmds.getAttr(edit_attr))
+			if cmds.getAttr(edit_attr) > 20:
+				int_slider.setMaximum(100)
+			else:
+				int_slider.setMaximum(20)
+			int_slider.setStyleSheet('background-color: none;')
+			int_slider.valueChanged.connect(partial(self.slider_update_attr, int_label, int_slider, edit_attr))
 
-					def handle_copy(lw=list_widget):
-						items = []
-						for i in range(lw.count()):
-							items.append(lw.item(i).text())
-						text = '\n'.join(items)
-						clipboard = QtWidgets.QApplication.clipboard()
-						clipboard.setText(text)
-						print('Copied {} entries to clipboard.'.format(lw.count()))
+			h_layout.addWidget(int_label)
+			h_layout.addWidget(int_slider)
 
-					def clear_list(lw=list_widget, ea=edit_attr):
-						lw.clear()
-						update_attr_from_list(lw, ea)
-						print('List cleared successfully.')
-
-					# Create copy and paste shortcuts on the list widget
-					copy_shortcut = QtGui.QShortcut(QtGui.QKeySequence("Ctrl+C"), list_widget)
-					copy_shortcut.activated.connect(lambda lw=list_widget: handle_copy(lw))
-
-					paste_shortcut = QtGui.QShortcut(QtGui.QKeySequence("Ctrl+V"), list_widget)
-					paste_shortcut.activated.connect(lambda lw=list_widget, ea=edit_attr, an=attr: handle_paste(lw, ea, an))
-
-					list_v_layout = QtWidgets.QVBoxLayout()
-					list_v_layout.addWidget(list_widget)
-					
-					resizer_widget = ListResizer(list_widget)
-					list_v_layout.addWidget(resizer_widget)
-					
-					btn_h_layout = QtWidgets.QHBoxLayout()
-					add_btn = QtWidgets.QPushButton('Add Selected')
-					add_btn.clicked.connect(add_selected_to_list)
-					remove_btn = QtWidgets.QPushButton('Remove Selected')
-					remove_btn.clicked.connect(remove_selected_from_list)
-					clear_btn = QtWidgets.QPushButton('Clear')
-					clear_btn.setToolTip("Clear all entries from this list")
-					clear_btn.clicked.connect(lambda checked=False, lw=list_widget, ea=edit_attr: clear_list(lw, ea))
-					btn_h_layout.addWidget(add_btn)
-					btn_h_layout.addWidget(remove_btn)
-					btn_h_layout.addWidget(clear_btn)
-
-					copy_btn = QtWidgets.QPushButton('Copy')
-					copy_btn.setToolTip("Copy all list entries to clipboard")
-					copy_btn.clicked.connect(lambda checked=False, lw=list_widget: handle_copy(lw))
-					btn_h_layout.addWidget(copy_btn)
-
-					paste_btn = QtWidgets.QPushButton('Paste')
-					paste_btn.setToolTip("Paste entries from clipboard (supports spreadsheet columns, tab/comma/equals/colon separated values)")
-					paste_btn.clicked.connect(lambda checked=False, lw=list_widget, ea=edit_attr, an=attr: handle_paste(lw, ea, an))
-					btn_h_layout.addWidget(paste_btn)
-					
-					if 'Set' in attr:
-						select_button = QtWidgets.QPushButton()
-						select_button.setFixedSize(20, 20)
-						select_button.setIcon(QtGui.QIcon(os.path.join(IconsPath, 'Cursor.png')))
-						select_button.clicked.connect(lambda checked=False, lw=list_widget: select_all_in_list(lw))
-						btn_h_layout.addWidget(select_button)
-
-					list_v_layout.addLayout(btn_h_layout)
-					
-					h_layout.addLayout(list_v_layout)
-
-				if attr == 'Code':  # if code in name it will create a larger box
-					line_edit.setParent(None)
-					h_layout.removeWidget(label)
-					code_v_layout = QtWidgets.QVBoxLayout()
-					label.setFixedHeight(25)
-					label.setStyleSheet("font-weight: bold; color: #9CC7FF;")
-					code_v_layout.addWidget(label)
-					code_editor = codeEditorWidget.IDECodeEditor(max_height_limit=None)
-					code_editor.setPlainText(cmds.getAttr('{}.{}'.format(config, attr)))
-					code_editor.set_language('python')
-					code_editor.textChanged.connect(partial(self.lineEdit_update_attr, code_editor, edit_attr))
-					# Restore saved code block height if available
-					if cmds.optionVar(ex='mutant_code_block_height'):
-						saved_h = cmds.optionVar(q='mutant_code_block_height')
-						if saved_h > 50:
-							code_editor.setFixedHeight(saved_h)
-					code_v_layout.addWidget(code_editor)
-					resizer_widget = ListResizer(code_editor)
-					code_v_layout.addWidget(resizer_widget)
-					h_layout.addLayout(code_v_layout)
-
-				if attr == 'Help':  # if non string do a code box but non editable
-					line_edit.setParent(None)
-					help_browser = QtWidgets.QTextBrowser()
-					help_browser.setOpenExternalLinks(True)
-					help_browser.setReadOnly(True)
-					help_browser.setMinimumHeight(180)
-					help_browser.setFrameShape(QtWidgets.QFrame.NoFrame)
-					help_browser.setHtml(self._help_html(cmds.getAttr('{}.{}'.format(config, attr))))
-					h_layout.addWidget(help_browser)
-
-			#-----------------------------------------------------------------
-			elif attr_type == 'enum':
-				#get all the options in the config combo box and add them to a custom qt cumbo box
-				#print (attr + ': is enum')
-				enums = cmds.attributeQuery(attr, node=config, listEnum = True)[0]
-				enums = str(enums).split(':')
-				#print (enums)
-				enum_box = QtWidgets.QComboBox()
-				enum_box.addItems(enums)
-				enum_box.setCurrentIndex(cmds.getAttr(edit_attr))
-				enum_box.setStyleSheet('background-color: none;')
-				enum_box.currentIndexChanged.connect(partial(self.enum_update_attr,enum_box,edit_attr))
-
-				h_layout.addWidget(enum_box)
-
-			#-----------------------------------------------------------------
-			elif attr_type == 'long':
-				#print (attr + ': is long')
-
-				int_label = QtWidgets.QLabel(str(cmds.getAttr(edit_attr)))
-				int_slider = QtWidgets.QSlider(QtCore.Qt.Horizontal)
-				int_slider.setValue(cmds.getAttr(edit_attr))
-				if cmds.getAttr(edit_attr) > 20:
-					int_slider.setMaximum(100)
-				else:
-					int_slider.setMaximum(20)
-				int_slider.setStyleSheet('background-color: none;')
-				int_slider.valueChanged.connect(partial(self.slider_update_attr, int_label, int_slider, edit_attr))
-
-				h_layout.addWidget(int_label)
-				h_layout.addWidget(int_slider)
-
-			#-----------------------------------------------------------------
-			elif attr_type == 'bool':
-				#print (attr + ': is bool')
-				checkbox = QtWidgets.QCheckBox(attr)
-				checkbox.setChecked(cmds.getAttr('{}.{}'.format(config, attr)))
-				checkbox.setStyleSheet('background-color: none;')
-				h_layout.addWidget(checkbox)
-				label.setParent(None)
-				checkbox.stateChanged.connect(partial(self.checkBox_update_attr, checkbox, edit_attr))
-			#-----------------------------------------------------------------
+		#-----------------------------------------------------------------
+		elif attr_type == 'bool':
+			#print (attr + ': is bool')
+			checkbox = QtWidgets.QCheckBox(attr)
+			checkbox.setChecked(cmds.getAttr('{}.{}'.format(config, attr)))
+			checkbox.setStyleSheet('background-color: none;')
+			h_layout.addWidget(checkbox)
+			label.setParent(None)
+			checkbox.stateChanged.connect(partial(self.checkBox_update_attr, checkbox, edit_attr))
+		#-----------------------------------------------------------------
 
 
 	#-------------------------------------------------------------------

@@ -74,6 +74,7 @@ from Mutant_Tools.Utils.Helpers.decorators import undo
 from Mutant_Tools.Utils.Rigging import main_mutant
 reload(Mutant_Tools.Utils.Rigging.main_mutant)
 mt = main_mutant.Mutant()
+from Mutant_Tools.UI.AutoRigger import config_update
 
 
 # -------------------------------------------------------------------
@@ -556,62 +557,8 @@ class AutoRiggerOptions(QtMutantWindow.Qt_Mutant):
 		self.close()
 
 	def update_config(self, block, config, module):
-		print(config)
-		attrs_in_json = module.get('attrs', {})
-		attrs_in_config = cmds.listAttr(config , ud=True) or []
-
-		print(attrs_in_config)
-		print(attrs_in_json)
-
-		skips = ['precode', 'postcode', 'Build_Command', 'Import_Command']
-		attrs_to_recreate = []
-		existing_values = {}
-
-		#if not in json delete
-		for attr in attrs_in_config:
-			if attr in skips:
-				continue
-			clean_attr = self.get_mutant_config_attr(attr, config)
-			if clean_attr not in attrs_in_json:
-				if cmds.attributeQuery(attr, node=config, exists=True):
-					cmds.deleteAttr('{}.{}'.format(config, attr))
-			else:
-				attrs_to_recreate.append(attr)
-				existing_values[clean_attr] = self.get_config_attr_value(config=config, attr=attr, attr_key=clean_attr)
-
-		# Recreate custom attrs in JSON order so the UI/channel order matches the json file
-		for attr in attrs_to_recreate:
-			if cmds.attributeQuery(attr, node=config, exists=True):
-				cmds.deleteAttr('{}.{}'.format(config, attr))
-
-		for attr in attrs_in_json:
-			attr_name = attr.rsplit('_', 1)[0]
-			if 'string' in attr:
-				mt.string_attr(input=config, name=attr_name, string=module['attrs'][attr])
-			elif 'enum' in attr:
-				mt.new_enum(input=config, name=attr_name, enums=module['attrs'][attr])
-			elif 'float' in attr:
-				mt.new_attr_interger(input=config, name=attr_name, min=1, max=20, default=int(module['attrs'][attr]))
-			elif 'bool' in attr:
-				mt.new_boolean(input=config, name=attr_name, dv=module['attrs'][attr])
-
-			value_to_set = module['attrs'][attr]
-			if attr in existing_values:
-				value_to_set = existing_values[attr]
-
-			self.set_config_attr_value(config=config, attr=attr_name, attr_key=attr, value=value_to_set)
-
-		# Update block icon if provided in JSON
-		if 'Icon' in module:
-			icon_name = module['Icon']
-			if not icon_name.endswith('.png'):
-				icon_name += '.png'
-			icon_path = os.path.join(FOLDER, 'Icons', icon_name)
-			if cmds.attributeQuery('iconName', node=block, exists=True):
-				try:
-					cmds.setAttr('{}.iconName'.format(block), icon_path, type="string")
-				except Exception as e:
-					print('Could not update icon for {}: {}'.format(block, e))
+		"""Rebuild the config attrs from the block json keeping the user values (see config_update)."""
+		return config_update.update_config(mt, block, config, module, icons_folder=os.path.join(FOLDER, 'Icons'))
 
 	def set_config_attr_value(self, config, attr, attr_key, value):
 		attr_path = '{}.{}'.format(config, attr)
