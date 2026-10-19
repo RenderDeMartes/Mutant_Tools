@@ -1,16 +1,20 @@
 {
-    "Name":  "QuadSpine",
-    "Description":  "This will create a QuadSpine System",
-    "Icon":  "QuadSpine.png",
-    "Enable":  "True",
-    "python_file":  "exec_quadspine_v001.py",
-    "import":  "import exec_quadspine_v001",
-    "imp.reload":  "reload(exec_quadspine_v001)",
-    "exec_command":  "exec_quadspine_v001.create_quadspine_block()",
-    "build_command":  "exec_quadspine_v001.build_quadspine_block()",
-    "attrs":  {
-                  "SetParent_string":  "new_locator",
-                  "CtrlSize_float":  "4",
-                  "Help_string":  "Overview:\n  This will create a QuadSpine System.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetParent: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- CtrlSize: numeric value that controls size/amount/intensity (default 4).\n- Template parent examples: Spine_End_Jnt, Head_Jnt, L_Wrist_Jnt.\n\nTips:\n- start with defaults, build once, then tweak only the fields you need."
-              }
+    "Name": "QuadSpine",
+    "Description": "This will create a QuadSpine System (v002: hip / chest controllers drive the end joints, even stretch and squash, matrix based, chained bind joints, tweakers)",
+    "Icon": "QuadSpine.png",
+    "Enable": "True",
+    "python_file": "exec_quadspine_v002.py",
+    "import": "import exec_quadspine_v002",
+    "imp.reload": "reload(exec_quadspine_v002)",
+    "exec_command": "exec_quadspine_v002.create_quadspine_block()",
+    "build_command": "exec_quadspine_v002.build_quadspine_block()",
+    "attrs": {
+        "SetParent_string": "new_locator",
+        "CtrlSize_float": "4",
+        "SetGameParent_string": "",
+        "JointCount_enum": "Guides:5:7:9:11",
+        "Tweakers_bool": "True",
+        "DefaultCtrls_enum": "Both:IK:FK",
+        "Help_string": "Overview:\n  This will create a QuadSpine System.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetParent: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- CtrlSize: numeric value that controls size/amount/intensity (default 4).\n- SetGameParent: bind joint the spine bind chain goes under (for example COG_Bnd), so the game skeleton (ConvertBody) gets Spine_A..G in a chain under it. Empty: the bind joints group. The bind joints are always a chain (Spine_A_Bnd > Spine_B_Bnd ...).\n- JointCount: Guides = one joint per guide (default). 5 / 7 / 9 / 11 resample the spine evenly along the guides (joints named A, B, C...). The controllers stay on the guides (every other guide an IK controller, the others FK).\n- Tweakers: one extra controller per joint (tweakCtrls on the spine attrs) to move, rotate and scale each bind joint.\n- DefaultCtrls: which controllers show after the build: Both, IK or FK (IkMain / IkMid / FkForwards / FkBackwards attrs).\n- Hip / chest: the first and last IK controllers drive the first / last joint orientation fully, the joints in between aim along the spine with the twist blended from hip to chest.\n- Stretch (spine attrs): 1 the joints spread on the whole spine curve (even stretch, the chain ends on the chest controller), 0 they keep their length. Squash keeps the volume.\n- Controllers scale: IK controllers scale the bind joints around them (fading to the next IK controller), FK controllers their joint, tweakers their own joint.\n- Template parent examples: Spine_End_Jnt, Head_Jnt, L_Wrist_Jnt.\n\nTips:\n- start with defaults, build once, then tweak only the fields you need."
+    }
 }
