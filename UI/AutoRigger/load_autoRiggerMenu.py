@@ -218,10 +218,13 @@ class AutoRiggerMenu(QtWidgets.QDialog):
 		self.save_sel_skin = self.skinsMenu.addAction("Save Selected Skins")
 		self.load_sel_skin = self.skinsMenu.addAction("Load Selected Skins")
 		self.skinsMenu.addSeparator()
-		self.use_fast_skin = self.skinsMenu.addAction("Use Fast Skin (Rebuild)")
+		# Rebuild skins: fast skin pack (binary, needs pymel) or one json per mesh (no pymel)
+		self.use_fast_skin = self.skinsMenu.addAction("Rebuild With Fast Skin Pack (pymel)")
 		self.use_fast_skin.setCheckable(True)
-		fast_skin_state = cmds.optionVar(q="mutant_use_fast_skin") if cmds.optionVar(ex="mutant_use_fast_skin") else True
-		self.use_fast_skin.setChecked(fast_skin_state)
+		self.use_fast_skin.setToolTip("Rebuild saves / loads skins as a binary skin pack (IOSkin, needs pymel). "
+									  "Off, or no pymel: one json per mesh (EasySkin).")
+		pack_state = cmds.optionVar(q="mutant_rebuild_skin_pack") if cmds.optionVar(ex="mutant_rebuild_skin_pack") else True
+		self.use_fast_skin.setChecked(pack_state)
 
 		# Controllers submenu
 		self.ctrlsMenu = QtWidgets.QMenu("Controllers", self)
@@ -413,7 +416,7 @@ class AutoRiggerMenu(QtWidgets.QDialog):
 		self.auto_orient_deformers.toggled.connect(lambda state: cmds.optionVar(intValue=("mutant_auto_orient_deformers", state)))
 
 		#Use Fast Skin (Rebuild)
-		self.use_fast_skin.toggled.connect(lambda state: cmds.optionVar(intValue=("mutant_use_fast_skin", state)))
+		self.use_fast_skin.toggled.connect(lambda state: cmds.optionVar(intValue=("mutant_rebuild_skin_pack", state)))
 
 		#Standard Window
 		self.standard_window.toggled.connect(self._toggle_standard_window)

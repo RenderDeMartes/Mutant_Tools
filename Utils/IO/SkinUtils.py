@@ -515,6 +515,8 @@ class Skinning(MayaNode):
 
         loaded = list()
         fails = list()
+        # (geo, message) the loader could fix on its own, read by EasySkin for the build report
+        self.last_warnings = list()
 
         for geo, data in all_data.items():
             if not cmds.objExists(geo):
@@ -545,9 +547,16 @@ class Skinning(MayaNode):
             #     cmds.select(cl=True)
             #     cmds.joint(n=i)
             if missing and not namespace:
-                print('Influences for {} are missing \n {}'.format(geo, missing))
-                fails.append(geo)
-                continue
+                # a rebuild that does not make some joints anymore (renamed / removed block) used to leave the
+                # whole mesh unskinned, now their weights go to the influences left
+                cmds.warning('Skin {}: influences missing, their weights go to the other influences: {}'.format(
+                    geo, missing))
+                self.last_warnings.append((geo, 'missing influences, weights moved to the others: {}'.format(
+                    ', '.join(missing))))
+                data = self.without_influences(geo, data, missing)
+                if not data[INFLUENCE_KEY]:
+                    fails.append(geo)
+                    continue
             # Find and match the influences on existing skinCluster or build a new one!
             skin = self.get_skin_from_geo(geo)
             if not skin: #Crowds support
@@ -576,6 +585,25 @@ class Skinning(MayaNode):
             raise RuntimeError('{} \n{}'.format(msg, fails))
 
         return loaded
+
+    def without_influences(self, geo, data, missing):
+        """Copy of the skin data without the missing influences: weights renormalized on the influences left, a
+        vertex only on missing influences goes fully to the closest influence left."""
+        missing = set(missing)
+        influences = [i for i in data[INFLUENCE_KEY] if i not in missing]
+        if not influences:
+            return dict(data, **{INFLUENCE_KEY: [], WEIGHT_KEY: {}})
+        positions = {i: om.MVector(*cmds.xform(i, q=True, ws=True, t=True)) for i in influences}
+        weights = {}
+        for vertex, values in data[WEIGHT_KEY].items():
+            kept = {i: v for i, v in values.items() if i not in missing}
+            total = sum(kept.values())
+            if total > 1e-6:
+                weights[vertex] = {i: v / total for i, v in kept.items()}
+                continue
+            point = om.MVector(*cmds.pointPosition('{}.vtx[{}]'.format(geo, vertex), w=True))
+            weights[vertex] = {min(influences, key=lambda i: (positions[i] - point).length()): 1.0}
+        return dict(data, **{INFLUENCE_KEY: influences, WEIGHT_KEY: weights})
 
     def set_weight(self, inf_names, weights, skin, namespace=False):
         """

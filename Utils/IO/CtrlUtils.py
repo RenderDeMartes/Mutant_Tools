@@ -469,6 +469,7 @@ class Ctrls(object):
 
         if show_report:
             self.showSaveReport(saved_ctrls, warning_ctrls, failed_ctrls)
+        return {'saved': saved_ctrls, 'warnings': warning_ctrls, 'failed': failed_ctrls}
 
     #---------------------------------------------------------------------------
 
@@ -518,14 +519,23 @@ class Ctrls(object):
         except:
             data = all_data
 
+        # report: loaded, not in the file (new ctrls keep their build shape), errors, saved but not in the scene
+        loaded, not_saved, failed = [], [], []
         select_all_ctrls()
-        for ctrl in cmds.ls(sl=True):
+        scene_ctrls = cmds.ls(sl=True)
+        for ctrl in scene_ctrls:
+            if ctrl not in data:
+                not_saved.append(ctrl)
+                continue
             try:
-                shape_data = data[ctrl]
-                self.setShape(ctrl, shape_data)
+                self.setShape(ctrl, data[ctrl])
                 self.reparent_locators(ctrl)
+                loaded.append(ctrl)
             except Exception as e:
                 print ('Error with load_all: {}, {}'.format(ctrl, e))
+                failed.append((ctrl, str(e)))
+        scene_names = set(c.split('|')[-1] for c in scene_ctrls)
+        not_in_scene = [c for c in data if c not in scene_names]
 
         self.load_all_vis_connections(vis_data)
 
@@ -533,6 +543,8 @@ class Ctrls(object):
         if color_info_presence:
             color_data = all_data["ctrl_color_data"]    
             self.apply_ctrls_color_data(colors_data=color_data, selection=list(color_data.keys()))
+
+        return {'loaded': loaded, 'not_saved': not_saved, 'not_in_scene': not_in_scene, 'failed': failed}
 
 
     @undo

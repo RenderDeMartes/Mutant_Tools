@@ -246,16 +246,14 @@ def collectInfluenceWeights(skinCls, dagPath, components, dataDic):
         influencePaths
     )
     numComponentsPerInfluence = int(weights.length() / numInfluences)
+    # one python list read (indexing the MDoubleArray per vertex and influence was most of the save time)
+    all_weights = list(weights)
     for ii in range(influencePaths.length()):
         influenceName = influencePaths[ii].partialPathName()
         #influenceWithoutNamespace = pm.PyNode(influenceName).stripNamespace()
         influenceWithoutNamespace = pm.PyNode(influenceName)
         # build a dictionary of {vtx: weight}. Skip 0.0 weights.
-        inf_w = {
-            jj: weights[jj * numInfluences + ii]
-            for jj in range(numComponentsPerInfluence)
-            if weights[jj * numInfluences + ii] != 0.0
-        }
+        inf_w = {jj: w for jj, w in enumerate(all_weights[ii::numInfluences]) if w != 0.0}
         # cast to float to avoid rounding errors when dividing integers?
         dataDic["vertexCount"] = int(weights.length() / float(numInfluences))
         # cast influenceWithoutNamespace as string otherwise it can end up
@@ -270,11 +268,8 @@ def collectBlendWeights(skinCls, dagPath, components, dataDic):
     )
     # round the weights down. This should be safe on Dual Quat blends
     # because it is not normalized. And 6 should be more than accurate enough.
-    dataDic["blendWeights"] = {
-        i: round(weights[i], 6)
-        for i in range(weights.length())
-        if round(weights[i], 6) != 0.0
-    }
+    rounded = [round(w, 6) for w in weights]
+    dataDic["blendWeights"] = {i: w for i, w in enumerate(rounded) if w != 0.0}
 
 
 def collectData(skinCls, dataDic):
@@ -612,7 +607,55 @@ def getObjsFromSkinFile(filePath=None, *args):
 
 
 # @utils.timeFunc
-def importSkin(filePath=None, *args):
+def _without_missing_influences(objNode, data, missing, compressed):
+    """Skin data without the influences missing in the scene: per vertex the weights left are renormalized, a
+    vertex only on missing influences goes fully to the closest influence left. A rebuild that does not make some
+    joints anymore (renamed / removed block) used to leave the whole object without skin."""
+    missing = set(missing)
+    weights = data["weights"]
+    kept = [j for j in weights if j.split("|")[-1] not in missing]
+    if not kept:
+        return None
+    count = data["vertexCount"] if compressed else len(data["blendWeights"])
+
+    def value(values, vtx):
+        if compressed:
+            return values.get(vtx, values.get(str(vtx), 0.0))
+        return values[vtx] if vtx < len(values) else 0.0
+
+    positions = {j: om_vector(cmds.xform(j.split("|")[-1], q=True, ws=True, t=True)) for j in kept}
+    new_weights = {j: ({} if compressed else [0.0] * count) for j in kept}
+    shape = objNode.getShape().name()
+    for vtx in range(count):
+        values = {j: value(weights[j], vtx) for j in kept}
+        total = sum(values.values())
+        if total <= 1e-6:
+            if not any(value(weights[j], vtx) for j in weights):
+                continue
+            point = om_vector(cmds.pointPosition("{}.vtx[{}]".format(shape, vtx), w=True))
+            values = {min(kept, key=lambda j: (positions[j] - point).length()): 1.0}
+            total = 1.0
+        for j, w in values.items():
+            if w:
+                new_weights[j][vtx] = w / total
+    data = dict(data)
+    data["weights"] = new_weights
+    return data
+
+
+def om_vector(values):
+    return OpenMaya.MVector(values[0], values[1], values[2])
+
+
+def new_report():
+    """What importSkin / importSkinPack did, for build reports."""
+    return {"loaded_geos": [], "skipped_missing": [], "errors": [], "warnings": []}
+
+
+def importSkin(filePath=None, *args, **kwargs):
+    report = kwargs.get("report")
+    if report is None:
+        report = new_report()
 
     if not filePath:
         f1 = "binary Skin (*{0} *{1})".format(FILE_EXT, FILE_JSON_EXT)
@@ -687,9 +730,21 @@ def importSkin(filePath=None, *args):
                             objName, meshVertices, importedVertices
                         )
                     )
+                    report["errors"].append(warningMsg.format(objName, meshVertices, importedVertices))
                     continue
             except Exception as vtx_err:
                 print("IOSkin: Vertex count check skipped for '{}': {}".format(objName, vtx_err))
+
+            missing = [j.split("|")[-1] for j in data["weights"] if not cmds.objExists(j.split("|")[-1])]
+            if missing:
+                fixed = _without_missing_influences(objNode, data, missing, compressed)
+                if fixed is None:
+                    report["errors"].append("{}: none of its influences are in the scene".format(objName))
+                    continue
+                data = fixed
+                report["warnings"].append("{}: missing influences, weights moved to the others: {}".format(
+                    objName, ", ".join(missing)))
+                pm.displayWarning("{}: missing influences, weights moved to the others: {}".format(objName, missing))
 
             if getSkinCluster(objNode):
                 skinCluster = getSkinCluster(objNode)
@@ -717,6 +772,7 @@ def importSkin(filePath=None, *args):
                         "found corresponding deformer for the "
                         "following joints: " + str(notFound) + " | Error: " + str(e)
                     )
+                    report["errors"].append("{}: skin not made ({})".format(objName, e))
                     continue
 
             if isinstance(skinCluster, list):
@@ -725,12 +781,15 @@ def importSkin(filePath=None, *args):
             if skinCluster:
                 setData(skinCluster, data, compressed)
                 print("Imported skin for: {}".format(objName))
+                report["loaded_geos"].append(objName)
 
         except Exception as e:
             import traceback
             warningMsg = "Object: {} Skipped. Can NOT be found in the scene ({})"
             pm.displayWarning(warningMsg.format(objName, e))
             traceback.print_exc()
+            report["skipped_missing"].append("{} ({})".format(objName, e))
+    return report
 
 
 
@@ -747,11 +806,13 @@ def importSkinPack(filePath=None, *args):
     if not isinstance(filePath, string_types):
         filePath = filePath[0]
 
+    report = new_report()
     with open(filePath) as fp:
         packDic = json.load(fp)
         for pFile in packDic["packFiles"]:
             filePath = os.path.join(os.path.split(filePath)[0], pFile)
-            importSkin(filePath, True)
+            importSkin(filePath, True, report=report)
+    return report
 
 
 ######################################

@@ -139,6 +139,7 @@ def load_all_skins_from(folder_path='', accept_errors=True, namespace=False, avo
         viewport_frozen = True
 
     errors = []
+    warnings = []
     loaded_geos = []
     skipped_missing = []
     skipped_not_mesh = []
@@ -180,6 +181,9 @@ def load_all_skins_from(folder_path='', accept_errors=True, namespace=False, avo
                 loaded_geos.append(geo)
             except Exception as e:
                 errors.append('{}: {}'.format(geo, e))
+            finally:
+                warnings += ['{}: {}'.format(g, m) for g, m in getattr(cSkin, 'last_warnings', [])]
+                cSkin.last_warnings = []
                 if not accept_errors:
                     raise
     finally:
@@ -207,6 +211,7 @@ def load_all_skins_from(folder_path='', accept_errors=True, namespace=False, avo
         'skipped_missing': skipped_missing,
         'skipped_not_mesh': skipped_not_mesh,
         'errors': errors,
+        'warnings': warnings,
     }
 def save_selected_geos(folder_path=''):
 

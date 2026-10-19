@@ -93,6 +93,7 @@ from Mutant_Tools.Utils.Helpers import decorators
 import Mutant_Tools.Utils.IO
 from Mutant_Tools.Utils.IO import EasySkin
 from Mutant_Tools.Utils.IO import CtrlUtils
+from Mutant_Tools.Utils.IO import io_report
 from Mutant_Tools.Utils.Rigging import block_hooks
 
 # Read dev_mode early so reloads only happen during active development.
@@ -3224,6 +3225,8 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		build_failed = False
 		failed_block = 'Unknown'
 		is_skin_block = False
+		# skins / controllers save and load problems, shown in a small dialog at the end of the build
+		self.io_report = io_report.IOReport()
 
 		try:
 			self.ui.bar_label.resize(100, 200)
@@ -3514,7 +3517,7 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 				if not cmds.about(batch=True):
 					mel.eval("paneLayout -e -manage false $gMainPane")
 				try:
-					ctrls.load_all(path=os.path.join(tempfile.gettempdir(), 'RebuildTempCtrls', 'tempControllers.json'))
+					self._report_ctrls_load(ctrls.load_all(path=os.path.join(tempfile.gettempdir(), 'RebuildTempCtrls', 'tempControllers.json')))
 					# Load parent hierarchy
 					temp_folder = os.path.join(tempfile.gettempdir(), 'RebuildTemp')
 					skeleton_file = os.path.join(temp_folder, 'skeleton_hierarchy.txt')
@@ -3581,6 +3584,9 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 			# Auto Orient Deformers
 			if cmds.optionVar(q="mutant_auto_orient_deformers") if cmds.optionVar(ex="mutant_auto_orient_deformers") else False:
 				self._auto_orient_deformers_on_all_meshes()
+
+			# skins / controllers IO problems (nothing shows when everything loaded)
+			self._io_report_dialog = self.io_report.show()
 
 		except Exception:
 			import traceback
@@ -3691,12 +3697,22 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 
 		return 'fast'
 
-	def _save_rebuild_skins(self, temp_skin_folder):
-		use_fast = cmds.optionVar(q="mutant_use_fast_skin") if cmds.optionVar(ex="mutant_use_fast_skin") else True
+	def _rebuild_uses_skin_pack(self):
+		"""Fast skin pack (IOSkin binary) when the option is on (default) and pymel is installed."""
+		use_pack = cmds.optionVar(q="mutant_rebuild_skin_pack") if cmds.optionVar(ex="mutant_rebuild_skin_pack") else True
+		if not use_pack:
+			return False
+		try:
+			import pymel.core
+			return True
+		except Exception:
+			print('Rebuild skins: pymel not installed, using EasySkin json files.')
+			return False
 
-		if use_fast:
+	def _save_rebuild_skins(self, temp_skin_folder):
+		if not self._rebuild_uses_skin_pack():
 			self._set_rebuild_skin_mode(temp_skin_folder=temp_skin_folder, mode='easy')
-			EasySkin.save_all_skins_to(folder_path=temp_skin_folder)
+			self._report_skin_save(EasySkin.save_all_skins_to(folder_path=temp_skin_folder))
 		else:
 			temp_skin_pack = os.path.join(temp_skin_folder, 'tempSkinPack.bSkinPack')
 			try:
@@ -3708,7 +3724,7 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 				if not skinned_geos:
 					cmds.warning('No skinned geometries found for IOSkin rebuild export.')
 					self._set_rebuild_skin_mode(temp_skin_folder=temp_skin_folder, mode='easy')
-					EasySkin.save_all_skins_to(folder_path=temp_skin_folder)
+					self._report_skin_save(EasySkin.save_all_skins_to(folder_path=temp_skin_folder))
 					return
 
 				pm_geos = [pm.PyNode(geo) for geo in skinned_geos if cmds.objExists(geo)]
@@ -3721,16 +3737,44 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 			except Exception as e:
 				import traceback
 				traceback.print_exc()
-				cmds.warning('IOSkin save unavailable ({}). Falling back to Fast Skin.'.format(e))
+				cmds.warning('IOSkin save unavailable ({}). Falling back to EasySkin json files.'.format(e))
+				self._report('Skin pack save failed, saved as json instead', [str(e)], 'warning')
 				self._set_rebuild_skin_mode(temp_skin_folder=temp_skin_folder, mode='easy')
-				EasySkin.save_all_skins_to(folder_path=temp_skin_folder)
+				self._report_skin_save(EasySkin.save_all_skins_to(folder_path=temp_skin_folder))
+
+	def _report(self, title, entries, level='error'):
+		report = getattr(self, 'io_report', None)
+		if report is not None:
+			report.add(title, entries, level)
+
+	def _report_skin_save(self, result):
+		if result:
+			self._report('Skin save errors', result.get('errors'))
+
+	def _report_skin_load(self, result):
+		if not result:
+			return
+		self._report('Skin load errors (mesh left without skin)', result.get('errors'))
+		self._report('Skins loaded with fixes', result.get('warnings'), 'warning')
+		self._report('Saved skins for meshes not in the scene', result.get('skipped_missing'), 'warning')
+
+	def _report_ctrls_save(self, result):
+		if result:
+			self._report('Controllers save failed', ['{}: {}'.format(c.split('|')[-1], e) for c, e in result.get('failed', [])])
+			self._report('Controllers with duplicated names (one saved)', ['{}: {}'.format(c.split('|')[-1], e) for c, e in result.get('warnings', [])], 'warning')
+
+	def _report_ctrls_load(self, result):
+		if result:
+			self._report('Controllers load failed', ['{}: {}'.format(c, e) for c, e in result.get('failed', [])])
+			self._report('Saved controllers not in the new rig', result.get('not_in_scene'), 'warning')
+			self._report('New controllers (kept the build shape)', result.get('not_saved'), 'info')
 
 	def _load_rebuild_skins(self, temp_skin_folder):
 		temp_skin_pack = os.path.join(temp_skin_folder, 'tempSkinPack.bSkinPack')
 		skin_mode = self._get_rebuild_skin_mode(temp_skin_folder=temp_skin_folder)
 
 		if skin_mode == 'easy':
-			EasySkin.load_all_skins_from(folder_path=temp_skin_folder)
+			self._report_skin_load(EasySkin.load_all_skins_from(folder_path=temp_skin_folder))
 			return
 
 		try:
@@ -3739,11 +3783,11 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 
 			from Mutant_Tools.Utils.IO import IOSkin
 			reload(Mutant_Tools.Utils.IO.IOSkin)
-			IOSkin.importSkinPack(filePath=temp_skin_pack)
+			self._report_skin_load(IOSkin.importSkinPack(filePath=temp_skin_pack))
 			print('Fast rebuild skin pack loaded: {}'.format(temp_skin_pack))
 		except Exception as e:
 			cmds.warning('Fast rebuild skin load unavailable ({}). Falling back to EasySkin.'.format(e))
-			EasySkin.load_all_skins_from(folder_path=temp_skin_folder)
+			self._report_skin_load(EasySkin.load_all_skins_from(folder_path=temp_skin_folder))
 
 	def _auto_orient_deformers_on_all_meshes(self):
 		"""Reorder deformers on all skinned meshes: blendShape first, then skinCluster, then nonLinear/deltaMush."""
@@ -3928,8 +3972,8 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		temp_controllers_folder = os.path.join(tempfile.gettempdir(), 'RebuildTempCtrls')
 		if not os.path.exists(temp_controllers_folder):
 			os.mkdir(temp_controllers_folder)
-		ctrls.save_all(folder_path=os.path.join(temp_controllers_folder, 'tempControllers.json'),
-					   force_validate=True, show_report=False)
+		self._report_ctrls_save(ctrls.save_all(folder_path=os.path.join(temp_controllers_folder, 'tempControllers.json'),
+					   force_validate=True, show_report=False))
 
 		#Skins
 		temp_skin_folder = os.path.join(tempfile.gettempdir(), 'RebuildTempSkin')
