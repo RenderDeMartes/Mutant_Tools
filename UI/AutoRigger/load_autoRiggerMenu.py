@@ -335,6 +335,12 @@ class AutoRiggerMenu(QtWidgets.QDialog):
 		self.tutorialMenu.addSeparator()
 		self.use_mutant_hotkeys = self.tutorialMenu.addAction('Set Mutant Hotkeys')
 
+		# scene fixes for blocks (connected in AutoRigger.create_menus)
+		self.tutorialMenu.addSeparator()
+		self.update_block_icons = self.tutorialMenu.addAction('Update Block Icons')
+		self.open_black_boxes = self.tutorialMenu.addAction('Turn Off Black Box on Blocks')
+		self.refresh_outliner = self.tutorialMenu.addAction('Refresh Blocks in Outliner')
+
 		# -------------------------------------------------------------------
 
 		#Donate

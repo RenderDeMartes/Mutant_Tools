@@ -804,18 +804,18 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 			lambda idx: cmds.optionVar(intValue=('mutant_active_tab', idx))
 		)
 
-		# block containers with Black Box on hide their guides in the outliner / viewport selection
-		self.open_block_black_boxes()
-
 		try:OpenMaya.MGlobal.displayInfo('<3')
 		except:pass
 
 	#-------------------------------------------------------------------
 
+	def get_block_containers(self):
+		return cmds.ls('*' + nc['module'], type='dagContainer') or []
+
 	def open_block_black_boxes(self):
-		"""Turn Black Box off on every block container, so the guides inside can always be seen and picked."""
+		"""Help menu: turn Black Box off on every block container, so the guides inside can be seen and picked."""
 		opened = []
-		for block in cmds.ls('*' + nc['module'], type='dagContainer') or []:
+		for block in self.get_block_containers():
 			try:
 				if cmds.getAttr(block + '.blackBox'):
 					cmds.setAttr(block + '.blackBox', 0)
@@ -823,8 +823,29 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 			except Exception as e:
 				print('Could not turn Black Box off on {}: {}'.format(block, e))
 		if opened:
+			# the outliner keeps the black boxed child lists, refresh them or the guides stay hidden
+			self.refresh_outliner_children(opened)
 			print('Mutant Tools: Black Box turned off on {} block(s): {}'.format(len(opened), ', '.join(opened)))
+		else:
+			print('Mutant Tools: no block had Black Box on.')
 		return opened
+
+	def refresh_outliner_children(self, blocks):
+		"""Help menu: the outliner keeps the child list it cached while a container was black boxed, so guides stay
+		missing (no expand arrow) after Black Box goes off. Re-sending every child to the back of its
+		parent keeps the order but makes the outliner rebuild each level."""
+		cmds.undoInfo(stateWithoutFlush=False)
+		try:
+			for block in blocks:
+				parents = [block] + (cmds.listRelatives(block, ad=True, f=True, type='transform') or [])
+				for parent in parents:
+					for child in cmds.listRelatives(parent, c=True, f=True) or []:
+						try:
+							cmds.reorder(child, back=True)
+						except Exception:
+							pass
+		finally:
+			cmds.undoInfo(stateWithoutFlush=True)
 
 	#-------------------------------------------------------------------
 
@@ -896,6 +917,11 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		self.menu.dev_reload.triggered.connect(self.reload_all_blocks)
 		self.menu.update_all_blocks.triggered.connect(self.update_all_blocks_cmd)
 		self.menu.wrap_icons.toggled.connect(self.toggle_wrap_icons)
+
+		#Help menu scene fixes
+		self.menu.update_block_icons.triggered.connect(lambda: mt.update_icons())
+		self.menu.open_black_boxes.triggered.connect(lambda: self.open_block_black_boxes())
+		self.menu.refresh_outliner.triggered.connect(lambda: self.refresh_outliner_children(self.get_block_containers()))
 		
 
 	def _setup_splitter(self):
