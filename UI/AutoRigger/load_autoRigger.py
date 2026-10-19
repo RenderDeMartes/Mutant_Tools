@@ -832,13 +832,30 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 
 	def refresh_outliner_children(self, blocks):
 		"""Help menu: the outliner keeps the child list it cached while a container was black boxed, so guides stay
-		missing (no expand arrow) after Black Box goes off. Re-sending every child to the back of its
-		parent keeps the order but makes the outliner rebuild each level."""
+		missing (no expand arrow) after Black Box goes off. The block's own children only come back when
+		they leave the block and return (relative parent through a temp group, so local values stay the
+		same); deeper levels rebuild by sending every child to the back of its parent, keeping the order."""
 		cmds.undoInfo(stateWithoutFlush=False)
 		try:
 			for block in blocks:
-				parents = [block] + (cmds.listRelatives(block, ad=True, f=True, type='transform') or [])
-				for parent in parents:
+				kids = cmds.listRelatives(block, c=True, f=True, type='transform') or []
+				if kids:
+					tmp = cmds.createNode('transform', n='mtOutlinerRefresh_Tmp', p=block, ss=True)
+					try:
+						cmds.parent(cmds.parent(kids, tmp, r=True), block, r=True)
+					except Exception as e:
+						print('Could not refresh {} in the outliner: {}'.format(block, e))
+					finally:
+						# never delete the temp group while it still holds guides
+						left = cmds.listRelatives(tmp, c=True, f=True) or []
+						if left:
+							try:
+								cmds.parent(left, block, r=True)
+							except Exception:
+								pass
+						if not cmds.listRelatives(tmp, c=True):
+							cmds.delete(tmp)
+				for parent in cmds.listRelatives(block, ad=True, f=True, type='transform') or []:
 					for child in cmds.listRelatives(parent, c=True, f=True) or []:
 						try:
 							cmds.reorder(child, back=True)
@@ -846,6 +863,7 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 							pass
 		finally:
 			cmds.undoInfo(stateWithoutFlush=True)
+		print('Mutant Tools: refreshed {} block(s) in the outliner.'.format(len(blocks)))
 
 	#-------------------------------------------------------------------
 
