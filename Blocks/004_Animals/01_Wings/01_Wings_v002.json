@@ -1,0 +1,20 @@
+{
+    "Name": "Wings",
+    "Description": "Create Wings System RdM Wings (v002: Scapular / Secundary / Primary amounts add or remove feather guides live, FeatherJoints sets the joints per feather, PreviewFeatherCtrls places the feather FK joints so feathers can curve)",
+    "Icon": "Wing.png",
+    "Enable": "True",
+    "python_file": "exec_wings_v002.py",
+    "import": "import exec_wings_v002",
+    "imp.reload": "reload(exec_wings_v002)",
+    "exec_command": "exec_wings_v002.create_wings_block()",
+    "build_command": "exec_wings_v002.build_wings_block()",
+    "attrs": {
+        "SetParent_string": "new_locator",
+        "Scapular_float": "5",
+        "Secundary_float": "8",
+        "Primary_float": "10",
+        "FeatherJoints_float": "4",
+        "PreviewFeatherCtrls_bool": "False",
+        "Help_string": "Overview:\n  Create Wings System RdM Wings.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetParent: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- Scapular / Secundary / Primary: feathers in each part. Changing them in the builder adds or removes feather guides right away, the first and last feather stay and the fan is spread again between them (placement of the feathers in between is interpolated).\n- FeatherJoints: joints in every feather FK chain (default 4: the feather joint and 3 bends, minimum 2). More joints bend smoother, the build adds or removes bends and spreads them on the feather.\n- PreviewFeatherCtrls: On adds a guide inside every feather for each joint between posStart and posEnd (posBend01, posBend02...), those are the feather FK joints, move them to curve the feather and the build uses them. Changing FeatherJoints while it is on spreads the new guides along the curve you have. Off goes back to straight feathers (posStart to posEnd), the bends are remembered if you turn it on again without moving posEnd.\n- Template parent examples: Spine_End_Jnt, Head_Jnt, L_Wrist_Jnt.\n\nTips:\n- start with defaults, build once, then tweak only the fields you need."
+    }
+}

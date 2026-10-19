@@ -3115,6 +3115,21 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 			self.update_max_slider(slider, attr)
 		cmds.setAttr(attr, slider.value())
 		label.setText(str(slider.value()))
+		self.queue_attr_hook(attr)
+
+	def queue_attr_hook(self, attr, delay=350):
+		"""Run the block on_attr_changed hook for a number attr once the slider / spinbox stops moving,
+		so dragging from 15 to 3 rebuilds the guides once, not twelve times."""
+		if not hasattr(self, '_attr_hook_timers'):
+			self._attr_hook_timers = {}
+		timer = self._attr_hook_timers.get(attr)
+		if timer is None:
+			timer = QtCore.QTimer(self)
+			timer.setSingleShot(True)
+			config, attr_name = attr.split('.', 1)
+			timer.timeout.connect(lambda c=config, a=attr_name: cmds.objExists(c) and block_hooks.run_attr_changed(c, a))
+			self._attr_hook_timers[attr] = timer
+		timer.start(delay)
 
 	def update_max_slider(self, slider, attr):
 		print('updating value')

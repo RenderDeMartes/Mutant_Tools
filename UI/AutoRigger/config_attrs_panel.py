@@ -24,6 +24,7 @@ import maya.cmds as cmds
 
 from Mutant_Tools.UI.AutoRigger import config_previews
 from Mutant_Tools.UI.AutoRigger import config_update
+from Mutant_Tools.Utils.Rigging import block_hooks
 
 STYLE_OPTION_VAR = 'mutant_attr_panel_style'
 SECTION_OPTION_VAR = 'mutant_attr_section_{}'
@@ -33,6 +34,8 @@ MODIFIED = '#E0A030'
 
 # (key, title, collapsed by default)
 SECTIONS = [
+	# attrs the block lists in DYNAMIC_ATTRS: editing them runs python on the guides right away
+	('dynamic', 'Dynamic', False),
 	('connections', 'Connections', False),
 	('toggles', 'Toggles', False),
 	('choices', 'Choices', False),
@@ -209,6 +212,7 @@ class ConfigCardsPanel(QtCore.QObject):
 		if cmds.attributeQuery('Help', node=config, exists=True):
 			help_text = cmds.getAttr('{}.Help'.format(config)) or ''
 		self.help_fields = parse_help_fields(help_text)
+		self.dynamic_attrs = block_hooks.get_dynamic_attrs(config)
 
 		self.rows = []          # (widget, section_key, search_text)
 		self.sections = {}      # key -> dict(frame, body, layout, header, count)
@@ -250,7 +254,7 @@ class ConfigCardsPanel(QtCore.QObject):
 			if not cmds.getAttr(edit_attr, settable=True):
 				continue
 			attr_type = cmds.getAttr(edit_attr, type=True)
-			key = _attr_section(attr, attr_type)
+			key = 'dynamic' if attr in self.dynamic_attrs else _attr_section(attr, attr_type)
 			if key:
 				grouped[key].append((attr, attr_type))
 
@@ -412,6 +416,12 @@ class ConfigCardsPanel(QtCore.QObject):
 
 		if attr_type == 'enum':
 			self._build_enum(row_layout, attr, edit_attr)
+		elif attr_type == 'bool':
+			check = QtWidgets.QCheckBox()
+			check.setChecked(bool(self._current(attr)))
+			check.toggled.connect(lambda _=None, c=check, ea=edit_attr, a=attr: (self.ui.checkBox_update_attr(c, ea), self._changed(a)))
+			row_layout.addWidget(check)
+			row_layout.addStretch()
 		elif attr_type in NUMERIC_TYPES:
 			self._build_number(row_layout, attr, attr_type, edit_attr)
 		else:
@@ -583,6 +593,7 @@ class ConfigCardsPanel(QtCore.QObject):
 				cmds.addAttr(edit_attr, edit=True, max=max(100, new_value))
 			cmds.setAttr(edit_attr, new_value)
 			self._changed(attr)
+			self.ui.queue_attr_hook(edit_attr)
 
 		def on_spin(new_value):
 			if new_value * scale > slider.maximum():

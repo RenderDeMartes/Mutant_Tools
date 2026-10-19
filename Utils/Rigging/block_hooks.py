@@ -6,8 +6,10 @@ A block opts in by defining, in the module of its Import_Command (e.g. exec_hand
         ...
 
 config is the block config network node, attr the attr name without the JSON suffix (Thumb, not Thumb_bool)
-and value the new value. The AutoRigger calls it after a checkbox or enum edit, any other tool can call
-run_attr_changed() after setting a config attr.
+and value the new value. The AutoRigger calls it after a checkbox or enum edit, and after a number edit
+once the slider / spinbox stops moving. Any other tool can call run_attr_changed() after setting a config attr.
+
+The module can also list DYNAMIC_ATTRS = ['Attr', ...]: the builder groups those in a Dynamic section.
 
 Blocks without the function are not imported (the file is only read), so nothing changes for them.
 """
@@ -40,7 +42,7 @@ def _has_hook(module_name):
         try:
             spec = importlib.util.find_spec(module_name)
             if spec and spec.origin and spec.origin.endswith('.py'):
-                with open(spec.origin) as source:
+                with open(spec.origin, encoding='utf-8', errors='ignore') as source:
                     found = 'def {}('.format(HOOK_NAME) in source.read()
         except Exception:
             found = False
@@ -55,6 +57,19 @@ def get_hook(config):
         return None
     module = sys.modules.get(module_name) or importlib.import_module(module_name)
     return getattr(module, HOOK_NAME, None)
+
+
+def get_dynamic_attrs(config):
+    """Attrs the block lists in DYNAMIC_ATTRS (next to its hook): the builder shows them in a Dynamic
+    section, editing them runs python on the guides right away. Empty for blocks without a hook."""
+    try:
+        hook = get_hook(config)
+    except Exception:
+        return []
+    if not hook:
+        return []
+    module = sys.modules.get(block_module_name(config))
+    return list(getattr(module, 'DYNAMIC_ATTRS', []) or [])
 
 
 def run_attr_changed(config, attr, value=None):
