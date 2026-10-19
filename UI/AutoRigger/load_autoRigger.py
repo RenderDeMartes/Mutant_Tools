@@ -838,6 +838,7 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		cmds.undoInfo(stateWithoutFlush=False)
 		try:
 			for block in blocks:
+				self.drop_shapes_from_block_layout(block)
 				kids = cmds.listRelatives(block, c=True, f=True, type='transform') or []
 				if kids:
 					tmp = cmds.createNode('transform', n='mtOutlinerRefresh_Tmp', p=block, ss=True)
@@ -864,6 +865,21 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		finally:
 			cmds.undoInfo(stateWithoutFlush=True)
 		print('Mutant Tools: refreshed {} block(s) in the outliner.'.format(len(blocks)))
+
+	def drop_shapes_from_block_layout(self, block):
+		"""Shapes listed in the block container's hyperLayout show up in the outliner as rows under their
+		guide. The entries are only Node Editor positions, so dropping them is safe."""
+		layout = cmds.listConnections(block + '.hyperLayout', s=True, d=False) or []
+		if not layout:
+			return 0
+		dropped = 0
+		for i in cmds.getAttr(layout[0] + '.hyperPosition', mi=True) or []:
+			plug = '{}.hyperPosition[{}]'.format(layout[0], i)
+			src = cmds.listConnections(plug + '.dependNode', s=True, d=False, sh=True) or []
+			if src and cmds.objectType(src[0], isAType='shape'):
+				cmds.removeMultiInstance(plug, b=True)
+				dropped += 1
+		return dropped
 
 	#-------------------------------------------------------------------
 
