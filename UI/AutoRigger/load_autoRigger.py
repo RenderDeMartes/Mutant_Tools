@@ -804,8 +804,27 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 			lambda idx: cmds.optionVar(intValue=('mutant_active_tab', idx))
 		)
 
+		# block containers with Black Box on hide their guides in the outliner / viewport selection
+		self.open_block_black_boxes()
+
 		try:OpenMaya.MGlobal.displayInfo('<3')
 		except:pass
+
+	#-------------------------------------------------------------------
+
+	def open_block_black_boxes(self):
+		"""Turn Black Box off on every block container, so the guides inside can always be seen and picked."""
+		opened = []
+		for block in cmds.ls('*' + nc['module'], type='dagContainer') or []:
+			try:
+				if cmds.getAttr(block + '.blackBox'):
+					cmds.setAttr(block + '.blackBox', 0)
+					opened.append(block)
+			except Exception as e:
+				print('Could not turn Black Box off on {}: {}'.format(block, e))
+		if opened:
+			print('Mutant Tools: Black Box turned off on {} block(s): {}'.format(len(opened), ', '.join(opened)))
+		return opened
 
 	#-------------------------------------------------------------------
 
