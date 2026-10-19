@@ -27,13 +27,13 @@ PYBLOCK_NAME = 'exec_wings'
 PARTS = [('Scapular', 'Scapulars', 'Secondaries'),
          ('Secundary', 'Secondaries', 'Primaries'),
          ('Primary', 'Primaries', 'End')]
-PREVIEW_ATTR = 'PreviewFeatherCtrls'
-# joints in every feather FK chain (Fthr + Bend01...), the PreviewFeatherCtrls guides are posStart,
-# one posBendNN per joint in between and posEnd
-FEATHER_JOINTS_ATTR = 'FeatherJoints'
+# per part, next to its amount: <Amount>FeatherJoints = joints in every feather FK chain (Fthr + Bend01...),
+# <Amount>Preview = feather FK guides (posStart, one posBendNN per joint in between, posEnd)
+FEATHER_JOINTS_SUFFIX = 'FeatherJoints'
+PREVIEW_SUFFIX = 'Preview'
 DEFAULT_FEATHER_JOINTS = 4
 # shown in the builder Dynamic section, editing them runs on_attr_changed on the guides
-DYNAMIC_ATTRS = [p[0] for p in PARTS] + [FEATHER_JOINTS_ATTR, PREVIEW_ATTR]
+DYNAMIC_ATTRS = [attr for p in PARTS for attr in (p[0], p[0] + FEATHER_JOINTS_SUFFIX, p[0] + PREVIEW_SUFFIX)]
 STORED_BENDS_ATTR = 'StoredFeatherBends'
 
 #---------------------------------------------
@@ -170,7 +170,7 @@ def build_wings_block():
                 cmds.select(jnt)
                 mel.eval('searchReplaceNames {} {} "selected"'.format('Guide', 'JR'))
 
-    # PreviewFeatherCtrls guides: keep where the feather FK joints go, then back to a straight
+    # <Part>Preview guides: keep where the feather FK joints go, then back to a straight
     # posStart > posEnd feather so autoWings builds as always
     feather_curves = take_feather_curves()
 
@@ -184,7 +184,7 @@ def build_wings_block():
         sizeUI=1)
 
     # before the mirror, the R wing copies them: joints per feather, then the curved feathers
-    feather_joints = _feather_joints(config)
+    feather_joints = dict((part, _feather_joints(config, part)) for count_attr, part, next_part in PARTS)
     set_built_feather_joints(feather_joints)
     apply_feather_curves(feather_curves, feather_joints)
 
@@ -366,19 +366,19 @@ def clean_cc_names():
 
 
 #-------------------------
-# Builder hook (Utils/Rigging/block_hooks.py): Scapular / Secundary / Primary add or remove feather guides,
-# PreviewFeatherCtrls adds or removes the feather FK guides (posBendNN), FeatherJoints sets how many.
+# Builder hook (Utils/Rigging/block_hooks.py), per part (Scapular / Secundary / Primary): the amount
+# adds or removes feather guides, <Part>Preview adds or removes the feather FK guides (posBendNN),
+# <Part>FeatherJoints sets how many.
 
 def on_attr_changed(config, attr, value):
     for count_attr, part, next_part in PARTS:
         if attr == count_attr:
             set_feather_count(config, part, next_part, int(round(value)))
-            return
-    if attr == PREVIEW_ATTR:
-        set_feather_preview(config, bool(value))
-    elif attr == FEATHER_JOINTS_ATTR and _preview_on(config):
-        # the bend guides follow the new amount, spread along the feather as it is now
-        set_feather_preview(config, True)
+        elif attr == count_attr + PREVIEW_SUFFIX:
+            set_feather_preview(config, parts=[part])
+        elif attr == count_attr + FEATHER_JOINTS_SUFFIX and _preview_on(config, part):
+            # the bend guides follow the new amount, spread along the feather as it is now
+            set_feather_preview(config, parts=[part])
 
 
 def _num(index):
@@ -405,14 +405,20 @@ def _feather_count(part):
     return count
 
 
-def _preview_on(config):
-    return cmds.attributeQuery(PREVIEW_ATTR, n=config, exists=True) and bool(cmds.getAttr('{}.{}'.format(config, PREVIEW_ATTR)))
+def _part_attr(part, suffix):
+    return [count_attr for count_attr, name, next_part in PARTS if name == part][0] + suffix
 
 
-def _feather_joints(config):
-    if not cmds.attributeQuery(FEATHER_JOINTS_ATTR, n=config, exists=True):
+def _preview_on(config, part):
+    attr = _part_attr(part, PREVIEW_SUFFIX)
+    return cmds.attributeQuery(attr, n=config, exists=True) and bool(cmds.getAttr('{}.{}'.format(config, attr)))
+
+
+def _feather_joints(config, part):
+    attr = _part_attr(part, FEATHER_JOINTS_SUFFIX)
+    if not cmds.attributeQuery(attr, n=config, exists=True):
         return DEFAULT_FEATHER_JOINTS
-    return max(2, int(cmds.getAttr('{}.{}'.format(config, FEATHER_JOINTS_ATTR))))
+    return max(2, int(cmds.getAttr('{}.{}'.format(config, attr))))
 
 
 def _wings_block(config):
@@ -537,10 +543,9 @@ def set_feather_count(config, part, next_part, count):
     if count == old_count:
         return
 
-    preview = _preview_on(config)
-    # every feather like the toggle says, so all of them have the same guides
-    set_feather_preview(config, preview, parts=[part])
-    bends = _feather_joints(config) - 2 if preview else 0
+    # every feather like the part toggle says, so all of them have the same guides
+    set_feather_preview(config, parts=[part])
+    bends = _feather_joints(config, part) - 2 if _preview_on(config, part) else 0
     ends = ['posStart'] + [_bend_end(number) for number in range(1, bends + 1)] + ['posEnd']
 
     feathers = [[_channels(_feather_guide(part, num, end)) for end in ends] for num in range(old_count)]
@@ -586,17 +591,19 @@ def _write_stored_bends(block, stored):
     cmds.setAttr('{}.{}'.format(block, STORED_BENDS_ATTR), json.dumps(stored), type='string')
 
 
-def set_feather_preview(config, on, parts=None):
-    """On: FeatherJoints - 2 posBendNN guides between posStart and posEnd of every feather, spread along
-    it (or where they were when it was turned off). A feather with another amount of bends gets them
-    spread again along its current curve. Off: posEnd back under posStart where it is."""
+def set_feather_preview(config, parts=None):
+    """Feather guides of each part like its Preview / FeatherJoints attrs say. Preview on: FeatherJoints - 2
+    posBendNN guides between posStart and posEnd of every feather, spread along it (or where they were
+    when it was turned off). A feather with another amount of bends gets them spread again along its
+    current curve. Preview off: posEnd back under posStart where it is."""
     block = _wings_block(config)
     stored = _read_stored_bends(block)
-    bends = _feather_joints(config) - 2
     store_changed = False
     for count_attr, part, next_part in PARTS:
         if parts and part not in parts:
             continue
+        on = _preview_on(config, part)
+        bends = _feather_joints(config, part) - 2
         for num in range(_feather_count(part)):
             start = _feather_guide(part, num, 'posStart')
             end = _feather_guide(part, num, 'posEnd')
@@ -637,7 +644,7 @@ def _channels_at_start(end, start):
 
 
 #-------------------------
-# Build: joints per feather and curved feathers from the PreviewFeatherCtrls guides
+# Build: joints per feather and curved feathers from the <Part>Preview guides
 
 def take_feather_curves():
     """World positions of posStart, the posBendNN and posEnd of every L feather with bends (JR copies of
@@ -673,15 +680,16 @@ def _feather_fk(prefix, joints):
             [None] + ['{}_BendJnt{}'.format(prefix, num) for num in range(1, joints)])
 
 
-def set_built_feather_joints(joints):
-    """autoWings makes 4 joints per feather (Fthr, Bend01-03), this adds or removes bends to get joints,
-    spread evenly on the same length. New bends get the same drivers as Bend03 (bend ctrl on the
+def set_built_feather_joints(joints_by_part):
+    """autoWings makes 4 joints per feather (Fthr, Bend01-03), this adds or removes bends to get the
+    joints of each part (joints_by_part), spread evenly on the same length. New bends get the same drivers as Bend03 (bend ctrl on the
     BendJnt group rotate, feather ctrl BendX/Y/Z on the joint rotate)."""
     built = 3
-    bends = joints - 1
-    if bends == built:
-        return
     for part, num, prefix in _built_feathers():
+        joints = joints_by_part.get(part, DEFAULT_FEATHER_JOINTS)
+        bends = joints - 1
+        if bends == built:
+            continue
         old_joints, old_groups = _feather_fk(prefix, built + 1)
         if not all(cmds.objExists(node) for node in old_joints + old_groups[1:]):
             cmds.warning('{} feather joints not found, it keeps {} joints'.format(prefix, built + 1))
@@ -722,11 +730,12 @@ def _aim_down_z(joint, target):
     cmds.setAttr(joint + '.jointOrient', math.degrees(local.x), math.degrees(local.y), math.degrees(local.z))
 
 
-def apply_feather_curves(curves, joints):
-    """Feather FK joints (Fthr, BendNN in their BendJnt groups) on the PreviewFeatherCtrls guides, each
+def apply_feather_curves(curves, joints_by_part):
+    """Feather FK joints (Fthr, BendNN in their BendJnt groups) on the <Part>Preview guides, each
     joint aimed to the next one. Guides with another amount of bends are spread along their curve."""
     for (part, num), points in curves.items():
         prefix = 'L_{}_JR_Fthr_{}'.format(part, _num(num))
+        joints = joints_by_part.get(part, DEFAULT_FEATHER_JOINTS)
         fk_joints, groups = _feather_fk(prefix, joints)
         if not all(cmds.objExists(node) for node in fk_joints + groups[1:]):
             cmds.warning('{} feather joints not found, it stays straight'.format(prefix))
