@@ -798,6 +798,8 @@ def create_junction_spread_ctrls():
         cmds.connectAttr(locators[1] + '.worldMatrix[0]', relative + '.matrixIn[0]')
         cmds.connectAttr(locators[0] + '.worldInverseMatrix[0]', relative + '.matrixIn[1]')
         bend = cmds.createNode('decomposeMatrix', n=name + '_Bend_DM')
+        # yzx: Y is not the middle axis, so the bend reads past 90 degrees without flipping back
+        cmds.setAttr(bend + '.inputRotateOrder', 1)
         cmds.connectAttr(relative + '.matrixSum', bend + '.inputMatrix')
 
         # the ctrl between both spread ctrls, following both parts half and half
@@ -818,16 +820,17 @@ def create_junction_spread_ctrls():
         for sub in (out_ctrl, in_ctrl):
             cmds.connectAttr(ctrl + '.SubCtrls', sub.replace(nc['ctrl'], '_Root' + nc['group']) + '.visibility', f=True)
 
-        # half the bend each way, times AutoClose
-        half = cmds.createNode('multiplyDivide', n=name + '_HalfBend_MD')
-        cmds.connectAttr(bend + '.outputRotateY', half + '.input1X')
-        cmds.setAttr(half + '.input2Y', 0.5)
-        cmds.connectAttr(ctrl + '.AutoClose', half + '.input1Y')
-        cmds.connectAttr(half + '.outputY', half + '.input2X')
+        # half the bend each way, times AutoClose (two nodes, one feeding itself reads as a cycle)
+        close = cmds.createNode('multiplyDivide', n=name + '_CloseBend_MD')
+        cmds.connectAttr(bend + '.outputRotateY', close + '.input1X')
+        cmds.connectAttr(ctrl + '.AutoClose', close + '.input2X')
+        half = cmds.createNode('multDoubleLinear', n=name + '_HalfBend_MDL')
+        cmds.connectAttr(close + '.outputX', half + '.input1')
+        cmds.setAttr(half + '.input2', 0.5)
         for auto, sign in ((out_auto, 1), (in_auto, -1)):
             sum_node = cmds.createNode('plusMinusAverage', n='{}_{}_PMA'.format(name, 'Out' if sign > 0 else 'In'))
             cmds.setAttr(sum_node + '.operation', 1 if sign > 0 else 2)
             cmds.connectAttr(ctrl + '.ry', sum_node + '.input1D[0]')
-            cmds.connectAttr(half + '.outputX', sum_node + '.input1D[1]')
+            cmds.connectAttr(half + '.output', sum_node + '.input1D[1]')
             cmds.connectAttr(sum_node + '.output1D', auto + '.ry', f=True)
             cmds.connectAttr(ctrl + '.rx', auto + '.rx', f=True)
