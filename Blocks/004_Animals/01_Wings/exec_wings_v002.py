@@ -140,7 +140,8 @@ def build_wings_block():
     mt.check_is_there_is_base()
 
     block = cmds.ls(sl=True)
-    config = cmds.listConnections(block)[1]
+    # the config network (the connection order changes, a hyperLayout can come first)
+    config = [node for node in cmds.listConnections(block) if cmds.nodeType(node) == 'network'][0]
     block = block[0]
     guide = cmds.listRelatives(block, c=True)[0]
     name = block.replace(nc['module'],'')
@@ -187,6 +188,8 @@ def build_wings_block():
     feather_joints = dict((part, _feather_joints(config, part)) for count_attr, part, next_part in PARTS)
     set_built_feather_joints(feather_joints)
     apply_feather_curves(feather_curves, feather_joints)
+    # one ctrl at the elbow and one at the wrist drive both spread ctrls there and keep the parts together
+    create_junction_spread_ctrls()
 
     cmds.rename('GlobalLoc', 'L_GlobalLoc')
 
@@ -748,3 +751,83 @@ def apply_feather_curves(curves, joints_by_part):
             # BendJnt rotations are driven, the translate places the next joint
             local = om.MPoint(points[index + 1]) * om.MMatrix(cmds.getAttr(groups[index + 1] + '.parentInverseMatrix[0]'))
             cmds.setAttr(groups[index + 1] + '.translate', local.x, local.y, local.z)
+
+
+#-------------------------
+# Build: elbow / wrist spread ctrls. Where two parts meet, the Spread_Out ctrl of one and the Spread_In ctrl
+# of the next sit together. A new ctrl drives both (through their Auto groups, the old ctrls keep their names
+# and anim and become sub ctrls), and AutoClose turns the edge feathers half the elbow / wrist bend each so
+# the two parts do not open a gap.
+
+# (ctrl name, part before, part after)
+JUNCTIONS = [('L_Elbow_Spread', 'Scapulars', 'Secondaries'),
+             ('L_Wrist_Spread', 'Secondaries', 'Primaries')]
+
+
+def _last_built_wing(part):
+    num = 0
+    while cmds.objExists('L_{}_JR_Wing_{}'.format(part, _num(num + 1))):
+        num += 1
+    return 'L_{}_JR_Wing_{}'.format(part, _num(num))
+
+
+def create_junction_spread_ctrls():
+    nc = mt.import_configs()[0]
+    for name, before, after in JUNCTIONS:
+        out_ctrl = 'L_{}_JR_Spread_Out{}'.format(before, nc['ctrl'])
+        in_ctrl = 'L_{}_JR_Spread_In{}'.format(after, nc['ctrl'])
+        out_auto = 'L_{}_JR_Spread_Out_Auto{}'.format(before, nc['group'])
+        in_auto = 'L_{}_JR_Spread_In_Auto{}'.format(after, nc['group'])
+        before_wing = _last_built_wing(before)
+        after_wing = 'L_{}_JR_Wing_{}'.format(after, _num(0))
+        after_cube = after_wing + nc['ctrl']
+        if not all(cmds.objExists(node) for node in (out_ctrl, in_ctrl, out_auto, in_auto, before_wing, after_wing, after_cube)):
+            cmds.warning('{}: spread ctrls not found, skipped'.format(name))
+            continue
+
+        # bend between the parts: an after-part locator seen from a before-part one, both start with the
+        # orientation of the after-part cube ctrl (Y is the wing up), so the rest is 0
+        locators = []
+        for side_name, parent in (('Before', before_wing), ('After', after_wing)):
+            loc = cmds.spaceLocator(n='{}_{}_Loc'.format(name, side_name))[0]
+            cmds.delete(cmds.parentConstraint(after_cube, loc, mo=False))
+            cmds.parent(loc, parent)
+            cmds.setAttr(loc + '.visibility', 0)
+            locators.append(loc)
+        relative = cmds.createNode('multMatrix', n=name + '_Bend_MM')
+        cmds.connectAttr(locators[1] + '.worldMatrix[0]', relative + '.matrixIn[0]')
+        cmds.connectAttr(locators[0] + '.worldInverseMatrix[0]', relative + '.matrixIn[1]')
+        bend = cmds.createNode('decomposeMatrix', n=name + '_Bend_DM')
+        cmds.connectAttr(relative + '.matrixSum', bend + '.inputMatrix')
+
+        # the ctrl between both spread ctrls, following both parts half and half
+        cmds.select(cl=True)
+        ctrl = mt.curve(input='', type='sphere', custom_name=True, name=name + nc['ctrl'], size=1, tag=False, playback=False)
+        mt.assign_color(ctrl, 'yellow')
+        root = cmds.group(ctrl, n=name + '_Root' + nc['group'])
+        cmds.delete(cmds.parentConstraint(out_ctrl, in_ctrl, root, mo=False))
+        cmds.delete(cmds.orientConstraint(after_cube, root, mo=False))
+        cmds.parent(root, 'L_Wing_AutoRig')
+        constraint = cmds.parentConstraint(locators[0], locators[1], root, mo=True)[0]
+        cmds.setAttr(constraint + '.interpType', 2)
+        for attr in ('tx', 'ty', 'tz', 'rz', 'sx', 'sy', 'sz', 'v'):
+            cmds.setAttr('{}.{}'.format(ctrl, attr), lock=True, keyable=False, channelBox=False)
+
+        cmds.addAttr(ctrl, ln='AutoClose', at='double', min=0, max=1, dv=1, k=True)
+        cmds.addAttr(ctrl, ln='SubCtrls', at='enum', en='Hide:Show', dv=0, k=True)
+        for sub in (out_ctrl, in_ctrl):
+            cmds.connectAttr(ctrl + '.SubCtrls', sub.replace(nc['ctrl'], '_Root' + nc['group']) + '.visibility', f=True)
+
+        # half the bend each way, times AutoClose
+        half = cmds.createNode('multiplyDivide', n=name + '_HalfBend_MD')
+        cmds.connectAttr(bend + '.outputRotateY', half + '.input1X')
+        cmds.setAttr(half + '.input2Y', 0.5)
+        cmds.connectAttr(ctrl + '.AutoClose', half + '.input1Y')
+        cmds.connectAttr(half + '.outputY', half + '.input2X')
+        for auto, sign in ((out_auto, 1), (in_auto, -1)):
+            sum_node = cmds.createNode('plusMinusAverage', n='{}_{}_PMA'.format(name, 'Out' if sign > 0 else 'In'))
+            cmds.setAttr(sum_node + '.operation', 1 if sign > 0 else 2)
+            cmds.connectAttr(ctrl + '.ry', sum_node + '.input1D[0]')
+            cmds.connectAttr(half + '.outputX', sum_node + '.input1D[1]')
+            cmds.connectAttr(sum_node + '.output1D', auto + '.ry', f=True)
+            cmds.connectAttr(ctrl + '.rx', auto + '.rx', f=True)
