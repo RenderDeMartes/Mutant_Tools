@@ -3784,7 +3784,7 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		try:
 			with open(mode_file, 'r') as mode_handle:
 				mode = mode_handle.read().strip()
-				if mode in ['fast', 'easy']:
+				if mode in ['fast', 'easy', 'none']:
 					return mode
 		except Exception:
 			pass
@@ -3804,6 +3804,11 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 			return False
 
 	def _save_rebuild_skins(self, temp_skin_folder):
+		# no skins in the scene: nothing to save or load back, no warnings
+		if not cmds.ls(type='skinCluster'):
+			self._set_rebuild_skin_mode(temp_skin_folder=temp_skin_folder, mode='none')
+			print('Rebuild skins: no skinClusters in the scene, nothing saved.')
+			return
 		if not self._rebuild_uses_skin_pack():
 			self._set_rebuild_skin_mode(temp_skin_folder=temp_skin_folder, mode='easy')
 			self._report_skin_save(EasySkin.save_all_skins_to(folder_path=temp_skin_folder))
@@ -3867,6 +3872,8 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		temp_skin_pack = os.path.join(temp_skin_folder, 'tempSkinPack.bSkinPack')
 		skin_mode = self._get_rebuild_skin_mode(temp_skin_folder=temp_skin_folder)
 
+		if skin_mode == 'none':
+			return
 		if skin_mode == 'easy':
 			self._report_skin_load(EasySkin.load_all_skins_from(folder_path=temp_skin_folder))
 			return
