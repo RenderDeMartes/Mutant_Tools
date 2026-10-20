@@ -190,6 +190,7 @@ def build_wings_block():
     apply_feather_curves(feather_curves, feather_joints)
     # one ctrl at the elbow and one at the wrist drive both spread ctrls there and keep the parts together
     create_junction_spread_ctrls()
+    lock_spread_ctrls()
 
     cmds.rename('GlobalLoc', 'L_GlobalLoc')
 
@@ -834,3 +835,16 @@ def create_junction_spread_ctrls():
             cmds.connectAttr(half + '.output', sum_node + '.input1D[1]')
             cmds.connectAttr(sum_node + '.output1D', auto + '.ry', f=True)
             cmds.connectAttr(ctrl + '.rx', auto + '.rx', f=True)
+
+
+# wingModule hides t / s on the spread Root group (the selection there), not on the ctrl, so the spread
+# In / Out ctrls of every part are locked here, rotate only
+def lock_spread_ctrls():
+    nc = mt.import_configs()[0]
+    for count_attr, part, next_part in PARTS:
+        for mode in ('In', 'Out'):
+            ctrl = 'L_{}_JR_Spread_{}{}'.format(part, mode, nc['ctrl'])
+            if not cmds.objExists(ctrl):
+                continue
+            for attr in ('tx', 'ty', 'tz', 'sx', 'sy', 'sz'):
+                cmds.setAttr('{}.{}'.format(ctrl, attr), lock=True, keyable=False, channelBox=False)
