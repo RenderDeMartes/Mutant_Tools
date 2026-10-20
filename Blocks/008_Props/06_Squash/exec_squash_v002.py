@@ -2,7 +2,6 @@ from __future__ import absolute_import, division
 from maya import cmds
 import maya.api.OpenMaya as om
 import json
-import math
 try:
     import importlib;from importlib import reload
 except:
@@ -478,13 +477,13 @@ def build_squash_block():
 
     #Top / Bottom / Left / Right controllers ---
     # spheres riding a row, each one moves its part of the lattice (a cluster after the skin, only their own
-    # moves): Top and Bottom their row with a falloff to the other end, Left and Right their side column,
-    # more in the middle
+    # moves): Top and Bottom their row with a falloff to the other end, Left and Right their whole side
+    # column (every row) with a falloff to the other side
     mid = joint_count // 2
     edge_specs = [('Top', joint_count - 1, om.MVector(0, 0, 0), lambda s, t: t ** 2),
                   ('Bottom', 0, om.MVector(0, 0, 0), lambda s, t: (1 - t) ** 2),
-                  ('Left', mid, om.MVector(-width / 2.0, 0, 0), lambda s, t: math.sin(math.pi * t) if s == 0 else 0),
-                  ('Right', mid, om.MVector(width / 2.0, 0, 0), lambda s, t: math.sin(math.pi * t) if s == sides - 1 else 0),
+                  ('Left', mid, om.MVector(-width / 2.0, 0, 0), lambda s, t: (1 - float(s) / (sides - 1)) ** 2),
+                  ('Right', mid, om.MVector(width / 2.0, 0, 0), lambda s, t: (float(s) / (sides - 1)) ** 2),
                   # corners: their side column, their row with a falloff to the other end
                   ('TopLeft', joint_count - 1, om.MVector(-width / 2.0, 0, 0), lambda s, t: t ** 2 if s == 0 else 0),
                   ('TopRight', joint_count - 1, om.MVector(width / 2.0, 0, 0), lambda s, t: t ** 2 if s == sides - 1 else 0),
