@@ -2090,6 +2090,19 @@
                </property>
               </widget>
              </item>
+             <item>
+              <widget class="QPushButton" name="feather_pivots_btn">
+               <property name="minimumSize">
+                <size>
+                 <width>30</width>
+                 <height>30</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Feather Pivots</string>
+               </property>
+              </widget>
+             </item>
             </layout>
            </item>
            <item row="1" column="0">

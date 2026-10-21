@@ -309,6 +309,7 @@ class HelperUI(QtMutantWindow.Qt_Mutant):
 
 		#Animals Tab
 		self.ui.fix_quad_foot.clicked.connect(self.fix_quad_foot)
+		self.ui.feather_pivots_btn.clicked.connect(self.open_feather_pivots)
 
 		#Other Tabs
 		self.ui.reload_udims.clicked.connect(self.reload_udims)
@@ -1879,6 +1880,11 @@ class HelperUI(QtMutantWindow.Qt_Mutant):
 
 		cWrap.fix_foot_quadruped_orientation(leg='Fr')
 		cWrap.fix_foot_quadruped_orientation(leg='Bk')
+
+	def open_feather_pivots(self):
+		from Mutant_Tools.UI.Helpers.helpers_utils import feather_pivots
+		reload(feather_pivots)
+		self.feather_pivots_ui = feather_pivots.show()
 
 	#-------------------------------------------------
 	#-------------------------------------------------

@@ -315,6 +315,10 @@ def build_wings_block():
     cmds.scaleConstraint(block_parent, 'R_Wing_CC_Auto', mo=True)
 
     clean_cc_names()
+    # Pivots on the first ctrl of every feather move its pivot and the automation groups above it
+    create_feather_pivots()
+    # the spread ctrls reach the far feather too (SpreadMin on the part Wing_000 ctrl)
+    create_spread_min()
 
     print ('Build {} Success'.format(block))
 
@@ -940,3 +944,150 @@ def create_spread_roll(joints_by_part, side='L'):
                 cmds.connectAttr(untwist + '.output', twist_grp + '.rotateZ')
             if children:
                 cmds.parent(children, twist_grp)
+
+
+#-------------------------
+# Build: feather pivots. The first ctrl of every feather (<Side>_<Part>_JR_<i>_Ctrl, parent of the Fthr AutoJnt)
+# gets Pivots > PivotX / PivotY / PivotZ, an offset in the ctrl space for the rotate / scale pivot of the ctrl
+# and of every group above it (AutoFold, SpreadRoll, RootJnt, SpreadCtrlGrp, SpreadAuto...) up to the
+# constrained Wing joint, so the automations turn the feather around it.
+# - groups turned from the ctrl (SpreadRoll aim, mirrored R wing) get the offset through a vectorProduct
+# - groups rotated at rest (AutoFold under the roll) get rotatePivotTranslate = pivot * (rest rotate - 1),
+#   the feather does not pop and they still turn around the pivot
+# - SpreadRoll_Grp turns from its offsetParentMatrix (no pivot there): rest * T(-pivot) * rest^-1 * aim * T(pivot)
+#   turns the roll around the pivot too
+
+PIVOTS_SEPARATOR = '__________'  # the Bends separator on the same ctrl has 9
+PIVOT_ATTRS = ('PivotX', 'PivotY', 'PivotZ')
+
+
+def _feather_pivot_nodes(ctrl):
+    nodes = [ctrl]
+    parent = (cmds.listRelatives(ctrl, p=True) or [None])[0]
+    while parent and not cmds.listRelatives(parent, type='constraint'):
+        nodes.append(parent)
+        parent = (cmds.listRelatives(parent, p=True) or [None])[0]
+    return nodes
+
+
+def _linear(matrix):
+    """3x3 of a matrix as a list for setAttr, no translate."""
+    return list(matrix)[:12] + [0, 0, 0, 1]
+
+
+def _pivot_vector(ctrl, matrix, name):
+    """ctrl PivotX / Y / Z times the 3x3 of matrix, as 3 plugs (the ctrl plugs if it is the identity)."""
+    if matrix.isEquivalent(om.MMatrix(), 1e-4):
+        return ['{}.{}'.format(ctrl, attr) for attr in PIVOT_ATTRS]
+    product = cmds.createNode('vectorProduct', n=name)
+    cmds.setAttr(product + '.operation', 3)
+    cmds.setAttr(product + '.matrix', _linear(matrix), type='matrix')
+    for attr, axis in zip(PIVOT_ATTRS, 'XYZ'):
+        cmds.connectAttr('{}.{}'.format(ctrl, attr), '{}.input1{}'.format(product, axis))
+    return ['{}.output{}'.format(product, axis) for axis in 'XYZ']
+
+
+def _pivot_roll(ctrl, ctrl_world, node, aim):
+    parent = cmds.listRelatives(node, p=True)[0]
+    to_parent = ctrl_world * om.MMatrix(cmds.getAttr(parent + '.worldInverseMatrix[0]'))
+    # T(pivot) and T(-pivot), inverseMatrix needs the matrixNodes plugin
+    to_pivot = cmds.createNode('composeMatrix', n=node + '_Pivot_CM')
+    for plug, axis in zip(_pivot_vector(ctrl, to_parent, node + '_Pivot_Parent_VP'), 'XYZ'):
+        cmds.connectAttr(plug, '{}.inputTranslate{}'.format(to_pivot, axis))
+    from_pivot = cmds.createNode('composeMatrix', n=node + '_Pivot_Back_CM')
+    for plug, axis in zip(_pivot_vector(ctrl, to_parent * -1.0, node + '_Pivot_Back_VP'), 'XYZ'):
+        cmds.connectAttr(plug, '{}.inputTranslate{}'.format(from_pivot, axis))
+
+    rest = om.MMatrix(cmds.getAttr(aim + '.outputMatrix'))
+    around = cmds.createNode('multMatrix', n=node + '_Pivot_MM')
+    cmds.setAttr(around + '.matrixIn[0]', list(rest), type='matrix')
+    cmds.connectAttr(from_pivot + '.outputMatrix', around + '.matrixIn[1]')
+    cmds.setAttr(around + '.matrixIn[2]', list(rest.inverse()), type='matrix')
+    cmds.connectAttr(aim + '.outputMatrix', around + '.matrixIn[3]')
+    cmds.connectAttr(to_pivot + '.outputMatrix', around + '.matrixIn[4]')
+    cmds.connectAttr(around + '.matrixSum', node + '.offsetParentMatrix', f=True)
+
+
+def create_feather_pivots():
+    for auto in sorted(cmds.ls('L_*_JR_Fthr_*_AutoJnt', 'R_*_JR_Fthr_*_AutoJnt', type='transform')):
+        ctrl = cmds.listRelatives(auto, p=True)[0]
+        if not cmds.attributeQuery(PIVOTS_SEPARATOR, n=ctrl, exists=True):
+            cmds.addAttr(ctrl, ln=PIVOTS_SEPARATOR, nn=PIVOTS_SEPARATOR, at='enum', en='Pivots')
+            cmds.setAttr('{}.{}'.format(ctrl, PIVOTS_SEPARATOR), e=True, channelBox=True)
+            cmds.setAttr('{}.{}'.format(ctrl, PIVOTS_SEPARATOR), lock=True)
+        for attr in PIVOT_ATTRS:
+            if not cmds.attributeQuery(attr, n=ctrl, exists=True):
+                cmds.addAttr(ctrl, ln=attr, at='double', dv=0, k=True)
+
+        ctrl_world = om.MMatrix(cmds.getAttr(ctrl + '.worldMatrix[0]'))
+        for node in _feather_pivot_nodes(ctrl):
+            pivot = _pivot_vector(ctrl, ctrl_world * om.MMatrix(cmds.getAttr(node + '.worldInverseMatrix[0]')),
+                                  node + '_Pivot_VP')
+            for plug, axis in zip(pivot, 'XYZ'):
+                cmds.connectAttr(plug, '{}.rotatePivot{}'.format(node, axis), f=True)
+                cmds.connectAttr(plug, '{}.scalePivot{}'.format(node, axis), f=True)
+
+            rest_turn = om.MMatrix(_linear(om.MMatrix(cmds.getAttr(node + '.matrix'))))
+            if not rest_turn.isEquivalent(om.MMatrix(), 1e-4):
+                minus_one = om.MMatrix(_linear(rest_turn))
+                for i in range(3):
+                    minus_one.setElement(i, i, minus_one.getElement(i, i) - 1)
+                compensate = cmds.createNode('vectorProduct', n=node + '_Pivot_Rest_VP')
+                cmds.setAttr(compensate + '.operation', 3)
+                cmds.setAttr(compensate + '.matrix', _linear(minus_one), type='matrix')
+                for plug, axis in zip(pivot, 'XYZ'):
+                    cmds.connectAttr(plug, '{}.input1{}'.format(compensate, axis))
+                    cmds.connectAttr('{}.output{}'.format(compensate, axis),
+                                     '{}.rotatePivotTranslate{}'.format(node, axis), f=True)
+
+            aim = cmds.listConnections(node + '.offsetParentMatrix', s=True, d=False, type='aimMatrix')
+            if aim:
+                _pivot_roll(ctrl, ctrl_world, node, aim[0])
+
+
+#-------------------------
+# Build: spread min. wingModule spreads every part from 1 on one end to 0 on the other (Spread_In: first
+# feather 1, last 0. Spread_Out: first 0, last 1), so the far feather does not move. Every feather share w
+# becomes w + SpreadMin * (1 - w), SpreadMin (0-1) on the part Wing_000 ctrl. The R wing has the mirrored
+# multiplyDivides (L_..._MD1), so they are found from the feather they drive, not by name.
+
+SPREAD_MIN_ATTR = 'SpreadMin'
+SPREAD_MIN_DEFAULT = 0.2
+
+
+def create_spread_min():
+    nc = mt.import_configs()[0]
+    shares = {}
+    for md in cmds.ls('*_JR_Fthr_*_MD*', type='multiplyDivide'):
+        if '_In_' in md or '_InAuto_' in md:
+            mode = 'In'
+        elif '_Out_' in md or '_OutAuto_' in md:
+            mode = 'Out'
+        else:
+            continue
+        if cmds.listConnections(md + '.input2X', s=True, d=False):
+            continue
+        driven = cmds.listConnections(md + '.outputX', s=False, d=True, skipConversionNodes=True) or []
+        # L / R wings only, other blocks (TailWing) have feathers too
+        driven = [node for node in driven if '_JR_Fthr_' in node and node[:2] in ('L_', 'R_')]
+        if not driven:
+            continue
+        part, number = driven[0].split('_JR_Fthr_')
+        feather = '{}_JR_Fthr_{}'.format(part, number.split('_')[0])
+        cube = '{}_JR_Wing_{}{}'.format(part, _num(0), nc['ctrl'])
+        if not cmds.objExists(cube):
+            continue
+        if not cmds.attributeQuery(SPREAD_MIN_ATTR, n=cube, exists=True):
+            cmds.addAttr(cube, ln=SPREAD_MIN_ATTR, at='double', min=0, max=1, dv=SPREAD_MIN_DEFAULT, k=True)
+
+        key = (feather, mode)
+        if key not in shares:
+            weight = cmds.getAttr(md + '.input2X')
+            reach = cmds.createNode('multDoubleLinear', n='{}_Spread{}Min_MDL'.format(feather, mode))
+            cmds.connectAttr('{}.{}'.format(cube, SPREAD_MIN_ATTR), reach + '.input1')
+            cmds.setAttr(reach + '.input2', 1 - weight)
+            share = cmds.createNode('addDoubleLinear', n='{}_Spread{}Min_ADL'.format(feather, mode))
+            cmds.connectAttr(reach + '.output', share + '.input1')
+            cmds.setAttr(share + '.input2', weight)
+            shares[key] = share + '.output'
+        cmds.connectAttr(shares[key], md + '.input2X', f=True)
