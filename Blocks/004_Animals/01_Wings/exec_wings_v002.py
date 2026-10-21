@@ -191,6 +191,13 @@ def build_wings_block():
     # one ctrl at the elbow and one at the wrist drive both spread ctrls there and keep the parts together
     create_junction_spread_ctrls()
     lock_spread_ctrls()
+    # SpreadMode Roll: spread ctrls tilt the feathers, they roll with the feather next to them so the overlap
+    # does not clip. Classic: as before (blocks made before SpreadMode get Roll)
+    spread_mode = 'Roll'
+    if cmds.attributeQuery('SpreadMode', n=config, exists=True):
+        spread_mode = cmds.getAttr('{}.SpreadMode'.format(config), asString=True)
+    if spread_mode == 'Roll':
+        create_spread_roll(feather_joints)
 
     cmds.rename('GlobalLoc', 'L_GlobalLoc')
 
@@ -848,3 +855,88 @@ def lock_spread_ctrls():
                 continue
             for attr in ('tx', 'ty', 'tz', 'sx', 'sy', 'sz'):
                 cmds.setAttr('{}.{}'.format(ctrl, attr), lock=True, keyable=False, channelBox=False)
+
+
+#-------------------------
+# Build: spread roll. The spread In / Out ctrls tilt every feather a share of their rx, so the feathers step
+# down flat next to each other and their overlap cuts through. Every feather gets a SpreadRoll group under its
+# RootJnt, aimed at its own tip with X to the tip of the next feather (the last one: away from the one before),
+# so it rolls with the feather sheet. All of it in the RootJnt space (aimMatrix), so the mirrored R wing works
+# the same. <Part>_JR_Wing_000_Ctrl.SheetFollow blends it (aimMatrix envelope).
+# Bend_Ctrl twist turns SpreadCtrlGrp (above the RootJnt), the roll would undo it, so a Twist group under the
+# roll turns it back on the feather.
+
+SHEET_FOLLOW_ATTR = 'SheetFollow'
+
+
+def _rest_matrix(origin, tip, side, flip):
+    """origin > tip is Z, X towards side (flip: away from it), as a list for setAttr."""
+    z = (tip - origin).normal()
+    x = (side - tip) * (-1 if flip else 1)
+    y = (z ^ x).normal()
+    x = (y ^ z).normal()
+    return [x.x, x.y, x.z, 0, y.x, y.y, y.z, 0, z.x, z.y, z.z, 0, origin.x, origin.y, origin.z, 1]
+
+
+def create_spread_roll(joints_by_part, side='L'):
+    nc = mt.import_configs()[0]
+    for count_attr, part, next_part in PARTS:
+        prefixes = []
+        while cmds.objExists('{}_{}_JR_Fthr_{}'.format(side, part, _num(len(prefixes)))):
+            prefixes.append('{}_{}_JR_Fthr_{}'.format(side, part, _num(len(prefixes))))
+        cube = '{}_{}_JR_Wing_{}{}'.format(side, part, _num(0), nc['ctrl'])
+        if len(prefixes) < 2 or not cmds.objExists(cube):
+            cmds.warning('{} {}: feathers not found, no spread roll'.format(side, part))
+            continue
+        joints = joints_by_part.get(part, DEFAULT_FEATHER_JOINTS)
+        if not cmds.attributeQuery(SHEET_FOLLOW_ATTR, n=cube, exists=True):
+            cmds.addAttr(cube, ln=SHEET_FOLLOW_ATTR, at='double', min=0, max=1, dv=1, k=True)
+
+        # twist back: -Bend_Ctrl.rz times SheetFollow, one for the part
+        twist = cmds.listConnections(prefixes[0] + '_SpreadCtrlGrp.rotateZ', s=True, d=False, p=True) or []
+        untwist = None
+        if twist:
+            follow = cmds.createNode('multDoubleLinear', n='{}_{}_JR_SpreadRoll_Twist_MDL'.format(side, part))
+            cmds.connectAttr(twist[0], follow + '.input1')
+            cmds.connectAttr('{}.{}'.format(cube, SHEET_FOLLOW_ATTR), follow + '.input2')
+            untwist = cmds.createNode('multDoubleLinear', n='{}_{}_JR_SpreadRoll_Untwist_MDL'.format(side, part))
+            cmds.connectAttr(follow + '.output', untwist + '.input1')
+            cmds.setAttr(untwist + '.input2', -1)
+
+        tips = []
+        for prefix in prefixes:
+            tip = cmds.createNode('transform', n=prefix + '_SheetTip', p=prefix + '_RootJnt')
+            cmds.xform(tip, ws=True, t=cmds.xform(_feather_fk(prefix, joints)[0][-1], q=True, ws=True, t=True))
+            tips.append(tip)
+
+        for index, prefix in enumerate(prefixes):
+            root = prefix + '_RootJnt'
+            last = index == len(prefixes) - 1
+            side_tip = tips[index - 1] if last else tips[index + 1]
+            children = [c for c in cmds.listRelatives(root, c=True, type='transform') if c != tips[index]]
+
+            # rest frame in the RootJnt space
+            root_inverse = om.MMatrix(cmds.getAttr(root + '.worldInverseMatrix[0]'))
+            local = lambda node: om.MVector(om.MPoint(cmds.xform(node, q=True, ws=True, t=True)) * root_inverse)
+            rest = _rest_matrix(local(prefix), local(tips[index]), local(side_tip), last)
+
+            side_local = cmds.createNode('multMatrix', n=prefix + '_SpreadRoll_MM')
+            cmds.connectAttr(side_tip + '.worldMatrix[0]', side_local + '.matrixIn[0]')
+            cmds.connectAttr(root + '.worldInverseMatrix[0]', side_local + '.matrixIn[1]')
+            aim = cmds.createNode('aimMatrix', n=prefix + '_SpreadRoll_AM')
+            cmds.setAttr(aim + '.inputMatrix', rest, type='matrix')
+            cmds.setAttr(aim + '.primaryInputAxis', 0, 0, 1)
+            cmds.setAttr(aim + '.primaryMode', 1)
+            cmds.connectAttr(tips[index] + '.matrix', aim + '.primaryTargetMatrix')
+            cmds.setAttr(aim + '.secondaryInputAxis', -1 if last else 1, 0, 0)
+            cmds.setAttr(aim + '.secondaryMode', 1)
+            cmds.connectAttr(side_local + '.matrixSum', aim + '.secondaryTargetMatrix')
+            cmds.connectAttr('{}.{}'.format(cube, SHEET_FOLLOW_ATTR), aim + '.envelope')
+
+            roll = cmds.createNode('transform', n=prefix + '_SpreadRoll_Grp', p=root)
+            cmds.connectAttr(aim + '.outputMatrix', roll + '.offsetParentMatrix')
+            twist_grp = cmds.createNode('transform', n=prefix + '_SpreadRoll_Twist_Grp', p=roll)
+            if untwist:
+                cmds.connectAttr(untwist + '.output', twist_grp + '.rotateZ')
+            if children:
+                cmds.parent(children, twist_grp)
