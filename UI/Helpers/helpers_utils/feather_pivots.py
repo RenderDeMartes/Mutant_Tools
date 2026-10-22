@@ -9,6 +9,7 @@ from __future__ import absolute_import, division
 # Test Rotation turns the ctrls (-180 / 180) to see them turn on the new pivot, Zero Rotation puts them back.
 # Double click a slider or press its reset icon: pivot / rotate back to 0, speed back to x0.25.
 # Mirror L > R copies every L feather pivot to the same R feather, mirrored in world X.
+# Toggle Geo shows / hides the geo in the field (names or wildcards, space or comma separated) to see the ctrls.
 
 import math
 
@@ -30,6 +31,7 @@ SLIDER_RANGE = 100
 SLIDER_UNITS = 10.0  # units of a full drag at x1
 SPEED_RANGE = 10.0  # speed slider from x1/10 to x10
 DEFAULT_SPEED = 0.25
+DEFAULT_GEO = 'Lf_Fea_SC_Geo_Grp'
 WINDOW_NAME = 'MutantFeatherPivots'
 RESET_ICON = ':/refresh.png'
 
@@ -71,6 +73,23 @@ def mirror_pivots_to_right():
 		cmds.undoInfo(closeChunk=True)
 	print('Feather Pivots: mirrored {} feathers to R'.format(len(mirrored)))
 	return mirrored
+
+
+def toggle_geo(names):
+	"""Hide the nodes if any is visible, show them if all are hidden."""
+	nodes = cmds.ls(names.replace(',', ' ').split(), type='transform') or []
+	plugs = [node + '.visibility' for node in nodes if _settable(node + '.visibility')]
+	if not plugs:
+		cmds.warning('Feather Pivots: no geo to toggle in "{}"'.format(names))
+		return None
+	visible = not any(cmds.getAttr(plug) for plug in plugs)
+	cmds.undoInfo(openChunk=True, chunkName='FeatherPivotsToggleGeo')
+	try:
+		for plug in plugs:
+			cmds.setAttr(plug, visible)
+	finally:
+		cmds.undoInfo(closeChunk=True)
+	return visible
 
 
 #-------------------------------------------------
@@ -200,6 +219,15 @@ class FeatherPivotsUI(QtWidgets.QWidget):
 		rotate_grid.addWidget(self.zero_rotate_button, len(ROTATE_ATTRS), 0, 1, 4)
 		layout.addWidget(self.rotate_widgets)
 
+		geo_row = QtWidgets.QHBoxLayout()
+		geo_row.addWidget(QtWidgets.QLabel('Geo'))
+		self.geo_field = QtWidgets.QLineEdit(DEFAULT_GEO)
+		self.geo_field.setToolTip('Names or wildcards, space or comma separated')
+		self.geo_button = QtWidgets.QPushButton('Toggle Geo')
+		geo_row.addWidget(self.geo_field)
+		geo_row.addWidget(self.geo_button)
+		layout.addLayout(geo_row)
+
 		self.mirror_button = QtWidgets.QPushButton('Mirror L > R')
 		self.mirror_button.setMinimumHeight(26)
 		layout.addWidget(self.mirror_button)
@@ -224,6 +252,8 @@ class FeatherPivotsUI(QtWidgets.QWidget):
 			zero.clicked.connect(lambda checked=False, attr=attr: self.set_value([attr], 0))
 		self.zero_rotate_button.clicked.connect(lambda checked=False: self.set_value(ROTATE_ATTRS, 0))
 		self.mirror_button.clicked.connect(self.mirror)
+		self.geo_button.clicked.connect(lambda checked=False: toggle_geo(self.geo_field.text()))
+		self.geo_field.returnPressed.connect(lambda: toggle_geo(self.geo_field.text()))
 
 	#-------------------------------------------------
 
