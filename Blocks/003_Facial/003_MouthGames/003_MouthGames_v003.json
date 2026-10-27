@@ -1,0 +1,22 @@
+{
+    "Name": "Mouth",
+    "Description": "Create JaW and Lips System for Games",
+    "Icon": "MouthGames.png",
+    "Enable": "True",
+    "python_file": "exec_mouthgames_v003.py",
+    "import": "import exec_mouthgames_v003",
+    "imp.reload": "reload(exec_mouthgames_v003)",
+    "exec_command": "exec_mouthgames_v003.create_mouthgames_block()",
+    "build_command": "exec_mouthgames_v003.build_mouthgames_block()",
+    "attrs": {
+        "SetParent_string": "new_locator",
+        "SetAttrsPosition_string": "new_locator",
+        "SetUpperEdge_string": "",
+        "SetLowerEdge_string": "",
+        "TweakCtrlsAmount_float": 7,
+        "MidCtrlsAmount_float": 5,
+        "CtrlSize_float": 4,
+        "BindJoints_enum": "PerVtx:21:15:11:9:7:5",
+        "Help_string": "Overview:\n  Create JaW and Lips System for Games.\n  v003: lip joints are spaced evenly by length (BindJoints: one per lip vertex or a fixed count). Tweak ctrls push the joints around them with a soft falloff instead of moving one joint. Every lip ctrl scales per axis (sx/sy/sz) and the scale falls off over the lip like its translate. Roll attr on Mouth_Up/Dw_Main_Ctrl, Zip attr on L/R_Mouth_Main_Ctrl. Jaw, collision and center ctrls are the same as v002. Dynamic jaw pivot: the JawPivot guide sets where the jaw rotates, Mouth_JawPivot_Ctrl (show it with Mouth_Jaw_Ctrl.PivotCtrl) moves it in the scene. Parent jaw followers (teeth, tongue) to Mouth_JawFollow_Null, not Mouth_Jaw_Ctrl.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetParent: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- SetAttrsPosition: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- TweakCtrlsAmount: tweak ctrls per lip, corners not counted (default 7).\n- MidCtrlsAmount: mid ctrls per lip (default 5).\n- CtrlSize: numeric value that controls size/amount/intensity (default 4).\n- BindJoints: PerVtx = one joint per vertex of the lip edge, or a fixed joint count per lip.\n- SetUpperEdge / SetLowerEdge: lip edge loops, corner to corner.\n- Teeth / Tongue SetParent: Mouth_JawFollow_Null (follows the jaw around the dynamic pivot).\n- Template parent examples: Jaw_Jnt, Head_Jnt, Head_Ctrl.\n- Template attrs-position examples: Lips_Center_Ctrl, Vis_Ctrl, Mouth_Jaw_Ctrl.\n\nTips:\n- start with defaults, build once, then tweak only the fields you need."
+    }
+}
