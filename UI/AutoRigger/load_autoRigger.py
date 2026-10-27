@@ -1284,7 +1284,7 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 
 		#set Manual Icons
 		self.ui.prebuild.setIcon(QtGui.QIcon(os.path.join(IconsPath ,'PRECODE.png')))
-		self.ui.current_code.setIcon(QtGui.QIcon(os.path.join(IconsPath ,'CODE.png')))
+		self.ui.current_code.setIcon(QtGui.QIcon(os.path.join(IconsPath ,'ViewCode.png')))
 		self.ui.postbuild.setIcon(QtGui.QIcon(os.path.join(IconsPath ,'POSTCODE.png')))
 		self.ui.reload_ui.setIcon(QtGui.QIcon(os.path.join(IconsPath ,'RELOAD.png')))
 		self.ui.log.setIcon(QtGui.QIcon(os.path.join(IconsPath ,'LOG.png')))
