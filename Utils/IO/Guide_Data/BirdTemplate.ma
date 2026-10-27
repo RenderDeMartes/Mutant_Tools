@@ -1,6 +1,6 @@
 //Maya ASCII 2026 scene
 //Name: BirdTemplate.ma
-//Last modified: Tue, Jul 14, 2026 05:53:31 PM
+//Last modified: Tue, Oct 27, 2026 04:04:59 PM
 //Codeset: 1252
 requires maya "2026";
 requires "stereoCamera" "10.0";
@@ -10,8 +10,8 @@ fileInfo "application" "maya";
 fileInfo "product" "Maya 2026";
 fileInfo "version" "2026";
 fileInfo "cutIdentifier" "202510291147-60ec9eda33";
-fileInfo "osv" "Windows 11 Home v2009 (Build: 26200)";
-fileInfo "UUID" "77C939AC-4BAC-21A7-7C35-CB93CE3F2DD2";
+fileInfo "osv" "Windows 11 Home v2009 (Build: 26300)";
+fileInfo "UUID" "62EBFFD7-4B3E-5F13-9E32-3F8DD56971A9";
 createNode transform -n "Mutant_Build";
 	rename -uid "344FDE6A-4B75-1BCA-94A4-AD9EA9A5E9CB";
 createNode transform -n "Init" -p "Mutant_Build";
@@ -55,7 +55,7 @@ createNode dagContainer -n "Root_Block" -p "Init";
 	setAttr ".nts" -type "string" "['Root']";
 createNode transform -n "Spine" -p "Mutant_Build";
 	rename -uid "765CAC2D-470B-F15A-F187-87865F655C24";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 createNode dagContainer -n "COG_Block" -p "Spine";
 	rename -uid "D1766169-4DCC-AD93-C02E-4AA9966B335D";
 	addAttr -ci true -sn "nts" -ln "notes" -dt "string";
@@ -76,11 +76,11 @@ createNode dagContainer -n "COG_Block" -p "Spine";
 	setAttr ".nts" -type "string" "['COG_Ctrl', 'COG_Jnt_scaleConstraint1', 'COG_Gimbal_Ctrl', 'COG_Bnd_scaleConstraint1', 'COG_Gimbal_Ctrl_tag', 'COG_Rig_Grp', 'COG_Jnt_parentConstraint1', 'COG_Ctrl_tag', 'COG_CtrlShape', 'COG_Bnd', 'COG_Bnd_parentConstraint1', 'COG_Gimbal_CtrlShape', 'COG_Ctrl_Offset_Grp', 'COG_Jnt']";
 createNode transform -n "COG_Loc" -p "COG_Block";
 	rename -uid "95583F31-43EC-081C-AA40-3898055236E7";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 0 42.216868216713209 0.081912015775175817 ;
 createNode locator -n "COG_LocShape" -p "COG_Loc";
 	rename -uid "4CE684E7-4D04-7DE4-76AA-5CA837707A16";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 createNode dagContainer -n "Spine_Block" -p "Spine";
 	rename -uid "831165FD-41BF-0C43-14D1-29B1BDA1B5EB";
@@ -104,7 +104,7 @@ createNode dagContainer -n "Spine_Block" -p "Spine";
 createNode joint -n "Spine_Root_Guide" -p "Spine_Block";
 	rename -uid "F0B57E1C-4123-44A8-F0D7-BFB59F18782B";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 0 37.199118086628388 -3.8101660657809955 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
@@ -112,7 +112,7 @@ createNode joint -n "Spine_Root_Guide" -p "Spine_Block";
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "Spine_Root_Guide_CtrlShape" -p "Spine_Root_Guide";
 	rename -uid "8AB8A43D-454B-F6D2-151D-0EA71012B7DC";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -134,7 +134,7 @@ createNode nurbsCurve -n "Spine_Root_Guide_CtrlShape" -p "Spine_Root_Guide";
 		;
 createNode nurbsCurve -n "Spine_Root_Guide_Ctrl_CtrlShape" -p "Spine_Root_Guide";
 	rename -uid "E3968593-42F6-FC74-7C55-60B5CEB7DF04";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -251,7 +251,7 @@ createNode nurbsCurve -n "Spine_Root_Guide_Ctrl_CtrlShape" -p "Spine_Root_Guide"
 		;
 createNode nurbsCurve -n "Spine_Root_Guide_Ctrl_Ctrl_CtrlShape" -p "Spine_Root_Guide";
 	rename -uid "6CEF4286-4334-E122-D68D-AA867CD21610";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -273,7 +273,7 @@ createNode nurbsCurve -n "Spine_Root_Guide_Ctrl_Ctrl_CtrlShape" -p "Spine_Root_G
 		;
 createNode nurbsCurve -n "Spine_Root_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "Spine_Root_Guide";
 	rename -uid "DE3A01DF-4260-1967-B2A2-1DB1D979B94C";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -296,7 +296,7 @@ createNode nurbsCurve -n "Spine_Root_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "Spine_R
 createNode joint -n "Spine_Base_Guide" -p "Spine_Root_Guide";
 	rename -uid "E22D1842-4534-01DD-6D74-2DBC7AD8E48C";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 7.4542703698601649 0 4.9344365754748154e-28 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
@@ -304,7 +304,7 @@ createNode joint -n "Spine_Base_Guide" -p "Spine_Root_Guide";
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "Spine_Base_Guide_CtrlShape" -p "Spine_Base_Guide";
 	rename -uid "1211946D-4213-5A16-F12F-1CA89E2FA8EA";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -326,7 +326,7 @@ createNode nurbsCurve -n "Spine_Base_Guide_CtrlShape" -p "Spine_Base_Guide";
 		;
 createNode nurbsCurve -n "Spine_Base_Guide_Ctrl_CtrlShape" -p "Spine_Base_Guide";
 	rename -uid "0389AA71-4F3F-AAEA-E091-7194B825B13B";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -443,7 +443,7 @@ createNode nurbsCurve -n "Spine_Base_Guide_Ctrl_CtrlShape" -p "Spine_Base_Guide"
 		;
 createNode nurbsCurve -n "Spine_Base_Guide_Ctrl_Ctrl_CtrlShape" -p "Spine_Base_Guide";
 	rename -uid "A5F02829-4339-71DE-2DF0-6C97170090C9";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -465,7 +465,7 @@ createNode nurbsCurve -n "Spine_Base_Guide_Ctrl_Ctrl_CtrlShape" -p "Spine_Base_G
 		;
 createNode nurbsCurve -n "Spine_Base_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "Spine_Base_Guide";
 	rename -uid "34B76176-46EF-FEDA-5D10-55BD2496532A";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -488,7 +488,7 @@ createNode nurbsCurve -n "Spine_Base_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "Spine_B
 createNode joint -n "Spine_Belly_Guide" -p "Spine_Base_Guide";
 	rename -uid "EFB0727F-4FC9-61DC-2EE6-51AF3320FAC4";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 5.6340366213291944 -3.5527136788005009e-15 -7.7368080455261859e-15 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
@@ -496,7 +496,7 @@ createNode joint -n "Spine_Belly_Guide" -p "Spine_Base_Guide";
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "Spine_Belly_Guide_CtrlShape" -p "Spine_Belly_Guide";
 	rename -uid "BCF4EC2D-495C-5CF0-CC39-A89C9B29FE46";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -518,7 +518,7 @@ createNode nurbsCurve -n "Spine_Belly_Guide_CtrlShape" -p "Spine_Belly_Guide";
 		;
 createNode nurbsCurve -n "Spine_Belly_Guide_Ctrl_CtrlShape" -p "Spine_Belly_Guide";
 	rename -uid "897793F2-4B27-7F3C-547C-D1956EA7BA44";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -635,7 +635,7 @@ createNode nurbsCurve -n "Spine_Belly_Guide_Ctrl_CtrlShape" -p "Spine_Belly_Guid
 		;
 createNode nurbsCurve -n "Spine_Belly_Guide_Ctrl_Ctrl_CtrlShape" -p "Spine_Belly_Guide";
 	rename -uid "6822D194-4C36-6FD8-45CA-92ADD395DD5B";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -657,7 +657,7 @@ createNode nurbsCurve -n "Spine_Belly_Guide_Ctrl_Ctrl_CtrlShape" -p "Spine_Belly
 		;
 createNode nurbsCurve -n "Spine_Belly_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "Spine_Belly_Guide";
 	rename -uid "C967E097-4955-18B4-AAC2-2B866B04B13A";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -680,7 +680,7 @@ createNode nurbsCurve -n "Spine_Belly_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "Spine_
 createNode joint -n "Spine_Chest_Guide" -p "Spine_Belly_Guide";
 	rename -uid "3BB076C9-427B-3B0E-B02E-D7A743D3222F";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 8.9227958328274539 -3.5527136788005009e-15 7.2005532837218392e-14 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
@@ -688,7 +688,7 @@ createNode joint -n "Spine_Chest_Guide" -p "Spine_Belly_Guide";
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "Spine_Chest_Guide_CtrlShape" -p "Spine_Chest_Guide";
 	rename -uid "8EBD14CE-404F-46F0-5FE8-0583F97E6B7D";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -710,7 +710,7 @@ createNode nurbsCurve -n "Spine_Chest_Guide_CtrlShape" -p "Spine_Chest_Guide";
 		;
 createNode nurbsCurve -n "Spine_Chest_Guide_Ctrl_CtrlShape" -p "Spine_Chest_Guide";
 	rename -uid "3F506E05-4ACB-E2A6-AFE6-5CB9AFFD9A64";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -827,7 +827,7 @@ createNode nurbsCurve -n "Spine_Chest_Guide_Ctrl_CtrlShape" -p "Spine_Chest_Guid
 		;
 createNode nurbsCurve -n "Spine_Chest_Guide_Ctrl_Ctrl_CtrlShape" -p "Spine_Chest_Guide";
 	rename -uid "72A4E30C-45C1-E80B-66C9-91B9B2B21475";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -849,7 +849,7 @@ createNode nurbsCurve -n "Spine_Chest_Guide_Ctrl_Ctrl_CtrlShape" -p "Spine_Chest
 		;
 createNode nurbsCurve -n "Spine_Chest_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "Spine_Chest_Guide";
 	rename -uid "EBC8DE16-478E-EDC6-4579-ABBE7CEFABEC";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -872,14 +872,14 @@ createNode nurbsCurve -n "Spine_Chest_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "Spine_
 createNode joint -n "Spine_End_Guide" -p "Spine_Chest_Guide";
 	rename -uid "BFB7E93A-48B6-998D-950A-52A5DA97395C";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 13.84023400377677 -1.7763568394002503e-15 1.9396933983683155e-14 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "Spine_End_Guide_CtrlShape" -p "Spine_End_Guide";
 	rename -uid "F3AB8167-4E0A-79BA-DA6C-41A701E9977E";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -901,7 +901,7 @@ createNode nurbsCurve -n "Spine_End_Guide_CtrlShape" -p "Spine_End_Guide";
 		;
 createNode nurbsCurve -n "Spine_End_Guide_Ctrl_CtrlShape" -p "Spine_End_Guide";
 	rename -uid "4FC60CCA-4932-0FF9-3FB6-84B559A262FB";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -1018,7 +1018,7 @@ createNode nurbsCurve -n "Spine_End_Guide_Ctrl_CtrlShape" -p "Spine_End_Guide";
 		;
 createNode nurbsCurve -n "Spine_End_Guide_Ctrl_Ctrl_CtrlShape" -p "Spine_End_Guide";
 	rename -uid "23998F00-4955-DDCA-E059-9BA0B15D56A3";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -1040,7 +1040,7 @@ createNode nurbsCurve -n "Spine_End_Guide_Ctrl_Ctrl_CtrlShape" -p "Spine_End_Gui
 		;
 createNode nurbsCurve -n "Spine_End_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "Spine_End_Guide";
 	rename -uid "BB68F3A1-4BA4-769D-24FF-36B0EB557A34";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -1084,7 +1084,7 @@ createNode dagContainer -n "Wings_Block" -p "Body";
 		"['R_Scapulars_JR_Fthr_0014Bend03_Indiv_Ctrl_Offset_Grp', 'unitConversion33', 'unitConversion423', 'L_Secondaries_JR_Fthr_003_In_ry_MD', 'R_Scapulars_JR_Fthr_000_Ctrl_Root_Grp', 'L_Scapulars_JR_Fthr_007Bend03_Indiv_Ctrl_tag', 'unitConversion1112', 'R_Secondaries_JR_Fthr_008_Bnd', 'unitConversion1636', 'unitConversion1393', 'R_Secondaries_JR_Fthr_006Bend01_Indiv_Ctrl', 'L_Secondaries_JR_Fthr_005_In_ry_MD', 'unitConversion669', 'R_Secondaries_JR_Fthr_0015Bend02_Indiv_Ctrl', 'unitConversion1498', 'L_Scapulars_JR_Wing_000', 'R_GlobalLocShape', 'L_Secondaries_JR_Fthr_009_In_rx_MD', 'unitConversion55', 'L_Primaries_JR_Fthr_005Bend03_Bnd', 'unitConversion576', 'unitConversion1727', 'unitConversion2247', 'unitConversion1493', 'L_Scapulars_JR_Fthr_004_OutAuto_ry_MD1', 'L_Secondaries_JR_Fthr_006Bend01_Indiv_Ctrl_tag', 'unitConversion512', 'unitConversion725', 'R_Secondaries_JR_Fthr_009Bend02', 'unitConversion2393', 'L_Secondaries_JR_Fthr_0011Bend01_Bnd', 'L_Scapulars_JR_Fthr_009_In_ry_MD', 'unitConversion1817', 'R_Scapulars_JR_Fthr_002Bend01_Indiv_Ctrl_Offset_Grp', 'L_Scapulars_JR_Fthr_0012Bend01_Indiv_CtrlShape', 'unitConversion1269', 'unitConversion1778', 'L_Scapulars_JR_Fthr_003Bend03_Bnd', 'unitConversion1773', 'L_Secondaries_JR_Wing_006_Bnd', 'R_Secondaries_JR_5_CtrlL_Secondaries_JR_5_CC_AutoFold_Grp_Grp', 'unitConversion2129', 'unitConversion2084', 'unitConversion647', 'unitConversion1989', 'unitConversion1516', 'unitConversion2307', 'L_Scapulars_JR_Fthr_004_OutAuto_rx_MD', 'L_Secondaries_JR_Fthr_0011_InAuto_rx_MD1', 'L_Primaries_JR_Fthr_002Bend01', 'L_Scapulars_JR_Wing_0012', 'L_Primaries_JR_Fthr_001_In_ry_MD', 'unitConversion2785', 'unitConversion2770', 'unitConversion1477', 'L_Scapulars_JR_Fthr_0014Bend01_Indiv_Ctrl', 'unitConversion119', 'unitConversion1210', 'R_Scapulars_JR_Wing_0014_parentConstraint1', 'L_Primaries_JR_Fthr_000_Ctrl', 'unitConversion1731', 'L_Primaries_JR_Wing_009', 'L_Scapulars_JR_Fthr_0011Bend01_Indiv_Ctrl_Offset_Grp', 'L_Secondaries_JR_Fthr_0015_Indiv_Ctrl', 'R_Scapulars_JR_Fthr_003Bend02_Bnd', 'L_Secondaries_JR_Fthr_0015_SpreadAuto_Auto', 'unitConversion1514', 'unitConversion2567', 'L_Secondaries_JR_Fthr_001_Ctrl_Root_Grp', 'L_Scapulars_JR_6_CtrlL_Scapulars_JR_6_CC_AutoFold_Grp_Grp', 'R_Secondaries_JR_Fthr_0011_BendJnt1', 'R_Scapulars_JR_Fthr_009_BendJnt1', 'L_Scapulars_JR_Fthr_0014_Indiv_Ctrl_Offset_Grp', 'R_Primaries_JR_Spread_In_Root_Grp', 'R_Primaries_JR_Spread_In_CtrlShape', 'R_Secondaries_JR_Fthr_009Bend01_Indiv_Ctrl_tag', 'L_Primaries_JR_Fthr_008_Ctrl_Root_Grp', 'L_Scapulars_JR_Fthr_0012_Ctrl', 'unitConversion57', 'R_Secondaries_JR_Fthr_009_BendJnt2', 'unitConversion1482', 'unitConversion127', 'L_Scapulars_JR_Fthr_008Bend03_Indiv_Ctrl_tag', 'L_Scapulars_JR_Fthr_0010Bend01_Bnd_parentConstraint1', 'R_Secondaries_JR_Fthr_000_SpreadCtrlGrp', 'unitConversion814', 'R_Scapulars_JR_Fthr_004_AutoJnt', 'L_Secondaries_JR_Fthr_008_Bnd_parentConstraint1', 'unitConversion1782', 'R_Primaries_JR_Fthr_002Bend02_Indiv_Ctrl_Offset_Grp', 'unitConversion679', 'L_Primaries_JR_Fthr_008_InAuto_ry_MD', 'unitConversion1500', 'L_Primaries_JR_Fthr_006_InAuto_rx_MD', 'R_Scapulars_JR_Fthr_002_BendJnt3', 'R_Secondaries_JR_0_Ctrl', 'L_Scapulars_JR_Fthr_006_Ctrl_Auto_Grp', 'unitConversion1743', 'unitConversion1270', 'unitConversion1288', 'unitConversion383', 'R_Primaries_JR_Wing_006_Bnd', 'L_Secondaries_JR_Wing_0012_Bnd_parentConstraint1', 'unitConversion1173', 'L_Scapulars_JR_Fthr_000Bend01_Indiv_Ctrl_Offset_Grp', 'L_Primaries_JR_Fthr_005Bend02_Indiv_CtrlShape', 'unitConversion2352', 'unitConversion2575', 'unitConversion2096', 'L_Secondaries_JR_14_CtrlL_Secondaries_JR_14_CC_AutoFold_Grp_Grp', 'L_Scapulars_JR', 'unitConversion1742', 'L_Scapulars_JR_Fthr_000_InAuto_ry_MD', 'L_Scapulars_JR_Fthr_0012_InAuto_rx_MD', 'R_Scapulars_JR_Fthr_006_AutoJnt', 'R_Secondaries_JR_Fthr_007Bend02', 'R_Scapulars_JR_Fthr_007Bend01_Indiv_Ctrl_Offset_Grp', 'unitConversion1959', 'R_Secondaries_JR_6_CtrlShape', 'unitConversion484', 'L_Secondaries_JR_Fthr_0017Bend01_Indiv_Ctrl', 'R_Scapulars_JR_Fthr_000_RootJnt', 'unitConversion909', 'R_Secondaries_JR_Fthr_006_Bnd_parentConstraint1', 'R_Secondaries_JR_Fthr_0014Bend02_Indiv_Ctrl', 'L_Secondaries_JR_Fthr_008_InAuto_rx_MD', 'L_Primaries_JR_Fthr_002Bend01_Bnd_parentConstraint1', 'R_Secondaries_JR_Fthr_0011_SpreadAuto_Root', 'L_Secondaries_JR_Fthr_0013_In_ry_MD1', 'L_Secondaries_JR_Fthr_000_SpreadAuto_Root', 'unitConversion337', 'unitConversion2587', 'R_Primaries_JR_Fthr_003Bend03_Indiv_CtrlShape', 'L_Scapulars_JR_11_CtrlL_Scapulars_JR_11_CC_AutoFold_Grp_Grp', 'L_Secondaries_JR_Fthr_0013_AutoJnt', 'R_Secondaries_JR_Fthr_007_Indiv_CtrlShape', 'R_Secondaries_JR_Fthr_002Bend02_Bnd', 'L_Scapulars_JR_Fthr_003Bend01_Indiv_Ctrl', 'L_Scapulars_JR_Fthr_009_BendJnt2', 'R_Secondaries_JR_Fthr_004_SpreadAuto_Root', 'R_Primaries_JR_Bnd', 'L_Secondaries_JR_Fthr_004_Ctrl', 'unitConversion1040', 'R_Secondaries_JR_Wing_004', 'unitConversion194', 'L_Primaries_JR_Fthr_003Bend03_Indiv_Ctrl', 'R_Scapulars_JR_Fthr_001_Indiv_Ctrl_tag', 'L_Secondaries_JR_Spread_In_Auto_Grp', 'L_Scapulars_JR_Fthr_0012_Bnd', 'unitConversion1131', 'unitConversion922', 'R_Secondaries_JR_14_CtrlShape', 'R_Scapulars_JR_Fthr_0012Bend03', 'R_Secondaries_JR_Fthr_0010Bend01', 'R_Scapulars_JR_Fthr_002_Indiv_Ctrl_tag', 'unitConversion1435', 'R_Primaries_JR_Fthr_001Bend02', 'unitConversion683', 'R_Secondaries_JR_Wing_0013', 'L_Primaries_JR_Fthr_009_BendJnt1', 'unitConversion593', 'R_Scapulars_JR_2_Ctrl', 'R_Scapulars_JR_Wing_006_parentConstraint1', 'R_Secondaries_JR_Fthr_001_Ctrl', 'L_Scapulars_JR_Fthr_008_Ctrl', 'L_Secondaries_JR_Wing_008_parentConstraint1', 'unitConversion767', 'unitConversion417', 'R_Secondaries_JR_Fthr_007Bend02_Indiv_Ctrl_Offset_Grp', 'R_Primaries_JR_Fthr_003Bend02_Indiv_CtrlShape', 'R_Secondaries_JR_Fthr_004Bend03_Bnd_parentConstraint1', 'R_Secondaries_JR_10_CtrlL_Secondaries_JR_10_CC_AutoFold_Grp_Grp', 'R_Scapulars_JR_Fthr_0013Bend03_Indiv_Ctrl_Offset_Grp', 'R_Primaries_JR_Fthr_004Bend02_Bnd_parentConstraint1', 'L_Scapulars_JR_Fthr_0014_SpreadCtrlGrp', 'L_Secondaries_JR_Fthr_0012Bend02_Indiv_Ctrl_Offset_Grp', 'R_Secondaries_JR_Fthr_001Bend01_Bnd', 'unitConversion375', 'unitConversion664', 'unitConversion2092', 'unitConversion2337', 'unitConversion1041', 'unitConversion2046', 'unitConversion358', 'unitConversion295', 'R_Secondaries_JR_Fthr_0016Bend01_Indiv_CtrlShape', 'unitConversion1647', 'R_Secondaries_JR_Fthr_0010Bend02_Bnd', 'R_Scapulars_JR_Fthr_007Bend02_Indiv_CtrlShape', 'R_Secondaries_JR_Fthr_002Bend03_Indiv_CtrlShape', 'R_Scapulars_JR_Fthr_0014_Ctrl_Root_Grp', 'L_Scapulars_JR_Fthr_0012_OutAuto_ry_MD1', 'R_Primaries_JR_Fthr_005_SpreadAuto', 'L_Scapulars_JR_Wing_000_Ctrl_locGlobalRotateShape', 'unitConversion832', 'L_Scapulars_JR_Fthr_007Bend01_Indiv_CtrlShape', 'unitConversion702', 'L_Scapulars_JR_Fthr_0012_Out_rx_MD1', 'L_Scapulars_JR_Spread_Out_Ctrl', 'R_Secondaries_JR_Fthr_0016_Ctrl_Root_Grp', 'L_Secondaries_JR_Fthr_006_Indiv_Ctrl', 'R_Primaries_JR_4_CtrlL_Primaries_JR_4_CC_AutoFold_Grp_Grp', 'L_Secondaries_JR_Fthr_009_OutAuto_rx_MD', 'L_Scapulars_JR_Fthr_008_In_ry_MD', 'R_Scapulars_JR_Fthr_0010_BendJnt1', 'R_Primaries_JR_Fthr_009_BendJnt1', 'L_Scapulars_JR_5_CtrlShape', 'L_Scapulars_JR_Fthr_003Bend03_Indiv_Ctrl_tag', 'unitConversion40', 'R_Scapulars_JR_Fthr_0012Bend03_Indiv_Ctrl', 'unitConversion2645', 'unitConversion1550', 'unitConversion811', 'unitConversion500', 'unitConversion2683', 'L_Primaries_JR_Wing_005_parentConstraint1', 'R_Secondaries_JR_Fthr_001_CtrlShape', 'R_Secondaries_JR_Fthr_0017Bend02_Bnd', 'unitConversion2231', 'unitConversion1149', 'L_Secondaries_JR_Fthr_009_OutAuto_rx_MD1', 'unitConversion851', 'L_Secondaries_JR_Fthr_006_In_ry_MD1', 'L_Secondaries_JR_Bnd', 'unitConversion120', 'L_Primaries_JR_Fthr_002_BendJnt3', 'unitConversion1760', 'R_Secondaries_JR_Fthr_003_BendJnt3', 'L_Secondaries_JR_Fthr_0012_Indiv_Ctrl_tag', 'unitConversion2108', 'unitConversion2391', 'unitConversion889', 'unitConversion1530', 'L_Secondaries_JR_Fthr_0011_OutAuto_rx_MD', 'R_Scapulars_JR_Fthr_0012Bend03_Indiv_Ctrl_Offset_Grp', 'unitConversion884', 'L_Scapulars_JR_Fthr_007Bend02_Indiv_CtrlShape', 'R_Scapulars_JR_Fthr_0012_SpreadAuto', 'unitConversion2263', 'R_Primaries_JR_Fthr_003Bend01_Bnd_parentConstraint1', 'R_Primaries_JR_Fthr_007Bend03_Indiv_Ctrl', 'R_Secondaries_JR_Fthr_0016_SpreadCtrlGrp', 'L_Scapulars_JR_Fthr_0012_InAuto_ry_MD1', 'L_Scapulars_JR_Fthr_008Bend03_Indiv_CtrlShape', 'R_Primaries_JR_Fthr_002Bend03_Indiv_Ctrl_Offset_Grp', 'L_Secondaries_JR_Fthr_001Bend02_Indiv_CtrlShape', 'unitConversion2338', 'L_Secondaries_JR_3_CtrlL_Secondaries_JR_3_CC_AutoFold_Grp_Grp', 'L_Scapulars_JR_Bnd', 'L_Secondaries_JR_Fthr_0016Bend03_Indiv_Ctrl_Offset_Grp', 'unitConversion2665', 'unitConversion1158', 'R_Secondaries_JR_Fthr_002_CtrlShape', 'L_Scapulars_JR_4_Ctrl', 'R_Secondaries_JR_Fthr_001_SpreadCtrlGrp', 'R_Primaries_JR_Fthr_000Bend03_Indiv_Ctrl', 'R_Primaries_JR_Fthr_000Bend03_Bnd_parentConstraint1', 'unitConversion2525', 'unitConversion2101', 'unitConversion1799', 'L_Secondaries_JR_Fthr_002_SpreadAuto_Root', 'unitConversion1916', 'unitConversion1865', 'unitConversion2141', 'L_Scapulars_JR_Fthr_002_Out_rx_MD', 'L_Scapulars_JR_Fthr_008_Indiv_Ctrl_Offset_Grp', 'R_Secondaries_JR_3_Ctrl', 'L_Scapulars_JR_Wing_001_Bnd', 'unitConversion2634', 'R_Secondaries_JR_Fthr_0014Bend03_Indiv_Ctrl_tag', 'L_Scapulars_JR_Fthr_002Bend03_Bnd', 'L_Scapulars_JR_Fthr_004_Indiv_CtrlShape', 'R_Scapulars_JR_Fthr_004Bend01_Indiv_Ctrl_tag', 'L_Scapulars_JR_Fthr_009_Indiv_Ctrl_Offset_Grp', 'R_Secondaries_JR_FeathersPlaneShape', 'R_Scapulars_JR_Fthr_004Bend01_Indiv_CtrlShape', 'unitConversion534', 'L_Primaries_JR_Fthr_007Bend01_Indiv_Ctrl', 'unitConversion217', 'unitConversion442', 'unitConversion1678', 'L_Secondaries_JR_Wing_005_Bnd', 'R_Secondaries_JR_Fthr_0010_Bnd_parentConstraint1', 'R_Secondaries_JR_Fthr_0017_Indiv_Ctrl_tag', 'R_Secondaries_JR_Fthr_007Bend01_Indiv_Ctrl', 'L_Primaries_JR_Fthr_001_InAuto_ry_MD1', 'unitConversion917', 'R_Scapulars_JR_Fthr_004_SpreadAuto_Auto', 'L_Primaries_JR_Fthr_004Bend03_Bnd', 'R_Scapulars_JR_Fthr_007_RootJnt', 'unitConversion640', 'R_Primaries_JR_Fthr_006Bend03_Indiv_Ctrl_Offset_Grp', 'L_Scapulars_JR_Fthr_008Bend01_Indiv_Ctrl_tag', 'unitConversion1602', 'unitConversion601', 'L_Secondaries_JR_Fthr_0010', 'R_Primaries_JR_Fthr_007_SpreadAuto_Auto', 'unitConversion1918', 'L_Primaries_JR_Fthr_002_Out_rx_MD', 'R_Scapulars_JR_Wing_001_parentConstraint1', 'unitConversion2674', 'L_Secondaries_JR_Fthr_007_Indiv_CtrlShape', 'L_Secondaries_JR_Fthr_003_Indiv_Ctrl', 'L_Primaries_JR_1_Ctrl', 'unitConversion2408', 'unitConversion1141', 'unitConversion1616', 'L_Primaries_JR_Fthr_003_BendJnt1', 'L_Scapulars_JR_Fthr_000', 'unitConversion2036', 'L_Secondaries_JR_Fthr_0012_OutAuto_rx_MD', 'R_Scapulars_JR_Fthr_0014_SpreadAuto', 'R_Scapulars_JR_Fthr_0013_SpreadCtrlGrp', 'R_Secondaries_JR_Fthr_006Bend03_Indiv_Ctrl', 'R_Secondaries_JR_Fthr_0014Bend02', 'unitConversion938', 'R_Secondaries_JR_Fthr_006', 'unitConversion116', 'L_Secondaries_JR_5_Ctrl', 'L_Primaries_JR_Fthr_009Bend01_Indiv_CtrlShape', 'R_Scapulars_JR_Fthr_001_Ctrl_Auto_Grp', 'R_Scapulars_JR_Fthr_009_RootJnt', 'L_Primaries_JR_Fthr_006_Out_rx_MD1', 'unitConversion2389', 'L_Primaries_JR_Fthr_001_Indiv_Ctrl_Offset_Grp', 'R_Primaries_JR_Fthr_009Bend01_Bnd', 'L_Scapulars_JR_Fthr_0010_Indiv_Ctrl', 'R_Primaries_JR_Fthr_008', 'L_Primaries_JR_Fthr_008Bend01_Indiv_CtrlShape', 'L_Secondaries_JR_Fthr_0014', 'unitConversion1235', 'R_Scapulars_JR_Fthr_0011Bend03_Bnd', 'R_Scapulars_JR_Fthr_008_Ctrl', 'unitConversion2236', 'unitConversion1367', 'L_Secondaries_JR_Fthr_005Bend03_Indiv_Ctrl_tag', 'unitConversion2294', 'L_Primaries_JR_Fthr_009_Out_ry_MD', 'L_Scapulars_JR_Fthr_0014_SpreadAuto_Root', 'R_Primaries_JR_Fthr_000Bend03_Bnd', 'R_Secondaries_JR_Fthr_005Bend03', 'R_Primaries_JR_Fthr_006Bend03_Bnd', 'unitConversion1821', 'unitConversion717', 'L_Scapulars_JR_Fthr_001_In_ry_MD1', 'L_Primaries_JR_Fthr_005Bend02_Indiv_Ctrl', 'R_Secondaries_JR_Fthr_002Bend03_Bnd', 'R_Primaries_JR_Fthr_000_SpreadAuto', 'R_Primaries_JR_Fthr_002Bend01_Indiv_Ctrl_Offset_Grp', 'unitConversion2790', 'unitConversion1532', 'R_Scapulars_JR_Fthr_0012Bend03_Bnd', 'R_Primaries_JR_Fthr_008Bend02_Indiv_CtrlShape', 'unitConversion2256', 'L_Secondaries_JR_Fthr_004_InAuto_rx_MD1', 'L_Secondaries_JR_Fthr_0011Bend01', 'unitConversion285', 'L_Secondaries_JR_Fthr_000_RootJnt', 'unitConversion2398', 'R_Primaries_JR_Fthr_000_RootJnt', 'L_Secondaries_JR_Fthr_007Bend01', 'unitConversion2054', 'unitConversion947', 'R_Primaries_JR_Wing_001_Bnd_parentConstraint1', 'unitConversion2657', 'R_Secondaries_JR_Fthr_006_Ctrl_Auto_Grp', 'skinCluster5', 'L_Primaries_JR_Fthr_007Bend01_Indiv_Ctrl_Offset_Grp', 'L_Secondaries_JR_Fthr_0010_Bnd_parentConstraint1', 'unitConversion894', 'L_Scapulars_JR_Fthr_0010Bend02', 'unitConversion1569', 'R_Secondaries_JR_Wing_006_Bnd', 'R_Primaries_JR_Fthr_001_Ctrl', 'R_Scapulars_JR_Wing_004_Bnd', 'R_Scapulars_JR_Wing_0010_Bnd_parentConstraint1', 'R_Secondaries_JR_Fthr_0013_BendJnt3', 'L_Secondaries_JR_Fthr_0012Bend01_Bnd_parentConstraint1', 'unitConversion1026', 'R_Scapulars_JR_Fthr_0010_CtrlShape', 'R_Scapulars_JR_Fthr_005Bend01_Indiv_Ctrl', 'R_Secondaries_JR_Fthr_0016Bend03_Bnd_parentConstraint1', 'L_Primaries_JR_Fthr_004_InAuto_ry_MD', 'R_Scapulars_JR_Fthr_007Bend02_Indiv_Ctrl_Offset_Grp', 'L_Scapulars_JR_Fthr_000_Out_ry_MD1', 'L_Scapulars_JR_Fthr_003_SpreadAuto_Root', 'unitConversion2723', 'unitConversion1360', 'L_Primaries_JR_0_CtrlShape', 'unitConversion2548', 'L_Primaries_JR_Fthr_002_In_rx_MD', 'unitConversion813', 'R_Scapulars_JR_Fthr_000_AutoJnt', 'R_Scapulars_JR_Bend_CtrlShape', 'R_Scapulars_JR_Fthr_007Bend03_Indiv_Ctrl_Offset_Grp', 'L_Secondaries_JR_Fthr_0017_SpreadCtrlGrp', 'unitConversion1344', 'L_Scapulars_JR_Fthr_0013Bend01_Indiv_Ctrl_Offset_Grp', 'L_Primaries_JR_Fthr_001_SpreadAuto_Root', 'L_Primaries_JR_Fthr_006Bend02_Indiv_Ctrl_Offset_Grp', 'unitConversion368', 'unitConversion1396', 'L_Scapulars_JR_Fthr_0011Bend03_Bnd', 'R_Scapulars_JR_Bnd_parentConstraint1', 'skinCluster3GroupParts', 'L_Scapulars_JR_Fthr_009_BendJnt1', 'L_Scapulars_JR_Bend_CtrlShape', 'unitConversion1545', 'R_Secondaries_JR_Fthr_0015Bend01_Indiv_CtrlShape', 'unitConversion2553', 'R_Scapulars_JR_Fthr_0012Bend01_Bnd_parentConstraint1', 'L_Scapulars_JR_Fthr_0012Bend02', 'unitConversion525', 'R_Secondaries_JR_Wing_0010', 'L_Primaries_JR_Fthr_007Bend01_Indiv_CtrlShape', 'L_Secondaries_JR_Fthr_006_OutAuto_ry_MD', 'L_Secondaries_JR_Fthr_0010Bend01', 'L_Secondaries_JR_Fthr_0016_SpreadAuto', 'L_Scapulars_JR_Fthr_004Bend03_Indiv_Ctrl_tag', 'unitConversion520', 'R_Scapulars_JR_Fthr_009_Ctrl_Auto_Grp', 'L_Scapulars_JR_Fthr_0010Bend01_Indiv_Ctrl_Offset_Grp', 'unitConversion1962', 'bindPose5', 'L_Primaries_JR_Fthr_005_OutAuto_ry_MD', 'L_Primaries_JR_Fthr_003Bend02_Indiv_Ctrl', 'R_Scapulars_JR_Fthr_002_Indiv_Ctrl_Offset_Grp', 'unitConversion173', 'R_Secondaries_JR_Fthr_0016Bend01', 'unitConversion1906', 'R_Secondaries_JR_Fthr_0011Bend02_Bnd', 'unitConversion1590', 'L_Secondaries_JR_Fthr_0011_Out_ry_MD1', 'L_Primaries_JR_Fthr_008_BendJnt3', 'unitConversion1657', 'L_Secondaries_JR_Fthr_0014_InAuto_ry_MD', 'unitConversion2257', 'L_Scapulars_JR_Fthr_003Bend03_Indiv_CtrlShape', 'unitConversion345', 'unitConversion529', 'R_Scapulars_JR_Fthr_006_SpreadAuto', 'L_Primaries_JR_Fthr_004_OutAuto_rx_MD', 'L_Secondaries_JR_Fthr_007Bend02', 'unitConversion2237', 'R_Scapulars_JR_14_Ctrl', 'unitConversion753', 'unitConversion2282', 'unitConversion332', 'L_Secondaries_JR_10_Ctrl', 'R_Secondaries_JR_Fthr_009_BendJnt1', 'unitConversion1494', 'R_Secondaries_JR_Fthr_004_SpreadAuto_Auto', 'L_Primaries_JR_Fthr_004_SpreadAuto', 'R_Secondaries_JR_Fthr_0014Bend03_Bnd', 'L_Secondaries_JR_Fthr_006_Bnd_parentConstraint1', 'R_Scapulars_JR_Fthr_0010_Bnd', 'R_Scapulars_JR_Fthr_006Bend02_Indiv_Ctrl_tag', 'unitConversion83', 'R_Primaries_JR_Fthr_009_Indiv_Ctrl_tag', 'unitConversion1018', 'L_Secondaries_JR_Fthr_006_Ctrl', 'L_Primaries_JR_Fthr_003_Out_rx_MD1', 'unitConversion1243', 'R_Primaries_JR_Fthr_004_SpreadAuto', 'R_Primaries_JR_Fthr_009_SpreadAuto_Auto', 'unitConversion2496', 'L_Secondaries_JR_Bend_CtrlShape', 'L_Scapulars_JR_Fthr_003_InAuto_rx_MD', 'R_Scapulars_JR_Fthr_003Bend01', 'R_Secondaries_JR_Fthr_0013_Bnd_parentConstraint1', 'L_Primaries_JR_8_CtrlL_Primaries_JR_8_CC_AutoFold_Grp_Grp', 'R_Primaries_JR_5_CtrlShape', 'unitConversion415', 'unitConversion804', 'L_Primaries_JR_Fthr_001_AutoJnt', 'unitConversion2453', 'unitConversion2019', 'R_Scapulars_JR_Fthr_008Bend02_Indiv_CtrlShape', 'unitConversion2190', 'unitConversion2332', 'unitConversion1717', 'unitConversion2188', 'L_Secondaries_JR_Fthr_005Bend02_Indiv_CtrlShape', 'L_Primaries_JR_Fthr_002Bend03_Bnd', 'R_Scapulars_JR_Fthr_0010_AutoJnt', 'R_Scapulars_JR_Fthr_0011_SpreadAuto_Root_orientConstraint1', 'R_Secondaries_JR_Fthr_000Bend01_Bnd_parentConstraint1', 'L_Scapulars_JR_Fthr_004Bend02_Indiv_CtrlShape', 'R_Scapulars_JR_Fthr_002_Indiv_Ctrl', 'L_Scapulars_JR_Fthr_000_CtrlShape', 'R_Wing_Nurbs_GRP', 'R_Secondaries_JR_6_Ctrl', 'unitConversion2386', 'L_Scapulars_JR_Fthr_003Bend02_Indiv_Ctrl_Offset_Grp', 'unitConversion2009', 'L_Scapulars_JR_Fthr_0013Bend02_Indiv_Ctrl', 'unitConversion2139', 'unitConversion2585', 'unitConversion1901', 'unitConversion281', 'L_Scapulars_JR_Fthr_0011_Bnd_parentConstraint1', 'L_Scapulars_JR_Fthr_004Bend03', 'L_Scapulars_JR_Fthr_004_Ctrl_Auto_Grp', 'L_Scapulars_JR_Fthr_0010_OutAuto_ry_MD1', 'L_Scapulars_JR_10_Ctrl', 'R_Scapulars_JR_Fthr_0011Bend03_Indiv_CtrlShape', 'unitConversion1489', 'L_Secondaries_JR_Fthr_008Bend01_Indiv_CtrlShape', 'L_Scapulars_JR_Bend_CC_Auto_Grp', 'L_Secondaries_JR_Fthr_0014Bend03_Bnd', 'L_Scapulars_JR_Fthr_0010_SpreadCtrlGrp', 'L_Scapulars_JR_Fthr_007_BendJnt2', 'unitConversion662', 'L_Scapulars_JR_Fthr_005_In_ry_MD1', 'L_Primaries_JR_Fthr_006_BendJnt2', 'unitConversion2397', 'L_Scapulars_JR_Fthr_0011_Indiv_Ctrl_Offset_Grp', 'unitConversion1949', 'L_Scapulars_JR_Fthr_007_Ctrl_Root_Grp', 'R_Secondaries_JR_Wing_001_parentConstraint1', 'R_Primaries_JR_Fthr_000Bend02', 'R_Secondaries_JR_Fthr_002_SpreadCtrlGrp', 'L_Secondaries_JR_Fthr_004Bend02_Bnd', 'R_Scapulars_JR_Fthr_001_RootJnt', 'L_Scapulars_JR_Fthr_009_Ctrl_Root_Grp', 'R_Scapulars_JR_Fthr_008Bend02_Indiv_Ctrl_Offset_Grp', 'L_Scapulars_JR_Fthr_0010_CtrlShape', 'L_Secondaries_JR_Fthr_009', 'unitConversion1947', 'unitConversion1266', 'L_Primaries_JR_Fthr_007_InAuto_rx_MD', 'L_Secondaries_JR_Fthr_000_Ctrl', 'L_Primaries_JR_Fthr_005Bend03_Indiv_Ctrl_tag', 'R_Secondaries_JR_Fthr_009_Ctrl', 'unitConversion1922', 'unitConversion162', 'unitConversion1588', 'unitConversion2210', 'L_Scapulars_JR_Fthr_007_Ctrl_Auto_Grp', 'L_Secondaries_JR_Fthr_006_Out_rx_MD1', 'L_Secondaries_JR_Fthr_0015Bend03_Indiv_Ctrl_Offset_Grp', 'skinCluster2GroupParts', 'L_Secondaries_JR_Fthr_007_SpreadAuto_Root', 'R_Secondaries_JR_Fthr_0013Bend01_Indiv_Ctrl_tag', 'unitConversion2043', 'L_Primaries_JR_Fthr_009Bend01_Indiv_Ctrl', 'unitConversion546', 'R_Secondaries_JR_Fthr_0010Bend02_Indiv_CtrlShape', 'R_Primaries_JR_Fthr_006_AutoJnt', 'R_Secondaries_JR_Fthr_009_Bnd', 'R_Primaries_JR_Fthr_005Bend01_Indiv_Ctrl_tag', 'unitConversion2067', 'R_Secondaries_JR_Wing_0010_Bnd_parentConstraint1', 'R_Scapulars_JR_Fthr_009Bend02', 'unitConversion21', 'R_Primaries_JR_Fthr_008Bend01_Indiv_CtrlShape', 'unitConversion561', 'unitConversion362', 'unitConversion712', 'R_Scapulars_JR_Fthr_000Bend03_Indiv_Ctrl_Offset_Grp', 'R_Primaries_JR_Fthr_000Bend01_Bnd', 'unitConversion1225', 'L_Secondaries_JR_Fthr_007_In_ry_MD', 'unitConversion2499', 'unitConversion1274', 'R_Primaries_JR_Fthr_005_BendJnt3', 'unitConversion1860', 'R_Primaries_JR_Fthr_009Bend01_Bnd_parentConstraint1', 'L_Secondaries_JR_Fthr_005_In_rx_MD1', 'unitConversion256', 'L_Secondaries_JR_Fthr_008_Ctrl_Root_Grp', 'R_Secondaries_JR_Fthr_002Bend01_Bnd', 'L_Secondaries_JR_Fthr_002Bend03_Indiv_Ctrl_tag', 'R_Primaries_JR_Fthr_007_Bnd', 'L_Scapulars_JR_5_CtrlL_Scapulars_JR_5_CC_AutoFold_Grp_Grp', 'L_Scapulars_JR_Fthr_002_Out_rx_MD1', 'L_Secondaries_JR_Fthr_0013Bend02_Indiv_CtrlShape', 'L_Secondaries_JR_Fthr_0011Bend02_Indiv_Ctrl_tag', 'unitConversion2680', 'L_Scapulars_JR_Fthr_009_Bnd_parentConstraint1', 'R_Secondaries_JR_Fthr_0010Bend01_Indiv_Ctrl_Offset_Grp', 'unitConversion1357', 'unitConversion1659', 'unitConversion2728', 'L_Scapulars_JR_Fthr_0013_Indiv_Ctrl_tag', 'unitConversion995', 'L_Secondaries_JR_Fthr_006_Indiv_Ctrl_Offset_Grp', 'R_Scapulars_JR_Fthr_008Bend03_Bnd_parentConstraint1', 'unitConversion1422', 'unitConversion1353', 'R_Secondaries_JR_Fthr_0016_BendJnt2', 'unitConversion766', 'unitConversion363', 'R_Primaries_JR_Fthr_006_BendJnt1', 'unitConversion2306', 'R_Scapulars_JR_5_CtrlL_Scapulars_JR_5_CC_AutoFold_Grp_Grp', 'L_Secondaries_JR_FeathersPlane', 'L_Secondaries_JR_Fthr_0015Bend02_Indiv_CtrlShape', 'L_Secondaries_JR_Wing_0013_Bnd', 'L_Secondaries_JR_Fthr_008Bend03_Bnd_parentConstraint1', 'unitConversion169', 'unitConversion1061', 'unitConversion2742', 'L_Scapulars_JR_Fthr_002_InAuto_rx_MD1', 'unitConversion1221', 'L_Primaries_JR_Fthr_000Bend01_Bnd', 'unitConversion1023', 'unitConversion1866', 'R_Scapulars_JR_13_CtrlL_Scapulars_JR_13_CC_AutoFold_Grp_Grp', 'L_Scapulars_JR_Fthr_007_Bnd_parentConstraint1', 'L_Scapulars_JR_Fthr_0014_Out_ry_MD1', 'unitConversion1895', 'unitConversion819', 'L_Scapulars_JR_Fthr_008_SpreadAuto_Root_orientConstraint1', 'unitConversion2547', 'L_Secondaries_JR_Fthr_002Bend03_Bnd', 'L_Scapulars_JR_Fthr_007_OutAuto_ry_MD1', 'R_Secondaries_JR_Fthr_0011Bend02_Indiv_Ctrl_tag', 'R_Secondaries_JR_Fthr_0012Bend01_Bnd_parentConstraint1', 'R_Secondaries_JR_Fthr_0017_SpreadAuto_Root', 'unitConversion953', 'L_Primaries_JR_Fthr_001Bend01_Indiv_Ctrl_Offset_Grp', 'unitConversion1597', 'L_Secondaries_JR_Fthr_0017_Bnd', 'R_Scapulars_JR_Fthr_001Bend01', 'R_Scapulars_JR_Fthr_001Bend03_Indiv_CtrlShape', 'unitConversion607', 'unitConversion1623', 'L_Secondaries_JR_Fthr_0014_Indiv_Ctrl_tag', 'R_Primaries_JR_Fthr_003_CtrlShape', 'R_Secondaries_JR_Fthr_0012Bend03_Indiv_CtrlShape', 'L_Scapulars_JR_Fthr_0013_SpreadCtrlGrp', 'unitConversion1546', 'R_Scapulars_JR_Fthr_002Bend03_Bnd', 'unitConversion312', 'R_Scapulars_JR_Wing_007_Bnd_parentConstraint1', 'L_Scapulars_JR_Fthr_009Bend03', 'R_Scapulars_JR_Fthr_009Bend03', 'L_Scapulars_JR_Fthr_003Bend02_Bnd', 'R_Primaries_JR_Fthr_007Bend01', 'unitConversion1575', 'unitConversion817', 'unitConversion453', 'unitConversion1289', 'unitConversion1337', 'R_Primaries_JR_Fthr_006', 'L_Scapulars_JR_Fthr_006Bend02_Indiv_CtrlShape', 'R_Primaries_JR_Wing_007', 'unitConversion1912', 'L_Primaries_JR_Fthr_002_Indiv_CtrlShape', 'unitConversion1509', 'L_Primaries_JR_Fthr_006Bend01_Indiv_CtrlShape', 'unitConversion1119', 'R_Secondaries_JR_Fthr_004Bend01_Bnd_parentConstraint1', 'unitConversion1890', 'R_Secondaries_JR_Fthr_0012Bend02_Indiv_Ctrl_Offset_Grp', 'R_Primaries_JR_Fthr_000_Indiv_Ctrl_tag', 'unitConversion2633', 'unitConversion652', 'unitConversion2466', 'L_Primaries_JR_Wing_008', 'R_Primaries_JR_Fthr_008Bend03_Indiv_Ctrl_tag', 'unitConversion1772', 'L_Primaries_JR_Fthr_001Bend02_Indiv_CtrlShape', 'unitConversion1478', 'unitConversion2733', 'unitConversion1406', 'R_Primaries_JR_Fthr_008Bend01_Bnd', 'L_Primaries_JR_Fthr_007_RootJnt', 'R_Primaries_JR_Fthr_000_SpreadAuto_Root', 'L_Secondaries_JR_Fthr_0017_InAuto_ry_MD1', 'unitConversion1887', 'L_Scapulars_JR_Fthr_002_Out_ry_MD', 'R_Secondaries_JR_Fthr_001Bend01_Indiv_Ctrl_tag', 'L_Secondaries_JR_Fthr_000Bend02_Indiv_CtrlShape', 'unitConversion847', 'R_Secondaries_JR_Wing_001_Bnd_parentConstraint1', 'L_Scapulars_JR_Fthr_0010_In_ry_MD', 'R_Scapulars_JR_Fthr_0013Bend01_Indiv_CtrlShape', 'L_Secondaries_JR_Wing_001', 'unitConversion750', 'unitConversion1984', 'unitConversion1807', 'unitConversion1601', 'L_Primaries_JR_Fthr_003_InAuto_rx_MD1', 'unitConversion455', 'unitConversion1342', 'L_Secondaries_JR_Fthr_000_Out_rx_MD', 'L_Scapulars_JR_Fthr_003_InAuto_rx_MD1', 'L_Secondaries_JR_Fthr_0013_In_rx_MD', 'unitConversion206', 'L_Scapulars_JR_Fthr_0011_SpreadAuto_Root', 'R_Secondaries_JR_Fthr_0013Bend02_Bnd_parentConstraint1', 'unitConversion741', 'L_Secondaries_JR_Wing_001_Bnd_parentConstraint1', 'L_Scapulars_JR_Fthr_004Bend01_Bnd', 'unitConversion1690', 'L_Secondaries_JR_Fthr_009_Indiv_Ctrl', 'R_Primaries_JR_Fthr_001Bend03_Bnd_parentConstraint1', 'L_Primaries_JR_Fthr_001_Out_ry_MD1', 'L_Scapulars_JR_Fthr_004Bend01', 'unitConversion2695', 'L_Scapulars_JR_Wing_008_Bnd_parentConstraint1', 'R_Secondaries_JR_Fthr_0013Bend02_Indiv_Ctrl_Offset_Grp', 'unitConversion1445', 'R_Secondaries_JR_Fthr_0016_Bnd', 'L_Secondaries_JR_Fthr_005Bend03_Indiv_Ctrl_Offset_Grp', 'L_Scapulars_JR_Fthr_006_In_ry_MD1', 'R_Secondaries_JR_Fthr_003_Bnd_parentConstraint1', 'R_Secondaries_JR_Fthr_008Bend02_Indiv_Ctrl_tag', 'unitConversion2488', 'R_Secondaries_JR_Fthr_005Bend02_Indiv_CtrlShape', 'unitConversion1726', 'L_Secondaries_JR_Bend_CC_Root_Grp', 'L_Scapulars_JR_Fthr_0010Bend03_Bnd', 'R_Scapulars_JR_Fthr_007_BendJnt2', 'unitConversion605', 'R_Secondaries_JR_Fthr_0012Bend01', 'L_Secondaries_JR_Fthr_0014_In_rx_MD', 'unitConversion232', 'unitConversion1684', 'L_Secondaries_JR_Fthr_0013_InAuto_ry_MD1', 'unitConversion1272', 'unitConversion2196', 'L_Primaries_JR_Fthr_006_Indiv_Ctrl_Offset_Grp', 'unitConversion1904', 'unitConversion2285', 'L_Primaries_JR_Fthr_006Bend03', 'L_Secondaries_JR_Fthr_0014_SpreadCtrlGrp', 'unitConversion172', 'R_Scapulars_JR_Fthr_008_SpreadAuto_Auto', 'unitConversion2465', 'unitConversion92', 'R_Secondaries_JR_Wing_002_Bnd_parentConstraint1', 'L_Scapulars_JR_Fthr_0014_SpreadAuto_Root_orientConstraint1', 'unitConversion2047', 'L_Secondaries_JR_Fthr_007_Ctrl_Root_Grp', 'unitConversion2568', 'R_Primaries_JR_Fthr_002_RootJnt', 'unitConversion2204', 'R_Scapulars_JR_Fthr_002Bend02_Indiv_Ctrl_tag', 'L_Secondaries_JR_Wing_008_Bnd_parentConstraint1', 'L_Primaries_JR_Fthr_009_Indiv_Ctrl_Offset_Grp', 'R_Secondaries_JR_Fthr_0012_Indiv_CtrlShape', 'R_Scapulars_JR_Wing_000_Ctrl_AutoGlobalRotate', 'L_Secondaries_JR_Wing_001_Bnd', 'unitConversion2437', 'R_Scapulars_JR_Fthr_0010Bend02_Indiv_Ctrl_tag', 'L_Secondaries_JR_Fthr_008_SpreadCtrlGrp', 'L_Secondaries_JR_Fthr_008_Ctrl', 'unitConversion1007', 'R_Secondaries_JR_Fthr_009Bend03_Bnd_parentConstraint1', 'unitConversion2055', 'L_Secondaries_JR_1_CtrlL_Secondaries_JR_1_CC_AutoFold_Grp_Grp', 'L_Secondaries_JR_Wing_0017_parentConstraint1', 'R_Scapulars_JR_Fthr_0014_SpreadAuto_Auto', 'unitConversion60', 'L_Primaries_JR_Fthr_007', 'unitConversion2080', 'unitConversion1810', 'L_Secondaries_JR_Fthr_0017Bend03_Indiv_Ctrl', 'R_Scapulars_JR_Fthr_0012Bend02', 'unitConversion530', 'unitConversion585', 'L_Scapulars_JR_Fthr_008_OutAuto_rx_MD1', 'L_Scapulars_JR_Fthr_0012_Indiv_Ctrl', 'unitConversion473', 'R_Scapulars_JR_14_CtrlL_Scapulars_JR_14_CC_AutoFold_Grp_Grp', 'R_Primaries_JR_6_CtrlL_Primaries_JR_6_CC_AutoFold_Grp_Grp', 'L_Secondaries_JR_Fthr_008_OutAuto_rx_MD', 'L_Scapulars_JR_Fthr_0012_Out_rx_MD', 'L_Primaries_JR_Fthr_004Bend01_Indiv_Ctrl', 'L_Secondaries_JR_Fthr_0017Bend01_Bnd_parentConstraint1', 'L_Secondaries_JR_Fthr_0017_BendJnt1', 'unitConversion2563', 'unitConversion747', 'unitConversion1645', 'unitConversion1749', 'unitConversion2162', 'L_Scapulars_JR_Fthr_008_InAuto_ry_MD1', 'unitConversion505', 'L_Primaries_JR_Fthr_003Bend01_Indiv_CtrlShape', 'L_Primaries_JR_Fthr_005Bend03_Bnd_parentConstraint1', 'unitConversion252', 'R_Scapulars_JR_Fthr_000Bend03_Indiv_CtrlShape', 'unitConversion897', 'L_Secondaries_JR_Fthr_0013Bend03_Indiv_Ctrl', 'L_Primaries_JR_Fthr_002_BendJnt1', 'unitConversion2612', 'skinCluster3Set1', 'R_Secondaries_JR_Fthr_0013_CtrlShape', 'unitConversion1117', 'R_Primaries_JR_4_Ctrl', 'unitConversion198', 'R_Scapulars_JR_Fthr_0010Bend02_Indiv_Ctrl_Offset_Grp', 'L_Secondaries_JR_Fthr_0012Bend02_Indiv_CtrlShape', 'L_Scapulars_JR_Fthr_008_SpreadAuto_Root', 'unitConversion2388', 'L_Secondaries_JR_Fthr_003_OutAuto_rx_MD1', 'L_Scapulars_JR_Fthr_009_CtrlShape', 'unitConversion2545', 'L_Scapulars_JR_Fthr_0011_In_ry_MD1', 'L_Scapulars_JR_10_CtrlShape', 'unitConversion1845', 'L_Secondaries_JR_Fthr_003_In_ry_MD1', 'R_Scapulars_JR_Fthr_0011Bend03_Bnd_parentConstraint1', 'R_Scapulars_JR_6_CtrlShape', 'unitConversion87', 'unitConversion672', 'unitConversion2555', 'unitConversion2219', 'L_Scapulars_JR_Fthr_006Bend03_Bnd_parentConstraint1', 'R_Primaries_JR_Fthr_000_Ctrl_Auto_Grp', 'L_Scapulars_JR_Wing_0014_Bnd', 'unitConversion1280', 'unitConversion622', 'L_Secondaries_JR_Fthr_006_BendJnt2', 'R_Secondaries_JR_Fthr_0015_CtrlShape', 'L_Secondaries_JR_Fthr_005_Out_rx_MD', 'unitConversion578', 'unitConversion940', 'L_Primaries_JR_Fthr_003_SpreadAuto', 'R_Scapulars_JR_Fthr_004Bend01_Bnd_parentConstraint1', 'L_Secondaries_JR_10_CtrlL_Secondaries_JR_10_CC_AutoFold_Grp_Grp', 'unitConversion506', 'unitConversion710', 'unitConversion2078', 'unitConversion1429', 'unitConversion1802', 'L_Primaries_JR_Fthr_002_SpreadAuto_Root', 'L_Secondaries_JR_Fthr_0011_BendJnt2', 'unitConversion2704', 'R_Primaries_JR_Fthr_007Bend03', 'unitConversion513', 'L_Scapulars_JR_Fthr_0011Bend02_Indiv_Ctrl_tag', 'unitConversion690', 'R_Secondaries_JR_Fthr_0016Bend02_Bnd_parentConstraint1', 'unitConversion1716', 'L_Primaries_JR_Fthr_007Bend03_Indiv_Ctrl', 'R_Secondaries_JR_Fthr_000_SpreadAuto', 'L_Secondaries_JR_Fthr_004_BendJnt3', 'R_Scapulars_JR_Fthr_001Bend02_Indiv_CtrlShape', 'L_Primaries_JR_Bend_CC_Auto_Grp', 'L_Secondaries_JR_Fthr_002Bend01_Indiv_Ctrl_Offset_Grp', 'R_Secondaries_JR_Fthr_004_SpreadCtrlGrp', 'unitConversion2025', 'R_Scapulars_JR_5_Ctrl', 'unitConversion1510', 'unitConversion2719', 'unitConversion2506', 'R_Primaries_JR_Fthr_006_BendJnt2', 'R_Scapulars_JR_Fthr_007Bend01_Bnd', 'unitConversion1451', 'unitConversion1938', 'unitConversion609', 'R_Primaries_JR_Fthr_009Bend01_Indiv_Ctrl', 'R_Primaries_JR_Fthr_008Bend03_Indiv_Ctrl', 'unitConversion2432', 'unitConversion2250', 'L_Secondaries_JR_Fthr_001_RootJnt', 'R_Secondaries_JR_Fthr_0010_AutoJnt', 'unitConversion2620', 'R_Secondaries_JR_4_CtrlShape', 'R_Secondaries_JR_Fthr_005Bend03_Indiv_Ctrl', 'R_Primaries_JR_Fthr_008_BendJnt3', 'L_Scapulars_JR_Fthr_000_Bnd_parentConstraint1', 'L_Scapulars_JR_Fthr_0012_Bnd_parentConstraint1', 'unitConversion2593', 'unitConversion2171', 'L_Secondaries_JR_Fthr_0012_Ctrl_Root_Grp', 'R_Secondaries_JR_Fthr_0013', 'L_Scapulars_JR_Fthr_0014Bend03', 'R_Scapulars_JR_Fthr_003Bend02', 'unitConversion2340', 'L_Scapulars_JR_Wing_007_Bnd_parentConstraint1', 'unitConversion282', 'R_Secondaries_JR_Fthr_002Bend03_Indiv_Ctrl_Offset_Grp', 'R_Scapulars_JR_Fthr_0013Bend03_Indiv_CtrlShape', 'unitConversion1077', 'R_Secondaries_JR_Fthr_004Bend02', 'R_Primaries_JR_Fthr_004Bend02', 'unitConversion1427', 'unitConversion447', 'R_Primaries_JR_Fthr_003_Ctrl', 'L_Scapulars_JR_Wing_0011_Bnd_parentConstraint1', 'L_Primaries_JR_Fthr_006_Ctrl_Auto_Grp', 'L_Scapulars_JR_Fthr_0011Bend01_Bnd', 'L_Scapulars_JR_Fthr_007_InAuto_rx_MD', 'unitConversion420', 'R_Primaries_JR_Fthr_006Bend02_Indiv_Ctrl_Offset_Grp', 'R_Secondaries_JR_Fthr_0013_BendJnt2', 'R_Secondaries_JR_Fthr_006Bend01_Bnd_parentConstraint1', 'L_Secondaries_JR_Fthr_0017Bend02_Bnd', 'unitConversion2265', 'L_Primaries_JR_Fthr_003Bend03_Bnd', 'R_Scapulars_JR_Fthr_003_Indiv_CtrlShape', 'R_Primaries_JR_Fthr_005Bend02_Indiv_Ctrl_Offset_Grp', 'L_Scapulars_JR_Fthr_006_Bnd_parentConstraint1', 'unitConversion2335', 'unitConversion99', 'unitConversion63', 'R_Primaries_JR_Fthr_008Bend03_Indiv_CtrlShape', 'L_Secondaries_JR_Fthr_0017_AutoJnt', 'L_Primaries_JR_Fthr_008Bend01_Indiv_Ctrl_tag', 'R_Secondaries_JR_Fthr_005_BendJnt3', 'R_Secondaries_JR_Fthr_0010Bend02_Indiv_Ctrl_tag', 'R_Secondaries_JR_Fthr_005_Indiv_Ctrl_Offset_Grp', 'R_Secondaries_JR_Fthr_0015_RootJnt', 'unitConversion751', 'R_Secondaries_JR_Fthr_007Bend01', 'R_Scapulars_JR_Fthr_001Bend03_Bnd', 'L_Secondaries_JR_Fthr_0016_Bnd_parentConstraint1', 'R_Scapulars_JR_Fthr_003_BendJnt3', 'L_Scapulars_JR_Fthr_002Bend01_Indiv_CtrlShape', 'L_Scapulars_JR_Fthr_007Bend01_Indiv_Ctrl_tag', 'R_Secondaries_JR_Fthr_000Bend01_Indiv_Ctrl_tag', 'unitConversion330', 'L_Primaries_JR_Fthr_000_Ctrl_Root_Grp', 'R_Secondaries_JR_Fthr_0010Bend03_Bnd', 'L_Secondaries_JR_Fthr_001_BendJnt1', 'unitConversion1246', 'R_Scapulars_JR_Fthr_0012_Ctrl', 'R_Secondaries_JR_Fthr_006_SpreadAuto_Auto', 'L_Secondaries_JR_Fthr_0010_OutAuto_rx_MD', 'unitConversion2662', 'unitConversion1587', 'R_Secondaries_JR_Fthr_001Bend03_Indiv_Ctrl', 'L_Primaries_JR_Wing_000_CtrlShape', 'unitConversion409', 'L_Secondaries_JR_Fthr_002_InAuto_rx_MD', 'R_Scapulars_JR_Fthr_000_BendJnt3', 'L_Secondaries_JR_Fthr_0014Bend03_Indiv_Ctrl_tag', 'L_Primaries_JR_Fthr_004_Indiv_CtrlShape', 'unitConversion2378', 'unitConversion2116', 'unitConversion816', 'unitConversion548', 'unitConversion518', 'unitConversion2289', 'L_Secondaries_JR_Fthr_003Bend03_Indiv_Ctrl', 'L_Secondaries_JR_4_Ctrl', 'L_Secondaries_JR_Fthr_002', 'unitConversion2784', 'R_Scapulars_JR_Fthr_0012_BendJnt2', 'unitConversion1212', 'R_Secondaries_JR_Fthr_0015_Bnd', 'L_Primaries_JR_Fthr_006_InAuto_rx_MD1', 'R_Scapulars_JR_Fthr_001_Indiv_Ctrl_Offset_Grp', 'L_Scapulars_JR_Fthr_0014', 'L_Secondaries_JR_Fthr_0014_BendJnt2', 'L_Scapulars_JR_Fthr_007_OutAuto_ry_MD', 'R_Secondaries_JR_Fthr_003Bend02_Indiv_CtrlShape', 'R_Secondaries_JR_Fthr_000Bend02_Indiv_CtrlShape', 'unitConversion1765', 'unitConversion8', 'L_Scapulars_JR_Fthr_0011Bend01_Indiv_CtrlShape', 'unitConversion1978', 'unitConversion1065', 'L_Primaries_JR_Fthr_000Bend02_Bnd_parentConstraint1', 'L_Secondaries_JR_Fthr_0010_InAuto_rx_MD', 'L_Primaries_JR_Fthr_006_In_rx_MD1', 'R_Secondaries_JR_Fthr_0012Bend03_Bnd', 'R_Secondaries_JR_Fthr_004Bend02_Indiv_CtrlShape', 'L_Scapulars_JR_Fthr_0010_Ctrl_Auto_Grp', 'L_Secondaries_JR_Fthr_004_CtrlShape', 'L_Primaries_JR_Fthr_005_Bnd', 'unitConversion1859', 'unitConversion1911', 'L_Scapulars_JR_Fthr_000Bend01_Indiv_CtrlShape', 'unitConversion2779', 'unitConversion2103', 'L_Secondaries_JR_Fthr_0017_InAuto_ry_MD', 'unitConversion621', 'unitConversion1204', 'L_Scapulars_JR_Wing_000_Bnd', 'L_Secondaries_JR_Fthr_001_In_rx_MD1', 'L_Secondaries_JR_Fthr_009Bend02_Indiv_Ctrl_Offset_Grp', 'unitConversion241', 'L_Scapulars_JR_Fthr_009_AutoJnt', 'L_Secondaries_JR_Fthr_0014_Out_rx_MD1', 'R_Primaries_JR_Fthr_005Bend01_Indiv_Ctrl', 'R_Secondaries_JR_Fthr_0015_BendJnt2', 'unitConversion670', 'unitConversion1789', 'R_Scapulars_JR_Wing_0013_Bnd_parentConstraint1', 'unitConversion1914', 'L_Primaries_JR_Fthr_001_Bnd_parentConstraint1', 'L_Secondaries_JR_Fthr_0010_In_ry_MD1', 'R_Secondaries_JR_Fthr_0013Bend01_Bnd', 'R_Primaries_JR_FeathersPlane', 'unitConversion233', 'L_Secondaries_JR_Fthr_008Bend01_Bnd_parentConstraint1', 'unitConversion623', 'R_Scapulars_JR_Wing_002_Bnd', 'unitConversion2125', 'bindPose3', 'unitConversion1019', 'unitConversion2439', 'unitConversion1610', 'R_Primaries_JR_Wing_006_parentConstraint1', 'L_Scapulars_JR_Fthr_0010_OutAuto_ry_MD', 'unitConversion1944', 'L_Scapulars_JR_Fthr_005_Indiv_Ctrl_tag', 'R_Scapulars_JR_Fthr_0011_BendJnt1', 'L_Secondaries_JR_Wing_000_CtrlShape', 'L_Secondaries_JR_Fthr_0015_BendJnt1', 'L_Scapulars_JR_Fthr_002_OutAuto_rx_MD1', 'L_Secondaries_JR_Fthr_0012Bend03_Indiv_Ctrl', 'L_Secondaries_JR_Fthr_003_OutAuto_rx_MD', 'unitConversion2690', 'L_Secondaries_JR_Fthr_0012Bend02_Bnd_parentConstraint1', 'L_Scapulars_JR_Fthr_000Bend03_Bnd_parentConstraint1', 'unitConversion372', 'R_Primaries_JR_Fthr_008_Ctrl', 'unitConversion2295', 'L_Scapulars_JR_1_CtrlShape', 'L_Secondaries_JR_Fthr_004Bend03_Bnd', 'L_Primaries_JR_Fthr_002_OutAuto_ry_MD', 'L_Secondaries_JR_Fthr_0017_Indiv_Ctrl_Offset_Grp', 'unitConversion249', 'R_Secondaries_JR_Fthr_009Bend01_Bnd', 'R_Secondaries_JR_Fthr_0015Bend01', 'unitConversion366', 'L_Secondaries_JR_Wing_0017', 'R_Secondaries_JR_Fthr_007Bend03_Indiv_Ctrl', 'L_Scapulars_JR_Fthr_007_RootJnt', 'L_Primaries_JR_Fthr_002_OutAuto_rx_MD', 'unitConversion2137', 'R_Scapulars_JR_Fthr_009Bend02_Bnd_parentConstraint1', 'R_Primaries_JR_Fthr_005Bend02_Indiv_Ctrl_tag', 'unitConversion1442', 'R_Secondaries_JR_Fthr_0016Bend01_Bnd', 'R_Scapulars_JR_Fthr_008Bend03_Indiv_Ctrl', 'L_Scapulars_JR_Fthr_0010_BendJnt1', 'unitConversion650', 'unitConversion1063', 'R_Secondaries_JR_Fthr_009Bend02_Bnd', 'R_Secondaries_JR_Fthr_005Bend01_Indiv_CtrlShape', 'unitConversion1319', 'unitConversion1060', 'unitConversion999', 'L_Secondaries_JR_Fthr_001', 'L_Secondaries_JR_1_Ctrl', 'L_Scapulars_JR_Fthr_009Bend02_Indiv_Ctrl_tag', 'unitConversion170', 'L_Primaries_JR_Fthr_008Bend01_Bnd', 'L_Scapulars_JR_Fthr_002_InAuto_ry_MD', 'unitConversion1341', 'L_Secondaries_JR_15_Ctrl', 'L_Scapulars_JR_Wing_000_CtrlShape', 'unitConversion326', 'L_Primaries_JR_Fthr_005_Ctrl', 'R_Primaries_JR_Fthr_005Bend03_Bnd', 'L_Primaries_JR_5_Ctrl', 'L_Scapulars_JR_Fthr_0013_Out_ry_MD1', 'unitConversion2609', 'unitConversion1316', 'R_Scapulars_JR_Fthr_008Bend01_Bnd', 'L_Scapulars_JR_Fthr_0012_In_rx_MD', 'R_Scapulars_JR_Fthr_0014_SpreadAuto_Root', 'unitConversion2556', 'skinCluster3GroupId', 'L_Scapulars_JR_Fthr_008_OutAuto_rx_MD', 'L_Secondaries_JR_Fthr_002Bend01', 'unitConversion1566', 'R_Secondaries_JR_Spread_Out_Ctrl', 'unitConversion895', 'L_Primaries_JR_Fthr_007Bend02_Bnd', 'unitConversion846', 'R_Secondaries_JR_Fthr_005_Bnd', 'unitConversion401', 'unitConversion1662', 'unitConversion1053', 'L_Secondaries_JR_Fthr_0012Bend01_Indiv_CtrlShape', 'L_Secondaries_JR_Fthr_003_InAuto_ry_MD', 'unitConversion1167', 'L_Secondaries_JR_Fthr_0010_OutAuto_rx_MD1', 'L_Secondaries_JR_9_Ctrl', 'R_Scapulars_JR_Fthr_009_SpreadAuto_Auto', 'unitConversion148', 'unitConversion602', 'L_Secondaries_JR_Fthr_0012_Bnd_parentConstraint1', 'R_Primaries_JR_Fthr_006_Ctrl_Root_Grp', 'R_Scapulars_JR_Fthr_005_SpreadAuto_Auto', 'L_Secondaries_JR_Fthr_0014Bend03_Indiv_CtrlShape', 'R_Secondaries_JR_Fthr_0016', 'unitConversion50', 'unitConversion2510', 'L_Secondaries_JR_Fthr_003Bend03_Bnd', 'unitConversion1340', 'L_Secondaries_JR_Fthr_005_Out_rx_MD1', 'unitConversion1583', 'L_Scapulars_JR_Fthr_005_SpreadAuto_Root', 'L_Secondaries_JR_Fthr_009Bend01_Bnd', 'R_Scapulars_JR_Fthr_000Bend02_Bnd', 'L_Secondaries_JR_2_CtrlShape', 'L_Primaries_JR_Fthr_002_Indiv_Ctrl', 'L_Primaries_JR_Fthr_009Bend02_Bnd_parentConstraint1', 'unitConversion390', 'R_Secondaries_JR_Fthr_0016_AutoJnt', 'L_Primaries_JR_Fthr_002Bend02_Indiv_CtrlShape', 'R_Secondaries_JR_Wing_004_Bnd', 'L_Secondaries_JR_Fthr_006_OutAuto_rx_MD1', 'unitConversion1205', 'unitConversion1424', 'R_Scapulars_JR_Fthr_006Bend03_Indiv_Ctrl_Offset_Grp', 'L_Secondaries_JR_Wing_0016_parentConstraint1', 'skinCluster3', 'L_Secondaries_JR_Fthr_006_AutoJnt', 'L_Scapulars_JR_Fthr_008_Out_ry_MD1', 'R_Scapulars_JR_Fthr_0013Bend02', 'L_Primaries_JR_Fthr_001_BendJnt1', 'L_Primaries_JR_Fthr_007Bend03_Indiv_Ctrl_Offset_Grp', 'unitConversion1362', 'unitConversion1561', 'unitConversion82', 'L_Secondaries_JR_Fthr_002_Bnd', 'R_Secondaries_JR_Fthr_0017_Ctrl_Auto_Grp', 'R_Primaries_JR_Fthr_007Bend03_Indiv_Ctrl_tag', 'unitConversion115', 'L_Scapulars_JR_Fthr_003_Out_rx_MD1', 'L_Primaries_JR_Fthr_008Bend03', 'unitConversion155', 'L_Scapulars_JR_Fthr_0011_OutAuto_ry_MD1', 'L_Scapulars_JR_Fthr_0013_In_rx_MD', 'L_Scapulars_JR_Fthr_003_Ctrl', 'unitConversion493', 'unitConversion2462', 'unitConversion2126', 'unitConversion1738', 'unitConversion1843', 'R_Scapulars_JR_Fthr_006Bend03_Indiv_Ctrl_tag', 'R_Scapulars_JR_Wing_0014_Bnd', 'R_Secondaries_JR_Fthr_003Bend03_Indiv_Ctrl_Offset_Grp', 'R_Secondaries_JR_Fthr_0015_Indiv_Ctrl_Offset_Grp', 'unitConversion553', 'unitConversion258', 'L_Secondaries_JR_Fthr_0016_BendJnt2', 'unitConversion1969', 'L_Secondaries_JR_Fthr_003Bend01_Indiv_Ctrl_Offset_Grp', 'R_Primaries_JR_5_CtrlL_Primaries_JR_5_CC_AutoFold_Grp_Grp', 'unitConversion1317', 'unitConversion2346', 'L_Primaries_JR_9_CtrlShape', 'L_Secondaries_JR_Fthr_001Bend01_Indiv_Ctrl_tag', 'R_Scapulars_JR_Fthr_0014Bend02_Bnd', 'R_Primaries_JR_Fthr_007Bend03_Bnd', 'R_Scapulars_JR_Fthr_006_Bnd_parentConstraint1', 'L_Secondaries_JR_7_Ctrl', 'unitConversion187', 'L_Secondaries_JR_Wing_008', 'R_Secondaries_JR_Wing_009_parentConstraint1', 'L_Primaries_JR_1_CtrlL_Primaries_JR_1_CC_AutoFold_Grp_Grp', 'R_Secondaries_JR_Fthr_0017', 'unitConversion2528', 'L_Secondaries_JR_Fthr_0012Bend02_Bnd', 'unitConversion244', 'unitConversion1753', 'L_Secondaries_JR_Wing_0011_parentConstraint1', 'unitConversion347', 'unitConversion2651', 'unitConversion2732', 'unitConversion1737', 'unitConversion1038', 'unitConversion2212', 'L_Scapulars_JR_Fthr_003_Ctrl_Root_Grp', 'R_Scapulars_JR_Fthr_008_Indiv_CtrlShape', 'unitConversion2331', 'L_Primaries_JR_Fthr_005Bend02_Bnd_parentConstraint1', 'R_Primaries_JR_Wing_008_parentConstraint1', 'unitConversion2143', 'L_Scapulars_JR_Fthr_009_Indiv_Ctrl', 'R_Secondaries_JR_Fthr_002Bend02_Indiv_Ctrl', 'unitConversion1175', 'L_Scapulars_JR_Fthr_004_OutAuto_ry_MD', 'R_Secondaries_JR_Fthr_003_SpreadCtrlGrp', 'R_Scapulars_JR_Fthr_007_SpreadAuto_Root_orientConstraint1', 'R_Scapulars_JR_Fthr_009Bend02_Indiv_Ctrl_Offset_Grp', 'R_Scapulars_JR_Wing_0012_Bnd_parentConstraint1', 'unitConversion1127', 'R_Secondaries_JR_Fthr_009_SpreadAuto_Root', 'R_Primaries_JR_Fthr_009Bend02_Indiv_Ctrl_tag', 'R_Secondaries_JR_FeathersPlaneShapeOrig', 'unitConversion140', 'L_Scapulars_JR_Fthr_003_SpreadAuto_Root_orientConstraint1', 'R_Scapulars_JR_Wing_005_Bnd', 'unitConversion1926', 'R_Scapulars_JR_Fthr_005Bend01_Bnd_parentConstraint1', 'unitConversion2416', 'R_Secondaries_JR_Fthr_008_Indiv_Ctrl_Offset_Grp', 'unitConversion787', 'L_Secondaries_JR_Fthr_005_OutAuto_ry_MD', 'unitConversion757', 'L_Secondaries_JR_Fthr_0015_CtrlShape', 'R_Scapulars_JR_Fthr_003_RootJnt', 'L_Secondaries_JR_Fthr_001_Out_rx_MD1', 'L_Primaries_JR_Fthr_000_OutAuto_ry_MD', 'L_Scapulars_JR_Fthr_008Bend01_Indiv_Ctrl', 'unitConversion854', 'unitConversion1057', 'L_Primaries_JR_Fthr_007_SpreadCtrlGrp', 'R_Secondaries_JR_Fthr_001Bend01_Bnd_parentConstraint1', 'R_Secondaries_JR_Fthr_0011Bend01_Bnd', 'L_Secondaries_JR_11_Ctrl', 'L_Scapulars_JR_Fthr_0013_SpreadAuto_Root_orientConstraint1', 'R_Primaries_JR_Fthr_006_SpreadAuto', 'R_Scapulars_JR_Fthr_0013_AutoJnt', 'L_Secondaries_JR_Fthr_0010_InAuto_ry_MD1', 'R_Secondaries_JR_Fthr_009Bend01_Indiv_Ctrl_Offset_Grp', 'unitConversion536', 'L_Secondaries_JR_Fthr_0015_InAuto_rx_MD', 'L_Secondaries_JR_Fthr_006_OutAuto_ry_MD1', 'unitConversion356', 'unitConversion812', 'unitConversion516', 'R_Secondaries_JR_Fthr_0017Bend02_Indiv_CtrlShape', 'L_Primaries_JR_Fthr_006_Out_ry_MD', 'L_Primaries_JR_Fthr_006_Bnd', 'R_Primaries_JR_Fthr_002_Indiv_Ctrl', 'L_Scapulars_JR_Fthr_006Bend01_Bnd', 'unitConversion310', 'L_Secondaries_JR_Fthr_004Bend01_Indiv_CtrlShape', 'unitConversion936', 'L_Primaries_JR_Fthr_006_Indiv_CtrlShape', 'R_Secondaries_JR_Fthr_0014_BendJnt2', 'R_Primaries_JR_Fthr_006Bend01_Indiv_CtrlShape', 'L_Secondaries_JR_Fthr_009_OutAuto_ry_MD', 'L_Secondaries_JR_Fthr_0015_SpreadAuto_Root', 'L_Secondaries_JR_Wing_0015_Bnd_parentConstraint1', 'L_Primaries_JR_Fthr_003', 'unitConversion2707', 'L_Primaries_JR_Wing_008_Bnd', 'L_Primaries_JR_Fthr_006_Ctrl_Root_Grp', 'L_Scapulars_JR_Wing_000_Ctrl_Root_Grp', 'R_Secondaries_JR_Fthr_0015Bend02_Indiv_Ctrl_Offset_Grp', 'unitConversion1421', 'L_Scapulars_JR_Fthr_006_Out_rx_MD1', 'L_Scapulars_JR_Fthr_004Bend03_Indiv_Ctrl', 'unitConversion949', 'R_Secondaries_JR', 'unitConversion1425', 'unitConversion649', 'unitConversion104', 'R_Scapulars_JR_Fthr_0010_Indiv_Ctrl_Offset_Grp', 'R_Primaries_JR_Fthr_009Bend02_Indiv_CtrlShape', 'unitConversion748', 'unitConversion1847', 'unitConversion2406', 'L_Secondaries_JR_Fthr_009_Out_ry_MD', 'R_Secondaries_JR_Wing_007_Bnd', 'R_Scapulars_JR_Fthr_004_Indiv_CtrlShape', 'L_Scapulars_JR_Fthr_0011', 'unitConversion228', 'R_Secondaries_JR_Fthr_0010_Bnd', 'L_Primaries_JR_Fthr_008_In_ry_MD', 'L_Primaries_JR_Fthr_002_Indiv_Ctrl_tag', 'L_Scapulars_JR_Fthr_001Bend03_Bnd', 'L_Secondaries_JR_Fthr_008Bend02_Indiv_Ctrl_Offset_Grp', 'unitConversion1090', 'L_Scapulars_JR_Fthr_005_Ctrl_Auto_Grp', 'R_Primaries_JR_Fthr_004Bend01_Indiv_CtrlShape', 'unitConversion2179', 'unitConversion65', 'R_Secondaries_JR_Fthr_0016_Ctrl', 'R_Primaries_JR_Fthr_002_BendJnt2', 'unitConversion2789', 'R_Secondaries_JR_Fthr_0016_CtrlShape', 'R_Secondaries_JR_Fthr_002_Indiv_Ctrl', 'unitConversion696', 'skinCluster1GroupParts1', 'R_Secondaries_JR_11_CtrlShape', 'unitConversion587', 'R_Scapulars_JR_Fthr_003_SpreadAuto_Root', 'unitConversion758', 'R_Primaries_JR_Fthr_008_Ctrl_Root_Grp', 'unitConversion2689', 'R_Secondaries_JR_Fthr_0016_Indiv_Ctrl_tag', 'R_Primaries_JR_9_CtrlL_Primaries_JR_9_CC_AutoFold_Grp_Grp', 'unitConversion185', 'R_Scapulars_JR_Fthr_007Bend01', 'R_Primaries_JR_Fthr_003Bend03_Bnd_parentConstraint1', 'L_Scapulars_JR_Fthr_000_SpreadCtrlGrp', 'R_Secondaries_JR_Fthr_006_Indiv_Ctrl_Offset_Grp', 'unitConversion1700', 'unitConversion2446', 'L_Secondaries_JR_Fthr_000_OutAuto_ry_MD', 'unitConversion2191', 'L_Primaries_JR_Fthr_007Bend02_Indiv_Ctrl', 'unitConversion2354', 'L_Scapulars_JR_Fthr_008_InAuto_rx_MD1', 'unitConversion398', 'unitConversion1681', 'unitConversion1349', 'R_Secondaries_JR_Fthr_0010_BendJnt2', 'R_Secondaries_JR_Fthr_002Bend02_Indiv_Ctrl_tag', 'unitConversion1974', 'L_Scapulars_JR_Fthr_0013_Indiv_Ctrl', 'unitConversion898', 'R_Primaries_JR_FeathersPlaneShapeOrig', 'L_Primaries_JR_Fthr_009_Out_rx_MD', 'L_Primaries_JR_Fthr_006_CtrlShape', 'L_Secondaries_JR_Fthr_006_Bnd', 'L_Secondaries_JR_Fthr_000_Indiv_Ctrl', 'R_Scapulars_JR_Wing_0013', 'unitConversion1029', 'unitConversion1432', 'unitConversion1345', 'R_Secondaries_JR_Wing_0012_parentConstraint1', 'unitConversion1624', 'unitConversion1200', 'R_Primaries_JR_Fthr_004_Ctrl_Auto_Grp', 'L_Secondaries_JR_Fthr_0013_OutAuto_rx_MD1', 'R_Primaries_JR_Fthr_000Bend02_Indiv_Ctrl', 'R_Primaries_JR_Fthr_001Bend01_Bnd', 'L_Primaries_JR_Fthr_004_InAuto_rx_MD', 'L_Primaries_JR_Fthr_004Bend03_Indiv_Ctrl', 'R_Scapulars_JR_Fthr_0011Bend02_Indiv_Ctrl', 'L_Primaries_JR_Wing_009_Bnd', 'R_Primaries_JR_Fthr_000_CtrlShape', 'L_Scapulars_JR_Wing_002', 'unitConversion2343', 'unitConversion1066', 'R_Secondaries_JR_Fthr_001Bend01_Indiv_CtrlShape', 'unitConversion793', 'L_Scapulars_JR_Fthr_005_Indiv_Ctrl_Offset_Grp', 'unitConversion600', 'unitConversion2726', 'unitConversion2086', 'L_Secondaries_JR_Wing_000_Bnd_parentConstraint1', 'R_Primaries_JR_Fthr_008Bend03_Bnd_parentConstraint1', 'unitConversion384', 'R_Secondaries_JR_Fthr_002Bend03_Indiv_Ctrl_tag', 'unitConversion2030', 'L_Scapulars_JR_Fthr_000_Indiv_CtrlShape', 'unitConversion1735', 'L_Primaries_JR_Fthr_008_BendJnt2', 'unitConversion397', 'R_Secondaries_JR_Fthr_0017Bend03', 'unitConversion1402', 'L_Primaries_JR_Fthr_009_Indiv_CtrlShape', 'L_Secondaries_JR_Fthr_0013_Indiv_Ctrl', 'L_Scapulars_JR_Fthr_003_BendJnt1', 'L_Primaries_JR_Fthr_003_In_ry_MD', 'unitConversion373', 'L_Primaries_JR_Fthr_008Bend03_Indiv_Ctrl', 'unitConversion653', 'R_Scapulars_JR_Fthr_003Bend01_Indiv_CtrlShape', 'unitConversion1913', 'L_Primaries_JR_Fthr_004Bend03', 'L_Secondaries_JR_Spread_Out_Auto_Grp', 'bindPose6', 'L_Scapulars_JR_Fthr_000Bend01', 'unitConversion977', 'L_Primaries_JR_Fthr_009Bend02_Bnd', 'R_Secondaries_JR_Fthr_0014Bend01_Indiv_CtrlShape', 'R_Primaries_JR_Fthr_007_Ctrl_Auto_Grp', 'R_Secondaries_JR_Fthr_0014_Ctrl', 'unitConversion246', 'R_Secondaries_JR_Fthr_006_AutoJnt', 'unitConversion1723', 'Wings_Ctrl_Grp', 'unitConversion59', 'L_Secondaries_JR_Fthr_003_Out_rx_MD', 'L_Secondaries_JR_Fthr_004_OutAuto_rx_MD', 'L_Secondaries_JR_Fthr_0016_In_ry_MD1', 'unitConversion1267', 'unitConversion1529', 'L_Secondaries_JR_Fthr_0011_OutAuto_rx_MD1', 'R_Secondaries_JR_Fthr_001Bend03_Indiv_Ctrl_Offset_Grp', 'L_Secondaries_JR_Fthr_0017_In_rx_MD1', 'L_Primaries_JR_Fthr_006Bend01', 'unitConversion2018', 'L_Scapulars_JR_Fthr_007Bend03_Indiv_CtrlShape', 'R_Primaries_JR_Fthr_006_BendJnt3', 'R_Secondaries_JR_Fthr_0013Bend02_Bnd', 'skinCluster1GroupId', 'unitConversion1157', 'unitConversion2286', 'unitConversion1497', 'unitConversion2692', 'L_Scapulars_JR_Fthr_0013_InAuto_ry_MD', 'unitConversion316', 'L_Secondaries_JR_Fthr_0013_Out_ry_MD1', 'L_Primaries_JR_Fthr_002_SpreadAuto', 'L_Secondaries_JR_Fthr_0013_RootJnt', 'L_Secondaries_JR_Fthr_009Bend02_Indiv_Ctrl', 'unitConversion1813', 'unitConversion855', 'R_Secondaries_JR_Fthr_0015Bend02_Bnd', 'unitConversion2342', 'unitConversion212', 'R_Scapulars_JR_Fthr_006_BendJnt2', 'unitConversion1016', 'unitConversion986', 'L_Secondaries_JR_Wing_0017_Bnd_parentConstraint1', 'R_Primaries_JR_Fthr_009_Ctrl_Auto_Grp', 'L_Secondaries_JR_Fthr_004_InAuto_rx_MD', 'R_Secondaries_JR_Fthr_001', 'unitConversion559', 'R_Scapulars_JR_Fthr_0012_SpreadAuto_Root_orientConstraint1', 'L_Scapulars_JR_Fthr_006Bend02_Indiv_Ctrl_Offset_Grp', 'unitConversion954', 'R_Primaries_JR_Fthr_000Bend03_Indiv_Ctrl_Offset_Grp', 'L_Primaries_JR_Fthr_009Bend02_Indiv_Ctrl', 'L_Scapulars_JR_Fthr_007_InAuto_rx_MD1', 'R_Scapulars_JR_Fthr_0010Bend02_Indiv_CtrlShape', 'L_Secondaries_JR_Fthr_002_OutAuto_ry_MD', 'L_Scapulars_JR_Fthr_0013_In_rx_MD1', 'L_Secondaries_JR_Fthr_0011_SpreadCtrlGrp', 'unitConversion1415', 'unitConversion2111', 'unitConversion673', 'L_Secondaries_JR_Fthr_0011_InAuto_rx_MD', 'R_Primaries_JR_Fthr_005_Ctrl_Auto_Grp', 'L_Secondaries_JR_Fthr_0010_BendJnt1', 'unitConversion1365', 'unitConversion2239', 'unitConversion2206', 'L_Scapulars_JR_Fthr_0012Bend03_Bnd', 'unitConversion1618', 'R_Secondaries_JR_Fthr_008_SpreadCtrlGrp', 'unitConversion75', 'unitConversion2121', 'unitConversion1888', 'L_Primaries_JR_Fthr_005_BendJnt3', 'R_Primaries_JR_Fthr_000_SpreadAuto_Auto', 'L_Scapulars_JR_Fthr_0011_SpreadCtrlGrp', 'L_Primaries_JR_Fthr_004_BendJnt2', 'L_Primaries_JR_Fthr_006Bend02_Bnd', 'unitConversion1702', 'R_Primaries_JR_0_Ctrl', 'L_Scapulars_JR_2_CtrlShape', 'unitConversion586', 'R_Secondaries_JR_Fthr_004_Indiv_CtrlShape', 'R_Secondaries_JR_Fthr_0016_Bnd_parentConstraint1', 'L_Primaries_JR_Fthr_002_SpreadAuto_Auto', 'unitConversion1378', 'R_Scapulars_JR_FeathersPlane', 'L_Secondaries_JR_Fthr_007_RootJnt', 'unitConversion1910', 'R_Scapulars_JR_Wing_002', 'L_Primaries_JR_FeathersPlaneShape', 'L_Primaries_JR_Fthr_007_Ctrl_Root_Grp', 'L_Primaries_JR_Fthr_002Bend02_Indiv_Ctrl_tag', 'L_Secondaries_JR_Fthr_001_BendJnt3', 'R_Secondaries_JR_Fthr_0016_Indiv_CtrlShape', 'unitConversion2426', 'R_Scapulars_JR_Fthr_003_Indiv_Ctrl_tag', 'unitConversion1099', 'unitConversion625', 'R_Secondaries_JR_Fthr_0012_Ctrl', 'R_Secondaries_JR_Fthr_001Bend02_Indiv_Ctrl', 'R_Primaries_JR_Fthr_008Bend02_Indiv_Ctrl', 'L_Primaries_JR_Fthr_002_Bnd', 'L_Secondaries_JR_Fthr_0010_In_rx_MD1', 'R_Secondaries_JR_Fthr_003Bend02_Indiv_Ctrl_tag', 'L_Secondaries_JR_Fthr_001Bend03_Bnd_parentConstraint1', 'unitConversion1', 'R_Scapulars_JR_Spread_Out_CtrlShape', 'unitConversion2172', 'L_Scapulars_JR_Fthr_000_SpreadAuto', 'R_Secondaries_JR_Fthr_005Bend01', 'L_Scapulars_JR_14_CtrlL_Scapulars_JR_14_CC_AutoFold_Grp_Grp', 'L_Secondaries_JR_Fthr_005_InAuto_rx_MD1', 'unitConversion648', 'R_Primaries_JR_Fthr_009Bend02', 'R_Secondaries_JR_Fthr_007Bend03_Indiv_Ctrl_Offset_Grp', 'L_Secondaries_JR_Fthr_004_Out_rx_MD1', 'R_Scapulars_JR_Fthr_003_BendJnt1', 'unitConversion2361', 'L_Primaries_JR_Fthr_009Bend03_Bnd', 'unitConversion572', 'L_Secondaries_JR_Fthr_0017Bend02_Indiv_CtrlShape', 'unitConversion1253', 'L_Scapulars_JR_Fthr_005Bend02_Bnd', 'R_Scapulars_JR_12_Ctrl', 'unitConversion835', 'R_Scapulars_JR_Fthr_0010Bend02_Bnd_parentConstraint1', 'unitConversion1857', 'unitConversion1711', 'L_Primaries_JR_Fthr_006_In_rx_MD', 'unitConversion2345', 'unitConversion1939', 'L_Secondaries_JR_Fthr_002_OutAuto_ry_MD1', 'unitConversion2327', 'unitConversion1412', 'unitConversion1676', 'unitConversion318', 'unitConversion382', 'unitConversion2110', 'unitConversion2494', 'unitConversion2255', 'R_Secondaries_JR_Fthr_0013_Bnd', 'unitConversion1148', 'unitConversion1172', 'L_Scapulars_JR_Fthr_009_InAuto_ry_MD', 'R_Secondaries_JR_Fthr_0011_CtrlShape', 'unitConversion1191', 'unitConversion1671', 'L_Secondaries_JR_Fthr_0012', 'unitConversion1220', 'L_Secondaries_JR_Fthr_002Bend02_Bnd_parentConstraint1', 'R_Scapulars_JR_Wing_009_Bnd', 'L_Scapulars_JR_Fthr_000Bend03_Indiv_Ctrl_tag', 'unitConversion2228', 'L_Primaries_JR_Fthr_009_InAuto_rx_MD', 'L_Scapulars_JR_FeathersPlane', 'L_Secondaries_JR_Fthr_005_BendJnt3', 'unitConversion958', 'R_Secondaries_JR_Wing_0017_Bnd_parentConstraint1', 'L_Secondaries_JR_Fthr_009Bend03_Indiv_Ctrl_tag', 'L_Scapulars_JR_Fthr_006', 'L_Secondaries_JR_Fthr_002_Out_ry_MD1', 'R_Secondaries_JR_Fthr_0016_BendJnt3', 'R_Secondaries_JR_Fthr_0010_BendJnt1', 'unitConversion2767', 'unitConversion2424', 'unitConversion1488', 'unitConversion968', 'R_Primaries_JR_Fthr_001Bend03_Bnd', 'R_Primaries_JR_Fthr_007_Indiv_CtrlShape', 'L_Primaries_JR_Fthr_005Bend03_Indiv_Ctrl', 'R_Secondaries_JR_Fthr_0013Bend02_Indiv_CtrlShape', 'R_Secondaries_JR_Fthr_009Bend03_Bnd', 'L_Scapulars_JR_Fthr_0013Bend01_Bnd_parentConstraint1', 'unitConversion975', 'L_Primaries_JR_Fthr_007Bend03_Bnd', 'R_Secondaries_JR_8_CtrlL_Secondaries_JR_8_CC_AutoFold_Grp_Grp', 'unitConversion365', 'unitConversion2693', 'unitConversion2156', 'unitConversion2218', 'L_Secondaries_JR_Wing_0014_Bnd_parentConstraint1', 'unitConversion815', 'unitConversion1885', 'L_Secondaries_JR_Fthr_0016Bend01_Indiv_Ctrl_Offset_Grp', 'R_Secondaries_JR_Fthr_005_Ctrl_Auto_Grp', 'unitConversion1668', 'unitConversion2225', 'unitConversion952', 'L_Scapulars_JR_Fthr_001_Ctrl', 'L_Scapulars_JR_2_Ctrl', 'R_Secondaries_JR_Fthr_0012Bend01_Indiv_CtrlShape', 'R_Scapulars_JR_Fthr_002_SpreadAuto', 'L_Secondaries_JR_Fthr_0016_Bnd', 'R_Primaries_JR_Fthr_004_CtrlShape', 'L_Primaries_JR_Fthr_009_SpreadAuto_Root', 'R_Scapulars_JR_Fthr_003Bend01_Indiv_Ctrl_Offset_Grp', 'R_Secondaries_JR_Fthr_008Bend01_Bnd_parentConstraint1', 'L_Secondaries_JR_Fthr_0011_In_rx_MD', 'L_Scapulars_JR_Fthr_000_Indiv_Ctrl_Offset_Grp', 'L_Secondaries_JR_Fthr_007_SpreadAuto', 'R_Primaries_JR_Fthr_004Bend01_Bnd_parentConstraint1', 'R_Scapulars_JR_Fthr_007Bend02', 'R_Primaries_JR_Wing_005_Bnd_parentConstraint1', 'unitConversion591', 'L_Scapulars_JR_Fthr_0014Bend01', 'R_Scapulars_JR_Fthr_0014_BendJnt1', 'R_Primaries_JR_Fthr_005Bend03_Indiv_Ctrl_Offset_Grp', 'unitConversion1358', 'unitConversion2365', 'unitConversion266', 'unitConversion1577', 'L_Scapulars_JR_Fthr_0013_RootJnt', 'L_Scapulars_JR_Fthr_008_In_rx_MD', 'R_Scapulars_JR_Fthr_002Bend02_Indiv_Ctrl', 'unitConversion452', 'L_Scapulars_JR_Fthr_006Bend03_Indiv_CtrlShape', 'L_Secondaries_JR_Fthr_007_Out_rx_MD', 'unitConversion1524', 'R_Primaries_JR_Fthr_006_SpreadAuto_Auto', 'R_Primaries_JR_Wing_002', 'L_Secondaries_JR_Fthr_002_InAuto_ry_MD', 'unitConversion1805', 'L_Secondaries_JR_Bnd_parentConstraint1', 'unitConversion2766', 'R_Scapulars_JR_11_CtrlShape', 'unitConversion403', 'L_Secondaries_JR_Fthr_0011_BendJnt3', 'unitConversion1263', 'L_Secondaries_JR_Fthr_0010_InAuto_rx_MD1', 'L_Secondaries_JR_Fthr_003Bend02_Bnd_parentConstraint1', 'R_Scapulars_JR_Fthr_005Bend01_Indiv_CtrlShape', 'unitConversion2181', 'L_Secondaries_JR_Fthr_001Bend02_Bnd_parentConstraint1', 'R_Scapulars_JR_Fthr_0014Bend03_Indiv_Ctrl', 'unitConversion2560', 'L_Secondaries_JR_Fthr_0013_InAuto_ry_MD', 'unitConversion930', 'unitConversion2186', 'unitConversion2774', 'unitConversion132', 'unitConversion2591', 'L_Secondaries_JR_Fthr_0015_RootJnt', 'R_Primaries_JR_Fthr_008_BendJnt2', 'L_Secondaries_JR_Fthr_004_SpreadAuto_Auto', 'R_Primaries_JR_Spread_Out_CtrlShape', 'unitConversion2699', 'L_Primaries_JR_Fthr_004_In_ry_MD1', 'unitConversion64', 'L_Secondaries_JR_Fthr_0012Bend01_Indiv_Ctrl_tag', 'L_Scapulars_JR_Fthr_0013_SpreadAuto_Auto', 'L_Secondaries_JR_Fthr_0016_OutAuto_ry_MD1', 'unitConversion1211', 'L_Scapulars_JR_Fthr_0013_InAuto_rx_MD', 'unitConversion2099', 'unitConversion1908', 'L_Secondaries_JR_Fthr_0012_BendJnt1', 'R_Secondaries_JR_Fthr_006Bend02_Indiv_Ctrl_tag', 'R_Secondaries_JR_Fthr_0016Bend02_Indiv_CtrlShape', 'unitConversion2114', 'L_Secondaries_JR_Wing_0011', 'unitConversion1976', 'R_Secondaries_JR_Fthr_009Bend02_Indiv_Ctrl', 'unitConversion2318', 'R_Clavicle_JC_Root_scaleConstraint1', 'L_Scapulars_JR_Fthr_0014_Ctrl_Auto_Grp', 'unitConversion2709', 'L_Scapulars_JR_Fthr_0011_Out_rx_MD1', 'L_Primaries_JR_Fthr_007_Ctrl_Auto_Grp', 'R_Scapulars_JR_Fthr_009Bend02_Indiv_CtrlShape', 'L_Scapulars_JR_Fthr_0011_RootJnt', 'unitConversion509', 'unitConversion1669', 'unitConversion1996', 'unitConversion2713', 'L_Secondaries_JR_Fthr_006Bend03_Indiv_Ctrl_Offset_Grp', 'R_Scapulars_JR_Fthr_001Bend03_Bnd_parentConstraint1', 'R_Scapulars_JR_Fthr_0011Bend01_Indiv_CtrlShape', 'L_Secondaries_JR_Fthr_0010Bend01_Bnd', 'unitConversion490', 'L_Secondaries_JR_Fthr_008Bend03_Indiv_CtrlShape', 'unitConversion2165', 'unitConversion618', 'R_Scapulars_JR_Fthr_000Bend03_Bnd', 'R_Primaries_JR_Fthr_000_Bnd', 'unitConversion1982', 'unitConversion1543', 'L_Primaries_JR_Fthr_002Bend03_Indiv_Ctrl', 'L_Scapulars_JR_Fthr_000_In_rx_MD1', 'R_Primaries_JR_Fthr_007Bend02_Indiv_Ctrl_Offset_Grp', 'L_Secondaries_JR_Fthr_0015_In_ry_MD1', 'R_Primaries_JR_Fthr_003Bend02_Bnd_parentConstraint1', 'L_Secondaries_JR_Fthr_009_BendJnt1', 'R_Primaries_JR_Fthr_007Bend03_Bnd_parentConstraint1', 'L_Scapulars_JR_Fthr_000_OutAuto_ry_MD1', 'unitConversion1382', 'unitConversion1824', 'L_Scapulars_JR_Wing_001', 'L_Secondaries_JR_Fthr_001_SpreadAuto_Root', 'L_Secondaries_JR_Fthr_005Bend01_Indiv_CtrlShape', 'unitConversion175', 'L_Scapulars_JR_Fthr_007_Out_ry_MD1', 'L_Primaries_JR_Fthr_007_OutAuto_ry_MD1', 'R_Scapulars_JR_Fthr_0013_RootJnt', 'unitConversion105', 'unitConversion1261', 'unitConversion997', 'L_Scapulars_JR_Fthr_009Bend03_Indiv_Ctrl_Offset_Grp', 'L_Primaries_JR_Fthr_009_OutAuto_ry_MD1', 'L_Primaries_JR_Fthr_001_In_rx_MD1', 'unitConversion2232', 'unitConversion1186', 'L_Secondaries_JR_Fthr_0014Bend02_Indiv_CtrlShape', 'R_Primaries_JR_Fthr_000Bend03', 'unitConversion302', 'L_Secondaries_JR_Fthr_007_Indiv_Ctrl_tag', 'unitConversion2569', 'R_Secondaries_JR_Fthr_004_Bnd', 'L_Secondaries_JR_Fthr_000Bend01_Indiv_Ctrl_Offset_Grp', 'R_Secondaries_JR_Fthr_002_AutoJnt', 'unitConversion783', 'R_Secondaries_JR_Fthr_008Bend02_Indiv_Ctrl', 'L_Secondaries_JR_6_CtrlShape', 'L_Scapulars_JR_Fthr_001_SpreadAuto_Root', 'unitConversion2606', 'unitConversion385', 'unitConversion1992', 'L_Primaries_JR_Fthr_004Bend01_Indiv_Ctrl_Offset_Grp', 'R_Secondaries_JR_Fthr_0014Bend03_Indiv_Ctrl_Offset_Grp', 'unitConversion322', 'R_Secondaries_JR_Fthr_0015Bend01_Indiv_Ctrl_tag', 'L_Secondaries_JR_Fthr_009_Ctrl_Auto_Grp', 'L_Secondaries_JR_Fthr_000_Out_ry_MD', 'L_Primaries_JR_Fthr_000_InAuto_rx_MD1', 'L_Secondaries_JR', 'R_Secondaries_JR_Fthr_000Bend03_Bnd_parentConstraint1', 'unitConversion978', 'unitConversion1713', 'R_Scapulars_JR_Fthr_004', 'L_Scapulars_JR_Fthr_0010_Indiv_Ctrl_tag', 'R_Scapulars_JR_Fthr_005Bend02_Indiv_CtrlShape', 'R_Scapulars_JR_Fthr_002Bend01_Indiv_Ctrl', 'L_Scapulars_JR_Wing_0013_parentConstraint1', 'R_Primaries_JR_Fthr_006Bend02_Indiv_Ctrl_tag', 'L_Secondaries_JR_Fthr_005_Ctrl', 'L_Scapulars_JR_Fthr_0011Bend03', 'L_Secondaries_JR_Fthr_000Bend03_Bnd', 'R_Secondaries_JR_Fthr_0015_SpreadAuto', 'L_Scapulars_JR_Fthr_0013Bend01_Indiv_Ctrl', 'L_Secondaries_JR_Fthr_004_Indiv_Ctrl', 'L_Secondaries_JR_Fthr_003', 'L_Secondaries_JR_Fthr_005_Out_ry_MD1', 'unitConversion1323', 'unitConversion2640', 'unitConversion2691', 'L_Scapulars_JR_Fthr_0012Bend03_Bnd_parentConstraint1', 'L_Primaries_JR_Fthr_009Bend01_Indiv_Ctrl_Offset_Grp', 'L_Scapulars_JR_Fthr_005Bend01_Bnd', 'L_Secondaries_JR_Fthr_000Bend02', 'L_Primaries_JR_Fthr_002_OutAuto_rx_MD1', 'unitConversion2403', 'L_Secondaries_JR_Fthr_0013Bend03_Bnd', 'unitConversion539', 'R_Scapulars_JR_Fthr_009Bend03_Bnd_parentConstraint1', 'unitConversion573', 'unitConversion338', 'L_Primaries_JR_Fthr_006_AutoJnt', 'R_Primaries_JR_Fthr_007Bend02', 'unitConversion106', 'L_Scapulars_JR_Fthr_001_Out_rx_MD', 'unitConversion659', 'unitConversion231', 'R_Scapulars_JR_Fthr_004Bend03_Indiv_Ctrl', 'R_Primaries_JR_Fthr_002_Ctrl_Root_Grp', 'unitConversion2042', 'L_Secondaries_JR_Fthr_001Bend03_Indiv_Ctrl', 'R_Scapulars_JR_Fthr_007_Indiv_Ctrl_Offset_Grp', 'unitConversion892', 'L_Secondaries_JR_Fthr_000_Bnd_parentConstraint1', 'L_Scapulars_JR_Fthr_0012_Ctrl_Root_Grp', 'L_Secondaries_JR_Fthr_003_OutAuto_ry_MD', 'R_Secondaries_JR_Fthr_0011Bend01_Indiv_Ctrl', 'L_Secondaries_JR_Fthr_003Bend01_Bnd_parentConstraint1', 'unitConversion1330', 'R_Secondaries_JR_Fthr_007Bend03', 'L_Scapulars_JR_Fthr_006Bend03', 'unitConversion1693', 'unitConversion2407', 'R_Secondaries_JR_Fthr_008Bend02_Indiv_Ctrl_Offset_Grp', 'L_Scapulars_JR_Wing_006_Bnd', 'R_Primaries_JR_Fthr_004Bend01', 'L_Primaries_JR_Fthr_005_Out_rx_MD1', 'L_Scapulars_JR_Wing_006_parentConstraint1', 'unitConversion276', 'L_Secondaries_JR_Wing_002_Bnd_parentConstraint1', 'L_Secondaries_JR_Fthr_0012Bend02_Indiv_Ctrl_tag', 'R_Clav_JR_Bnd', 'L_Scapulars_JR_Fthr_0012_AutoJnt', 'unitConversion742', 'L_Scapulars_JR_Fthr_002_Out_ry_MD1', 'L_Secondaries_JR_Fthr_007_OutAuto_ry_MD1', 'L_Scapulars_JR_Fthr_009Bend01', 'L_Primaries_JR_Fthr_004_Out_ry_MD1', 'R_Secondaries_JR_Fthr_0014Bend02_Bnd_parentConstraint1', 'R_Secondaries_JR_Fthr_003Bend03', 'L_Primaries_JR_Fthr_009Bend02_Indiv_CtrlShape', 'R_Secondaries_JR_Fthr_006_Ctrl', 'unitConversion2478', 'L_Secondaries_JR_Fthr_006Bend01_Indiv_Ctrl_Offset_Grp', 'R_Scapulars_JR_Fthr_0014_Bnd_parentConstraint1', 'unitConversion1202', 'unitConversion1929', 'L_Primaries_JR_Fthr_000Bend03_Indiv_CtrlShape', 'unitConversion2642', 'R_Primaries_JR_Fthr_009_Bnd_parentConstraint1', 'R_Scapulars_JR_Fthr_003Bend02_Indiv_CtrlShape', 'L_Scapulars_JR_Wing_0013', 'unitConversion2522', 'unitConversion2737', 'unitConversion1535', 'L_Scapulars_JR_8_CtrlShape', 'unitConversion1564', 'L_Primaries_JR_Fthr_005_Indiv_Ctrl_tag', 'unitConversion2619', 'unitConversion1405', 'R_Scapulars_JR_Fthr_002Bend03_Indiv_Ctrl', 'unitConversion364', 'R_Scapulars_JR_Fthr_008_SpreadAuto_Root', 'L_Secondaries_JR_Fthr_007Bend02_Indiv_Ctrl_Offset_Grp', 'L_Secondaries_JR_Fthr_007_Indiv_Ctrl_Offset_Grp', 'unitConversion1503', 'L_Scapulars_JR_Fthr_0013_OutAuto_ry_MD', 'R_Scapulars_JR_Fthr_002Bend03_Indiv_Ctrl_tag', 'L_Scapulars_JR_Fthr_009_RootJnt', 'L_Primaries_JR_Fthr_004_In_ry_MD', 'R_Secondaries_JR_Fthr_008Bend01_Indiv_Ctrl_Offset_Grp', 'unitConversion234', 'unitConversion2565', 'L_Primaries_JR_Fthr_000_SpreadCtrlGrp', 'L_Primaries_JR_Fthr_003Bend03_Bnd_parentConstraint1', 'L_Primaries_JR_Fthr_006Bend03_Indiv_Ctrl_tag', 'L_Scapulars_JR_Wing_000_Ctrl_AutoGlobalRotate', 'L_Primaries_JR_Fthr_006_SpreadCtrlGrp', 'unitConversion407', 'unitConversion1699', 'R_Primaries_JR_Fthr_004_BendJnt3', 'R_Secondaries_JR_Fthr_0016Bend03_Indiv_CtrlShape', 'R_Secondaries_JR_Fthr_0013Bend02_Indiv_Ctrl', 'R_Scapulars_JR_Fthr_0012_Bnd_parentConstraint1', 'unitConversion1991', 'L_Scapulars_JR_Fthr_000Bend02', 'unitConversion1150', 'L_Primaries_JR_Fthr_000_Out_rx_MD1', 'unitConversion1338', 'R_Scapulars_JR_Fthr_0012Bend01_Indiv_Ctrl_tag', 'R_Scapulars_JR_Fthr_006Bend02', 'L_Scapulars_JR_Fthr_002_Indiv_Ctrl_tag', 'unitConversion2747', 'R_Scapulars_JR_10_Ctrl', 'unitConversion470', 'L_Secondaries_JR_Fthr_002_SpreadAuto_Auto', 'L_Primaries_JR_Fthr_005_CtrlShape', 'L_Scapulars_JR_Fthr_006_Out_ry_MD1', 'unitConversion2001', 'R_Secondaries_JR_Fthr_004Bend03_Indiv_Ctrl_Offset_Grp', 'unitConversion1617', 'unitConversion2038', 'L_Secondaries_JR_Fthr_0011_Ctrl', 'R_Scapulars_JR_4_Ctrl', 'R_Secondaries_JR_Fthr_0017_Indiv_Ctrl_Offset_Grp', 'R_Secondaries_JR_Fthr_001_Indiv_Ctrl_tag', 'R_Secondaries_JR_Fthr_0016Bend01_Indiv_Ctrl_tag', 'unitConversion93', 'unitConversion2508', 'R_Scapulars_JR_Fthr_0012_SpreadCtrlGrp', 'unitConversion67', 'unitConversion1188', 'L_Scapulars_JR_Fthr_0011_InAuto_ry_MD1', 'L_Primaries_JR_Fthr_003Bend03_Indiv_Ctrl_Offset_Grp', 'unitConversion1628', 'L_Scapulars_JR_Fthr_007_Indiv_Ctrl_tag', 'L_Scapulars_JR_Fthr_004_OutAuto_rx_MD1', 'R_Scapulars_JR_Wing_006_Bnd_parentConstraint1', 'L_Secondaries_JR_Fthr_005_SpreadCtrlGrp', 'L_Primaries_JR_Fthr_006Bend01_Indiv_Ctrl_Offset_Grp', 'unitConversion1027', 'L_Scapulars_JR_Fthr_007_Bnd', 'unitConversion1368', 'L_Scapulars_JR_Fthr_003Bend02_Indiv_CtrlShape', 'unitConversion1296', 'R_Scapulars_JR_Spread_Out_Auto_Grp', 'R_Primaries_JR_Fthr_007', 'unitConversion703', 'L_Secondaries_JR_Fthr_004Bend01_Bnd_parentConstraint1', 'L_Scapulars_JR_Wing_004_Bnd', 'L_Scapulars_JR_Fthr_0012Bend01', 'R_Primaries_JR_Fthr_003Bend01_Indiv_Ctrl_tag', 'unitConversion1418', 'unitConversion293', 'L_Scapulars_JR_Fthr_005Bend01_Indiv_Ctrl_tag', 'L_Scapulars_JR_Fthr_002_SpreadAuto_Root_orientConstraint1', 'L_Scapulars_JR_Fthr_002_OutAuto_ry_MD1', 'L_Secondaries_JR_Fthr_0016Bend03', 'L_Scapulars_JR_Wing_0014_parentConstraint1', 'L_Scapulars_JR_Fthr_004_AutoJnt', 'unitConversion2066', 'L_Primaries_JR_Wing_007_Bnd_parentConstraint1', 'unitConversion834', 'L_Scapulars_JR_Wing_0014', 'unitConversion532', 'L_Secondaries_JR_Wing_004_Bnd', 'R_Primaries_JR_Fthr_004Bend03', 'R_Secondaries_JR_13_CtrlL_Secondaries_JR_13_CC_AutoFold_Grp_Grp', 'unitConversion1605', 'R_Secondaries_JR_Fthr_005Bend02', 'R_Secondaries_JR_Fthr_000_RootJnt', 'unitConversion1044', 'R_Scapulars_JR_2_CtrlShape', 'L_Secondaries_JR_Fthr_003_Bnd', 'R_Scapulars_JR_Fthr_0012', 'L_Primaries_JR_Fthr_005Bend03_Indiv_CtrlShape', 'L_Primaries_JR_Fthr_001Bend03_Indiv_Ctrl', 'unitConversion1128', 'R_Primaries_JR_Wing_009_Bnd_parentConstraint1', 'L_Scapulars_JR_Fthr_009Bend03_Bnd', 'L_Scapulars_JR_Fthr_005Bend03_Bnd', 'unitConversion921', 'R_Primaries_JR_Fthr_004_Bnd', 'R_Scapulars_JR_Fthr_001Bend02_Bnd_parentConstraint1', 'L_Scapulars_JR_Fthr_002Bend01_Bnd', 'R_Secondaries_JR_Fthr_003Bend01_Indiv_Ctrl_Offset_Grp', 'unitConversion2230', 'L_Scapulars_JR_Fthr_009Bend01_Indiv_Ctrl_Offset_Grp', 'L_Scapulars_JR_Fthr_008_BendJnt1', 'R_Secondaries_JR_Fthr_0014', 'unitConversion377', 'L_Secondaries_JR_Fthr_0014_In_rx_MD1', 'L_Scapulars_JR_Fthr_001Bend02_Indiv_Ctrl', 'unitConversion823', 'R_Primaries_JR_Wing_000', 'unitConversion820', 'L_Secondaries_JR_Fthr_008_BendJnt1', 'L_Secondaries_JR_Fthr_002Bend01_Bnd', 'unitConversion501', 'unitConversion1578', 'R_Secondaries_JR_Fthr_009_SpreadCtrlGrp', 'unitConversion1453', 'R_Scapulars_JR_Fthr_002_Indiv_CtrlShape', 'unitConversion1785', 'R_Scapulars_JR_Fthr_004_Indiv_Ctrl_tag', 'unitConversion1276', 'R_Scapulars_JR_Fthr_0013_Ctrl_Root_Grp', 'R_Secondaries_JR_Fthr_009Bend03_Indiv_CtrlShape', 'R_Scapulars_JR_Fthr_001Bend03_Indiv_Ctrl_Offset_Grp', 'L_Secondaries_JR_16_CtrlShape', 'R_Secondaries_JR_Fthr_0017Bend01_Indiv_Ctrl', 'L_Primaries_JR_Fthr_008_Out_rx_MD', 'L_Primaries_JR_1_CtrlShape', 'L_Scapulars_JR_Fthr_0013Bend02_Bnd_parentConstraint1', 'L_Primaries_JR_0_CtrlL_Primaries_JR_0_CC_AutoFold_Grp_Grp', 'R_Secondaries_JR_Fthr_0011Bend01_Indiv_CtrlShape', 'R_Scapulars_JR_Fthr_000_Indiv_Ctrl_tag', 'R_Secondaries_JR_Wing_009_Bnd', 'L_Primaries_JR_Fthr_006_Out_ry_MD1', 'unitConversion920', 'unitConversion2227', 'L_Primaries_JR_Fthr_000Bend02_Indiv_Ctrl', 'L_Secondaries_JR_Fthr_003_RootJnt', 'unitConversion1232', 'L_Scapulars_JR_Fthr_001_SpreadAuto_Auto', 'unitConversion1217', 'R_Primaries_JR_Wing_002_parentConstraint1', 'L_Primaries_JR_Fthr_006_BendJnt1', 'L_Secondaries_JR_Fthr_0011Bend03_Bnd_parentConstraint1', 'unitConversion1463', 'unitConversion1250', 'unitConversion1017', 'R_Scapulars_JR_Fthr_002Bend02_Bnd', 'unitConversion18', 'unitConversion2621', 'R_Secondaries_JR_Fthr_005_SpreadAuto_Root', 'R_Primaries_JR_Fthr_002_SpreadCtrlGrp', 'L_Scapulars_JR_Fthr_006_SpreadAuto_Root', 'unitConversion1621', 'unitConversion2029', 'skinCluster2GroupParts1', 'unitConversion961', 'R_Secondaries_JR_Fthr_003_Indiv_Ctrl', 'L_Secondaries_JR_Fthr_0015_In_rx_MD', 'unitConversion1244', 'L_Secondaries_JR_Fthr_0011_Out_rx_MD', 'L_Primaries_JR_Fthr_002_Out_ry_MD1', 'R_Secondaries_JR_Fthr_002_SpreadAuto', 'R_Primaries_JR_Fthr_001_Indiv_Ctrl_Offset_Grp', 'unitConversion2429', 'unitConversion2280', 'L_Primaries_JR_Fthr_002Bend03', 'R_Secondaries_JR_Fthr_002_Bnd', 'L_Secondaries_JR_Fthr_000_InAuto_ry_MD1', 'unitConversion2601', 'R_Secondaries_JR_Fthr_006Bend01_Indiv_Ctrl_Offset_Grp', 'unitConversion810', 'L_Secondaries_JR_Fthr_0013_SpreadAuto_Root', 'L_Secondaries_JR_Fthr_006_Out_rx_MD', 'L_Primaries_JR_Fthr_009_SpreadCtrlGrp', 'L_Secondaries_JR_Fthr_0010_Out_rx_MD1', 'R_Secondaries_JR_Fthr_005Bend01_Bnd', 'L_Primaries_JR_Fthr_005_SpreadAuto_Auto', 'L_Scapulars_JR_Fthr_004Bend01_Bnd_parentConstraint1', 'R_Scapulars_JR_Fthr_0010_SpreadCtrlGrp', 'R_Scapulars_JR_Fthr_009Bend03_Indiv_Ctrl_tag', 'L_Secondaries_JR_Fthr_0017Bend01_Indiv_CtrlShape', 'R_Scapulars_JR_Fthr_0011_Ctrl_Root_Grp', 'unitConversion1880', 'L_Secondaries_JR_Fthr_007', 'R_Scapulars_JR_Fthr_004Bend01_Indiv_Ctrl', 'L_Secondaries_JR_Wing_001_parentConstraint1', 'unitConversion2278', 'unitConversion1035', 'L_Secondaries_JR_Fthr_0013_SpreadAuto_Auto', 'R_Scapulars_JR_Wing_001_Bnd', 'L_Secondaries_JR_Fthr_0016_AutoJnt', 'R_Secondaries_JR_Fthr_0016_RootJnt', 'L_Secondaries_JR_Fthr_0013_Bnd_parentConstraint1', 'L_Secondaries_JR_Fthr_0015_Out_rx_MD', 'L_Secondaries_JR_Fthr_006Bend03_Indiv_Ctrl_tag', 'R_Scapulars_JR_Fthr_008_Bnd', 'L_Secondaries_JR_Fthr_001_Ctrl', 'R_Secondaries_JR_Fthr_0010Bend03_Indiv_Ctrl', 'unitConversion570', 'unitConversion313', 'unitConversion1527', 'R_Secondaries_JR_2_CtrlShape', 'unitConversion1413', 'L_Secondaries_JR_Fthr_0011_InAuto_ry_MD1', 'R_Secondaries_JR_Fthr_004_Indiv_Ctrl', 'R_Primaries_JR_Fthr_004Bend03_Indiv_CtrlShape', 'R_Secondaries_JR_Fthr_007_Indiv_Ctrl_tag', 'unitConversion972', 'R_Primaries_JR_Fthr_008Bend01', 'unitConversion1736', 'R_Secondaries_JR_Fthr_0016Bend02', 'L_Scapulars_JR_Fthr_005_BendJnt2', 'L_Secondaries_JR_Fthr_009_CtrlShape', 'unitConversion149', 'R_Primaries_JR_Fthr_000Bend03_Indiv_Ctrl_tag', 'L_Primaries_JR_Fthr_004_Out_rx_MD', 'R_Scapulars_JR_12_CtrlShape', 'unitConversion321', 'R_Primaries_JR_Fthr_006Bend03_Indiv_Ctrl_tag', 'R_Primaries_JR_Fthr_002_BendJnt3', 'unitConversion1600', 'L_Scapulars_JR_Fthr_0012_In_rx_MD1', 'R_Secondaries_JR_Fthr_0017Bend02_Indiv_Ctrl_tag', 'unitConversion2329', 'L_Secondaries_JR_Fthr_0015_OutAuto_rx_MD', 'L_Primaries_JR_Fthr_008Bend02_Bnd', 'R_Scapulars_JR_Fthr_000Bend03', 'unitConversion596', 'unitConversion756', 'R_Secondaries_JR_Fthr_0014Bend01_Indiv_Ctrl_Offset_Grp', 'R_Secondaries_JR_Fthr_0014_Ctrl_Root_Grp', 'R_Primaries_JR_Fthr_005Bend01_Bnd_parentConstraint1', 'L_Clavicle_CtrlShape', 'unitConversion971', 'L_Primaries_JR_Fthr_000Bend01_Indiv_Ctrl_tag', 'L_Secondaries_JR_Fthr_0013_Indiv_CtrlShape', 'R_Secondaries_JR_Fthr_002_BendJnt2', 'unitConversion1020', 'L_Primaries_JR_Fthr_002_In_rx_MD1', 'R_Secondaries_JR_Fthr_0012_Indiv_Ctrl', 'unitConversion1637', 'unitConversion1722', 'L_Scapulars_JR_Fthr_001_AutoJnt', 'L_Scapulars_JR_Fthr_007Bend01_Bnd', 'L_Scapulars_JR_Fthr_007_Out_ry_MD', 'L_Secondaries_JR_Fthr_0015Bend01_Indiv_Ctrl_tag', 'R_Primaries_JR_Fthr_004Bend03_Bnd', 'L_Scapulars_JR_7_CtrlL_Scapulars_JR_7_CC_AutoFold_Grp_Grp', 'L_Primaries_JR_Fthr_004_Ctrl_Root_Grp', 'unitConversion802', 'R_Secondaries_JR_Fthr_003_BendJnt2', 'unitConversion2500', 'L_Scapulars_JR_Fthr_001_Ctrl_Auto_Grp', 'L_Scapulars_JR_Fthr_009Bend02_Indiv_CtrlShape', 'L_Scapulars_JR_Fthr_0014Bend01_Indiv_Ctrl_Offset_Grp', 'unitConversion966', 'L_Scapulars_JR_Fthr_0012_SpreadAuto_Auto', 'L_Secondaries_JR_Fthr_0016_SpreadAuto_Root', 'L_Secondaries_JR_13_Ctrl', 'unitConversion1542', 'unitConversion136', 'L_Scapulars_JR_Fthr_003_OutAuto_ry_MD', 'L_Secondaries_JR_Fthr_0012_Ctrl_Auto_Grp', 'L_Scapulars_JR_Fthr_006_OutAuto_rx_MD1', 'L_Secondaries_JR_Fthr_009_Bnd_parentConstraint1', 'R_Scapulars_JR_Fthr_0010_Bnd_parentConstraint1', 'R_Scapulars_JR_Fthr_0012_Indiv_Ctrl', 'L_Secondaries_JR_Wing_0011_Bnd_parentConstraint1', 'L_Scapulars_JR_Fthr_004_Indiv_Ctrl_Offset_Grp', 'unitConversion311', 'R_Scapulars_JR_Fthr_007Bend03_Bnd_parentConstraint1', 'L_Secondaries_JR_Fthr_0013_CtrlShape', 'L_Primaries_JR_Fthr_005_SpreadAuto', 'L_Scapulars_JR_Fthr_0014_SpreadAuto', 'unitConversion2049', 'L_Secondaries_JR_Fthr_008_Out_rx_MD1', 'R_Secondaries_JR_Fthr_0012Bend02_Bnd', 'unitConversion2144', 'R_Secondaries_JR_Fthr_0012_SpreadAuto_Root', 'R_Primaries_JR_Fthr_003_RootJnt', 'L_Secondaries_JR_Fthr_001_Indiv_Ctrl_tag', 'L_Secondaries_JR_Fthr_0013_Out_ry_MD', 'unitConversion2091', 'L_Primaries_JR_Fthr_007_InAuto_ry_MD1', 'L_Scapulars_JR_Fthr_004_BendJnt2', 'unitConversion697', 'L_Secondaries_JR_Fthr_0012_SpreadAuto_Root', 'R_Scapulars_JR_Fthr_0011Bend03_Indiv_Ctrl_tag', 'L_Scapulars_JR_Fthr_004Bend01_Indiv_CtrlShape', 'L_Secondaries_JR_Fthr_003Bend03_Indiv_Ctrl_tag', 'unitConversion402', 'unitConversion2554', 'L_Scapulars_JR_Fthr_002_Ctrl_Auto_Grp', 'L_Secondaries_JR_Wing_002_parentConstraint1', 'unitConversion2782', 'R_Scapulars_JR_Fthr_009_Indiv_Ctrl_tag', 'L_Scapulars_JR_Fthr_0012_BendJnt2', 'L_Primaries_JR_Fthr_003Bend01_Indiv_Ctrl_tag', 'R_Scapulars_JR_Fthr_006_BendJnt1', 'unitConversion1862', 'L_Primaries_JR_Fthr_000_In_ry_MD1', 'unitConversion686', 'R_Scapulars_JR_Fthr_0013_BendJnt1', 'unitConversion1792', 'L_Scapulars_JR_Fthr_008Bend02_Bnd', 'unitConversion2794', 'unitConversion1043', 'R_Primaries_JR_Fthr_007_BendJnt3', 'L_Secondaries_JR_Fthr_001Bend01_Indiv_CtrlShape', 'unitConversion1815', 'unitConversion2300', 'R_Secondaries_JR_Fthr_003_Indiv_Ctrl_Offset_Grp', 'L_Secondaries_JR_Fthr_0014Bend02_Indiv_Ctrl', 'R_Secondaries_JR_Wing_002_parentConstraint1', 'unitConversion2201', 'L_Secondaries_JR_Fthr_0016_OutAuto_rx_MD1', 'unitConversion1816', 'R_Secondaries_JR_Fthr_007Bend03_Indiv_Ctrl_tag', 'L_Scapulars_JR_Fthr_003Bend01_Bnd', 'unitConversion924', 'L_Scapulars_JR_Fthr_008Bend02_Indiv_Ctrl_tag', 'unitConversion908', 'L_Primaries_JR_Fthr_009Bend01_Bnd_parentConstraint1', 'unitConversion270', 'unitConversion2526', 'L_Scapulars_JR_Wing_0010_parentConstraint1', 'unitConversion458', 'L_Primaries_JR_Spread_In_Ctrl', 'L_Scapulars_JR_Fthr_000Bend02_Bnd', 'unitConversion1438', 'L_Primaries_JR_8_CtrlShape', 'R_Primaries_JR_Fthr_005Bend02', 'R_Primaries_JR_Fthr_009Bend02_Indiv_Ctrl', 'unitConversion959', 'R_Secondaries_JR_Fthr_004_BendJnt1', 'L_Primaries_JR_Fthr_001_Indiv_CtrlShape', 'L_Scapulars_JR_0_CtrlShape', 'L_Secondaries_JR_Fthr_0011_Indiv_Ctrl_Offset_Grp', 'L_Primaries_JR_Fthr_004Bend01_Indiv_CtrlShape', 'R_Secondaries_JR_Fthr_0013_SpreadAuto', 'unitConversion29', 'L_Scapulars_JR_Fthr_0010_Out_ry_MD1', 'L_Secondaries_JR_6_CtrlL_Secondaries_JR_6_CC_AutoFold_Grp_Grp', 'L_Secondaries_JR_Fthr_000_Bnd', 'unitConversion1945', 'unitConversion1884', 'L_Scapulars_JR_Fthr_003_AutoJnt', 'L_Secondaries_JR_Fthr_001_InAuto_rx_MD1', 'R_Primaries_JR_Bend_Ctrl', 'L_Secondaries_JR_Fthr_0013_SpreadAuto', 'L_Secondaries_JR_Fthr_0012_BendJnt3', 'unitConversion1426', 'unitConversion1995', 'L_Scapulars_JR_Fthr_000Bend02_Indiv_Ctrl', 'L_Scapulars_JR_Fthr_008Bend02_Bnd_parentConstraint1', 'unitConversion1339', 'L_Secondaries_JR_Fthr_0010_Out_ry_MD1', 'Secundaries_Bnd_Grp', 'unitConversion2051', 'L_Scapulars_JR_Fthr_0010_Out_rx_MD', 'unitConversion1187', 'R_Secondaries_JR_Fthr_0014Bend03_Indiv_Ctrl', 'unitConversion998', 'R_Primaries_JR_Wing_004_parentConstraint1', 'R_Secondaries_JR_Fthr_0017_BendJnt3', 'unitConversion1507', 'unitConversion2174', 'L_Secondaries_JR_Fthr_003_SpreadAuto_Root', 'R_Secondaries_JR_Fthr_000Bend02_Indiv_Ctrl', 'unitConversion1933', 'L_Primaries_JR_Wing_000_Ctrl', 'unitConversion1281', 'unitConversion2514', 'R_Scapulars_JR_Fthr_0014_Indiv_CtrlShape', 'unitConversion1837', 'unitConversion1548', 'unitConversion2661', 'L_Secondaries_JR_Fthr_003_AutoJnt', 'unitConversion2377', 'unitConversion1144', 'unitConversion1811', 'unitConversion2183', 'L_Primaries_JR_Wing_006', 'unitConversion687', 'L_Primaries_JR_Fthr_006Bend03_Bnd', 'R_Scapulars_JR_Fthr_0011_Bnd_parentConstraint1', 'unitConversion392', 'R_Secondaries_JR_Wing_008_Bnd', 'R_Primaries_JR_Fthr_004Bend02_Indiv_Ctrl', 'unitConversion510', 'L_Scapulars_JR_Fthr_003_CtrlShape', 'unitConversion2759', 'unitConversion2411', 'unitConversion1627', 'L_Secondaries_JR_Fthr_009_Bnd', 'unitConversion630', 'L_Primaries_JR_Wing_002_Bnd_parentConstraint1', 'unitConversion27', 'R_Secondaries_JR_2_Ctrl', 'L_Primaries_JR_Fthr_007_In_ry_MD1', 'unitConversion538', 'L_Secondaries_JR_Fthr_005_InAuto_ry_MD1', 'unitConversion2636', 'R_Primaries_JR_Fthr_003_BendJnt2', 'unitConversion1724', 'L_Primaries_JR_Fthr_001_Ctrl_Auto_Grp', 'unitConversion2741', 'unitConversion2549', 'L_Scapulars_JR_Fthr_008_Indiv_Ctrl_tag', 'unitConversion2503', 'L_Secondaries_JR_Wing_002', 'R_Scapulars_JR_Fthr_006Bend03_Bnd', 'R_Scapulars_JR_Fthr_006Bend01', 'L_Secondaries_JR_Fthr_0017_In_ry_MD1', 'unitConversion2470', 'unitConversion80', 'unitConversion2628', 'R_Primaries_JR_Wing_000_Bnd_parentConstraint1', 'L_Secondaries_JR_Fthr_007_CtrlShape', 'R_Scapulars_JR_Fthr_005_Indiv_Ctrl_Offset_Grp', 'R_Scapulars_JR_Fthr_000Bend03_Bnd_parentConstraint1', 'R_Primaries_JR_Fthr_000Bend02_Bnd_parentConstraint1', 'unitConversion1106', 'R_Secondaries_JR_Fthr_0015Bend02', 'R_Primaries_JR_Spread_In_Ctrl', 'R_Secondaries_JR_Fthr_0013Bend03_Indiv_Ctrl', 'L_Primaries_JR_Fthr_006_OutAuto_ry_MD', 'R_Scapulars_JR_Wing_003_parentConstraint1', 'L_Primaries_JR_Fthr_003_Out_ry_MD1', 'unitConversion1335', 'L_Primaries_JR_Fthr_009_RootJnt', 'R_Secondaries_JR_Fthr_008_Indiv_Ctrl', 'R_Scapulars_JR_Fthr_0011Bend02_Indiv_CtrlShape', 'L_Primaries_JR_Fthr_000Bend02_Bnd', 'unitConversion716', 'L_Primaries_JR_Fthr_000_Indiv_CtrlShape', 'L_Scapulars_JR_Fthr_007_Ctrl', 'L_Primaries_JR_Fthr_005_Out_ry_MD1', 'unitConversion1004', 'R_Primaries_JR_Wing_009', 'L_Secondaries_JR_Fthr_000_InAuto_rx_MD', 'L_Secondaries_JR_Fthr_002_Indiv_Ctrl', 'L_Scapulars_JR_Fthr_001_Indiv_Ctrl_Offset_Grp', 'R_Secondaries_JR_10_CtrlShape', 'R_Scapulars_JR_Fthr_0012_SpreadAuto_Root', 'unitConversion2310', 'unitConversion205', 'L_Secondaries_JR_Fthr_004_Indiv_Ctrl_Offset_Grp', 'R_Secondaries_JR_Fthr_000Bend02', 'L_Secondaries_JR_Fthr_0010_SpreadCtrlGrp', 'R_Primaries_JR_7_Ctrl', 'unitConversion472', 'R_Scapulars_JR_Fthr_009_Ctrl_Root_Grp', 'unitConversion2138', 'R_Primaries_JR_Fthr_001_RootJnt', 'bindPose2', 'unitConversion1576', 'R_Secondaries_JR_Fthr_003Bend02', 'unitConversion1687', 'L_Secondaries_JR_Fthr_003_InAuto_rx_MD1', 'unitConversion839', 'L_Primaries_JR_Fthr_004Bend03_Indiv_Ctrl_tag', 'R_Primaries_JR_Fthr_004_BendJnt2', 'L_Secondaries_JR_Fthr_007Bend03', 'R_Primaries_JR_Fthr_006Bend01_Bnd_parentConstraint1', 'L_Secondaries_JR_Fthr_009_BendJnt2', 'L_Scapulars_JR_Fthr_0014_In_ry_MD', 'unitConversion638', 'unitConversion1763', 'L_Secondaries_JR_9_CtrlShape', 'L_Scapulars_JR_Fthr_002_In_ry_MD1', 'R_Secondaries_JR_11_Ctrl', 'R_Scapulars_JR_Fthr_003_BendJnt2', 'L_Scapulars_JR_Fthr_002_CtrlShape', 'L_Secondaries_JR_Fthr_0015_Indiv_CtrlShape', 'R_Scapulars_JR_Fthr_001_SpreadAuto_Root', 'R_Scapulars_JR_Fthr_003Bend03_Bnd', 'R_Scapulars_JR_Fthr_0010Bend01_Indiv_Ctrl_tag', 'L_Scapulars_JR_Fthr_006Bend01_Indiv_CtrlShape', 'L_Primaries_JR_Fthr_003_Indiv_Ctrl_tag', 'R_Clavicle_Ctrl', 'R_Secondaries_JR_Fthr_0011Bend01_Bnd_parentConstraint1', 'unitConversion2611', 'L_Secondaries_JR_Fthr_005Bend01_Bnd', 'unitConversion2487', 'unitConversion38', 'unitConversion2626', 'skinCluster2GroupId', 'R_Secondaries_JR_Fthr_004Bend03_Indiv_Ctrl', 'unitConversion1625', 'unitConversion2761', 'unitConversion2472', 'R_Secondaries_JR_Fthr_000_Ctrl', 'R_Scapulars_JR_Fthr_008_RootJnt', 'R_Scapulars_JR_Fthr_006_SpreadAuto_Root', 'unitConversion1248', 'L_Scapulars_JR_Fthr_009_In_rx_MD', 'skinCluster2Set1', 'unitConversion2795', 'L_Primaries_JR_Fthr_009Bend02_Indiv_Ctrl_Offset_Grp', 'unitConversion1234', 'unitConversion517', 'L_Primaries_JR_Fthr_003_BendJnt3', 'R_Secondaries_JR_Fthr_0013_AutoJnt', 'unitConversion255', 'unitConversion2205', 'L_Secondaries_JR_Fthr_002Bend03_Indiv_Ctrl_Offset_Grp', 'R_Secondaries_JR_Fthr_003Bend01_Bnd_parentConstraint1', 'unitConversion562', 'unitConversion1457', 'L_Scapulars_JR_Fthr_005_SpreadAuto_Root_orientConstraint1', 'L_Secondaries_JR_Fthr_003Bend02_Indiv_Ctrl_Offset_Grp', 'L_Primaries_JR_Fthr_008_Out_ry_MD1', 'unitConversion1820', 'L_Secondaries_JR_Fthr_0012Bend03', 'unitConversion1644', 'R_Secondaries_JR_Fthr_0013Bend02_Indiv_Ctrl_tag', 'unitConversion1085', 'L_Secondaries_JR_Fthr_003_Indiv_Ctrl_tag', 'unitConversion970', 'unitConversion53', 'unitConversion2558', 'L_Scapulars_JR_Fthr_008', 'L_Scapulars_JR_Fthr_0010Bend03_Indiv_Ctrl', 'R_Secondaries_JR_Fthr_0015Bend01_Indiv_Ctrl_Offset_Grp', 'L_Secondaries_JR_Fthr_0017_BendJnt2', 'unitConversion524', 'L_Primaries_JR_Fthr_003_Ctrl_Root_Grp', 'R_Primaries_JR_5_Ctrl', 'L_Scapulars_JR_Fthr_003_SpreadCtrlGrp', 'unitConversion404', 'R_Secondaries_JR_Fthr_003_SpreadAuto_Root', 'unitConversion1683', 'L_Secondaries_JR_Fthr_0012Bend01_Indiv_Ctrl_Offset_Grp', 'unitConversion2053', 'unitConversion2659', 'unitConversion1251', 'unitConversion1902', 'R_Scapulars_JR_Fthr_0011_Ctrl', 'L_Scapulars_JR_Fthr_004Bend03_Bnd_parentConstraint1', 'L_Secondaries_JR_Fthr_0017Bend02_Indiv_Ctrl', 'L_Secondaries_JR_Fthr_007Bend02_Bnd_parentConstraint1', 'unitConversion1650', 'L_Wing_CC_Auto', 'unitConversion2325', 'L_Secondaries_JR_Fthr_007Bend01_Bnd', 'Scauplars_feathers_Bnd_Grp', 'unitConversion563', 'L_Primaries_JR_Fthr_008_Indiv_Ctrl_Offset_Grp', 'R_Secondaries_JR_Fthr_004Bend02_Indiv_Ctrl_Offset_Grp', 'unitConversion1247', 'unitConversion2705', 'L_Scapulars_JR_Wing_004_Bnd_parentConstraint1', 'R_Secondaries_JR_Fthr_0013_Indiv_CtrlShape', 'L_Scapulars_JR_Fthr_004_In_rx_MD1', 'unitConversion2647', 'L_Scapulars_JR_Fthr_0010_Out_rx_MD1', 'unitConversion2711', 'unitConversion95', 'R_Primaries_JR_Wing_008_Bnd', 'L_Scapulars_JR_Fthr_0012_InAuto_ry_MD', 'unitConversion574', 'L_Secondaries_JR_Wing_003', 'L_Secondaries_JR_Fthr_006_SpreadAuto', 'L_Scapulars_JR_Fthr_001_InAuto_rx_MD', 'unitConversion1571', 'L_Wing_CC_Auto_scaleConstraint1', 'unitConversion1472', 'R_Primaries_JR_Fthr_007_Bnd_parentConstraint1', 'L_Secondaries_JR_Fthr_0010Bend02', 'R_Primaries_JR_Fthr_001Bend03_Indiv_Ctrl', 'R_Primaries_JR_Fthr_001Bend03_Indiv_CtrlShape', 'unitConversion178', 'unitConversion893', 'unitConversion2448', 'R_Scapulars_JR_Fthr_008Bend01_Indiv_Ctrl_tag', 'unitConversion1620', 'R_Secondaries_JR_12_CtrlShape', 'R_Scapulars_JR_Fthr_004_RootJnt', 'unitConversion237', 'L_Scapulars_JR_Fthr_006Bend02', 'R_Secondaries_JR_Spread_Out_Auto_Grp', 'L_Scapulars_JR_Fthr_008Bend02_Indiv_Ctrl', 'unitConversion2164', 'unitConversion656', 'L_Secondaries_JR_Fthr_0014Bend02_Bnd', 'L_Secondaries_JR_Fthr_006_InAuto_rx_MD1', 'unitConversion2452', 'unitConversion1801', 'R_Primaries_JR_Fthr_005_SpreadAuto_Root', 'L_Secondaries_JR_Fthr_005_Indiv_Ctrl', 'unitConversion2720', 'unitConversion483', 'unitConversion1728', 'L_Secondaries_JR_Fthr_007Bend01_Indiv_CtrlShape', 'L_Scapulars_JR_Wing_003_Bnd', 'R_Primaries_JR_2_CtrlL_Primaries_JR_2_CC_AutoFold_Grp_Grp', 'R_Secondaries_JR_0_CtrlL_Secondaries_JR_0_CC_AutoFold_Grp_Grp', 'unitConversion435', 'R_Secondaries_JR_Fthr_003Bend03_Bnd', 'unitConversion223', 'L_Scapulars_JR_Fthr_007Bend02', 'R_Scapulars_JR_Fthr_006', 'L_Secondaries_JR_16_CtrlL_Secondaries_JR_16_CC_AutoFold_Grp_Grp', 'R_Secondaries_JR_Fthr_0014_RootJnt', 'R_Scapulars_JR_Fthr_005Bend02_Indiv_Ctrl_Offset_Grp', 'L_Scapulars_JR_Fthr_0013Bend01_Indiv_Ctrl_tag', 'unitConversion1952', 'unitConversion2678', 'R_Primaries_JR_Fthr_003Bend03_Bnd', 'R_Secondaries_JR_Fthr_0011', 'R_Primaries_JR_Fthr_002_Ctrl_Auto_Grp', 'L_Scapulars_JR_Fthr_008Bend03_Indiv_Ctrl', 'unitConversion1891', 'unitConversion2226', 'L_Primaries_JR_Wing_000_Ctrl_Root_Grp', 'R_Secondaries_JR_Fthr_007_RootJnt', 'unitConversion1461', 'R_Secondaries_JR_Fthr_000', 'R_Secondaries_JR_Fthr_005_RootJnt', 'unitConversion1444', 'L_Secondaries_JR_Fthr_006_SpreadAuto_Auto', 'R_Secondaries_JR_Fthr_0014_CtrlShape', 'unitConversion2012', 'unitConversion1273', 'R_Primaries_JR_Fthr_005_Ctrl', 'R_Primaries_JR_2_CtrlShape', 'unitConversion1208', 'unitConversion188', 'R_Secondaries_JR_Wing_0013_Bnd_parentConstraint1', 'unitConversion708', 'R_Scapulars_JR_Fthr_005_Ctrl_Auto_Grp', 'unitConversion2006', 'R_Secondaries_JR_Fthr_0016_Indiv_Ctrl_Offset_Grp', 'L_Primaries_JR_Fthr_008Bend02_Bnd_parentConstraint1', 'L_Secondaries_JR_Wing_007_parentConstraint1', 'L_Primaries_JR_Fthr_002_Bnd_parentConstraint1', 'R_Secondaries_JR_Fthr_004_Ctrl_Auto_Grp', 'R_Secondaries_JR_Fthr_0013_Ctrl', 'unitConversion1071', 'L_Scapulars_JR_Fthr_0011_CtrlShape', 'unitConversion2721', 'unitConversion1309', 'L_Secondaries_JR_Fthr_007Bend03_Bnd_parentConstraint1', 'unitConversion1674', 'R_Primaries_JR_Fthr_001_BendJnt2', 'R_Secondaries_JR_Wing_0013_Bnd', 'unitConversion275', 'R_Scapulars_JR_Fthr_004Bend02_Indiv_Ctrl_Offset_Grp', 'unitConversion2024', 'R_Scapulars_JR_Fthr_005_SpreadCtrlGrp', 'unitConversion1609', 'L_Scapulars_JR_Fthr_009Bend01_Indiv_CtrlShape', 'unitConversion1226', 'unitConversion1921', 'L_Secondaries_JR_Fthr_000_CtrlShape', 'R_Secondaries_JR_Fthr_002Bend01_Indiv_Ctrl', 'unitConversion993', 'L_Secondaries_JR_Fthr_005Bend01_Indiv_Ctrl_Offset_Grp', 'R_Scapulars_JR_Fthr_006_Bnd', 'unitConversion16', 'Clavicles_Bnd_Grp', 'unitConversion1170', 'R_Scapulars_JR_9_CtrlShape', 'R_Scapulars_JR_Wing_0010', 'L_Primaries_JR_Fthr_006Bend03_Indiv_CtrlShape', 'unitConversion1264', 'unitConversion772', 'unitConversion950', 'unitConversion797', 'R_Secondaries_JR_Fthr_0012Bend02_Bnd_parentConstraint1', 'L_Primaries_JR_Fthr_005Bend01_Bnd', 'unitConversion1653', 'unitConversion103', 'L_Secondaries_JR_Fthr_003_OutAuto_ry_MD1', 'R_Secondaries_JR_Fthr_0017_BendJnt2', 'L_Secondaries_JR_Fthr_0010_Bnd', 'unitConversion1957', 'R_Scapulars_JR_Fthr_004Bend02_Indiv_Ctrl_tag', 'L_Secondaries_JR_Fthr_001_InAuto_ry_MD1', 'L_Scapulars_JR_Fthr_009_SpreadAuto', 'R_Scapulars_JR_Fthr_0014_Indiv_Ctrl_Offset_Grp', 'unitConversion2583', 'L_Primaries_JR_Fthr_001_SpreadAuto_Auto', 'L_Secondaries_JR_Fthr_0016Bend02_Bnd', 'L_Secondaries_JR_Fthr_0016_Indiv_Ctrl', 'R_Scapulars_JR_Wing_009_Bnd_parentConstraint1', 'L_Scapulars_JR_Fthr_008_Out_rx_MD1', 'L_Scapulars_JR_Fthr_0010_BendJnt2', 'R_Scapulars_JR_Fthr_003_SpreadAuto_Auto', 'L_Scapulars_JR_Fthr_0014_Indiv_Ctrl', 'R_Scapulars_JR_Fthr_0013Bend03_Indiv_Ctrl', 'L_Secondaries_JR_Fthr_006Bend03_Indiv_CtrlShape', 'R_Scapulars_JR_Fthr_006Bend01_Bnd', 'L_Secondaries_JR_Fthr_009_InAuto_ry_MD1', 'unitConversion2623', 'unitConversion1256', 'L_Scapulars_JR_Fthr_008_BendJnt2', 'R_Secondaries_JR_Fthr_003Bend01_Indiv_CtrlShape', 'R_Primaries_JR_Fthr_008Bend03_Indiv_Ctrl_Offset_Grp', 'L_Scapulars_JR_Wing_002_Bnd', 'L_Secondaries_JR_Fthr_006Bend03', 'unitConversion487', 'R_Primaries_JR_Fthr_008_BendJnt1', 'L_Primaries_JR', 'R_Scapulars_JR_Fthr_007_Ctrl_Auto_Grp', 'R_Secondaries_JR_Fthr_000Bend03_Indiv_Ctrl', 'R_Scapulars_JR_Fthr_0014_Ctrl', 'unitConversion153', 'unitConversion610', 'L_Secondaries_JR_Fthr_007Bend03_Indiv_Ctrl', 'unitConversion1052', 'R_Secondaries_JR_Fthr_002Bend01', 'L_Secondaries_JR_Fthr_006_CtrlShape', 'L_Primaries_JR_Wing_005_Bnd', 'L_Scapulars_JR_Fthr_004_RootJnt', 'R_Primaries_JR_Fthr_001_Bnd_parentConstraint1', 'unitConversion2308', 'unitConversion2081', 'unitConversion2708', 'R_Scapulars_JR_Fthr_008', 'unitConversion2372', 'L_Primaries_JR_Fthr_007_Ctrl', 'unitConversion2072', 'L_Primaries_JR_Fthr_005_OutAuto_rx_MD', 'unitConversion1008', 'unitConversion440', 'unitConversion1159', 'unitConversion2625', 'L_Secondaries_JR_Fthr_0010_SpreadAuto', 'R_Scapulars_JR_Fthr_003Bend02_Indiv_Ctrl_Offset_Grp', 'unitConversion2443', 'L_Primaries_JR_Fthr_005', 'L_Secondaries_JR_Fthr_001_AutoJnt', 'L_Secondaries_JR_Fthr_0014_SpreadAuto_Auto', 'L_Secondaries_JR_Fthr_0013Bend01', 'L_Scapulars_JR_Fthr_000_Ctrl', 'L_Primaries_JR_Fthr_007_Bnd_parentConstraint1', 'unitConversion2745', 'L_Primaries_JR_Fthr_008_InAuto_rx_MD', 'L_Scapulars_JR_Fthr_000Bend01_Indiv_Ctrl', 'R_Scapulars_JR_Fthr_0013Bend01_Bnd_parentConstraint1', 'R_Primaries_JR_Fthr_000_Indiv_CtrlShape', 'unitConversion1720', 'R_Secondaries_JR_Wing_003', 'unitConversion2266', 'L_Primaries_JR_Fthr_007_SpreadAuto_Auto', 'unitConversion486', 'unitConversion1599', 'unitConversion2550', 'unitConversion2149', 'L_Primaries_JR_Fthr_005_RootJnt', 'L_Scapulars_JR_Wing_0012_Bnd', 'unitConversion654', 'L_Primaries_JR_Bend_Ctrl', 'R_Secondaries_JR_Fthr_0013_Ctrl_Auto_Grp', 'L_Secondaries_JR_Fthr_007Bend02_Bnd', 'unitConversion2656', 'L_Secondaries_JR_Fthr_0016Bend01_Bnd', 'L_Secondaries_JR_Fthr_0014Bend01_Indiv_CtrlShape', 'R_Primaries_JR_Fthr_001Bend03_Indiv_Ctrl_tag', 'R_Secondaries_JR_Fthr_001_Ctrl_Root_Grp', 'unitConversion1179', 'L_Scapulars_JR_Fthr_006_Ctrl', 'unitConversion701', 'L_Primaries_JR_Fthr_001Bend01_Bnd_parentConstraint1', 'unitConversion2460', 'unitConversion1030', 'L_Primaries_JR_Fthr_007Bend01', 'unitConversion786', 'L_Secondaries_JR_3_Ctrl', 'unitConversion2746', 'unitConversion1701', 'R_Scapulars_JR_Fthr_006Bend02_Indiv_Ctrl', 'L_Scapulars_JR_Fthr_008Bend03_Indiv_Ctrl_Offset_Grp', 'unitConversion2613', 'unitConversion227', 'L_Primaries_JR_Fthr_008Bend02_Indiv_Ctrl', 'unitConversion1850', 'R_Secondaries_JR_Fthr_003_CtrlShape', 'L_Secondaries_JR_Fthr_0016_Out_ry_MD1', 'L_Scapulars_JR_Fthr_004_Bnd', 'R_Primaries_JR_Fthr_001Bend02_Indiv_Ctrl', 'L_Secondaries_JR_Fthr_003_Bnd_parentConstraint1', 'R_Scapulars_JR_Fthr_0012Bend01_Indiv_Ctrl_Offset_Grp', 'R_Scapulars_JR_Bend_CC_Root_Grp', 'L_Secondaries_JR_Fthr_000_Indiv_Ctrl_tag', 'L_Secondaries_JR_Fthr_0012Bend03_Bnd', 'R_Secondaries_JR_Fthr_003_RootJnt', 'L_Primaries_JR_Fthr_002Bend02_Bnd_parentConstraint1', 'R_Scapulars_JR_Fthr_003Bend02_Indiv_Ctrl_tag', 'unitConversion1536', 'R_Secondaries_JR_Wing_000_Bnd', 'R_Scapulars_JR_Fthr_0014_Bnd', 'R_Scapulars_JR_Fthr_0011Bend02_Bnd_parentConstraint1', 'L_Primaries_JR_Fthr_000_Out_ry_MD', 'R_Secondaries_JR_Fthr_007_CtrlShape', 'R_Scapulars_JR_Fthr_009_BendJnt3', 'L_Primaries_JR_Fthr_000_Out_rx_MD', 'L_Scapulars_JR_Fthr_009_OutAuto_ry_MD1', 'unitConversion1734', 'L_Secondaries_JR_Fthr_0012Bend03_Indiv_Ctrl_tag', 'R_Scapulars_JR_Wing_000_Auto2', 'R_Scapulars_JR_Fthr_002_BendJnt1', 'unitConversion2653', 'L_Primaries_JR_2_CtrlShape', 'R_Secondaries_JR_12_CtrlL_Secondaries_JR_12_CC_AutoFold_Grp_Grp', 'L_Primaries_JR_Fthr_005_AutoJnt', 'L_Scapulars_JR_Fthr_003_RootJnt', 'L_Secondaries_JR_Fthr_000_BendJnt3', 'R_Secondaries_JR_17_Ctrl', 'L_Scapulars_JR_Fthr_000_BendJnt2', 'R_Scapulars_JR_Fthr_0012Bend03_Indiv_CtrlShape', 'L_Primaries_JR_Fthr_004Bend02_Indiv_CtrlShape', 'L_Secondaries_JR_Fthr_0016Bend01_Bnd_parentConstraint1', 'L_Scapulars_JR_12_CtrlL_Scapulars_JR_12_CC_AutoFold_Grp_Grp', 'unitConversion2122', 'R_Primaries_JR_Fthr_005Bend01_Indiv_Ctrl_Offset_Grp', 'R_Scapulars_JR_Fthr_005Bend03_Indiv_Ctrl_tag', 'R_Scapulars_JR_Wing_000_parentConstraint1', 'L_Secondaries_JR_Fthr_0017Bend01', 'L_Scapulars_JR_Fthr_004_Out_ry_MD1', 'unitConversion259', 'unitConversion2373', 'unitConversion743', 'unitConversion355', 'unitConversion1798', 'R_Primaries_JR_Fthr_008Bend02_Bnd_parentConstraint1', 'R_Secondaries_JR_Fthr_0010Bend03_Indiv_Ctrl_Offset_Grp', 'L_Secondaries_JR_Spread_Out_CtrlShape', 'unitConversion875', 'L_Secondaries_JR_Fthr_003_Ctrl_Auto_Grp', 'unitConversion1408', 'L_Primaries_JR_Fthr_001_Out_rx_MD', 'L_Scapulars_JR_Fthr_005_Indiv_CtrlShape', 'R_Secondaries_JR_Fthr_007_SpreadAuto_Auto', 'unitConversion1766', 'unitConversion2356', 'R_Secondaries_JR_Fthr_008_RootJnt', 'unitConversion2381', 'R_Secondaries_JR_Fthr_007_Ctrl_Auto_Grp', 'L_Secondaries_JR_Fthr_000Bend01_Bnd', 'R_Scapulars_JR_Fthr_006Bend02_Indiv_CtrlShape', 'R_Scapulars_JR_Fthr_005Bend03', 'R_Scapulars_JR_Fthr_008_SpreadCtrlGrp', 'L_Primaries_JR_Fthr_000_Out_ry_MD1', 'L_Primaries_JR_Fthr_009_Out_rx_MD1', 'unitConversion215', 'R_Secondaries_JR_Fthr_007', 'L_Secondaries_JR_Fthr_004_In_ry_MD1', 'R_Primaries_JR_Wing_006', 'unitConversion498', 'L_Secondaries_JR_Fthr_0014_SpreadAuto_Root', 'L_Secondaries_JR_Wing_005_Bnd_parentConstraint1', 'unitConversion2599', 'R_Primaries_JR_Fthr_002Bend03_Indiv_CtrlShape', 'unitConversion2192', 'unitConversion211', 'unitConversion883', 'L_Secondaries_JR_Fthr_0017Bend02_Bnd_parentConstraint1', 'L_Scapulars_JR_Fthr_0010_SpreadAuto_Auto', 'R_Secondaries_JR_Wing_0017_Bnd', 'unitConversion1682', 'L_Scapulars_JR_Fthr_001_In_ry_MD', 'R_Primaries_JR_Fthr_002_AutoJnt', 'unitConversion1126', 'R_Secondaries_JR_Fthr_002Bend03_Indiv_Ctrl', 'R_Scapulars_JR_Fthr_007_Indiv_CtrlShape', 'L_Secondaries_JR_Fthr_002_In_rx_MD', 'unitConversion1364', 'unitConversion503', 'unitConversion1484', 'unitConversion2722', 'L_Scapulars_JR_Fthr_0011_InAuto_ry_MD', 'R_Scapulars_JR_Fthr_0014_Indiv_Ctrl', 'L_Scapulars_JR_Fthr_002_InAuto_rx_MD', 'unitConversion1800', 'R_Secondaries_JR_Fthr_0014_BendJnt1', 'L_Secondaries_JR_Fthr_008_In_rx_MD', 'unitConversion1295', 'unitConversion1538', 'unitConversion164', 'R_Primaries_JR_Fthr_005_AutoJnt', 'unitConversion1796', 'L_Scapulars_JR_Fthr_005_InAuto_ry_MD', 'L_Secondaries_JR_Fthr_000Bend01_Bnd_parentConstraint1', 'L_Secondaries_JR_Fthr_005_OutAuto_rx_MD1', 'L_Scapulars_JR_Fthr_000_In_ry_MD', 'L_Scapulars_JR_Fthr_007_InAuto_ry_MD1', 'R_Primaries_JR_0_CtrlShape', 'R_Scapulars_JR_Fthr_0011Bend02_Indiv_Ctrl_Offset_Grp', 'R_Secondaries_JR_Fthr_004Bend01_Indiv_CtrlShape', 'R_Secondaries_JR_Fthr_008Bend02_Bnd', 'unitConversion1819', 'L_Scapulars_JR_Fthr_0013_BendJnt2', 'L_Secondaries_JR_Fthr_0017Bend02', 'L_Secondaries_JR_Spread_In_Root_Grp', 'unitConversion2458', 'L_Secondaries_JR_Fthr_0017Bend01_Indiv_Ctrl_Offset_Grp', 'unitConversion2268', 'R_Scapulars_JR_Fthr_005_BendJnt3', 'unitConversion1691', 'R_Scapulars_JR_Fthr_0013_BendJnt2', 'L_Secondaries_JR_Fthr_0014_BendJnt1', 'L_Scapulars_JR_Fthr_000Bend02_Bnd_parentConstraint1', 'L_Scapulars_JR_Fthr_005Bend01_Indiv_Ctrl_Offset_Grp', 'unitConversion1889', 'L_Primaries_JR_Fthr_003_OutAuto_ry_MD', 'R_Secondaries_JR_Fthr_0015Bend03_Indiv_Ctrl_Offset_Grp', 'L_Primaries_JR_Fthr_007_InAuto_rx_MD1', 'unitConversion354', 'R_Scapulars_JR_Fthr_0012_CtrlShape', 'unitConversion1956', 'R_Scapulars_JR_Spread_In_Root_Grp', 'R_Secondaries_JR_Fthr_0012Bend03_Indiv_Ctrl_tag', 'unitConversion1356', 'R_Primaries_JR_Fthr_004_Bnd_parentConstraint1', 'unitConversion147', 'unitConversion1380', 'R_Scapulars_JR_Fthr_0013Bend01_Bnd', 'unitConversion678', 'unitConversion2321', 'unitConversion2457', 'L_Secondaries_JR_Wing_0013', 'L_Secondaries_JR_Wing_0016_Bnd_parentConstraint1', 'unitConversion1643', 'unitConversion2414', 'L_Scapulars_JR_Fthr_003_In_ry_MD1', 'L_Primaries_JR_Fthr_002_InAuto_ry_MD', 'unitConversion833', 'L_Scapulars_JR_Fthr_0010_RootJnt', 'R_Scapulars_JR_Wing_000_Bnd', 'R_Secondaries_JR_Fthr_002_BendJnt1', 'unitConversion396', 'R_Secondaries_JR_Fthr_002_Ctrl_Auto_Grp', 'L_Secondaries_JR_Wing_0017_Bnd', 'R_Secondaries_JR_Fthr_008_CtrlShape', 'unitConversion1088', 'L_Primaries_JR_Fthr_007_Indiv_Ctrl', 'unitConversion1685', 'R_Secondaries_JR_Fthr_0016Bend02_Bnd', 'R_Scapulars_JR_Fthr_006_Ctrl', 'L_Scapulars_JR_Fthr_0013Bend01', 'R_Primaries_JR_Fthr_003', 'unitConversion1786', 'L_Primaries_JR_Fthr_006Bend02_Bnd_parentConstraint1', 'R_Primaries_JR_Fthr_002Bend02_Indiv_CtrlShape', 'L_Scapulars_JR_Fthr_006Bend03_Bnd', 'L_Primaries_JR_7_CtrlShape', 'L_Primaries_JR_Fthr_008_Indiv_Ctrl_tag', 'unitConversion982', 'unitConversion2703', 'R_Primaries_JR_3_Ctrl', 'unitConversion1058', 'L_Scapulars_JR_Fthr_007_In_ry_MD1', 'unitConversion1431', 'L_Scapulars_JR_Fthr_009Bend01_Bnd', 'L_Secondaries_JR_Fthr_0016_In_ry_MD', 'unitConversion1109', 'unitConversion1465', 'unitConversion1827', 'unitConversion2392', 'unitConversion2425', 'R_Scapulars_JR_Fthr_0012_Indiv_Ctrl_tag', 'unitConversion448', 'R_Scapulars_JR_Fthr_005_AutoJnt', 'R_Secondaries_JR_Fthr_0015_Ctrl_Root_Grp', 'L_Scapulars_JR_Fthr_0013_Bnd_parentConstraint1', 'L_Scapulars_JR_Fthr_000Bend03_Indiv_Ctrl', 'R_Primaries_JR_Fthr_001Bend01_Indiv_Ctrl_Offset_Grp', 'L_Secondaries_JR_Fthr_002Bend02_Bnd', 'unitConversion2788', 'L_Scapulars_JR_Fthr_007_BendJnt3', 'R_Secondaries_JR_Fthr_0017Bend02_Bnd_parentConstraint1', 'unitConversion432', 'R_Secondaries_JR_Fthr_0013Bend03_Bnd_parentConstraint1', 'R_Secondaries_JR_Fthr_001Bend03', 'unitConversion2527', 'unitConversion1780', 'L_Secondaries_JR_Fthr_008Bend02_Bnd_parentConstraint1', 'R_Secondaries_JR_Fthr_007_Bnd', 'R_Primaries_JR_Fthr_002Bend01_Bnd_parentConstraint1', 'unitConversion1794', 'R_Secondaries_JR_Fthr_0011_Bnd_parentConstraint1', 'R_Primaries_JR_Fthr_008_Indiv_Ctrl_Offset_Grp', 'R_Primaries_JR_Fthr_006_Indiv_CtrlShape', 'unitConversion1487', 'unitConversion86', 'L_Secondaries_JR_Fthr_000Bend03_Indiv_Ctrl_Offset_Grp', 'L_Primaries_JR_Fthr_003_CtrlShape', 'L_Primaries_JR_Fthr_003_In_rx_MD', 'unitConversion519', 'unitConversion752', 'L_Secondaries_JR_Spread_Out_Root_Grp', 'L_Secondaries_JR_Fthr_004_Indiv_Ctrl_tag', 'R_Secondaries_JR_Fthr_008_Ctrl_Root_Grp', 'R_Primaries_JR_Fthr_000_SpreadCtrlGrp', 'L_Secondaries_JR_Fthr_007Bend01_Indiv_Ctrl_tag', 'unitConversion466', 'L_Scapulars_JR_Fthr_008_In_ry_MD1', 'R_Primaries_JR_Fthr_004_Indiv_CtrlShape', 'unitConversion243', 'unitConversion720', 'unitConversion1768', 'R_Secondaries_JR_Fthr_001_Indiv_Ctrl', 'unitConversion1964', 'unitConversion632', 'L_Secondaries_JR_Fthr_0017', 'L_Secondaries_JR_Fthr_0015_BendJnt3', 'L_Primaries_JR_Bend_CtrlShape', 'unitConversion2071', 'L_Secondaries_JR_Fthr_005_Ctrl_Auto_Grp', 'R_Secondaries_JR_Fthr_0011Bend01_Indiv_Ctrl_Offset_Grp', 'R_Scapulars_JR_Fthr_001_SpreadAuto_Root_orientConstraint1', 'R_Secondaries_JR_13_Ctrl', 'unitConversion870', 'R_Primaries_JR_Fthr_001Bend02_Indiv_CtrlShape', 'unitConversion2007', 'L_Secondaries_JR_Fthr_004Bend02_Indiv_Ctrl_Offset_Grp', 'R_Scapulars_JR_Fthr_004_CtrlShape', 'L_Secondaries_JR_Fthr_0011_Indiv_CtrlShape', 'unitConversion190', 'unitConversion208', 'R_Scapulars_JR_Fthr_0010_SpreadAuto', 'R_Wing_CC_Root_parentConstraint1', 'R_Secondaries_JR_Fthr_0012Bend02_Indiv_Ctrl', 'unitConversion2085', 'L_Secondaries_JR_parentConstraint1', 'unitConversion350', 'unitConversion482', 'unitConversion1387', 'unitConversion1054', 'R_Scapulars_JR_Fthr_008_BendJnt1', 'unitConversion32', 'L_Secondaries_JR_Fthr_007_OutAuto_rx_MD', 'unitConversion1848', 'L_Secondaries_JR_Fthr_001Bend02_Indiv_Ctrl_Offset_Grp', 'R_Secondaries_JR_Fthr_0010_Ctrl_Root_Grp', 'unitConversion1180', 'L_Secondaries_JR_Fthr_006_SpreadAuto_Root', 'unitConversion434', 'L_Secondaries_JR_Fthr_0013_BendJnt1', 'L_Primaries_JR_Fthr_004_In_rx_MD1', 'L_Scapulars_JR_Fthr_000_RootJnt', 'L_Primaries_JR_Fthr_007Bend03_Indiv_Ctrl_tag', 'unitConversion1881', 'unitConversion2359', 'L_Primaries_JR_Fthr_004_OutAuto_rx_MD1', 'L_Secondaries_JR_Fthr_0010Bend02_Indiv_Ctrl_Offset_Grp', 'R_Scapulars_JR_Fthr_006_SpreadAuto_Auto', 'L_Secondaries_JR_Fthr_0013', 'L_Secondaries_JR_Fthr_0010Bend02_Bnd_parentConstraint1', 'R_Secondaries_JR_parentConstraint1', 'unitConversion327', 'R_Secondaries_JR_Fthr_007Bend01_Indiv_Ctrl_Offset_Grp', 'L_Scapulars_JR_Fthr_001_SpreadAuto_Root_orientConstraint1', 'L_Primaries_JR_Fthr_001_OutAuto_ry_MD1', 'unitConversion1871', 'unitConversion890', 'R_Scapulars_JR_Fthr_0012_BendJnt3', 'unitConversion1089', 'unitConversion2104', 'L_Scapulars_JR_Fthr_002_BendJnt3', 'L_Secondaries_JR_Fthr_0013Bend03_Bnd_parentConstraint1', 'R_Secondaries_JR_Fthr_0010Bend03_Indiv_CtrlShape', 'unitConversion1729', 'unitConversion1080', 'unitConversion1960', 'unitConversion1286', 'unitConversion298', 'R_Scapulars_JR_Fthr_0013_Indiv_Ctrl_Offset_Grp', 'R_Secondaries_JR_Fthr_0011Bend03_Indiv_Ctrl_tag', 'R_Primaries_JR_Fthr_002Bend02', 'L_Secondaries_JR_Fthr_0016_InAuto_ry_MD1', 'R_Secondaries_JR_Fthr_008Bend03_Indiv_CtrlShape', 'R_Scapulars_JR_Fthr_0010Bend01_Indiv_CtrlShape', 'L_Secondaries_JR_Fthr_004Bend02_Indiv_Ctrl_tag', 'L_Scapulars_JR_Fthr_002_AutoJnt', 'unitConversion1383', 'unitConversion681', 'L_Scapulars_JR_Fthr_007_SpreadAuto_Root_orientConstraint1', 'R_Scapulars_JR_5_CtrlShape', 'unitConversion1207', 'R_Secondaries_JR_Fthr_003_Bnd', 'R_Scapulars_JR_Fthr_000Bend02_Indiv_Ctrl', 'L_Primaries_JR_Fthr_005_InAuto_rx_MD', 'R_Secondaries_JR_Fthr_0016Bend01_Indiv_Ctrl_Offset_Grp', 'L_Secondaries_JR_Fthr_0015_SpreadAuto', 'unitConversion28', 'R_Scapulars_JR_Fthr_000Bend02_Indiv_Ctrl_tag', 'L_Scapulars_JR_Wing_008_parentConstraint1', 'L_Scapulars_JR_Fthr_0010Bend02_Indiv_Ctrl', 'R_Primaries_JR_Fthr_007Bend02_Indiv_Ctrl_tag', 'unitConversion1468', 'R_Scapulars_JR_3_Ctrl', 'R_Scapulars_JR_Fthr_0014_AutoJnt', 'L_Scapulars_JR_Fthr_0010_SpreadAuto_Root', 'unitConversion724', 'unitConversion123', 'R_Secondaries_JR_Fthr_009Bend03_Indiv_Ctrl_Offset_Grp', 'L_Secondaries_JR_Wing_003_parentConstraint1', 'L_Scapulars_JR_Fthr_0013_OutAuto_rx_MD1', 'L_Secondaries_JR_Fthr_0014Bend02_Indiv_Ctrl_tag', 'L_Secondaries_JR_Fthr_009_In_ry_MD1', 'R_Primaries_JR_Fthr_008Bend03', 'L_Secondaries_JR_Fthr_0014_RootJnt', 'unitConversion478', 'L_Secondaries_JR_Fthr_003Bend02', 'R_Secondaries_JR_Fthr_005_Bnd_parentConstraint1', 'L_Secondaries_JR_Fthr_0015_BendJnt2', 'unitConversion348', 'R_Primaries_JR_Fthr_009Bend03_Bnd_parentConstraint1', 'unitConversion1168', 'R_Scapulars_JR_11_CtrlL_Scapulars_JR_11_CC_AutoFold_Grp_Grp', 'L_Scapulars_JR_Fthr_000_Out_rx_MD1', 'L_Secondaries_JR_Fthr_006Bend02_Bnd', 'unitConversion1416', 'L_Secondaries_JR_Fthr_0013Bend01_Indiv_CtrlShape', 'L_Primaries_JR_Fthr_005_In_ry_MD1', 'L_Primaries_JR_Fthr_009_Bnd_parentConstraint1', 'R_Primaries_JR_Wing_000_Ctrl_Root_Grp', 'unitConversion451', 'unitConversion1695', 'L_Scapulars_JR_Fthr_008Bend02_Indiv_Ctrl_Offset_Grp', 'unitConversion715', 'L_Secondaries_JR_Fthr_006Bend03_Bnd_parentConstraint1', 'L_Scapulars_JR_Fthr_0013_Ctrl', 'R_Secondaries_JR_Wing_0011_Bnd_parentConstraint1', 'L_Scapulars_JR_Fthr_0014_In_rx_MD', 'R_Secondaries_JR_Fthr_0015_SpreadAuto_Auto', 'R_Secondaries_JR_16_CtrlShape', 'R_Scapulars_JR_Fthr_000_BendJnt1', 'unitConversion684', 'unitConversion507', 'L_Scapulars_JR_Fthr_0011_SpreadAuto_Auto', 'unitConversion218', 'unitConversion2405', 'L_Secondaries_JR_Fthr_0012_SpreadAuto', 'L_Primaries_JR_Fthr_008_Bnd_parentConstraint1', 'R_Primaries_JR_Fthr_001_SpreadCtrlGrp', 'L_Scapulars_JR_Fthr_005Bend01_Indiv_CtrlShape', 'unitConversion1231', 'R_Wing_Ctrl', 'unitConversion1428', 'L_Scapulars_JR_Fthr_006_Bnd', 'L_Secondaries_JR_Fthr_009_InAuto_ry_MD', 'L_Secondaries_JR_Fthr_006Bend02_Indiv_Ctrl_Offset_Grp', 'L_Primaries_JR_Fthr_001_InAuto_rx_MD', 'R_Scapulars_JR_Fthr_006_Ctrl_Auto_Grp', 'L_Primaries_JR_Fthr_005Bend02_Indiv_Ctrl_Offset_Grp', 'R_Scapulars_JR_Fthr_007Bend01_Indiv_Ctrl', 'L_Secondaries_JR_Fthr_001_InAuto_rx_MD', 'L_Scapulars_JR_9_CtrlL_Scapulars_JR_9_CC_AutoFold_Grp_Grp', 'unitConversion2277', 'unitConversion2311', 'L_Primaries_JR_Fthr_008Bend03_Indiv_Ctrl_Offset_Grp', 'unitConversion2033', 'R_Scapulars_JR_Fthr_004_SpreadAuto_Root', 'unitConversion969', 'R_Primaries_JR_Fthr_000Bend03_Indiv_CtrlShape', 'R_Scapulars_JR_Fthr_002Bend01', 'R_Primaries_JR_Fthr_007Bend02_Bnd_parentConstraint1', 'unitConversion2702', 'L_Secondaries_JR_Fthr_0010_Out_ry_MD', 'unitConversion2234', 'unitConversion504', 'unitConversion1696', 'R_Secondaries_JR_Wing_006_Bnd_parentConstraint1', 'R_Secondaries_JR_Fthr_005Bend02_Indiv_Ctrl_tag', 'R_Scapulars_JR_Fthr_006Bend03_Indiv_Ctrl', 'R_Secondaries_JR_Fthr_0016_BendJnt1', 'skinCluster1Set1', 'L_Secondaries_JR_Fthr_005_BendJnt2', 'unitConversion2436', 'R_Secondaries_JR_Fthr_004Bend02_Bnd', 'L_Secondaries_JR_Fthr_0011_OutAuto_ry_MD1', 'L_Secondaries_JR_Fthr_0017Bend01_Bnd', 'unitConversion320', 'L_Secondaries_JR_17_Ctrl', 'unitConversion2688', 'unitConversion268', 'unitConversion2610', 'L_Scapulars_JR_Fthr_0011_Indiv_CtrlShape', 'R_Scapulars_JR_Fthr_008_Indiv_Ctrl', 'L_Scapulars_JR_Fthr_006_InAuto_ry_MD', 'R_Primaries_JR_Fthr_008_Ctrl_Auto_Grp', 'unitConversion240', 'R_Scapulars_JR_Fthr_000_Indiv_Ctrl_Offset_Grp', 'L_Scapulars_JR_Fthr_008_OutAuto_ry_MD', 'unitConversion2146', 'L_Scapulars_JR_Fthr_0014Bend02_Indiv_Ctrl_tag', 'L_Secondaries_JR_Fthr_009_SpreadCtrlGrp', 'R_Secondaries_JR_Fthr_009Bend03_Indiv_Ctrl', 'L_Secondaries_JR_15_CtrlL_Secondaries_JR_15_CC_AutoFold_Grp_Grp', 'L_Secondaries_JR_Fthr_001_In_rx_MD', 'R_Primaries_JR_6_CtrlShape', 'R_Scapulars_JR', 'L_Secondaries_JR_Fthr_005_In_rx_MD', 'L_Secondaries_JR_Fthr_006_Out_ry_MD', 'R_Primaries_JR_Fthr_009Bend01_Indiv_CtrlShape', 'unitConversion77', 'R_Primaries_JR_Fthr_001_Indiv_Ctrl_tag', 'R_Scapulars_JR_Wing_003_Bnd_parentConstraint1', 'L_Secondaries_JR_Wing_0015_parentConstraint1', 'R_Scapulars_JR_Fthr_001_Indiv_CtrlShape', 'L_Scapulars_JR_Fthr_001_BendJnt1', 'R_Secondaries_JR_Wing_008', 'L_Secondaries_JR_Fthr_0015_Out_ry_MD', 'unitConversion2541', 'unitConversion1064', 'unitConversion1206', 'R_Scapulars_JR_Wing_005', 'unitConversion15', 'R_Secondaries_JR_Fthr_002Bend03', 'R_Secondaries_JR_Fthr_005Bend02_Bnd_parentConstraint1', 'R_Primaries_JR_Fthr_007_Indiv_Ctrl_Offset_Grp', 'unitConversion2178', 'R_Primaries_JR_Fthr_001Bend01_Indiv_Ctrl_tag', 'R_Secondaries_JR_Fthr_0010_Ctrl', 'R_Secondaries_JR_Fthr_005Bend02_Indiv_Ctrl_Offset_Grp', 'L_Scapulars_JR_Fthr_005_InAuto_rx_MD1', 'L_Secondaries_JR_Fthr_0017_Out_ry_MD', 'unitConversion540', 'L_Scapulars_JR_Fthr_004Bend02_Indiv_Ctrl_Offset_Grp', 'unitConversion1059', 'R_Scapulars_JR_Fthr_004Bend03_Indiv_CtrlShape', 'L_Scapulars_JR_Fthr_0014Bend03_Bnd', 'L_Primaries_JR_Fthr_002_SpreadCtrlGrp', 'L_Secondaries_JR_Fthr_0013Bend02_Bnd_parentConstraint1', 'R_Scapulars_JR_4_CtrlL_Scapulars_JR_4_CC_AutoFold_Grp_Grp', 'L_Primaries_JR_Fthr_004_OutAuto_ry_MD', 'unitConversion881', 'R_Secondaries_JR_Fthr_006Bend03_Indiv_Ctrl_Offset_Grp', 'unitConversion1245', 'unitConversion107', 'R_Scapulars_JR_Fthr_0011Bend03', 'L_Secondaries_JR_Fthr_006Bend02_Bnd_parentConstraint1', 'unitConversion617', 'R_Primaries_JR_Fthr_008Bend03_Bnd', 'L_Scapulars_JR_Fthr_0014_In_ry_MD1', 'unitConversion257', 'unitConversion552', 'L_Secondaries_JR_Fthr_006_InAuto_rx_MD', 'unitConversion2781', 'R_Primaries_JR_Fthr_007Bend03_Indiv_CtrlShape', 'unitConversion2512', 'R_Secondaries_JR_Wing_009_Bnd_parentConstraint1', 'L_Secondaries_JR_Fthr_0016Bend03_Bnd', 'R_Secondaries_JR_Fthr_006Bend01_Bnd', 'L_Scapulars_JR_Fthr_0013_InAuto_rx_MD1', 'L_Scapulars_JR_14_CtrlShape', 'L_Secondaries_JR_Fthr_007_Bnd_parentConstraint1', 'L_Secondaries_JR_Fthr_0012_In_ry_MD', 'L_Secondaries_JR_Fthr_005_InAuto_rx_MD', 'L_Secondaries_JR_Fthr_0012_InAuto_ry_MD', 'unitConversion1136', 'unitConversion69', 'unitConversion915', 'unitConversion2369', 'L_Secondaries_JR_Fthr_0014Bend01_Indiv_Ctrl_Offset_Grp', 'L_Secondaries_JR_Fthr_001_SpreadAuto_Auto', 'R_Secondaries_JR_Fthr_002_Bnd_parentConstraint1', 'L_Secondaries_JR_Fthr_0014_OutAuto_rx_MD', 'L_Primaries_JR_Fthr_008Bend03_Indiv_Ctrl_tag', 'R_Primaries_JR_Fthr_003_SpreadCtrlGrp', 'R_Primaries_JR_Fthr_005Bend03_Indiv_Ctrl_tag', 'R_Secondaries_JR_Fthr_004_RootJnt', 'L_Secondaries_JR_Fthr_000_Indiv_CtrlShape', 'R_Scapulars_JR_Fthr_0011_Indiv_Ctrl', 'L_Scapulars_JR_Fthr_0013Bend03', 'unitConversion2155', 'R_Primaries_JR_Fthr_006Bend01_Indiv_Ctrl', 'unitConversion2176', 'R_Secondaries_JR_Fthr_0016Bend02_Indiv_Ctrl_tag', 'R_Scapulars_JR_3_CtrlL_Scapulars_JR_3_CC_AutoFold_Grp_Grp', 'unitConversion462', 'L_Secondaries_JR_Fthr_009_BendJnt3', 'unitConversion2481', 'R_Secondaries_JR_Fthr_0014_Ctrl_Auto_Grp', 'unitConversion583', 'L_Secondaries_JR_Wing_0010_Bnd', 'L_Scapulars_JR_Wing_000_Bnd_parentConstraint1', 'L_Primaries_JR_Fthr_009Bend03', 'R_Secondaries_JR_Fthr_0012_BendJnt3', 'L_Primaries_JR_Fthr_009Bend03_Indiv_Ctrl', 'unitConversion2200', 'R_Secondaries_JR_Fthr_0013_SpreadAuto_Auto', 'unitConversion1630', 'R_Scapulars_JR_Fthr_0012Bend02_Indiv_Ctrl_Offset_Grp', 'unitConversion1705', 'unitConversion740', 'unitConversion769', 'R_Secondaries_JR_Fthr_0017Bend01_Indiv_CtrlShape', 'unitConversion951', 'unitConversion2399', 'R_Secondaries_JR_Fthr_0010_Indiv_Ctrl', 'R_Scapulars_JR_Fthr_001_SpreadCtrlGrp', 'unitConversion1437', 'L_Secondaries_JR_Fthr_0013Bend02', 'L_Scapulars_JR_Wing_005_Bnd', 'unitConversion2384', 'R_Scapulars_JR_Wing_0012_parentConstraint1', 'unitConversion770', 'unitConversion1386', 'unitConversion2421', 'unitConversion14', 'L_Primaries_JR_Fthr_000Bend03_Indiv_Ctrl', 'unitConversion309', 'L_Secondaries_JR_Fthr_000_OutAuto_ry_MD1', 'R_Secondaries_JR_Fthr_0010_RootJnt', 'L_Primaries_JR_Fthr_009_CtrlShape', 'R_Scapulars_JR_Wing_008', 'R_Secondaries_JR_Fthr_0013Bend01_Bnd_parentConstraint1', 'L_Primaries_JR_Fthr_009_Ctrl', 'R_Secondaries_JR_Fthr_004Bend01_Indiv_Ctrl_Offset_Grp', 'L_Scapulars_JR_Fthr_0014_InAuto_rx_MD', 'unitConversion359', 'L_Secondaries_JR_Fthr_001Bend02', 'L_Scapulars_JR_Fthr_0011Bend01_Bnd_parentConstraint1', 'L_Scapulars_JR_Spread_Out_CtrlShape', 'L_Scapulars_JR_Fthr_0013_Bnd', 'unitConversion2253', 'R_Primaries_JR_Fthr_005_SpreadAuto_Auto', 'R_Secondaries_JR_Fthr_0015Bend02_Bnd_parentConstraint1', 'unitConversion714', 'L_Scapulars_JR_Fthr_0011_Out_ry_MD', 'R_Secondaries_JR_Fthr_0013_SpreadAuto_Root', 'R_Primaries_JR_Fthr_007Bend03_Indiv_Ctrl_Offset_Grp', 'unitConversion1363', 'R_Secondaries_JR_Fthr_0013_SpreadCtrlGrp', 'unitConversion1584', 'L_Secondaries_JR_Fthr_0015Bend03_Bnd', 'L_Secondaries_JR_Fthr_007Bend01_Indiv_Ctrl', 'unitConversion822', 'unitConversion1301', 'R_Secondaries_JR_Fthr_009_Indiv_CtrlShape', 'unitConversion2489', 'unitConversion1853', 'R_Secondaries_JR_Fthr_001Bend03_Bnd_parentConstraint1', 'L_Secondaries_JR_Fthr_006_Ctrl_Auto_Grp', 'L_Scapulars_JR_Fthr_005_Out_rx_MD1', 'R_Secondaries_JR_Wing_0011_parentConstraint1', 'L_Secondaries_JR_Fthr_009_AutoJnt', 'L_Primaries_JR_Fthr_003_Ctrl', 'L_Secondaries_JR_Fthr_0017_SpreadAuto', 'R_Scapulars_JR_Fthr_007Bend03', 'L_Scapulars_JR_5_Ctrl', 'L_Secondaries_JR_Fthr_0016Bend02_Indiv_Ctrl_Offset_Grp', 'L_Scapulars_JR_Fthr_002Bend02_Indiv_Ctrl', 'unitConversion1062', 'L_Scapulars_JR_Fthr_009Bend02', 'R_Secondaries_JR_Wing_0013_parentConstraint1', 'L_Primaries_JR_Wing_001_Bnd', 'unitConversion1318', 'unitConversion2400', 'unitConversion973', 'L_Secondaries_JR_Fthr_0010_AutoJnt', 'R_Secondaries_JR_Wing_005', 'L_Primaries_JR_Fthr_008_RootJnt', 'unitConversion2551', 'unitConversion2590', 'L_Scapulars_JR_Fthr_008_AutoJnt', 'R_Scapulars_JR_Fthr_0012_BendJnt1', 'R_Secondaries_JR_Fthr_008_Ctrl_Auto_Grp', 'L_Secondaries_JR_Fthr_005_RootJnt', 'unitConversion1162', 'unitConversion1769', 'L_Secondaries_JR_Fthr_0014_Bnd', 'L_Secondaries_JR_Fthr_005_Ctrl_Root_Grp', 'R_Scapulars_JR_Fthr_006Bend01_Indiv_Ctrl_tag', 'unitConversion800', 'R_Scapulars_JR_Fthr_005Bend01_Indiv_Ctrl_Offset_Grp', 'R_Secondaries_JR_Fthr_0016_Indiv_Ctrl', 'L_Primaries_JR_Wing_000_Bnd_parentConstraint1', 'unitConversion755', 'R_Secondaries_JR_Fthr_001_Indiv_CtrlShape', 'unitConversion1322', 'R_Secondaries_JR_Fthr_001_RootJnt', 'R_Scapulars_JR_Fthr_0012_SpreadAuto_Auto', 'R_Secondaries_JR_Fthr_000Bend02_Bnd_parentConstraint1', 'unitConversion914', 'unitConversion220', 'L_Secondaries_JR_Fthr_009Bend03_Bnd', 'R_Secondaries_JR_Fthr_0013_Indiv_Ctrl', 'unitConversion746', 'L_Secondaries_JR_Fthr_0012_Out_rx_MD', 'L_Secondaries_JR_Fthr_000_SpreadCtrlGrp', 'R_Primaries_JR_Fthr_001_BendJnt1', 'L_Scapulars_JR_Fthr_002', 'L_Scapulars_JR_Fthr_0011_InAuto_rx_MD1', 'L_Scapulars_JR_Fthr_007Bend03_Indiv_Ctrl_Offset_Grp', 'L_Primaries_JR_Fthr_001_SpreadAuto', 'unitConversion2451', 'L_Scapulars_JR_Fthr_003Bend02_Indiv_Ctrl', 'unitConversion933', 'L_Secondaries_JR_Fthr_000_InAuto_ry_MD', 'L_Secondaries_JR_Fthr_0011_In_rx_MD1', 'L_Secondaries_JR_Fthr_000Bend01', 'unitConversion2427', 'R_Scapulars_JR_Fthr_000Bend02_Bnd_parentConstraint1', 'unitConversion842', 'L_Scapulars_JR_Fthr_0010Bend01', 'unitConversion271', 'L_Secondaries_JR_Fthr_0017Bend03_Indiv_Ctrl_Offset_Grp', 'R_Scapulars_JR_Fthr_008Bend01_Indiv_Ctrl', 'unitConversion943', 'unitConversion1328', 'R_Primaries_JR_Fthr_001_SpreadAuto_Auto', 'L_Scapulars_JR_Fthr_004Bend01_Indiv_Ctrl_Offset_Grp', 'L_Scapulars_JR_Fthr_002_Indiv_Ctrl', 'unitConversion956', 'R_Secondaries_JR_Fthr_0012_Ctrl_Root_Grp', 'unitConversion1203', 'L_Scapulars_JR_Fthr_0012_Out_ry_MD', 'unitConversion1615', 'unitConversion2778', 'L_Secondaries_JR_Fthr_006_InAuto_ry_MD', 'R_Secondaries_JR_Wing_000_Bnd_parentConstraint1', 'L_Scapulars_JR_Fthr_004_Indiv_Ctrl_tag', 'R_Scapulars_JR_Fthr_009_SpreadCtrlGrp', 'L_Scapulars_JR_Fthr_003_Indiv_Ctrl', 'R_Secondaries_JR_Fthr_0016Bend02_Indiv_Ctrl_Offset_Grp', 'unitConversion1198', 'R_Scapulars_JR_FeathersPlaneShapeOrig', 'R_Scapulars_JR_0_CtrlL_Scapulars_JR_0_CC_AutoFold_Grp_Grp', 'unitConversion2724', 'L_Secondaries_JR_Fthr_005Bend03', 'L_Primaries_JR_Fthr_009_InAuto_rx_MD1', 'unitConversion1292', 'R_Primaries_JR_Fthr_005Bend02_Bnd', 'unitConversion2616', 'L_Secondaries_JR_Fthr_008_Out_ry_MD1', 'L_Scapulars_JR_Fthr_0014Bend02_Indiv_Ctrl', 'L_Scapulars_JR_Fthr_005Bend01_Indiv_Ctrl', 'unitConversion2396', 'skinCluster3GroupParts1', 'unitConversion941', 'L_Scapulars_JR_Fthr_0011_Out_ry_MD1', 'unitConversion2395', 'R_Secondaries_JR_Fthr_001_SpreadAuto_Root', 'L_Secondaries_JR_Fthr_004_In_rx_MD', 'unitConversion2076', 'L_Scapulars_JR_Fthr_002Bend02_Bnd', 'R_Secondaries_JR_Fthr_001_Bnd_parentConstraint1', 'unitConversion1836', 'unitConversion620', 'L_Scapulars_JR_Fthr_004_BendJnt1', 'R_Scapulars_JR_Fthr_002Bend01_Bnd', 'L_Scapulars_JR_Fthr_0012Bend02_Bnd_parentConstraint1', 'unitConversion554', 'unitConversion1389', 'unitConversion1971', 'unitConversion2434', 'L_Scapulars_JR_Fthr_0011_Ctrl_Root_Grp', 'unitConversion2383', 'L_Scapulars_JR_Fthr_007_Indiv_Ctrl_Offset_Grp', 'R_Secondaries_JR_Wing_0015', 'L_Secondaries_JR_Wing_0011_Bnd', 'R_Scapulars_JR_Fthr_003Bend02_Indiv_Ctrl', 'L_Scapulars_JR_Fthr_0012_OutAuto_rx_MD1', 'unitConversion1651', 'R_Primaries_JR_Fthr_009_SpreadAuto_Root', 'L_Scapulars_JR_Fthr_003Bend02_Indiv_Ctrl_tag', 'L_Secondaries_JR_Fthr_0010_In_ry_MD', 'unitConversion1950', 'L_Primaries_JR_Fthr_008_InAuto_rx_MD1', 'R_Primaries_JR_Fthr_000Bend02_Indiv_CtrlShape', 'R_Scapulars_JR_Fthr_005Bend01_Bnd', 'unitConversion1098', 'unitConversion1927', 'L_Secondaries_JR_Wing_0013_Bnd_parentConstraint1', 'L_Scapulars_JR_Fthr_001Bend01_Bnd_parentConstraint1', 'L_Scapulars_JR_Fthr_009_OutAuto_rx_MD1', 'L_Scapulars_JR_Wing_0014_Bnd_parentConstraint1', 'unitConversion1348', 'L_Primaries_JR_Fthr_009_Indiv_Ctrl', 'unitConversion2062', 'L_Primaries_JR_Fthr_008Bend03_Bnd', 'R_Scapulars_JR_Fthr_002Bend01_Indiv_CtrlShape', 'R_Scapulars_JR_Fthr_005Bend03_Bnd_parentConstraint1', 'unitConversion261', 'unitConversion130', 'unitConversion405', 'L_Primaries_JR_Fthr_008_BendJnt1', 'R_Secondaries_JR_Fthr_0013_BendJnt1', 'L_Secondaries_JR_Fthr_000Bend02_Indiv_Ctrl', 'L_Scapulars_JR_Fthr_0011Bend02_Indiv_Ctrl_Offset_Grp', 'L_Scapulars_JR_Fthr_0012_BendJnt3', 'L_Scapulars_JR_Fthr_0013Bend02_Indiv_CtrlShape', 'L_Secondaries_JR_Fthr_009Bend02', 'unitConversion2641', 'L_Primaries_JR_Fthr_005_Ctrl_Auto_Grp', 'R_Primaries_JR_Fthr_003Bend03_Indiv_Ctrl', 'R_Primaries_JR_Fthr_009_BendJnt2', 'L_Secondaries_JR_Wing_007', 'unitConversion2020', 'R_Secondaries_JR_Fthr_005Bend02_Indiv_Ctrl', 'R_Secondaries_JR_Fthr_003Bend02_Bnd', 'R_Secondaries_JR_Wing_000_parentConstraint1', 'R_Secondaries_JR_Fthr_0014_SpreadCtrlGrp', 'unitConversion2486', 'L_Secondaries_JR_Fthr_0011_In_ry_MD', 'R_Secondaries_JR_Fthr_006_SpreadAuto', 'R_Primaries_JR_Wing_008', 'unitConversion778', 'L_Scapulars_JR_Fthr_008_SpreadAuto', 'unitConversion1596', 'R_Primaries_JR_Fthr_006Bend02_Indiv_Ctrl', 'R_Primaries_JR_Fthr_002Bend03_Bnd', 'L_Primaries_JR_Fthr_009Bend03_Indiv_Ctrl_tag', 'L_Secondaries_JR_Fthr_008_Bnd', 'R_Secondaries_JR_Fthr_006Bend03_Indiv_Ctrl_tag', 'unitConversion222', 'R_Scapulars_JR_Wing_000_CtrlShape', 'unitConversion1751', 'L_Secondaries_JR_Fthr_0014_Out_ry_MD1', 'unitConversion160', 'R_Secondaries_JR_Fthr_0011_AutoJnt', 'L_Secondaries_JR_Fthr_005Bend03_Indiv_CtrlShape', 'R_Scapulars_JR_Fthr_0013Bend03_Bnd', 'L_Primaries_JR_Wing_006_Bnd', 'unitConversion122', 'unitConversion859', 'R_Secondaries_JR_Fthr_0013_RootJnt', 'unitConversion2258', 'R_Secondaries_JR_Fthr_0014_Indiv_Ctrl', 'L_Secondaries_JR_Fthr_0014Bend01_Indiv_Ctrl', 'R_Scapulars_JR_Fthr_008_BendJnt3', 'L_Secondaries_JR_Wing_006', 'R_Secondaries_JR_Fthr_0017Bend03_Indiv_Ctrl_Offset_Grp', 'L_Scapulars_JR_Wing_009', 'unitConversion2464', 'unitConversion1287', 'L_Primaries_JR_Fthr_007_OutAuto_rx_MD1', 'L_Secondaries_JR_Fthr_009Bend03_Indiv_Ctrl', 'L_Secondaries_JR_Fthr_0015_Ctrl_Root_Grp', 'L_Secondaries_JR_Fthr_0010_OutAuto_ry_MD', 'unitConversion1553', 'unitConversion1224', 'unitConversion2358', 'R_Secondaries_JR_Fthr_0014Bend01_Bnd_parentConstraint1', 'unitConversion1534', 'L_Primaries_JR_Fthr_002_Ctrl', 'R_Scapulars_JR_Spread_Out_Ctrl', 'unitConversion1680', 'unitConversion1905', 'L_Primaries_JR_Fthr_009_InAuto_ry_MD', 'L_Scapulars_JR_Fthr_005Bend01', 'unitConversion996', 'L_Scapulars_JR_Wing_0010_Bnd', 'L_Scapulars_JR_Fthr_0012_SpreadAuto_Root', 'L_Scapulars_JR_Fthr_004Bend02_Bnd', 'L_Secondaries_JR_Fthr_0015', 'R_Secondaries_JR_Fthr_0014Bend01_Indiv_Ctrl', 'R_Scapulars_JR_Fthr_007', 'unitConversion2275', 'R_Primaries_JR_Fthr_001_Ctrl_Auto_Grp', 'skinCluster2', 'L_Scapulars_JR_Fthr_002_Indiv_Ctrl_Offset_Grp', 'L_Primaries_JR_Fthr_009_OutAuto_rx_MD', 'unitConversion990', 'unitConversion1239', 'R_Scapulars_JR_8_Ctrl', 'L_Secondaries_JR_Fthr_007_Out_ry_MD', 'L_Primaries_JR_Fthr_003Bend02_Bnd_parentConstraint1', 'L_Scapulars_JR_Fthr_0013_AutoJnt', 'R_Secondaries_JR_Fthr_002_Indiv_Ctrl_Offset_Grp', 'L_Secondaries_JR_Fthr_000Bend03_Indiv_CtrlShape', 'unitConversion776', 'R_Scapulars_JR_Fthr_004Bend03', 'R_Scapulars_JR_10_CtrlL_Scapulars_JR_10_CC_AutoFold_Grp_Grp', 'L_Primaries_JR_Bend_CC_Root_Grp', 'R_Secondaries_JR_Wing_0011_Bnd', 'L_Secondaries_JR_Fthr_001Bend01_Bnd_parentConstraint1', 'R_Primaries_JR_Fthr_005_Bnd', 'R_Scapulars_JR_Fthr_001Bend02', 'R_Secondaries_JR_Fthr_001Bend03_Bnd', 'L_Primaries_JR_Fthr_006_OutAuto_rx_MD', 'unitConversion843', 'unitConversion945', 'R_Primaries_JR_Fthr_004_Ctrl', 'unitConversion645', 'L_Secondaries_JR_Fthr_0012_Bnd', 'unitConversion2744', 'R_Secondaries_JR_Fthr_005_BendJnt1', 'L_Primaries_JR_Fthr_008', 'R_Primaries_JR_Fthr_009Bend01', 'unitConversion156', 'unitConversion2229', 'R_Primaries_JR_Fthr_003Bend01_Indiv_CtrlShape', 'L_Secondaries_JR_Fthr_000_Out_rx_MD1', 'R_Scapulars_JR_Fthr_009Bend01_Bnd', 'R_Primaries_JR_Fthr_000Bend01_Indiv_Ctrl_tag', 'L_Secondaries_JR_Fthr_000_In_ry_MD1', 'unitConversion1967', 'L_Scapulars_JR_parentConstraint1', 'L_Secondaries_JR_Fthr_002_BendJnt1', 'L_Scapulars_JR_Fthr_0013_OutAuto_ry_MD1', 'L_Scapulars_JR_Fthr_0014_OutAuto_ry_MD1', 'unitConversion1788', 'R_Scapulars_JR_Fthr_005_BendJnt2', 'unitConversion2075', 'L_Primaries_JR_Fthr_003_Ctrl_Auto_Grp', 'unitConversion43', 'unitConversion836', 'L_Scapulars_JR_Fthr_0014_Bnd_parentConstraint1', 'unitConversion981', 'L_Primaries_JR_9_Ctrl', 'R_Scapulars_JR_Fthr_009_CtrlShape', 'L_Scapulars_JR_Fthr_0012Bend02_Indiv_Ctrl_Offset_Grp', 'R_Scapulars_JR_3_CtrlShape', 'unitConversion2734', 'L_Primaries_JR_Fthr_001Bend02_Indiv_Ctrl_tag', 'unitConversion1006', 'unitConversion844', 'unitConversion1795', 'L_Scapulars_JR_Bnd_parentConstraint1', 'unitConversion677', 'R_Secondaries_JR_Fthr_000Bend03_Indiv_CtrlShape', 'unitConversion2002', 'L_Scapulars_JR_FeathersPlaneShapeOrig', 'R_Scapulars_JR_Fthr_0010Bend01_Bnd_parentConstraint1', 'L_Secondaries_JR_Fthr_0010Bend01_Indiv_Ctrl', 'unitConversion263', 'L_Secondaries_JR_Fthr_0017_RootJnt', 'L_Secondaries_JR_Fthr_006_In_rx_MD1', 'L_Primaries_JR_Fthr_005_OutAuto_rx_MD1', 'R_Secondaries_JR_Wing_005_Bnd_parentConstraint1', 'L_Scapulars_JR_Fthr_004_In_ry_MD', 'unitConversion2037', 'L_Secondaries_JR_Fthr_003_BendJnt2', 'unitConversion1555', 'R_Primaries_JR_Fthr_008_CtrlShape', 'R_Secondaries_JR_0_CtrlShape', 'L_Primaries_JR_Fthr_004Bend02_Indiv_Ctrl_Offset_Grp', 'unitConversion406', 'L_Secondaries_JR_Fthr_0015Bend03_Indiv_Ctrl', 'L_Scapulars_JR_Wing_0011_Bnd', 'unitConversion4', 'L_Scapulars_JR_Fthr_006_SpreadCtrlGrp', 'L_Secondaries_JR_Fthr_002_In_ry_MD', 'unitConversion1919', 'unitConversion867', 'unitConversion2040', 'R_Secondaries_JR_Fthr_0011_SpreadAuto', 'L_Secondaries_JR_Fthr_008_SpreadAuto_Root', 'L_Primaries_JR_Fthr_007Bend03', 'L_Scapulars_JR_Wing_009_Bnd_parentConstraint1', 'unitConversion2438', 'L_Secondaries_JR_Fthr_0012Bend01', 'unitConversion818', 'unitConversion2348', 'R_Secondaries_JR_Fthr_001_AutoJnt', 'L_Scapulars_JR_Wing_006_Bnd_parentConstraint1', 'R_Scapulars_JR_Fthr_008_SpreadAuto', 'R_Primaries_JR_Fthr_006_Bnd_parentConstraint1', 'unitConversion1228', 'unitConversion1414', 'L_Scapulars_JR_Fthr_003_In_rx_MD1', 'unitConversion992', 'R_Secondaries_JR_3_CtrlShape', 'R_Secondaries_JR_Fthr_000Bend01_Bnd', 'unitConversion2539', 'L_Secondaries_JR_Fthr_0013_InAuto_rx_MD', 'R_Scapulars_JR_Fthr_005_SpreadAuto_Root', 'unitConversion2050', 'R_Secondaries_JR_Fthr_008_Bnd_parentConstraint1', 'L_Secondaries_JR_Fthr_0015Bend03_Indiv_CtrlShape', 'L_Clavicle_JC_Root', 'unitConversion454', 'L_Primaries_JR_Fthr_003_Bnd', 'R_Primaries_JR_Fthr_002Bend01_Indiv_Ctrl', 'unitConversion2314', 'unitConversion331', 'L_Secondaries_JR_Fthr_002_SpreadCtrlGrp', 'unitConversion2261', 'unitConversion444', 'R_Primaries_JR_Fthr_002_Indiv_Ctrl_Offset_Grp', 'R_Scapulars_JR_Fthr_0012Bend02_Indiv_CtrlShape', 'R_Scapulars_JR_Fthr_006_BendJnt3', 'unitConversion100', 'L_Primaries_JR_Fthr_008_SpreadCtrlGrp', 'L_Scapulars_JR_Fthr_002Bend03_Indiv_CtrlShape', 'unitConversion1570', 'L_Scapulars_JR_1_CtrlL_Scapulars_JR_1_CC_AutoFold_Grp_Grp', 'unitConversion2588', 'L_Primaries_JR_Wing_007_parentConstraint1', 'unitConversion84', 'unitConversion738', 'R_Secondaries_JR_Fthr_007Bend02_Indiv_Ctrl_tag', 'unitConversion749', 'R_Scapulars_JR_Fthr_001_AutoJnt', 'unitConversion1838', 'unitConversion824', 'unitConversion1673', 'L_Primaries_JR_3_Ctrl', 'L_Primaries_JR_Fthr_000_InAuto_rx_MD', 'unitConversion2559', 'unitConversion1567', 'R_Secondaries_JR_Fthr_002Bend02_Bnd_parentConstraint1', 'L_Secondaries_JR_Fthr_001Bend01', 'unitConversion387', 'unitConversion97', 'unitConversion668', 'R_Scapulars_JR_Fthr_000', 'unitConversion1490', 'L_Secondaries_JR_Fthr_008Bend03', 'L_Primaries_JR_Fthr_009_SpreadAuto_Auto', 'unitConversion2363', 'unitConversion946', 'L_Scapulars_JR_Fthr_000_InAuto_rx_MD1', 'unitConversion1214', 'skinCluster1GroupParts', 'R_Scapulars_JR_Fthr_007_CtrlShape', 'R_Secondaries_JR_Fthr_0013Bend03_Bnd', 'unitConversion425', 'unitConversion1410', 'unitConversion201', 'L_Secondaries_JR_Fthr_001_Out_rx_MD', 'R_Scapulars_JR_Fthr_009_BendJnt2', 'L_Secondaries_JR_Fthr_0013_Bnd', 'unitConversion2578', 'R_Scapulars_JR_Fthr_0011_Ctrl_Auto_Grp', 'R_Scapulars_JR_Wing_004', 'L_Primaries_JR_Fthr_001Bend03_Indiv_Ctrl_Offset_Grp', 'R_Scapulars_JR_Fthr_008Bend02_Indiv_Ctrl_tag', 'L_Scapulars_JR_12_CtrlShape', 'L_Scapulars_JR_Fthr_0010Bend02_Bnd_parentConstraint1', 'unitConversion861', 'L_Scapulars_JR_Fthr_0014Bend02_Bnd_parentConstraint1', 'unitConversion2243', 'unitConversion2089', 'L_Secondaries_JR_Fthr_000', 'unitConversion1351', 'R_Scapulars_JR_Fthr_001Bend03', 'unitConversion283', 'R_Primaries_JR_8_CtrlL_Primaries_JR_8_CC_AutoFold_Grp_Grp', 'unitConversion2718', 'unitConversion2518', 'unitConversion1988', 'L_Secondaries_JR_Wing_0016', 'L_Scapulars_JR_Fthr_007Bend02_Bnd_parentConstraint1', 'R_Secondaries_JR_Fthr_0011Bend02_Bnd_parentConstraint1', 'R_Primaries_JR_Fthr_008_SpreadAuto_Auto', 'L_Primaries_JR_Wing_001', 'R_Primaries_JR_Fthr_007Bend01_Indiv_Ctrl_tag', 'R_Scapulars_JR_Fthr_006Bend03_Indiv_CtrlShape', 'unitConversion430', 'L_Scapulars_JR_Fthr_004_InAuto_rx_MD1', 'unitConversion342', 'R_Secondaries_JR_Fthr_005_Ctrl', 'R_Secondaries_JR_Fthr_008_Indiv_CtrlShape', 'unitConversion849', 'unitConversion1334', 'L_Secondaries_JR_Wing_005', 'unitConversion2485', 'L_Scapulars_JR_Fthr_000_BendJnt1', 'L_Secondaries_JR_Fthr_0013_InAuto_rx_MD1', 'R_Secondaries_JR_11_CtrlL_Secondaries_JR_11_CC_AutoFold_Grp_Grp', 'L_Secondaries_JR_Fthr_002_Indiv_Ctrl_Offset_Grp', 'R_Scapulars_JR_Fthr_000Bend01_Bnd', 'unitConversion2362', 'unitConversion1355', 'L_Wing_Nurbs_GRP', 'unitConversion856', 'unitConversion361', 'unitConversion1084', 'R_Secondaries_JR_Fthr_0015_SpreadAuto_Root', 'R_Scapulars_JR_Fthr_0010_SpreadAuto_Root', 'R_Secondaries_JR_Fthr_0016Bend02_Indiv_Ctrl', 'unitConversion2502', 'unitConversion923', 'unitConversion2468', 'L_Secondaries_JR_Fthr_009Bend02_Bnd', 'L_Secondaries_JR_Fthr_003_SpreadAuto', 'unitConversion333', 'L_Primaries_JR_Wing_000', 'unitConversion528', 'L_Scapulars_JR_Fthr_006_Indiv_Ctrl_tag', 'R_Secondaries_JR_Wing_000_Ctrl_Root_Grp_parentConstraint1', 'L_Primaries_JR_Wing_000_Bnd', 'L_Primaries_JR_Wing_000_Ctrl_Root_Grp_parentConstraint1', 'R_Secondaries_JR_Fthr_008_SpreadAuto_Root', 'unitConversion1271', 'L_Primaries_JR_Fthr_007Bend02_Indiv_CtrlShape', 'L_Scapulars_JR_Wing_005', 'L_Primaries_JR_Fthr_002Bend02_Indiv_Ctrl_Offset_Grp', 'unitConversion1598', 'unitConversion676', 'L_Primaries_JR_Fthr_004Bend03_Indiv_CtrlShape', 'L_Secondaries_JR_Fthr_0010Bend03_Indiv_CtrlShape', 'unitConversion2281', 'L_Secondaries_JR_Fthr_0011_Bnd', 'L_Secondaries_JR_Fthr_000_SpreadAuto', 'L_Secondaries_JR_Fthr_0011Bend03_Indiv_Ctrl_Offset_Grp', 'L_Primaries_JR_5_CtrlL_Primaries_JR_5_CC_AutoFold_Grp_Grp', 'L_Primaries_JR_Fthr_000_In_rx_MD', 'L_Scapulars_JR_Fthr_007_SpreadCtrlGrp', 'R_Primaries_JR_Fthr_005Bend01_Bnd', 'L_Primaries_JR_Wing_008_parentConstraint1', 'L_Secondaries_JR_Fthr_0017_Ctrl_Root_Grp', 'L_Clav_JR_Bnd_parentConstraint1', 'L_Secondaries_JR_Fthr_005_SpreadAuto_Root', 'unitConversion2441', 'R_Primaries_JR_Fthr_004Bend02_Bnd', 'L_Primaries_JR_Fthr_006Bend03_Indiv_Ctrl_Offset_Grp', 'L_Scapulars_JR_Fthr_004_Ctrl_Root_Grp', 'unitConversion543', 'L_Scapulars_JR_Fthr_0014_BendJnt2', 'L_Primaries_JR_Fthr_000_Bnd', 'unitConversion1797', 'L_Scapulars_JR_Fthr_0010_OutAuto_rx_MD', 'R_Scapulars_JR_13_CtrlShape', 'R_Secondaries_JR_Fthr_002Bend01_Indiv_Ctrl_Offset_Grp', 'L_Scapulars_JR_14_Ctrl', 'unitConversion838', 'L_Scapulars_JR_Fthr_0010Bend03_Bnd_parentConstraint1', 'R_Secondaries_JR_1_Ctrl', 'L_Secondaries_JR_Fthr_0010Bend03_Bnd', 'unitConversion1417', 'L_Secondaries_JR_Fthr_0014_BendJnt3', 'unitConversion1539', 'L_Scapulars_JR_Fthr_000Bend03_Indiv_Ctrl_Offset_Grp', 'L_Scapulars_JR_Fthr_008Bend01_Bnd', 'unitConversion603', 'L_Primaries_JR_Fthr_006Bend01_Indiv_Ctrl', 'unitConversion932', 'R_Primaries_JR_Fthr_005_CtrlShape', 'R_Secondaries_JR_Fthr_001_BendJnt3', 'R_Scapulars_JR_Fthr_006Bend01_Indiv_CtrlShape', 'unitConversion1409', 'R_Wing_CC_Root', 'L_Secondaries_JR_Fthr_005_Indiv_Ctrl_Offset_Grp', 'L_Scapulars_JR_Fthr_0012_RootJnt', 'R_Scapulars_JR_Fthr_007_SpreadAuto', 'unitConversion2302', 'L_Secondaries_JR_Fthr_0014Bend03_Bnd_parentConstraint1', 'R_Secondaries_JR_Fthr_005Bend03_Indiv_CtrlShape', 'R_Scapulars_JR_Fthr_0014Bend01_Indiv_Ctrl_Offset_Grp', 'R_Secondaries_JR_Fthr_0011_Indiv_Ctrl', 'unitConversion419', 'L_Primaries_JR_Fthr_009_OutAuto_ry_MD', 'unitConversion1581', 'L_Primaries_JR_Fthr_001_Indiv_Ctrl_tag', 'unitConversion685', 'R_Secondaries_JR_Fthr_009', 'L_Secondaries_JR_Fthr_002Bend01_Indiv_Ctrl', 'unitConversion1093', 'R_Scapulars_JR_Fthr_0011_BendJnt3', 'L_Secondaries_JR_Fthr_0012_OutAuto_ry_MD', 'L_Scapulars_JR_Fthr_005_Out_rx_MD', 'R_Scapulars_JR_Fthr_001_SpreadAuto_Auto', 'L_Secondaries_JR_Wing_0010_Bnd_parentConstraint1', 'R_Secondaries_JR_Fthr_0014Bend03_Indiv_CtrlShape', 'R_Scapulars_JR_Fthr_009', 'unitConversion2267', 'L_Scapulars_JR_Fthr_005Bend02', 'R_Primaries_JR_Fthr_003_Bnd', 'unitConversion569', 'L_Secondaries_JR_Fthr_0014_CtrlShape', 'R_Scapulars_JR_Fthr_009_SpreadAuto_Root_orientConstraint1', 'unitConversion1002', 'L_Secondaries_JR_Fthr_0016_Indiv_Ctrl_tag', 'unitConversion1213', 'unitConversion788', 'L_Secondaries_JR_Fthr_005_Indiv_Ctrl_tag', 'unitConversion1401', 'L_Scapulars_JR_Fthr_0010_Indiv_CtrlShape', 'R_Primaries_JR_Fthr_006Bend03_Indiv_CtrlShape', 'unitConversion378', 'R_Scapulars_JR_Fthr_0013Bend01_Indiv_Ctrl_tag', 'unitConversion1851', 'L_Secondaries_JR_Fthr_0013_Ctrl_Root_Grp', 'R_Scapulars_JR_Fthr_009Bend02_Bnd', 'L_Primaries_JR_Fthr_001Bend03_Indiv_CtrlShape', 'R_Scapulars_JR_Fthr_008_BendJnt2', 'R_Primaries_JR_Fthr_001_Indiv_CtrlShape', 'unitConversion2209', 'unitConversion1092', 'L_Secondaries_JR_Fthr_0014_In_ry_MD', 'unitConversion878', 'unitConversion2491', 'L_Scapulars_JR_Fthr_0010_Bnd_parentConstraint1', 'L_Secondaries_JR_Fthr_0011Bend02_Bnd_parentConstraint1', 'unitConversion541', 'unitConversion2521', 'L_Secondaries_JR_Fthr_008Bend02_Bnd', 'unitConversion152', 'R_Secondaries_JR_Wing_0014', 'R_Secondaries_JR_Fthr_001Bend03_Indiv_Ctrl_tag', 'unitConversion2276', 'R_Scapulars_JR_Bnd', 'unitConversion73', 'unitConversion1028', 'L_Secondaries_JR_Fthr_000_Out_ry_MD1', 'R_Primaries_JR_Fthr_005Bend03_Indiv_Ctrl', 'L_Primaries_JR_Fthr_007_AutoJnt', 'L_Scapulars_JR_Fthr_009Bend02_Bnd', 'L_Primaries_JR_Fthr_005Bend01_Indiv_CtrlShape', 'unitConversion666', 'unitConversion1943', 'unitConversion5', 'L_Primaries_JR_Fthr_005_Bnd_parentConstraint1', 'R_Primaries_JR_9_CtrlShape', 'L_Secondaries_JR_Fthr_003_BendJnt3', 'unitConversion426', 'unitConversion2698', 'unitConversion2577', 'L_Secondaries_JR_Fthr_0012_Out_ry_MD1', 'L_Primaries_JR_Fthr_008Bend02_Indiv_Ctrl_tag', 'unitConversion51', 'unitConversion2519', 'R_Scapulars_JR_Fthr_008Bend02_Bnd_parentConstraint1', 'R_Primaries_JR_Fthr_003Bend03', 'L_Scapulars_JR_Fthr_0014_Ctrl_Root_Grp', 'R_Secondaries_JR_Fthr_006_Indiv_Ctrl_tag', 'unitConversion2097', 'unitConversion346', 'R_Primaries_JR_Fthr_009Bend01_Indiv_Ctrl_Offset_Grp', 'R_Secondaries_JR_Fthr_0012Bend03_Indiv_Ctrl_Offset_Grp', 'Scapulars_Bnd_Grp', 'L_Secondaries_JR_Fthr_0014_OutAuto_ry_MD1', 'unitConversion2324', 'L_Secondaries_JR_Fthr_0012_Out_ry_MD', 'R_Scapulars_JR_Fthr_002_RootJnt', 'L_Secondaries_JR_Fthr_006_In_ry_MD', 'R_Secondaries_JR_Fthr_003Bend01_Indiv_Ctrl_tag', 'L_Secondaries_JR_Fthr_002_Ctrl_Auto_Grp', 'L_Secondaries_JR_Fthr_0015_In_ry_MD', 'L_Scapulars_JR_Fthr_004_In_ry_MD1', 'R_Primaries_JR_Fthr_007_SpreadCtrlGrp', 'unitConversion1107', 'L_Scapulars_JR_Fthr_009', 'R_Primaries_JR_Fthr_004_Indiv_Ctrl_tag', 'L_Scapulars_JR_Fthr_0011Bend03_Bnd_parentConstraint1', 'L_Secondaries_JR_Fthr_007_In_rx_MD1', 'unitConversion161', 'R_Secondaries_JR_Fthr_002_BendJnt3', 'R_Scapulars_JR_Fthr_0014Bend02_Indiv_CtrlShape', 'L_Primaries_JR_Fthr_002_InAuto_ry_MD1', 'L_Primaries_JR_Fthr_003Bend03_Indiv_CtrlShape', 'L_Primaries_JR_Fthr_006_In_ry_MD1', 'unitConversion22', 'L_Secondaries_JR_8_Ctrl', 'unitConversion124', 'unitConversion1883', 'unitConversion1833', 'L_Primaries_JR_Fthr_007_InAuto_ry_MD', 'L_Scapulars_JR_Fthr_001_Indiv_Ctrl_tag', 'R_Primaries_JR_Fthr_005Bend03_Bnd_parentConstraint1', 'R_Primaries_JR_Spread_Out_Ctrl', 'L_Scapulars_JR_Fthr_006_In_rx_MD1', 'unitConversion837', 'unitConversion2283', 'unitConversion79', 'unitConversion1863', 'R_Secondaries_JR_Fthr_0010Bend02_Indiv_Ctrl_Offset_Grp', 'L_Secondaries_JR_Fthr_0016Bend03_Indiv_Ctrl', 'unitConversion380', 'unitConversion944', 'unitConversion1526', 'unitConversion135', 'R_Scapulars_JR_Wing_000_Ctrl', 'L_Scapulars_JR_Fthr_001Bend01_Indiv_Ctrl_Offset_Grp', 'R_Primaries_JR_Fthr_002Bend03_Bnd_parentConstraint1', 'L_Scapulars_JR_Fthr_005_OutAuto_ry_MD1', 'L_Primaries_JR_Fthr_000_Indiv_Ctrl_Offset_Grp', 'R_Scapulars_JR_Fthr_004_SpreadAuto_Root_orientConstraint1', 'unitConversion141', 'L_Scapulars_JR_Fthr_008_Indiv_CtrlShape', 'R_Scapulars_JR_Fthr_002Bend03', 'unitConversion2598', 'L_Primaries_JR_Fthr_000_In_rx_MD1', 'unitConversion1557', 'unitConversion2260', 'unitConversion1096', 'L_Primaries_JR_Fthr_007Bend03_Indiv_CtrlShape', 'L_Secondaries_JR_Fthr_009Bend02_Indiv_CtrlShape', 'R_Wing_CC_Auto', 'R_Primaries_JR_Fthr_004Bend01_Indiv_Ctrl_Offset_Grp', 'unitConversion1073', 'unitConversion2697', 'R_Scapulars_JR_6_Ctrl', 'R_Secondaries_JR_Fthr_0015Bend03_Bnd_parentConstraint1', 'unitConversion2271', 'R_Secondaries_JR_Fthr_000_Indiv_Ctrl', 'L_Secondaries_JR_Fthr_007_In_ry_MD1', 'R_Secondaries_JR_Fthr_0017Bend03_Indiv_Ctrl_tag', 'unitConversion935', 'unitConversion159', 'R_Secondaries_JR_Fthr_0010_BendJnt3', 'unitConversion2022', 'unitConversion827', 'R_Primaries_JR_Fthr_002_BendJnt1', 'L_Secondaries_JR_Fthr_009Bend02_Bnd_parentConstraint1', 'R_Secondaries_JR_Fthr_000Bend02_Bnd', 'L_Scapulars_JR_Fthr_005Bend02_Indiv_Ctrl_Offset_Grp', 'R_Scapulars_JR_Wing_003_Bnd', 'unitConversion2492', 'R_Scapulars_JR_Wing_002_Bnd_parentConstraint1', 'unitConversion523', 'L_Primaries_JR_Bnd', 'L_Primaries_JR_Wing_002_Bnd', 'unitConversion2476', 'unitConversion1123', 'unitConversion260', 'unitConversion273', 'L_Primaries_JR_Fthr_001_In_ry_MD1', 'L_Scapulars_JR_Fthr_001Bend02_Indiv_CtrlShape', 'R_Primaries_JR_Fthr_007_CtrlShape', 'L_Secondaries_JR_Fthr_0012_RootJnt', 'unitConversion1703', 'R_Secondaries_JR_Fthr_0010_Indiv_Ctrl_tag', 'R_Scapulars_JR_Wing_005_parentConstraint1', 'unitConversion437', 'unitConversion1074', 'L_Secondaries_JR_Wing_0015_Bnd', 'L_Primaries_JR_Fthr_002_AutoJnt', 'unitConversion2477', 'R_Scapulars_JR_Fthr_007_Indiv_Ctrl', 'unitConversion278', 'R_Primaries_JR_Fthr_009_Indiv_Ctrl', 'L_Scapulars_JR_Fthr_004Bend02_Indiv_Ctrl_tag', 'L_Scapulars_JR_Fthr_0010Bend02_Indiv_Ctrl_Offset_Grp', 'R_Primaries_JR_parentConstraint1', 'R_Secondaries_JR_Fthr_003', 'unitConversion292', 'L_Secondaries_JR_Fthr_0012_Indiv_Ctrl', 'unitConversion1746', 'L_Scapulars_JR_Fthr_001Bend03_Indiv_Ctrl', 'L_Secondaries_JR_Wing_009_Bnd', 'L_Scapulars_JR_Fthr_005_BendJnt3', 'L_Secondaries_JR_Fthr_006Bend01', 'R_Secondaries_JR_Wing_0017', 'unitConversion1068', 'R_Secondaries_JR_Wing_004_parentConstraint1', 'R_Secondaries_JR_Fthr_004_BendJnt2', 'unitConversion545', 'L_Secondaries_JR_Fthr_007_In_rx_MD', 'unitConversion643', 'L_Scapulars_JR_Fthr_0014_Bnd', 'R_Scapulars_JR_Fthr_0011Bend01_Indiv_Ctrl_tag', 'unitConversion1237', 'L_Scapulars_JR_Fthr_0013Bend02_Bnd', 'R_Primaries_JR_Wing_000_CtrlShape', 'R_Primaries_JR_Fthr_009_SpreadCtrlGrp', 'L_Secondaries_JR_Wing_009', 'R_Primaries_JR_6_Ctrl', 'unitConversion1039', 'R_Scapulars_JR_Fthr_002_BendJnt2', 'R_Scapulars_JR_Fthr_005_Indiv_Ctrl', 'unitConversion1142', 'L_Secondaries_JR_Fthr_0017_In_rx_MD', 'L_Secondaries_JR_Fthr_005Bend02_Bnd_parentConstraint1', 'unitConversion962', 'R_Clavicle_JC_Root_parentConstraint1', 'L_Secondaries_JR_Fthr_0017_OutAuto_rx_MD1', 'unitConversion1454', 'unitConversion264', 'R_Scapulars_JR_Fthr_001_Bnd_parentConstraint1', 'L_Scapulars_JR_Fthr_0013Bend02_Indiv_Ctrl_tag', 'unitConversion599', 'unitConversion1980', 'unitConversion781', 'unitConversion967', 'unitConversion980', 'L_Secondaries_JR_Fthr_001_In_ry_MD', 'R_Secondaries_JR_Fthr_004Bend03_Bnd', 'unitConversion639', 'L_Secondaries_JR_Fthr_0012Bend02', 'unitConversion81', 'R_Scapulars_JR_Wing_007', 'unitConversion1521', 'L_Scapulars_JR_Fthr_009_InAuto_ry_MD1', 'L_Scapulars_JR_Fthr_008_InAuto_ry_MD', 'R_Secondaries_JR_Fthr_003Bend01_Indiv_Ctrl', 'unitConversion2743', 'L_Secondaries_JR_Fthr_0012_InAuto_ry_MD1', 'R_Secondaries_JR_Fthr_002_SpreadAuto_Root', 'R_Secondaries_JR_Fthr_0011_Ctrl_Auto_Grp', 'unitConversion2117', 'unitConversion2777', 'R_Scapulars_JR_Fthr_0011_SpreadAuto', 'R_Primaries_JR_Fthr_005_SpreadCtrlGrp', 'unitConversion2168', 'R_Primaries_JR_Fthr_006Bend02', 'L_Scapulars_JR_Fthr_009_OutAuto_ry_MD', 'unitConversion948', 'L_Scapulars_JR_Fthr_006Bend01_Bnd_parentConstraint1', 'R_Primaries_JR_Wing_004', 'L_Secondaries_JR_Fthr_0015_OutAuto_rx_MD1', 'R_Secondaries_JR_Fthr_002_Indiv_Ctrl_tag', 'unitConversion1759', 'L_Secondaries_JR_Fthr_0011_AutoJnt', 'unitConversion1138', 'unitConversion876', 'unitConversion488', 'unitConversion718', 'L_Scapulars_JR_Fthr_009_InAuto_rx_MD1', 'L_Secondaries_JR_Fthr_0013_In_rx_MD1', 'unitConversion1563', 'unitConversion1958', 'unitConversion200', 'R_Secondaries_JR_Fthr_000Bend01', 'L_Primaries_JR_6_CtrlShape', 'L_Primaries_JR_Fthr_009Bend01_Bnd', 'unitConversion118', 'unitConversion457', 'R_Primaries_JR_Bend_CtrlShape', 'R_Primaries_JR_Fthr_009', 'L_Primaries_JR_4_CtrlShape', 'L_Scapulars_JR_Fthr_0011Bend02_Indiv_CtrlShape', 'unitConversion1467', 'L_Secondaries_JR_Fthr_008Bend03_Indiv_Ctrl_Offset_Grp', 'L_Primaries_JR_Fthr_009Bend03_Indiv_CtrlShape', 'unitConversion1985', 'L_Secondaries_JR_Fthr_004_SpreadAuto_Root', 'R_Secondaries_JR_Fthr_009_Indiv_Ctrl', 'R_Scapulars_JR_Fthr_0010Bend02', 'L_Primaries_JR_Fthr_004Bend01_Indiv_Ctrl_tag', 'R_Secondaries_JR_Fthr_0013Bend01_Indiv_Ctrl_Offset_Grp', 'unitConversion1103', 'L_Primaries_JR_2_Ctrl', 'L_Scapulars_JR_Fthr_0011_Bnd', 'L_Secondaries_JR_Fthr_006_BendJnt1', 'unitConversion1045', 'L_Primaries_JR_Fthr_008Bend01', 'L_Scapulars_JR_Fthr_0010_BendJnt3', 'R_Secondaries_JR_9_Ctrl', 'R_Primaries_JR_Fthr_005_Indiv_CtrlShape', 'unitConversion2296', 'unitConversion2185', 'unitConversion163', 'unitConversion2109', 'unitConversion2292', 'R_Secondaries_JR_Fthr_0013Bend03', 'L_Scapulars_JR_Fthr_0012_Indiv_Ctrl_Offset_Grp', 'L_Scapulars_JR_13_CtrlL_Scapulars_JR_13_CC_AutoFold_Grp_Grp', 'unitConversion1012', 'R_Scapulars_JR_Wing_007_parentConstraint1', 'unitConversion1047', 'unitConversion2364', 'L_Scapulars_JR_Fthr_006_RootJnt', 'unitConversion1434', 'R_Secondaries_JR_Fthr_005Bend02_Bnd', 'R_Secondaries_JR_Fthr_004_Ctrl', 'R_Primaries_JR_Fthr_001_AutoJnt', 'R_Primaries_JR_Fthr_006Bend03_Indiv_Ctrl', 'unitConversion1480', 'R_Scapulars_JR_Fthr_0010Bend03_Bnd', 'unitConversion1582', 'L_Secondaries_JR_Wing_0014_parentConstraint1', 'R_Scapulars_JR_Fthr_006Bend03_Bnd_parentConstraint1', 'unitConversion46', 'bindPose1', 'L_Scapulars_JR_Wing_0010', 'unitConversion2013', 'L_Primaries_JR_Fthr_008_OutAuto_ry_MD1', 'R_Scapulars_JR_Fthr_003_Ctrl_Auto_Grp', 'L_Secondaries_JR_Fthr_006', 'unitConversion1573', 'R_Scapulars_JR_Fthr_0010Bend03_Indiv_Ctrl_Offset_Grp', 'R_Secondaries_JR_Fthr_000Bend02_Indiv_Ctrl_tag', 'unitConversion37', 'unitConversion1756', 'L_Scapulars_JR_Fthr_0012_In_ry_MD1', 'L_Scapulars_JR_Fthr_002_In_rx_MD1', 'L_Primaries_JR_Wing_006_Bnd_parentConstraint1', 'R_Secondaries_JR_Wing_008_parentConstraint1', 'R_Primaries_JR_Fthr_007_Indiv_Ctrl', 'unitConversion1163', 'R_Scapulars_JR_Fthr_008Bend03', 'unitConversion2635', 'R_Secondaries_JR_Fthr_004_Ctrl_Root_Grp', 'L_Primaries_JR_Fthr_000Bend02', 'R_Scapulars_JR_Fthr_006_Indiv_CtrlShape', 'unitConversion774', 'L_Secondaries_JR_Fthr_0010_CtrlShape', 'R_Secondaries_JR_Fthr_0017Bend03_Indiv_Ctrl', 'unitConversion1496', 'L_Secondaries_JR_Fthr_003_Ctrl', 'L_Secondaries_JR_Fthr_009_In_rx_MD1', 'unitConversion1814', 'R_Primaries_JR_Fthr_002_Indiv_Ctrl_tag', 'R_Secondaries_JR_Fthr_007Bend02_Bnd_parentConstraint1', 'R_Secondaries_JR_Fthr_0014_Indiv_CtrlShape', 'unitConversion719', 'R_Scapulars_JR_Fthr_008Bend03_Indiv_Ctrl_tag', 'R_Scapulars_JR_Fthr_005Bend03_Indiv_Ctrl', 'L_Primaries_JR_Fthr_009Bend01_Indiv_Ctrl_tag', 'L_Secondaries_JR_Wing_000_Ctrl_Root_Grp', 'unitConversion213', 'L_Primaries_JR_Wing_009_Bnd_parentConstraint1', 'unitConversion239', 'unitConversion1591', 'R_Secondaries_JR_Fthr_0017Bend01_Indiv_Ctrl_tag', 'unitConversion2776', 'L_Secondaries_JR_Fthr_0010_BendJnt2', 'L_Scapulars_JR_Fthr_0010_Out_ry_MD', 'L_Scapulars_JR_Fthr_006_InAuto_rx_MD', 'unitConversion2725', 'L_Scapulars_JR_Fthr_002Bend02_Indiv_CtrlShape', 'unitConversion1791', 'L_Secondaries_JR_Fthr_0011Bend01_Indiv_Ctrl_tag', 'unitConversion1171', 'L_Secondaries_JR_10_CtrlShape', 'unitConversion2617', 'unitConversion2123', 'L_Scapulars_JR_Fthr_008Bend02_Indiv_CtrlShape', 'unitConversion315', 'unitConversion2479', 'L_Secondaries_JR_Fthr_005_AutoJnt', 'unitConversion446', 'unitConversion637', 'L_Scapulars_JR_Fthr_000Bend01_Indiv_Ctrl_tag', 'L_Secondaries_JR_Fthr_0014_Out_ry_MD', 'unitConversion353', 'L_Primaries_JR_Fthr_002_RootJnt', 'R_Primaries_JR_Fthr_004_SpreadAuto_Auto', 'unitConversion474', 'R_Scapulars_JR_14_CtrlShape', 'unitConversion1931', 'L_Secondaries_JR_Fthr_0016_Out_rx_MD1', 'L_Primaries_JR_Fthr_007Bend02_Indiv_Ctrl_Offset_Grp', 'L_Secondaries_JR_Fthr_007_OutAuto_rx_MD1', 'unitConversion126', 'R_Scapulars_JR_Wing_0010_parentConstraint1', 'unitConversion782', 'unitConversion1114', 'L_Scapulars_JR_Fthr_000_Out_rx_MD', 'L_Primaries_JR_Fthr_006_OutAuto_rx_MD1', 'L_Primaries_JR_Fthr_004Bend02_Indiv_Ctrl_tag', 'L_Scapulars_JR_Fthr_006_BendJnt1', 'unitConversion2315', 'unitConversion1899', 'unitConversion1419', 'L_Secondaries_JR_Fthr_005_InAuto_ry_MD', 'R_Secondaries_JR_Fthr_003_BendJnt1', 'L_Scapulars_JR_Fthr_0010_In_rx_MD', 'unitConversion1740', 'unitConversion2336', 'unitConversion1072', 'unitConversion581', 'L_Scapulars_JR_Fthr_0012Bend03_Indiv_Ctrl_Offset_Grp', 'L_Secondaries_JR_Fthr_004Bend02_Bnd_parentConstraint1', 'unitConversion1603', 'unitConversion791', 'R_Scapulars_JR_Fthr_007Bend01_Bnd_parentConstraint1', 'R_Scapulars_JR_Fthr_009_SpreadAuto', 'R_Secondaries_JR_Fthr_0013Bend03_Indiv_Ctrl_Offset_Grp', 'L_Scapulars_JR_Fthr_001Bend02_Bnd', 'unitConversion2442', 'L_Secondaries_JR_Fthr_008_Indiv_CtrlShape', 'unitConversion329', 'unitConversion1879', 'L_Secondaries_JR_11_CtrlL_Secondaries_JR_11_CC_AutoFold_Grp_Grp', 'R_Scapulars_JR_Wing_0011_parentConstraint1', 'L_Scapulars_JR_Fthr_0010_OutAuto_rx_MD1', 'R_Secondaries_JR_Fthr_0015Bend01_Bnd_parentConstraint1', 'L_Primaries_JR_Fthr_008_CtrlShape', 'L_Scapulars_JR_Fthr_002_SpreadCtrlGrp', 'L_Secondaries_JR_Fthr_0012_In_rx_MD', 'L_Secondaries_JR_Fthr_007Bend01_Indiv_Ctrl_Offset_Grp', 'unitConversion137', 'unitConversion721', 'L_Primaries_JR_Fthr_000_SpreadAuto', 'R_Scapulars_JR_Fthr_0014_RootJnt', 'unitConversion2622', 'R_Secondaries_JR_Fthr_001Bend02_Bnd', 'unitConversion2418', 'R_Primaries_JR_Fthr_002Bend03', 'unitConversion459', 'R_Primaries_JR_Wing_005', 'unitConversion2654', 'unitConversion1233', 'L_Secondaries_JR_Fthr_0013Bend03_Indiv_CtrlShape', 'R_Scapulars_JR_6_CtrlL_Scapulars_JR_6_CC_AutoFold_Grp_Grp', 'R_Scapulars_JR_Fthr_008_SpreadAuto_Root_orientConstraint1', 'unitConversion2028', 'unitConversion369', 'R_Primaries_JR_Fthr_003_BendJnt1', 'unitConversion1312', 'unitConversion1300', 'unitConversion768', 'L_Secondaries_JR_Fthr_000Bend03_Bnd_parentConstraint1', 'L_Secondaries_JR_Fthr_002Bend01_Indiv_Ctrl_tag', 'L_Scapulars_JR_Fthr_008_RootJnt', 'unitConversion2284', 'L_Secondaries_JR_Fthr_0010Bend02_Indiv_Ctrl_tag', 'L_Scapulars_JR_Fthr_008_Out_rx_MD', 'unitConversion242', 'L_Scapulars_JR_Fthr_0013_SpreadAuto_Root', 'unitConversion1331', 'unitConversion2415', 'unitConversion2088', 'unitConversion1537', 'R_Primaries_JR_Wing_007_parentConstraint1', 'L_Secondaries_JR_Fthr_002Bend02_Indiv_Ctrl_Offset_Grp', 'R_Secondaries_JR_Fthr_0014_AutoJnt', 'L_Secondaries_JR_Fthr_003Bend02_Bnd', 'R_Scapulars_JR_Fthr_0010_Ctrl_Root_Grp', 'L_Secondaries_JR_Fthr_0011Bend01_Indiv_Ctrl', 'unitConversion2130', 'unitConversion579', 'unitConversion910', 'L_Secondaries_JR_Fthr_0014_Ctrl_Root_Grp', 'L_Scapulars_JR_Fthr_000_SpreadAuto_Auto', 'unitConversion2157', 'R_Secondaries_JR_Fthr_001Bend01_Indiv_Ctrl_Offset_Grp', 'R_Scapulars_JR_Fthr_0012_Ctrl_Auto_Grp', 'unitConversion1612', 'L_Primaries_JR_Fthr_007_In_rx_MD', 'unitConversion1209', 'unitConversion357', 'unitConversion1779', 'R_Scapulars_JR_Fthr_008_Bnd_parentConstraint1', 'unitConversion1670', 'L_Scapulars_JR_Fthr_005Bend02_Bnd_parentConstraint1', 'R_Secondaries_JR_Fthr_004_BendJnt3', 'unitConversion1830', 'R_Scapulars_JR_Fthr_009Bend01_Indiv_Ctrl_Offset_Grp', 'L_Secondaries_JR_Fthr_004_Bnd', 'unitConversion762', 'unitConversion1310', 'R_Secondaries_JR_Fthr_004_SpreadAuto', 'L_Secondaries_JR_Fthr_0014Bend03', 'R_Scapulars_JR_Bend_CC_Auto_Grp', 'unitConversion129', 'L_Primaries_JR_Fthr_008Bend02_Indiv_Ctrl_Offset_Grp', 'L_Scapulars_JR_Fthr_000Bend01_Bnd', 'unitConversion1299', 'L_Scapulars_JR_2_CtrlL_Scapulars_JR_2_CC_AutoFold_Grp_Grp', 'unitConversion297', 'L_Secondaries_JR_Fthr_008Bend01_Bnd', 'L_Primaries_JR_Wing_008_Bnd_parentConstraint1', 'R_Secondaries_JR_Fthr_0013_Ctrl_Root_Grp', 'L_Scapulars_JR_Fthr_002_In_ry_MD', 'L_Primaries_JR_Fthr_006_InAuto_ry_MD1', 'L_Scapulars_JR_Fthr_000_OutAuto_rx_MD1', 'R_Scapulars_JR_2_CtrlL_Scapulars_JR_2_CC_AutoFold_Grp_Grp', 'L_Scapulars_JR_Fthr_003Bend02', 'L_Secondaries_JR_Fthr_004Bend02_Indiv_Ctrl', 'R_Secondaries_JR_Fthr_003_SpreadAuto', 'L_Secondaries_JR_Fthr_0013_OutAuto_ry_MD', 'L_Secondaries_JR_Fthr_000Bend03_Indiv_Ctrl', 'L_Secondaries_JR_Fthr_009Bend03_Indiv_CtrlShape', 'R_Scapulars_JR_Fthr_007Bend03_Indiv_Ctrl_tag', 'L_Secondaries_JR_Fthr_008_BendJnt2', 'unitConversion2379', 'unitConversion25', 'L_Scapulars_JR_Fthr_0013_Indiv_Ctrl_Offset_Grp', 'L_Primaries_JR_Fthr_004Bend01_Bnd', 'R_Scapulars_JR_Fthr_003_Bnd_parentConstraint1', 'R_Secondaries_JR_Fthr_006Bend02_Bnd_parentConstraint1', 'unitConversion1948', 'unitConversion1556', 'R_Secondaries_JR_13_CtrlShape', 'unitConversion1661', 'L_Scapulars_JR_Fthr_004_InAuto_ry_MD1', 'R_Scapulars_JR_Wing_0011_Bnd', 'L_Primaries_JR_Fthr_005_Ctrl_Root_Grp', 'unitConversion9', 'R_Scapulars_JR_Fthr_0011Bend02', 'unitConversion1375', 'L_Primaries_JR_Fthr_002Bend02', 'unitConversion2664', 'L_Scapulars_JR_Fthr_002_In_rx_MD', 'R_Scapulars_JR_Fthr_004Bend01_Bnd', 'unitConversion13', 'R_Secondaries_JR_Fthr_000_CtrlShape', 'unitConversion272', 'R_Primaries_JR_Fthr_004Bend01_Bnd', 'L_Scapulars_JR_Fthr_000_InAuto_rx_MD', 'unitConversion994', 'unitConversion2153', 'unitConversion937', 'unitConversion604', 'L_Primaries_JR_Fthr_005_Indiv_Ctrl', 'R_WingRef_LocShape', 'R_Primaries_JR_Fthr_002_Bnd', 'R_Secondaries_JR_Spread_In_CtrlShape', 'L_Primaries_JR_Fthr_004_Ctrl_Auto_Grp', 'R_Secondaries_JR_Fthr_0017Bend01_Bnd_parentConstraint1', 'unitConversion146', 'unitConversion2073', 'unitConversion557', 'R_Secondaries_JR_Fthr_007_Ctrl', 'L_Scapulars_JR_Wing_003_parentConstraint1', 'L_Secondaries_JR_Wing_008_Bnd', 'unitConversion1975', 'R_Scapulars_JR_Wing_0013_parentConstraint1', 'R_Secondaries_JR_Fthr_0011Bend03', 'R_Primaries_JR_Fthr_008Bend02_Indiv_Ctrl_Offset_Grp', 'L_Primaries_JR_Fthr_003Bend01_Bnd_parentConstraint1', 'L_Scapulars_JR_Fthr_000_OutAuto_rx_MD', 'unitConversion2252', 'unitConversion680', 'L_Scapulars_JR_Fthr_0012Bend03_Indiv_Ctrl', 'R_Secondaries_JR_Fthr_008_SpreadAuto_Auto', 'unitConversion1972', 'unitConversion1917', 'unitConversion2158', 'L_Secondaries_JR_Fthr_002Bend02_Indiv_Ctrl', 'L_Secondaries_JR_Fthr_002Bend03_Bnd_parentConstraint1', 'L_Primaries_JR_Fthr_002Bend02_Indiv_Ctrl', 'unitConversion2010', 'unitConversion642', 'unitConversion2557', 'unitConversion760', 'unitConversion464', 'unitConversion2222', 'R_Scapulars_JR_Fthr_005Bend03_Indiv_CtrlShape', 'L_Secondaries_JR_Fthr_008_In_ry_MD', 'R_Scapulars_JR_Fthr_0013_SpreadAuto', 'unitConversion1803', 'R_Secondaries_JR_Fthr_0013Bend02', 'R_Secondaries_JR_Fthr_008_Ctrl', 'L_Secondaries_JR_Fthr_0016Bend03_Indiv_Ctrl_tag', 'unitConversion1606', 'L_Secondaries_JR_Fthr_009Bend01_Bnd_parentConstraint1', 'unitConversion1055', 'L_Primaries_JR_Fthr_002_Out_ry_MD', 'L_Secondaries_JR_0_CtrlShape', 'unitConversion2668', 'L_Secondaries_JR_Fthr_0014Bend03_Indiv_Ctrl_Offset_Grp', 'unitConversion2582', 'unitConversion1547', 'L_Secondaries_JR_Fthr_0016_OutAuto_rx_MD', 'unitConversion868', 'R_Scapulars_JR_Fthr_009Bend03_Bnd', 'unitConversion74', 'unitConversion1840', 'R_Secondaries_JR_Fthr_007_SpreadAuto_Root', 'L_Primaries_JR_Fthr_008_InAuto_ry_MD1', 'R_Scapulars_JR_Fthr_0011_BendJnt2', 'L_Primaries_JR_Fthr_008_Ctrl_Auto_Grp', 'L_Primaries_JR_Fthr_005Bend02_Indiv_Ctrl_tag', 'unitConversion2118', 'L_Scapulars_JR_Fthr_007Bend02_Indiv_Ctrl', 'unitConversion428', 'R_Secondaries_JR_Fthr_005Bend01_Bnd_parentConstraint1', 'R_Scapulars_JR_Fthr_000_Bnd_parentConstraint1', 'R_Scapulars_JR_Fthr_007Bend02_Indiv_Ctrl', 'L_Scapulars_JR_Fthr_005_OutAuto_ry_MD', 'unitConversion2056', 'unitConversion125', 'L_Secondaries_JR_Fthr_0012_Indiv_Ctrl_Offset_Grp', 'unitConversion265', 'unitConversion1165', 'R_Secondaries_JR_Fthr_0015_Bnd_parentConstraint1', 'R_Secondaries_JR_Fthr_0011Bend02_Indiv_CtrlShape', 'R_Primaries_JR_Fthr_005', 'unitConversion1447', 'L_Scapulars_JR_Fthr_008_SpreadCtrlGrp', 'L_Secondaries_JR_Fthr_0015Bend01_Bnd', 'unitConversion918', 'unitConversion1870', 'unitConversion1111', 'R_Primaries_JR_Fthr_000_Ctrl_Root_Grp', 'R_Secondaries_JR_Fthr_0010_Indiv_CtrlShape', 'L_Scapulars_JR_Fthr_007Bend03', 'L_Secondaries_JR_Fthr_005', 'L_Secondaries_JR_Fthr_008Bend03_Indiv_Ctrl', 'L_Scapulars_JR_Fthr_001Bend03_Bnd_parentConstraint1', 'R_Primaries_JR_Fthr_009Bend02_Bnd_parentConstraint1', 'R_Scapulars_JR_Fthr_009_Ctrl', 'R_Secondaries_JR_Fthr_0010_SpreadCtrlGrp', 'L_Scapulars_JR_Fthr_006Bend02_Indiv_Ctrl_tag', 'R_Scapulars_JR_Fthr_002Bend02_Bnd_parentConstraint1', 'L_Primaries_JR_Fthr_001_Bnd', 'R_Secondaries_JR_Fthr_007_BendJnt3', 'R_Primaries_JR_4_CtrlShape', 'R_Scapulars_JR_Fthr_001_BendJnt1', 'L_Primaries_JR_Fthr_007Bend01_Indiv_Ctrl_tag', 'unitConversion1955', 'unitConversion1094', 'unitConversion1219', 'unitConversion1275', 'L_Secondaries_JR_Fthr_004_InAuto_ry_MD', 'unitConversion468', 'R_Scapulars_JR_Wing_009_parentConstraint1', 'L_Secondaries_JR_Fthr_001_Indiv_Ctrl_Offset_Grp', 'R_Primaries_JR_Wing_008_Bnd_parentConstraint1', 'unitConversion2602', 'L_Secondaries_JR_Fthr_0010_Ctrl_Root_Grp', 'L_Secondaries_JR_Fthr_004_Ctrl_Auto_Grp', 'L_Primaries_JR_Fthr_006_SpreadAuto_Auto', 'R_Secondaries_JR_Fthr_0010Bend02_Bnd_parentConstraint1', 'R_Primaries_JR_Fthr_008_Indiv_Ctrl_tag', 'L_Scapulars_JR_Fthr_0010_Bnd', 'L_Secondaries_JR_Fthr_003_SpreadAuto_Auto', 'R_Scapulars_JR_Fthr_001Bend01_Bnd_parentConstraint1', 'L_Primaries_JR_Fthr_003Bend02_Bnd', 'R_Primaries_JR_Fthr_000_Indiv_Ctrl', 'L_Scapulars_JR_Fthr_0014_InAuto_ry_MD', 'L_Primaries_JR_Fthr_009_Out_ry_MD1', 'R_Secondaries_JR_Fthr_0012_SpreadAuto_Auto', 'R_Secondaries_JR_Fthr_0015Bend03_Indiv_Ctrl_tag', 'L_Scapulars_JR_Fthr_0012Bend01_Bnd_parentConstraint1', 'unitConversion564', 'L_Scapulars_JR_Fthr_007_SpreadAuto_Auto', 'L_Primaries_JR_Wing_000_parentConstraint1', 'unitConversion2537', 'unitConversion1164', 'L_Scapulars_JR_Fthr_0013Bend03_Indiv_Ctrl', 'unitConversion1079', 'R_Scapulars_JR_Fthr_002_Ctrl_Auto_Grp', 'R_Secondaries_JR_Fthr_003Bend03_Indiv_Ctrl', 'R_Primaries_JR_Spread_Out_Root_Grp', 'L_Secondaries_JR_2_CtrlL_Secondaries_JR_2_CC_AutoFold_Grp_Grp', 'unitConversion1022', 'L_Scapulars_JR_Fthr_0012Bend02_Bnd', 'R_Scapulars_JR_Fthr_005_BendJnt1', 'L_Secondaries_JR_Fthr_005_In_ry_MD1', 'L_Primaries_JR_Spread_In_Auto_Grp', 'unitConversion2220', 'L_Scapulars_JR_Fthr_009Bend02_Indiv_Ctrl', 'R_Primaries_JR_Bnd_parentConstraint1', 'L_Scapulars_JR_Fthr_0011_Indiv_Ctrl', 'L_Scapulars_JR_Fthr_003Bend03', 'L_Scapulars_JR_Fthr_006_BendJnt3', 'unitConversion626', 'unitConversion899', 'L_Scapulars_JR_Fthr_0010Bend03_Indiv_Ctrl_tag', 'L_Secondaries_JR_Fthr_0012_BendJnt2', 'unitConversion619', 'unitConversion1686', 'L_Secondaries_JR_Fthr_0016_In_rx_MD', 'unitConversion225', 'unitConversion1822', 'L_Primaries_JR_Fthr_007_Indiv_Ctrl_Offset_Grp', 'unitConversion1541', 'L_Primaries_JR_Fthr_005_BendJnt2', 'L_Secondaries_JR_Spread_In_Ctrl', 'L_Secondaries_JR_Wing_000_Ctrl', 'L_Primaries_JR_Fthr_008Bend01_Indiv_Ctrl', 'L_Secondaries_JR_Fthr_0014_InAuto_rx_MD1', 'R_Secondaries_JR_Fthr_003_Ctrl_Root_Grp', 'L_Secondaries_JR_Fthr_0011Bend03_Bnd', 'L_Primaries_JR_Spread_Out_Root_Grp', 'R_Secondaries_JR_Fthr_0011_BendJnt3', 'unitConversion286', 'L_Scapulars_JR_Fthr_0011_OutAuto_rx_MD1', 'L_Secondaries_JR_Fthr_008_In_ry_MD1', 'L_Primaries_JR_Fthr_003Bend02_Indiv_CtrlShape', 'unitConversion2374', 'R_Scapulars_JR_Spread_In_Auto_Grp', 'unitConversion2570', 'L_Scapulars_JR_Fthr_004_SpreadCtrlGrp', 'R_Secondaries_JR_Fthr_006_SpreadCtrlGrp', 'R_Scapulars_JR_Fthr_008Bend03_Indiv_CtrlShape', 'unitConversion2687', 'unitConversion1400', 'L_Secondaries_JR_Fthr_001Bend02_Indiv_Ctrl_tag', 'L_Secondaries_JR_Fthr_000_BendJnt1', 'R_Primaries_JR_Spread_Out_Auto_Grp', 'unitConversion2752', 'unitConversion860', 'unitConversion2150', 'L_Primaries_JR_Fthr_007Bend02_Indiv_Ctrl_tag', 'R_Scapulars_JR_Fthr_008Bend02_Bnd', 'unitConversion193', 'L_GlobalLocShape', 'L_Primaries_JR_Fthr_003_InAuto_rx_MD', 'L_Secondaries_JR_12_CtrlShape', 'unitConversion250', 'unitConversion2671', 'R_Secondaries_JR_Fthr_001Bend02_Indiv_Ctrl_Offset_Grp', 'unitConversion1260', 'unitConversion1886', 'L_Secondaries_JR_14_Ctrl', 'L_Secondaries_JR_Fthr_005Bend03_Indiv_Ctrl', 'R_Scapulars_JR_Fthr_003_CtrlShape', 'unitConversion1677', 'R_Secondaries_JR_Fthr_0017Bend03_Indiv_CtrlShape', 'R_Secondaries_JR_Bend_CtrlShape', 'unitConversion2163', 'unitConversion3', 'R_Secondaries_JR_Fthr_0015_Indiv_CtrlShape', 'unitConversion1954', 'L_Scapulars_JR_Fthr_005_InAuto_ry_MD1', 'unitConversion1285', 'L_Primaries_JR_Fthr_004_InAuto_ry_MD1', 'L_Primaries_JR_Fthr_003_SpreadCtrlGrp', 'R_Primaries_JR_Fthr_009_Indiv_Ctrl_Offset_Grp', 'unitConversion631', 'L_Secondaries_JR_4_CtrlShape', 'unitConversion1745', 'R_Secondaries_JR_Fthr_005Bend01_Indiv_Ctrl_tag', 'L_Primaries_JR_Fthr_006Bend01_Bnd_parentConstraint1', 'L_Secondaries_JR_Fthr_0013Bend01_Indiv_Ctrl', 'L_Secondaries_JR_Fthr_007_SpreadAuto_Auto', 'unitConversion1775', 'unitConversion1861', 'R_Scapulars_JR_Wing_0010_Bnd', 'unitConversion1856', 'unitConversion1689', 'R_Primaries_JR_Fthr_002_Indiv_CtrlShape', 'L_Secondaries_JR_Fthr_0010_SpreadAuto_Root', 'R_Scapulars_JR_Fthr_003_SpreadCtrlGrp', 'L_Secondaries_JR_Fthr_005Bend02', 'L_Secondaries_JR_Fthr_001Bend02_Bnd', 'L_Primaries_JR_Fthr_005_Indiv_CtrlShape', 'unitConversion2175', 'L_Primaries_JR_Fthr_005_InAuto_rx_MD1', 'L_Secondaries_JR_Fthr_0016Bend03_Indiv_CtrlShape', 'R_Scapulars_JR_Fthr_004_SpreadCtrlGrp', 'R_Secondaries_JR_Fthr_009Bend01_Bnd_parentConstraint1', 'unitConversion199', 'L_Secondaries_JR_Fthr_0017_Out_rx_MD1', 'R_Secondaries_JR_Fthr_0012_AutoJnt', 'R_Primaries_JR_Wing_009_Bnd', 'unitConversion391', 'L_Scapulars_JR_Fthr_0012_OutAuto_ry_MD', 'R_Primaries_JR_Fthr_009Bend03_Bnd', 'R_Secondaries_JR_Fthr_000Bend03_Indiv_Ctrl_tag', 'L_Primaries_JR_Fthr_009_BendJnt3', 'L_Scapulars_JR_Fthr_003_Indiv_CtrlShape', 'R_Scapulars_JR_Fthr_002Bend02', 'R_Primaries_JR_Fthr_003Bend01_Bnd', 'unitConversion229', 'R_Primaries_JR_Wing_003_Bnd_parentConstraint1', 'R_Scapulars_JR_Fthr_006Bend01_Indiv_Ctrl_Offset_Grp', 'L_Primaries_JR_Wing_002', 'unitConversion660', 'L_Scapulars_JR_Wing_000_Auto', 'R_Scapulars_JR_Fthr_0014Bend03_Indiv_Ctrl_tag', 'unitConversion427', 'L_Scapulars_JR_Wing_008', 'L_Secondaries_JR_Fthr_0010_Ctrl', 'unitConversion651', 'R_Scapulars_JR_Fthr_0014Bend01_Bnd', 'L_Primaries_JR_Fthr_007Bend03_Bnd_parentConstraint1', 'L_Secondaries_JR_Fthr_002_AutoJnt', 'R_Primaries_JR_Fthr_002_CtrlShape', 'L_Secondaries_JR_Fthr_006Bend02_Indiv_Ctrl_tag', 'L_Secondaries_JR_17_CtrlShape', 'R_Scapulars_JR_Fthr_0013Bend02_Bnd_parentConstraint1', 'L_Secondaries_JR_Fthr_0010Bend01_Indiv_Ctrl_tag', 'L_Primaries_JR_Fthr_007_BendJnt3', 'unitConversion2580', 'R_Primaries_JR_Fthr_000Bend01_Indiv_Ctrl_Offset_Grp', 'L_Primaries_JR_Fthr_009_SpreadAuto', 'L_Secondaries_JR_Fthr_0014Bend01_Indiv_Ctrl_tag', 'L_Scapulars_JR_Fthr_0011Bend03_Indiv_CtrlShape', 'L_Scapulars_JR_Fthr_0010Bend01_Bnd', 'unitConversion913', 'unitConversion2440', 'unitConversion1411', 'unitConversion1761', 'L_Secondaries_JR_Fthr_005Bend01', 'R_Secondaries_JR_Fthr_007Bend02_Indiv_CtrlShape', 'unitConversion2016', 'L_Primaries_JR_Fthr_003_Bnd_parentConstraint1', 'L_Primaries_JR_Fthr_000Bend02_Indiv_Ctrl_tag', 'L_Scapulars_JR_Fthr_009Bend03_Indiv_Ctrl', 'L_Primaries_JR_Fthr_008Bend01_Indiv_Ctrl_Offset_Grp', 'R_Scapulars_JR_Fthr_005_Bnd_parentConstraint1', 'R_Primaries_JR_Fthr_006Bend03', 'unitConversion475', 'unitConversion1374', 'R_Scapulars_JR_Fthr_007_SpreadCtrlGrp', 'L_Secondaries_JR_Fthr_0010_Indiv_Ctrl_tag', 'R_Secondaries_JR_Fthr_000_BendJnt2', 'unitConversion389', 'L_Scapulars_JR_Wing_0011_parentConstraint1', 'L_Primaries_JR_Fthr_003_Indiv_CtrlShape', 'R_Secondaries_JR_Wing_0015_Bnd', 'R_Secondaries_JR_Fthr_0012Bend03', 'L_Scapulars_JR_Fthr_0014_Indiv_Ctrl_tag', 'unitConversion393', 'unitConversion598', 'R_Primaries_JR_Fthr_002Bend02_Bnd', 'L_Secondaries_JR_Fthr_0016Bend01', 'L_Primaries_JR_Fthr_003_OutAuto_ry_MD1', 'unitConversion1829', 'L_Primaries_JR_Fthr_008_Out_rx_MD1', 'unitConversion2740', 'L_Secondaries_JR_Fthr_0016_Ctrl', 'L_Secondaries_JR_Fthr_0014_Indiv_CtrlShape', 'unitConversion1122', 'L_Secondaries_JR_Fthr_002_OutAuto_rx_MD', 'L_Primaries_JR_Fthr_009Bend03_Indiv_Ctrl_Offset_Grp', 'unitConversion2624', 'unitConversion2505', 'unitConversion360', 'R_Secondaries_JR_5_Ctrl', 'unitConversion314', 'L_Secondaries_JR_Fthr_007Bend03_Bnd', 'R_Scapulars_JR_Fthr_003Bend03_Bnd_parentConstraint1', 'unitConversion1390', 'L_Secondaries_JR_Fthr_007_SpreadCtrlGrp', 'L_Primaries_JR_Fthr_009Bend02_Indiv_Ctrl_tag', 'unitConversion1305', 'R_Scapulars_JR_Fthr_0012Bend01_Bnd', 'unitConversion1767', 'L_Scapulars_JR_Fthr_002_OutAuto_rx_MD', 'L_Secondaries_JR_Fthr_0016Bend03_Bnd_parentConstraint1', 'unitConversion2543', 'L_Scapulars_JR_Fthr_007_Indiv_Ctrl', 'L_Secondaries_JR_Fthr_001_OutAuto_rx_MD1', 'R_Primaries_JR_Fthr_003Bend02_Indiv_Ctrl_tag', 'L_Scapulars_JR_7_CtrlShape', 'L_Scapulars_JR_Fthr_000Bend03', 'L_Primaries_JR_Fthr_003Bend03', 'L_Scapulars_JR_Fthr_007_In_rx_MD', 'R_Scapulars_JR_Fthr_009Bend01_Indiv_Ctrl', 'unitConversion2650', 'L_Scapulars_JR_Fthr_001_InAuto_rx_MD1', 'L_Scapulars_JR_Fthr_0011_Ctrl', 'R_Scapulars_JR_Fthr_0010_RootJnt', 'R_Primaries_JR_Fthr_007Bend02_Indiv_CtrlShape', 'R_Primaries_JR_Wing_000_parentConstraint1', 'unitConversion2169', 'L_Scapulars_JR_Fthr_007_Indiv_CtrlShape', 'R_Secondaries_JR_Fthr_006_BendJnt3', 'L_Primaries_JR_Fthr_001_Indiv_Ctrl', 'unitConversion872', 'R_Secondaries_JR_Fthr_0017_AutoJnt', 'L_Primaries_JR_Fthr_003_Indiv_Ctrl_Offset_Grp', 'unitConversion1458', 'L_Scapulars_JR_Fthr_004_SpreadAuto_Auto', 'L_Scapulars_JR_Fthr_002_Bnd', 'L_Scapulars_JR_Fthr_006_In_rx_MD', 'unitConversion221', 'L_Secondaries_JR_Fthr_009_SpreadAuto_Root', 'R_Secondaries_JR_Fthr_009Bend03_Indiv_Ctrl_tag', 'unitConversion798', 'L_Scapulars_JR_Fthr_007_Out_rx_MD', 'unitConversion2758', 'unitConversion580', 'R_Scapulars_JR_Fthr_005_Bnd', 'L_Primaries_JR_Fthr_009Bend02', 'L_Scapulars_JR_Fthr_003_BendJnt3', 'Wings_Rig_Grp', 'R_Scapulars_JR_Fthr_005_RootJnt', 'R_Scapulars_JR_Fthr_0010_SpreadAuto_Auto', 'L_Primaries_JR_Fthr_007_Out_ry_MD1', 'unitConversion2675', 'unitConversion1709', 'unitConversion399', 'L_Primaries_JR_Fthr_007_Bnd', 'R_Secondaries_JR_Fthr_0017_Indiv_CtrlShape', 'L_Secondaries_JR_Wing_0014_Bnd', 'unitConversion1031', 'R_Primaries_JR_Wing_003_Bnd', 'R_Primaries_JR_Fthr_004_SpreadAuto_Root', 'L_Secondaries_JR_Fthr_0013Bend01_Indiv_Ctrl_tag', 'L_Secondaries_JR_Fthr_001Bend02_Indiv_Ctrl', 'R_Scapulars_JR_4_CtrlShape', 'L_Secondaries_JR_Wing_0010_parentConstraint1', 'R_Scapulars_JR_Fthr_000_CtrlShape', 'R_Secondaries_JR_Bend_Ctrl', 'unitConversion2615', 'unitConversion796', 'R_Secondaries_JR_Fthr_0017Bend01_Indiv_Ctrl_Offset_Grp', 'L_Secondaries_JR_Fthr_003_Out_ry_MD1', 'unitConversion1924', 'L_Secondaries_JR_Fthr_0017_Bnd_parentConstraint1', 'L_Secondaries_JR_Fthr_0013_Out_rx_MD', 'R_Scapulars_JR_13_Ctrl', 'L_Primaries_JR_Fthr_003Bend01_Indiv_Ctrl_Offset_Grp', 'L_Primaries_JR_Fthr_000Bend03_Indiv_Ctrl_Offset_Grp', 'R_Secondaries_JR_Fthr_0011_Indiv_Ctrl_Offset_Grp', 'R_Scapulars_JR_Fthr_007_SpreadAuto_Auto', 'L_Scapulars_JR_Fthr_0013Bend01_Indiv_CtrlShape', 'L_Scapulars_JR_Fthr_003_Bnd_parentConstraint1', 'unitConversion2160', 'L_Secondaries_JR_0_CtrlL_Secondaries_JR_0_CC_AutoFold_Grp_Grp', 'L_Secondaries_JR_Fthr_005_Bnd_parentConstraint1', 'unitConversion693', 'unitConversion2495', 'L_Secondaries_JR_Wing_006_parentConstraint1', 'R_Secondaries_JR_Fthr_0014Bend01_Indiv_Ctrl_tag', 'L_Primaries_JR_Fthr_008_In_ry_MD1', 'unitConversion157', 'L_Scapulars_JR_Fthr_002_BendJnt2', 'unitConversion2763', 'R_Scapulars_JR_Fthr_006_Indiv_Ctrl', 'unitConversion289', 'L_Secondaries_JR_Fthr_009Bend01_Indiv_Ctrl_Offset_Grp', 'L_Scapulars_JR_Fthr_0010Bend03_Indiv_CtrlShape', 'R_Secondaries_JR_Fthr_0013Bend01_Indiv_CtrlShape', 'L_Secondaries_JR_Fthr_007_BendJnt3', 'L_Secondaries_JR_Fthr_001_Indiv_Ctrl', 'unitConversion180', 'L_Secondaries_JR_Fthr_009Bend02_Indiv_Ctrl_tag', 'unitConversion1804', 'L_Scapulars_JR_Fthr_009_SpreadCtrlGrp', 'unitConversion1110', 'unitConversion759', 'L_Primaries_JR_Fthr_001_Ctrl', 'L_Secondaries_JR_Wing_004_Bnd_parentConstraint1', 'L_Primaries_JR_Fthr_004_Bnd', 'unitConversion45', 'L_Scapulars_JR_Fthr_000_AutoJnt', 'L_Primaries_JR_Wing_001_parentConstraint1', 'R_Scapulars_JR_Fthr_000Bend02_Indiv_Ctrl_Offset_Grp', 'R_Secondaries_JR_Fthr_009_Ctrl_Root_Grp', 'R_Secondaries_JR_Fthr_002Bend01_Indiv_CtrlShape', 'R_Secondaries_JR_Fthr_0011_BendJnt2', 'L_Scapulars_JR_Fthr_0014Bend03_Indiv_CtrlShape', 'R_Secondaries_JR_Fthr_0014Bend02_Bnd', 'L_Scapulars_JR_Fthr_007_CtrlShape', 'unitConversion2594', 'unitConversion1135', 'R_Primaries_JR_Fthr_006_Ctrl_Auto_Grp', 'unitConversion1379', 'L_Secondaries_JR_Fthr_0014Bend03_Indiv_Ctrl', 'unitConversion2371', 'L_Scapulars_JR_Fthr_003_OutAuto_rx_MD', 'L_Secondaries_JR_Wing_002_Bnd', 'R_Secondaries_JR_Fthr_006Bend03_Bnd', 'unitConversion2409', 'R_Secondaries_JR_Fthr_0017_Bnd_parentConstraint1', 'L_Scapulars_JR_Fthr_007', 'unitConversion433', 'L_Secondaries_JR_Fthr_001_BendJnt2', 'L_Primaries_JR_Fthr_008_SpreadAuto_Root', 'R_Primaries_JR_Fthr_006Bend02_Bnd', 'L_Secondaries_JR_Fthr_001Bend01_Bnd', 'L_Primaries_JR_Fthr_007_SpreadAuto_Root', 'R_Scapulars_JR_Fthr_0013_Indiv_Ctrl', 'R_Secondaries_JR_Fthr_0010Bend03', 'R_Secondaries_JR_Fthr_0013Bend01_Indiv_Ctrl', 'R_Secondaries_JR_Wing_000_Ctrl_Root_Grp', 'L_Scapulars_JR_Fthr_000Bend01_Bnd_parentConstraint1', 'R_Scapulars_JR_Fthr_007Bend02_Bnd', 'unitConversion925', 'L_Secondaries_JR_Fthr_003Bend02_Indiv_CtrlShape', 'R_Primaries_JR_Fthr_008Bend02_Bnd', 'R_Secondaries_JR_Wing_000', 'L_Scapulars_JR_Fthr_003_SpreadAuto', 'unitConversion794', 'R_Secondaries_JR_Fthr_005_CtrlShape', 'R_Secondaries_JR_Fthr_0012_RootJnt', 'unitConversion754', 'R_Secondaries_JR_Fthr_0012_Indiv_Ctrl_Offset_Grp', 'R_Scapulars_JR_Fthr_004Bend02_Indiv_Ctrl', 'unitConversion803', 'unitConversion471', 'unitConversion2447', 'L_Secondaries_JR_Fthr_0011_SpreadAuto_Root', 'unitConversion174', 'L_Secondaries_JR_Wing_0013_parentConstraint1', 'L_Secondaries_JR_Fthr_009_Ctrl_Root_Grp', 'R_Primaries_JR_Fthr_005Bend02_Bnd_parentConstraint1', 'unitConversion771', 'unitConversion2113', 'L_Primaries_JR_Fthr_004_Ctrl', 'R_Secondaries_JR_Fthr_0015Bend03_Indiv_CtrlShape', 'L_Secondaries_JR_Fthr_0012_CtrlShape', 'unitConversion1436', 'R_Scapulars_JR_9_Ctrl', 'R_Scapulars_JR_Fthr_0012_Indiv_CtrlShape', 'L_Scapulars_JR_Fthr_0013Bend03_Indiv_Ctrl_tag', 'R_Primaries_JR_Fthr_003_Indiv_Ctrl_Offset_Grp', 'unitConversion1306', 'L_Secondaries_JR_Fthr_005_CtrlShape', 'R_Scapulars_JR_Spread_Out_Root_Grp', 'L_Secondaries_JR_12_CtrlL_Secondaries_JR_12_CC_AutoFold_Grp_Grp', 'R_Secondaries_JR_Fthr_004Bend02_Indiv_Ctrl', 'unitConversion2524', 'L_Secondaries_JR_Fthr_004_OutAuto_rx_MD1', 'L_Secondaries_JR_Fthr_003Bend02_Indiv_Ctrl', 'unitConversion1504', 'R_Scapulars_JR_Fthr_002_CtrlShape', 'L_Primaries_JR_Fthr_004_In_rx_MD', 'R_Scapulars_JR_Wing_004_parentConstraint1', 'unitConversion2497', 'L_Secondaries_JR_Fthr_001Bend03_Indiv_Ctrl_Offset_Grp', 'L_Primaries_JR_Fthr_004_CtrlShape', 'L_Secondaries_JR_Fthr_0011_Ctrl_Auto_Grp', 'L_Primaries_JR_Fthr_006_OutAuto_ry_MD1', 'unitConversion2716', 'L_Secondaries_JR_Fthr_008_Out_ry_MD', 'unitConversion1154', 'L_Scapulars_JR_Fthr_007Bend03_Bnd', 'R_Primaries_JR_Fthr_004Bend03_Indiv_Ctrl', 'unitConversion2576', 'R_Scapulars_JR_Fthr_000_SpreadAuto', 'unitConversion2095', 'R_Scapulars_JR_10_CtrlShape', 'L_Secondaries_JR_Wing_0014', 'R_Secondaries_JR_Fthr_0017Bend03_Bnd', 'L_Secondaries_JR_Fthr_003Bend01_Bnd', 'R_Primaries_JR_Fthr_004Bend03_Indiv_Ctrl_tag', 'R_Secondaries_JR_Bnd_parentConstraint1', 'unitConversion2005', 'L_Secondaries_JR_Fthr_002_BendJnt2', 'R_Scapulars_JR_Fthr_0010_BendJnt2', 'unitConversion531', 'L_Scapulars_JR_Fthr_0013Bend02_Indiv_Ctrl_Offset_Grp', 'R_Secondaries_JR_FeathersPlane', 'L_Scapulars_JR_Fthr_0014_SpreadAuto_Auto', 'unitConversion1346', 'R_Scapulars_JR_Wing_0013_Bnd', 'L_Scapulars_JR_Fthr_0012_OutAuto_rx_MD', 'unitConversion1474', 'unitConversion2100', 'unitConversion2589', 'unitConversion1304', 'R_Secondaries_JR_Fthr_0017_Bnd', 'L_Secondaries_JR_Fthr_002_OutAuto_rx_MD1', 'R_Secondaries_JR_Fthr_0010Bend02_Indiv_Ctrl', 'R_Scapulars_JR_Fthr_005_Indiv_CtrlShape', 'L_Primaries_JR_Wing_004', 'unitConversion1499', 'L_Secondaries_JR_Wing_0010', 'unitConversion2498', 'L_Secondaries_JR_Fthr_003_BendJnt1', 'unitConversion1448', 'unitConversion2540', 'unitConversion1395', 'L_Primaries_JR_Fthr_001_SpreadCtrlGrp', 'R_Primaries_JR_Wing_004_Bnd_parentConstraint1', 'unitConversion2211', 'unitConversion68', 'L_Primaries_JR_Fthr_001_OutAuto_rx_MD1', 'R_Primaries_JR_Fthr_007_SpreadAuto', 'unitConversion2483', 'unitConversion1032', 'L_Secondaries_JR_Fthr_0013_BendJnt2', 'L_Scapulars_JR_Fthr_008_Ctrl_Auto_Grp', 'L_Scapulars_JR_Fthr_0011_Ctrl_Auto_Grp', 'unitConversion2014', 'unitConversion726', 'R_Secondaries_JR_Fthr_007_Ctrl_Root_Grp', 'unitConversion1303', 'R_Primaries_JR_FeathersPlaneShape', 'unitConversion2248', 'R_Secondaries_JR_Fthr_009_BendJnt3', 'R_Scapulars_JR_Fthr_0011Bend01_Bnd', 'unitConversion2290', 'L_Secondaries_JR_Fthr_009_Ctrl', 'L_Secondaries_JR_Fthr_000_AutoJnt', 'unitConversion2586', 'R_Primaries_JR_Fthr_004Bend02_Indiv_CtrlShape', 'L_Secondaries_JR_Fthr_004_Out_rx_MD', 'L_Scapulars_JR_Fthr_006_SpreadAuto_Auto', 'R_Scapulars_JR_Fthr_008Bend03_Bnd', 'R_Scapulars_JR_parentConstraint1', 'unitConversion1108', 'R_Scapulars_JR_Fthr_009_AutoJnt', 'unitConversion2534', 'R_Wing_CC_Auto_scaleConstraint1', 'L_Scapulars_JR_Wing_000_Ctrl_Root_Grp_parentConstraint1', 'L_Secondaries_JR_Fthr_003Bend03_Indiv_CtrlShape', 'unitConversion1849', 'R_Primaries_JR_Fthr_000Bend01_Indiv_CtrlShape', 'unitConversion594', 'unitConversion2473', 'L_Primaries_JR_Fthr_003_SpreadAuto_Root', 'unitConversion1708', 'R_Scapulars_JR_Fthr_0010Bend01_Indiv_Ctrl', 'R_Scapulars_JR_Fthr_005Bend02_Bnd', 'L_Scapulars_JR_0_CtrlL_Scapulars_JR_0_CC_AutoFold_Grp_Grp', 'L_Secondaries_JR_Fthr_002_Ctrl', 'R_Scapulars_JR_Fthr_0011Bend01_Indiv_Ctrl', 'R_Secondaries_JR_Fthr_0012Bend03_Bnd_parentConstraint1', 'L_Secondaries_JR_Fthr_000Bend02_Indiv_Ctrl_Offset_Grp', 'L_Primaries_JR_Fthr_004Bend03_Indiv_Ctrl_Offset_Grp', 'unitConversion2544', 'unitConversion414', 'R_Primaries_JR_Fthr_004_AutoJnt', 'L_Secondaries_JR_Fthr_0017_Indiv_Ctrl_tag', 'unitConversion904', 'unitConversion674', 'L_Scapulars_JR_Fthr_005_SpreadAuto_Auto', 'L_Scapulars_JR_Fthr_009Bend01_Indiv_Ctrl_tag', 'L_Scapulars_JR_Fthr_0010Bend03_Indiv_Ctrl_Offset_Grp', 'unitConversion1086', 'R_Secondaries_JR_4_Ctrl', 'R_Primaries_JR_Fthr_002', 'R_Secondaries_JR_Fthr_007Bend01_Bnd', 'unitConversion929', 'R_Scapulars_JR_Fthr_002_SpreadAuto_Auto', 'L_Scapulars_JR_Fthr_005_In_rx_MD1', 'unitConversion597', 'unitConversion131', 'unitConversion926', 'L_Secondaries_JR_Fthr_009Bend01_Indiv_Ctrl_tag', 'R_Scapulars_JR_Fthr_0013Bend01', 'L_Scapulars_JR_Fthr_009_Ctrl_Auto_Grp', 'L_Scapulars_JR_Fthr_009Bend01_Bnd_parentConstraint1', 'unitConversion1070', 'L_Secondaries_JR_Fthr_0013_Ctrl', 'L_Secondaries_JR_Fthr_0010_Indiv_Ctrl_Offset_Grp', 'R_Secondaries_JR_Wing_0014_Bnd_parentConstraint1', 'unitConversion2279', 'R_Secondaries_JR_Fthr_0012Bend01_Indiv_Ctrl_Offset_Grp', 'unitConversion1652', 'R_Secondaries_JR_Fthr_009Bend02_Bnd_parentConstraint1', 'unitConversion284', 'L_Secondaries_JR_Fthr_006_InAuto_ry_MD1', 'L_Scapulars_JR_Fthr_0011_OutAuto_rx_MD', 'L_Scapulars_JR_Fthr_007Bend03_Bnd_parentConstraint1', 'R_Scapulars_JR_Fthr_0013_SpreadAuto_Root', 'L_Secondaries_JR_Fthr_0015Bend03_Indiv_Ctrl_tag', 'unitConversion2760', 'unitConversion957', 'unitConversion182', 'R_Scapulars_JR_Fthr_005Bend02_Bnd_parentConstraint1', 'unitConversion2658', 'unitConversion2618', 'unitConversion2170', 'R_Scapulars_JR_Fthr_008_Indiv_Ctrl_Offset_Grp', 'R_Primaries_JR_Wing_002_Bnd', 'unitConversion1324', 'unitConversion267', 'L_Primaries_JR_Wing_003_parentConstraint1', 'L_Scapulars_JR_Fthr_0014_Out_rx_MD', 'unitConversion2193', 'R_Scapulars_JR_Fthr_006_SpreadAuto_Root_orientConstraint1', 'L_Scapulars_JR_Fthr_009_OutAuto_rx_MD', 'L_Scapulars_JR_Spread_Out_Auto_Grp', 'skinCluster2GroupId1', 'R_Secondaries_JR_Fthr_0017Bend02_Indiv_Ctrl_Offset_Grp', 'L_Scapulars_JR_Fthr_008Bend02', 'L_Scapulars_JR_Fthr_006Bend02_Indiv_Ctrl', 'R_Primaries_JR_Fthr_001_SpreadAuto_Root', 'R_Secondaries_JR_Fthr_0017_Indiv_Ctrl', 'R_Scapulars_JR_Spread_In_Ctrl', 'L_Secondaries_JR_Fthr_0011_Bnd_parentConstraint1', 'unitConversion1718', 'unitConversion1997', 'R_Secondaries_JR_Fthr_009_AutoJnt', 'L_Secondaries_JR_Fthr_0011_BendJnt1', 'R_Secondaries_JR_Fthr_007_Bnd_parentConstraint1', 'unitConversion707', 'L_Scapulars_JR_Fthr_003Bend01_Indiv_Ctrl_tag', 'L_Scapulars_JR_Fthr_005_InAuto_rx_MD', 'R_Primaries_JR_Fthr_004_Ctrl_Root_Grp', 'L_Primaries_JR_2_CtrlL_Primaries_JR_2_CC_AutoFold_Grp_Grp', 'R_Secondaries_JR_Fthr_009_RootJnt', 'L_Scapulars_JR_6_CtrlShape', 'unitConversion873', 'L_Secondaries_JR_2_Ctrl', 'L_Secondaries_JR_Fthr_004_Indiv_CtrlShape', 'unitConversion1852', 'unitConversion335', 'L_Secondaries_JR_Fthr_0012_SpreadAuto_Auto', 'R_Secondaries_JR_Fthr_004Bend03_Indiv_Ctrl_tag', 'L_Scapulars_JR_Fthr_0013_SpreadAuto', 'unitConversion1321', 'unitConversion667', 'unitConversion1831', 'R_Scapulars_JR_Fthr_000Bend01_Indiv_CtrlShape', 'unitConversion1832', 'R_Primaries_JR_Fthr_004_Indiv_Ctrl_Offset_Grp', 'unitConversion2128', 'unitConversion1660', 'unitConversion400', 'R_Secondaries_JR_Fthr_008_BendJnt2', 'L_Scapulars_JR_Fthr_009Bend03_Indiv_Ctrl_tag', 'unitConversion1452', 'unitConversion1329', 'unitConversion1505', 'L_Scapulars_JR_Fthr_0011_BendJnt2', 'unitConversion1466', 'L_Scapulars_JR_Fthr_005Bend02_Indiv_Ctrl_tag', 'R_Scapulars_JR_Fthr_009_SpreadAuto_Root', 'L_Scapulars_JR_Fthr_009_InAuto_rx_MD', 'unitConversion2269', 'L_Secondaries_JR_Fthr_0016Bend02_Bnd_parentConstraint1', 'L_Scapulars_JR_Spread_In_Root_Grp', 'unitConversion1153', 'L_Secondaries_JR_Fthr_0014_Bnd_parentConstraint1', 'L_Secondaries_JR_Fthr_0015_Indiv_Ctrl_tag', 'R_Scapulars_JR_Fthr_004Bend02_Bnd', 'R_Primaries_JR_Fthr_008Bend01_Indiv_Ctrl', 'L_Scapulars_JR_Spread_In_Auto_Grp', 'L_Secondaries_JR_Fthr_007_InAuto_ry_MD', 'L_Scapulars_JR_Fthr_0013Bend02', 'unitConversion955', 'unitConversion1923', 'R_Secondaries_JR_12_Ctrl', 'L_Scapulars_JR_Fthr_002Bend01_Indiv_Ctrl_tag', 'unitConversion1574', 'R_Primaries_JR_Fthr_003_SpreadAuto_Root', 'unitConversion2207', 'R_Scapulars_JR_Fthr_004Bend01', 'unitConversion2450', 'unitConversion195', 'L_Secondaries_JR_Fthr_0010Bend03', 'L_Scapulars_JR_Fthr_002Bend02_Indiv_Ctrl_Offset_Grp', 'unitConversion689', 'unitConversion2538', 'unitConversion2004', 'L_Scapulars_JR_Fthr_0011Bend02_Bnd_parentConstraint1', 'unitConversion2592', 'unitConversion1515', 'R_Secondaries_JR_Fthr_0012Bend01_Indiv_Ctrl', 'unitConversion1370', 'unitConversion848', 'unitConversion49', 'L_Scapulars_JR_Fthr_006_BendJnt2', 'R_Primaries_JR_Fthr_000Bend01_Indiv_Ctrl', 'R_Scapulars_JR_Fthr_002Bend01_Bnd_parentConstraint1', 'unitConversion1134', 'unitConversion2061', 'unitConversion20', 'unitConversion857', 'L_Scapulars_JR_Fthr_0013Bend03_Indiv_CtrlShape', 'R_Secondaries_JR_Fthr_0014Bend01', 'unitConversion692', 'R_Scapulars_JR_Fthr_007_SpreadAuto_Root', 'L_Secondaries_JR_Fthr_0011Bend03_Indiv_CtrlShape', 'R_Secondaries_JR_Fthr_0015Bend01_Bnd', 'unitConversion1525', 'unitConversion644', 'unitConversion1076', 'L_Scapulars_JR_Fthr_003_OutAuto_rx_MD1', 'L_Secondaries_JR_Fthr_004Bend03_Indiv_Ctrl_tag', 'unitConversion2083', 'L_Secondaries_JR_Fthr_006Bend03_Bnd', 'L_Secondaries_JR_15_CtrlShape', 'L_Scapulars_JR_Fthr_004_SpreadAuto_Root_orientConstraint1', 'L_Scapulars_JR_Wing_009_parentConstraint1', 'R_Primaries_JR_Fthr_003_Indiv_Ctrl', 'L_Scapulars_JR_Fthr_005_RootJnt', 'R_Secondaries_JR_Fthr_000_Ctrl_Auto_Grp', 'R_Secondaries_JR_Fthr_0010Bend03_Indiv_Ctrl_tag', 'unitConversion732', 'unitConversion1257', 'L_Secondaries_JR_Fthr_006Bend03_Indiv_Ctrl', 'L_Secondaries_JR_Wing_006_Bnd_parentConstraint1', 'R_Secondaries_JR_Fthr_0015_Ctrl', 'L_Secondaries_JR_Fthr_000_In_rx_MD', 'R_Secondaries_JR_Fthr_006_CtrlShape', 'unitConversion2098', 'unitConversion2145', 'R_Scapulars_JR_Fthr_000_BendJnt2', 'unitConversion628', 'R_Primaries_JR_Fthr_003_Indiv_CtrlShape', 'unitConversion1990', 'unitConversion443', 'R_Primaries_JR_Fthr_007Bend01_Indiv_CtrlShape', 'unitConversion1372', 'L_Secondaries_JR_Fthr_004_OutAuto_ry_MD', 'R_Secondaries_JR_Fthr_0010_Ctrl_Auto_Grp', 'unitConversion508', 'L_Primaries_JR_Fthr_003Bend02_Indiv_Ctrl_tag', 'unitConversion2780', 'L_Secondaries_JR_Fthr_006_BendJnt3', 'unitConversion2520', 'R_Secondaries_JR_Fthr_0010Bend01_Indiv_Ctrl', 'unitConversion1102', 'unitConversion1998', 'unitConversion1973', 'skinCluster1', 'L_Primaries_JR_Fthr_007_CtrlShape', 'L_Primaries_JR_Fthr_003_Indiv_Ctrl', 'R_Scapulars_JR_Fthr_0012_Bnd', 'unitConversion2413', 'L_Scapulars_JR_Fthr_006Bend03_Indiv_Ctrl_Offset_Grp', 'R_Scapulars_JR_Fthr_0014Bend01_Indiv_Ctrl', 'L_Scapulars_JR_Wing_007_Bnd', 'unitConversion1757', 'unitConversion121', 'L_Primaries_JR_Fthr_002_InAuto_rx_MD', 'R_Secondaries_JR_Fthr_0012_BendJnt2', 'L_Secondaries_JR_Fthr_0016Bend01_Indiv_CtrlShape', 'R_Secondaries_JR_Fthr_009_SpreadAuto_Auto', 'R_Secondaries_JR_Fthr_009Bend02_Indiv_Ctrl_Offset_Grp', 'R_Secondaries_JR_Fthr_008Bend02_Indiv_CtrlShape', 'unitConversion700', 'unitConversion2090', 'unitConversion2604', 'unitConversion1558', 'R_Secondaries_JR_Fthr_001Bend02', 'R_Scapulars_JR_Fthr_003_Indiv_Ctrl', 'L_Secondaries_JR_Fthr_0011_InAuto_ry_MD', 'R_Scapulars_JR_Fthr_0012Bend02_Bnd_parentConstraint1', 'unitConversion2048', 'L_Scapulars_JR_Fthr_002_Bnd_parentConstraint1', 'L_Primaries_JR_Fthr_007_In_rx_MD1', 'unitConversion301', 'R_Secondaries_JR_Fthr_003Bend03_Bnd_parentConstraint1', 'L_Secondaries_JR_Fthr_0017_Ctrl', 'L_Secondaries_JR_Fthr_0014_OutAuto_rx_MD1', 'unitConversion1182', 'R_Clavicle_CtrlShape', 'unitConversion624', 'L_Secondaries_JR_Fthr_002_Bnd_parentConstraint1', 'R_Secondaries_JR_Fthr_009Bend01_Indiv_CtrlShape', 'unitConversion308', 'R_Scapulars_JR_Fthr_004Bend03_Indiv_Ctrl_Offset_Grp', 'L_Scapulars_JR_Fthr_004_InAuto_rx_MD', 'unitConversion1882', 'L_Scapulars_JR_Fthr_009Bend03_Bnd_parentConstraint1', 'unitConversion1692', 'unitConversion1965', 'unitConversion109', 'L_Secondaries_JR_Fthr_0014_AutoJnt', 'L_Scapulars_JR_Fthr_008_In_rx_MD1', 'unitConversion927', 'unitConversion2627', 'unitConversion219', 'R_Primaries_JR_Fthr_007_Indiv_Ctrl_tag', 'unitConversion1230', 'L_Secondaries_JR_0_Ctrl', 'R_Scapulars_JR_Fthr_004_BendJnt1', 'R_Secondaries_JR_Wing_003_Bnd_parentConstraint1', 'unitConversion695', 'unitConversion806', 'L_Scapulars_JR_12_Ctrl', 'R_Primaries_JR_Fthr_002Bend01_Indiv_CtrlShape', 'L_Primaries_JR_Fthr_006Bend02_Indiv_CtrlShape', 'R_Primaries_JR_Fthr_006_RootJnt', 'unitConversion186', 'L_Scapulars_JR_Fthr_005_Bnd_parentConstraint1', 'L_Primaries_JR_Fthr_008Bend02_Indiv_CtrlShape', 'L_Scapulars_JR_Fthr_0013_Ctrl_Auto_Grp', 'L_Secondaries_JR_Fthr_0011_Indiv_Ctrl', 'R_Scapulars_JR_Fthr_001Bend01_Bnd', 'R_Primaries_JR_Fthr_007Bend02_Bnd', 'unitConversion1223', 'R_Scapulars_JR_Fthr_005Bend03_Indiv_Ctrl_Offset_Grp', 'unitConversion2105', 'L_Secondaries_JR_5_CtrlShape', 'R_Scapulars_JR_Fthr_004_SpreadAuto', 'unitConversion299', 'L_Primaries_JR_Fthr_001Bend03_Bnd_parentConstraint1', 'unitConversion235', 'L_Secondaries_JR_Fthr_0010Bend03_Bnd_parentConstraint1', 'L_Primaries_JR_Fthr_003_InAuto_ry_MD', 'R_Scapulars_JR_Fthr_000_Ctrl_Auto_Grp', 'L_Primaries_JR_Fthr_006_InAuto_ry_MD', 'L_Primaries_JR_Fthr_008_OutAuto_ry_MD', 'unitConversion88', 'unitConversion1133', 'R_Primaries_JR_Fthr_005_BendJnt1', 'unitConversion1770', 'unitConversion2669', 'unitConversion1552', 'unitConversion2749', 'L_Secondaries_JR_Fthr_003_In_rx_MD', 'L_Secondaries_JR_Fthr_005_SpreadAuto', 'unitConversion143', 'unitConversion1014', 'R_Secondaries_JR_Wing_0010_parentConstraint1', 'R_Secondaries_JR_14_Ctrl', 'L_Secondaries_JR_Fthr_004Bend01_Indiv_Ctrl', 'unitConversion1874', 'unitConversion1825', 'unitConversion1325', 'R_Secondaries_JR_Fthr_0015Bend03_Bnd', 'L_Scapulars_JR_Fthr_0013Bend01_Bnd', 'unitConversion2786', 'L_Secondaries_JR_Wing_007_Bnd', 'unitConversion826', 'unitConversion98', 'L_Scapulars_JR_Fthr_000_OutAuto_ry_MD', 'R_Secondaries_JR_Fthr_002_Indiv_CtrlShape', 'unitConversion2717', 'unitConversion1397', 'R_Scapulars_JR_Fthr_006Bend02_Bnd_parentConstraint1', 'L_Scapulars_JR_3_Ctrl', 'unitConversion853', 'L_Scapulars_JR_Fthr_003_Out_rx_MD', 'unitConversion514', 'unitConversion2355', 'unitConversion1450', 'R_Primaries_JR_Fthr_001Bend01_Indiv_CtrlShape', 'R_Primaries_JR_Fthr_000', 'unitConversion2507', 'L_Scapulars_JR_Wing_001_parentConstraint1', 'L_Primaries_JR_Fthr_008_OutAuto_rx_MD', 'unitConversion1903', 'R_Scapulars_JR_Fthr_008Bend03_Indiv_Ctrl_Offset_Grp', 'unitConversion792', 'R_Secondaries_JR_Fthr_008_BendJnt3', 'L_Secondaries_JR_Fthr_0015Bend01_Indiv_Ctrl', 'R_Scapulars_JR_Fthr_0011_RootJnt', 'unitConversion1441', 'unitConversion1733', 'L_Scapulars_JR_Fthr_002Bend01_Indiv_Ctrl_Offset_Grp', 'unitConversion869', 'L_Primaries_JR_Fthr_000', 'R_Scapulars_JR_Fthr_009Bend01_Bnd_parentConstraint1', 'R_Primaries_JR_Fthr_006_Bnd', 'R_Secondaries_JR_Fthr_006_Indiv_CtrlShape', 'L_Secondaries_JR_Fthr_008_In_rx_MD1', 'R_Primaries_JR_Fthr_008Bend02_Indiv_Ctrl_tag', 'unitConversion2530', 'L_Secondaries_JR_Fthr_0013_Out_rx_MD1', 'L_Secondaries_JR_Fthr_0015_Indiv_Ctrl_Offset_Grp', 'unitConversion1732', 'L_Secondaries_JR_Fthr_0016_InAuto_ry_MD', 'R_Scapulars_JR_Fthr_004Bend02_Indiv_CtrlShape', 'R_Scapulars_JR_Spread_In_CtrlShape', 'L_Secondaries_JR_FeathersPlaneShapeOrig', 'unitConversion138', 'unitConversion2357', 'L_Scapulars_JR_6_Ctrl', 'L_Secondaries_JR_Fthr_0015_OutAuto_ry_MD1', 'unitConversion1968', 'unitConversion1384', 'L_Scapulars_JR_Fthr_0013_OutAuto_rx_MD', 'L_Scapulars_JR_Fthr_001Bend02_Bnd_parentConstraint1', 'L_Secondaries_JR_Fthr_008_Indiv_Ctrl_tag', 'unitConversion2041', 'R_Primaries_JR_Fthr_001_CtrlShape', 'R_Primaries_JR_Fthr_005_Indiv_Ctrl', 'unitConversion675', 'L_Scapulars_JR_Wing_0013_Bnd', 'L_Secondaries_JR_Fthr_0015_Out_ry_MD1', 'L_Secondaries_JR_Fthr_0015_SpreadCtrlGrp', 'unitConversion2194', 'L_Scapulars_JR_Fthr_008_Bnd', 'unitConversion1688', 'R_Scapulars_JR_Fthr_0013Bend03_Indiv_Ctrl_tag', 'R_Secondaries_JR_Fthr_003Bend03_Indiv_Ctrl_tag', 'unitConversion2428', 'R_Secondaries_JR_Fthr_006_SpreadAuto_Root', 'L_Scapulars_JR_Fthr_002_InAuto_ry_MD1', 'L_Secondaries_JR_Fthr_008_AutoJnt', 'unitConversion386', 'R_Secondaries_JR_Fthr_005_AutoJnt', 'unitConversion78', 'R_Primaries_JR_Fthr_003_Ctrl_Root_Grp', 'unitConversion1197', 'unitConversion2039', 'L_Scapulars_JR_Fthr_009Bend02_Indiv_Ctrl_Offset_Grp', 'R_Secondaries_JR_Fthr_003_Indiv_CtrlShape', 'unitConversion2112', 'L_Scapulars_JR_Fthr_005Bend03_Indiv_Ctrl', 'R_Secondaries_JR_Fthr_004_CtrlShape', 'R_Primaries_JR_Fthr_009Bend02_Bnd', 'unitConversion76', 'unitConversion150', 'unitConversion176', 'L_Scapulars_JR_Fthr_0011Bend01_Indiv_Ctrl', 'unitConversion431', 'unitConversion1540', 'unitConversion224', 'L_Scapulars_JR_Wing_000_Auto2', 'L_Secondaries_JR_8_CtrlL_Secondaries_JR_8_CC_AutoFold_Grp_Grp', 'L_Scapulars_JR_Fthr_007_OutAuto_rx_MD', 'L_Secondaries_JR_Fthr_006_Ctrl_Root_Grp', 'unitConversion1858', 'L_Secondaries_JR_Fthr_0016_OutAuto_ry_MD', 'L_Primaries_JR_Fthr_005Bend01_Indiv_Ctrl_Offset_Grp', 'L_Primaries_JR_Fthr_001_Out_ry_MD', 'L_Scapulars_JR_Fthr_0013_Ctrl_Root_Grp', 'unitConversion882', 'R_Scapulars_JR_Fthr_003Bend01_Indiv_Ctrl', 'L_Primaries_JR_Fthr_005Bend01_Bnd_parentConstraint1', 'unitConversion71', 'L_Secondaries_JR_Fthr_0015Bend01_Bnd_parentConstraint1', 'L_Scapulars_JR_Spread_Out_Root_Grp', 'R_Scapulars_JR_8_CtrlShape', 'R_Scapulars_JR_Fthr_003_Indiv_Ctrl_Offset_Grp', 'L_Secondaries_JR_Wing_007_Bnd_parentConstraint1', 'L_Secondaries_JR_Fthr_009_Indiv_CtrlShape', 'unitConversion456', 'L_Primaries_JR_Fthr_000_OutAuto_ry_MD1', 'unitConversion2670', 'R_Secondaries_JR_Fthr_002Bend02_Indiv_Ctrl_Offset_Grp', 'unitConversion1531', 'R_Secondaries_JR_Fthr_000Bend01_Indiv_Ctrl', 'unitConversion2376', 'R_Scapulars_JR_Fthr_0013_SpreadAuto_Root_orientConstraint1', 'R_Secondaries_JR_Fthr_0017_Ctrl', 'L_Scapulars_JR_Fthr_006_OutAuto_ry_MD1', 'unitConversion694', 'L_Primaries_JR_Fthr_008Bend03_Bnd_parentConstraint1', 'R_Scapulars_JR_1_CtrlL_Scapulars_JR_1_CC_AutoFold_Grp_Grp', 'L_Scapulars_JR_Fthr_006Bend01_Indiv_Ctrl_Offset_Grp', 'unitConversion381', 'unitConversion1826', 'unitConversion1983', 'unitConversion974', 'L_Primaries_JR_Fthr_009_In_rx_MD1', 'L_Primaries_JR_Fthr_006_Out_rx_MD', 'L_Scapulars_JR_Fthr_0010_Ctrl_Root_Grp', 'R_Secondaries_JR_Fthr_007Bend03_Bnd', 'unitConversion1430', 'unitConversion1633', 'unitConversion111', 'L_Primaries_JR_Fthr_007_Indiv_CtrlShape', 'L_Primaries_JR_Fthr_006Bend01_Indiv_Ctrl_tag', 'unitConversion1189', 'unitConversion102', 'unitConversion903', 'unitConversion1667', 'unitConversion2074', 'L_Secondaries_JR_Fthr_008Bend01_Indiv_Ctrl', 'R_Primaries_JR_Fthr_000_Indiv_Ctrl_Offset_Grp', 'unitConversion991', 'unitConversion960', 'R_Scapulars_JR_Wing_008_Bnd', 'L_Primaries_JR_Fthr_009_Indiv_Ctrl_tag', 'L_Secondaries_JR_Fthr_002_In_ry_MD1', 'unitConversion871', 'L_Secondaries_JR_Fthr_006_Indiv_Ctrl_tag', 'unitConversion2787', 'unitConversion1522', 'L_Secondaries_JR_14_CtrlShape', 'L_Primaries_JR_Fthr_006_In_ry_MD', 'unitConversion1439', 'unitConversion1152', 'L_Scapulars_JR_Fthr_009_SpreadAuto_Root', 'unitConversion214', 'R_Scapulars_JR_Fthr_0010Bend01', 'L_Secondaries_JR_Fthr_0011Bend03_Indiv_Ctrl', 'unitConversion888', 'R_Scapulars_JR_Fthr_006Bend03', 'L_Scapulars_JR_1_Ctrl', 'L_Primaries_JR_Fthr_000_AutoJnt', 'R_Secondaries_JR_Fthr_0017Bend02_Indiv_Ctrl', 'unitConversion1809', 'R_Secondaries_JR_Fthr_0016_Ctrl_Auto_Grp', 'L_Scapulars_JR_Fthr_007_SpreadAuto_Root', 'R_Scapulars_JR_Fthr_005_CtrlShape', 'unitConversion1216', 'R_Secondaries_JR_Fthr_008Bend01', 'unitConversion1855', 'L_Secondaries_JR_Fthr_003Bend01_Indiv_CtrlShape', 'bindPose4', 'unitConversion2445', 'L_Primaries_JR_Fthr_004Bend02_Bnd', 'L_Secondaries_JR_Fthr_0017Bend02_Indiv_Ctrl_tag', 'R_Secondaries_JR_Fthr_007Bend01_Indiv_CtrlShape', 'L_Secondaries_JR_Fthr_003_Out_ry_MD', 'L_Scapulars_JR_Fthr_008_BendJnt3', 'unitConversion290', 'R_Scapulars_JR_Fthr_0013Bend02_Bnd', 'unitConversion374', 'L_Primaries_JR_Fthr_002Bend03_Indiv_CtrlShape', 'R_Scapulars_JR_Fthr_008Bend01_Indiv_CtrlShape', 'unitConversion30', 'R_Secondaries_JR_Fthr_008Bend03_Indiv_Ctrl', 'unitConversion412', 'R_Secondaries_JR_Fthr_0013Bend03_Indiv_CtrlShape', 'unitConversion556', 'R_Secondaries_JR_Fthr_0010Bend01_Indiv_Ctrl_tag', 'unitConversion1343', 'unitConversion1460', 'unitConversion2501', 'R_Secondaries_JR_Fthr_0015', 'R_Scapulars_JR_Fthr_0013_Ctrl', 'L_Scapulars_JR_Fthr_006_AutoJnt', 'L_Secondaries_JR_Fthr_0017_OutAuto_ry_MD', 'unitConversion2542', 'L_Secondaries_JR_Fthr_002Bend02_Indiv_Ctrl_tag', 'L_Secondaries_JR_Fthr_005Bend02_Bnd', 'R_Secondaries_JR_Wing_0010_Bnd', 'L_Primaries_JR_Fthr_000_Ctrl_Auto_Grp', 'unitConversion1359', 'L_Scapulars_JR_Fthr_0012_SpreadAuto_Root_orientConstraint1', 'R_Scapulars_JR_Fthr_0012Bend01_Indiv_CtrlShape', 'L_Scapulars_JR_Fthr_0012_SpreadAuto', 'R_Scapulars_JR_Fthr_0013', 'R_Scapulars_JR_Fthr_003Bend01_Indiv_Ctrl_tag', 'R_Secondaries_JR_Fthr_0011Bend02_Indiv_Ctrl', 'R_Secondaries_JR_Fthr_0010Bend03_Bnd_parentConstraint1', 'L_Secondaries_JR_Fthr_009_InAuto_rx_MD1', 'R_Primaries_JR_Fthr_007_BendJnt1', 'Primaries_Bnd_Grp', 'L_Secondaries_JR_Fthr_006Bend01_Bnd', 'R_Secondaries_JR_Fthr_008_BendJnt1', 'unitConversion179', 'L_Scapulars_JR_Fthr_003_Out_ry_MD', 'unitConversion1297', 'L_Wing_CC_Root', 'L_Scapulars_JR_Fthr_001_Indiv_CtrlShape', 'L_Scapulars_JR_Fthr_0014_OutAuto_rx_MD1', 'unitConversion785', 'L_Scapulars_JR_Fthr_001Bend02_Indiv_Ctrl_tag', 'R_Scapulars_JR_Fthr_0013_Ctrl_Auto_Grp', 'L_Secondaries_JR_12_Ctrl', 'L_Secondaries_JR_Fthr_002_InAuto_ry_MD1', 'unitConversion2475', 'L_Secondaries_JR_Fthr_0012Bend01_Indiv_Ctrl', 'L_Scapulars_JR_Wing_005_parentConstraint1', 'L_Scapulars_JR_Fthr_006Bend01_Indiv_Ctrl', 'R_Secondaries_JR_Bend_CC_Auto_Grp', 'unitConversion303', 'unitConversion1034', 'L_Scapulars_JR_Fthr_0012_Ctrl_Auto_Grp', 'L_Secondaries_JR_13_CtrlShape', 'unitConversion1894', 'L_Secondaries_JR_Fthr_008_InAuto_ry_MD', 'unitConversion2546', 'unitConversion2757', 'R_Secondaries_JR_3_CtrlL_Secondaries_JR_3_CC_AutoFold_Grp_Grp', 'L_Secondaries_JR_Fthr_003_SpreadCtrlGrp', 'skinCluster4', 'unitConversion535', 'L_Secondaries_JR_Fthr_007_InAuto_rx_MD', 'unitConversion840', 'L_Secondaries_JR_Fthr_002_In_rx_MD1', 'L_Secondaries_JR_Fthr_0014Bend01', 'L_Primaries_JR_Fthr_004_InAuto_rx_MD1', 'R_Secondaries_JR_Fthr_0013_Indiv_Ctrl_Offset_Grp', 'unitConversion1592', 'unitConversion89', 'L_Scapulars_JR_Fthr_0014_BendJnt3', 'R_Primaries_JR_Bend_CC_Auto_Grp', 'L_Secondaries_JR_Spread_Out_Ctrl', 'L_Secondaries_JR_Fthr_006_OutAuto_rx_MD', 'R_Secondaries_JR_Wing_003_Bnd', 'unitConversion745', 'R_Scapulars_JR_Fthr_0013_SpreadAuto_Auto', 'unitConversion2493', 'L_Scapulars_JR_Fthr_0014_Indiv_CtrlShape', 'L_Scapulars_JR_Fthr_005_In_ry_MD', 'L_Primaries_JR_Fthr_002Bend01_Indiv_CtrlShape', 'unitConversion1715', 'unitConversion699', 'L_Primaries_JR_Fthr_006Bend03_Bnd_parentConstraint1', 'unitConversion1846', 'L_Scapulars_JR_Fthr_0014_InAuto_rx_MD1', 'R_GlobalLoc', 'L_Scapulars_JR_Fthr_0010_SpreadAuto_Root_orientConstraint1', 'R_Primaries_JR_Fthr_009_RootJnt', 'L_Primaries_JR_Fthr_000Bend01_Indiv_CtrlShape', 'unitConversion584', 'R_Scapulars_JR_Fthr_001_Bnd', 'L_Scapulars_JR_Fthr_004_Out_rx_MD', 'L_Secondaries_JR_Fthr_003_Indiv_Ctrl_Offset_Grp', 'L_Primaries_JR_Fthr_001Bend02_Indiv_Ctrl', 'L_Secondaries_JR_Fthr_0014_In_ry_MD1', 'R_Secondaries_JR_Fthr_0012_SpreadCtrlGrp', 'L_Secondaries_JR_Bend_CC_Auto_Grp', 'R_Primaries_JR_Fthr_003_Ctrl_Auto_Grp', 'unitConversion1710', 'L_Scapulars_JR_Fthr_0013_In_ry_MD', 'unitConversion616', 'unitConversion568', 'unitConversion2630', 'L_Scapulars_JR_Fthr_008_Ctrl_Root_Grp', 'unitConversion2367', 'L_Scapulars_JR_Fthr_006Bend01', 'L_Secondaries_JR_Wing_000_Ctrl_Auto_Grp', 'L_Scapulars_JR_Fthr_008_Indiv_Ctrl', 'unitConversion515', 'L_Secondaries_JR_Fthr_002_SpreadAuto', 'R_Scapulars_JR_Fthr_0013Bend01_Indiv_Ctrl', 'R_Secondaries_JR_Wing_007_parentConstraint1', 'unitConversion2456', 'R_Primaries_JR_Fthr_006_SpreadCtrlGrp', 'L_Scapulars_JR_Fthr_0011Bend03_Indiv_Ctrl_tag', 'unitConversion336', 'R_Scapulars_JR_Fthr_003Bend01_Bnd_parentConstraint1', 'L_Secondaries_JR_Fthr_007_InAuto_ry_MD1', 'unitConversion2063', 'L_Scapulars_JR_Fthr_0010Bend01_Indiv_Ctrl_tag', 'R_Scapulars_JR_Fthr_006_Indiv_Ctrl_tag', 'L_Scapulars_JR_Fthr_008_Bnd_parentConstraint1', 'L_Secondaries_JR_Fthr_009_OutAuto_ry_MD1', 'L_Secondaries_JR_Fthr_009_Indiv_Ctrl_Offset_Grp', 'R_Secondaries_JR_Fthr_003Bend02_Indiv_Ctrl', 'unitConversion2353', 'unitConversion709', 'L_Primaries_JR_Fthr_004_BendJnt1', 'unitConversion1000', 'L_Scapulars_JR_Fthr_0011Bend03_Indiv_Ctrl_Offset_Grp', 'R_Scapulars_JR_0_CtrlShape', 'unitConversion1196', 'unitConversion2756', 'L_Primaries_JR_6_CtrlL_Primaries_JR_6_CC_AutoFold_Grp_Grp', 'R_Secondaries_JR_Fthr_000Bend03_Indiv_Ctrl_Offset_Grp', 'R_Scapulars_JR_Fthr_0012Bend01_Indiv_Ctrl', 'L_Secondaries_JR_Fthr_0015_AutoJnt', 'unitConversion1481', 'R_Primaries_JR_Fthr_007_SpreadAuto_Root', 'R_Secondaries_JR_Spread_In_Auto_Grp', 'unitConversion1129', 'unitConversion496', 'R_Secondaries_JR_Fthr_0014_SpreadAuto_Auto', 'unitConversion1937', 'unitConversion1373', 'L_Scapulars_JR_Fthr_008Bend03_Bnd_parentConstraint1', 'R_Primaries_JR_Fthr_001_Bnd', 'L_Secondaries_JR_Fthr_008_Indiv_Ctrl_Offset_Grp', 'unitConversion2148', 'unitConversion852', 'L_Secondaries_JR_Fthr_0011_SpreadAuto', 'unitConversion1697', 'L_Scapulars_JR_Fthr_006_InAuto_ry_MD1', 'L_Primaries_JR_Fthr_000_SpreadAuto_Root', 'unitConversion1332', 'R_Primaries_JR_Fthr_002Bend02_Indiv_Ctrl', 'R_Scapulars_JR_Fthr_003_AutoJnt', 'unitConversion2287', 'unitConversion1528', 'R_Secondaries_JR_Fthr_0014Bend02_Indiv_Ctrl_tag', 'L_Secondaries_JR_Fthr_009_SpreadAuto', 'L_Primaries_JR_Fthr_002Bend02_Bnd', 'L_Secondaries_JR_Fthr_0010Bend01_Indiv_Ctrl_Offset_Grp', 'R_Scapulars_JR_Fthr_002Bend02_Indiv_CtrlShape', 'unitConversion1613', 'unitConversion2187', 'unitConversion1050', 'L_Secondaries_JR_Fthr_001_Out_ry_MD1', 'L_Secondaries_JR_Fthr_004Bend03_Indiv_Ctrl', 'unitConversion1315', 'R_Scapulars_JR_Wing_006', 'unitConversion1404', 'R_Primaries_JR_1_Ctrl', 'unitConversion1385', 'L_Primaries_JR_Fthr_003_SpreadAuto_Auto', 'R_Secondaries_JR_Wing_004_Bnd_parentConstraint1', 'R_Scapulars_JR_Fthr_009Bend02_Indiv_Ctrl', 'unitConversion2666', 'unitConversion411', 'L_Primaries_JR_Fthr_008_SpreadAuto', 'unitConversion2482', 'unitConversion2270', 'R_Secondaries_JR_Fthr_0016Bend03_Indiv_Ctrl', 'R_Primaries_JR_Fthr_003Bend02_Indiv_Ctrl_Offset_Grp', 'unitConversion1664', 'L_Secondaries_JR_Fthr_0010_RootJnt', 'L_Secondaries_JR_Wing_005_parentConstraint1', 'L_Scapulars_JR_Fthr_007Bend01_Indiv_Ctrl', 'L_Primaries_JR_3_CtrlShape', 'L_Secondaries_JR_Fthr_004Bend02', 'unitConversion979', 'L_Secondaries_JR_Fthr_004_Bnd_parentConstraint1', 'L_Scapulars_JR_Fthr_0011Bend02_Indiv_Ctrl', 'L_Scapulars_JR_Fthr_009_Indiv_CtrlShape', 'unitConversion551', 'R_Primaries_JR_Fthr_007_RootJnt', 'L_Secondaries_JR_6_Ctrl', 'unitConversion2304', 'unitConversion2240', 'L_Scapulars_JR_Fthr_0013Bend03_Indiv_Ctrl_Offset_Grp', 'unitConversion2233', 'unitConversion2681', 'unitConversion2173', 'unitConversion184', 'L_Primaries_JR_Fthr_008_In_rx_MD', 'R_Primaries_JR_Fthr_006Bend02_Indiv_CtrlShape', 'R_Secondaries_JR_Wing_0012', 'R_Secondaries_JR_Fthr_0015_BendJnt1', 'L_Primaries_JR_6_Ctrl', 'unitConversion1741', 'L_Primaries_JR_7_CtrlL_Primaries_JR_7_CC_AutoFold_Grp_Grp', 'unitConversion2323', 'R_End_JR', 'L_Primaries_JR_Fthr_005_In_rx_MD1', 'R_Primaries_JR_Fthr_001_SpreadAuto', 'unitConversion2773', 'R_Primaries_JR_Fthr_006_Indiv_Ctrl_tag', 'unitConversion2772', 'R_Scapulars_JR_Fthr_005Bend02_Indiv_Ctrl_tag', 'R_Scapulars_JR_Fthr_005Bend02', 'unitConversion1520', 'unitConversion1449', 'L_Scapulars_JR_Fthr_005_OutAuto_rx_MD1', 'L_Secondaries_JR_Fthr_0014Bend02_Bnd_parentConstraint1', 'L_Primaries_JR_Wing_000_Ctrl_Auto_Grp', 'L_Scapulars_JR_Fthr_0010_SpreadAuto', 'R_Secondaries_JR_Fthr_005_BendJnt2', 'unitConversion2142', 'unitConversion1005', 'unitConversion566', 'L_Scapulars_JR_Fthr_001_SpreadCtrlGrp', 'L_Scapulars_JR_Fthr_000_Indiv_Ctrl', 'L_Primaries_JR_Fthr_001Bend03_Bnd', 'R_Secondaries_JR_Fthr_008Bend01_Indiv_Ctrl', 'L_Primaries_JR_Fthr_000_Indiv_Ctrl', 'L_Secondaries_JR_16_Ctrl', 'unitConversion989', 'L_Scapulars_JR_Fthr_004_SpreadAuto_Root', 'R_Secondaries_JR_Fthr_0016_SpreadAuto', 'R_Secondaries_JR_Fthr_003Bend03_Indiv_CtrlShape', 'L_Scapulars_JR_Fthr_002_SpreadAuto_Root', 'L_Scapulars_JR_Fthr_009Bend02_Bnd_parentConstraint1', 'L_Primaries_JR_Fthr_009_In_ry_MD', 'L_Secondaries_JR_Fthr_007_BendJnt1', 'L_Secondaries_JR_Fthr_007Bend03_Indiv_CtrlShape', 'R_Primaries_JR_Fthr_003Bend02', 'L_Primaries_JR_Fthr_000Bend03_Indiv_Ctrl_tag', 'L_Secondaries_JR_Fthr_0013_OutAuto_ry_MD1', 'R_Secondaries_JR_Fthr_006Bend03_Bnd_parentConstraint1', 'L_Scapulars_JR_Fthr_006Bend01_Indiv_Ctrl_tag', 'L_Primaries_JR_Fthr_008_Indiv_Ctrl', 'L_Scapulars_JR_Fthr_0012_Indiv_Ctrl_tag', 'L_Primaries_JR_Spread_Out_Ctrl', 'R_Wing_AutoRig_Mirror_GRP', 'unitConversion1501', 'L_Secondaries_JR_Wing_0012_parentConstraint1', 'L_Secondaries_JR_Fthr_0017Bend03_Indiv_CtrlShape', 'unitConversion2614', 'unitConversion1420', 'unitConversion2685', 'L_Primaries_JR_Fthr_002_Out_rx_MD1', 'unitConversion2394', 'R_Primaries_JR_Fthr_008_Bnd', 'R_Primaries_JR_Fthr_001', 'L_Secondaries_JR_Fthr_0016_InAuto_rx_MD', 'R_Secondaries_JR_Fthr_007_SpreadCtrlGrp', 'L_Secondaries_JR_Fthr_001_InAuto_ry_MD', 'unitConversion101', 'R_Secondaries_JR_Fthr_0016Bend03_Indiv_Ctrl_tag', 'unitConversion831', 'R_Scapulars_JR_Bend_Ctrl', 'R_Secondaries_JR_Wing_001_Bnd', 'L_Secondaries_JR_Wing_000', 'unitConversion589', 'unitConversion780', 'unitConversion763', 'unitConversion2115', 'unitConversion1010', 'L_Scapulars_JR_Fthr_0011_In_ry_MD', 'L_Scapulars_JR_Fthr_009_Bnd', 'unitConversion2326', 'L_Scapulars_JR_Fthr_009Bend01_Indiv_Ctrl', 'L_Secondaries_JR_Fthr_000Bend03_Indiv_Ctrl_tag', 'R_Secondaries_JR_Fthr_006Bend02_Indiv_Ctrl_Offset_Grp', 'L_Primaries_JR_Fthr_006_Indiv_Ctrl', 'unitConversion2673', 'R_Scapulars_JR_Fthr_003Bend03_Indiv_Ctrl', 'unitConversion1192', 'R_Primaries_JR_Wing_006_Bnd_parentConstraint1', 'L_Primaries_JR_Wing_003', 'unitConversion2410', 'unitConversion1492', 'L_Primaries_JR_Fthr_004Bend02_Indiv_Ctrl', 'L_Secondaries_JR_Wing_0012_Bnd', 'L_Secondaries_JR_Fthr_0014_InAuto_ry_MD1', 'unitConversion1258', 'L_Primaries_JR_Fthr_001_InAuto_rx_MD1', 'L_Scapulars_JR_Spread_In_Ctrl', 'L_Secondaries_JR_Fthr_008Bend01_Indiv_Ctrl_tag', 'unitConversion2246', 'R_Secondaries_JR_Fthr_005Bend03_Bnd_parentConstraint1', 'L_Secondaries_JR_Fthr_0012_InAuto_rx_MD', 'unitConversion31', 'R_Secondaries_JR_Fthr_007Bend03_Indiv_CtrlShape', 'R_Secondaries_JR_Fthr_0011Bend02_Indiv_Ctrl_Offset_Grp', 'L_Secondaries_JR_Fthr_0012_AutoJnt', 'unitConversion1748', 'L_Secondaries_JR_Fthr_004Bend01_Indiv_Ctrl_tag', 'R_Primaries_JR_Fthr_007_Ctrl_Root_Grp', 'unitConversion1790', 'unitConversion636', 'L_Primaries_JR_Fthr_001_In_rx_MD', 'R_Scapulars_JR_Fthr_006_Indiv_Ctrl_Offset_Grp', 'unitConversion2133', 'R_Scapulars_JR_Fthr_008Bend01_Bnd_parentConstraint1', 'L_Scapulars_JR_Fthr_000_InAuto_ry_MD1', 'unitConversion657', 'L_Primaries_JR_Fthr_001Bend03_Indiv_Ctrl_tag', 'R_Scapulars_JR_Fthr_009Bend01_Indiv_CtrlShape', 'L_Scapulars_JR_Fthr_006_CtrlShape', 'L_Scapulars_JR_Fthr_004Bend03_Indiv_Ctrl_Offset_Grp', 'L_Secondaries_JR_Fthr_008_InAuto_rx_MD1', 'L_Secondaries_JR_Fthr_004Bend01_Indiv_Ctrl_Offset_Grp', 'unitConversion2154', 'L_Primaries_JR_Fthr_000_SpreadAuto_Auto', 'R_Secondaries_JR_Fthr_0017_Ctrl_Root_Grp', 'L_Scapulars_JR_Fthr_001_OutAuto_ry_MD', 'L_Secondaries_JR_5_CtrlL_Secondaries_JR_5_CC_AutoFold_Grp_Grp', 'R_Secondaries_JR_Fthr_0012Bend01_Indiv_Ctrl_tag', 'R_Secondaries_JR_8_Ctrl', 'L_Secondaries_JR_Fthr_000Bend02_Bnd', 'R_Primaries_JR_Fthr_004_RootJnt', 'unitConversion52', 'unitConversion2762', 'unitConversion1067', 'L_Scapulars_JR_Fthr_004_CtrlShape', 'R_Secondaries_JR_Fthr_000_Bnd_parentConstraint1', 'unitConversion2783', 'R_Primaries_JR_Fthr_000Bend02_Indiv_Ctrl_tag', 'L_Primaries_JR_Fthr_002Bend01_Indiv_Ctrl_tag', 'R_Primaries_JR_Fthr_001Bend02_Bnd', 'R_Primaries_JR_Fthr_002Bend03_Indiv_Ctrl', 'L_Secondaries_JR_Fthr_004_SpreadCtrlGrp', 'R_Scapulars_JR_Fthr_0010_Indiv_Ctrl_tag', 'unitConversion2057', 'unitConversion2328', 'L_Primaries_JR_Fthr_006Bend03_Indiv_Ctrl', 'L_Secondaries_JR_Fthr_007_OutAuto_ry_MD', 'L_Primaries_JR_Fthr_000Bend01_Bnd_parentConstraint1', 'unitConversion1201', 'unitConversion1254', 'L_Secondaries_JR_Fthr_0016Bend01_Indiv_Ctrl', 'L_Secondaries_JR_Fthr_0015_Bnd_parentConstraint1', 'L_Primaries_JR_Fthr_001Bend02_Bnd', 'unitConversion1656', 'L_Scapulars_JR_Fthr_0012Bend01_Indiv_Ctrl_tag', 'unitConversion317', 'L_Scapulars_JR_Fthr_0013_BendJnt1', 'L_Primaries_JR_Fthr_006_SpreadAuto_Root', 'unitConversion2730', 'unitConversion2021', 'R_Primaries_JR_Fthr_002_Bnd_parentConstraint1', 'L_Scapulars_JR_Fthr_001_OutAuto_ry_MD1', 'L_Secondaries_JR_Fthr_0015_InAuto_rx_MD1', 'unitConversion1725', 'unitConversion777', 'unitConversion306', 'R_Scapulars_JR_Fthr_007_Bnd', 'R_Scapulars_JR_Fthr_001Bend02_Indiv_Ctrl_tag', 'unitConversion1639', 'L_Primaries_JR_Fthr_003Bend01_Indiv_Ctrl', 'unitConversion560', 'L_Primaries_JR_Fthr_004_Indiv_Ctrl_tag', 'L_Primaries_JR_Fthr_005Bend03_Indiv_Ctrl_Offset_Grp', 'unitConversion2264', 'R_Secondaries_JR_Fthr_000_AutoJnt', 'unitConversion2134', 'L_Scapulars_JR_Fthr_008Bend03_Bnd', 'R_Secondaries_JR_Wing_0015_Bnd_parentConstraint1', 'unitConversion1381', 'L_Primaries_JR_Fthr_007Bend01_Bnd', 'R_Scapulars_JR_Wing_006_Bnd', 'unitConversion1443', 'unitConversion2093', 'L_Scapulars_JR_Fthr_0011_In_rx_MD1', 'L_Secondaries_JR_Fthr_004_SpreadAuto', 'unitConversion449', 'R_Secondaries_JR_4_CtrlL_Secondaries_JR_4_CC_AutoFold_Grp_Grp', 'L_Scapulars_JR_Fthr_005Bend03_Bnd_parentConstraint1', 'unitConversion1951', 'unitConversion379', 'L_Secondaries_JR_Fthr_0013_Indiv_Ctrl_Offset_Grp', 'unitConversion864', 'R_Secondaries_JR_8_CtrlShape', 'unitConversion1640', 'L_Secondaries_JR_Fthr_0011_RootJnt', 'R_Scapulars_JR_Fthr_003Bend03_Indiv_Ctrl_tag', 'L_Secondaries_JR_Fthr_0011Bend01_Indiv_CtrlShape', 'R_Primaries_JR_Fthr_009Bend03_Indiv_CtrlShape', 'L_Primaries_JR_Spread_In_Root_Grp', 'L_Scapulars_JR_Fthr_000_Out_ry_MD', 'unitConversion688', 'unitConversion1839', 'L_Scapulars_JR_Fthr_006_SpreadAuto', 'L_Scapulars_JR_Fthr_002_SpreadAuto_Auto', 'skinCluster2Set', 'R_Secondaries_JR_Fthr_0011Bend03_Indiv_Ctrl', 'L_Secondaries_JR_Fthr_0014_Ctrl_Auto_Grp', 'R_Scapulars_JR_Fthr_003_SpreadAuto_Root_orientConstraint1', 'L_Scapulars_JR_Fthr_0011Bend02_Bnd', 'R_Secondaries_JR_Fthr_0010_SpreadAuto', 'unitConversion575', 'L_Secondaries_JR_Fthr_0011Bend03', 'R_Primaries_JR_Fthr_003Bend01', 'unitConversion2401', 'R_Scapulars_JR_Fthr_007Bend03_Bnd', 'unitConversion1046', 'R_Primaries_JR_7_CtrlShape', 'unitConversion1307', 'unitConversion1185', 'unitConversion1920', 'L_Scapulars_JR_Fthr_005Bend01_Bnd_parentConstraint1', 'R_Scapulars_JR_Fthr_0013Bend02_Indiv_Ctrl_tag', 'unitConversion2015', 'R_Secondaries_JR_Fthr_009_SpreadAuto', 'L_Scapulars_JR_Fthr_008Bend01_Indiv_Ctrl_Offset_Grp', 'L_Secondaries_JR_Wing_0016_Bnd', 'unitConversion808', 'unitConversion1376', 'L_Secondaries_JR_Fthr_009_Out_ry_MD1', 'unitConversion2368', 'unitConversion36', 'R_Secondaries_JR_Fthr_001Bend02_Indiv_CtrlShape', 'R_Primaries_JR_Fthr_007Bend02_Indiv_Ctrl', 'L_Primaries_JR_Fthr_004_Indiv_Ctrl', 'L_Secondaries_JR_Fthr_0017Bend03_Bnd', 'unitConversion2632', 'unitConversion2249', 'L_Primaries_JR_9_CtrlL_Primaries_JR_9_CC_AutoFold_Grp_Grp', 'L_Secondaries_JR_9_CtrlL_Secondaries_JR_9_CC_AutoFold_Grp_Grp', 'R_Secondaries_JR_Fthr_006Bend02', 'R_Scapulars_JR_Fthr_0014Bend01', 'L_Primaries_JR_Fthr_006_Bnd_parentConstraint1', 'R_Secondaries_JR_7_Ctrl', 'unitConversion1658', 'unitConversion611', 'unitConversion2238', 'L_Secondaries_JR_Fthr_001_Bnd_parentConstraint1', 'unitConversion1754', 'L_Primaries_JR_Wing_004_Bnd_parentConstraint1', 'unitConversion805', 'unitConversion1284', 'L_Secondaries_JR_Fthr_0016', 'L_Secondaries_JR_Fthr_0011_Out_ry_MD', 'L_Scapulars_JR_Fthr_0012_CtrlShape', 'unitConversion2262', 'R_Scapulars_JR_Fthr_0014Bend02_Bnd_parentConstraint1', 'unitConversion2151', 'L_Secondaries_JR_Fthr_0014_InAuto_rx_MD', 'unitConversion1333', 'unitConversion151', 'L_Secondaries_JR_Fthr_006_In_rx_MD', 'L_Secondaries_JR_Fthr_000Bend01_Indiv_CtrlShape', 'L_Scapulars_JR_9_CtrlShape', 'L_Primaries_JR_Fthr_003Bend01_Bnd', 'unitConversion291', 'unitConversion2127', 'L_Secondaries_JR_Fthr_006Bend02', 'R_Secondaries_JR_Fthr_005Bend01_Indiv_Ctrl', 'R_Primaries_JR_Fthr_006Bend01_Indiv_Ctrl_tag', 'L_Scapulars_JR_Fthr_0011_Indiv_Ctrl_tag', 'L_Scapulars_JR_Fthr_0012_BendJnt1', 'R_Secondaries_JR_Fthr_0015_SpreadCtrlGrp', 'unitConversion739', 'L_Secondaries_JR_Fthr_006_Indiv_CtrlShape', 'unitConversion1145', 'R_Secondaries_JR_Fthr_006_BendJnt1', 'unitConversion963', 'unitConversion305', 'unitConversion253', 'unitConversion773', 'R_Secondaries_JR_Fthr_0013Bend01', 'unitConversion139', 'L_Primaries_JR_Fthr_005Bend03', 'unitConversion2166', 'unitConversion1875', 'unitConversion2649', 'L_Secondaries_JR_Fthr_009_In_ry_MD', 'R_Scapulars_JR_Fthr_004Bend02_Bnd_parentConstraint1', 'R_Secondaries_JR_7_CtrlL_Secondaries_JR_7_CC_AutoFold_Grp_Grp', 'L_Secondaries_JR_Fthr_002_Out_rx_MD1', 'R_Scapulars_JR_Fthr_0011_SpreadAuto_Auto', 'R_Scapulars_JR_Fthr_001Bend02_Indiv_Ctrl', 'R_Scapulars_JR_Fthr_000Bend02', 'unitConversion1594', 'L_Secondaries_JR_Fthr_005_BendJnt1', 'unitConversion1042', 'L_Scapulars_JR_Fthr_004_Indiv_Ctrl', 'R_Primaries_JR_Fthr_009Bend03', 'unitConversion304', 'unitConversion349', 'L_Scapulars_JR_8_CtrlL_Scapulars_JR_8_CC_AutoFold_Grp_Grp', 'L_Primaries_JR_Fthr_001_BendJnt2', 'L_Scapulars_JR_Fthr_0011_In_rx_MD', 'L_Primaries_JR_Fthr_007_BendJnt1', 'R_Scapulars_JR_Fthr_001Bend03_Indiv_Ctrl', 'L_Secondaries_JR_Fthr_0015_Bnd', 'unitConversion2147', 'R_Scapulars_JR_Fthr_008Bend02', 'unitConversion56', 'unitConversion460', 'unitConversion737', 'unitConversion177', 'unitConversion410', 'R_Scapulars_JR_Fthr_007Bend02_Indiv_Ctrl_tag', 'L_Scapulars_JR_Fthr_0012Bend01_Indiv_Ctrl', 'L_Secondaries_JR_Fthr_002Bend03', 'L_WingRef_Loc', 'unitConversion2291', 'unitConversion1037', 'unitConversion1361', 'L_Scapulars_JR_11_CtrlShape', 'unitConversion1147', 'L_Secondaries_JR_Fthr_008_InAuto_ry_MD1', 'unitConversion830', 'R_Primaries_JR_Wing_000_Ctrl', 'unitConversion825', 'unitConversion158', 'unitConversion1607', 'L_Secondaries_JR_Fthr_000_Ctrl_Auto_Grp', 'R_Secondaries_JR_Fthr_0015Bend03', 'unitConversion549', 'R_Scapulars_JR_Fthr_009_Indiv_Ctrl', 'L_Primaries_JR_Fthr_004_SpreadAuto_Root', 'R_Scapulars_JR_Fthr_0011Bend01_Indiv_Ctrl_Offset_Grp', 'R_Primaries_JR_Fthr_002Bend01_Bnd', 'R_Primaries_JR_Fthr_002_SpreadAuto_Root', 'L_Scapulars_JR_Fthr_0014_OutAuto_ry_MD', 'L_Scapulars_JR_13_CtrlShape', 'R_Secondaries_JR_Fthr_0015Bend01_Indiv_Ctrl', 'L_Secondaries_JR_Fthr_0011', 'R_Primaries_JR_Fthr_006_Ctrl', 'R_Secondaries_JR_Wing_0011', 'R_Scapulars_JR_Fthr_009Bend01', 'L_Primaries_JR_Fthr_007_Out_rx_MD', 'unitConversion142', 'R_Secondaries_JR_Wing_0015_parentConstraint1', 'L_Clavicle_JC_Root_parentConstraint1', 'L_Primaries_JR_Wing_005', 'L_Secondaries_JR_Fthr_0011_Indiv_Ctrl_tag', 'L_Scapulars_JR_Fthr_008Bend01_Bnd_parentConstraint1', 'unitConversion2631', 'unitConversion395', 'unitConversion2102', 'unitConversion705', 'R_Primaries_JR_Fthr_003_Bnd_parentConstraint1', 'R_Scapulars_JR_Fthr_000Bend01_Indiv_Ctrl', 'R_Primaries_JR_3_CtrlShape', 'R_Scapulars_JR_Fthr_001Bend01_Indiv_Ctrl_Offset_Grp', 'unitConversion110', 'unitConversion1291', 'L_Secondaries_JR_Fthr_0014_Ctrl', 'unitConversion1462', 'unitConversion671', 'L_Scapulars_JR_Fthr_004Bend03_Indiv_CtrlShape', 'unitConversion134', 'unitConversion2008', 'R_Secondaries_JR_Fthr_002Bend01_Bnd_parentConstraint1', 'unitConversion2646', 'R_Scapulars_JR_Fthr_0013_CtrlShape', 'R_Secondaries_JR_Fthr_0010Bend02', 'L_Secondaries_JR_Fthr_0011Bend02', 'L_Primaries_JR_Fthr_001_Out_rx_MD1', 'L_Secondaries_JR_Fthr_0017_Indiv_Ctrl', 'unitConversion254', 'L_Scapulars_JR_Fthr_0012Bend02_Indiv_Ctrl', 'unitConversion900', 'R_Primaries_JR_Fthr_005Bend02_Indiv_CtrlShape', 'R_Secondaries_JR_Fthr_006_Ctrl_Root_Grp', 'unitConversion2667', 'L_Primaries_JR_Fthr_004Bend01_Bnd_parentConstraint1', 'R_Scapulars_JR_FeathersPlaneShape', 'R_Secondaries_JR_Fthr_007_BendJnt1', 'R_Secondaries_JR_Fthr_0014Bend03_Bnd_parentConstraint1', 'L_Scapulars_JR_Fthr_003_InAuto_ry_MD1', 'L_Secondaries_JR_Fthr_005Bend01_Bnd_parentConstraint1', 'unitConversion2027', 'unitConversion2515', 'R_Scapulars_JR_Fthr_0011Bend02_Indiv_Ctrl_tag', 'L_Secondaries_JR_Fthr_0015Bend02', 'L_Secondaries_JR_Fthr_0010Bend01_Indiv_CtrlShape', 'R_Secondaries_JR_Fthr_0012_SpreadAuto', 'R_Scapulars_JR_Wing_000_Bnd_parentConstraint1', 'unitConversion2513', 'L_Secondaries_JR_Fthr_008_CtrlShape', 'L_Scapulars_JR_Fthr_003_InAuto_ry_MD', 'unitConversion24', 'L_Secondaries_JR_Fthr_008Bend01_Indiv_Ctrl_Offset_Grp', 'L_Secondaries_JR_Fthr_0011_Out_rx_MD1', 'L_Secondaries_JR_Wing_0012', 'L_Secondaries_JR_Fthr_0013Bend02_Indiv_Ctrl', 'unitConversion1308', 'unitConversion1580', 'unitConversion592', 'R_Primaries_JR_Fthr_009_Ctrl', 'unitConversion1115', 'R_Scapulars_JR_Fthr_004_BendJnt3', 'R_Scapulars_JR_Fthr_002_Bnd', 'L_Secondaries_JR_Fthr_009Bend03_Indiv_Ctrl_Offset_Grp', 'unitConversion1629', 'unitConversion1970', 'R_Secondaries_JR_Wing_002_Bnd', 'L_Scapulars_JR_Fthr_0012Bend03_Indiv_Ctrl_tag', 'unitConversion1966', 'R_Clav_JR', 'L_Primaries_JR_Fthr_005_SpreadAuto_Root', 'unitConversion965', 'unitConversion2017', 'L_Secondaries_JR_Fthr_008Bend02', 'R_Secondaries_JR_Fthr_0017_SpreadAuto_Auto', 'L_Scapulars_JR_Fthr_000_SpreadAuto_Root', 'L_Secondaries_JR_Fthr_001Bend03_Indiv_CtrlShape', 'L_Scapulars_JR_Wing_001_Bnd_parentConstraint1', 'L_Secondaries_JR_8_CtrlShape', 'R_Secondaries_JR_Fthr_008Bend03_Bnd', 'L_Secondaries_JR_Fthr_009Bend03', 'unitConversion1347', 'L_Primaries_JR_Bnd_parentConstraint1', 'unitConversion1403', 'R_Scapulars_JR_0_Ctrl', 'L_Scapulars_JR_Fthr_0012Bend02_Indiv_CtrlShape', 'L_Scapulars_JR_Fthr_003Bend02_Bnd_parentConstraint1', 'unitConversion307', 'unitConversion1994', 'unitConversion744', 'unitConversion1915', 'L_Secondaries_JR_Fthr_0010Bend02_Indiv_Ctrl', 'R_Scapulars_JR_Fthr_0013_Bnd', 'R_Secondaries_JR_Fthr_004_AutoJnt', 'unitConversion2068', 'L_Secondaries_JR_Fthr_008_OutAuto_ry_MD', 'L_Secondaries_JR_Fthr_0014_Out_rx_MD', 'L_Scapulars_JR_Fthr_009_BendJnt3', 'unitConversion300', 'unitConversion2736', 'L_Scapulars_JR_Fthr_002Bend02_Indiv_Ctrl_tag', 'unitConversion2532', 'L_Secondaries_JR_Fthr_003Bend03_Bnd_parentConstraint1', 'R_Secondaries_JR_Fthr_0017_SpreadAuto', 'L_Scapulars_JR_Fthr_0014_InAuto_ry_MD1', 'unitConversion2120', 'R_Secondaries_JR_Fthr_000Bend01_Indiv_CtrlShape', 'R_Secondaries_JR_Fthr_007Bend02_Indiv_Ctrl', 'R_Primaries_JR_Fthr_009_CtrlShape', 'unitConversion1391', 'L_Primaries_JR_Fthr_003_Out_ry_MD', 'R_Primaries_JR_Fthr_002Bend02_Bnd_parentConstraint1', 'unitConversion17', 'L_Scapulars_JR_Fthr_001_SpreadAuto', 'L_Secondaries_JR_Fthr_0017_CtrlShape', 'R_Primaries_JR_Wing_007_Bnd_parentConstraint1', 'L_Scapulars_JR_Fthr_0014Bend03_Indiv_Ctrl_Offset_Grp', 'unitConversion1568', 'L_Secondaries_JR_Fthr_000Bend01_Indiv_Ctrl', 'unitConversion1649', 'unitConversion1774', 'L_Secondaries_JR_Fthr_0015_InAuto_ry_MD1', 'L_Scapulars_JR_Fthr_0011_BendJnt3', 'R_Secondaries_JR_1_CtrlShape', 'R_Secondaries_JR_Fthr_003Bend01_Bnd', 'L_Primaries_JR_Fthr_004_Bnd_parentConstraint1', 'unitConversion2566', 'unitConversion2679', 'R_Secondaries_JR_Fthr_008Bend01_Indiv_CtrlShape', 'unitConversion1181', 'unitConversion527', 'R_Secondaries_JR_Fthr_008Bend01_Indiv_Ctrl_tag', 'L_Primaries_JR_Fthr_001_Ctrl_Root_Grp', 'unitConversion2026', 'unitConversion1255', 'unitConversion340', 'unitConversion2579', 'R_Scapulars_JR_Fthr_003_SpreadAuto', 'L_Primaries_JR_Fthr_000Bend03', 'L_Scapulars_JR_Fthr_004Bend02_Indiv_Ctrl', 'L_Scapulars_JR_4_CtrlShape', 'R_Secondaries_JR_Fthr_008_AutoJnt', 'R_Scapulars_JR_Fthr_000Bend01_Indiv_Ctrl_tag', 'L_Primaries_JR_Fthr_006', 'unitConversion491', 'L_Secondaries_JR_Fthr_0010Bend03_Indiv_Ctrl_tag', 'L_Secondaries_JR_Fthr_003_Out_rx_MD1', 'unitConversion1896', 'L_Primaries_JR_Fthr_002_Indiv_Ctrl_Offset_Grp', 'R_Primaries_JR_Wing_000_Bnd', 'L_Secondaries_JR_Fthr_006_SpreadCtrlGrp', 'unitConversion1116', 'unitConversion2701', 'L_Secondaries_JR_Fthr_008Bend03_Bnd', 'unitConversion1193', 'unitConversion2652', 'R_Wing_AutoRig', 'R_Scapulars_JR_Fthr_0010_SpreadAuto_Root_orientConstraint1', 'unitConversion764', 'L_Secondaries_JR_Fthr_001Bend03', 'unitConversion1456', 'L_Primaries_JR_Fthr_007_BendJnt2', 'L_Primaries_JR_Fthr_001Bend03', 'L_Scapulars_JR_Fthr_002_Indiv_CtrlShape', 'R_Scapulars_JR_Fthr_0012Bend02_Indiv_Ctrl', 'unitConversion634', 'unitConversion2533', 'R_Secondaries_JR_Wing_0012_Bnd_parentConstraint1', 'L_Secondaries_JR_Wing_009_Bnd_parentConstraint1', 'R_Secondaries_JR_Fthr_008Bend03_Indiv_Ctrl_Offset_Grp', 'L_Scapulars_JR_Fthr_0013_Out_ry_MD', 'R_Scapulars_JR_Fthr_007Bend01_Indiv_Ctrl_tag', 'L_Primaries_JR_Fthr_004_BendJnt3', 'R_Secondaries_JR_Fthr_0012Bend02_Indiv_Ctrl_tag', 'unitConversion2297', 'R_Secondaries_JR_Fthr_0017Bend02', 'unitConversion481', 'unitConversion2197', 'L_Secondaries_JR_Fthr_0015Bend02_Bnd_parentConstraint1', 'L_Secondaries_JR_Fthr_001_Out_ry_MD', 'L_Scapulars_JR_Fthr_003_BendJnt2', 'unitConversion2177', 'R_Scapulars_JR_Fthr_000_Indiv_Ctrl', 'R_Secondaries_JR_Fthr_008Bend03', 'unitConversion1999', 'L_Secondaries_JR_Fthr_001_SpreadCtrlGrp', 'unitConversion1981', 'L_Scapulars_JR_Fthr_006_Out_rx_MD', 'unitConversion323', 'R_Scapulars_JR_Fthr_0010_Ctrl_Auto_Grp', 'L_Scapulars_JR_Fthr_005_AutoJnt', 'unitConversion1626', 'L_Secondaries_JR_Fthr_0015Bend02_Indiv_Ctrl', 'L_Primaries_JR_Fthr_008_OutAuto_rx_MD1', 'unitConversion1932', 'unitConversion1320', 'R_Secondaries_JR_Fthr_0017_CtrlShape', 'unitConversion1013', 'unitConversion1758', 'R_Secondaries_JR_Wing_0014_parentConstraint1', 'L_Primaries_JR_Fthr_004Bend01', 'L_Scapulars_JR_Fthr_002Bend02_Bnd_parentConstraint1', 'unitConversion807', 'L_Primaries_JR_Fthr_003_RootJnt', 'R_Primaries_JR_Fthr_001_Ctrl_Root_Grp', 'unitConversion133', 'L_Secondaries_JR_Fthr_002_InAuto_rx_MD1', 'L_Scapulars_JR_Fthr_003Bend01_Bnd_parentConstraint1', 'unitConversion2167', 'R_Secondaries_JR_Fthr_0014Bend01_Bnd', 'R_Secondaries_JR_Fthr_0010', 'R_Scapulars_JR_Fthr_0012_RootJnt', 'unitConversion537', 'R_Secondaries_JR_Fthr_002_SpreadAuto_Auto', 'unitConversion44', 'unitConversion1604', 'R_Secondaries_JR_Fthr_005Bend03_Bnd', 'L_Scapulars_JR_Fthr_003_Ctrl_Auto_Grp', 'R_Primaries_JR_Fthr_008Bend01_Indiv_Ctrl_tag', 'R_Secondaries_JR_Fthr_005_SpreadAuto', 'L_Scapulars_JR_Fthr_006_SpreadAuto_Root_orientConstraint1', 'R_Scapulars_JR_Fthr_006Bend02_Bnd', 'R_Scapulars_JR_Fthr_0014Bend03_Indiv_CtrlShape', 'unitConversion704', 'R_Primaries_JR_Fthr_004Bend03_Bnd_parentConstraint1', 'unitConversion2189', 'R_Primaries_JR_Fthr_009Bend02_Indiv_Ctrl_Offset_Grp', 'L_Secondaries_JR_Fthr_008Bend02_Indiv_Ctrl', 'unitConversion2490', 'L_Scapulars_JR_Fthr_001Bend03_Indiv_Ctrl_Offset_Grp', 'unitConversion2094', 'L_Scapulars_JR_Fthr_0014Bend01_Bnd_parentConstraint1', 'R_Scapulars_JR_Fthr_004_Ctrl_Auto_Grp', 'unitConversion2319', 'R_Primaries_JR_Wing_001', 'unitConversion421', 'L_Scapulars_JR_Fthr_007Bend01', 'unitConversion1823', 'unitConversion906', 'unitConversion682', 'R_Secondaries_JR_Fthr_0010Bend01_Bnd', 'L_Scapulars_JR_Fthr_001_InAuto_ry_MD1', 'R_Secondaries_JR_Fthr_002Bend02', 'unitConversion635', 'R_Secondaries_JR_Fthr_0014_Bnd_parentConstraint1', 'R_Scapulars_JR_Fthr_007_AutoJnt', 'R_Scapulars_JR_Fthr_003_Bnd', 'R_Secondaries_JR_Fthr_006Bend01_Indiv_CtrlShape', 'unitConversion91', 'L_Scapulars_JR_Fthr_002_RootJnt', 'unitConversion1585', 'L_Secondaries_JR_Fthr_008Bend02_Indiv_CtrlShape', 'unitConversion39', 'unitConversion1614', 'R_Secondaries_JR_Fthr_002', 'R_Secondaries_JR_Fthr_005_Indiv_Ctrl', 'R_Scapulars_JR_Fthr_0011_SpreadAuto_Root', 'L_Secondaries_JR_3_CtrlShape', 'R_Scapulars_JR_Wing_001', 'L_Scapulars_JR_3_CtrlShape', 'unitConversion727', 'L_Primaries_JR_Fthr_007Bend02', 'L_Primaries_JR_Fthr_003_BendJnt2', 'L_Secondaries_JR_Fthr_0017_OutAuto_rx_MD', 'L_Primaries_JR_Fthr_000Bend02_Indiv_Ctrl_Offset_Grp', 'L_Secondaries_JR_Fthr_0011_CtrlShape', 'R_Scapulars_JR_Fthr_007_BendJnt3', 'R_Primaries_JR_Fthr_003Bend02_Indiv_Ctrl', 'L_Scapulars_JR_Fthr_0014Bend03_Indiv_Ctrl_tag', 'unitConversion988', 'L_Primaries_JR_Fthr_004_RootJnt', 'R_Primaries_JR_Fthr_009_Ctrl_Root_Grp', 'L_Secondaries_JR_Fthr_007_BendJnt2', 'L_Secondaries_JR_Fthr_004_In_rx_MD1', 'unitConversion343', 'unitConversion96', 'R_Scapulars_JR_Fthr_008_CtrlShape', 'L_Scapulars_JR_Fthr_0010_InAuto_rx_MD', 'R_Primaries_JR_Fthr_006Bend02_Bnd_parentConstraint1', 'L_Scapulars_JR_Fthr_001_Bnd', 'unitConversion2420', 'unitConversion2754', 'unitConversion2792', 'L_Primaries_JR_Fthr_007_SpreadAuto', 'R_Scapulars_JR_Fthr_005_Ctrl_Root_Grp', 'L_Secondaries_JR_Fthr_004_InAuto_ry_MD1', 'unitConversion1218', 'L_Secondaries_JR_Fthr_0011Bend01_Indiv_Ctrl_Offset_Grp', 'L_Secondaries_JR_Fthr_007_AutoJnt', 'L_Scapulars_JR_Fthr_0010_InAuto_ry_MD1', 'R_Secondaries_JR_14_CtrlL_Secondaries_JR_14_CC_AutoFold_Grp_Grp', 'unitConversion485', 'L_Secondaries_JR_Fthr_002_Out_ry_MD', 'R_Scapulars_JR_Fthr_004Bend03_Bnd_parentConstraint1', 'L_Primaries_JR_Wing_002_parentConstraint1', 'L_Scapulars_JR_Fthr_002Bend03_Indiv_Ctrl_tag', 'R_Secondaries_JR_Fthr_003_Ctrl', 'L_Scapulars_JR_Fthr_0010_Ctrl', 'L_Primaries_JR_Fthr_005Bend02', 'R_Scapulars_JR_Fthr_007_Ctrl_Root_Grp', 'R_Primaries_JR_Fthr_005_Bnd_parentConstraint1', 'unitConversion2320', 'R_Secondaries_JR_Fthr_0016Bend01_Indiv_Ctrl', 'R_Primaries_JR_Fthr_004Bend03_Indiv_Ctrl_Offset_Grp', 'L_Primaries_JR_Fthr_002Bend01_Indiv_Ctrl', 'unitConversion269', 'L_Secondaries_JR_Fthr_008Bend01', 'R_Scapulars_JR_Fthr_009Bend01_Indiv_Ctrl_tag', 'R_Scapulars_JR_Wing_004_Bnd_parentConstraint1', 'unitConversion2572', 'unitConversion2584', 'unitConversion1160', 'R_Primaries_JR_Fthr_006Bend01_Indiv_Ctrl_Offset_Grp', 'unitConversion1469', 'R_Scapulars_JR_Fthr_002Bend03_Bnd_parentConstraint1', 'L_Secondaries_JR_Fthr_0017_In_ry_MD', 'L_Primaries_JR_Spread_Out_CtrlShape', 'R_Secondaries_JR_Fthr_001Bend01', 'unitConversion916', 'L_Secondaries_JR_Fthr_000_SpreadAuto_Auto', 'unitConversion1252', 'unitConversion1611', 'R_Primaries_JR_Fthr_000_BendJnt1', 'R_Scapulars_JR_Wing_0014_Bnd_parentConstraint1', 'L_Primaries_JR_Fthr_009Bend03_Bnd_parentConstraint1', 'R_Scapulars_JR_Fthr_000_Ctrl', 'R_Scapulars_JR_Wing_009', 'L_Scapulars_JR_Fthr_003Bend03_Bnd_parentConstraint1', 'L_Scapulars_JR_Fthr_004_In_rx_MD', 'unitConversion779', 'unitConversion934', 'R_Scapulars_JR_Fthr_004_Ctrl', 'unitConversion388', 'R_Secondaries_JR_Fthr_003_Indiv_Ctrl_tag', 'L_Primaries_JR_Fthr_006Bend02', 'L_Secondaries_JR_Fthr_001_OutAuto_ry_MD1', 'unitConversion1199', 'L_Secondaries_JR_Fthr_0012Bend03_Bnd_parentConstraint1', 'R_Secondaries_JR_Fthr_0014Bend02_Indiv_Ctrl_Offset_Grp', 'unitConversion1987', 'R_Secondaries_JR_Fthr_0011Bend03_Indiv_Ctrl_Offset_Grp', 'L_Scapulars_JR_Fthr_007_OutAuto_rx_MD1', 'R_Primaries_JR_Fthr_001Bend03', 'unitConversion1011', 'unitConversion2535', 'R_Secondaries_JR_Fthr_000_Bnd', 'unitConversion713', 'L_Scapulars_JR_Fthr_003_In_rx_MD', 'unitConversion809', 'L_Secondaries_JR_Fthr_0010_In_rx_MD', 'L_Secondaries_JR_Wing_003_Bnd_parentConstraint1', 'R_Scapulars_JR_Fthr_0013Bend03', 'R_Primaries_JR_Fthr_000Bend02_Bnd', 'L_Scapulars_JR_Fthr_005', 'unitConversion1483', 'L_Clav_JR', 'L_Scapulars_JR_Fthr_0010_In_rx_MD1', 'R_Primaries_JR_Fthr_009Bend01_Indiv_Ctrl_tag', 'R_Clavicle_JC_Root', 'L_Secondaries_JR_Fthr_0015Bend02_Indiv_Ctrl_Offset_Grp', 'unitConversion23', 'unitConversion606', 'L_Primaries_JR_Fthr_000Bend01_Indiv_Ctrl', 'R_Scapulars_JR_Fthr_0014Bend01_Indiv_Ctrl_tag', 'L_Scapulars_JR_Fthr_008_InAuto_rx_MD', 'unitConversion1021', 'unitConversion2637', 'L_Scapulars_JR_Fthr_0014Bend03_Indiv_Ctrl', 'unitConversion1893', 'R_Primaries_JR_Fthr_005Bend01', 'L_Secondaries_JR_1_CtrlShape', 'L_Secondaries_JR_Wing_004_parentConstraint1', 'L_Secondaries_JR_Fthr_0012_Out_rx_MD1', 'L_Primaries_JR_Wing_001_Bnd_parentConstraint1', 'L_Scapulars_JR_Fthr_0010', 'L_Scapulars_JR_Fthr_0012_In_ry_MD', 'L_Wing_CC_Root_parentConstraint1', 'L_Secondaries_JR_Fthr_001Bend03_Bnd', 'L_Scapulars_JR_Fthr_001Bend03', 'unitConversion167', 'L_Primaries_JR_Fthr_004_OutAuto_ry_MD1', 'R_Scapulars_JR_Fthr_007Bend02_Bnd_parentConstraint1', 'L_Primaries_JR_Fthr_005Bend01_Indiv_Ctrl', 'R_Primaries_JR_Fthr_005Bend03_Indiv_CtrlShape', 'R_Secondaries_JR_Fthr_0013_Indiv_Ctrl_tag', 'R_Scapulars_JR_Fthr_001_BendJnt2', 'L_Secondaries_JR_Fthr_0012_InAuto_rx_MD1', 'L_Primaries_JR_Fthr_007_OutAuto_rx_MD', 'unitConversion230', 'L_Scapulars_JR_Fthr_005Bend03_Indiv_Ctrl_tag', 'unitConversion2595', 'unitConversion1283', 'unitConversion1051', 'L_Primaries_JR_Fthr_004', 'L_Scapulars_JR_Fthr_002_BendJnt1', 'L_Secondaries_JR_Fthr_0012Bend02_Indiv_Ctrl', 'R_Primaries_JR_Fthr_009_Indiv_CtrlShape', 'R_Scapulars_JR_Fthr_0010_BendJnt3', 'R_Primaries_JR_Fthr_000_Bnd_parentConstraint1', 'R_Secondaries_JR_Fthr_0011Bend03_Bnd', 'L_Secondaries_JR_Fthr_008Bend02_Indiv_Ctrl_tag', 'unitConversion2184', 'L_Secondaries_JR_Fthr_008_OutAuto_rx_MD1', 'R_Secondaries_JR_15_CtrlL_Secondaries_JR_15_CC_AutoFold_Grp_Grp', 'L_Scapulars_JR_Fthr_0012', 'L_Scapulars_JR_Fthr_009_Ctrl', 'unitConversion2031', 'R_Secondaries_JR_Fthr_009_Bnd_parentConstraint1', 'R_Secondaries_JR_Fthr_009_Ctrl_Auto_Grp', 'R_Secondaries_JR_Fthr_0016_SpreadAuto_Auto', 'unitConversion2035', 'unitConversion1025', 'unitConversion1078', 'R_Scapulars_JR_Fthr_005_SpreadAuto_Root_orientConstraint1', 'L_Scapulars_JR_13_Ctrl', 'L_Secondaries_JR_Fthr_0010_InAuto_ry_MD', 'unitConversion1161', 'R_Scapulars_JR_Fthr_0011_Indiv_Ctrl_Offset_Grp', 'R_Secondaries_JR_Fthr_006Bend01', 'L_Secondaries_JR_Fthr_0015_OutAuto_ry_MD', 'L_Secondaries_JR_Fthr_0013Bend03_Indiv_Ctrl_Offset_Grp', 'L_Secondaries_JR_Fthr_005_Out_ry_MD', 'unitConversion829', 'unitConversion351', 'unitConversion1784', 'L_Primaries_JR_7_Ctrl', 'unitConversion216', 'unitConversion1229', 'L_Scapulars_JR_Fthr_0011_BendJnt1', 'L_Scapulars_JR_Wing_006', 'L_Secondaries_JR_Fthr_006_RootJnt', 'L_Primaries_JR_Fthr_007_In_ry_MD', 'unitConversion2629', 'L_Primaries_JR_Fthr_002_BendJnt2', 'L_Secondaries_JR_Fthr_003Bend02_Indiv_Ctrl_tag', 'R_Secondaries_JR_Fthr_0015Bend02_Indiv_CtrlShape', 'R_Scapulars_JR_Fthr_003_Ctrl', 'L_Secondaries_JR_Fthr_0016_Ctrl_Auto_Grp', 'unitConversion2215', 'R_Secondaries_JR_Fthr_0016_SpreadAuto_Root', 'L_Secondaries_JR_Fthr_0017Bend03_Bnd_parentConstraint1', 'L_Secondaries_JR_Fthr_0015Bend01_Indiv_Ctrl_Offset_Grp', 'L_Scapulars_JR_Fthr_008_OutAuto_ry_MD1', 'R_Scapulars_JR_Fthr_004_BendJnt2', 'L_Secondaries_JR_Fthr_007_InAuto_rx_MD1', 'unitConversion2454', 'L_Scapulars_JR_Fthr_001Bend02_Indiv_Ctrl_Offset_Grp', 'L_Secondaries_JR_Fthr_003_CtrlShape', 'R_Scapulars_JR_Fthr_001_BendJnt3', 'R_Scapulars_JR_Fthr_0011Bend01', 'L_Secondaries_JR_Fthr_002Bend01_Bnd_parentConstraint1', 'R_Scapulars_JR_Fthr_002_AutoJnt', 'L_Secondaries_JR_Fthr_0013_OutAuto_rx_MD', 'L_Scapulars_JR_Fthr_007_In_ry_MD', 'R_Scapulars_JR_Fthr_0010_Indiv_CtrlShape', 'L_Scapulars_JR_Wing_004_parentConstraint1', 'R_Secondaries_JR_Fthr_000_BendJnt1', 'unitConversion2', 'L_Secondaries_JR_Fthr_001_Bnd', 'L_Secondaries_JR_Fthr_0016_Out_rx_MD', 'R_Secondaries_JR_Fthr_0011_SpreadAuto_Auto', 'unitConversion828', 'R_Primaries_JR_Fthr_005_RootJnt', 'R_Secondaries_JR_Wing_0016_Bnd', 'unitConversion2433', 'L_Secondaries_JR_Fthr_008', 'L_Secondaries_JR_Fthr_0011Bend02_Indiv_Ctrl', 'R_Scapulars_JR_Fthr_005', 'L_Wing_AutoRig', 'unitConversion2124', 'unitConversion661', 'unitConversion2484', 'L_Primaries_JR_Fthr_001Bend01', 'L_Scapulars_JR_Fthr_0014_RootJnt', 'L_Secondaries_JR_Fthr_003_In_rx_MD1', 'R_Primaries_JR_Fthr_005_BendJnt2', 'unitConversion112', 'R_Scapulars_JR_Fthr_008Bend01', 'R_Secondaries_JR_Fthr_0015_Indiv_Ctrl', 'unitConversion939', 'L_Primaries_JR_Fthr_002Bend01_Indiv_Ctrl_Offset_Grp', 'L_Secondaries_JR_Fthr_0013Bend02_Indiv_Ctrl_tag', 'L_Secondaries_JR_Fthr_000_OutAuto_rx_MD', 'unitConversion2003', 'unitConversion2244', 'unitConversion2423', 'L_Scapulars_JR_Fthr_009Bend03_Indiv_CtrlShape', 'R_Scapulars_JR_Fthr_0013Bend03_Bnd_parentConstraint1', 'R_Primaries_JR_Fthr_006Bend03_Bnd_parentConstraint1', 'L_Scapulars_JR_Fthr_005_BendJnt1', 'R_Scapulars_JR_1_CtrlShape', 'R_Secondaries_JR_Fthr_000_SpreadAuto_Auto', 'R_Scapulars_JR_Fthr_003', 'L_Secondaries_JR_Fthr_007_Out_ry_MD1', 'unitConversion422', 'unitConversion629', 'L_Scapulars_JR_Wing_009_Bnd', 'unitConversion2087', 'L_Scapulars_JR_Fthr_0014Bend01_Bnd', 'L_Scapulars_JR_Fthr_000_SpreadAuto_Root_orientConstraint1', 'R_Scapulars_JR_Fthr_007_BendJnt1', 'L_Primaries_JR_Fthr_003_OutAuto_rx_MD1', 'L_Secondaries_JR_Fthr_001_OutAuto_ry_MD', 'unitConversion1473', 'unitConversion2299', 'L_Scapulars_JR_Fthr_0014_BendJnt1', 'unitConversion2058', 'R_Scapulars_JR_Fthr_000Bend01_Indiv_Ctrl_Offset_Grp', 'R_WingRef_Loc', 'L_Secondaries_JR_Fthr_000Bend02_Indiv_Ctrl_tag', 'unitConversion1120', 'L_Secondaries_JR_Fthr_006Bend01_Indiv_Ctrl', 'L_Primaries_JR_Fthr_004_Out_ry_MD', 'L_Scapulars_JR_Fthr_001Bend01_Indiv_Ctrl_tag', 'R_Secondaries_JR_Wing_0016_Bnd_parentConstraint1', 'L_Secondaries_JR_Fthr_0017_Out_rx_MD', 'unitConversion2180', 'R_Secondaries_JR_Fthr_006_RootJnt', 'L_Primaries_JR_Fthr_000_In_ry_MD', 'unitConversion1502', 'L_Primaries_JR_Fthr_007Bend02_Bnd_parentConstraint1', 'unitConversion1048', 'L_Scapulars_JR_Fthr_0013_CtrlShape', 'R_Primaries_JR_Fthr_002Bend03_Indiv_Ctrl_tag', 'R_Scapulars_JR_Fthr_0010Bend01_Bnd', 'unitConversion328', 'unitConversion2581', 'L_Primaries_JR_Fthr_008_Out_ry_MD', 'unitConversion171', 'R_Scapulars_JR_Fthr_002_SpreadAuto_Root', 'unitConversion1675', 'L_Primaries_JR_Spread_Out_Auto_Grp', 'unitConversion1075', 'L_Primaries_JR_Fthr_001Bend02', 'unitConversion113', 'unitConversion775', 'L_Secondaries_JR_Fthr_007Bend03_Indiv_Ctrl_Offset_Grp', 'unitConversion2504', 'unitConversion511', 'R_Secondaries_JR_Fthr_000Bend03', 'L_Secondaries_JR_Wing_0015', 'unitConversion1707', 'L_Primaries_JR_Fthr_006Bend01_Bnd', 'L_Secondaries_JR_Fthr_0013_In_ry_MD', 'unitConversion1533', 'unitConversion1834', 'R_Scapulars_JR_Fthr_003Bend03', 'L_Primaries_JR_Fthr_002_Ctrl_Auto_Grp', 'unitConversion735', 'unitConversion1878', 'L_Secondaries_JR_Fthr_0014_Indiv_Ctrl', 'unitConversion1519', 'R_Secondaries_JR_Fthr_007_SpreadAuto', 'unitConversion907', 'R_Secondaries_JR_17_CtrlShape', 'unitConversion1928', 'L_Scapulars_JR_Fthr_001_Out_ry_MD1', 'L_Scapulars_JR_Fthr_005Bend02_Indiv_Ctrl', 'R_Secondaries_JR_Fthr_000_Indiv_CtrlShape', 'L_Secondaries_JR_Fthr_0010Bend02_Indiv_CtrlShape', 'R_Secondaries_JR_Fthr_003_AutoJnt', 'unitConversion1151', 'L_Scapulars_JR_Fthr_0014_AutoJnt', 'L_Primaries_JR_Fthr_005Bend02_Bnd', 'unitConversion2639', 'R_Secondaries_JR_Fthr_004Bend03', 'unitConversion1249', 'unitConversion2459', 'unitConversion567', 'L_Secondaries_JR_Fthr_008_Indiv_Ctrl', 'unitConversion902', 'unitConversion2214', 'unitConversion1961', 'R_Scapulars_JR_Fthr_0012_Indiv_Ctrl_Offset_Grp', 'L_Secondaries_JR_Fthr_002Bend02', 'R_Secondaries_JR_Fthr_0014_Indiv_Ctrl_Offset_Grp', 'R_Scapulars_JR_Wing_008_parentConstraint1', 'R_Scapulars_JR_Fthr_0012Bend02_Bnd', 'R_Primaries_JR_Fthr_001Bend01_Indiv_Ctrl', 'L_Primaries_JR_5_CtrlShape', 'L_Scapulars_JR_Fthr_006Bend03_Indiv_Ctrl_tag', 'L_Scapulars_JR_Wing_003_Bnd_parentConstraint1', 'unitConversion896', 'L_Secondaries_JR_Fthr_002_Indiv_CtrlShape', 'R_Primaries_JR_Fthr_003Bend02_Bnd', 'L_Scapulars_JR_Fthr_003Bend03_Indiv_Ctrl_Offset_Grp', 'R_Scapulars_JR_Fthr_005Bend02_Indiv_Ctrl', 'unitConversion1712', 'unitConversion489', 'unitConversion2106', 'R_Secondaries_JR_Fthr_0015Bend02_Indiv_Ctrl_tag', 'L_Secondaries_JR_Spread_In_CtrlShape', 'unitConversion424', 'R_Scapulars_JR_12_CtrlL_Scapulars_JR_12_CC_AutoFold_Grp_Grp', 'L_Secondaries_JR_Fthr_001_Indiv_CtrlShape', 'unitConversion203', 'R_Scapulars_JR_8_CtrlL_Scapulars_JR_8_CC_AutoFold_Grp_Grp', 'unitConversion441', 'R_Primaries_JR_Fthr_007Bend01_Bnd_parentConstraint1', 'R_Secondaries_JR_Fthr_006Bend02_Indiv_Ctrl', 'R_Secondaries_JR_1_CtrlL_Secondaries_JR_1_CC_AutoFold_Grp_Grp', 'L_End_JR', 'R_Primaries_JR_2_Ctrl', 'skinCluster1Set', 'unitConversion1479', 'L_Scapulars_JR_Fthr_007_AutoJnt', 'L_Scapulars_JR_Spread_In_CtrlShape', 'L_Scapulars_JR_Fthr_0010_Indiv_Ctrl_Offset_Grp', 'unitConversion550', 'L_Primaries_JR_Fthr_000_BendJnt3', 'unitConversion2755', 'unitConversion439', 'unitConversion1279', 'unitConversion165', 'L_Scapulars_JR_Wing_003', 'R_Secondaries_JR_Fthr_000_BendJnt3', 'L_Secondaries_JR_Fthr_005_SpreadAuto_Auto', 'unitConversion181', 'R_Primaries_JR_Fthr_006_SpreadAuto_Root', 'R_Secondaries_JR_16_CtrlL_Secondaries_JR_16_CC_AutoFold_Grp_Grp', 'L_Secondaries_JR_Fthr_001Bend03_Indiv_Ctrl_tag', 'unitConversion582', 'L_Secondaries_JR_Fthr_002_Indiv_Ctrl_tag', 'unitConversion866', 'unitConversion2684', 'unitConversion319', 'L_Primaries_JR_FeathersPlaneShapeOrig', 'L_Primaries_JR_Fthr_008_SpreadAuto_Auto', 'unitConversion1184', 'L_Scapulars_JR_Fthr_001_RootJnt', 'L_Scapulars_JR_Wing_000_Ctrl', 'unitConversion1113', 'L_Secondaries_JR_Fthr_0012_In_ry_MD1', 'R_Secondaries_JR_Fthr_002Bend02_Indiv_CtrlShape', 'R_Secondaries_JR_Fthr_009_Indiv_Ctrl_Offset_Grp', 'L_Secondaries_JR_Fthr_0014Bend02_Indiv_Ctrl_Offset_Grp', 'L_Scapulars_JR_Fthr_008_CtrlShape', 'unitConversion2254', 'R_Secondaries_JR_Bend_CC_Root_Grp', 'unitConversion1654', 'L_Scapulars_JR_Fthr_0013_BendJnt3', 'unitConversion1238', 'R_Secondaries_JR_Fthr_005_Indiv_CtrlShape', 'R_Scapulars_JR_Fthr_001Bend03_Indiv_Ctrl_tag', 'L_Scapulars_JR_Fthr_002_Ctrl_Root_Grp', 'unitConversion2045', 'L_Scapulars_JR_Fthr_007Bend03_Indiv_Ctrl', 'R_Secondaries_JR_Wing_009', 'unitConversion865', 'L_Scapulars_JR_Fthr_009_SpreadAuto_Root_orientConstraint1', 'R_Primaries_JR_Fthr_002Bend01', 'unitConversion1979', 'R_Secondaries_JR_Fthr_008Bend03_Bnd_parentConstraint1', 'R_Scapulars_JR_Fthr_0014Bend02_Indiv_Ctrl_tag', 'R_Primaries_JR_Fthr_003_Indiv_Ctrl_tag', 'L_Secondaries_JR_Fthr_0017_Out_ry_MD1', 'unitConversion1174', 'unitConversion2474', 'unitConversion1714', 'R_Scapulars_JR_Wing_001_Bnd_parentConstraint1', 'R_Secondaries_JR_Fthr_004_Indiv_Ctrl_tag', 'unitConversion1854', 'L_Scapulars_JR_Fthr_003Bend01', 'L_Scapulars_JR_Fthr_006_InAuto_rx_MD1', 'L_Secondaries_JR_Fthr_0015Bend02_Bnd', 'unitConversion2161', 'R_Primaries_JR_Fthr_008_RootJnt', 'L_Secondaries_JR_Fthr_0014_Indiv_Ctrl_Offset_Grp', 'R_Primaries_JR_Fthr_003Bend01_Indiv_Ctrl_Offset_Grp', 'L_Secondaries_JR_Fthr_001_OutAuto_rx_MD', 'R_Secondaries_JR_Fthr_005_SpreadCtrlGrp', 'unitConversion928', 'unitConversion445', 'R_Scapulars_JR_Fthr_002_Ctrl', 'R_Secondaries_JR_Fthr_006Bend01_Indiv_Ctrl_tag', 'R_Primaries_JR_Fthr_004_SpreadCtrlGrp', 'R_Secondaries_JR_Fthr_0016Bend03', 'unitConversion2682', 'unitConversion885', 'unitConversion2660', 'unitConversion1554', 'R_Secondaries_JR_Fthr_007Bend01_Indiv_Ctrl_tag', 'unitConversion61', 'Primaries_feathers_Bnd_Grp', 'unitConversion114', 'R_Primaries_JR_Bend_CC_Root_Grp', 'unitConversion1631', 'unitConversion2159', 'unitConversion371', 'L_Primaries_JR_Wing_009_parentConstraint1', 'unitConversion2387', 'L_Secondaries_JR_Fthr_0015Bend01', 'unitConversion799', 'unitConversion463', 'R_Secondaries_JR_15_Ctrl', 'L_Primaries_JR_Fthr_003_OutAuto_rx_MD', 'L_Scapulars_JR_Fthr_001_BendJnt3', 'unitConversion1100', 'unitConversion1828', 'R_Scapulars_JR_Fthr_0014Bend03_Bnd', 'unitConversion1398', 'unitConversion296', 'unitConversion2064', 'L_Secondaries_JR_Fthr_009_Out_rx_MD', 'L_Secondaries_JR_Fthr_0015_Ctrl_Auto_Grp', 'unitConversion1900', 'L_Primaries_JR_Fthr_009_Ctrl_Auto_Grp', 'L_Secondaries_JR_Fthr_0016_SpreadCtrlGrp', 'R_Secondaries_JR_Fthr_001Bend02_Bnd_parentConstraint1', 'unitConversion1586', 'L_Scapulars_JR_Fthr_0012Bend03', 'unitConversion2663', 'L_Scapulars_JR_Fthr_001', 'unitConversion2775', 'R_Scapulars_JR_Fthr_003Bend02_Bnd_parentConstraint1', 'L_Primaries_JR_Wing_004_parentConstraint1', 'R_Scapulars_JR_Wing_000_Ctrl_locGlobalRotate', 'L_Secondaries_JR_Fthr_002Bend03_Indiv_Ctrl', 'unitConversion339', 'L_Primaries_JR_Fthr_008_Indiv_CtrlShape', 'unitConversion658', 'R_Secondaries_JR_Fthr_001Bend01_Indiv_Ctrl', 'L_Secondaries_JR_Fthr_008_OutAuto_ry_MD1', 'L_Scapulars_JR_Fthr_007_BendJnt1', 'R_Scapulars_JR_Fthr_0014Bend01_Bnd_parentConstraint1', 'unitConversion555', 'L_Secondaries_JR_Fthr_0010Bend03_Indiv_Ctrl', 'R_Primaries_JR_8_Ctrl', 'unitConversion1486', 'unitConversion279', 'unitConversion2739', 'unitConversion2060', 'L_Secondaries_JR_Fthr_005_Indiv_CtrlShape', 'L_Scapulars_JR_Fthr_0011Bend03_Indiv_Ctrl', 'R_Scapulars_JR_Fthr_0014_SpreadAuto_Root_orientConstraint1', 'unitConversion2202', 'unitConversion262', 'L_Secondaries_JR_Fthr_0016_RootJnt', 'R_Secondaries_JR_Fthr_0012Bend03_Indiv_Ctrl', 'L_Secondaries_JR_Fthr_005Bend01_Indiv_Ctrl', 'L_Scapulars_JR_Fthr_004_Out_rx_MD1', 'R_Primaries_JR_Fthr_008_Indiv_Ctrl', 'R_Secondaries_JR_Fthr_004Bend01_Indiv_Ctrl_tag', 'L_Primaries_JR_Fthr_005_BendJnt1', 'L_Secondaries_JR_Fthr_005Bend02_Indiv_Ctrl_Offset_Grp', 'L_GlobalLoc', 'R_Primaries_JR_Fthr_000Bend01_Bnd_parentConstraint1', 'R_Scapulars_JR_Fthr_000_SpreadAuto_Root_orientConstraint1', 'unitConversion1750', 'unitConversion558', 'unitConversion85', 'L_Primaries_JR_Fthr_002_In_ry_MD', 'L_Secondaries_JR_Fthr_002_RootJnt', 'unitConversion2235', 'unitConversion408', 'R_Primaries_JR_Fthr_009Bend03_Indiv_Ctrl_Offset_Grp', 'R_Scapulars_JR_Fthr_008Bend01_Indiv_Ctrl_Offset_Grp', 'L_Secondaries_JR_Fthr_007_Indiv_Ctrl', 'R_Secondaries_JR_Fthr_0011_SpreadCtrlGrp', 'R_Primaries_JR_Fthr_007Bend01_Indiv_Ctrl', 'L_Scapulars_JR_Fthr_0014_CtrlShape', 'L_Secondaries_JR_Fthr_002_Out_rx_MD', 'R_Secondaries_JR_Fthr_004_Indiv_Ctrl_Offset_Grp', 'unitConversion1593', 'L_Secondaries_JR_Fthr_0010Bend02_Bnd', 'L_Primaries_JR_Fthr_003_Out_rx_MD', 'unitConversion1876', 'unitConversion2333', 'R_Scapulars_JR_Fthr_0010Bend02_Indiv_Ctrl', 'unitConversion1326', 'unitConversion2638', 'L_Secondaries_JR_Fthr_005Bend02_Indiv_Ctrl', 'R_Primaries_JR_Fthr_008_SpreadAuto', 'unitConversion627', 'R_Scapulars_JR_Fthr_007_Indiv_Ctrl_tag', 'L_Secondaries_JR_Fthr_0015Bend03', 'R_Scapulars_JR_Fthr_001Bend01_Indiv_Ctrl', 'unitConversion874', 'L_Secondaries_JR_Fthr_0013_Indiv_Ctrl_tag', 'R_Secondaries_JR_Fthr_0016Bend01_Bnd_parentConstraint1', 'unitConversion2152', 'unitConversion2382', 'unitConversion1392', 'unitConversion2216', 'L_Scapulars_JR_Fthr_003Bend03_Indiv_Ctrl', 'unitConversion1049', 'L_Secondaries_JR_Fthr_0012_OutAuto_ry_MD1', 'unitConversion1622', 'R_Secondaries_JR_Fthr_006Bend02_Bnd', 'L_Secondaries_JR_Fthr_0016_CtrlShape', 'R_Scapulars_JR_Fthr_0012_AutoJnt', 'R_Secondaries_JR_Fthr_008Bend02_Bnd_parentConstraint1', 'unitConversion964', 'unitConversion1242', 'R_Secondaries_JR_Fthr_0014_SpreadAuto', 'unitConversion1095', 'Secondaries_feathers_Bnd_Grp', 'unitConversion2600', 'R_Secondaries_JR_Fthr_001_SpreadAuto_Auto', 'unitConversion1744', 'unitConversion1934', 'unitConversion245', 'R_Scapulars_JR_Fthr_0011_Indiv_CtrlShape', 'L_Secondaries_JR_Fthr_003Bend01_Indiv_Ctrl', 'L_Scapulars_JR_Fthr_006_Indiv_Ctrl', 'L_Scapulars_JR_Fthr_005_Bnd', 'unitConversion2706', 'R_Secondaries_JR_Fthr_003Bend02_Indiv_Ctrl_Offset_Grp', 'L_Scapulars_JR_Fthr_009_SpreadAuto_Auto', 'L_Secondaries_JR_Fthr_000_OutAuto_rx_MD1', 'unitConversion2469', 'R_Secondaries_JR_Fthr_007Bend01_Bnd_parentConstraint1', 'R_Scapulars_JR_Fthr_0014Bend02', 'L_Secondaries_JR_Fthr_001Bend01_Indiv_Ctrl_Offset_Grp', 'unitConversion1083', 'R_Scapulars_JR_Wing_0012', 'R_Scapulars_JR_Fthr_0011_Indiv_Ctrl_tag', 'R_Secondaries_JR_Fthr_008_Indiv_Ctrl_tag', 'L_Secondaries_JR_Fthr_0010_Indiv_CtrlShape', 'unitConversion108', 'L_Scapulars_JR_Wing_000_parentConstraint1', 'unitConversion436', 'unitConversion2069', 'R_Secondaries_JR_Fthr_008', 'unitConversion2132', 'L_Secondaries_JR_Fthr_0012_Indiv_CtrlShape', 'L_Secondaries_JR_Fthr_0011Bend02_Indiv_Ctrl_Offset_Grp', 'L_Primaries_JR_Fthr_002_InAuto_rx_MD1', 'R_Primaries_JR_Fthr_000_AutoJnt', 'L_Secondaries_JR_Fthr_004_Out_ry_MD1', 'unitConversion1589', 'R_Scapulars_JR_Fthr_0014Bend01_Indiv_CtrlShape', 'L_Primaries_JR_Fthr_000Bend03_Bnd_parentConstraint1', 'unitConversion1897', 'L_Scapulars_JR_11_Ctrl', 'unitConversion2380', 'R_Primaries_JR_Fthr_008Bend01_Indiv_Ctrl_Offset_Grp', 'R_Primaries_JR_Wing_007_Bnd', 'L_Secondaries_JR_Fthr_0013Bend02_Bnd', 'R_Secondaries_JR_Fthr_0014_Bnd', 'unitConversion1222', 'unitConversion467', 'L_Scapulars_JR_Fthr_006_Indiv_Ctrl_Offset_Grp', 'unitConversion280', 'unitConversion480', 'R_Scapulars_JR_Fthr_0010Bend03', 'R_Scapulars_JR_Fthr_000Bend01', 'L_Scapulars_JR_Fthr_0014Bend01_Indiv_CtrlShape', 'L_Secondaries_JR_Fthr_001_In_ry_MD1', 'R_Scapulars_JR_Fthr_000Bend02_Indiv_CtrlShape', 'unitConversion2390', 'R_Secondaries_JR_Wing_0014_Bnd', 'unitConversion698', 'unitConversion2023', 'R_Secondaries_JR_Fthr_000Bend02_Indiv_Ctrl_Offset_Grp', 'L_Scapulars_JR_Fthr_006Bend02_Bnd', 'unitConversion1143', 'R_Scapulars_JR_7_CtrlShape', 'L_Secondaries_JR_Fthr_002Bend03_Indiv_CtrlShape', 'R_Secondaries_JR_Fthr_006Bend03_Indiv_CtrlShape', 'L_Scapulars_JR_Fthr_0012_Indiv_CtrlShape', 'L_Scapulars_JR_Fthr_0012_Out_ry_MD1', 'R_Primaries_JR_Wing_003', 'unitConversion912', 'unitConversion1183', 'L_Scapulars_JR_Fthr_000Bend02_Indiv_Ctrl_Offset_Grp', 'unitConversion1476', 'unitConversion2339', 'L_Secondaries_JR_Fthr_008_SpreadAuto', 'unitConversion544', 'unitConversion571', 'unitConversion1268', 'unitConversion1935', 'unitConversion2241', 'L_Primaries_JR_Wing_007_Bnd', 'L_Scapulars_JR_Fthr_0011_InAuto_rx_MD', 'L_Secondaries_JR_Fthr_0015Bend02_Indiv_Ctrl_tag', 'R_Secondaries_JR_Spread_In_Root_Grp', 'unitConversion1679', 'R_Primaries_JR_Fthr_004Bend01_Indiv_Ctrl_tag', 'unitConversion2648', 'R_Scapulars_JR_Fthr_004Bend03_Indiv_Ctrl_tag', 'L_Primaries_JR_4_CtrlL_Primaries_JR_4_CC_AutoFold_Grp_Grp', 'unitConversion1793', 'L_Secondaries_JR_Fthr_003Bend03_Indiv_Ctrl_Offset_Grp', 'L_Scapulars_JR_Fthr_002_SpreadAuto', 'R_Secondaries_JR_Fthr_005Bend03_Indiv_Ctrl_tag', 'unitConversion608', 'R_Scapulars_JR_Fthr_007_Bnd_parentConstraint1', 'unitConversion2119', 'R_Scapulars_JR_Fthr_005_Ctrl', 'L_Primaries_JR_Fthr_005_OutAuto_ry_MD1', 'unitConversion168', 'L_Secondaries_JR_Fthr_0017Bend02_Indiv_Ctrl_Offset_Grp', 'unitConversion1350', 'unitConversion2751', 'L_Scapulars_JR_Fthr_0011_AutoJnt', 'R_Scapulars_JR_Fthr_004Bend01_Indiv_Ctrl_Offset_Grp', 'L_Scapulars_JR_Fthr_002Bend03', 'unitConversion1940', 'L_Secondaries_JR_Fthr_004Bend01', 'unitConversion2199', 'R_Scapulars_JR_Fthr_002', 'R_Primaries_JR_Fthr_007Bend01_Bnd', 'unitConversion2052', 'unitConversion1125', 'L_Secondaries_JR_Fthr_003_InAuto_rx_MD', 'L_Scapulars_JR_Fthr_0013_Out_rx_MD1', 'L_Secondaries_JR_Fthr_0016_BendJnt1', 'unitConversion1446', 'L_Secondaries_JR_Fthr_0011Bend01_Bnd_parentConstraint1', 'unitConversion723', 'unitConversion1868', 'unitConversion1755', 'unitConversion1485', 'unitConversion2245', 'unitConversion2564', 'unitConversion2771', 'unitConversion1936', 'R_Secondaries_JR_Fthr_004Bend01_Bnd', 'L_Scapulars_JR_Fthr_004_Bnd_parentConstraint1', 'L_Secondaries_JR_Fthr_004Bend03_Bnd_parentConstraint1', 'R_Scapulars_JR_Fthr_004_Ctrl_Root_Grp', 'R_Secondaries_JR_Fthr_0012_Ctrl_Auto_Grp', 'R_Secondaries_JR_Wing_0016', 'L_Secondaries_JR_Fthr_0017_SpreadAuto_Auto', 'unitConversion479', 'unitConversion1495', 'unitConversion588', 'unitConversion2422', 'unitConversion2748', 'L_Secondaries_JR_Fthr_0010_Out_rx_MD', 'L_Secondaries_JR_Fthr_005_OutAuto_ry_MD1', 'R_Scapulars_JR_Fthr_000Bend03_Indiv_Ctrl', 'L_Secondaries_JR_Fthr_004_AutoJnt', 'L_Primaries_JR_Fthr_009_In_ry_MD1', 'unitConversion2140', 'unitConversion1551', 'L_Secondaries_JR_Fthr_004_BendJnt1', 'unitConversion6', 'unitConversion2672', 'unitConversion2293', 'unitConversion2217', 'L_Secondaries_JR_Fthr_0017_BendJnt3', 'L_Secondaries_JR_Fthr_009Bend01_Indiv_CtrlShape', 'L_Secondaries_JR_Fthr_0011_Ctrl_Root_Grp', 'unitConversion1369', 'L_Secondaries_JR_Fthr_0017Bend03', 'unitConversion277', 'R_Primaries_JR_Wing_000_Ctrl_Auto_Grp', 'R_Secondaries_JR_Fthr_004Bend02_Indiv_Ctrl_tag', 'unitConversion886', 'L_Primaries_JR_parentConstraint1', 'L_Primaries_JR_Wing_005_Bnd_parentConstraint1', 'R_Scapulars_JR_Fthr_000_SpreadCtrlGrp', 'L_Secondaries_JR_Fthr_0016Bend02_Indiv_CtrlShape', 'R_Scapulars_JR_Fthr_001_Indiv_Ctrl', 'L_Scapulars_JR_Wing_002_parentConstraint1', 'R_Scapulars_JR_Fthr_005Bend01_Indiv_Ctrl_tag', 'unitConversion731', 'L_Primaries_JR_Fthr_009_InAuto_ry_MD1', 'unitConversion2731', 'L_Primaries_JR_Fthr_006_Ctrl', 'L_Secondaries_JR_Fthr_0013Bend01_Indiv_Ctrl_Offset_Grp', 'R_Primaries_JR_Fthr_004Bend02_Indiv_Ctrl_Offset_Grp', 'R_Scapulars_JR_Fthr_002Bend03_Indiv_Ctrl_Offset_Grp', 'unitConversion1132', 'unitConversion2309', 'L_Secondaries_JR_Fthr_009_Out_rx_MD1', 'L_Primaries_JR_Wing_004_Bnd', 'unitConversion154', 'L_Primaries_JR_Fthr_007Bend01_Bnd_parentConstraint1', 'unitConversion54', 'R_Secondaries_JR_Fthr_0012', 'R_Primaries_JR_Wing_005_parentConstraint1', 'unitConversion1694', 'unitConversion494', 'L_Secondaries_JR_Fthr_009_SpreadAuto_Auto', 'unitConversion2655', 'unitConversion210', 'L_Scapulars_JR_Fthr_009_Out_rx_MD1', 'unitConversion1282', 'R_Primaries_JR_9_Ctrl', 'L_Secondaries_JR_Fthr_0010Bend03_Indiv_Ctrl_Offset_Grp', 'L_Scapulars_JR_Fthr_0010Bend03', 'L_Scapulars_JR_Fthr_006_Ctrl_Root_Grp', 'L_Scapulars_JR_Fthr_002Bend01', 'unitConversion1806', 'unitConversion2334', 'R_Primaries_JR_Wing_001_Bnd', 'R_Secondaries_JR_Fthr_0012_Bnd', 'L_Primaries_JR_Fthr_000_RootJnt', 'L_Primaries_JR_Fthr_004_SpreadCtrlGrp', 'unitConversion72', 'unitConversion94', 'L_WingRef_LocShape', 'L_Scapulars_JR_Fthr_002_OutAuto_ry_MD', 'L_Scapulars_JR_Fthr_0012Bend01_Indiv_Ctrl_Offset_Grp', 'R_Secondaries_JR_Fthr_007_Indiv_Ctrl_Offset_Grp', 'L_Scapulars_JR_Fthr_005Bend03_Indiv_Ctrl_Offset_Grp', 'L_Primaries_JR_0_Ctrl', 'L_Scapulars_JR_Fthr_002Bend02', 'unitConversion2059', 'unitConversion1783', 'L_Secondaries_JR_Fthr_0017_InAuto_rx_MD', 'unitConversion850', 'L_Scapulars_JR_Fthr_006_In_ry_MD', 'R_Secondaries_JR_Fthr_0016Bend03_Bnd', 'R_Secondaries_JR_16_Ctrl', 'L_Primaries_JR_Fthr_000Bend03_Bnd', 'L_Primaries_JR_Fthr_007_Indiv_Ctrl_tag', 'L_Clav_JR_Bnd', 'L_Secondaries_JR_Fthr_007Bend02_Indiv_Ctrl', 'unitConversion287', 'L_Scapulars_JR_Fthr_001_Out_ry_MD', 'unitConversion2032', 'unitConversion2750', 'L_Scapulars_JR_Fthr_008_SpreadAuto_Auto', 'L_Scapulars_JR_Fthr_009_Indiv_Ctrl_tag', 'R_Scapulars_JR_Fthr_0012_Ctrl_Root_Grp', 'unitConversion1399', 'unitConversion1190', 'L_Secondaries_JR_Fthr_007Bend02_Indiv_CtrlShape', 'L_Secondaries_JR_Fthr_0013Bend03', 'L_Scapulars_JR_Fthr_001Bend01_Indiv_Ctrl', 'R_Secondaries_JR_Fthr_0014Bend03', 'L_Scapulars_JR_Fthr_008Bend01', 'L_Scapulars_JR_Fthr_001Bend03_Indiv_CtrlShape', 'L_Primaries_JR_Fthr_001_OutAuto_rx_MD', 'R_Scapulars_JR_Fthr_0010', 'unitConversion1459', 'unitConversion1262', 'unitConversion128', 'L_Primaries_JR_Fthr_008_AutoJnt', 'R_Secondaries_JR_Fthr_0014_BendJnt3', 'L_Secondaries_JR_Fthr_0014Bend01_Bnd', 'R_Secondaries_JR_Fthr_004Bend01_Indiv_Ctrl', 'L_Scapulars_JR_Fthr_000_In_rx_MD', 'unitConversion2712', 'L_Primaries_JR_Fthr_004Bend02_Bnd_parentConstraint1', 'R_Secondaries_JR_Fthr_000_Indiv_Ctrl_tag', 'unitConversion2603', 'R_Secondaries_JR_Fthr_007_AutoJnt', 'unitConversion891', 'unitConversion1518', 'L_Primaries_JR_Fthr_000_InAuto_ry_MD', 'unitConversion1015', 'R_Primaries_JR_Fthr_009_AutoJnt', 'unitConversion2273', 'unitConversion367', 'L_Scapulars_JR_Fthr_0014Bend02_Bnd', 'unitConversion2700', 'R_Secondaries_JR_Fthr_006_BendJnt2', 'R_Primaries_JR_Fthr_005Bend01_Indiv_CtrlShape', 'unitConversion901', 'L_Secondaries_JR_Fthr_007_Ctrl', 'R_Scapulars_JR_9_CtrlL_Scapulars_JR_9_CC_AutoFold_Grp_Grp', 'L_Secondaries_JR_Fthr_0017Bend03_Indiv_Ctrl_tag', 'R_Secondaries_JR_Fthr_006_Indiv_Ctrl', 'unitConversion117', 'L_Scapulars_JR_Fthr_0014Bend02_Indiv_Ctrl_Offset_Grp', 'unitConversion1762', 'R_Scapulars_JR_Fthr_001_Ctrl_Root_Grp', 'R_Secondaries_JR_Fthr_0017_SpreadCtrlGrp', 'unitConversion1704', 'unitConversion1302', 'L_Primaries_JR_Fthr_005_InAuto_ry_MD', 'R_Scapulars_JR_Fthr_0013Bend02_Indiv_CtrlShape', 'R_Scapulars_JR_Fthr_005_SpreadAuto', 'L_Primaries_JR_Fthr_000Bend01', 'R_Scapulars_JR_Fthr_000_SpreadAuto_Root', 'unitConversion2562', 'L_Scapulars_JR_Fthr_000Bend03_Bnd', 'R_Scapulars_JR_Fthr_0012Bend03_Bnd_parentConstraint1', 'unitConversion691', 'L_Scapulars_JR_Fthr_001_CtrlShape', 'L_Scapulars_JR_Fthr_004', 'unitConversion2768', 'unitConversion166', 'L_Primaries_JR_Fthr_001_OutAuto_ry_MD', 'L_Clavicle_JC_Root_scaleConstraint1', 'unitConversion1572', 'R_Primaries_JR_Wing_000_Ctrl_Root_Grp_parentConstraint1', 'unitConversion1864', 'unitConversion1666', 'R_Scapulars_JR_Fthr_006_SpreadCtrlGrp', 'R_Primaries_JR_Fthr_003_SpreadAuto_Auto', 'R_Scapulars_JR_Fthr_001_Ctrl', 'unitConversion2676', 'unitConversion2419', 'L_Primaries_JR_Fthr_008_Bnd', 'L_Secondaries_JR_Fthr_0013Bend01_Bnd_parentConstraint1', 'unitConversion2574', 'L_Secondaries_JR_Fthr_000_In_rx_MD1', 'L_Scapulars_JR_Wing_0012_parentConstraint1', 'unitConversion2696', 'L_Scapulars_JR_Fthr_004Bend02', 'R_Secondaries_JR_Fthr_008_SpreadAuto', 'L_Secondaries_JR_Fthr_004', 'unitConversion2251', 'R_Primaries_JR_Fthr_008_SpreadAuto_Root', 'unitConversion294', 'unitConversion1747', 'R_Primaries_JR_Fthr_000Bend02_Indiv_Ctrl_Offset_Grp', 'L_Secondaries_JR_Fthr_0011Bend02_Indiv_CtrlShape', 'R_Scapulars_JR_Fthr_003Bend03_Indiv_CtrlShape', 'R_Secondaries_JR_Bnd', 'unitConversion2375', 'R_Scapulars_JR_Fthr_0010Bend03_Indiv_Ctrl', 'L_Secondaries_JR_Fthr_0012_In_rx_MD1', 'unitConversion1925', 'L_Scapulars_JR_Fthr_005_Indiv_Ctrl', 'L_Scapulars_JR_Fthr_003_Out_ry_MD1', 'R_Scapulars_JR_Fthr_0011', 'L_Scapulars_JR_Fthr_008Bend01_Indiv_CtrlShape', 'L_Scapulars_JR_Fthr_001_OutAuto_rx_MD', 'unitConversion34', 'L_Scapulars_JR_Fthr_001Bend01_Bnd', 'unitConversion2298', 'L_Primaries_JR_Fthr_001Bend01_Bnd', 'unitConversion1003', 'unitConversion1388', 'L_Secondaries_JR_Fthr_0012_Ctrl', 'R_Scapulars_JR_Fthr_0014_Indiv_Ctrl_tag', 'R_Primaries_JR_Fthr_001Bend01', 'L_Scapulars_JR_Wing_007', 'R_Primaries_JR_Fthr_004_Indiv_Ctrl', 'unitConversion1097', 'unitConversion1608', 'unitConversion1377', 'R_Primaries_JR_Fthr_002_SpreadAuto_Auto', 'R_Secondaries_JR_Fthr_007Bend03_Bnd_parentConstraint1', 'R_Secondaries_JR_Fthr_009Bend02_Indiv_Ctrl_tag', 'unitConversion1081', 'unitConversion11', 'unitConversion1872', 'L_Secondaries_JR_Fthr_009Bend01_Indiv_Ctrl', 'unitConversion2467', 'R_Primaries_JR_Fthr_001_BendJnt3', 'unitConversion2366', 'L_Scapulars_JR_Fthr_006Bend02_Bnd_parentConstraint1', 'unitConversion19', 'R_Scapulars_JR_Fthr_0011_CtrlShape', 'unitConversion465', 'unitConversion614', 'R_Scapulars_JR_Fthr_002_SpreadAuto_Root_orientConstraint1', 'unitConversion565', 'L_Secondaries_JR_Fthr_008_RootJnt', 'R_Secondaries_JR_Fthr_000_Indiv_Ctrl_Offset_Grp', 'L_Secondaries_JR_Fthr_007_Bnd', 'R_Scapulars_JR_Fthr_001_CtrlShape', 'R_Scapulars_JR_Fthr_0010_Indiv_Ctrl', 'L_Scapulars_JR_Fthr_0013Bend03_Bnd', 'unitConversion2607', 'R_Scapulars_JR_Fthr_0011_SpreadCtrlGrp', 'L_Secondaries_JR_Fthr_000Bend02_Bnd_parentConstraint1', 'R_Scapulars_JR_Fthr_009_Indiv_CtrlShape', 'R_Primaries_JR_Fthr_005_Ctrl_Root_Grp', 'L_Primaries_JR_Fthr_009_AutoJnt', 'L_Primaries_JR_Fthr_009_Ctrl_Root_Grp', 'unitConversion2765', 'L_Scapulars_JR_Fthr_007_InAuto_ry_MD', 'L_Secondaries_JR_Fthr_0012Bend01_Bnd', 'unitConversion665', 'unitConversion12', 'L_Scapulars_JR_Fthr_004Bend01_Indiv_Ctrl', 'R_Scapulars_JR_Fthr_001', 'R_Secondaries_JR_Wing_0016_parentConstraint1', 'L_Primaries_JR_Fthr_003_In_rx_MD1', 'unitConversion2131', 'unitConversion1907', 'R_Primaries_JR', 'L_Scapulars_JR_7_Ctrl', 'L_Scapulars_JR_Wing_000_Ctrl_locGlobalRotate', 'L_Scapulars_JR_Fthr_009_Out_rx_MD', 'L_Scapulars_JR_Fthr_0013_Indiv_CtrlShape', 'L_Scapulars_JR_Fthr_000_Bnd', 'L_Primaries_JR_Fthr_007_Out_ry_MD', 'L_Scapulars_JR_Fthr_001_In_rx_MD', 'unitConversion1146', 'R_Secondaries_JR_Fthr_0011_Indiv_CtrlShape', 'R_Secondaries_JR_Fthr_001Bend02_Indiv_Ctrl_tag', 'unitConversion1215', 'R_Scapulars_JR_Wing_002_parentConstraint1', 'R_Scapulars_JR_Fthr_000_SpreadAuto_Auto', 'L_Primaries_JR_Fthr_005_In_rx_MD', 'R_Primaries_JR_Wing_009_parentConstraint1', 'unitConversion1511', 'L_Secondaries_JR_Fthr_0012Bend03_Indiv_Ctrl_Offset_Grp', 'L_Primaries_JR_Fthr_009_BendJnt2', 'R_Scapulars_JR_Fthr_003Bend03_Indiv_Ctrl_Offset_Grp', 'L_Secondaries_JR_Fthr_006Bend01_Indiv_CtrlShape', 'unitConversion502', 'unitConversion1739', 'L_Scapulars_JR_Fthr_002_Ctrl', 'unitConversion145', 'L_Secondaries_JR_Fthr_008_Ctrl_Auto_Grp', 'R_Scapulars_JR_Fthr_006Bend01_Indiv_Ctrl', 'unitConversion1169', 'R_Scapulars_JR_Fthr_005_Indiv_Ctrl_tag', 'R_Scapulars_JR_Fthr_0013Bend02_Indiv_Ctrl_Offset_Grp', 'unitConversion2347', 'R_Secondaries_JR_Fthr_0011_Ctrl_Root_Grp', 'R_Scapulars_JR_Fthr_007Bend03_Indiv_Ctrl', 'L_Primaries_JR_Fthr_004_SpreadAuto_Auto', 'unitConversion1562', 'unitConversion1366', 'unitConversion2303', 'unitConversion1513', 'R_Secondaries_JR_Fthr_003Bend02_Bnd_parentConstraint1', 'unitConversion2305', 'L_Secondaries_JR_Fthr_0010Bend01_Bnd_parentConstraint1', 'L_Secondaries_JR_Fthr_008Bend03_Indiv_Ctrl_tag', 'unitConversion728', 'unitConversion2351', 'L_Primaries_JR_Fthr_002', 'L_Secondaries_JR_Fthr_000Bend03', 'R_Secondaries_JR_Fthr_005', 'L_Primaries_JR_Fthr_002_CtrlShape', 'unitConversion1672', 'R_Primaries_JR_Fthr_003_BendJnt3', 'R_Secondaries_JR_Fthr_006Bend03', 'unitConversion1752', 'L_Secondaries_JR_Fthr_004Bend01_Bnd', 'L_Scapulars_JR_Fthr_001_Bnd_parentConstraint1', 'L_Scapulars_JR_Fthr_0010_In_ry_MD1', 'R_Scapulars_JR_Fthr_0014Bend03', 'L_Primaries_JR_Fthr_002_Ctrl_Root_Grp', 'L_Scapulars_JR_Fthr_005_Out_ry_MD', 'unitConversion469', 'unitConversion2044', 'unitConversion1293', 'unitConversion418', 'L_Scapulars_JR_Fthr_002Bend01_Bnd_parentConstraint1', 'unitConversion1082', 'R_Scapulars_JR_Fthr_000Bend03_Indiv_Ctrl_tag', 'unitConversion887', 'R_Secondaries_JR_Fthr_002_RootJnt', 'L_Scapulars_JR_Fthr_007_SpreadAuto', 'unitConversion192', 'unitConversion761', 'R_Scapulars_JR_Fthr_001Bend01_Indiv_Ctrl_tag', 'L_Scapulars_JR_Fthr_007Bend02_Indiv_Ctrl_Offset_Grp', 'unitConversion633', 'L_Secondaries_JR_Fthr_0016Bend02_Indiv_Ctrl_tag', 'unitConversion1091', 'L_Scapulars_JR_Fthr_000Bend03_Indiv_CtrlShape', 'unitConversion1595', 'L_Scapulars_JR_Fthr_005_SpreadAuto', 'R_Secondaries_JR_Fthr_0010Bend01_Indiv_CtrlShape', 'unitConversion1139', 'R_Scapulars_JR_Wing_000_Ctrl_locGlobalRotateShape', 'L_Clavicle_Ctrl', 'L_Secondaries_JR_Fthr_006Bend02_Indiv_CtrlShape', 'unitConversion2322', 'unitConversion2686', 'L_Scapulars_JR_Fthr_003_In_ry_MD', 'unitConversion863', 'R_Scapulars_JR_Fthr_009_Bnd_parentConstraint1', 'L_Primaries_JR_Fthr_005Bend01', 'unitConversion1549', 'L_Secondaries_JR_Fthr_0016_InAuto_rx_MD1', 'R_Scapulars_JR_Fthr_005Bend03_Bnd', 'R_Secondaries_JR_Fthr_0015_BendJnt3', 'R_Scapulars_JR_Fthr_0013Bend01_Indiv_Ctrl_Offset_Grp', 'R_Scapulars_JR_Wing_000_Ctrl_Root_Grp_parentConstraint1', 'R_Primaries_JR_Fthr_000_BendJnt2', 'L_Scapulars_JR_Fthr_001Bend01_Indiv_CtrlShape', 'R_Primaries_JR_Fthr_005_Indiv_Ctrl_tag', 'R_Primaries_JR_Fthr_004Bend02_Indiv_Ctrl_tag', 'L_Primaries_JR_Fthr_009_In_rx_MD', 'unitConversion1177', 'unitConversion47', 'unitConversion795', 'L_Secondaries_JR_Wing_003_Bnd', 'unitConversion476', 'R_Secondaries_JR_Fthr_0010_SpreadAuto_Root', 'R_Primaries_JR_Wing_004_Bnd', 'L_Primaries_JR_Fthr_001Bend02_Indiv_Ctrl_Offset_Grp', 'L_Secondaries_JR_Fthr_0015_Ctrl', 'unitConversion1024', 'R_Secondaries_JR_Fthr_000_Ctrl_Root_Grp', 'L_Secondaries_JR_Wing_000_Ctrl_Root_Grp_parentConstraint1', 'L_Secondaries_JR_Fthr_0012Bend03_Indiv_CtrlShape', 'R_Scapulars_JR_Fthr_000Bend01_Bnd_parentConstraint1', 'R_Scapulars_JR_Fthr_0014_CtrlShape', 'L_Scapulars_JR_Fthr_004_Out_ry_MD', 'unitConversion1560', 'unitConversion2597', 'L_Scapulars_JR_Fthr_001_OutAuto_rx_MD1', 'unitConversion1352', 'unitConversion1986', 'R_Primaries_JR_Fthr_008_AutoJnt', 'R_Scapulars_JR_Fthr_0012Bend02_Indiv_Ctrl_tag', 'L_Scapulars_JR_Fthr_005_In_rx_MD', 'R_Secondaries_JR_Fthr_0015_Indiv_Ctrl_tag', 'R_Primaries_JR_Fthr_004Bend01_Indiv_Ctrl', 'R_Scapulars_JR_Fthr_0014Bend02_Indiv_Ctrl_Offset_Grp', 'L_Primaries_JR_Fthr_000_OutAuto_rx_MD1', 'unitConversion2312', 'L_Secondaries_JR_Fthr_0016_SpreadAuto_Auto', 'unitConversion1771', 'L_Secondaries_JR_Fthr_008_BendJnt3', 'L_Secondaries_JR_Fthr_009Bend03_Bnd_parentConstraint1', 'unitConversion542', 'unitConversion2317', 'L_Primaries_JR_Wing_003_Bnd_parentConstraint1', 'unitConversion2715', 'unitConversion987', 'unitConversion983', 'L_Scapulars_JR_Wing_0011', 'R_Primaries_JR_Fthr_002Bend02_Indiv_Ctrl_tag', 'R_Primaries_JR_Fthr_003_SpreadAuto', 'R_Scapulars_JR_Fthr_0011_Bnd', 'unitConversion1812', 'R_Primaries_JR_Fthr_004', 'R_Primaries_JR_Fthr_008Bend02', 'L_Secondaries_JR_Fthr_004Bend02_Indiv_CtrlShape', 'L_Scapulars_JR_Fthr_005_Ctrl', 'L_Scapulars_JR_Fthr_0014_Ctrl', 'R_Scapulars_JR_11_Ctrl', 'unitConversion1265', 'L_Primaries_JR_Wing_007', 'R_Primaries_JR_Fthr_001_Indiv_Ctrl', 'L_Scapulars_JR_Fthr_0014Bend02', 'L_Scapulars_JR_Fthr_000_BendJnt3', 'unitConversion1818', 'L_Secondaries_JR_Fthr_002_CtrlShape', 'unitConversion2402', 'L_Secondaries_JR_Fthr_000_In_ry_MD', 'L_Primaries_JR_Fthr_006Bend02_Indiv_Ctrl_tag', 'L_Primaries_JR_Fthr_001_BendJnt3', 'unitConversion1619', 'L_Primaries_JR_Fthr_001Bend02_Bnd_parentConstraint1', 'unitConversion247', 'skinCluster1GroupId1', 'L_Primaries_JR_Fthr_005_Indiv_Ctrl_Offset_Grp', 'L_Scapulars_JR_Fthr_005_OutAuto_rx_MD', 'L_Scapulars_JR_Fthr_006_Indiv_CtrlShape', 'unitConversion207', 'L_Scapulars_JR_Fthr_0014_Out_rx_MD1', 'L_Scapulars_JR_Fthr_0010_AutoJnt', 'R_Secondaries_JR_Wing_0017_parentConstraint1', 'R_Primaries_JR_8_CtrlShape', 'unitConversion2729', 'unitConversion1841', 'unitConversion196', 'R_Scapulars_JR_Fthr_0014_SpreadCtrlGrp', 'R_Scapulars_JR_Fthr_008_Ctrl_Root_Grp', 'R_Scapulars_JR_Fthr_008Bend02_Indiv_Ctrl', 'unitConversion1155', 'L_Scapulars_JR_Fthr_0010Bend01_Indiv_CtrlShape', 'unitConversion376', 'R_Secondaries_JR_Fthr_000Bend01_Indiv_Ctrl_Offset_Grp', 'unitConversion1313', 'unitConversion2738', 'R_Primaries_JR_Fthr_009Bend03_Indiv_Ctrl_tag', 'L_Scapulars_JR_0_Ctrl', 'R_Secondaries_JR_Fthr_002Bend01_Indiv_Ctrl_tag', 'unitConversion547', 'unitConversion2552', 'unitConversion344', 'L_Secondaries_JR_Fthr_003_Ctrl_Root_Grp', 'unitConversion2349', 'R_Secondaries_JR_Fthr_0012_Indiv_Ctrl_tag', 'L_Secondaries_JR_4_CtrlL_Secondaries_JR_4_CC_AutoFold_Grp_Grp', 'L_Primaries_JR_Fthr_001', 'unitConversion1638', 'L_Secondaries_JR_Fthr_007Bend03_Indiv_Ctrl_tag', 'L_Secondaries_JR_Fthr_005Bend03_Bnd', 'unitConversion2431', 'L_Primaries_JR_Fthr_005_InAuto_ry_MD1', 'unitConversion1941', 'unitConversion2727', 'unitConversion1719', 'R_Secondaries_JR_Fthr_008Bend02', 'R_Secondaries_JR_Fthr_009_Indiv_Ctrl_tag', 'unitConversion2301', 'R_Primaries_JR_Fthr_003Bend03_Indiv_Ctrl_tag', 'unitConversion58', 'R_Scapulars_JR_Fthr_004Bend03_Bnd', 'L_Primaries_JR_Fthr_003_InAuto_ry_MD1', 'unitConversion2203', 'L_Secondaries_JR_Fthr_003_InAuto_ry_MD1', 'unitConversion2435', 'unitConversion189', 'L_Scapulars_JR_Fthr_007Bend01_Indiv_Ctrl_Offset_Grp', 'unitConversion2764', 'unitConversion722', 'R_Secondaries_JR_Fthr_001_BendJnt1', 'L_Secondaries_JR_Fthr_006Bend01_Bnd_parentConstraint1', 'skinCluster3Set', 'unitConversion1336', 'R_Secondaries_JR_Fthr_005_SpreadAuto_Auto', 'L_Scapulars_JR_Fthr_005_CtrlShape', 'L_Secondaries_JR_Fthr_001Bend01_Indiv_Ctrl', 'R_Scapulars_JR_Fthr_000_Bnd', 'R_Secondaries_JR_Fthr_0017Bend01_Bnd', 'L_Scapulars_JR_Fthr_0013_In_ry_MD1', 'R_Scapulars_JR_Wing_007_Bnd', 'L_Scapulars_JR_Fthr_009_In_rx_MD1', 'unitConversion1844', 'L_Secondaries_JR_Fthr_0014_OutAuto_ry_MD', 'R_Secondaries_JR_Wing_000_Ctrl_Auto_Grp', 'R_Scapulars_JR_Fthr_006Bend01_Bnd_parentConstraint1', 'L_Secondaries_JR_Fthr_0016_BendJnt3', 'unitConversion1892', 'unitConversion197', 'unitConversion2385', 'R_Primaries_JR_Fthr_001Bend01_Bnd_parentConstraint1', 'unitConversion1730', 'unitConversion1194', 'unitConversion1394', 'L_Scapulars_JR_Fthr_0013_InAuto_ry_MD1', 'L_Scapulars_JR_Fthr_004_Ctrl', 'unitConversion911', 'unitConversion1176', 'L_Secondaries_JR_Fthr_009_RootJnt', 'R_Scapulars_JR_7_Ctrl', 'unitConversion2316', 'unitConversion62', 'unitConversion1455', 'unitConversion1808', 'L_Primaries_JR_Fthr_006Bend02_Indiv_Ctrl', 'L_Secondaries_JR_Fthr_0013_SpreadCtrlGrp', 'L_Secondaries_JR_Fthr_0017_Indiv_CtrlShape', 'R_Secondaries_JR_Wing_000_Ctrl', 'R_Scapulars_JR_Fthr_005Bend01', 'L_Primaries_JR_8_Ctrl', 'R_Scapulars_JR_Fthr_009_Bnd', 'L_Scapulars_JR_Fthr_0011_OutAuto_ry_MD', 'L_Secondaries_JR_Fthr_002Bend02_Indiv_CtrlShape', 'R_Secondaries_JR_Spread_Out_CtrlShape', 'unitConversion1001', 'unitConversion70', 'R_Primaries_JR_Fthr_007_AutoJnt', 'unitConversion976', 'R_Scapulars_JR_Fthr_008_Ctrl_Auto_Grp', 'L_Scapulars_JR_Fthr_003_OutAuto_ry_MD1', 'R_Scapulars_JR_Fthr_0012Bend03_Indiv_Ctrl_tag', 'unitConversion1371', 'unitConversion41', 'L_Primaries_JR_Fthr_008Bend03_Indiv_CtrlShape', 'skinCluster6', 'L_Secondaries_JR_Fthr_000_InAuto_rx_MD1', 'unitConversion734', 'R_Secondaries_JR_Fthr_001_SpreadAuto', 'L_Scapulars_JR_8_Ctrl', 'unitConversion577', 'L_Scapulars_JR_FeathersPlaneShape', 'R_Secondaries_JR_Fthr_007_Indiv_Ctrl', 'L_Secondaries_JR_Fthr_0016_Ctrl_Root_Grp', 'unitConversion1314', 'unitConversion2608', 'L_Scapulars_JR_Fthr_000Bend02_Indiv_Ctrl_tag', 'unitConversion2077', 'R_Secondaries_JR_5_CtrlShape', 'L_Scapulars_JR_Wing_004', 'L_Scapulars_JR_Fthr_001_Indiv_Ctrl', 'L_Primaries_JR_Fthr_000_BendJnt2', 'R_Primaries_JR_Fthr_006_Indiv_Ctrl', 'R_Secondaries_JR_Fthr_0011_RootJnt', 'L_Secondaries_JR_Fthr_0011_OutAuto_ry_MD', 'L_Primaries_JR_Fthr_008Bend02', 'R_Scapulars_JR_Wing_0014', 'unitConversion521', 'unitConversion2011', 'R_Secondaries_JR_Fthr_0017_BendJnt1', 'L_Scapulars_JR_Fthr_000_In_ry_MD1', 'R_Secondaries_JR_Fthr_0011Bend03_Bnd_parentConstraint1', 'unitConversion1877', 'L_Secondaries_JR_Fthr_0010_BendJnt3', 'R_Secondaries_JR_Fthr_000Bend03_Bnd', 'L_Secondaries_JR_Fthr_0011_SpreadAuto_Auto', 'L_Secondaries_JR_Fthr_004_RootJnt', 'L_Secondaries_JR_Fthr_006_Out_ry_MD1', 'R_Secondaries_JR_Fthr_0016Bend03_Indiv_Ctrl_Offset_Grp', 'unitConversion1311', 'R_Primaries_JR_Wing_005_Bnd', 'R_Scapulars_JR_Fthr_004_Bnd', 'unitConversion144', 'L_Secondaries_JR_Fthr_0013Bend02_Indiv_Ctrl_Offset_Grp', 'R_Scapulars_JR_Fthr_006_CtrlShape', 'R_Secondaries_JR_Fthr_004Bend01', 'unitConversion1140', 'R_Primaries_JR_Fthr_008_SpreadCtrlGrp', 'unitConversion2223', 'R_Primaries_JR_3_CtrlL_Primaries_JR_3_CC_AutoFold_Grp_Grp', 'L_Scapulars_JR_Fthr_0014Bend03_Bnd_parentConstraint1', 'unitConversion1764', 'L_Scapulars_JR_Fthr_000_Indiv_Ctrl_tag', 'R_Scapulars_JR_Fthr_009_Indiv_Ctrl_Offset_Grp', 'unitConversion1298', 'L_Secondaries_JR_Fthr_009_InAuto_rx_MD', 'unitConversion2455', 'unitConversion248', 'L_Secondaries_JR_Fthr_0015_In_rx_MD1', 'R_Primaries_JR_Fthr_003_AutoJnt', 'unitConversion1033', 'L_Secondaries_JR_Fthr_000_Indiv_Ctrl_Offset_Grp', 'L_Secondaries_JR_Fthr_006Bend02_Indiv_Ctrl', 'L_Secondaries_JR_Fthr_007Bend02_Indiv_Ctrl_tag', 'L_Primaries_JR_Spread_In_CtrlShape', 'unitConversion10', 'R_Scapulars_JR_Fthr_0010Bend03_Indiv_CtrlShape', 'R_Secondaries_JR_Fthr_000_SpreadAuto_Root', 'unitConversion1641', 'L_Primaries_JR_Fthr_008Bend01_Bnd_parentConstraint1', 'L_Secondaries_JR_Fthr_002_BendJnt3', 'unitConversion2350', 'R_Primaries_JR_Fthr_005Bend02_Indiv_Ctrl', 'unitConversion1579', 'L_Primaries_JR_Fthr_002Bend01_Bnd', 'L_Scapulars_JR_Fthr_0010_InAuto_ry_MD', 'R_Scapulars_JR_Wing_0012_Bnd', 'unitConversion1423', 'unitConversion1327', 'L_Secondaries_JR_Fthr_007Bend01_Bnd_parentConstraint1', 'L_Scapulars_JR_Fthr_0011_Out_rx_MD', 'L_Secondaries_JR_Fthr_0017_InAuto_rx_MD1', 'unitConversion2288', 'R_Scapulars_JR_Fthr_004_Indiv_Ctrl_Offset_Grp', 'L_Primaries_JR_Fthr_001_RootJnt', 'L_Scapulars_JR_Fthr_0011Bend02', 'L_Primaries_JR_Fthr_007_Out_rx_MD1', 'L_Secondaries_JR_Fthr_004_BendJnt2', 'L_Scapulars_JR_Fthr_0012Bend01_Bnd', 'R_Secondaries_JR_Fthr_005_Indiv_Ctrl_tag', 'unitConversion35', 'R_Primaries_JR_Fthr_009Bend03_Indiv_Ctrl', 'R_Secondaries_JR_Fthr_005Bend03_Indiv_Ctrl_Offset_Grp', 'L_Primaries_JR_Fthr_005Bend01_Indiv_Ctrl_tag', 'R_Scapulars_JR_Fthr_006Bend02_Indiv_Ctrl_Offset_Grp', 'R_Secondaries_JR_Fthr_0011Bend03_Indiv_CtrlShape', 'unitConversion2471', 'R_Secondaries_JR_Fthr_0010_Indiv_Ctrl_Offset_Grp', 'R_Scapulars_JR_Wing_008_Bnd_parentConstraint1', 'R_Secondaries_JR_Fthr_0014_Indiv_Ctrl_tag', 'R_Scapulars_JR_Fthr_0013_Indiv_CtrlShape', 'unitConversion1655', 'L_Scapulars_JR_Fthr_001Bend01', 'L_Scapulars_JR_Wing_007_parentConstraint1', 'L_Scapulars_JR_Fthr_0010Bend02_Indiv_CtrlShape', 'L_Secondaries_JR_Fthr_0016_In_rx_MD1', 'L_Scapulars_JR_9_Ctrl', 'R_Secondaries_JR_Wing_003_parentConstraint1', 'L_Scapulars_JR_10_CtrlL_Scapulars_JR_10_CC_AutoFold_Grp_Grp', 'L_Scapulars_JR_Fthr_002Bend03_Indiv_Ctrl_Offset_Grp', 'R_Scapulars_JR_Fthr_007_Ctrl', 'R_Secondaries_JR_Fthr_004_Bnd_parentConstraint1', 'L_Primaries_JR_Fthr_008_In_rx_MD1', 'unitConversion2213', 'unitConversion729', 'unitConversion2444', 'unitConversion919', 'unitConversion1240', 'R_Secondaries_JR_Fthr_0014_SpreadAuto_Root', 'unitConversion2344', 'L_Scapulars_JR_Fthr_002Bend03_Indiv_Ctrl', 'R_Scapulars_JR_Fthr_001Bend02_Indiv_Ctrl_Offset_Grp', 'L_Secondaries_JR_Fthr_005Bend03_Bnd_parentConstraint1', 'unitConversion2221', 'unitConversion730', 'L_Primaries_JR_Fthr_009_Bnd', 'L_Scapulars_JR_Fthr_002Bend03_Bnd_parentConstraint1', 'R_Scapulars_JR_7_CtrlL_Scapulars_JR_7_CC_AutoFold_Grp_Grp', 'unitConversion790', 'L_Secondaries_JR_Fthr_0016_Out_ry_MD', 'R_Scapulars_JR_Fthr_009Bend02_Indiv_Ctrl_tag', 'unitConversion2509', 'unitConversion2511', 'R_Secondaries_JR_Fthr_001Bend03_Indiv_CtrlShape', 'L_Secondaries_JR_17_CtrlL_Secondaries_JR_17_CC_AutoFold_Grp_Grp', 'R_Secondaries_JR_Fthr_009Bend01', 'unitConversion1294', 'R_Scapulars_JR_Fthr_0014_BendJnt2', 'L_Secondaries_JR_Fthr_000Bend01_Indiv_Ctrl_tag', 'R_Scapulars_JR_Fthr_0014Bend03_Bnd_parentConstraint1', 'R_Secondaries_JR_Fthr_0010Bend01_Bnd_parentConstraint1', 'L_Secondaries_JR_Fthr_0010_OutAuto_ry_MD1', 'L_Primaries_JR_Fthr_003Bend02', 'R_Secondaries_JR_Wing_007_Bnd_parentConstraint1', 'unitConversion522', 'R_Scapulars_JR_Fthr_002_Ctrl_Root_Grp', 'L_Secondaries_JR_Fthr_0016_Indiv_Ctrl_Offset_Grp', 'unitConversion416', 'unitConversion615', 'unitConversion2531', 'L_Secondaries_JR_Fthr_002Bend01_Indiv_CtrlShape', 'L_Secondaries_JR_Fthr_004_In_ry_MD', 'unitConversion325', 'R_Scapulars_JR_Fthr_002Bend02_Indiv_Ctrl_Offset_Grp', 'R_Scapulars_JR_Wing_000_Auto', 'unitConversion877', 'R_Secondaries_JR_Wing_002', 'R_Primaries_JR_Spread_In_Auto_Grp', 'unitConversion2330', 'L_Secondaries_JR_FeathersPlaneShape', 'unitConversion2714', 'R_Secondaries_JR_Fthr_002_Ctrl_Root_Grp', 'unitConversion66', 'unitConversion841', 'R_Primaries_JR_Fthr_005_Indiv_Ctrl_Offset_Grp', 'unitConversion2082', 'R_Primaries_JR_Fthr_007_Ctrl', 'unitConversion1909', 'L_Scapulars_JR_Fthr_005Bend03_Indiv_CtrlShape', 'unitConversion48', 'unitConversion711', 'L_Scapulars_JR_Fthr_0014_Out_ry_MD', 'unitConversion1517', 'L_Scapulars_JR_Fthr_0011_SpreadAuto_Root_orientConstraint1', 'R_Secondaries_JR_Fthr_0017_RootJnt', 'unitConversion2480', 'L_Primaries_JR_Fthr_005_In_ry_MD', 'R_Primaries_JR_Fthr_008Bend01_Bnd_parentConstraint1', 'unitConversion2259', 'R_Primaries_JR_Fthr_006_CtrlShape', 'L_Secondaries_JR_Fthr_0016Bend02_Indiv_Ctrl', 'L_Scapulars_JR_Fthr_0013', 'R_Secondaries_JR_Fthr_001_Bnd', 'unitConversion879', 'L_Primaries_JR_Fthr_000_InAuto_ry_MD1', 'unitConversion413', 'L_Scapulars_JR_Fthr_003_SpreadAuto_Auto', 'unitConversion2561', 'L_Scapulars_JR_Fthr_006_OutAuto_ry_MD', 'R_Secondaries_JR_Fthr_0012Bend02', 'L_Primaries_JR_Fthr_009Bend01', 'L_Secondaries_JR_Fthr_003Bend01', 'unitConversion2710', 'L_Primaries_JR_3_CtrlL_Primaries_JR_3_CC_AutoFold_Grp_Grp', 'L_Scapulars_JR_Fthr_006Bend03_Indiv_Ctrl', 'L_Scapulars_JR_Fthr_007_In_rx_MD1', 'R_Scapulars_JR_Fthr_0013_Indiv_Ctrl_tag', 'unitConversion1491', 'unitConversion1776', 'L_Secondaries_JR_Fthr_005_Bnd', 'R_Scapulars_JR_Fthr_0011Bend02_Bnd', 'unitConversion1178', 'unitConversion1512', 'R_Scapulars_JR_Fthr_007Bend01_Indiv_CtrlShape', 'unitConversion2224', 'unitConversion646', 'unitConversion1121', 'unitConversion1930', 'R_Secondaries_JR_Fthr_0017Bend03_Bnd_parentConstraint1', 'L_Scapulars_JR_Fthr_005_SpreadCtrlGrp', 'L_Scapulars_JR_Fthr_008Bend03', 'L_Primaries_JR_Fthr_000_Bnd_parentConstraint1', 'R_Scapulars_JR_Fthr_002Bend01_Indiv_Ctrl_tag', 'unitConversion2195', 'unitConversion784', 'L_Primaries_JR_Wing_003_Bnd', 'R_Secondaries_JR_Fthr_003Bend01', 'R_Secondaries_JR_Fthr_001_Indiv_Ctrl_Offset_Grp', 'L_Scapulars_JR_Fthr_006_OutAuto_rx_MD', 'R_Scapulars_JR_Fthr_0014_BendJnt3', 'unitConversion334', 'L_Scapulars_JR_Fthr_0012Bend03_Indiv_CtrlShape', 'unitConversion595', 'unitConversion1036', 'unitConversion845', 'L_Scapulars_JR_Fthr_005Bend02_Indiv_CtrlShape', 'unitConversion2430', 'L_Scapulars_JR_Fthr_0011Bend01', 'L_Scapulars_JR_Fthr_000Bend02_Indiv_CtrlShape', 'unitConversion2107', 'R_Secondaries_JR_Fthr_0011_Indiv_Ctrl_tag', 'unitConversion1523', 'L_Primaries_JR_Fthr_002_OutAuto_ry_MD1', 'L_Secondaries_JR_Fthr_0010_SpreadAuto_Auto', 'L_Scapulars_JR_Fthr_0010Bend02_Bnd', 'L_Secondaries_JR_Fthr_0014_SpreadAuto', 'L_Scapulars_JR_Fthr_004_SpreadAuto', 'L_Primaries_JR_Fthr_003Bend02_Indiv_Ctrl_Offset_Grp', 'L_Primaries_JR_Fthr_002_In_ry_MD1', 'unitConversion2769', 'L_Secondaries_JR_Fthr_0013Bend03_Indiv_Ctrl_tag', 'R_Scapulars_JR_Fthr_002_Bnd_parentConstraint1', 'unitConversion1721', 'L_Primaries_JR_Fthr_001_CtrlShape', 'R_Primaries_JR_Fthr_008_Indiv_CtrlShape', 'unitConversion905', 'Bind_Joints_Grp_scaleConstraint1', 'unitConversion477', 'L_Primaries_JR_Fthr_000Bend01_Indiv_Ctrl_Offset_Grp', 'L_Secondaries_JR_Fthr_003Bend03', 'L_Secondaries_JR_Fthr_004Bend03_Indiv_Ctrl_Offset_Grp', 'R_Secondaries_JR_Fthr_0012_Bnd_parentConstraint1', 'skinCluster3GroupId1', 'unitConversion183', 'unitConversion2793', 'L_Scapulars_JR_3_CtrlL_Scapulars_JR_3_CC_AutoFold_Grp_Grp', 'unitConversion801', 'L_Secondaries_JR_Fthr_001_SpreadAuto', 'unitConversion821', 'L_Secondaries_JR_Fthr_009Bend01', 'R_Secondaries_JR_Fthr_0015_AutoJnt', 'L_Primaries_JR_Wing_006_parentConstraint1', 'unitConversion341', 'R_Secondaries_JR_17_CtrlL_Secondaries_JR_17_CC_AutoFold_Grp_Grp', 'R_Secondaries_JR_Fthr_002Bend03_Bnd_parentConstraint1', 'unitConversion2070', 'L_Scapulars_JR_Fthr_001_InAuto_ry_MD', 'unitConversion1632', 'unitConversion789', 'L_Secondaries_JR_Fthr_0012_OutAuto_rx_MD1', 'unitConversion765', 'unitConversion1118', 'R_Secondaries_JR_Fthr_001_Ctrl_Auto_Grp', 'unitConversion1440', 'unitConversion663', 'L_Scapulars_JR_Wing_0010_Bnd_parentConstraint1', 'L_Scapulars_JR_Fthr_001_In_rx_MD1', 'R_Scapulars_JR_Fthr_004_Bnd_parentConstraint1', 'L_Scapulars_JR_Fthr_003Bend01_Indiv_Ctrl_Offset_Grp', 'L_Scapulars_JR_Fthr_004Bend02_Bnd_parentConstraint1', 'unitConversion1277', 'L_Scapulars_JR_Fthr_007Bend01_Bnd_parentConstraint1', 'unitConversion1433', 'R_Secondaries_JR_6_CtrlL_Secondaries_JR_6_CC_AutoFold_Grp_Grp', 'unitConversion352', 'unitConversion2791', 'unitConversion985', 'L_Scapulars_JR_Fthr_0012_InAuto_rx_MD1', 'unitConversion1101', 'unitConversion984', 'L_Scapulars_JR_Fthr_002Bend01_Indiv_Ctrl', 'L_Scapulars_JR_Fthr_003Bend01_Indiv_CtrlShape', 'R_Scapulars_JR_Wing_003', 'L_Scapulars_JR_Fthr_007Bend02_Bnd', 'unitConversion880', 'L_Primaries_JR_Fthr_009', 'L_Secondaries_JR_Fthr_0015_InAuto_ry_MD', 'unitConversion858', 'R_Scapulars_JR_Fthr_001Bend01_Indiv_CtrlShape', 'unitConversion1963', 'R_Scapulars_JR_Fthr_0014Bend02_Indiv_Ctrl', 'unitConversion1869', 'R_Secondaries_JR_Fthr_003_SpreadAuto_Auto', 'L_Secondaries_JR_Fthr_0017Bend01_Indiv_Ctrl_tag', 'R_Secondaries_JR_Fthr_006Bend02_Indiv_CtrlShape', 'R_Secondaries_JR_Wing_008_Bnd_parentConstraint1', 'unitConversion526', 'L_Primaries_JR_Fthr_003_In_ry_MD1', 'unitConversion1130', 'unitConversion26', 'R_Primaries_JR_Wing_001_parentConstraint1', 'R_Primaries_JR_Fthr_003Bend03_Indiv_Ctrl_Offset_Grp', 'unitConversion1777', 'L_Primaries_JR_Fthr_001Bend01_Indiv_CtrlShape', 'L_Secondaries_JR_Fthr_007_Ctrl_Auto_Grp', 'L_Secondaries_JR_Fthr_0016Bend02', 'L_Primaries_JR_Fthr_001_InAuto_ry_MD', 'L_Scapulars_JR_Fthr_005_Ctrl_Root_Grp', 'L_Secondaries_JR_Fthr_000_BendJnt2', 'unitConversion2370', 'R_Secondaries_JR_Fthr_0012_CtrlShape', 'unitConversion191', 'L_Primaries_JR_Fthr_004_AutoJnt', 'L_Scapulars_JR_Fthr_009_Out_ry_MD', 'R_Primaries_JR_Fthr_006Bend01', 'L_Secondaries_JR_Fthr_008_Out_rx_MD', 'L_Scapulars_JR_Fthr_001Bend03_Indiv_Ctrl_tag', 'unitConversion1634', 'unitConversion495', 'R_Secondaries_JR_Wing_001', 'R_Scapulars_JR_Fthr_0011Bend03_Indiv_Ctrl', 'R_Scapulars_JR_Fthr_008_AutoJnt', 'L_Primaries_JR_Fthr_000Bend02_Indiv_CtrlShape', 'unitConversion655', 'unitConversion1953', 'R_Secondaries_JR_Fthr_0011Bend01', 'L_Secondaries_JR_Fthr_0015Bend01_Indiv_CtrlShape', 'unitConversion1646', 'L_Scapulars_JR_Fthr_009_Out_ry_MD1', 'unitConversion1873', 'R_Scapulars_JR_Fthr_0010Bend01_Indiv_Ctrl_Offset_Grp', 'R_Scapulars_JR_Fthr_008_Indiv_Ctrl_tag', 'unitConversion2208', 'unitConversion1698', 'unitConversion1706', 'L_Secondaries_JR_Fthr_0015Bend03_Bnd_parentConstraint1', 'unitConversion1508', 'L_Scapulars_JR_Fthr_005Bend03', 'unitConversion2517', 'L_Secondaries_JR_Fthr_008_SpreadAuto_Auto', 'L_Primaries_JR_Fthr_003Bend01', 'unitConversion1259', 'L_Scapulars_JR_Wing_0012_Bnd_parentConstraint1', 'R_Scapulars_JR_Fthr_009Bend03_Indiv_Ctrl', 'unitConversion1236', 'R_Primaries_JR_Fthr_000_Ctrl', 'R_Primaries_JR_Fthr_007Bend01_Indiv_Ctrl_Offset_Grp', 'unitConversion2523', 'R_Secondaries_JR_Fthr_0017Bend01', 'unitConversion2341', 'unitConversion274', 'unitConversion394', 'L_Secondaries_JR_Wing_000_Bnd', 'L_Scapulars_JR_Fthr_003_Indiv_Ctrl_tag', 'R_Scapulars_JR_Fthr_009Bend03_Indiv_Ctrl_Offset_Grp', 'R_Secondaries_JR_Fthr_002_Ctrl', 'unitConversion1471', 'unitConversion202', 'unitConversion1354', 'R_Secondaries_JR_15_CtrlShape', 'R_Secondaries_JR_Fthr_004', 'unitConversion236', 'R_Secondaries_JR_Wing_007', 'unitConversion1977', 'L_Scapulars_JR_Fthr_0010_InAuto_rx_MD1', 'R_Scapulars_JR_Fthr_0014_Ctrl_Auto_Grp', 'L_Primaries_JR_Fthr_002Bend03_Indiv_Ctrl_Offset_Grp', 'L_Primaries_JR_Fthr_001Bend01_Indiv_Ctrl_tag', 'R_Secondaries_JR_Fthr_0011_Bnd', 'L_Scapulars_JR_Fthr_0014Bend01_Indiv_Ctrl_tag', 'L_Scapulars_JR_Fthr_001_Out_rx_MD1', 'R_Scapulars_JR_Fthr_0010_Ctrl', 'unitConversion1195', 'unitConversion862', 'L_Scapulars_JR_Fthr_004Bend03_Bnd', 'R_Primaries_JR_Fthr_008_Bnd_parentConstraint1', 'L_Primaries_JR_Fthr_002Bend03_Indiv_Ctrl_tag', 'R_Scapulars_JR_Fthr_006_Ctrl_Root_Grp', 'R_Scapulars_JR_Fthr_0010Bend03_Indiv_Ctrl_tag', 'L_Secondaries_JR_Fthr_0016_Indiv_CtrlShape', 'L_Primaries_JR_Fthr_005_Out_rx_MD', 'L_Secondaries_JR_Fthr_007_Out_rx_MD1', 'unitConversion2182', 'unitConversion1166', 'L_Secondaries_JR_Fthr_001_Ctrl_Auto_Grp', 'unitConversion931', 'R_Secondaries_JR_Fthr_0010_SpreadAuto_Auto', 'L_Secondaries_JR_Fthr_0011_In_ry_MD1', 'R_Secondaries_JR_10_Ctrl', 'L_Scapulars_JR_Fthr_003_Indiv_Ctrl_Offset_Grp', 'L_Secondaries_JR_Fthr_002_Ctrl_Root_Grp', 'L_Secondaries_JR_Fthr_003_Indiv_CtrlShape', 'unitConversion251', 'unitConversion1993', 'unitConversion238', 'R_Primaries_JR_Fthr_003Bend01_Indiv_Ctrl', 'unitConversion2417', 'R_Secondaries_JR_Fthr_001_BendJnt2', 'R_Primaries_JR_Fthr_009_Bnd', 'R_Secondaries_JR_Fthr_005Bend01_Indiv_Ctrl_Offset_Grp', 'L_Scapulars_JR_Fthr_0010Bend01_Indiv_Ctrl', 'R_Secondaries_JR_Fthr_0014Bend02_Indiv_CtrlShape', 'R_Secondaries_JR_Wing_005_Bnd', 'R_Scapulars_JR_Fthr_001_SpreadAuto', 'R_Secondaries_JR_Fthr_009_CtrlShape', 'L_Scapulars_JR_Fthr_006_Out_ry_MD', 'unitConversion2571', 'R_Secondaries_JR_Fthr_0011Bend01_Indiv_Ctrl_tag', 'L_Scapulars_JR_Wing_005_Bnd_parentConstraint1', 'L_Primaries_JR_Fthr_005_SpreadCtrlGrp', 'L_Primaries_JR_Fthr_005_Out_ry_MD', 'R_Secondaries_JR_Fthr_0010_CtrlShape', 'unitConversion1124', 'unitConversion733', 'L_Secondaries_JR_Fthr_001_CtrlShape', 'R_Secondaries_JR_Fthr_0011Bend02', 'R_Primaries_JR_Fthr_009_BendJnt3', 'unitConversion1635', 'L_Scapulars_JR_Fthr_0011Bend01_Indiv_Ctrl_tag', 'unitConversion2573', 'R_Primaries_JR_Fthr_006Bend01_Bnd', 'L_Primaries_JR_Fthr_009_OutAuto_rx_MD1', 'L_Secondaries_JR_7_CtrlShape', 'unitConversion2461', 'unitConversion226', 'unitConversion2536', 'unitConversion1867', 'unitConversion590', 'R_Primaries_JR_Fthr_002_SpreadAuto', 'L_Secondaries_JR_Fthr_000_Ctrl_Root_Grp', 'unitConversion2677', 'R_Scapulars_JR_Fthr_006_RootJnt', 'L_Secondaries_JR_Fthr_0017_SpreadAuto_Root', 'R_Secondaries_JR_Fthr_009Bend01_Indiv_Ctrl', 'R_Scapulars_JR_Fthr_002_SpreadCtrlGrp', 'L_Secondaries_JR_Fthr_005Bend02_Indiv_Ctrl_tag', 'L_Secondaries_JR_Fthr_009_Indiv_Ctrl_tag', 'R_Scapulars_JR_Wing_000_Ctrl_Root_Grp', 'R_Scapulars_JR_Fthr_0013Bend02_Indiv_Ctrl', 'L_Secondaries_JR_Fthr_0010_Ctrl_Auto_Grp', 'L_Scapulars_JR_Fthr_007Bend02_Indiv_Ctrl_tag', 'unitConversion736', 'R_Secondaries_JR_Wing_005_parentConstraint1', 'unitConversion1137', 'unitConversion1278', 'L_Primaries_JR_FeathersPlane', 'unitConversion429', 'R_Primaries_JR_Fthr_000_BendJnt3', 'R_Scapulars_JR_Fthr_004Bend02', 'unitConversion2644', 'L_Primaries_JR_Fthr_003Bend03_Indiv_Ctrl_tag', 'unitConversion1470', 'R_Secondaries_JR_Fthr_005_Ctrl_Root_Grp', 'unitConversion90', 'R_Primaries_JR_Fthr_005Bend03', 'R_Scapulars_JR_Wing_0011_Bnd_parentConstraint1', 'R_Secondaries_JR_Fthr_008Bend01_Bnd', 'R_Primaries_JR_Fthr_001Bend03_Indiv_Ctrl_Offset_Grp', 'L_Primaries_JR_Fthr_006_RootJnt', 'unitConversion1087', 'R_Scapulars_JR_Fthr_003Bend01_Bnd', 'unitConversion641', 'L_Wing_Ctrl', 'R_Primaries_JR_Wing_003_parentConstraint1', 'R_Scapulars_JR_Fthr_003_Ctrl_Root_Grp', 'R_Scapulars_JR_Fthr_0013_Bnd_parentConstraint1', 'unitConversion1464', 'unitConversion450', 'R_Primaries_JR_Wing_002_Bnd_parentConstraint1', 'R_Primaries_JR_Fthr_006_Indiv_Ctrl_Offset_Grp', 'R_Scapulars_JR_Fthr_0010Bend03_Bnd_parentConstraint1', 'unitConversion2079', 'R_Secondaries_JR_Fthr_008Bend03_Indiv_Ctrl_tag', 'R_Scapulars_JR_Fthr_0014', 'unitConversion2596', 'unitConversion370', 'R_Secondaries_JR_9_CtrlL_Secondaries_JR_9_CC_AutoFold_Grp_Grp', 'L_Scapulars_JR_Wing_0013_Bnd_parentConstraint1', 'unitConversion1665', 'R_Clav_JR_Bnd_parentConstraint1', 'R_Primaries_JR_0_CtrlL_Primaries_JR_0_CC_AutoFold_Grp_Grp', 'L_Secondaries_JR_Fthr_004Bend03_Indiv_CtrlShape', 'L_Scapulars_JR_Wing_002_Bnd_parentConstraint1', 'L_Scapulars_JR_Fthr_009_In_ry_MD1', 'unitConversion2135', 'R_Scapulars_JR_Fthr_007Bend03_Indiv_CtrlShape', 'unitConversion706', 'unitConversion2753', 'L_Primaries_JR_Fthr_006_SpreadAuto', 'R_Secondaries_JR_Fthr_006_Bnd', 'L_Secondaries_JR_Fthr_004_Out_ry_MD', 'L_Secondaries_JR_13_CtrlL_Secondaries_JR_13_CC_AutoFold_Grp_Grp', 'L_Primaries_JR_Fthr_001Bend01_Indiv_Ctrl', 'unitConversion7', 'L_Scapulars_JR_Fthr_001_BendJnt2', 'R_Secondaries_JR_Fthr_003_Ctrl_Auto_Grp', 'unitConversion1663', 'L_Scapulars_JR_Fthr_008_Out_ry_MD', 'unitConversion1156', 'unitConversion1648', 'L_Scapulars_JR_Fthr_0011_SpreadAuto', 'R_Scapulars_JR_Wing_0011', 'R_Secondaries_JR_Wing_0012_Bnd', 'unitConversion1787', 'L_Scapulars_JR_Fthr_001Bend02', 'R_Scapulars_JR_Fthr_000_Indiv_CtrlShape', 'R_Primaries_JR_Fthr_002Bend01_Indiv_Ctrl_tag', 'R_Secondaries_JR_Spread_In_Ctrl', 'L_Secondaries_JR_Fthr_0011Bend03_Indiv_Ctrl_tag', 'R_Primaries_JR_Fthr_009_SpreadAuto', 'R_Secondaries_JR_Spread_Out_Root_Grp', 'unitConversion324', 'L_Secondaries_JR_Fthr_0013_Ctrl_Auto_Grp', 'unitConversion2198', 'L_Primaries_JR_Fthr_000_CtrlShape', 'L_Primaries_JR_Fthr_004Bend02', 'L_Scapulars_JR_Fthr_0013_Out_rx_MD', 'L_Primaries_JR_Fthr_008_Ctrl', 'L_Scapulars_JR_Bend_CC_Root_Grp', 'R_Secondaries_JR_Fthr_0013Bend03_Indiv_Ctrl_tag', 'R_Wing_CtrlShape', 'L_Primaries_JR_Fthr_004_Indiv_Ctrl_Offset_Grp', 'unitConversion1241', 'R_Secondaries_JR_Wing_006_parentConstraint1', 'L_Scapulars_JR_Fthr_001_Ctrl_Root_Grp', 'unitConversion1559', 'unitConversion1942', 'unitConversion1475', 'R_Secondaries_JR_9_CtrlShape', 'L_Secondaries_JR_Fthr_004_Ctrl_Root_Grp', 'unitConversion209', 'unitConversion1842', 'unitConversion2272', 'L_Secondaries_JR_Fthr_005_OutAuto_rx_MD', 'R_Scapulars_JR_Fthr_009Bend03_Indiv_CtrlShape', 'L_Wing_CtrlShape', 'R_Scapulars_JR_Wing_000', 'unitConversion2643', 'L_Primaries_JR_Fthr_002Bend03_Bnd_parentConstraint1', 'unitConversion1290', 'unitConversion1069', 'unitConversion2735', 'L_Scapulars_JR_Fthr_000_Ctrl_Root_Grp', 'L_Primaries_JR_Fthr_006_BendJnt3', 'unitConversion2034', 'unitConversion2605', 'L_Secondaries_JR_Wing_004', 'L_Secondaries_JR_Fthr_005Bend01_Indiv_Ctrl_tag', 'unitConversion1781', 'R_Scapulars_JR_Fthr_002Bend03_Indiv_CtrlShape', 'R_Secondaries_JR_Fthr_0011_Ctrl', 'L_Primaries_JR_Fthr_004_Out_rx_MD1', 'L_Secondaries_JR_Fthr_0012_SpreadCtrlGrp', 'R_Primaries_JR_Fthr_001Bend02_Bnd_parentConstraint1', 'unitConversion2516', 'unitConversion1407', 'unitConversion1565', 'R_Secondaries_JR_Fthr_007_BendJnt2', 'L_Secondaries_JR_Fthr_0017_OutAuto_ry_MD1', 'unitConversion2404', 'unitConversion1105', 'L_Secondaries_JR_Fthr_0014Bend02', 'L_Secondaries_JR_Fthr_0016Bend01_Indiv_Ctrl_tag', 'unitConversion288', 'unitConversion1506', 'unitConversion533', 'R_Secondaries_JR_Wing_000_CtrlShape', 'L_Primaries_JR_Fthr_006_Indiv_Ctrl_tag', 'unitConversion2360', 'L_Primaries_JR_Fthr_007_OutAuto_ry_MD', 'unitConversion1056', 'unitConversion2000', 'L_Scapulars_JR_Wing_008_Bnd', 'unitConversion2065', 'R_Secondaries_JR_2_CtrlL_Secondaries_JR_2_CC_AutoFold_Grp_Grp', 'R_Secondaries_JR_Fthr_0015Bend03_Indiv_Ctrl', 'R_Primaries_JR_Fthr_000Bend01', 'R_Scapulars_JR_Fthr_0013_BendJnt3', 'R_Secondaries_JR_Fthr_0015_Ctrl_Auto_Grp', 'R_Primaries_JR_1_CtrlL_Primaries_JR_1_CC_AutoFold_Grp_Grp', 'R_Secondaries_JR_Wing_006', 'unitConversion2694', 'L_Primaries_JR_Fthr_004Bend03_Bnd_parentConstraint1', 'unitConversion613', 'unitConversion2242', 'unitConversion42', 'unitConversion499', 'R_Primaries_JR_Fthr_002_Ctrl', 'L_Primaries_JR_Fthr_003_AutoJnt', 'unitConversion1227', 'R_Scapulars_JR_Fthr_0012Bend01', 'L_Secondaries_JR_11_CtrlShape', 'R_Scapulars_JR_Fthr_0011Bend03_Indiv_Ctrl_Offset_Grp', 'R_Scapulars_JR_Wing_005_Bnd_parentConstraint1', 'R_Primaries_JR_Fthr_001Bend02_Indiv_Ctrl_Offset_Grp', 'unitConversion1642', 'unitConversion2449', 'L_Secondaries_JR_Bend_Ctrl', 'L_Secondaries_JR_Wing_000_parentConstraint1', 'R_Primaries_JR_Fthr_004_BendJnt1', 'unitConversion497', 'L_Primaries_JR_Fthr_000_Indiv_Ctrl_tag', 'R_Scapulars_JR_Fthr_0010Bend02_Bnd', 'L_Scapulars_JR_Fthr_003', 'L_Secondaries_JR_Fthr_0010_Indiv_Ctrl', 'unitConversion942', 'R_Primaries_JR_Fthr_007_BendJnt2', 'unitConversion2529', 'L_Secondaries_JR_Fthr_0017_Ctrl_Auto_Grp', 'L_Secondaries_JR_Fthr_004_OutAuto_ry_MD1', 'unitConversion2412', 'L_Scapulars_JR_Fthr_0014_In_rx_MD1', 'unitConversion438', 'unitConversion1946', 'L_Secondaries_JR_Fthr_0011Bend02_Bnd', 'L_Primaries_JR_Fthr_000_BendJnt1', 'L_Secondaries_JR_Wing_009_parentConstraint1', 'unitConversion492', 'R_Secondaries_JR_Fthr_009Bend02_Indiv_CtrlShape', 'R_Scapulars_JR_Fthr_0011_AutoJnt', 'R_Secondaries_JR_Fthr_004Bend02_Bnd_parentConstraint1', 'R_Primaries_JR_1_CtrlShape', 'unitConversion1009', 'L_Secondaries_JR_Fthr_0013_BendJnt3', 'L_Secondaries_JR_Fthr_0014Bend01_Bnd_parentConstraint1', 'L_Scapulars_JR_Fthr_0014_OutAuto_rx_MD', 'R_Secondaries_JR_Fthr_007Bend02_Bnd', 'L_Scapulars_JR_Fthr_004Bend01_Indiv_Ctrl_tag', 'L_Secondaries_JR_7_CtrlL_Secondaries_JR_7_CC_AutoFold_Grp_Grp', 'L_Scapulars_JR_Bend_Ctrl', 'R_Secondaries_JR_Fthr_0012Bend02_Indiv_CtrlShape', 'L_Scapulars_JR_Fthr_004_BendJnt3', 'L_Scapulars_JR_4_CtrlL_Scapulars_JR_4_CC_AutoFold_Grp_Grp', 'L_Primaries_JR_4_Ctrl', 'L_Scapulars_JR_Fthr_0012Bend02_Indiv_Ctrl_tag', 'unitConversion461', 'R_Primaries_JR_Fthr_001Bend02_Indiv_Ctrl_tag', 'R_Secondaries_JR_Fthr_009Bend03', 'L_Secondaries_JR_Fthr_0015_Out_rx_MD1', 'L_Scapulars_JR_Fthr_003_Bnd', 'L_Scapulars_JR_Fthr_007_Out_rx_MD1', 'L_Primaries_JR_Fthr_000_OutAuto_rx_MD', 'R_Secondaries_JR_Fthr_0012_BendJnt1', 'L_Scapulars_JR_Fthr_005_Out_ry_MD1', 'unitConversion1898', 'R_Secondaries_JR_7_CtrlShape', 'L_Scapulars_JR_Fthr_004_InAuto_ry_MD', 'unitConversion2313', 'R_Secondaries_JR_Fthr_0012Bend01_Bnd', 'L_Scapulars_JR_Fthr_000_Ctrl_Auto_Grp', 'unitConversion2274', 'unitConversion612', 'R_Primaries_JR_7_CtrlL_Primaries_JR_7_CC_AutoFold_Grp_Grp', 'unitConversion1544', 'L_Secondaries_JR_Fthr_003Bend01_Indiv_Ctrl_tag', 'L_Scapulars_JR_Fthr_0010Bend02_Indiv_Ctrl_tag', 'L_Scapulars_JR_Fthr_0013Bend03_Bnd_parentConstraint1', 'L_Scapulars_JR_Fthr_0014Bend02_Indiv_CtrlShape', 'R_Scapulars_JR_1_Ctrl', 'R_Scapulars_JR_Fthr_001Bend02_Bnd', 'unitConversion1104', 'R_Secondaries_JR_Fthr_004Bend03_Indiv_CtrlShape', 'R_Scapulars_JR_Fthr_0011Bend01_Bnd_parentConstraint1', 'unitConversion2136', 'unitConversion1835', 'unitConversion2463', 'L_Secondaries_JR_Fthr_0013Bend01_Bnd', 'R_Scapulars_JR_Fthr_004_Indiv_Ctrl', 'unitConversion204', 'L_Scapulars_JR_Fthr_0012_SpreadCtrlGrp', 'L_Secondaries_JR_Fthr_004Bend03']");
 createNode joint -n "L_Clav_Guide" -p "Wings_Block";
 	rename -uid "AF8E90D4-44B0-509D-0E30-F4A3062D3790";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 2.9220475335299674 59.949463600538202 11.217512134960208 ;
 	setAttr ".r" -type "double3" 5.1064331142220727 17.348533630660675 1.9416942080956316 ;
 	setAttr ".s" -type "double3" 0.99999999999999989 0.99999999999999978 0.99999999999999978 ;
@@ -1093,7 +1093,7 @@ createNode joint -n "L_Clav_Guide" -p "Wings_Block";
 	setAttr ".jot" -type "string" "xzy";
 createNode joint -n "L_Scapulars_Guide" -p "L_Clav_Guide";
 	rename -uid "177C21E4-43FE-B263-EEF4-BD93A1728958";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 9.264525607189988 0.98264712581873681 0.30071848504483878 ;
 	setAttr ".r" -type "double3" 0 -13.477500515289856 0 ;
 	setAttr ".s" -type "double3" 0.99999999999999989 0.99999999999999989 1.0000000000000004 ;
@@ -1104,7 +1104,7 @@ createNode joint -n "L_Scapulars_Guide" -p "L_Clav_Guide";
 	setAttr ".radi" 2;
 createNode joint -n "L_Secondaries_Guide" -p "L_Scapulars_Guide";
 	rename -uid "4C69AC31-4834-0101-360B-E192448044E5";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 23.666987500578394 2.8421709430404007e-14 -1.3677947663381929e-13 ;
 	setAttr ".r" -type "double3" 0 2.9216068314560224 0 ;
 	setAttr ".s" -type "double3" 0.99999999999999978 0.99999999999999989 0.99999999999999967 ;
@@ -1115,7 +1115,7 @@ createNode joint -n "L_Secondaries_Guide" -p "L_Scapulars_Guide";
 	setAttr ".radi" 2;
 createNode joint -n "L_Primaries_Guide" -p "L_Secondaries_Guide";
 	rename -uid "9C5D3205-49AE-61C5-46D3-B98D5AAACA1B";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 31.292926503946596 0.22449230059805103 -0.13779707659547391 ;
 	setAttr ".r" -type "double3" 0.054522236449216506 -21.536926860240801 -5.2823560775525209 ;
 	setAttr ".s" -type "double3" 0.99999999999999978 0.99999999999999989 1.0000000000000002 ;
@@ -1126,17 +1126,17 @@ createNode joint -n "L_Primaries_Guide" -p "L_Secondaries_Guide";
 	setAttr ".radi" 2;
 createNode joint -n "L_End_Guide" -p "L_Primaries_Guide";
 	rename -uid "2480FC3C-46D1-A6DA-4E32-1E9724EAD50C";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 16.808914187905003 -1.3613242477728003e-14 1.2212453270876724e-15 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 	setAttr ".radi" 2;
 createNode transform -n "L_Scapulars_Guide_Wing_000_Offset_Grp" -p "Wings_Block";
 	rename -uid "D863B9D4-4887-EA8C-11A2-94809A67EE10";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 createNode joint -n "L_Scapulars_Guide_Wing_000" -p "L_Scapulars_Guide_Wing_000_Offset_Grp";
 	rename -uid "0B94134D-489F-6C58-DDC7-109ED750BAEE";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 0.51186043945343984 1.5668022435022522e-14 -1.3739009929736312e-15 ;
 	setAttr ".r" -type "double3" -4.9424478037013273 0 0 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
@@ -1144,265 +1144,265 @@ createNode joint -n "L_Scapulars_Guide_Wing_000" -p "L_Scapulars_Guide_Wing_000_
 	setAttr ".jo" -type "double3" 0 1.5902773407317588e-15 0 ;
 createNode joint -n "L_Scapulars_Guide_Wing_001" -p "L_Scapulars_Guide_Wing_000";
 	rename -uid "02E45708-47E5-EA9A-190E-CC89E69DA6AE";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 1.5207101694815441 1.5668022435022522e-14 -1.3739009929736312e-15 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Scapulars_Guide_Wing_002" -p "L_Scapulars_Guide_Wing_001";
 	rename -uid "13BD0E4B-447F-C232-BFFD-9F88CEEF839B";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 1.5207101694815441 1.5668022435022522e-14 -1.3739009929736312e-15 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Scapulars_Guide_Wing_003" -p "L_Scapulars_Guide_Wing_002";
 	rename -uid "C781EB0A-44D1-69DC-857F-C5BF5005DAFF";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 1.5207101694815441 1.5668022435022522e-14 -1.3739009929736312e-15 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Scapulars_Guide_Wing_004" -p "L_Scapulars_Guide_Wing_003";
 	rename -uid "8C7EC205-43EE-F58C-DC04-7BAA54020D73";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 1.5207101694815441 1.5668022435022522e-14 -1.3739009929736312e-15 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Scapulars_Guide_Wing_005" -p "L_Scapulars_Guide_Wing_004";
 	rename -uid "CF8ED674-4EC3-D19C-95BA-E1A04C0BA1F0";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 1.5207101694815441 1.5668022435022522e-14 -1.3739009929736312e-15 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Scapulars_Guide_Wing_006" -p "L_Scapulars_Guide_Wing_005";
 	rename -uid "FD467C85-4B66-91A5-D7E4-E8890FBD5848";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 1.5207101694815441 1.5668022435022522e-14 -1.3739009929736312e-15 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Scapulars_Guide_Wing_007" -p "L_Scapulars_Guide_Wing_006";
 	rename -uid "00230AE0-4945-4E05-A953-71A5AEB9EF46";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 1.5207101694815441 1.5668022435022522e-14 -1.3739009929736312e-15 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Scapulars_Guide_Wing_008" -p "L_Scapulars_Guide_Wing_007";
 	rename -uid "999314BF-478A-6943-66F0-B4976888FEBD";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 1.5207101694815441 1.5668022435022522e-14 -1.3739009929736312e-15 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Scapulars_Guide_Wing_009" -p "L_Scapulars_Guide_Wing_008";
 	rename -uid "22511347-4AE1-BB36-11F0-1A8C6462D7E8";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 1.5207101694815441 1.5668022435022522e-14 -1.3739009929736312e-15 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Scapulars_Guide_Wing_0010" -p "L_Scapulars_Guide_Wing_009";
 	rename -uid "3D98D979-41F8-C822-A5AB-D28BBF9E17ED";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 1.5207101694815441 1.5668022435022522e-14 -1.3739009929736312e-15 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Scapulars_Guide_Wing_0011" -p "L_Scapulars_Guide_Wing_0010";
 	rename -uid "E5E1E73F-46B6-95DA-2235-D3A0FAA40DEE";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 1.5207101694815441 1.5668022435022522e-14 -1.3739009929736312e-15 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Scapulars_Guide_Wing_0012" -p "L_Scapulars_Guide_Wing_0011";
 	rename -uid "83F37FBC-44BD-9FA2-1704-DBADA14D6071";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 1.5207101694815441 1.5668022435022522e-14 -1.3739009929736312e-15 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Scapulars_Guide_Wing_0013" -p "L_Scapulars_Guide_Wing_0012";
 	rename -uid "9E56519C-42A2-6648-1ED4-CBA7A89C713C";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 1.5207101694815441 1.5668022435022522e-14 -1.3739009929736312e-15 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Scapulars_Guide_Wing_0014" -p "L_Scapulars_Guide_Wing_0013";
 	rename -uid "E195B6CE-49A1-3518-E7E5-80857E8525C3";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 1.5207101694815441 1.5668022435022522e-14 -1.3739009929736312e-15 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Scapulars_Guide_Fthr_0014_posStart" -p "L_Scapulars_Guide_Wing_0014";
 	rename -uid "78204423-407F-6029-2058-AA977CF9D90D";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 0 0 -5 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Scapulars_Guide_Fthr_0014_posEnd" -p "L_Scapulars_Guide_Fthr_0014_posStart";
 	rename -uid "69BEB6F0-4F34-0586-95D5-C88024619828";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 0 0 -15 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Scapulars_Guide_Fthr_0013_posStart" -p "L_Scapulars_Guide_Wing_0013";
 	rename -uid "71A89DA0-430E-9113-C8B5-E9B2F8F586ED";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 0 0 -5 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Scapulars_Guide_Fthr_0013_posEnd" -p "L_Scapulars_Guide_Fthr_0013_posStart";
 	rename -uid "0019204A-4412-67AF-B02D-FC90D5BC9A5C";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 0 0 -15 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Scapulars_Guide_Fthr_0012_posStart" -p "L_Scapulars_Guide_Wing_0012";
 	rename -uid "818DAFA1-4F23-92F1-146F-ED9286824786";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 0 0 -5 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Scapulars_Guide_Fthr_0012_posEnd" -p "L_Scapulars_Guide_Fthr_0012_posStart";
 	rename -uid "F2D98E25-450C-FCAA-FB94-3798C50DF18C";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 0 0 -15 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Scapulars_Guide_Fthr_0011_posStart" -p "L_Scapulars_Guide_Wing_0011";
 	rename -uid "1A983336-4BAB-8723-EF0D-D2BDE4A7F1AD";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 0 0 -5 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Scapulars_Guide_Fthr_0011_posEnd" -p "L_Scapulars_Guide_Fthr_0011_posStart";
 	rename -uid "DADB4A8B-4F1D-6EE4-B2B0-4E9B17D7D143";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 0 0 -15 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Scapulars_Guide_Fthr_0010_posStart" -p "L_Scapulars_Guide_Wing_0010";
 	rename -uid "818ED1EC-449E-DF37-A19A-FE889E5081D7";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 0 0 -5 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Scapulars_Guide_Fthr_0010_posEnd" -p "L_Scapulars_Guide_Fthr_0010_posStart";
 	rename -uid "65FCCBE9-4133-7FB7-E0AC-E291BEDDDAAA";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 0 0 -15 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Scapulars_Guide_Fthr_009_posStart" -p "L_Scapulars_Guide_Wing_009";
 	rename -uid "A9F0736A-4148-2B7F-7340-67AC5EC40DDA";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 0 0 -5 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Scapulars_Guide_Fthr_009_posEnd" -p "L_Scapulars_Guide_Fthr_009_posStart";
 	rename -uid "E11318BB-4AE9-F017-7DA9-5CBE81DFD955";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 0 0 -15 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Scapulars_Guide_Fthr_008_posStart" -p "L_Scapulars_Guide_Wing_008";
 	rename -uid "188AE7D3-440D-9834-E097-0997B25D5B77";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 0 0 -5 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Scapulars_Guide_Fthr_008_posEnd" -p "L_Scapulars_Guide_Fthr_008_posStart";
 	rename -uid "41EC6B9A-49D4-43E3-94FB-CCA7E0CA28B2";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 0 0 -15 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Scapulars_Guide_Fthr_007_posStart" -p "L_Scapulars_Guide_Wing_007";
 	rename -uid "A5E99FD3-42A4-82E5-8959-DBA78EFAF85D";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 0 0 -5 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Scapulars_Guide_Fthr_007_posEnd" -p "L_Scapulars_Guide_Fthr_007_posStart";
 	rename -uid "6D17C3D6-4DA9-B7FE-BB19-439FD006352B";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 0 0 -15 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Scapulars_Guide_Fthr_006_posStart" -p "L_Scapulars_Guide_Wing_006";
 	rename -uid "D17A0849-4355-178B-3FAB-5FAA404347A8";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 0 0 -5 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Scapulars_Guide_Fthr_006_posEnd" -p "L_Scapulars_Guide_Fthr_006_posStart";
 	rename -uid "94E13185-4702-1CFF-0314-FAB5A06CE671";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 0 0 -15 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Scapulars_Guide_Fthr_005_posStart" -p "L_Scapulars_Guide_Wing_005";
 	rename -uid "58CF2EB8-4667-BBC3-1082-53A7872263DA";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 0 0 -5 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Scapulars_Guide_Fthr_005_posEnd" -p "L_Scapulars_Guide_Fthr_005_posStart";
 	rename -uid "AA7221A8-46F5-596E-8B7C-B08D6C40DB1D";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 0 0 -15 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Scapulars_Guide_Fthr_004_posStart" -p "L_Scapulars_Guide_Wing_004";
 	rename -uid "E1E2648B-47B5-7F7C-0B1F-A7B08A91E2C1";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 0 0 -5 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Scapulars_Guide_Fthr_004_posEnd" -p "L_Scapulars_Guide_Fthr_004_posStart";
 	rename -uid "5B20FE4A-4D1A-432A-7902-6AB34425BB13";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 0 0 -15 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Scapulars_Guide_Fthr_003_posStart" -p "L_Scapulars_Guide_Wing_003";
 	rename -uid "D899AA88-4CE9-93A4-63A7-2CAD5D6AF87E";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 0 0 -5 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Scapulars_Guide_Fthr_003_posEnd" -p "L_Scapulars_Guide_Fthr_003_posStart";
 	rename -uid "1498AA3E-4837-0171-ABCC-ECB48B671786";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 0 0 -15 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Scapulars_Guide_Fthr_002_posStart" -p "L_Scapulars_Guide_Wing_002";
 	rename -uid "495BB4C7-41CB-58DC-5A33-E7B3DCFC0BF5";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 0 0 -5 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Scapulars_Guide_Fthr_002_posEnd" -p "L_Scapulars_Guide_Fthr_002_posStart";
 	rename -uid "A42A1C9D-4FEE-61D2-5914-A4BD22E5D291";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 0 0 -15 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Scapulars_Guide_Fthr_001_posStart" -p "L_Scapulars_Guide_Wing_001";
 	rename -uid "06D2B548-4CBB-9277-38CE-FEB7574CFA2B";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 0 0 -5 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Scapulars_Guide_Fthr_001_posEnd" -p "L_Scapulars_Guide_Fthr_001_posStart";
 	rename -uid "CA388B17-4408-A8AE-A313-89B113A8572D";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 0 0 -15 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Scapulars_Guide_Fthr_000_posStart" -p "L_Scapulars_Guide_Wing_000";
 	rename -uid "00E77186-4FAA-33DC-B18F-B68E4F6E058A";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 0 0 -5 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Scapulars_Guide_Fthr_000_posEnd" -p "L_Scapulars_Guide_Fthr_000_posStart";
 	rename -uid "7ECB441A-4F38-6054-5A05-76AF13CBAC1A";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 0 0 -15 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
@@ -1412,7 +1412,7 @@ createNode parentConstraint -n "L_Scapulars_Guide_Wing_000_Offset_Grp_parentCons
 	addAttr -dcb 0 -ci true -k true -sn "w0" -ln "L_Scapulars_GuideW0" -dv 1 -min 0 
 		-at "double";
 	setAttr -k on ".nds";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr -k off ".tx";
 	setAttr -k off ".ty";
@@ -1432,346 +1432,346 @@ createNode parentConstraint -n "L_Scapulars_Guide_Wing_000_Offset_Grp_parentCons
 	setAttr -k on ".w0";
 createNode transform -n "L_Secondaries_Guide_Wing_000_Offset_Grp" -p "Wings_Block";
 	rename -uid "5081226D-4BDA-D61D-9674-5BB7011985D8";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 createNode joint -n "L_Secondaries_Guide_Wing_000" -p "L_Secondaries_Guide_Wing_000_Offset_Grp";
 	rename -uid "E50CA1E4-4BDB-1494-61B4-4787DBF435F2";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 0.80419612374768734 4.6143644460983069e-16 -4.4408920985006262e-16 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Secondaries_Guide_Wing_001" -p "L_Secondaries_Guide_Wing_000";
 	rename -uid "FD8ACCF5-46DD-C40E-4A60-C5981FB01FA8";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 1.6540327093464848 4.6143644460983069e-16 -4.4408920985006262e-16 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Secondaries_Guide_Wing_002" -p "L_Secondaries_Guide_Wing_001";
 	rename -uid "B6E5226D-4701-201B-8845-0897330F787B";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 1.6540327093464848 4.6143644460983069e-16 -4.4408920985006262e-16 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Secondaries_Guide_Wing_003" -p "L_Secondaries_Guide_Wing_002";
 	rename -uid "668BDF1A-41FF-1C80-6EB0-67AC8E1E7397";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 1.6540327093464848 4.6143644460983069e-16 -4.4408920985006262e-16 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Secondaries_Guide_Wing_004" -p "L_Secondaries_Guide_Wing_003";
 	rename -uid "F317C761-4A93-59A9-887F-049AF345DDDE";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 1.6540327093464848 4.6143644460983069e-16 -4.4408920985006262e-16 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Secondaries_Guide_Wing_005" -p "L_Secondaries_Guide_Wing_004";
 	rename -uid "E84C82E8-4FBB-DC1E-54D0-E5AA6B90CCA6";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 1.6540327093464848 4.6143644460983069e-16 -4.4408920985006262e-16 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Secondaries_Guide_Wing_006" -p "L_Secondaries_Guide_Wing_005";
 	rename -uid "B3831DE1-405C-BBBA-104C-47A18FF849D3";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 1.6540327093464848 4.6143644460983069e-16 -4.4408920985006262e-16 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Secondaries_Guide_Wing_007" -p "L_Secondaries_Guide_Wing_006";
 	rename -uid "4E55FF7F-4721-E925-4BC6-0DB8ECBF26C2";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 1.6540327093464848 4.6143644460983069e-16 -4.4408920985006262e-16 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Secondaries_Guide_Wing_008" -p "L_Secondaries_Guide_Wing_007";
 	rename -uid "D1342B4D-473A-3F26-559A-FA90D6F08D02";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 1.6540327093464848 4.6143644460983069e-16 -4.4408920985006262e-16 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Secondaries_Guide_Wing_009" -p "L_Secondaries_Guide_Wing_008";
 	rename -uid "0F2BAB68-44FA-657D-A05A-998FCFCA80C0";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 1.6540327093464848 4.6143644460983069e-16 -4.4408920985006262e-16 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Secondaries_Guide_Wing_0010" -p "L_Secondaries_Guide_Wing_009";
 	rename -uid "CADA2599-46E5-8729-73CE-05B11E2553D3";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 1.6540327093464848 4.6143644460983069e-16 -4.4408920985006262e-16 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Secondaries_Guide_Wing_0011" -p "L_Secondaries_Guide_Wing_0010";
 	rename -uid "974E111B-4A64-A4A7-2564-7F8283A2DE82";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 1.6540327093464848 4.6143644460983069e-16 -4.4408920985006262e-16 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Secondaries_Guide_Wing_0012" -p "L_Secondaries_Guide_Wing_0011";
 	rename -uid "C1AADCAB-43A9-E602-7427-DBB389C9356F";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 1.6540327093464848 4.6143644460983069e-16 -4.4408920985006262e-16 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Secondaries_Guide_Wing_0013" -p "L_Secondaries_Guide_Wing_0012";
 	rename -uid "DAFB5D11-4A3B-71A7-8020-89B1E986B6A3";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 1.6540327093464848 4.6143644460983069e-16 -4.4408920985006262e-16 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Secondaries_Guide_Wing_0014" -p "L_Secondaries_Guide_Wing_0013";
 	rename -uid "7208B077-463B-24B7-B783-2AB4395068F3";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 1.6540327093464848 4.6143644460983069e-16 -4.4408920985006262e-16 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Secondaries_Guide_Wing_0015" -p "L_Secondaries_Guide_Wing_0014";
 	rename -uid "7ECAEBCE-4CE5-FB78-3554-01AE9B8F67E9";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 1.6540327093464848 4.6143644460983069e-16 -4.4408920985006262e-16 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Secondaries_Guide_Wing_0016" -p "L_Secondaries_Guide_Wing_0015";
 	rename -uid "3DAD956E-4E89-F00D-D0B8-28BE07A52021";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 1.6540327093464848 4.6143644460983069e-16 -4.4408920985006262e-16 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Secondaries_Guide_Wing_0017" -p "L_Secondaries_Guide_Wing_0016";
 	rename -uid "40C1C1DA-4010-CBE5-D51B-D78346C2B713";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 1.6540327093464848 4.6143644460983069e-16 -4.4408920985006262e-16 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Secondaries_Guide_Fthr_0017_posStart" -p "L_Secondaries_Guide_Wing_0017";
 	rename -uid "26E3D7EA-4A55-7496-910B-2D87F261A6FA";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 1.5836282963916943 -0.70876522417958654 -1.2121875642115256 ;
 	setAttr ".r" -type "double3" -4.6821087773543253 -10.819396029748813 0.10259051030190663 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Secondaries_Guide_Fthr_0017_posEnd" -p "L_Secondaries_Guide_Fthr_0017_posStart";
 	rename -uid "D471680F-4E9B-198A-CBA6-098B2822ABF4";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 2.1760371282653068e-14 -1.2434497875801753e-14 -34.350704583490398 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Secondaries_Guide_Fthr_0016_posStart" -p "L_Secondaries_Guide_Wing_0016";
 	rename -uid "17F9CDB8-4B89-DDFC-EAB8-70A62D3789BA";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 0.92605385144526053 -0.72381138159355629 -1.4051612463793508 ;
 	setAttr ".r" -type "double3" -4.6639373823013663 -6.6285277762687809 0 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Secondaries_Guide_Fthr_0016_posEnd" -p "L_Secondaries_Guide_Fthr_0016_posStart";
 	rename -uid "21B97310-418D-B8D7-60F5-E98FE5A20A04";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" -5.3290705182007514e-15 -9.5479180117763462e-15 -34.515446264609352 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Secondaries_Guide_Fthr_0015_posStart" -p "L_Secondaries_Guide_Wing_0015";
 	rename -uid "421BAEF1-44EE-DF2D-AE5B-6CBC3A6C8424";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 0.33238108190661109 -0.74925217423562884 -1.8656150083740402 ;
 	setAttr ".r" -type "double3" -4.6639373823013655 -5.710597963309656 4.9944030037663436e-17 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Secondaries_Guide_Fthr_0015_posEnd" -p "L_Secondaries_Guide_Fthr_0015_posStart";
 	rename -uid "2C970AD0-4EA8-79E5-DFC8-4294E252AD22";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" -9.1038288019262836e-15 7.7715611723760958e-15 -33.444397540297189 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Secondaries_Guide_Fthr_0014_posStart" -p "L_Secondaries_Guide_Wing_0014";
 	rename -uid "9F8B4C4A-4E66-4314-EBCF-0DAA33260996";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" -0.096685991147410277 -0.7402834654748176 -1.7762574733080725 ;
 	setAttr ".r" -type "double3" -4.6639373823013672 -2.8496155714611731 2.4878847109957104e-17 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Secondaries_Guide_Fthr_0014_posEnd" -p "L_Secondaries_Guide_Fthr_0014_posStart";
 	rename -uid "8E08E8B5-4BEB-7846-0F2A-B4ACE576EBA6";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" -1.5987211554602254e-14 -2.0872192862952943e-14 -33.403960668305345 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Secondaries_Guide_Fthr_0013_posStart" -p "L_Secondaries_Guide_Wing_0013";
 	rename -uid "D55A0CA7-405A-5EA9-C2A1-039F452773FE";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" -0.47861548736195658 -0.90382526200141911 -3.565455942936028 ;
 	setAttr ".r" -type "double3" -4.6639373823013672 -2.0292419963356978 1.2431837913570916e-17 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Secondaries_Guide_Fthr_0013_posEnd" -p "L_Secondaries_Guide_Fthr_0013_posStart";
 	rename -uid "10B4CAA4-4D38-4CED-6449-28A00212B80F";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" -1.7097434579227411e-14 -8.8817841970012523e-16 -30.970445993330785 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Secondaries_Guide_Fthr_0012_posStart" -p "L_Secondaries_Guide_Wing_0012";
 	rename -uid "B0C3DEDE-48BE-83B7-5F9C-98B9377BA46D";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" -0.75027766050006051 -0.86755477726975272 -3.4254053079452143 ;
 	setAttr ".r" -type "double3" -4.6639373823013726 0 0 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Secondaries_Guide_Fthr_0012_posEnd" -p "L_Secondaries_Guide_Fthr_0012_posStart";
 	rename -uid "37F47164-4D40-2E04-585F-2195705710D9";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" -1.1990408665951691e-14 9.1038288019262836e-15 -30.812062055717576 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Secondaries_Guide_Fthr_0011_posStart" -p "L_Secondaries_Guide_Wing_0011";
 	rename -uid "CC018D81-49B4-BC17-4069-8BBC1BA38471";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" -0.94907259920164933 -0.90642485008341112 -3.8933811791918673 ;
 	setAttr ".r" -type "double3" -4.663937382301361 3.6474941487033483 0 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Secondaries_Guide_Fthr_0011_posEnd" -p "L_Secondaries_Guide_Fthr_0011_posStart";
 	rename -uid "3640951F-492A-C9EA-89B5-5596B62313BA";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" -8.2156503822261584e-15 -1.7763568394002505e-15 -30.180606055987017 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Secondaries_Guide_Fthr_0010_posStart" -p "L_Secondaries_Guide_Wing_0010";
 	rename -uid "6D664ED9-4ACD-6344-0749-C397F27C965C";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" -0.99779669774473945 -0.9376384906031916 -4.2707713391229429 ;
 	setAttr ".r" -type "double3" -4.6639373823013628 5.4519446562982932 2.4961001117752663e-17 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Secondaries_Guide_Fthr_0010_posEnd" -p "L_Secondaries_Guide_Fthr_0010_posStart";
 	rename -uid "DD65B3D8-40AF-9B15-A0B3-84ABCE5B1D61";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" -3.0531133177191805e-15 -9.9920072216264089e-15 -28.950599930691521 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Secondaries_Guide_Fthr_009_posStart" -p "L_Secondaries_Guide_Wing_009";
 	rename -uid "4F9ED46E-4DE8-3CF7-42A1-74BC6B986371";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" -1.4798712454414158 -0.95868452950067251 -4.5325576231000682 ;
 	setAttr ".r" -type "double3" -4.6639373823013628 8.1187961383464895 0 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Secondaries_Guide_Fthr_009_posEnd" -p "L_Secondaries_Guide_Fthr_009_posStart";
 	rename -uid "0E8E39BD-4C15-BA07-8281-D29EA1DD7772";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 1.4682699500667695e-14 -3.5527136788005009e-15 -29.465634833554518 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Secondaries_Guide_Fthr_008_posStart" -p "L_Secondaries_Guide_Wing_008";
 	rename -uid "9BC48242-4933-0C2E-150C-D7BA7FE10803";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" -1.7811145727726228 -0.96053573966147354 -4.4446701967672588 ;
 	setAttr ".r" -type "double3" -4.6639373823013601 8.4840123154331248 1.0049201091092195e-16 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Secondaries_Guide_Fthr_008_posEnd" -p "L_Secondaries_Guide_Fthr_008_posStart";
 	rename -uid "8E4BB814-44B7-BB73-8A09-5F9E5ECBE235";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 1.9387269567516796e-14 1.2212453270876722e-14 -28.990387609886071 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Secondaries_Guide_Fthr_007_posStart" -p "L_Secondaries_Guide_Wing_007";
 	rename -uid "AB6B9C51-4621-1DBC-3BE3-A9B082182D96";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" -1.9563554118960766 -0.98046523354729942 -4.815155614835863 ;
 	setAttr ".r" -type "double3" -4.6639373823013681 8.4603070122919029 -5.0242909005760943e-17 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Secondaries_Guide_Fthr_007_posEnd" -p "L_Secondaries_Guide_Fthr_007_posStart";
 	rename -uid "A939708F-47E9-68B6-FDD8-F495AB3F7A4C";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 1.1546319456101628e-14 5.773159728050814e-15 -28.508120459207639 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Secondaries_Guide_Fthr_006_posStart" -p "L_Secondaries_Guide_Wing_006";
 	rename -uid "C56B9C21-4429-2678-B265-3FB6C615CC9A";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" -2.3359400618647115 -0.97480475338066697 -4.7640908444875283 ;
 	setAttr ".r" -type "double3" -4.6639373823013699 9.2435113937414553 -5.0349983388194915e-17 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Secondaries_Guide_Fthr_006_posEnd" -p "L_Secondaries_Guide_Fthr_006_posStart";
 	rename -uid "3CD9DF8C-46AE-5AD2-EDE3-BBA072C60CE7";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" -7.2164496600635175e-16 -2.2204460492503131e-16 -28.507714039183703 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Secondaries_Guide_Fthr_005_posStart" -p "L_Secondaries_Guide_Wing_005";
 	rename -uid "312DB86C-47E3-08BB-918E-15B93B58FD78";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" -2.2927101253745192 -0.99183770470968113 -4.9860905941592311 ;
 	setAttr ".r" -type "double3" -4.6639373823013699 12.153352604751612 0 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Secondaries_Guide_Fthr_005_posEnd" -p "L_Secondaries_Guide_Fthr_005_posStart";
 	rename -uid "7372FE1A-4BE9-C319-CCA0-B9B2374AA9C6";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 1.5543122344752192e-15 -3.7747582837255322e-15 -27.860622025171629 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Secondaries_Guide_Fthr_004_posStart" -p "L_Secondaries_Guide_Wing_004";
 	rename -uid "046FF1E5-490C-1576-00CC-D1989EC3B7DD";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" -1.5692142852701565 -1.0067121358242375 -5.062253789138226 ;
 	setAttr ".r" -type "double3" -4.6936421553530208 16.374673884048796 -0.10955984350437535 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Secondaries_Guide_Fthr_004_posEnd" -p "L_Secondaries_Guide_Fthr_004_posStart";
 	rename -uid "3348E419-4CC7-5C31-40C9-0ABE586BCD84";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 1.1546319456101628e-14 9.3258734068513149e-15 -27.247898112331733 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Secondaries_Guide_Fthr_003_posStart" -p "L_Secondaries_Guide_Wing_003";
 	rename -uid "915BCF6F-4EBD-F8E2-F822-379B1F0A2256";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" -1.2027415236637182 -1.0456704868015123 -5.5473812344475375 ;
 	setAttr ".r" -type "double3" -4.6639373823013663 19.582973924183097 1.0549443865837912e-16 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Secondaries_Guide_Fthr_003_posEnd" -p "L_Secondaries_Guide_Fthr_003_posStart";
 	rename -uid "E71821DA-43DD-4588-14B3-D1851DECCE4B";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" -8.8817841970012523e-16 1.6542323066914832e-14 -26.528323734534094 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Secondaries_Guide_Fthr_002_posStart" -p "L_Secondaries_Guide_Wing_002";
 	rename -uid "D44CD616-414C-0C40-D3AE-6DA7D66C8513";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" -1.3665384774295077 -1.0903945334631615 -6.0936630056471914 ;
 	setAttr ".r" -type "double3" -4.6639373823013628 21.588967734958779 2.1378204435548819e-16 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Secondaries_Guide_Fthr_002_posEnd" -p "L_Secondaries_Guide_Fthr_002_posStart";
 	rename -uid "20401C1D-477D-2FCC-5BB3-ABA2FF2B24ED";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" -1.6875389974302379e-14 5.5511151231257827e-16 -24.054121182595395 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Secondaries_Guide_Fthr_001_posStart" -p "L_Secondaries_Guide_Wing_001";
 	rename -uid "BFA88CC3-4481-4B27-7A45-349A2A975918";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" -1.3469683012889391 -1.0996509700507957 -6.3431240102759165 ;
 	setAttr ".r" -type "double3" -4.6639373823013655 27.561116630534588 -4.4846176886231237e-16 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Secondaries_Guide_Fthr_001_posEnd" -p "L_Secondaries_Guide_Fthr_001_posStart";
 	rename -uid "33634C6A-4F7F-91DD-4907-06B4D82FC4D8";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" -4.4408920985006262e-16 6.9944050551384862e-15 -22.810324883365936 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Secondaries_Guide_Fthr_000_posStart" -p "L_Secondaries_Guide_Wing_000";
 	rename -uid "9E422195-4874-172B-C834-18A02AD18F46";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" -0.68492152011643981 -1.0853337434163421 -6.0692152236846146 ;
 	setAttr ".r" -type "double3" -4.6639373823013672 39.503157748979618 0 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Secondaries_Guide_Fthr_000_posEnd" -p "L_Secondaries_Guide_Fthr_000_posStart";
 	rename -uid "5C420AF2-41C1-D90A-D0E4-F790C02183F6";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" -6.6613381477509392e-16 -4.7739590058881731e-15 -16.846911940048336 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
@@ -1781,7 +1781,7 @@ createNode parentConstraint -n "L_Secondaries_Guide_Wing_000_Offset_Grp_parentCo
 	addAttr -dcb 0 -ci true -k true -sn "w0" -ln "L_Secondaries_GuideW0" -dv 1 -min 
 		0 -at "double";
 	setAttr -k on ".nds";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr -k off ".tx";
 	setAttr -k off ".ty";
@@ -1800,194 +1800,194 @@ createNode parentConstraint -n "L_Secondaries_Guide_Wing_000_Offset_Grp_parentCo
 	setAttr -k on ".w0";
 createNode transform -n "L_Primaries_Guide_Wing_000_Offset_Grp" -p "Wings_Block";
 	rename -uid "EF5786A5-47E0-2DE4-4A83-5F80C0863782";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 createNode joint -n "L_Primaries_Guide_Wing_000" -p "L_Primaries_Guide_Wing_000_Offset_Grp";
 	rename -uid "0330ABD4-4800-D5DF-6879-E8B2A859C39A";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 0.5627761827900245 -8.1601392309949006e-15 5.3013149425851225e-15 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Primaries_Guide_Wing_001" -p "L_Primaries_Guide_Wing_000";
 	rename -uid "E0BB6A92-472C-BD77-BB25-38B48289E0F7";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 1.5627761827900251 -8.1601392309949006e-15 5.3013149425851225e-15 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Primaries_Guide_Wing_002" -p "L_Primaries_Guide_Wing_001";
 	rename -uid "AAB97151-4DF5-3213-03FC-9884D635B826";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 1.5627761827900251 -8.1601392309949006e-15 5.3013149425851225e-15 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Primaries_Guide_Wing_003" -p "L_Primaries_Guide_Wing_002";
 	rename -uid "71C803F7-416A-1B2C-D984-33B71E94EB45";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 1.5627761827900251 -8.1601392309949006e-15 5.3013149425851225e-15 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Primaries_Guide_Wing_004" -p "L_Primaries_Guide_Wing_003";
 	rename -uid "2C479296-4521-EF7C-0BEE-EE8F0F9F2F55";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 1.5627761827900251 -8.1601392309949006e-15 5.3013149425851225e-15 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Primaries_Guide_Wing_005" -p "L_Primaries_Guide_Wing_004";
 	rename -uid "3CA37B2E-4A84-9156-B790-6BA461565CB1";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 1.5627761827900251 -8.1601392309949006e-15 5.3013149425851225e-15 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Primaries_Guide_Wing_006" -p "L_Primaries_Guide_Wing_005";
 	rename -uid "2B325F46-46FE-BFAC-2A2B-9D899D32DB1C";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 1.5627761827900251 -8.1601392309949006e-15 5.3013149425851225e-15 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Primaries_Guide_Wing_007" -p "L_Primaries_Guide_Wing_006";
 	rename -uid "FC89EA45-4FCA-CB14-90EC-D39BA017EE2B";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 1.5627761827900251 -8.1601392309949006e-15 5.3013149425851225e-15 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Primaries_Guide_Wing_008" -p "L_Primaries_Guide_Wing_007";
 	rename -uid "6E83FFC8-4233-E4DE-1E08-758FD8A065BD";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 1.5627761827900251 -8.1601392309949006e-15 5.3013149425851225e-15 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Primaries_Guide_Wing_009" -p "L_Primaries_Guide_Wing_008";
 	rename -uid "45DF6BC8-49E3-38AA-9E1A-3C9E7A1ADBED";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 1.5627761827900251 -8.1601392309949006e-15 5.3013149425851225e-15 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Primaries_Guide_Fthr_009_posStart" -p "L_Primaries_Guide_Wing_009";
 	rename -uid "3BE41201-46AE-682A-E4E8-78952B41C62F";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" -2.154182741679719 0.54343502645252784 0.38223862555575572 ;
 	setAttr ".r" -type "double3" 4.2958493480215463 -67.047625722429714 0 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Primaries_Guide_Fthr_009_posEnd" -p "L_Primaries_Guide_Fthr_009_posStart";
 	rename -uid "FA263049-4751-9529-6A00-0BA07612AA5D";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" -1.2212453270876722e-15 -1.4301060335952798e-14 -35.885491180165076 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Primaries_Guide_Fthr_008_posStart" -p "L_Primaries_Guide_Wing_008";
 	rename -uid "7C3B3F40-4EFC-B875-EDCD-29BD026441DB";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" -3.6361698109850948 0.26015160221157885 0.8251626642618497 ;
 	setAttr ".r" -type "double3" 3.8692572772569798 -61.496404426255083 -8.3310508677788199e-16 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Primaries_Guide_Fthr_008_posEnd" -p "L_Primaries_Guide_Fthr_008_posStart";
 	rename -uid "3BA317FC-4FB0-8386-CF93-D0A36890D7BC";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 4.9960036108132044e-16 4.6726511548911276e-14 -48.198796536215497 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Primaries_Guide_Fthr_007_posStart" -p "L_Primaries_Guide_Wing_007";
 	rename -uid "681C6FBE-4786-DEC2-0BDB-FDB702C1D1F2";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" -2.4955988839707572 0.15666616848797332 -0.17865304918101899 ;
 	setAttr ".r" -type "double3" 3.3301880593442612 -54.262546926073739 -3.4034278610928187e-16 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Primaries_Guide_Fthr_007_posEnd" -p "L_Primaries_Guide_Fthr_007_posStart";
 	rename -uid "74D6271E-476F-FF71-E276-A294894DA27F";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" -1.1324274851176597e-14 -1.2490009027033011e-15 -54.454832955424898 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Primaries_Guide_Fthr_006_posStart" -p "L_Primaries_Guide_Wing_006";
 	rename -uid "02F6E491-4F24-50DC-3AFE-65BD46A79BCB";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" -0.60981859645526981 0.15037182604902455 -1.109426467588893 ;
 	setAttr ".r" -type "double3" 2.0026210510374733 -46.122554729186334 0 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Primaries_Guide_Fthr_006_posEnd" -p "L_Primaries_Guide_Fthr_006_posStart";
 	rename -uid "CD9D2419-4C2E-AAED-5EEB-75B2EB8B48BB";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 1.5078216453190407e-14 2.9777395826879882e-14 -52.536953117026492 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Primaries_Guide_Fthr_005_posStart" -p "L_Primaries_Guide_Wing_005";
 	rename -uid "985538A1-4899-064D-2935-2C9171D017E5";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" -1.313579788370788 -0.037241382238647702 -0.16178117430997219 ;
 	setAttr ".r" -type "double3" 1.3342095945082926 -37.933307021779925 -6.3008082529672929e-17 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Primaries_Guide_Fthr_005_posEnd" -p "L_Primaries_Guide_Fthr_005_posStart";
 	rename -uid "17B21403-4FB6-0FC7-2A7D-6FBC7987ED43";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 9.1038288019262836e-15 -3.8441472227646045e-15 -52.749153985176008 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Primaries_Guide_Fthr_004_posStart" -p "L_Primaries_Guide_Wing_004";
 	rename -uid "E80F4045-4976-8F96-A6D6-1D920D6A112B";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" -0.66576582076615409 -0.078375956069422159 0.65707924116664174 ;
 	setAttr ".r" -type "double3" 0.86972538186523007 -30.519088045645606 0 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Primaries_Guide_Fthr_004_posEnd" -p "L_Primaries_Guide_Fthr_004_posStart";
 	rename -uid "654DFB73-4DA4-CCB0-5E05-27B179B343D0";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" -3.5527136788005009e-15 1.0436096431476471e-14 -50.004624001537096 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Primaries_Guide_Fthr_003_posStart" -p "L_Primaries_Guide_Wing_003";
 	rename -uid "B5926899-4F23-D8ED-50A8-D3B27A805808";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 1.098959815143985 -0.10943550312791217 -0.1820558004426438 ;
 	setAttr ".r" -type "double3" -0.64808901969807797 -22.114837204679109 -5.3642589238779749e-17 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Primaries_Guide_Fthr_003_posEnd" -p "L_Primaries_Guide_Fthr_003_posStart";
 	rename -uid "7D208146-4CA9-EC21-7EC9-BA98E595701E";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" -3.2862601528904634e-14 2.7033930649622562e-14 -43.875287517309673 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Primaries_Guide_Fthr_002_posStart" -p "L_Primaries_Guide_Wing_002";
 	rename -uid "87092018-400D-CE8C-F8B2-1A90D91A0607";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 2.0430802528447174 -0.16457198731777112 -0.40659235080252998 ;
 	setAttr ".r" -type "double3" -1.6132620009871936 -14.896814891631092 0 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Primaries_Guide_Fthr_002_posEnd" -p "L_Primaries_Guide_Fthr_002_posStart";
 	rename -uid "7D200663-43A8-917E-1BA5-7A892AB42A7B";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" -3.2862601528904634e-14 2.1094237467877974e-15 -41.231137093260699 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Primaries_Guide_Fthr_001_posStart" -p "L_Primaries_Guide_Wing_001";
 	rename -uid "FAFCCEA6-4878-2749-C7E2-6792D65577AC";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 2.1524168517426787 -0.28910115946720794 0.21729232880558591 ;
 	setAttr ".r" -type "double3" -1.7161577323491621 -8.080241877117091 0 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Primaries_Guide_Fthr_001_posEnd" -p "L_Primaries_Guide_Fthr_001_posStart";
 	rename -uid "BA96AD25-494E-5DAB-156A-8193E051B08F";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 1.7763568394002505e-15 1.4876988529977098e-14 -38.813439472297596 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Primaries_Guide_Fthr_000_posStart" -p "L_Primaries_Guide_Wing_000";
 	rename -uid "6B982BEB-40F6-F950-DDBB-439A70BCB8D4";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 2.2483718844020544 -0.44208526816757399 0.27201795179965771 ;
 	setAttr ".r" -type "double3" -3.2886465741719655 0 0 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Primaries_Guide_Fthr_000_posEnd" -p "L_Primaries_Guide_Fthr_000_posStart";
 	rename -uid "4D68035B-49E6-069E-C27C-BF8CA62ECDF6";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" -1.1768364061026659e-14 -4.4408920985006262e-15 -37.051578765749923 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
@@ -1997,7 +1997,7 @@ createNode parentConstraint -n "L_Primaries_Guide_Wing_000_Offset_Grp_parentCons
 	addAttr -dcb 0 -ci true -k true -sn "w0" -ln "L_Primaries_GuideW0" -dv 1 -min 0 
 		-at "double";
 	setAttr -k on ".nds";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr -k off ".tx";
 	setAttr -k off ".ty";
@@ -2037,7 +2037,7 @@ createNode dagContainer -n "L_Shoulder_Block" -p "Body";
 createNode joint -n "L_Shoulder_Guide" -p "L_Shoulder_Block";
 	rename -uid "E0CE73C2-4D95-B8D0-47D2-359FF8EF2147";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 11.843110331123231 61.204433109612665 8.8243652944805913 ;
 	setAttr ".r" -type "double3" 0 0 -6.8373824641624523 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
@@ -2046,7 +2046,7 @@ createNode joint -n "L_Shoulder_Guide" -p "L_Shoulder_Block";
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_Shoulder_Guide_CtrlShape" -p "L_Shoulder_Guide";
 	rename -uid "3A555DCC-40CC-28F0-964F-C6B8B1F48A19";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -2068,7 +2068,7 @@ createNode nurbsCurve -n "L_Shoulder_Guide_CtrlShape" -p "L_Shoulder_Guide";
 		;
 createNode nurbsCurve -n "L_Shoulder_Guide_Ctrl_CtrlShape" -p "L_Shoulder_Guide";
 	rename -uid "67563ED8-4102-7878-451F-968114F12CD8";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -2185,7 +2185,7 @@ createNode nurbsCurve -n "L_Shoulder_Guide_Ctrl_CtrlShape" -p "L_Shoulder_Guide"
 		;
 createNode nurbsCurve -n "L_Shoulder_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Shoulder_Guide";
 	rename -uid "D0A19729-47A8-3911-96FF-0CB8EBFCEF05";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -2207,7 +2207,7 @@ createNode nurbsCurve -n "L_Shoulder_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Shoulder_G
 		;
 createNode nurbsCurve -n "L_Shoulder_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Shoulder_Guide";
 	rename -uid "1325907E-4CA3-5A11-557B-B3A35F252004";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -2230,7 +2230,7 @@ createNode nurbsCurve -n "L_Shoulder_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Shoul
 createNode joint -n "L_Elbow_Guide" -p "L_Shoulder_Guide";
 	rename -uid "6E402A00-410C-43AC-5EB5-4B9E3513032F";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 23.329945444941217 1.7763568394002505e-15 3.5527136788005009e-14 ;
 	setAttr ".r" -type "double3" 0 0 5.4651332869866929 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
@@ -2239,7 +2239,7 @@ createNode joint -n "L_Elbow_Guide" -p "L_Shoulder_Guide";
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_Elbow_Guide_CtrlShape" -p "L_Elbow_Guide";
 	rename -uid "5A36752F-473E-F7F6-B002-798C839B8B16";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -2261,7 +2261,7 @@ createNode nurbsCurve -n "L_Elbow_Guide_CtrlShape" -p "L_Elbow_Guide";
 		;
 createNode nurbsCurve -n "L_Elbow_Guide_Ctrl_CtrlShape" -p "L_Elbow_Guide";
 	rename -uid "7540238A-48D1-20E3-ABCD-0390CE0B2EE2";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -2378,7 +2378,7 @@ createNode nurbsCurve -n "L_Elbow_Guide_Ctrl_CtrlShape" -p "L_Elbow_Guide";
 		;
 createNode nurbsCurve -n "L_Elbow_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Elbow_Guide";
 	rename -uid "051B65B8-43AE-0F07-3EA0-2D88347B93F7";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -2400,7 +2400,7 @@ createNode nurbsCurve -n "L_Elbow_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Elbow_Guide";
 		;
 createNode nurbsCurve -n "L_Elbow_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Elbow_Guide";
 	rename -uid "CE91351E-4E60-8C1B-ECFD-E6A3B9098EE5";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -2423,7 +2423,7 @@ createNode nurbsCurve -n "L_Elbow_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Elbow_Gu
 createNode joint -n "L_Wrist_Guide" -p "L_Elbow_Guide";
 	rename -uid "89E9B4F3-4F55-DEFF-2E33-3493C901455C";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 31.571368607634895 3.2418512319054571e-14 -7.1054273576010019e-15 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
@@ -2431,7 +2431,7 @@ createNode joint -n "L_Wrist_Guide" -p "L_Elbow_Guide";
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_Wrist_Guide_CtrlShape" -p "L_Wrist_Guide";
 	rename -uid "0FA15CE9-4BF7-CC53-7197-9A8A28C49689";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -2453,7 +2453,7 @@ createNode nurbsCurve -n "L_Wrist_Guide_CtrlShape" -p "L_Wrist_Guide";
 		;
 createNode nurbsCurve -n "L_Wrist_Guide_Ctrl_CtrlShape" -p "L_Wrist_Guide";
 	rename -uid "B2A3DE5B-453F-224E-D5CB-D197ED6BCC96";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -2570,7 +2570,7 @@ createNode nurbsCurve -n "L_Wrist_Guide_Ctrl_CtrlShape" -p "L_Wrist_Guide";
 		;
 createNode nurbsCurve -n "L_Wrist_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Wrist_Guide";
 	rename -uid "1C756159-4CB5-919F-3F2A-3FB1CC345DC2";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -2592,7 +2592,7 @@ createNode nurbsCurve -n "L_Wrist_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Wrist_Guide";
 		;
 createNode nurbsCurve -n "L_Wrist_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Wrist_Guide";
 	rename -uid "EC1C3FDE-4282-4780-72B0-A6A135EA322C";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -2632,10 +2632,10 @@ createNode dagContainer -n "ReorientClav_Block" -p "Body";
 	setAttr ".nts" -type "string" "['R_Clavicle_Ctrl_Offset_Grp', 'L_Clavicle_Ctrl_Offset_Grp', 'transform1']";
 createNode transform -n "ReorientClav_Loc" -p "ReorientClav_Block";
 	rename -uid "CCDC9096-4790-0BFF-DABE-40B9E68C930D";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 createNode locator -n "ReorientClav_LocShape" -p "ReorientClav_Loc";
 	rename -uid "E87F3772-4E19-7236-A65C-31B9D7498AD8";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 createNode dagContainer -n "L_Pelvis_Block" -p "Body";
 	rename -uid "A9F8DF1C-4A0C-3D50-20F6-CCAAD814FC62";
@@ -2658,7 +2658,7 @@ createNode dagContainer -n "L_Pelvis_Block" -p "Body";
 createNode joint -n "L_Pelvis_Guide" -p "L_Pelvis_Block";
 	rename -uid "634E5692-4332-7B9C-7BF5-E0A913C6D3C4";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 4.155566778973693 43.033148249603791 -4.3063469235342993 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
@@ -2666,7 +2666,7 @@ createNode joint -n "L_Pelvis_Guide" -p "L_Pelvis_Block";
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_Pelvis_Guide_CtrlShape" -p "L_Pelvis_Guide";
 	rename -uid "2E23B040-44C9-9A6F-D901-1AB2805550F4";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".hpb" yes;
@@ -2689,7 +2689,7 @@ createNode nurbsCurve -n "L_Pelvis_Guide_CtrlShape" -p "L_Pelvis_Guide";
 		;
 createNode nurbsCurve -n "L_Pelvis_Guide_Ctrl_CtrlShape" -p "L_Pelvis_Guide";
 	rename -uid "75960B0C-47A6-EC2B-47FA-5992C5E140CE";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".hpb" yes;
@@ -2807,7 +2807,7 @@ createNode nurbsCurve -n "L_Pelvis_Guide_Ctrl_CtrlShape" -p "L_Pelvis_Guide";
 		;
 createNode nurbsCurve -n "L_Pelvis_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Pelvis_Guide";
 	rename -uid "2DCB5167-48D9-1BCF-4789-1A95B726FAE1";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".hpb" yes;
@@ -2830,7 +2830,7 @@ createNode nurbsCurve -n "L_Pelvis_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Pelvis_Guide
 		;
 createNode nurbsCurve -n "L_Pelvis_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Pelvis_Guide";
 	rename -uid "5D2576A4-4847-CAA7-338E-79B2D90C76A6";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".hpb" yes;
@@ -2854,7 +2854,7 @@ createNode nurbsCurve -n "L_Pelvis_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Pelvis_
 createNode joint -n "L_PelvisEnd_Guide" -p "L_Pelvis_Guide";
 	rename -uid "E5BBC99A-47CE-DEBF-4553-8292872C3B47";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 6.6933123430037984 4.3046954192344152e-15 -2.8511485004128678e-15 ;
 	setAttr ".r" -type "double3" -4.1347210859025719e-13 -6.6791648310733754e-14 2.8624992133171894e-14 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
@@ -2863,7 +2863,7 @@ createNode joint -n "L_PelvisEnd_Guide" -p "L_Pelvis_Guide";
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_PelvisEnd_Guide_CtrlShape" -p "L_PelvisEnd_Guide";
 	rename -uid "9676D523-4DD3-21E7-C2D0-0CBC5991659E";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".hpb" yes;
@@ -2886,7 +2886,7 @@ createNode nurbsCurve -n "L_PelvisEnd_Guide_CtrlShape" -p "L_PelvisEnd_Guide";
 		;
 createNode nurbsCurve -n "L_PelvisEnd_Guide_Ctrl_CtrlShape" -p "L_PelvisEnd_Guide";
 	rename -uid "C64EA116-4207-C4DB-D8A9-CC983046310D";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".hpb" yes;
@@ -3004,7 +3004,7 @@ createNode nurbsCurve -n "L_PelvisEnd_Guide_Ctrl_CtrlShape" -p "L_PelvisEnd_Guid
 		;
 createNode nurbsCurve -n "L_PelvisEnd_Guide_Ctrl_Ctrl_CtrlShape" -p "L_PelvisEnd_Guide";
 	rename -uid "5F10FBE6-45E0-E355-B47C-E5A597DC25F0";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".hpb" yes;
@@ -3027,7 +3027,7 @@ createNode nurbsCurve -n "L_PelvisEnd_Guide_Ctrl_Ctrl_CtrlShape" -p "L_PelvisEnd
 		;
 createNode nurbsCurve -n "L_PelvisEnd_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_PelvisEnd_Guide";
 	rename -uid "C8F6550E-4E5E-A264-78E8-AD82CEA2B1C7";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".hpb" yes;
@@ -3070,7 +3070,7 @@ createNode dagContainer -n "L_Hip_Block" -p "Body";
 createNode joint -n "L_Hip_Guide" -p "L_Hip_Block";
 	rename -uid "F6086700-4E4F-59E3-0EC8-81965CEEFA2E";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 10.866350482487046 37.161559512607219 -3.946675046729506 ;
 	setAttr ".r" -type "double3" 81.526296378860337 -83.715475554761298 -74.626779293299933 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
@@ -3079,7 +3079,7 @@ createNode joint -n "L_Hip_Guide" -p "L_Hip_Block";
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_Hip_Guide_CtrlShape" -p "L_Hip_Guide";
 	rename -uid "EB187221-4B52-2FB2-4EC5-0E8CBE5A4477";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -3101,7 +3101,7 @@ createNode nurbsCurve -n "L_Hip_Guide_CtrlShape" -p "L_Hip_Guide";
 		;
 createNode nurbsCurve -n "L_Hip_Guide_Ctrl_CtrlShape" -p "L_Hip_Guide";
 	rename -uid "CBCA6B48-428A-A333-BF92-E7B6E6585ECF";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -3218,7 +3218,7 @@ createNode nurbsCurve -n "L_Hip_Guide_Ctrl_CtrlShape" -p "L_Hip_Guide";
 		;
 createNode nurbsCurve -n "L_Hip_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hip_Guide";
 	rename -uid "4E659DA6-489D-5384-4C10-7282882C723F";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -3240,7 +3240,7 @@ createNode nurbsCurve -n "L_Hip_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hip_Guide";
 		;
 createNode nurbsCurve -n "L_Hip_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Hip_Guide";
 	rename -uid "1052BB8D-4760-0F10-F5C0-F2A216EB21D3";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -3263,7 +3263,7 @@ createNode nurbsCurve -n "L_Hip_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Hip_Guide"
 createNode joint -n "L_Knee_Guide" -p "L_Hip_Guide";
 	rename -uid "9BA10093-44B1-7023-D879-BF86A25F5C02";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 20.941749261037227 0.19076561852029655 0.028420609802410953 ;
 	setAttr ".r" -type "double3" 0 0 3.9486427169603715 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
@@ -3272,7 +3272,7 @@ createNode joint -n "L_Knee_Guide" -p "L_Hip_Guide";
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_Knee_Guide_CtrlShape" -p "L_Knee_Guide";
 	rename -uid "6A1512C9-42C1-76A6-F18A-C8983B3999B9";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -3294,7 +3294,7 @@ createNode nurbsCurve -n "L_Knee_Guide_CtrlShape" -p "L_Knee_Guide";
 		;
 createNode nurbsCurve -n "L_Knee_Guide_Ctrl_CtrlShape" -p "L_Knee_Guide";
 	rename -uid "3874D3D7-40B5-0B5F-6CDE-B3B3CFEEC7B7";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -3411,7 +3411,7 @@ createNode nurbsCurve -n "L_Knee_Guide_Ctrl_CtrlShape" -p "L_Knee_Guide";
 		;
 createNode nurbsCurve -n "L_Knee_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Knee_Guide";
 	rename -uid "AB42E362-4C4F-D645-4367-3BB8D4EA0473";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -3433,7 +3433,7 @@ createNode nurbsCurve -n "L_Knee_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Knee_Guide";
 		;
 createNode nurbsCurve -n "L_Knee_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Knee_Guide";
 	rename -uid "09708FC4-4D4F-64B9-45DB-CABB411EBE11";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -3456,7 +3456,7 @@ createNode nurbsCurve -n "L_Knee_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Knee_Guid
 createNode joint -n "L_Ankle_Guide" -p "L_Knee_Guide";
 	rename -uid "292D980C-464D-A208-4A63-6586D622E286";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 12.136606923713112 1.1723955140041653e-13 -5.3290705182007514e-15 ;
 	setAttr ".r" -type "double3" 4.7670188018941732e-30 1.9083328088781104e-14 2.8624992133171654e-14 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
@@ -3465,7 +3465,7 @@ createNode joint -n "L_Ankle_Guide" -p "L_Knee_Guide";
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_Ankle_Guide_CtrlShape" -p "L_Ankle_Guide";
 	rename -uid "C3639FB3-4DB4-5EFB-215A-11A5924DCDF5";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -3487,7 +3487,7 @@ createNode nurbsCurve -n "L_Ankle_Guide_CtrlShape" -p "L_Ankle_Guide";
 		;
 createNode nurbsCurve -n "L_Ankle_Guide_Ctrl_CtrlShape" -p "L_Ankle_Guide";
 	rename -uid "2B9EF236-4EE8-B5D4-35C4-90B5F5731515";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -3604,7 +3604,7 @@ createNode nurbsCurve -n "L_Ankle_Guide_Ctrl_CtrlShape" -p "L_Ankle_Guide";
 		;
 createNode nurbsCurve -n "L_Ankle_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Ankle_Guide";
 	rename -uid "19786A8B-4989-70C8-0C70-B091ED1DFC87";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -3626,7 +3626,7 @@ createNode nurbsCurve -n "L_Ankle_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Ankle_Guide";
 		;
 createNode nurbsCurve -n "L_Ankle_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Ankle_Guide";
 	rename -uid "C41C2C21-4544-021A-26DC-98A13A46188B";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -3668,7 +3668,7 @@ createNode dagContainer -n "Neck_Head_Block" -p "Body";
 createNode joint -n "Neck_Guide" -p "Neck_Head_Block";
 	rename -uid "A7F8FC15-4193-DB80-5AEF-0188E55524B3";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 0 67.3940668340976 11.554844424554517 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
@@ -3676,7 +3676,7 @@ createNode joint -n "Neck_Guide" -p "Neck_Head_Block";
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "Neck_Guide_CtrlShape" -p "Neck_Guide";
 	rename -uid "8DF7CC8E-46E4-0645-0FE4-29B2EB704FE2";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -3698,7 +3698,7 @@ createNode nurbsCurve -n "Neck_Guide_CtrlShape" -p "Neck_Guide";
 		;
 createNode nurbsCurve -n "Neck_Guide_Ctrl_CtrlShape" -p "Neck_Guide";
 	rename -uid "EF892B45-4DBE-0487-4A25-01B9E3099B08";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -3815,7 +3815,7 @@ createNode nurbsCurve -n "Neck_Guide_Ctrl_CtrlShape" -p "Neck_Guide";
 		;
 createNode nurbsCurve -n "Neck_Guide_Ctrl_Ctrl_CtrlShape" -p "Neck_Guide";
 	rename -uid "31FD0242-4135-1FA7-F532-909D05B6D9DF";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -3837,7 +3837,7 @@ createNode nurbsCurve -n "Neck_Guide_Ctrl_Ctrl_CtrlShape" -p "Neck_Guide";
 		;
 createNode nurbsCurve -n "Neck_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "Neck_Guide";
 	rename -uid "CAAF67E2-4B25-1FA2-255B-11B41D6C8136";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -3860,7 +3860,7 @@ createNode nurbsCurve -n "Neck_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "Neck_Guide";
 createNode joint -n "Head_Guide" -p "Neck_Guide";
 	rename -uid "80F52C0B-47D3-AAB8-71E5-0483A6DC8E93";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 10.609119565225001 -1.7763568394002505e-15 1.1778488812313967e-15 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
@@ -3868,7 +3868,7 @@ createNode joint -n "Head_Guide" -p "Neck_Guide";
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "Head_Guide_CtrlShape" -p "Head_Guide";
 	rename -uid "0CB10688-43EE-E925-254E-28922655FCC2";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -3890,7 +3890,7 @@ createNode nurbsCurve -n "Head_Guide_CtrlShape" -p "Head_Guide";
 		;
 createNode nurbsCurve -n "Head_Guide_Ctrl_CtrlShape" -p "Head_Guide";
 	rename -uid "94594CA1-4A71-D7ED-8DF8-D98794F5D505";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -4007,7 +4007,7 @@ createNode nurbsCurve -n "Head_Guide_Ctrl_CtrlShape" -p "Head_Guide";
 		;
 createNode nurbsCurve -n "Head_Guide_Ctrl_Ctrl_CtrlShape" -p "Head_Guide";
 	rename -uid "E565F1F4-42DE-346F-EF29-A782E06258CF";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -4029,7 +4029,7 @@ createNode nurbsCurve -n "Head_Guide_Ctrl_Ctrl_CtrlShape" -p "Head_Guide";
 		;
 createNode nurbsCurve -n "Head_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "Head_Guide";
 	rename -uid "39906F38-4BFA-8F9D-B49C-76B418D35FD5";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -4052,14 +4052,14 @@ createNode nurbsCurve -n "Head_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "Head_Guide";
 createNode joint -n "HeadEnd_Guide" -p "Head_Guide";
 	rename -uid "9A9B2406-4AB5-30A8-34C3-C39740356692";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 13.749187533028291 -3.9478923739961855e-15 -6.0602040986700825e-15 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "HeadEnd_Guide_CtrlShape" -p "HeadEnd_Guide";
 	rename -uid "A5C1EBD3-41E7-E900-EB2C-4094727C749A";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -4081,7 +4081,7 @@ createNode nurbsCurve -n "HeadEnd_Guide_CtrlShape" -p "HeadEnd_Guide";
 		;
 createNode nurbsCurve -n "HeadEnd_Guide_Ctrl_CtrlShape" -p "HeadEnd_Guide";
 	rename -uid "006170D0-4C9F-2812-A34D-18A05809EDFE";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -4198,7 +4198,7 @@ createNode nurbsCurve -n "HeadEnd_Guide_Ctrl_CtrlShape" -p "HeadEnd_Guide";
 		;
 createNode nurbsCurve -n "HeadEnd_Guide_Ctrl_Ctrl_CtrlShape" -p "HeadEnd_Guide";
 	rename -uid "E5C1CC63-4D1B-8B67-1577-398727B1C972";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -4220,7 +4220,7 @@ createNode nurbsCurve -n "HeadEnd_Guide_Ctrl_Ctrl_CtrlShape" -p "HeadEnd_Guide";
 		;
 createNode nurbsCurve -n "HeadEnd_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "HeadEnd_Guide";
 	rename -uid "A6D59AE2-49AB-64F0-107A-1D95B10945E6";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -4262,7 +4262,7 @@ createNode dagContainer -n "L_Eyes_Block" -p "Body";
 createNode joint -n "L_Eyes_Guide" -p "L_Eyes_Block";
 	rename -uid "0AAD8305-4538-44CC-421A-A9B70594EB36";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 4.4113783836364746 83.999588012695312 20.575667381286621 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
@@ -4270,7 +4270,7 @@ createNode joint -n "L_Eyes_Guide" -p "L_Eyes_Block";
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_Eyes_Guide_CtrlShape" -p "L_Eyes_Guide";
 	rename -uid "F957229B-4D55-EF04-75F2-8F809360828E";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -4292,7 +4292,7 @@ createNode nurbsCurve -n "L_Eyes_Guide_CtrlShape" -p "L_Eyes_Guide";
 		;
 createNode nurbsCurve -n "L_Eyes_Guide_Ctrl_CtrlShape" -p "L_Eyes_Guide";
 	rename -uid "71FAFAB2-49F3-749F-377D-ECB977FAA310";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -4409,7 +4409,7 @@ createNode nurbsCurve -n "L_Eyes_Guide_Ctrl_CtrlShape" -p "L_Eyes_Guide";
 		;
 createNode nurbsCurve -n "L_Eyes_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Eyes_Guide";
 	rename -uid "C1B1074A-44CE-8E9C-2A22-B3AAA2EA6C9E";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -4431,7 +4431,7 @@ createNode nurbsCurve -n "L_Eyes_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Eyes_Guide";
 		;
 createNode nurbsCurve -n "L_Eyes_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Eyes_Guide";
 	rename -uid "DB4DD3FA-48D1-7030-3C1A-078204C089F0";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -4454,7 +4454,7 @@ createNode nurbsCurve -n "L_Eyes_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Eyes_Guid
 createNode joint -n "L_Eyes_Aim_Guide" -p "L_Eyes_Guide";
 	rename -uid "448C26C0-4F88-29F8-3CB1-2CA552D75B10";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 18.40676294436048 5.1159076974727213e-13 -3.5527136788005009e-15 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
@@ -4462,7 +4462,7 @@ createNode joint -n "L_Eyes_Aim_Guide" -p "L_Eyes_Guide";
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_Eyes_Aim_Guide_CtrlShape" -p "L_Eyes_Aim_Guide";
 	rename -uid "71A87D85-4BF5-1492-814E-0798AC6D8D9F";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -4484,7 +4484,7 @@ createNode nurbsCurve -n "L_Eyes_Aim_Guide_CtrlShape" -p "L_Eyes_Aim_Guide";
 		;
 createNode nurbsCurve -n "L_Eyes_Aim_Guide_Ctrl_CtrlShape" -p "L_Eyes_Aim_Guide";
 	rename -uid "98BFB11B-4C48-ADF1-8927-48A01A01910C";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -4601,7 +4601,7 @@ createNode nurbsCurve -n "L_Eyes_Aim_Guide_Ctrl_CtrlShape" -p "L_Eyes_Aim_Guide"
 		;
 createNode nurbsCurve -n "L_Eyes_Aim_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Eyes_Aim_Guide";
 	rename -uid "1F9CAA96-4D0A-8262-34E0-6ABA19FB625F";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -4623,7 +4623,7 @@ createNode nurbsCurve -n "L_Eyes_Aim_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Eyes_Aim_G
 		;
 createNode nurbsCurve -n "L_Eyes_Aim_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Eyes_Aim_Guide";
 	rename -uid "98EC8450-400B-B111-FD1D-2699F219CF11";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -4664,7 +4664,7 @@ createNode dagContainer -n "L_Pupil_Block" -p "Body";
 createNode joint -n "L_Pupil_A_Guide" -p "L_Pupil_Block";
 	rename -uid "BC878788-4955-F494-DBA8-A0BC180A742E";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 5.3599865436553955 84.0462646484375 21.815747261047363 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
@@ -4672,7 +4672,7 @@ createNode joint -n "L_Pupil_A_Guide" -p "L_Pupil_Block";
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_Pupil_A_Guide_CtrlShape" -p "L_Pupil_A_Guide";
 	rename -uid "40A7F472-442F-F11F-EA58-6AA3F296C1BE";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".hpb" yes;
@@ -4695,7 +4695,7 @@ createNode nurbsCurve -n "L_Pupil_A_Guide_CtrlShape" -p "L_Pupil_A_Guide";
 		;
 createNode nurbsCurve -n "L_Pupil_A_Guide_Ctrl_CtrlShape" -p "L_Pupil_A_Guide";
 	rename -uid "06CD73F1-407C-BB39-E1D6-1F94AD954F60";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".hpb" yes;
@@ -4813,7 +4813,7 @@ createNode nurbsCurve -n "L_Pupil_A_Guide_Ctrl_CtrlShape" -p "L_Pupil_A_Guide";
 		;
 createNode nurbsCurve -n "L_Pupil_A_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Pupil_A_Guide";
 	rename -uid "B851B971-48E0-A681-7B4D-90A02AC96341";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".hpb" yes;
@@ -4836,7 +4836,7 @@ createNode nurbsCurve -n "L_Pupil_A_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Pupil_A_Gui
 		;
 createNode nurbsCurve -n "L_Pupil_A_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Pupil_A_Guide";
 	rename -uid "3E0A4D7E-483A-B3BD-E074-33B74F3BBC89";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".hpb" yes;
@@ -4879,7 +4879,7 @@ createNode dagContainer -n "Tail_Block" -p "Body";
 createNode joint -n "Tail_A_Guide" -p "Tail_Block";
 	rename -uid "0F00021C-4416-4EA2-B308-A18849C6ED0E";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 0 36.578054685476914 -11.193870420981131 ;
 	setAttr ".r" -type "double3" 0 0 -30.493597148678791 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
@@ -4888,7 +4888,7 @@ createNode joint -n "Tail_A_Guide" -p "Tail_Block";
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "Tail_A_Guide_CtrlShape" -p "Tail_A_Guide";
 	rename -uid "4E490B53-4F69-9CBF-594B-60BEB54FD036";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".hpb" yes;
@@ -4911,7 +4911,7 @@ createNode nurbsCurve -n "Tail_A_Guide_CtrlShape" -p "Tail_A_Guide";
 		;
 createNode nurbsCurve -n "Tail_A_Guide_Ctrl_CtrlShape" -p "Tail_A_Guide";
 	rename -uid "3E39A04D-4FE2-BDEA-E296-E090F9600E3A";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".hpb" yes;
@@ -5029,7 +5029,7 @@ createNode nurbsCurve -n "Tail_A_Guide_Ctrl_CtrlShape" -p "Tail_A_Guide";
 		;
 createNode nurbsCurve -n "Tail_A_Guide_Ctrl_Ctrl_CtrlShape" -p "Tail_A_Guide";
 	rename -uid "EA0FE131-457D-9954-3163-AE829F9CE0F3";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".hpb" yes;
@@ -5052,7 +5052,7 @@ createNode nurbsCurve -n "Tail_A_Guide_Ctrl_Ctrl_CtrlShape" -p "Tail_A_Guide";
 		;
 createNode nurbsCurve -n "Tail_A_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "Tail_A_Guide";
 	rename -uid "4D7BE5AB-46F6-CD1B-0B00-AAAB0055FAB9";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".hpb" yes;
@@ -5076,14 +5076,14 @@ createNode nurbsCurve -n "Tail_A_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "Tail_A_Guid
 createNode joint -n "Tail_B_Guide" -p "Tail_A_Guide";
 	rename -uid "80DB84E0-4E55-315B-CC33-479A29F209F9";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 6.3458967375405919 -9.1940344226770776e-15 0 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "Tail_B_Guide_CtrlShape" -p "Tail_B_Guide";
 	rename -uid "B026AE01-4BFD-2602-777B-FF983980B01F";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".hpb" yes;
@@ -5106,7 +5106,7 @@ createNode nurbsCurve -n "Tail_B_Guide_CtrlShape" -p "Tail_B_Guide";
 		;
 createNode nurbsCurve -n "Tail_B_Guide_Ctrl_CtrlShape" -p "Tail_B_Guide";
 	rename -uid "23D4603C-4916-8B14-6753-ECBECC5F50A0";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".hpb" yes;
@@ -5224,7 +5224,7 @@ createNode nurbsCurve -n "Tail_B_Guide_Ctrl_CtrlShape" -p "Tail_B_Guide";
 		;
 createNode nurbsCurve -n "Tail_B_Guide_Ctrl_Ctrl_CtrlShape" -p "Tail_B_Guide";
 	rename -uid "B59AAA42-4F06-E342-89C0-DF84E196B1A4";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".hpb" yes;
@@ -5247,7 +5247,7 @@ createNode nurbsCurve -n "Tail_B_Guide_Ctrl_Ctrl_CtrlShape" -p "Tail_B_Guide";
 		;
 createNode nurbsCurve -n "Tail_B_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "Tail_B_Guide";
 	rename -uid "A2B21459-41DA-8526-4D5B-EA8C09D54484";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".hpb" yes;
@@ -5271,14 +5271,14 @@ createNode nurbsCurve -n "Tail_B_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "Tail_B_Guid
 createNode joint -n "Tail_C_Guide" -p "Tail_B_Guide";
 	rename -uid "A833A09A-4B25-74F9-1939-2DB4A1A66959";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 6.0947427399568159 -3.0253577421035516e-15 0 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "Tail_C_Guide_CtrlShape" -p "Tail_C_Guide";
 	rename -uid "88A30594-4C96-3236-64D8-E1B9ACFC394B";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".hpb" yes;
@@ -5301,7 +5301,7 @@ createNode nurbsCurve -n "Tail_C_Guide_CtrlShape" -p "Tail_C_Guide";
 		;
 createNode nurbsCurve -n "Tail_C_Guide_Ctrl_CtrlShape" -p "Tail_C_Guide";
 	rename -uid "56993B98-4CC6-07FD-1EC2-D7870B791D40";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".hpb" yes;
@@ -5419,7 +5419,7 @@ createNode nurbsCurve -n "Tail_C_Guide_Ctrl_CtrlShape" -p "Tail_C_Guide";
 		;
 createNode nurbsCurve -n "Tail_C_Guide_Ctrl_Ctrl_CtrlShape" -p "Tail_C_Guide";
 	rename -uid "4E4A1DB5-48BB-60B5-D742-9ABCC1009134";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".hpb" yes;
@@ -5442,7 +5442,7 @@ createNode nurbsCurve -n "Tail_C_Guide_Ctrl_Ctrl_CtrlShape" -p "Tail_C_Guide";
 		;
 createNode nurbsCurve -n "Tail_C_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "Tail_C_Guide";
 	rename -uid "479D49B5-4DD2-1DB3-B050-6F94486DC510";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".hpb" yes;
@@ -5484,7 +5484,7 @@ createNode dagContainer -n "TailWing_Block" -p "Body";
 		"['unitConversion3251', 'unitConversion2994', 'unitConversion3091', 'unitConversion2969', 'unitConversion3176', 'unitConversion2964', 'TailWing_Start_JR_Wing_005_Bnd_scaleConstraint1', 'TailWing_Start_JR_Wing_000_Bnd', 'TailWing_Start_JR_Fthr_009_Out_rx_MD', 'TailWing_Start_JR_Fthr_0010_Ctrl_Root_Grp', 'unitConversion3120', 'unitConversion3237', 'unitConversion3103', 'TailWing_Start_JR_Fthr_006_Ctrl', 'TailWing_Start_JR_Fthr_004Bend02', 'TailWing_Start_JR_Fthr_001_InAuto_ry_MD', 'unitConversion3157', 'TailWing_Start_JR_Fthr_005_Bnd_parentConstraint1', 'TailWing_Start_JR_Fthr_009_InAuto_rx_MD', 'TailWing_Start_JR_Fthr_0010_Bnd_scaleConstraint1', 'TailWing_Start_JR_Fthr_007_Bnd_scaleConstraint1', 'unitConversion2953', 'TailWing_Start_JR_parentConstraint1', 'unitConversion3122', 'TailWing_Start_JR_Fthr_003_Bnd_scaleConstraint1', 'TailWing_Start_JR_6_Ctrl', 'TailWing_Start_JR_Fthr_007Bend01_Bnd_scaleConstraint1', 'TailWing_Start_JR_Fthr_000_OutAuto_rx_MD', 'TailWing_Start_JR_Fthr_007Bend03_Bnd', 'TailWing_Start_JR_Fthr_003Bend01_Bnd_parentConstraint1', 'TailWing_Start_JR_Wing_008_Bnd_scaleConstraint1', 'TailWing_Start_JR_Fthr_002_BendJnt3', 'unitConversion3108', 'unitConversion2984', 'TailWing_Start_JR_Fthr_0010Bend02_Bnd', 'TailWing_Start_JR_Fthr_005_In_rx_MD', 'unitConversion2967', 'TailWing_Start_JR_Fthr_009Bend01_Bnd', 'TailWing_Start_JR_Wing_000_Bnd_scaleConstraint1', 'unitConversion3233', 'unitConversion3204', 'unitConversion3261', 'TailWing_Start_JR_Fthr_006_SpreadCtrlGrp', 'TailWing_Start_JR_Fthr_003_In_ry_MD', 'TailWing_Start_JR_FeathersPlaneShape', 'unitConversion3027', 'unitConversion3255', 'unitConversion3073', 'TailWing_Start_JR_Fthr_000_InAuto_rx_MD', 'TailWing_Start_JR_Wing_002_Bnd_parentConstraint1', 'TailWing_Start_JR_Wing_000_Ctrl_Root_Grp_scaleConstraint1', 'unitConversion3006', 'unitConversion3004', 'TailWing_Start_JR_Fthr_008Bend01_Bnd_scaleConstraint1', 'unitConversion2947', 'unitConversion3121', 'TailWing_Start_JR_Fthr_002_AutoJnt', 'TailWing_Start_JR_Fthr_001_SpreadAuto_Auto', 'TailWing_Start_JR_Fthr_008_Ctrl', 'unitConversion2990', 'TailWing_Start_JR_Fthr_0010_In_ry_MD', 'TailWing_Start_JR_Fthr_005Bend01_Bnd', 'TailWing_Start_JR_Fthr_000_Ctrl_Auto_Grp', 'unitConversion3002', 'TailWing_Start_JR_Fthr_007_InAuto_rx_MD', 'unitConversion2987', 'unitConversion3253', 'TailWing_Start_JR_Wing_001_Bnd_scaleConstraint1', 'TailWing_Start_JR_Wing_001_parentConstraint1', 'TailWing_Start_JR_Fthr_0010_Out_rx_MD', 'TailWing_Start_JR_Fthr_009_Ctrl_Auto_Grp', 'TailWing_Start_JR_Fthr_006', 'unitConversion2956', 'unitConversion3198', 'unitConversion3213', 'unitConversion3040', 'unitConversion2982', 'unitConversion3105', 'unitConversion3132', 'unitConversion2934', 'unitConversion2948', 'TailWing_Start_JR_Fthr_003Bend03_Bnd', 'unitConversion2961', 'TailWing_Start_JR_Fthr_008_Ctrl_Auto_Grp', 'unitConversion3220', 'TailWing_Start_JR_Fthr_007_In_ry_MD', 'TailWing_Start_JR_Fthr_006_Out_rx_MD', 'TailWing_Start_JR_Fthr_007_RootJnt', 'unitConversion3127', 'TailWing_Start_JR_Fthr_0010Bend01_Bnd', 'unitConversion3078', 'TailWing_Start_JR_Fthr_006Bend03_Bnd_scaleConstraint1', 'TailWing_Start_JR_Fthr_002Bend02', 'TailWing_Start_JR_Fthr_001_BendJnt3', 'unitConversion2978', 'TailWing_Start_JR_Fthr_000Bend01_Bnd', 'TailWing_Start_JR_Fthr_008Bend03', 'TailWing_Start_JR_Fthr_0011_Ctrl', 'TailWing_Start_JR_Fthr_0011_In_rx_MD', 'TailWing_Start_JR_Fthr_005_Bnd_scaleConstraint1', 'unitConversion2973', 'unitConversion3079', 'TailWing_Start_JR_Wing_005_Bnd', 'TailWing_Start_JR_Fthr_006_OutAuto_ry_MD', 'skinCluster39GroupId', 'TailWing_Start_JR_Fthr_0010_SpreadAuto_Root', 'TailWing_Start_JR_Fthr_008Bend01_Bnd', 'TailWing_Start_JR_Fthr_000_CtrlShape', 'unitConversion3068', 'unitConversion2951', 'TailWing_Start_JR_Wing_000', 'TailWing_Start_JR_Fthr_0010_Ctrl', 'unitConversion3182', 'TailWing_Start_JR_Wing_0010_Bnd_scaleConstraint1', 'TailWing_Start_JR_Fthr_007Bend02', 'unitConversion2979', 'TailWing_Start_JR_Wing_000_Ctrl_Root_Grp', 'unitConversion2980', 'unitConversion3007', 'TailWing_Start_JR_Fthr_0011_SpreadCtrlGrp', 'TailWing_Start_JR_7_CtrlTailWing_Start_JR_7_CC_AutoFold_Grp_Grp', 'TailWing_Start_JR_Fthr_005Bend02_Bnd_parentConstraint1', 'TailWing_Start_JR_Fthr_002_In_rx_MD', 'unitConversion2942', 'TailWing_Start_JR_Fthr_0011_RootJnt', 'unitConversion3090', 'TailWing_Start_JR_Fthr_007_BendJnt2', 'unitConversion3114', 'unitConversion2957', 'unitConversion3236', 'TailWing_Start_JR_Fthr_000Bend03_Bnd_parentConstraint1', 'unitConversion3083', 'unitConversion3018', 'TailWing_Start_JR_Fthr_000_In_rx_MD', 'unitConversion3026', 'TailWing_Start_JR_2_Ctrl', 'TailWing_Start_JR_Fthr_001_Ctrl_Root_Grp', 'TailWing_Start_JR_Wing_0011_Bnd_scaleConstraint1', 'unitConversion2996', 'TailWing_Start_JR_Fthr_002Bend01', 'TailWing_Start_JR_Fthr_004_Bnd_scaleConstraint1', 'unitConversion3154', 'unitConversion3017', 'unitConversion3098', 'unitConversion3072', 'TailWing_Start_JR_Fthr_0011_InAuto_ry_MD', 'TailWing_Start_JR_Fthr_004Bend03_Bnd_parentConstraint1', 'TailWing_Start_JR_Fthr_0011Bend03_Bnd', 'TailWing_Start_JR_Wing_004_Bnd', 'TailWing_Start_JR_Fthr_003_OutAuto_rx_MD', 'TailWing_Start_JR_Wing_003_Bnd_parentConstraint1', 'TailWing_Start_JR_Fthr_003_OutAuto_ry_MD', 'TailWing_Start_JR_Wing_0010', 'unitConversion3010', 'unitConversion3216', 'TailWing_Start_JR_Fthr_002_BendJnt2', 'TailWing_Start_JR_Bnd_parentConstraint1', 'TailWing_Start_JR_Fthr_0010Bend02_Bnd_parentConstraint1', 'unitConversion2974', 'unitConversion3227', 'TailWing_Start_JR_Fthr_004_Bnd', 'unitConversion3000', 'TailWing_Start_JR_Fthr_000Bend01_Bnd_parentConstraint1', 'unitConversion3012', 'TailWing_Start_JR_Fthr_001_OutAuto_rx_MD', 'TailWing_Start_JR_Wing_000_parentConstraint1', 'TailWing_Start_JR_Fthr_004_OutAuto_rx_MD', 'TailWing_Start_JR_Fthr_004_BendJnt2', 'TailWing_Start_JR_Fthr_007', 'unitConversion3201', 'unitConversion2960', 'TailWing_Start_JR_Fthr_0011_Ctrl_Auto_Grp', 'TailWing_Start_JR_Fthr_008_Bnd', 'TailWing_Start_JR_6_CtrlShape', 'unitConversion3064', 'unitConversion3208', 'TailWing_Start_JR_Fthr_009Bend03_Bnd_scaleConstraint1', 'unitConversion3252', 'unitConversion3221', 'TailWing_Start_JR_Fthr_005_Ctrl_Root_Grp', 'unitConversion3051', 'TailWing_Start_JR_Fthr_008_BendJnt2', 'TailWing_Start_JR_Fthr_0010Bend01_Bnd_scaleConstraint1', 'TailWing_Start_JR_Fthr_0011Bend02', 'TailWing_Start_JR_Fthr_000Bend01', 'TailWing_Start_JR_Fthr_008Bend02_Bnd_parentConstraint1', 'TailWing_Start_JR_Fthr_006_AutoJnt', 'TailWing_Start_JR_Fthr_006_CtrlShape', 'unitConversion3066', 'unitConversion3021', 'TailWing_Start_JR_Fthr_001_Ctrl', 'unitConversion3030', 'unitConversion3069', 'TailWing_Start_JR_Fthr_005_Ctrl_Auto_Grp', 'TailWing_Start_JR_Fthr_009_SpreadAuto', 'unitConversion3187', 'TailWing_Start_JR_Wing_000_Ctrl_Auto_Grp', 'unitConversion3116', 'unitConversion3260', 'TailWing_Start_JR_Fthr_002_CtrlShape', 'TailWing_Start_JR_Fthr_004_SpreadAuto_Auto', 'TailWing_Start_JR_Fthr_002Bend03_Bnd', 'TailWing_Start_JR_Fthr_005Bend01', 'bindPose33', 'unitConversion3118', 'TailWing_Start_JR_3_Ctrl', 'TailWing_Start_JR_Fthr_004_SpreadAuto', 'unitConversion3035', 'TailWing_Start_JR_Fthr_004_In_rx_MD', 'TailWing_Start_JR_Fthr_008_Ctrl_Root_Grp', 'TailWing_Start_JR_Wing_007', 'unitConversion3222', 'TailWing_Start_JR_9_CtrlTailWing_Start_JR_9_CC_AutoFold_Grp_Grp', 'unitConversion3209', 'TailWing_Start_JR_Fthr_004_BendJnt1', 'TailWing_Start_JR_Fthr_009_Bnd_scaleConstraint1', 'TailWing_Start_JR_Fthr_0010Bend03', 'unitConversion3042', 'TailWing_Start_JR_Fthr_0011_OutAuto_ry_MD', 'TailWing_Start_JR_Fthr_000Bend02_Bnd', 'TailWing_Start_JR_Fthr_005Bend03_Bnd_scaleConstraint1', 'unitConversion3045', 'TailWing_Start_JR_Fthr_008_In_ry_MD', 'unitConversion3185', 'TailWing_Start_JR_Fthr_003_BendJnt2', 'unitConversion3031', 'unitConversion3075', 'TailWing_Start_JR_Wing_000_Ctrl_Root_Grp_parentConstraint1', 'unitConversion3028', 'TailWing_Start_JR_Wing_004_Bnd_parentConstraint1', 'TailWing_Start_JR_Spread_In_CtrlShape', 'TailWing_Start_JR_Fthr_000_Ctrl_Root_Grp', 'TailWing_Start_JR_Wing_000_Ctrl', 'TailWing_Start_JR_Fthr_006Bend01_Bnd_parentConstraint1', 'TailWing_Start_JR_Fthr_0011_Bnd_parentConstraint1', 'unitConversion2937', 'TailWing_Start_JR_Fthr_007Bend01', 'TailWing_Start_JR_Fthr_005_In_ry_MD', 'TailWing_Start_JR_Fthr_001Bend01_Bnd_parentConstraint1', 'TailWing_Start_JR_Bend_CC_Auto_Grp', 'TailWing_Start_JR_Fthr_000_BendJnt3', 'TailWing_Start_JR_Fthr_004_Out_ry_MD', 'unitConversion3061', 'unitConversion3183', 'TailWing_Start_JR_Fthr_001_RootJnt', 'TailWing_End_JR_Bnd_scaleConstraint1', 'TailWing_Start_JR_Fthr_009Bend01_Bnd_scaleConstraint1', 'TailWing_Start_JR_Fthr_002Bend02_Bnd_parentConstraint1', 'unitConversion3003', 'unitConversion3052', 'TailWing_Start_JR_5_CtrlShape', 'unitConversion3107', 'TailWing_Start_JR_Fthr_005Bend02_Bnd_scaleConstraint1', 'unitConversion3092', 'TailWing_Start_JR_Fthr_0011_BendJnt1', 'unitConversion3171', 'unitConversion3054', 'unitConversion3247', 'TailWing_Start_JR_Fthr_006_RootJnt', 'TailWing_Start_JR_Fthr_003_Bnd', 'unitConversion3076', 'TailWing_Start_JR_Wing_009_parentConstraint1', 'unitConversion3230', 'TailWing_Start_JR_Fthr_000_BendJnt2', 'TailWing_Start_JR_Fthr_004_InAuto_ry_MD', 'TailWing_Start_JR_Fthr_008_InAuto_rx_MD', 'unitConversion3151', 'unitConversion2943', 'TailWing_Start_JR_Fthr_007Bend01_Bnd_parentConstraint1', 'TailWing_Start_JR_Wing_008', 'TailWing_Start_JR_Fthr_003_In_rx_MD', 'TailWing_Start_JR_Fthr_005_RootJnt', 'TailWing_Start_JR_Fthr_009_Out_ry_MD', 'TailWing_Start_JR_Fthr_005', 'TailWing_Start_JR_Fthr_004_Ctrl_Root_Grp', 'TailWing_Start_JR_Fthr_002_OutAuto_rx_MD', 'unitConversion3215', 'TailWing_Start_JR_Fthr_003_SpreadAuto', 'unitConversion3129', 'TailWing_Start_JR_Fthr_008_Bnd_parentConstraint1', 'unitConversion3047', 'unitConversion3046', 'unitConversion3254', 'unitConversion3023', 'TailWing_Start_JR_Wing_009_Bnd_parentConstraint1', 'TailWing_Start_JR_Fthr_0011_BendJnt2', 'TailWing_Start_JR_Fthr_0011_Out_ry_MD', 'TailWing_Start_JR_Fthr_0010Bend01_Bnd_parentConstraint1', 'unitConversion3205', 'TailWing_Start_JR_Fthr_002Bend01_Bnd_parentConstraint1', 'unitConversion2950', 'TailWing_Start_JR_Bend_CC', 'TailWing_Start_JR_Fthr_006Bend02_Bnd', 'unitConversion3019', 'TailWing_Start_JR_Fthr_009_BendJnt2', 'TailWing_Start_JR_Wing_005_parentConstraint1', 'TailWing_Start_JR_Fthr_008_SpreadCtrlGrp', 'TailWing_Start_JR_Fthr_001_In_rx_MD', 'TailWing_Start_JR_Fthr_004_InAuto_rx_MD', 'TailWing_Start_JR_Fthr_009_AutoJnt', 'TailWing_Start_JR_Fthr_003Bend01_Bnd_scaleConstraint1', 'unitConversion3238', 'unitConversion2931', 'TailWing_Start_JR_Wing_002_Bnd_scaleConstraint1', 'unitConversion3153', 'unitConversion3117', 'TailWing_Start_JR_Fthr_001_In_ry_MD', 'TailWing_Start_JR_Fthr_009Bend02_Bnd_parentConstraint1', 'TailWing_Start_JR_Fthr_005_SpreadAuto_Auto', 'TailWing_Start_JR_Fthr_0010_Bnd_parentConstraint1', 'unitConversion3074', 'TailWing_Start_JR_Fthr_006_OutAuto_rx_MD', 'TailWing_Start_JR_Fthr_009Bend02_Bnd_scaleConstraint1', 'TailWing_Start_JR_Fthr_009_BendJnt3', 'unitConversion2985', 'unitConversion3094', 'unitConversion2989', 'unitConversion3029', 'unitConversion3246', 'unitConversion3259', 'TailWing_Start_JR_Fthr_009_Ctrl_Root_Grp', 'unitConversion3160', 'unitConversion3071', 'unitConversion3263', 'TailWing_Start_JR_Fthr_006_Out_ry_MD', 'unitConversion3146', 'TailWing_Start_JR_Fthr_008_SpreadAuto', 'TailWing_Start_JR_Fthr_009_RootJnt', 'TailWing_Start_JR_Fthr_0010_SpreadAuto_Auto', 'TailWing_Start_JR_Fthr_008_OutAuto_rx_MD', 'TailWing_Start_JR_Fthr_0011_InAuto_rx_MD', 'TailWing_Start_JR_4_CtrlTailWing_Start_JR_4_CC_AutoFold_Grp_Grp', 'TailWing_Start_JR_Fthr_005_OutAuto_rx_MD', 'TailWing_Start_JR_Fthr_004_OutAuto_ry_MD', 'unitConversion3084', 'unitConversion3173', 'TailWing_Start_JR_Fthr_000_SpreadCtrlGrp', 'unitConversion3179', 'TailWing_Start_JR_Fthr_005Bend02', 'TailWing_Start_JR_Fthr_002', 'unitConversion3008', 'TailWing_Start_JR_Wing_009_Bnd', 'TailWing_Start_JR_Wing_006_Bnd_parentConstraint1', 'unitConversion2968', 'TailWing_Start_JR_Fthr_003', 'TailWing_Start_JR_Fthr_007_Ctrl_Root_Grp', 'unitConversion3169', 'TailWing_Start_JR_Fthr_003_Bnd_parentConstraint1', 'TailWing_Start_JR_Fthr_0010_OutAuto_ry_MD', 'TailWing_Start_JR_Fthr_004_SpreadCtrlGrp', 'TailWing_Start_JR_Fthr_007Bend02_Bnd_parentConstraint1', 'TailWing_Start_JR_Fthr_006_In_rx_MD', 'TailWing_Start_JR_2_CtrlShape', 'TailWing_Start_JR_Wing_003_parentConstraint1', 'TailWing_Start_JR_Fthr_008_In_rx_MD', 'TailWing_Start_JR_Fthr_006Bend01', 'TailWing_Start_JR_7_Ctrl', 'unitConversion3163', 'TailWing_Start_JR_FeathersPlaneShapeOrig', 'TailWing_Start_JR_Fthr_0011Bend02_Bnd_scaleConstraint1', 'TailWing_Start_JR_Fthr_002_Bnd', 'TailWing_Start_JR_Fthr_0010_Ctrl_Auto_Grp', 'TailWing_Start_JR_Fthr_000_In_ry_MD', 'TailWing_Start_JR_Fthr_007_AutoJnt', 'TailWing_Start_JR_Fthr_005_Out_ry_MD', 'TailWing_Start_JR_Fthr_001_CtrlShape', 'TailWing_End_JR_Bnd', 'unitConversion2971', 'unitConversion2993', 'TailWing_Start_JR_Fthr_007_CtrlShape', 'unitConversion3130', 'TailWing_Start_JR_11_CtrlTailWing_Start_JR_11_CC_AutoFold_Grp_Grp', 'unitConversion2928', 'TailWing_Start_JR_Wing_0010_parentConstraint1', 'unitConversion3119', 'TailWing_Start_JR_Fthr_0011_Bnd', 'unitConversion3242', 'TailWing_Start_JR_Fthr_009_SpreadAuto_Root', 'TailWing_Start_JR_Fthr_005Bend03_Bnd_parentConstraint1', 'TailWing_Start_JR_Fthr_007_SpreadAuto', 'unitConversion3015', 'TailWing_Start_JR_Fthr_000Bend02', 'unitConversion3240', 'TailWing_Start_JR_Fthr_009_CtrlShape', 'TailWing_Start_JR_Wing_005', 'TailWing_Start_JR_Fthr_0010_BendJnt2', 'unitConversion2930', 'TailWing_Start_JR_Fthr_004_RootJnt', 'TailWing_Start_JR_Wing_0010_Bnd_parentConstraint1', 'TailWing_Start_JR_Wing_007_parentConstraint1', 'TailWing_Start_JR_Fthr_007_OutAuto_ry_MD', 'TailWing_Start_JR_Fthr_003_BendJnt1', 'unitConversion3123', 'TailWing_Start_JR_Fthr_007_Out_ry_MD', 'unitConversion3190', 'TailWing_Start_JR_Fthr_0010_InAuto_ry_MD', 'TailWing_Start_JR_Fthr_002_Ctrl', 'unitConversion3085', 'unitConversion3206', 'unitConversion2944', 'unitConversion3100', 'TailWing_Start_JR_Fthr_007_Ctrl_Auto_Grp', 'TailWing_Start_JR_Fthr_007_SpreadCtrlGrp', 'unitConversion3164', 'unitConversion3192', 'TailWing_Start_JR_Wing_001_Bnd_parentConstraint1', 'TailWing_Start_JR_Fthr_002_Out_rx_MD', 'TailWing_Start_JR_Fthr_008Bend03_Bnd_scaleConstraint1', 'unitConversion3144', 'TailWing_Start_JR_Fthr_006Bend03_Bnd', 'TailWing_Start_JR_Fthr_009_In_ry_MD', 'TailWing_Start_JR_Wing_001', 'unitConversion3178', 'TailWing_Start_JR_Fthr_009Bend03_Bnd_parentConstraint1', 'TailWing_Start_JR_Fthr_006_SpreadAuto_Root', 'TailWing_Start_JR_Fthr_0010_CtrlShape', 'unitConversion2939', 'unitConversion2952', 'TailWing_Start_JR_Wing_006', 'TailWing_Start_JR_8_Ctrl', 'TailWing_Start_JR_Wing_001_Bnd', 'TailWing_Start_JR_Fthr_001Bend02_Bnd', 'TailWing_Start_JR_Fthr_0010_OutAuto_rx_MD', 'unitConversion3225', 'TailWing_Start_JR_Fthr_006Bend03', 'unitConversion3191', 'unitConversion3095', 'TailWing_Start_JR_Fthr_0011Bend01', 'TailWing_Start_JR_Fthr_007_Bnd_parentConstraint1', 'TailWing_Start_JR_Fthr_0011Bend03_Bnd_parentConstraint1', 'TailWing_Start_JR_Fthr_004Bend01', 'unitConversion2970', 'TailWing_Start_JR_Fthr_002Bend02_Bnd', 'TailWing_Start_JR_1_CtrlShape', 'unitConversion3241', 'TailWing_Start_JR_Fthr_009_BendJnt1', 'unitConversion3056', 'TailWing_Start_JR_4_CtrlShape', 'unitConversion2945', 'TailWing_Start_JR_Fthr_001Bend02', 'unitConversion3043', 'unitConversion2991', 'TailWing_Start_JR_Fthr_001_BendJnt1', 'unitConversion3150', 'TailWing_Start_JR_Fthr_0010_BendJnt3', 'TailWing_Start_JR_Fthr_008Bend01', 'TailWing_Start_JR_Wing_002_Bnd', 'unitConversion3175', 'TailWing_Start_JR_Fthr_001Bend03_Bnd', 'unitConversion3197', 'TailWing_Start_JR_Fthr_0011_CtrlShape', 'TailWing_Start_JR_Fthr_003_Out_rx_MD', 'TailWing_Start_JR_Wing_004_parentConstraint1', 'TailWing_Start_JR_Fthr_0010_AutoJnt', 'TailWing_Start_JR_Fthr_002_Ctrl_Root_Grp', 'unitConversion3050', 'TailWing_Start_JR_Fthr_001Bend03', 'TailWing_Start_JR_Fthr_007_BendJnt1', 'TailWing_Start_JR_Fthr_001_SpreadAuto', 'TailWing_Start_JR_Fthr_004Bend02_Bnd_scaleConstraint1', 'TailWing_Start_JR_Fthr_0011_OutAuto_rx_MD', 'unitConversion3174', 'TailWing_Start_JR_Fthr_001_SpreadCtrlGrp', 'TailWing_Start_JR_Fthr_003Bend03', 'unitConversion3086', 'unitConversion3210', 'TailWing_Start_JR_Fthr_0011_SpreadAuto_Auto', 'TailWing_Start_JR_Fthr_004Bend01_Bnd', 'TailWing_Start_JR_Fthr_006_InAuto_ry_MD', 'TailWing_Start_JR_Fthr_001_Bnd_parentConstraint1', 'unitConversion3099', 'unitConversion3036', 'TailWing_Start_JR_1_CtrlTailWing_Start_JR_1_CC_AutoFold_Grp_Grp', 'TailWing_Start_JR_Fthr_008_AutoJnt', 'TailWing_Start_JR_Fthr_001_Out_ry_MD', 'TailWing_Start_JR_Fthr_004Bend03_Bnd', 'TailWing_Start_JR_Fthr_002_SpreadCtrlGrp', 'unitConversion2938', 'unitConversion3034', 'TailWing_Start_JR_Fthr_002Bend01_Bnd_scaleConstraint1', 'TailWing_Start_JR_Fthr_0011_In_ry_MD', 'TailWing_Start_JR_Fthr_006_SpreadAuto_Auto', 'TailWing_Start_JR_10_CtrlShape', 'unitConversion3112', 'TailWing_Start_JR_Fthr_009_SpreadCtrlGrp', 'TailWing_Start_JR_Fthr_003Bend03_Bnd_parentConstraint1', 'TailWing_Start_JR_Fthr_008Bend02_Bnd_scaleConstraint1', 'unitConversion3194', 'unitConversion3195', 'TailWing_Start_JR_Fthr_0010Bend03_Bnd_scaleConstraint1', 'unitConversion3136', 'TailWing_Start_JR_Fthr_003_SpreadCtrlGrp', 'TailWing_Start_JR_Fthr_008_Out_rx_MD', 'TailWing_Start_JR_Fthr_002_SpreadAuto_Root', 'TailWing_Start_JR_Fthr_001_SpreadAuto_Root', 'unitConversion3141', 'TailWing_Start_JR_Fthr_007Bend03_Bnd_scaleConstraint1', 'TailWing_Start_JR_Fthr_001Bend02_Bnd_scaleConstraint1', 'unitConversion3011', 'unitConversion3131', 'TailWing_Start_JR_10_Ctrl', 'TailWing_Start_JR_Fthr_0011Bend03', 'unitConversion2981', 'unitConversion3212', 'TailWing_Start_JR_Fthr_002_Ctrl_Auto_Grp', 'TailWing_Start_JR_Fthr_007_BendJnt3', 'TailWing_Start_JR_Fthr_004_CtrlShape', 'TailWing_Start_JR_Fthr_004Bend01_Bnd_scaleConstraint1', 'TailWing_Start_JR_Fthr_000_BendJnt1', 'unitConversion3001', 'TailWing_Start_JR_Fthr_008_InAuto_ry_MD', 'TailWing_Start_JR_Fthr_005_Out_rx_MD', 'TailWing_Start_JR_Fthr_006Bend01_Bnd_scaleConstraint1', 'unitConversion3147', 'TailWing_Start_JR_Fthr_006Bend02', 'unitConversion3156', 'unitConversion3044', 'unitConversion3110', 'TailWing_Start_JR_Fthr_004_Ctrl_Auto_Grp', 'unitConversion3203', 'TailWing_Start_JR_11_CtrlShape', 'TailWing_Start_JR_Fthr_005_BendJnt3', 'TailWing_Start_JR_Fthr_008', 'TailWing_Start_JR_Fthr_000', 'TailWing_Start_JR_Fthr_009_Ctrl', 'unitConversion3113', 'unitConversion3244', 'TailWing_Start_JR_Fthr_009Bend03_Bnd', 'TailWing_Start_JR_Fthr_007_InAuto_ry_MD', 'TailWing_Start_JR_Fthr_0011Bend01_Bnd_parentConstraint1', 'unitConversion3032', 'unitConversion3199', 'unitConversion3038', 'unitConversion2955', 'unitConversion3041', 'TailWing_Start_JR_Fthr_000_InAuto_ry_MD', 'TailWing_Start_JR_Fthr_006_Ctrl_Root_Grp', 'TailWing_Start_JR_Fthr_000Bend03_Bnd_scaleConstraint1', 'TailWing_Start_JR_Fthr_002_BendJnt1', 'unitConversion3248', 'TailWing_End_JR', 'TailWing_Start_JR_Fthr_000_SpreadAuto_Root', 'TailWing_Start_JR_Spread_Out_CtrlShape', 'unitConversion3109', 'unitConversion2972', 'TailWing_Start_JR_Wing_0011', 'TailWing_Start_JR_Fthr_008Bend01_Bnd_parentConstraint1', 'TailWing_Start_JR_Fthr_005_AutoJnt', 'TailWing_Start_JR_Fthr_006Bend01_Bnd', 'TailWing_Start_JR_Fthr_0010Bend03_Bnd_parentConstraint1', 'unitConversion3166', 'TailWing_Start_JR_Fthr_009Bend02_Bnd', 'TailWing_Start_JR_Wing_007_Bnd_scaleConstraint1', 'TailWing_Start_JR_Fthr_002Bend03_Bnd_parentConstraint1', 'TailWing_Start_JR_Fthr_005_SpreadCtrlGrp', 'TailWing_Start_JR_Fthr_001_Bnd_scaleConstraint1', 'TailWing_Start_JR_Fthr_007_SpreadAuto_Root', 'unitConversion2976', 'TailWing_Start_JR_Fthr_002_Out_ry_MD', 'TailWing_Start_JR_Wing_0010_Bnd', 'unitConversion3200', 'unitConversion3189', 'unitConversion3202', 'TailWing_Start_JR_Fthr_002_OutAuto_ry_MD', 'TailWing_Start_JR_8_CtrlTailWing_Start_JR_8_CC_AutoFold_Grp_Grp', 'TailWing_Start_JR_Fthr_008Bend02_Bnd', 'TailWing_Start_JR_6_CtrlTailWing_Start_JR_6_CC_AutoFold_Grp_Grp', 'TailWing_Start_JR_Fthr_0011', 'TailWing_Start_JR_Wing_003_Bnd_scaleConstraint1', 'unitConversion3033', 'unitConversion3143', 'TailWing_Start_JR_Fthr_000_Out_ry_MD', 'TailWing_Start_JR_Fthr_006_Ctrl_Auto_Grp', 'TailWing_Start_JR_Fthr_001_OutAuto_ry_MD', 'TailWing_Start_JR_Fthr_007Bend02_Bnd_scaleConstraint1', 'unitConversion3014', 'TailWing_Start_JR_Fthr_006_BendJnt3', 'TailWing_Start_JR_Fthr_0010Bend02_Bnd_scaleConstraint1', 'TailWing_Start_JR_Fthr_001_InAuto_rx_MD', 'TailWing_Start_JR_Bnd', 'TailWing_Start_JR_2_CtrlTailWing_Start_JR_2_CC_AutoFold_Grp_Grp', 'TailWing_Start_JR_Fthr_0010Bend02', 'TailWing_Start_JR_Wing_007_Bnd_parentConstraint1', 'unitConversion3232', 'unitConversion3258', 'TailWing_Start_JR_Fthr_008_Out_ry_MD', 'unitConversion3133', 'TailWing_Start_JR_Fthr_007_Bnd', 'unitConversion3016', 'unitConversion3138', 'TailWing_Start_JR_Fthr_003_InAuto_rx_MD', 'TailWing_Start_JR_Fthr_005_SpreadAuto', 'TailWing_Start_JR_Fthr_008_Bnd_scaleConstraint1', 'TailWing_Start_JR_10_CtrlTailWing_Start_JR_10_CC_AutoFold_Grp_Grp', 'unitConversion3142', 'TailWing_Start_JR_Fthr_005Bend03_Bnd', 'unitConversion2940', 'TailWing_Start_JR_Fthr_004_Out_rx_MD', 'TailWing_Start_JR_Fthr_000Bend03_Bnd', 'TailWing_Start_JR_Fthr_005Bend02_Bnd', 'TailWing_Start_JR_Fthr_0010_In_rx_MD', 'TailWing_Start_JR_5_CtrlTailWing_Start_JR_5_CC_AutoFold_Grp_Grp', 'TailWing_Start_JR_Fthr_001Bend01_Bnd_scaleConstraint1', 'TailWing_Start_JR_Wing_0011_Bnd', 'TailWing_Start_JR_Fthr_002Bend02_Bnd_scaleConstraint1', 'TailWing_End_JR_Bnd_parentConstraint1', 'unitConversion3177', 'TailWing_Start_JR_Fthr_008Bend03_Bnd', 'unitConversion3058', 'unitConversion2935', 'unitConversion3089', 'TailWing_Start_JR_Fthr_009_Bnd_parentConstraint1', 'unitConversion3188', 'TailWing_Start_JR_4_Ctrl', 'unitConversion3170', 'TailWing_Start_JR_Fthr_005Bend03', 'TailWing_Start_JR_Fthr_003_SpreadAuto_Auto', 'unitConversion2988', 'TailWing_Start_JR_Fthr_007Bend02_Bnd', 'unitConversion3070', 'TailWing_Start_JR_Fthr_002_In_ry_MD', 'TailWing_Start_JR_Fthr_006_In_ry_MD', 'TailWing_Start_JR_Fthr_0011Bend03_Bnd_scaleConstraint1', 'unitConversion3087', 'unitConversion3159', 'unitConversion2954', 'TailWing_Start_JR_0_Ctrl', 'TailWing_Start_JR_8_CtrlShape', 'TailWing_Start_JR_Bend_CC_Root_Grp', 'TailWing_Start_JR_Fthr_009', 'skinCluster39', 'unitConversion3037', 'TailWing_Start_JR_Wing_008_Bnd_parentConstraint1', 'TailWing_Start_JR_Fthr_0010_InAuto_rx_MD', 'TailWing_Start_JR_Wing_004', 'TailWing_Start_JR_Spread_Out_Auto_Grp', 'TailWing_Start_JR_Fthr_006Bend03_Bnd_parentConstraint1', 'unitConversion3228', 'TailWing_Start_JR_Fthr_001_AutoJnt', 'unitConversion3059', 'unitConversion2962', 'unitConversion3168', 'TailWing_Start_JR_Fthr_0010_SpreadCtrlGrp', 'TailWing_Start_JR_Fthr_001_Bnd', 'unitConversion2999', 'unitConversion3134', 'unitConversion3093', 'TailWing_Start_JR_Fthr_002_SpreadAuto_Auto', 'TailWing_Start_JR_0_CtrlTailWing_Start_JR_0_CC_AutoFold_Grp_Grp', 'TailWing_Start_JR_FeathersPlane', 'unitConversion3211', 'TailWing_Start_JR_0_CtrlShape', 'unitConversion3256', 'TailWing_Start_JR_Fthr_004_In_ry_MD', 'TailWing_Start_JR_Fthr_004Bend03_Bnd_scaleConstraint1', 'TailWing_Start_JR_Spread_In_Auto_Grp', 'unitConversion3224', 'TailWing_Start_JR_Fthr_003_SpreadAuto_Root', 'TailWing_Start_JR_Fthr_005_InAuto_ry_MD', 'TailWing_Start_JR_Fthr_0011Bend01_Bnd_scaleConstraint1', 'TailWing_Start_JR_Fthr_007_In_rx_MD', 'TailWing_Start_JR_Fthr_003_BendJnt3', 'TailWing_Start_JR_Fthr_008_OutAuto_ry_MD', 'unitConversion3025', 'TailWing_Start_JR_Fthr_008Bend02', 'TailWing_Start_JR_Fthr_004', 'TailWing_Start_JR_Fthr_001Bend01_Bnd', 'unitConversion2966', 'TailWing_Start_JR', 'TailWing_Start_JR_Fthr_004_BendJnt3', 'TailWing_Start_JR_Fthr_000_Bnd', 'unitConversion3048', 'unitConversion2933', 'TailWing_Start_JR_Fthr_006_SpreadAuto', 'unitConversion3245', 'TailWing_Start_JR_Fthr_003_Ctrl_Auto_Grp', 'unitConversion2959', 'TailWing_Start_JR_Fthr_0010Bend03_Bnd', 'TailWing_Start_JR_Fthr_0011Bend01_Bnd', 'TailWing_Start_JR_Fthr_008Bend03_Bnd_parentConstraint1', 'TailWing_Start_JR_Bend_CCShape', 'unitConversion3097', 'TailWing_Start_JR_Wing_009', 'TailWing_Start_JR_Fthr_000_Ctrl', 'TailWing_Start_JR_Bnd_scaleConstraint1', 'TailWing_Start_JR_Wing_002', 'unitConversion2992', 'unitConversion3229', 'TailWing_Bnd_Grp', 'unitConversion3101', 'TailWing_Start_JR_Fthr_0011_SpreadAuto', 'TailWing_Start_JR_Fthr_003_CtrlShape', 'unitConversion3207', 'TailWing_Start_JR_Fthr_0011Bend02_Bnd', 'TailWing_Start_JR_Wing_000_CtrlShape', 'TailWing_Start_JR_Fthr_002Bend03', 'skinCluster39GroupParts', 'TailWing_Start_JR_Wing_008_Bnd', 'unitConversion3181', 'skinCluster39Set', 'TailWing_Start_JR_Fthr_007_OutAuto_rx_MD', 'TailWing_Start_JR_Fthr_006Bend02_Bnd_parentConstraint1', 'TailWing_Start_JR_Fthr_008_RootJnt', 'unitConversion3126', 'unitConversion2975', 'TailWing_Start_JR_3_CtrlShape', 'TailWing_Start_JR_Fthr_005_BendJnt1', 'unitConversion3243', 'TailWing_Start_JR_Fthr_004Bend02_Bnd_parentConstraint1', 'unitConversion3196', 'TailWing_Start_JR_Fthr_009_InAuto_ry_MD', 'TailWing_Start_JR_Fthr_008_SpreadAuto_Root', 'TailWing_Start_JR_Fthr_002_RootJnt', 'TailWing_Start_JR_5_Ctrl', 'unitConversion3217', 'TailWing_Start_JR_Fthr_005_CtrlShape', 'unitConversion3162', 'unitConversion3062', 'unitConversion3152', 'unitConversion3145', 'unitConversion2958', 'unitConversion3193', 'unitConversion3055', 'TailWing_Start_JR_Fthr_003_RootJnt', 'TailWing_Start_JR_Fthr_009_Bnd', 'TailWing_Start_JR_Fthr_004Bend01_Bnd_parentConstraint1', 'TailWing_Start_JR_Fthr_001_Ctrl_Auto_Grp', 'TailWing_Start_JR_Fthr_000Bend02_Bnd_scaleConstraint1', 'TailWing_Start_JR_Fthr_005_InAuto_rx_MD', 'TailWing_Start_JR_Fthr_002_InAuto_ry_MD', 'TailWing_Start_JR_Fthr_002_SpreadAuto', 'TailWing_Start_JR_Fthr_001Bend03_Bnd_parentConstraint1', 'TailWing_Start_JR_3_CtrlTailWing_Start_JR_3_CC_AutoFold_Grp_Grp', 'unitConversion3020', 'unitConversion2983', 'TailWing_Start_JR_Fthr_002_Bnd_parentConstraint1', 'TailWing_Start_JR_Fthr_003Bend02_Bnd', 'TailWing_Start_JR_Fthr_007Bend01_Bnd', 'unitConversion2932', 'unitConversion3128', 'TailWing_Start_JR_Spread_In_Root_Grp', 'TailWing_Start_JR_Fthr_006_Bnd_parentConstraint1', 'unitConversion3009', 'TailWing_Start_JR_Fthr_000_AutoJnt', 'TailWing_Start_JR_Fthr_009_SpreadAuto_Auto', 'TailWing_Start_JR_Fthr_004Bend02_Bnd', 'TailWing_Start_JR_Wing_007_Bnd', 'unitConversion3082', 'TailWing_Start_JR_Spread_Out_Root_Grp', 'unitConversion3249', 'TailWing_Start_JR_Fthr_003Bend02', 'TailWing_Start_JR_Fthr_006_Bnd_scaleConstraint1', 'unitConversion3080', 'TailWing_Start_JR_Fthr_005_Ctrl', 'TailWing_Start_JR_Fthr_0011_Bnd_scaleConstraint1', 'TailWing_Start_JR_Fthr_0010_RootJnt', 'TailWing_Start_JR_Fthr_0011_SpreadAuto_Root', 'unitConversion3102', 'unitConversion3077', 'unitConversion3218', 'unitConversion3060', 'TailWing_Start_JR_Fthr_006_BendJnt1', 'TailWing_Start_JR_Fthr_003Bend02_Bnd_parentConstraint1', 'unitConversion3013', 'unitConversion2941', 'TailWing_Start_JR_Fthr_009_OutAuto_ry_MD', 'TailWing_Start_JR_Fthr_001Bend03_Bnd_scaleConstraint1', 'unitConversion3155', 'unitConversion3125', 'TailWing_Start_JR_Fthr_007_Out_rx_MD', 'TailWing_Start_JR_Fthr_000Bend03', 'TailWing_Start_JR_Fthr_005_BendJnt2', 'TailWing_Start_JR_Fthr_003Bend01_Bnd', 'TailWing_Start_JR_Fthr_000_Out_rx_MD', 'unitConversion3106', 'TailWing_Start_JR_Fthr_007_Ctrl', 'unitConversion3111', 'unitConversion3139', 'TailWing_Start_JR_Fthr_009_In_rx_MD', 'unitConversion3137', 'unitConversion3148', 'unitConversion2946', 'TailWing_Start_JR_Fthr_000_OutAuto_ry_MD', 'TailWing_Start_JR_Fthr_0010Bend01', 'TailWing_Start_JR_Wing_006_parentConstraint1', 'TailWing_Start_JR_Fthr_0010_Bnd', 'unitConversion3172', 'TailWing_Start_JR_Wing_005_Bnd_parentConstraint1', 'unitConversion3104', 'unitConversion2977', 'TailWing_Start_JR_Fthr_009Bend01', 'unitConversion3005', 'unitConversion3165', 'unitConversion3226', 'TailWing_Start_JR_Wing_008_parentConstraint1', 'unitConversion3250', 'TailWing_Start_JR_Fthr_006_InAuto_rx_MD', 'unitConversion2936', 'TailWing_Start_JR_Fthr_007Bend03', 'TailWing_Start_JR_Fthr_003_Out_ry_MD', 'TailWing_Start_JR_Fthr_009_OutAuto_rx_MD', 'TailWing_Start_JR_Fthr_008_SpreadAuto_Auto', 'TailWing_Start_JR_Fthr_008_CtrlShape', 'unitConversion2997', 'unitConversion3135', 'unitConversion3223', 'TailWing_Start_JR_7_CtrlShape', 'unitConversion3219', 'TailWing_Start_JR_Spread_Out_Ctrl', 'TailWing_Start_JR_Fthr_009Bend01_Bnd_parentConstraint1', 'unitConversion3124', 'unitConversion3065', 'TailWing_Start_JR_11_Ctrl', 'TailWing_Start_JR_Fthr_006Bend02_Bnd_scaleConstraint1', 'unitConversion3057', 'TailWing_Start_JR_Fthr_004_AutoJnt', 'unitConversion3096', 'TailWing_Start_JR_Wing_006_Bnd_scaleConstraint1', 'TailWing_Start_JR_Fthr_003_InAuto_ry_MD', 'TailWing_Start_JR_Wing_004_Bnd_scaleConstraint1', 'unitConversion2949', 'unitConversion3167', 'unitConversion3186', 'unitConversion2998', 'TailWing_Start_JR_Fthr_0011_AutoJnt', 'TailWing_Start_JR_Fthr_007_SpreadAuto_Auto', 'TailWing_Start_JR_Fthr_004_Ctrl', 'TailWing_Start_JR_Fthr_005Bend01_Bnd_scaleConstraint1', 'TailWing_Start_JR_Fthr_0011_Out_rx_MD', 'TailWing_Start_JR_Fthr_003_Ctrl_Root_Grp', 'TailWing_Start_JR_Fthr_001', 'TailWing_Start_JR_Fthr_0010_SpreadAuto', 'TailWing_Start_JR_Fthr_003_AutoJnt', 'TailWing_Start_JR_Fthr_0011_BendJnt3', 'TailWing_Start_JR_Wing_0011_Bnd_parentConstraint1', 'TailWing_Start_JR_Fthr_008_BendJnt1', 'unitConversion3067', 'TailWing_Start_JR_Wing_0011_parentConstraint1', 'TailWing_Start_JR_Fthr_004_SpreadAuto_Root', 'TailWing_Start_JR_Spread_In_Ctrl', 'TailWing_Start_JR_Wing_000_Bnd_parentConstraint1', 'unitConversion3024', 'unitConversion3235', 'TailWing_Start_JR_9_CtrlShape', 'TailWing_Start_JR_Fthr_009Bend03', 'TailWing_Start_JR_Fthr_001Bend02_Bnd_parentConstraint1', 'TailWing_Start_JR_Fthr_0010_BendJnt1', 'TailWing_Start_JR_Wing_003_Bnd', 'TailWing_Start_JR_Fthr_009Bend02', 'TailWing_Start_JR_Fthr_001_BendJnt2', 'unitConversion2929', 'TailWing_Start_JR_Fthr_007Bend03_Bnd_parentConstraint1', 'TailWing_Start_JR_Fthr_000_Bnd_parentConstraint1', 'TailWing_Start_JR_Fthr_0010_Out_ry_MD', 'unitConversion3184', 'TailWing_Start_JR_Fthr_0011_Ctrl_Root_Grp', 'unitConversion3214', 'unitConversion3053', 'TailWing_Start_JR_Fthr_000Bend02_Bnd_parentConstraint1', 'TailWing_Start_JR_Fthr_000_SpreadAuto', 'TailWing_Start_JR_Fthr_002Bend03_Bnd_scaleConstraint1', 'unitConversion3262', 'TailWing_Start_JR_Fthr_000Bend01_Bnd_scaleConstraint1', 'unitConversion2965', 'unitConversion3049', 'unitConversion3180', 'unitConversion3158', 'TailWing_Start_JR_Fthr_000_SpreadAuto_Auto', 'unitConversion3239', 'TailWing_Start_JR_Fthr_006_BendJnt2', 'TailWing_Start_JR_Fthr_001_Out_rx_MD', 'TailWing_Start_JR_Fthr_003_Ctrl', 'TailWing_Start_JR_Wing_003', 'TailWing_Start_JR_Fthr_000_Bnd_scaleConstraint1', 'TailWing_Start_JR_Fthr_0011Bend02_Bnd_parentConstraint1', 'TailWing_Start_JR_Fthr_004_Bnd_parentConstraint1', 'TailWing_Start_JR_1_Ctrl', 'TailWing_Rig_Grp', 'unitConversion3231', 'TailWing_Start_JR_Fthr_003Bend01', 'TailWing_Start_JR_Fthr_002_InAuto_rx_MD', 'TailWing_Start_JR_Fthr_005_OutAuto_ry_MD', 'unitConversion3081', 'TailWing_Start_JR_Fthr_000_RootJnt', 'unitConversion3115', 'unitConversion3149', 'unitConversion3039', 'unitConversion3161', 'TailWing_Start_JR_Fthr_008_BendJnt3', 'unitConversion3257', 'TailWing_Start_JR_Fthr_003Bend02_Bnd_scaleConstraint1', 'unitConversion3140', 'unitConversion3088', 'TailWing_Start_JR_Fthr_005_SpreadAuto_Root', 'TailWing_Start_JR_Fthr_002Bend01_Bnd', 'TailWing_Start_JR_Fthr_0010', 'unitConversion2986', 'unitConversion3234', 'TailWing_Start_JR_Fthr_003Bend03_Bnd_scaleConstraint1', 'TailWing_Start_JR_Wing_006_Bnd', 'TailWing_Start_JR_Fthr_005Bend01_Bnd_parentConstraint1', 'TailWing_Ctrl_Grp', 'TailWing_Start_JR_Wing_009_Bnd_scaleConstraint1', 'unitConversion2995', 'TailWing_Start_JR_Fthr_002_Bnd_scaleConstraint1', 'TailWing_Start_JR_9_Ctrl', 'unitConversion3063', 'TailWing_Start_JR_Fthr_005_Bnd', 'TailWing_Start_JR_Fthr_004Bend03', 'TailWing_Start_JR_Fthr_006_Bnd', 'TailWing_Start_JR_Fthr_001Bend01', 'unitConversion3022', 'TailWing_Start_JR_Wing_002_parentConstraint1', 'unitConversion2963']");
 createNode joint -n "TailWing_Start_Guide" -p "TailWing_Block";
 	rename -uid "E1988FE6-4127-DBFC-79D4-18A9B5EBDE4A";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" -5.8338513374328613 34.431308746337891 -16.948251724243164 ;
 	setAttr ".r" -type "double3" -36.239333154954899 0 0 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
@@ -5493,76 +5493,76 @@ createNode joint -n "TailWing_Start_Guide" -p "TailWing_Block";
 	setAttr ".radi" 2;
 createNode joint -n "TailWing_End_Guide" -p "TailWing_Start_Guide";
 	rename -uid "C8FE0DB5-4E99-2903-19EB-C2A53696FD00";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 11.667702674865724 7.1054273576010019e-15 -7.1054273576010019e-15 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 	setAttr ".radi" 2;
 createNode joint -n "TailWing_Start_Guide_Wing_000" -p "TailWing_Block";
 	rename -uid "8A2425D4-4A11-4026-586F-05998CE7F577";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" -5.8338513374328613 34.431308746337891 -16.948251724243164 ;
 	setAttr ".r" -type "double3" -49.867296218882238 38.654413903433344 -37.625626372914439 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "TailWing_Start_Guide_Wing_001" -p "TailWing_Start_Guide_Wing_000";
 	rename -uid "0469B256-45CA-7971-7D4B-04A1F84E992D";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 2.5512978631152077 2.3314683517128287e-15 7.8825834748386114e-15 ;
 	setAttr ".r" -type "double3" 0 -3.3596100162828915 0 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "TailWing_Start_Guide_Wing_002" -p "TailWing_Start_Guide_Wing_001";
 	rename -uid "C2004230-4383-F442-F57A-7AB74EE53D9B";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 2.5720063730947267 1.7208456881689926e-15 -0.91482264690745718 ;
 	setAttr ".r" -type "double3" 0.67891179734531004 -8.3335036140695404 0.056359866577961069 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "TailWing_Start_Guide_Wing_003" -p "TailWing_Start_Guide_Wing_002";
 	rename -uid "B0F211F7-4BB3-790E-B8A8-E5AFDA158D2A";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 2.1839992031342117 0.23218504494782621 -0.98170833995573981 ;
 	setAttr ".r" -type "double3" 0 -10.406267595976171 0 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "TailWing_Start_Guide_Wing_004" -p "TailWing_Start_Guide_Wing_003";
 	rename -uid "CE38C989-46FD-53C8-6766-3F9D94E3114D";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 1.5085043015714099 0.13064535463874449 -0.86369070577768881 ;
 	setAttr ".r" -type "double3" 0 -10.716212935957831 0 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "TailWing_Start_Guide_Wing_005" -p "TailWing_Start_Guide_Wing_004";
 	rename -uid "14628024-48A7-BF46-C838-AE828F1EC2C3";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 1.3460811675284523 0.10186899314621201 -1.4743075309358735 ;
 	setAttr ".r" -type "double3" 0 -14.05153128754791 0 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "TailWing_Start_Guide_Wing_006" -p "TailWing_Start_Guide_Wing_005";
 	rename -uid "064AFC9C-4387-59CE-E202-0B9C72F42185";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 0.99794192517630353 0 7.1054273576010019e-15 ;
 	setAttr ".r" -type "double3" 0 -11.337587491036592 0 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "TailWing_Start_Guide_Fthr_006_posStart" -p "TailWing_Start_Guide_Wing_006";
 	rename -uid "037CF995-4BF9-B111-8330-75B77B28161C";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" -0.039305866458274163 0.032734901271894046 -2.5750266339503236 ;
 	setAttr ".r" -type "double3" -0.6334528780521026 3.5883614877034438 -3.1121118430932322e-18 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "TailWing_Start_Guide_Fthr_006_posEnd" -p "TailWing_Start_Guide_Fthr_006_posStart";
 	rename -uid "AC740C82-4F4A-B95D-3338-D8BE26B41159";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" -1.609823385706477e-15 1.7763568394002505e-15 -27.6928722236139 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "TailWing_Start_Guide_Wing_007" -p "TailWing_Start_Guide_Wing_006";
 	rename -uid "F32D6FA6-464A-5D5E-B2A3-D4892672F387";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 1.0316037979865229 -0.02034036534107031 1.8116970524427849 ;
 	setAttr ".r" -type "double3" 0 -23.957921070124325 0 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
@@ -5570,172 +5570,172 @@ createNode joint -n "TailWing_Start_Guide_Wing_007" -p "TailWing_Start_Guide_Win
 	setAttr ".jo" -type "double3" 0 11.337587491036592 1.2164458492079533e-15 ;
 createNode joint -n "TailWing_Start_Guide_Wing_008" -p "TailWing_Start_Guide_Wing_007";
 	rename -uid "45B27EEF-4E09-8D07-30B7-12A69A3B09D9";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 1.3267301264037759 -0.10384651796058364 1.125886807864648 ;
 	setAttr ".r" -type "double3" 0 -10.403031825557949 0 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "TailWing_Start_Guide_Wing_009" -p "TailWing_Start_Guide_Wing_008";
 	rename -uid "AD0836DA-47F6-CF2D-A6C1-CC9E4478FE7A";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 2.0479525992522927 -0.063489506607467661 1.2836286941850239 ;
 	setAttr ".r" -type "double3" 0 -8.9784640889101759 0 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "TailWing_Start_Guide_Wing_0010" -p "TailWing_Start_Guide_Wing_009";
 	rename -uid "B9149144-43E1-8566-B685-A89B607594AC";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 2.4807035221812139 -0.0074986861467607469 1.4491364026473552 ;
 	setAttr ".r" -type "double3" 0 -8.2764050643335363 0 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "TailWing_Start_Guide_Wing_0011" -p "TailWing_Start_Guide_Wing_0010";
 	rename -uid "D19FA33F-48FC-6955-7072-27839DC17A65";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 2.285662552830817 -0.027381313945795682 0.22760851731001847 ;
 	setAttr ".r" -type "double3" 0 -7.8054666524194252 0 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "TailWing_Start_Guide_Fthr_0011_posStart" -p "TailWing_Start_Guide_Wing_0011";
 	rename -uid "67ABBA00-4766-771E-F0AD-AE9DF369CC23";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" -0.43595408349083975 0.025240923870313736 -1.7209719599632716 ;
 	setAttr ".r" -type "double3" 0 16.189532422488842 0 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "TailWing_Start_Guide_Fthr_0011_posEnd" -p "TailWing_Start_Guide_Fthr_0011_posStart";
 	rename -uid "E053DECB-4FBD-9DA3-90E3-F59445D6F1D3";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" -2.2204460492503131e-16 -1.0880185641326534e-14 -25.190112714353987 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "TailWing_Start_Guide_Fthr_0010_posStart" -p "TailWing_Start_Guide_Wing_0010";
 	rename -uid "AD09E5F0-446C-8A03-5DD3-F19E4FAA9B2D";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" -0.092391933310690177 -0.0071691480425428722 -2.5484971332577557 ;
 	setAttr ".r" -type "double3" 0 15.201687989700929 0 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "TailWing_Start_Guide_Fthr_0010_posEnd" -p "TailWing_Start_Guide_Fthr_0010_posStart";
 	rename -uid "A0B3EEBD-401D-8596-7377-8CBE2C845F30";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 1.8873791418627661e-15 1.2656542480726785e-14 -26.618920317970908 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "TailWing_Start_Guide_Fthr_009_posStart" -p "TailWing_Start_Guide_Wing_009";
 	rename -uid "24EE463F-4EA1-0B8A-9427-078199AD8C2E";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 0.012795028378913997 -0.058239394511630849 -2.5204896034667152 ;
 	setAttr ".r" -type "double3" -0.4940884377979895 14.648609220518875 0 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "TailWing_Start_Guide_Fthr_009_posEnd" -p "TailWing_Start_Guide_Fthr_009_posStart";
 	rename -uid "17723755-4DC6-58F5-5DB4-799F32F81367";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 1.3322676295501878e-15 6.4392935428259079e-15 -26.989252884967065 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "TailWing_Start_Guide_Fthr_008_posStart" -p "TailWing_Start_Guide_Wing_008";
 	rename -uid "5AC5D4D1-4EB5-1FA7-3135-01BF2696AF87";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 0.0091406720666675767 0.049497406885549822 -2.7389496605163268 ;
 	setAttr ".r" -type "double3" -1.309105041453106 12.797459690717776 2.5481053819918136e-17 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "TailWing_Start_Guide_Fthr_008_posEnd" -p "TailWing_Start_Guide_Fthr_008_posStart";
 	rename -uid "30EF809F-4837-41C0-E359-9AAFFC0167C1";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" -8.7152507433074788e-15 1.4432899320127035e-14 -27.06929679746105 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "TailWing_Start_Guide_Fthr_007_posStart" -p "TailWing_Start_Guide_Wing_007";
 	rename -uid "532E9826-4C0F-9BC9-81DF-C793883564C5";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" -0.0078747933333582765 0.02255619725561786 -3.183581457768498 ;
 	setAttr ".r" -type "double3" -0.88024930317901573 12.756911539433391 2.5476964721689981e-17 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "TailWing_Start_Guide_Fthr_007_posEnd" -p "TailWing_Start_Guide_Fthr_007_posStart";
 	rename -uid "044179D6-48E7-4C24-B86C-D48AF15F1EE2";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" -3.4139358007223564e-15 -2.4424906541753444e-15 -27.06402632193711 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "TailWing_Start_Guide_Fthr_005_posStart" -p "TailWing_Start_Guide_Wing_005";
 	rename -uid "593BEFD1-4A1B-33BB-9B92-6792303DD253";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" -4.4408920985006262e-16 9.5479180117763462e-15 -2.658415079085628 ;
 	setAttr ".r" -type "double3" -1.2168215896256129 -2.5048581295837877 0 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "TailWing_Start_Guide_Fthr_005_posEnd" -p "TailWing_Start_Guide_Fthr_005_posStart";
 	rename -uid "C66B3F11-45CC-C6BB-65B9-E28EA883C6DA";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" -1.5265566588595902e-15 0 -27.582899708680507 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "TailWing_Start_Guide_Fthr_004_posStart" -p "TailWing_Start_Guide_Wing_004";
 	rename -uid "F81B2E95-47D4-F016-9342-B7BA3E5B43F7";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" -4.6837533851373792e-16 -2.4293067557579207e-14 -3.1860495108751832 ;
 	setAttr ".r" -type "double3" -1.3140675536799813 -12.315444188076116 0 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "TailWing_Start_Guide_Fthr_004_posEnd" -p "TailWing_Start_Guide_Fthr_004_posStart";
 	rename -uid "278BFAA8-4F5A-1F0B-3758-C0A8E07509B3";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" -3.3306690738754696e-16 9.3258734068513149e-15 -26.743374276643909 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "TailWing_Start_Guide_Fthr_003_posStart" -p "TailWing_Start_Guide_Wing_003";
 	rename -uid "67DA7D7D-450E-6785-FC37-39A44A8F1ADE";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 1.5265566588595902e-14 -1.6851103845638704e-14 -2.7415362341247564 ;
 	setAttr ".r" -type "double3" -1.2571763678177748 -13.196146775305424 0 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "TailWing_Start_Guide_Fthr_003_posEnd" -p "TailWing_Start_Guide_Fthr_003_posStart";
 	rename -uid "6320B4D4-4664-9C3D-C7B1-81A8F32F60BD";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 1.8318679906315083e-15 4.4408920985006262e-16 -26.837463669538348 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "TailWing_Start_Guide_Fthr_002_posStart" -p "TailWing_Start_Guide_Wing_002";
 	rename -uid "91840FF5-44D9-2780-4D04-1AAAC6345138";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 1.7659484985443896e-15 1.4394735403655545e-14 -2.6148865342430772 ;
 	setAttr ".r" -type "double3" -1.6850022309369654 -16.174509667895151 0 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "TailWing_Start_Guide_Fthr_002_posEnd" -p "TailWing_Start_Guide_Fthr_002_posStart";
 	rename -uid "3A38177B-464B-891D-45AB-E59D4DEA0F87";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 2.9976021664879227e-15 7.5495165674510645e-15 -26.901408244822985 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "TailWing_Start_Guide_Fthr_001_posStart" -p "TailWing_Start_Guide_Wing_001";
 	rename -uid "1F66A2F8-4891-CE6F-41D4-C6AF8A92D8CC";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" -3.5527136788005009e-15 3.5207947668425277e-14 -2.5658745292569596 ;
 	setAttr ".r" -type "double3" -0.77290701853060328 -17.45932175117974 2.6048114830269538e-17 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "TailWing_Start_Guide_Fthr_001_posEnd" -p "TailWing_Start_Guide_Fthr_001_posStart";
 	rename -uid "E3527900-47DF-2A42-F358-6F9328700E73";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 3.1086244689504383e-15 7.3274719625260332e-15 -26.016502495598278 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "TailWing_Start_Guide_Fthr_000_posStart" -p "TailWing_Start_Guide_Wing_000";
 	rename -uid "77CFA333-43EF-F7D7-7E83-4CB8DBA62549";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 0.44134030360153753 -0.045774132049074101 -1.7462601642123978 ;
 	setAttr ".r" -type "double3" -1.4557777603159308 -14.183610961308055 0 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "TailWing_Start_Guide_Fthr_000_posEnd" -p "TailWing_Start_Guide_Fthr_000_posStart";
 	rename -uid "C607D617-4D41-48EC-D273-428F25830A89";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" -7.1054273576010019e-15 1.9984014443252818e-14 -25.106216213816634 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
@@ -7356,6 +7356,7 @@ createNode dagContainer -n "L_FootBox_Block" -p "Body";
 createNode dagContainer -n "L_Hand_Block" -p "Body";
 	rename -uid "D5859B4F-4571-6CA2-89CD-66A467FE4870";
 	addAttr -ci true -sn "nts" -ln "notes" -dt "string";
+	addAttr -ci true -sn "StoredRingGuides" -ln "StoredRingGuides" -dt "string";
 	setAttr ".isc" yes;
 	setAttr ".icn" -type "string" "C:/Users/cisci/Documents/maya/scripts/rigging/Mutant_Tools/Icons/Hand.png";
 	setAttr ".ctor" -type "string" "brisa.pinotti";
@@ -7372,10 +7373,12 @@ createNode dagContainer -n "L_Hand_Block" -p "Body";
 	setAttr -l on -k off ".sz";
 	setAttr ".nts" -type "string" (
 		"['L_Hand_Middle_04_Jnt_parentConstraint1', 'R_Hand_Middle_04_Jnt_parentConstraint1', 'R_Hand_Pinky_03_Jnt', 'R_Hand_Middle_00_Jnt_scaleConstraint1', 'R_Hand_InnerCup_Ctrl', 'Relax_MultDiv7', 'L_Hand_Pinky_03_Bnd_scaleConstraint1', 'R_Hand_Index_00_Jnt', 'L_Hand_Middle_01_Bnd_scaleConstraint1', 'R_Hand_Pinky_01_Ctrl_Curl_Grp', 'R_Hand_Middle_02_Bnd', 'L_Hand_Middle_02_Bnd_parentConstraint1', 'R_Hand_Middle_01_Jnt', 'L_Hand_Middle_00_Bnd_parentConstraint1', 'L_Hand_Index_00_CtrlShape', 'L_Hand_Wrist_Ctrl_tag', 'L_Hand_Middle_02_Jnt', 'R_Hand_Pinky_01_Bnd_parentConstraint1', 'L_Hand_Middle_03_Bnd_parentConstraint1', 'L_Hand_Thumb_00_CtrlShape', 'L_Hand_Middle_00_Ctrl', 'unitConversion3334', 'L_Hand_Wrist_CtrlShape', 'R_Hand_Index_03_CtrlShape', 'R_Hand_Middle_01_Bnd', 'L_Hand_Index_01_Ctrl_Offset_Grp', 'Relax_MultDiv4', 'L_Hand_Index_03_Bnd', 'L_Hand_Palm_Jnt_parentConstraint1', 'L_Hand_Thumb_03_Bnd_parentConstraint1', 'L_Hand_OutterCup_Bnd_parentConstraint1', 'L_Hand_Thumb_00_Ctrl', 'L_Hand_Thumb_00_Jnt_Ctrl_tag', 'L_Hand_Index_03_Ctrl', 'R_Hand_Thumb_01_Bnd', 'unitConversion3375', 'R_Hand_Middle_00_Bnd', 'R_Hand_Middle_03_Jnt_scaleConstraint1', 'R_Hand_Pinky_01_Bnd', 'L_Hand_Palm_Jnt_Ctrl_Grp', 'L_Hand_Pinky_02_Jnt', 'R_Hand_Index_03_Ctrl', 'L_Hand_Middle_03_Ctrl', 'R_Hand_Pinky_03_CtrlShape', 'R_Hand_Palm_Jnt_Ctrl_Grp_parentConstraint1', 'R_Hand_InnerCup_Bnd_parentConstraint1', 'R_Hand_Middle_03_CtrlShape', 'L_Hand_Outter_Grp_Offset_Grp', 'R_Hand_Pinky_00_Jnt_scaleConstraint1', 'L_Hand_Pinky_00_Jnt_parentConstraint1', 'L_Hand_Middle_01_Jnt_Ctrl_tag', 'L_Hand_Palm_Bnd_parentConstraint1', 'R_Hand_Palm_Jnt', 'L_Hand_Outter_Grp', 'Relax_MultDiv9', 'L_Hand_Palm_Bnd', 'unitConversion3339', 'R_Hand_Index_01_Jnt', 'L_Hand_Pinky_03_Jnt_parentConstraint1', 'L_Hand_Index_01_Jnt', 'L_Hand_Index_04_Bnd_parentConstraint1', 'R_Hand_Index_02_CtrlShape', 'R_Hand_OutterCup_Ctrl_tag', 'R_Hand_Palm_Jnt_scaleConstraint1', 'L_Hand_Pinky_03_Ctrl_Offset_Grp', 'L_Hand_Ring_02_Jnt_Ctrl_tag', 'L_Hand_Pinky_00_Bnd_scaleConstraint1', 'R_Hand_Thumb_03_Bnd_scaleConstraint1', 'Spread_MultDiv5', 'L_Hand_Index_03_Jnt_parentConstraint1', 'R_Hand_Pinky_01_Jnt', 'L_Hand_Middle_00_Jnt_Ctrl_tag', 'unitConversion3332', 'R_Hand_Index_03_Bnd_scaleConstraint1', 'unitConversion3350', 'L_Hand_Middle_03_Bnd', 'R_Hand_Index_00_Ctrl_Offset_Grp', 'R_Hand_Palm_Jnt_parentConstraint1', 'R_Hand_InnerCup_Ctrl_Auto_Grp', 'unitConversion3344', 'R_Hand_Pinky_02_CtrlShape', 'L_Hand_Middle_03_CtrlShape', 'R_Hand_Thumb_00_Jnt_Ctrl_tag', 'unitConversion3367', 'L_Hand_Pinky_01_Jnt_parentConstraint1', 'R_Hand_Middle_04_Bnd_parentConstraint1', 'L_Hand_Palm_CtrlShape', 'R_Hand_Middle_01_Jnt_Ctrl_tag', 'R_Hand_Index_02_Bnd_parentConstraint1', 'R_Hand_Thumb_00_Jnt_parentConstraint1', 'L_Hand_Middle_00_CtrlShape', 'L_Hand_Ring_00_Jnt_Ctrl_tag', 'L_Hand_Pinky_00_Ctrl_Offset_Grp_parentConstraint1', 'R_Hand_Ring_01_Jnt', 'L_Hand_Wrist_Ctrl', 'L_Hand_Pinky_00_Ctrl', 'R_Hand_Pinky_00_Ctrl_Offset_Grp_parentConstraint1', 'R_Hand_Index_03_Jnt', 'R_Hand_Middle_03_Ctrl', 'R_Hand_Palm_Jnt_Ctrl_Grp', 'L_Hand_Pinky_02_Bnd_scaleConstraint1', 'R_Hand_Thumb_02_Bnd_parentConstraint1', 'L_Hand_Thumb_01_Ctrl_Offset_Grp', 'R_Hand_Middle_02_Jnt_Ctrl_tag', 'L_Hand_Middle_01_Jnt', 'unitConversion3345', 'R_Hand_Palm_Ctrl_Grp', 'L_Hand_InnerCup_Ctrl_tag', 'L_Hand_Index_01_Ctrl_Spread_Grp', 'R_Hand_Wrist_Ctrl_tag', 'unitConversion3357', 'R_Hand_Pinky_00_Ctrl', 'R_Hand_Ring_02_Jnt', 'R_Hand_Thumb_00_Jnt_scaleConstraint1', 'R_Hand_Pinky_00_CtrlShape', 'unitConversion3341', 'R_Hand_Thumb_02_Bnd', 'R_Hand_Thumb_00_Ctrl_Offset_Grp', 'L_Hand_Thumb_00_Jnt', 'R_Hand_Wrist_Ctrl_Offset_Grp', 'R_Hand_Middle_03_Bnd', 'R_Hand_Middle_03_Jnt', 'L_Hand_Index_02_Jnt', 'L_Hand_Thumb_03_Bnd', 'R_Hand_InnerCup_Jnt_parentConstraint1', 'unitConversion3333', 'R_Hand_Middle_02_Jnt', 'R_Hand_Middle_02_Jnt_parentConstraint1', 'R_Hand_OutterCup_Bnd', 'unitConversion3336', 'L_Hand_Thumb_02_Bnd', 'Relax_MultDiv2', 'R_Hand_Thumb_02_Jnt_parentConstraint1', 'R_Hand_Middle_00_Ctrl_Offset_Grp', 'L_Hand_Thumb_02_Bnd_parentConstraint1', 'L_Hand_Thumb_02_Ctrl_Curl_Grp', 'R_Hand_Thumb_01_CtrlShape', 'R_Hand_Index_01_Ctrl_Relax_Grp', 'L_Hand_Pinky_02_Ctrl_Offset_Grp', 'R_Hand_OutterCup_Bnd_scaleConstraint1', 'unitConversion3338', 'R_Hand_Index_00_Jnt_Ctrl_tag', 'unitConversion3372', 'R_Hand_Pinky_03_Jnt_parentConstraint1', 'L_Hand_Pinky_00_Jnt_Ctrl_tag', 'R_Hand_Palm_Bnd_parentConstraint1', 'R_Hand_Index_02_Ctrl', 'L_Hand_Pinky_01_Ctrl_Curl_Grp', 'unitConversion3320', 'SpreadThree_MultDiv5', 'R_Hand_Thumb_01_Ctrl', 'R_Hand_Index_00_CtrlShape', 'R_Hand_Middle_01_Ctrl_RelaxThree_Grp', 'L_Hand_Index_03_Jnt', 'L_Hand_Index_01_Bnd', 'R_Hand_Pinky_04_Jnt_parentConstraint1', 'L_Hand_InnerCup_Jnt_parentConstraint1', 'L_Hand_Index_01_Ctrl_Relax_Grp', 'R_Hand_Middle_00_CtrlShape', 'L_Hand_Palm_Ctrl_Offset_Grp', 'L_Hand_Pinky_02_Ctrl_Curl_Grp', 'L_Hand_Middle_01_Ctrl_SpreadThree_Grp', 'R_Hand_Index_02_Ctrl_Offset_Grp', 'unitConversion3325', 'R_Hand_Palm_Jnt_Ctrl_GrpMirror_Grp', 'L_Hand_InnerCup_Ctrl_Auto_Grp', 'RelaxThree_MultDiv1', 'R_Hand_Index_01_Bnd', 'unitConversion3356', 'L_Hand_Index_02_Bnd_scaleConstraint1', 'L_Hand_Thumb_00_Bnd', 'L_Hand_Index_00_Jnt', 'L_Hand_Index_02_CtrlShape', 'R_Hand_Middle_00_Jnt_parentConstraint1', 'R_Hand_Index_01_Ctrl_Offset_Grp', 'L_Hand_Pinky_01_Ctrl_RelaxThree_Grp', 'L_Hand_Thumb_02_Jnt_scaleConstraint1', 'L_Hand_Pinky_03_Jnt', 'Spread_MultDiv2', 'unitConversion3316', 'R_Hand_Middle_02_Ctrl_Curl_Grp', 'R_Hand_Palm_Ctrl_tag', 'R_Hand_Pinky_04_Bnd_parentConstraint1', 'R_Hand_InnerCup_Ctrl_tag', 'R_Hand_Thumb_02_Ctrl_Offset_Grp', 'L_Hand_Index_02_Jnt_scaleConstraint1', 'R_Hand_Pinky_00_Bnd_parentConstraint1', 'unitConversion3348', 'R_Hand_Middle_01_Ctrl_Curl_Grp', 'L_Hand_Palm_Jnt_scaleConstraint1', 'R_Hand_Thumb_03_Jnt', 'Relax_MultDiv6', 'R_Hand_Thumb_02_Jnt_Ctrl_tag', 'L_Hand_Middle_01_Ctrl_Relax_Grp', 'L_Hand_Pinky_01_Bnd_scaleConstraint1', 'R_Hand_Middle_00_Jnt', 'L_Hand_Inner_Cup_Grp_Grp', 'L_Hand_Pinky_00_Jnt', 'SpreadThree_MultDiv3', 'R_Hand_Pinky_04_Bnd_scaleConstraint1', 'L_Hand_Middle_00_Jnt_scaleConstraint1', 'L_Hand_Middle_02_Ctrl_Curl_Grp', 'R_Hand_Middle_03_Bnd_parentConstraint1', 'R_Hand_Index_04_Bnd_parentConstraint1', 'L_Hand_Middle_04_Bnd_scaleConstraint1', 'R_Hand_Index_00_Bnd_parentConstraint1', 'R_Hand_Pinky_03_Jnt_Ctrl_tag', 'L_Hand_Middle_03_Bnd_scaleConstraint1', 'L_Hand_Palm_Ctrl_tag', 'R_Hand_Palm_Ctrl', 'R_Hand_Middle_02_Ctrl_Offset_Grp', 'R_Hand_Index_00_Bnd', 'R_Hand_Pinky_01_Ctrl_Spread_Grp', 'L_Hand_Thumb_02_Ctrl', 'L_Hand_Pinky_03_CtrlShape', 'unitConversion3352', 'L_Hand_Palm_Ctrl_Grp', 'R_Hand_Pinky_01_Jnt_Ctrl_tag', 'R_Hand_Index_01_Bnd_scaleConstraint1', 'L_Hand_InnerCup_CtrlShape', 'R_Hand_Middle_00_Bnd_parentConstraint1', 'R_Hand_Pinky_03_Ctrl_Offset_Grp', 'L_Hand_Thumb_01_CtrlShape', 'Relax_MultDiv5', 'R_Hand_Index_03_Jnt_parentConstraint1', 'L_Hand_Palm_Bnd_scaleConstraint1', 'R_Hand_Ring_03_Jnt_Ctrl_tag', 'unitConversion3349', 'unitConversion3365', 'R_Hand_Wrist_Ctrl', 'R_Hand_Thumb_01_Jnt_Ctrl_tag', 'L_Hand_Pinky_01_Ctrl_Relax_Grp', 'L_Hand_Index_01_Jnt_parentConstraint1', 'R_Hand_Middle_04_Bnd', 'Spread_MultDiv3', 'R_Hand_Ring_03_Jnt', 'unitConversion3373', 'R_Hand_Middle_01_CtrlShape', 'L_Hand_Pinky_01_Jnt', 'L_Hand_Pinky_02_Jnt_scaleConstraint1', 'unitConversion3351', 'L_Hand_Middle_01_Ctrl_Offset_Grp', 'L_Hand_Pinky_03_Bnd_parentConstraint1', 'L_Hand_Thumb_00_Bnd_scaleConstraint1', 'L_Hand_Thumb_01_Bnd_parentConstraint1', 'R_Hand_Outter_Grp_Offset_Grp', 'Relax_MultDiv3', 'R_Hand_Middle_03_Ctrl_Offset_Grp', 'R_Hand_Pinky_01_Ctrl_Relax_Grp', 'RelaxThree_MultDiv4', 'R_Hand_Middle_01_Ctrl_Offset_Grp', 'L_Hand_Index_03_Ctrl_Offset_Grp', 'R_Hand_Ring_02_Jnt_Ctrl_tag', 'L_Hand_Middle_01_Jnt_parentConstraint1', 'L_Hand_InnerCup_Ctrl', 'R_Hand_Middle_01_Ctrl', 'L_Hand_Pinky_01_CtrlShape', 'R_Hand_Ring_00_Jnt', 'L_Hand_InnerCup_Ctrl_Root_Grp', 'L_Hand_Pinky_03_Jnt_Ctrl_tag', 'R_Hand_Outter_Grp', 'L_Hand_Middle_00_Bnd_scaleConstraint1', 'R_Hand_OutterCup_Ctrl_Auto_Grp', 'R_Hand_Thumb_01_Ctrl_Curl_Grp', 'R_Hand_Middle_02_CtrlShape', 'unitConversion3360', 'Spread_MultDiv7', 'L_Hand_Index_00_Ctrl_Offset_Grp_parentConstraint1', 'R_Hand_Middle_03_Ctrl_Curl_Grp', 'L_Hand_Middle_04_Jnt', 'R_Hand_Index_03_Bnd', 'unitConversion3364', 'RelaxThree_MultDiv5', 'L_Hand_Thumb_01_Jnt', 'L_Hand_Middle_02_Ctrl_Offset_Grp', 'L_Hand_Pinky_01_Ctrl_SpreadThree_Grp', 'R_Hand_Pinky_00_Bnd', 'R_Hand_Index_04_Jnt', 'L_Hand_Middle_02_Bnd_scaleConstraint1', 'L_Hand_Index_02_Ctrl_Curl_Grp', 'R_Hand_Thumb_01_Jnt', 'L_Hand_Pinky_02_Bnd_parentConstraint1', 'L_Hand_Index_00_Jnt_scaleConstraint1', 'L_Hand_Middle_03_Jnt_scaleConstraint1', 'R_Hand_Palm_Bnd_scaleConstraint1', 'R_Hand_Middle_00_Jnt_Ctrl_tag', 'L_Hand_Index_03_Bnd_parentConstraint1', 'R_Hand_Middle_03_Jnt_Ctrl_tag', 'R_Hand_Middle_03_Bnd_scaleConstraint1', 'L_Hand_Pinky_03_Ctrl_Curl_Grp', 'R_Hand_Thumb_00_Bnd', 'L_Hand_Index_01_Bnd_parentConstraint1', 'L_Hand_Palm_Ctrl_Offset_Grp_parentConstraint1', 'R_Hand_Pinky_02_Bnd_scaleConstraint1', 'L_Hand_Thumb_01_Jnt_parentConstraint1', 'SpreadThree_MultDiv1', 'R_Hand_InnerCup_Jnt', 'L_Hand_Middle_02_Ctrl', 'R_Hand_Index_01_Ctrl_Spread_Grp', 'L_Hand_Middle_01_CtrlShape', 'L_Hand_Thumb_02_Jnt', 'L_Hand_Middle_02_Bnd', 'L_Hand_Pinky_00_Bnd', 'L_Hand_Middle_02_Jnt_parentConstraint1', 'R_Hand_Thumb_02_Ctrl', 'L_Hand_Middle_01_Bnd', 'L_Hand_Thumb_02_Ctrl_Offset_Grp', 'unitConversion3321', 'L_Hand_Thumb_00_Jnt_scaleConstraint1', 'L_Hand_Index_03_CtrlShape', 'R_Hand_Pinky_03_Bnd', 'L_Hand_Pinky_02_Jnt_Ctrl_tag', 'R_Hand_Middle_03_Jnt_parentConstraint1', 'R_Hand_Thumb_00_Bnd_scaleConstraint1', 'R_Hand_Middle_04_Jnt', 'R_Hand_Pinky_01_Ctrl_RelaxThree_Grp', 'Spread_MultDiv1', 'L_Hand_Index_03_Bnd_scaleConstraint1', 'L_Hand_Pinky_01_Bnd', 'L_Hand_Thumb_02_Bnd_scaleConstraint1', 'unitConversion3347', 'L_Hand_Index_00_Jnt_Ctrl_tag', 'unitConversion3361', 'L_Hand_Thumb_02_Jnt_Ctrl_tag', 'R_Hand_Pinky_03_Ctrl_Curl_Grp', 'L_Hand_Pinky_04_Jnt', 'L_Hand_Index_02_Jnt_Ctrl_tag', 'L_Hand_Thumb_01_Jnt_Ctrl_tag', 'R_Hand_Inner_Cup_Grp_Grp', 'R_Hand_Palm_Ctrl_Offset_Grp_parentConstraint1', 'L_Hand_Middle_00_Ctrl_Offset_Grp_parentConstraint1', 'L_Hand_Index_03_Ctrl_Curl_Grp', 'R_Hand_Middle_04_Bnd_scaleConstraint1', 'unitConversion3358', 'L_Hand_OutterCup_Ctrl_Root_Grp', 'R_Hand_Pinky_00_Jnt_parentConstraint1', 'L_Hand_Middle_03_Jnt_Ctrl_tag', 'L_Hand_Index_03_Jnt_Ctrl_tag', 'R_Hand_OutterCup_Ctrl', 'R_Hand_Pinky_03_Ctrl', 'L_Hand_Index_04_Bnd_scaleConstraint1', 'L_Hand_Middle_00_Jnt', 'R_Hand_Middle_01_Jnt_parentConstraint1', 'R_Hand_Pinky_01_Bnd_scaleConstraint1', 'R_Hand_Middle_01_Bnd_scaleConstraint1', 'R_Hand_Thumb_01_Ctrl_Offset_Grp', 'L_Hand_Pinky_01_Jnt_Ctrl_tag', 'L_Hand_Index_00_Bnd', 'Relax_MultDiv', 'unitConversion3359', 'L_Hand_Pinky_03_Jnt_scaleConstraint1', 'L_Hand_Index_00_Ctrl', 'R_Hand_Index_00_Bnd_scaleConstraint1', 'unitConversion3368', 'L_Hand_Thumb_00_Ctrl_Offset_Grp', 'R_Hand_Pinky_03_Bnd_scaleConstraint1', 'L_Hand_Index_02_Jnt_parentConstraint1', 'L_Hand_Index_00_Jnt_parentConstraint1', 'R_Hand_Thumb_03_Bnd_parentConstraint1', 'R_Hand_Middle_02_Bnd_parentConstraint1', 'L_Hand_Thumb_03_Jnt_parentConstraint1', 'unitConversion3319', 'L_Hand_Ring_01_Jnt_Ctrl_tag', 'R_Hand_Pinky_03_Jnt_scaleConstraint1', 'R_Hand_Thumb_01_Bnd_parentConstraint1', 'SpreadThree_MultDiv2', 'R_Hand_Index_04_Bnd_scaleConstraint1', 'RelaxThree_MultDiv2', 'L_Hand_Palm_Ctrl', 'unitConversion3330', 'L_Hand_Pinky_01_Ctrl_Spread_Grp', 'L_Hand_Index_01_Jnt_scaleConstraint1', 'L_Hand_Index_01_Ctrl', 'L_Hand_Thumb_01_Jnt_scaleConstraint1', 'L_Hand_Middle_03_Ctrl_Curl_Grp', 'L_Hand_Index_00_Ctrl_Offset_Grp', 'R_Hand_InnerCup_Bnd_scaleConstraint1', 'R_Hand_Pinky_02_Ctrl', 'L_Hand_OutterCup_Ctrl_tag', 'L_Hand_OutterCup_Jnt_parentConstraint1', 'R_Hand_Middle_02_Jnt_scaleConstraint1', 'L_Hand_Middle_02_CtrlShape', 'L_Hand_Index_01_Jnt_Ctrl_tag', 'R_Hand_InnerCup_Ctrl_Root_Grp', 'L_Hand_Thumb_03_Bnd_scaleConstraint1', 'unitConversion3337', 'R_Hand_Pinky_02_Jnt_Ctrl_tag', 'L_Hand_Pinky_00_CtrlShape', 'L_Hand_OutterCup_Ctrl_Auto_Grp', 'R_Hand_Index_01_Ctrl', 'R_Hand_Pinky_00_Jnt_Ctrl_tag', 'L_Hand_Middle_03_Ctrl_Offset_Grp', 'R_Hand_Thumb_03_Jnt_parentConstraint1', 'R_Hand_Thumb_02_Bnd_scaleConstraint1', 'R_Hand_Pinky_02_Jnt_scaleConstraint1', 'L_Hand_InnerCup_Bnd_parentConstraint1', 'R_Hand_Index_02_Jnt_parentConstraint1', 'R_Hand_Index_03_Ctrl_Curl_Grp', 'Spread_MultDiv', 'R_Hand_Middle_01_Ctrl_Relax_Grp', 'R_Hand_Pinky_01_CtrlShape', 'R_Hand_Index_04_Bnd', 'L_Hand_Thumb_01_Ctrl', 'R_Hand_Index_01_Jnt_parentConstraint1', 'R_Hand_Ring_00_Jnt_Ctrl_tag', 'R_Hand_Index_03_Jnt_Ctrl_tag', 'L_Hand_Index_01_Ctrl_Curl_Grp', 'RelaxThree_MultDiv', 'L_Hand_Thumb_01_Bnd_scaleConstraint1', 'unitConversion3342', 'L_Hand_OutterCup_Bnd', 'R_Hand_OutterCup_Bnd_parentConstraint1', 'L_Hand_Index_04_Jnt_parentConstraint1', 'L_Hand_Thumb_01_Bnd', 'R_Hand_Thumb_01_Bnd_scaleConstraint1', 'L_Hand_Pinky_04_Bnd_scaleConstraint1', 'R_Hand_Index_03_Bnd_parentConstraint1', 'R_Hand_OutterCup_Jnt', 'R_Hand_Index_00_Jnt_parentConstraint1', 'R_Hand_Thumb_01_Jnt_parentConstraint1', 'L_Hand_OutterCup_CtrlShape', 'L_Hand_OutterCup_Bnd_scaleConstraint1', 'R_Hand_Thumb_02_Jnt_scaleConstraint1', 'R_Hand_Middle_00_Ctrl', 'L_Hand_Middle_03_Jnt_parentConstraint1', 'R_Hand_Thumb_00_CtrlShape', 'L_Hand_Index_02_Ctrl', 'R_Hand_Middle_01_Ctrl_Spread_Grp', 'L_Hand_Index_00_Bnd_parentConstraint1', 'R_Hand_Wrist_CtrlShape', 'L_Hand_Middle_00_Bnd', 'L_Hand_Middle_00_Ctrl_Offset_Grp', 'L_Hand_Wrist_Ctrl_Offset_Grp', 'R_Hand_Index_01_Ctrl_Curl_Grp', 'unitConversion3317', 'L_Hand_Index_01_Bnd_scaleConstraint1', 'L_Hand_Index_00_Bnd_scaleConstraint1', 'R_Hand_Pinky_01_Jnt_scaleConstraint1', 'R_Hand_Middle_02_Ctrl', 'R_Hand_Pinky_00_Jnt', 'L_Hand_Index_02_Bnd', 'L_Hand_Pinky_02_Jnt_parentConstraint1', 'R_Hand_Pinky_02_Ctrl_Offset_Grp', 'R_Hand_Pinky_00_Ctrl_Offset_Grp', 'L_Hand_Thumb_01_Ctrl_Curl_Grp', 'R_Hand_InnerCup_CtrlShape', 'R_Hand_Ring_01_Jnt_Ctrl_tag', 'R_Hand_Pinky_04_Jnt', 'R_Hand_Pinky_02_Bnd', 'L_Hand_InnerCup_Bnd', 'L_Hand_Index_04_Bnd', 'L_Hand_Middle_01_Ctrl_RelaxThree_Grp', 'R_Hand_Thumb_00_Ctrl', 'R_Hand_Pinky_04_Bnd', 'L_Hand_Pinky_00_Ctrl_Offset_Grp', 'R_Hand_Pinky_02_Ctrl_Curl_Grp', 'R_Hand_Pinky_01_Ctrl', 'R_Hand_Palm_Ctrl_Offset_Grp', 'L_Hand_Pinky_00_Bnd_parentConstraint1', 'R_Hand_Pinky_01_Jnt_parentConstraint1', 'R_Hand_Thumb_02_Jnt', 'L_Hand_Thumb_00_Jnt_parentConstraint1', 'R_Hand_Index_00_Ctrl', 'SpreadThree_MultDiv4', 'R_Hand_Middle_01_Bnd_parentConstraint1', 'R_Hand_Pinky_00_Bnd_scaleConstraint1', 'L_Hand_Pinky_01_Jnt_scaleConstraint1', 'R_Hand_Pinky_01_Ctrl_Offset_Grp', 'L_Hand_Pinky_02_CtrlShape', 'R_Hand_Thumb_01_Jnt_scaleConstraint1', 'R_Hand_Palm_Bnd', 'R_Hand_Palm_CtrlShape', 'unitConversion3318', 'L_Hand_Middle_01_Jnt_scaleConstraint1', 'SpreadThree_MultDiv', 'L_Hand_Pinky_01_Bnd_parentConstraint1', 'L_Hand_InnerCup_Jnt', 'L_Hand_Index_02_Ctrl_Offset_Grp', 'R_Hand_Pinky_02_Jnt_parentConstraint1', 'R_Hand_Index_01_CtrlShape', 'R_Hand_Thumb_00_Bnd_parentConstraint1', 'unitConversion3315', 'L_Hand_Pinky_01_Ctrl_Offset_Grp', 'L_Hand_Thumb_00_Bnd_parentConstraint1', 'L_Hand_Ring_03_Jnt_Ctrl_tag', 'R_Hand_OutterCup_CtrlShape', 'L_Hand_Middle_01_Ctrl_Spread_Grp', 'R_Hand_Index_02_Jnt_Ctrl_tag', 'R_Hand_Index_00_Jnt_scaleConstraint1', 'L_Hand_Palm_Jnt_Ctrl_Grp_parentConstraint1', 'unitConversion3326', 'unitConversion3328', 'L_Hand_Pinky_02_Bnd', 'R_Hand_Index_02_Jnt_scaleConstraint1', 'L_Hand_Middle_04_Bnd_parentConstraint1', 'unitConversion3346', 'L_Hand_Pinky_01_Ctrl', 'R_Hand_Palm_JntMirror_Grp', 'Spread_MultDiv6', 'L_Hand_Index_02_Bnd_parentConstraint1', 'L_Hand_InnerCup_Bnd_scaleConstraint1', 'unitConversion3314', 'R_Hand_Pinky_01_Ctrl_SpreadThree_Grp', 'R_Hand_Index_02_Ctrl_Curl_Grp', 'L_Hand_Pinky_04_Bnd_parentConstraint1', 'R_Hand_Middle_00_Bnd_scaleConstraint1', 'L_Hand_Pinky_04_Bnd', 'R_Hand_Thumb_00_Ctrl_Relax_Grp', 'R_Hand_OutterCup_Jnt_parentConstraint1', 'R_Hand_Thumb_00_Jnt', 'Relax_MultDiv1', 'L_Hand_Pinky_04_Jnt_parentConstraint1', 'L_Hand_OutterCup_Ctrl', 'R_Hand_Middle_02_Bnd_scaleConstraint1', 'L_Hand_Middle_02_Jnt_scaleConstraint1', 'L_Hand_Thumb_02_Jnt_parentConstraint1', 'Relax_MultDiv8', 'R_Hand_Index_02_Bnd_scaleConstraint1', 'L_Hand_Pinky_03_Bnd', 'R_Hand_Index_01_Jnt_Ctrl_tag', 'L_Hand_Index_03_Jnt_scaleConstraint1', 'R_Hand_Pinky_03_Bnd_parentConstraint1', 'R_Hand_Index_03_Jnt_scaleConstraint1', 'L_Hand_OutterCup_Jnt', 'R_Hand_Index_01_Jnt_scaleConstraint1', 'L_Hand_Middle_01_Ctrl', 'R_Hand_Thumb_03_Bnd', 'L_Hand_Middle_03_Jnt', 'Spread_MultDiv4', 'R_Hand_Index_02_Bnd', 'unitConversion3369', 'L_Hand_Thumb_02_CtrlShape', 'L_Hand_Thumb_03_Jnt', 'unitConversion3329', 'R_Hand_Index_03_Ctrl_Offset_Grp', 'R_Hand_Pinky_02_Bnd_parentConstraint1', 'R_Hand_Ring_04_Jnt', 'L_Hand_Index_04_Jnt', 'RelaxThree_MultDiv3', 'L_Hand_Middle_01_Bnd_parentConstraint1', 'R_Hand_Middle_01_Ctrl_SpreadThree_Grp', 'R_Hand_Index_00_Ctrl_Offset_Grp_parentConstraint1', 'L_Hand_Middle_01_Ctrl_Curl_Grp', 'L_Hand_Middle_00_Jnt_parentConstraint1', 'R_Hand_InnerCup_Bnd', 'R_Hand_Thumb_02_CtrlShape', 'unitConversion3370', 'L_Hand_Thumb_00_Ctrl_Relax_Grp', 'R_Hand_Index_04_Jnt_parentConstraint1', 'R_Hand_Index_02_Jnt', 'R_Hand_OutterCup_Ctrl_Root_Grp', 'R_Hand_Pinky_02_Jnt', 'L_Hand_Middle_02_Jnt_Ctrl_tag', 'unitConversion3363', 'unitConversion3327', 'R_Hand_Thumb_02_Ctrl_Curl_Grp', 'R_Hand_Middle_01_Jnt_scaleConstraint1', 'L_Hand_Middle_04_Bnd', 'L_Hand_Index_01_CtrlShape', 'R_Hand_Middle_00_Ctrl_Offset_Grp_parentConstraint1', 'L_Hand_Pinky_02_Ctrl', 'L_Hand_Pinky_03_Ctrl', 'L_Hand_Pinky_00_Jnt_scaleConstraint1', 'L_Hand_Palm_Jnt', 'R_Hand_Index_01_Bnd_parentConstraint1']");
+	setAttr ".StoredRingGuides" -type "string" (
+		"[[0.7095958487118191, -0.00674732924634483, -0.7045766140307201, 0.0, -2.168404344971009e-18, 0.9999541491394124, -0.009575991795830515, 0.0, 0.7046089209561237, 0.006795084025619773, 0.7095633131314865, 0.0, 3.42805944324315, -1.185817836068832, -10.998840408270985, 1.0], [0.7095958487118191, -0.00674732924634483, -0.7045766140307201, 0.0, -2.168404344971009e-18, 0.9999541491394124, -0.009575991795830515, 0.0, 0.7046089209561237, 0.006795084025619773, 0.7095633131314865, 0.0, 4.03329201917893, -1.1915728069693783, -11.599791949670335, 1.0], [0.7095958487118191, -0.00674732924634483, -0.7045766140307201, 0.0, -2.168404344971009e-18, 0.9999541491394124, -0.009575991795830515, 0.0, 0.7046089209561237, 0.006795084025619773, 0.7095633131314865, 0.0, 4.638524595114898, -1.1973277778698743, -12.200743491069725, 1.0], [0.7095958487118191, -0.00674732924634483, -0.7045766140307201, 0.0, -2.168404344971009e-18, 0.9999541491394124, -0.009575991795830515, 0.0, 0.7046089209561237, 0.006795084025619773, 0.7095633131314865, 0.0, 5.243757171050822, -1.2030827487703766, -12.801695032469167, 1.0], [0.7095958487118191, -0.00674732924634483, -0.7045766140307201, 0.0, -2.168404344971009e-18, 0.9999541491394124, -0.009575991795830515, 0.0, 0.7046089209561237, 0.006795084025619773, 0.7095633131314865, 0.0, 5.848989746986739, -1.2088377196708828, -13.402646573868646, 1.0]]");
 createNode joint -n "L_Hand_Palm_Guide" -p "L_Hand_Block";
 	rename -uid "89786A43-41B0-17E6-0BE4-AD92A295F253";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 11.370424080252395 4.3440444817357236 -4.0831748971811006 ;
 	setAttr ".r" -type "double3" 0 -74.999999999999972 0 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
@@ -7383,7 +7386,7 @@ createNode joint -n "L_Hand_Palm_Guide" -p "L_Hand_Block";
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_Hand_Palm_Guide_CtrlShape" -p "L_Hand_Palm_Guide";
 	rename -uid "005C39B0-441B-74D0-50A1-7FB4EE05C6E2";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -7405,7 +7408,7 @@ createNode nurbsCurve -n "L_Hand_Palm_Guide_CtrlShape" -p "L_Hand_Palm_Guide";
 		;
 createNode nurbsCurve -n "L_Hand_Palm_Guide_Ctrl_CtrlShape" -p "L_Hand_Palm_Guide";
 	rename -uid "3EA1D229-4B18-F9EC-8EDB-43A5847833EE";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -7522,7 +7525,7 @@ createNode nurbsCurve -n "L_Hand_Palm_Guide_Ctrl_CtrlShape" -p "L_Hand_Palm_Guid
 		;
 createNode nurbsCurve -n "L_Hand_Palm_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Palm_Guide";
 	rename -uid "457BCA85-4F2F-FD25-842D-EBB6B0713FEF";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -7544,7 +7547,7 @@ createNode nurbsCurve -n "L_Hand_Palm_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Palm
 		;
 createNode nurbsCurve -n "L_Hand_Palm_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Palm_Guide";
 	rename -uid "A2A12A0F-4DF9-BD3A-E340-0E8C62E0A3AC";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -7567,14 +7570,14 @@ createNode nurbsCurve -n "L_Hand_Palm_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Hand
 createNode joint -n "L_Hand_OutterCup_Guide" -p "L_Hand_Palm_Guide";
 	rename -uid "571AEFCC-419B-DC82-5BE8-BE973E6EAA5E";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 1.5381236984350226 -1.1260710894068908 -0.28154147638641369 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_Hand_OutterCup_Guide_CtrlShape" -p "L_Hand_OutterCup_Guide";
 	rename -uid "1F7BD62C-49B5-048B-992E-3C9AF79322E9";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -7596,7 +7599,7 @@ createNode nurbsCurve -n "L_Hand_OutterCup_Guide_CtrlShape" -p "L_Hand_OutterCup
 		;
 createNode nurbsCurve -n "L_Hand_OutterCup_Guide_Ctrl_CtrlShape" -p "L_Hand_OutterCup_Guide";
 	rename -uid "BD67FF2F-4BA0-2EAE-7CE6-60B56A5C914E";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -7713,7 +7716,7 @@ createNode nurbsCurve -n "L_Hand_OutterCup_Guide_Ctrl_CtrlShape" -p "L_Hand_Outt
 		;
 createNode nurbsCurve -n "L_Hand_OutterCup_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_OutterCup_Guide";
 	rename -uid "7C1CC9F8-4D7E-D8C5-0F1A-4CB5EFB4A266";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -7735,967 +7738,7 @@ createNode nurbsCurve -n "L_Hand_OutterCup_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand
 		;
 createNode nurbsCurve -n "L_Hand_OutterCup_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Hand_OutterCup_Guide";
 	rename -uid "466E7A4D-4108-EBC3-6BCB-95A56111153B";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
-	setAttr -k off ".v";
-	setAttr ".ove" yes;
-	setAttr ".ovc" 6;
-	setAttr ".ls" 2;
-	setAttr ".cc" -type "nurbsCurve" 
-		1 9 0 no 3
-		10 0 1 2 3 4 5 6 7 8 9
-		10
-		0.25000000000000011 1.3977299999944488e-05 -0.49999999999999994
-		0.25591599999999975 1.3977299999943175e-05 0.94513100000000017
-		0.50644299999999987 1.3977299999887547e-05 0.73965300000000012
-		0.93915099999999974 1.3977299999791466e-05 0.99018000000000017
-		3.8742999948945541e-07 1.37985e-05 2.299302
-		-0.93915100000000018 1.3977300000208532e-05 0.99018099999999976
-		-0.50644200000000006 1.3977300000112451e-05 0.73965299999999989
-		-0.2532210000000002 7.1674600000562262e-06 0.94513099999999994
-		-0.24999999999999989 1.397730000005551e-05 -0.5
-		0.25000000000000011 1.3977299999944488e-05 -0.49999999999999994
-		;
-createNode joint -n "L_Hand_Ring_00_Guide" -p "L_Hand_OutterCup_Guide";
-	rename -uid "BA8F37B7-4598-3A27-AEF3-C5BA87F67B5B";
-	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
-	setAttr ".t" -type "double3" 1.8899357448081284 -0.059746746661941241 -10.717298931884573 ;
-	setAttr ".r" -type "double3" -0.77319472183309346 44.79534948284055 -0.54479157230035036 ;
-	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
-	setAttr ".mxrl" -type "double3" 360 360 360 ;
-	setAttr -cb on ".Helper" 1;
-createNode nurbsCurve -n "L_Hand_Ring_00_Guide_CtrlShape" -p "L_Hand_Ring_00_Guide";
-	rename -uid "950C92DF-4ED6-19D5-9D02-5C9C99927BD9";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
-	setAttr -k off ".v";
-	setAttr ".ove" yes;
-	setAttr ".ovc" 14;
-	setAttr ".ls" 2;
-	setAttr ".cc" -type "nurbsCurve" 
-		1 9 0 no 3
-		10 0 1 2 3 4 5 6 7 8 9
-		10
-		1.3977299999999999e-05 -0.5 0.25
-		1.3977299999999999e-05 0.94513100000000005 0.25591599999999998
-		1.3977299999999999e-05 0.739653 0.50644299999999998
-		1.3977299999999999e-05 0.99017999999999995 0.93915099999999996
-		1.37985e-05 2.299302 3.8742999999999997e-07
-		1.3977299999999999e-05 0.99018099999999998 -0.93915099999999996
-		1.3977299999999999e-05 0.739653 -0.50644199999999995
-		7.1674600000000002e-06 0.94513100000000005 -0.25322099999999997
-		1.3977299999999999e-05 -0.5 -0.25
-		1.3977299999999999e-05 -0.5 0.25
-		;
-createNode nurbsCurve -n "L_Hand_Ring_00_Guide_Ctrl_CtrlShape" -p "L_Hand_Ring_00_Guide";
-	rename -uid "DC170C54-42F8-2DCB-B957-9086CBF4117D";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
-	setAttr -k off ".v";
-	setAttr ".ove" yes;
-	setAttr ".ovc" 18;
-	setAttr ".ls" 2;
-	setAttr ".cc" -type "nurbsCurve" 
-		1 101 0 no 3
-		102 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27
-		 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54
-		 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81
-		 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101
-		102
-		0 0.59420899999999999 0
-		-3.0751100000000001e-09 0.58518199999999998 0.103183
-		-6.0567700000000004e-09 0.55837400000000004 0.203232
-		-8.8544099999999994e-09 0.51460099999999998 0.29710500000000001
-		-1.1383e-08 0.45519100000000001 0.38195099999999998
-		-1.3565700000000001e-08 0.38195000000000001 0.45519100000000001
-		-1.5336300000000002e-08 0.29710500000000001 0.51460099999999998
-		-1.6640900000000001e-08 0.203232 0.55837400000000004
-		-1.7439800000000002e-08 0.103183 0.58518199999999998
-		-1.7708799999999999e-08 0 0.59421000000000002
-		-1.7439800000000002e-08 -0.103183 0.58518199999999998
-		-1.6640900000000001e-08 -0.203232 0.55837400000000004
-		-1.5336300000000002e-08 -0.29710500000000001 0.51460099999999998
-		-1.3565700000000001e-08 -0.38195000000000001 0.45519100000000001
-		-1.1383e-08 -0.45519100000000001 0.38195099999999998
-		-8.8544099999999994e-09 -0.51460099999999998 0.29710500000000001
-		-6.0567700000000004e-09 -0.55837400000000004 0.203232
-		-3.0751100000000001e-09 -0.58518199999999998 0.103183
-		0 -0.59420899999999999 0
-		0 -0.58518199999999998 -0.103183
-		0 -0.55837400000000004 -0.203232
-		0 -0.51460099999999998 -0.29710500000000001
-		0 -0.45519100000000001 -0.38195099999999998
-		0 -0.38195000000000001 -0.45519100000000001
-		0 -0.29710500000000001 -0.51460099999999998
-		0 -0.203232 -0.55837499999999995
-		0 -0.103183 -0.58518199999999998
-		0 0 -0.59421000000000002
-		0 0.103183 -0.58518199999999998
-		0 0.203232 -0.55837499999999995
-		0 0.29710500000000001 -0.51460099999999998
-		0 0.38195000000000001 -0.45519100000000001
-		0 0.45519100000000001 -0.38195099999999998
-		0 0.51460099999999998 -0.29710500000000001
-		0 0.55837400000000004 -0.203232
-		0 0.58518199999999998 -0.103183
-		0 0.59420899999999999 0
-		0.103183 0.58518199999999998 0
-		0.203232 0.55837400000000004 0
-		0.29710500000000001 0.51460099999999998 0
-		0.38195099999999998 0.45519100000000001 0
-		0.45519100000000001 0.38195000000000001 0
-		0.51460099999999998 0.29710500000000001 0
-		0.55837400000000004 0.203232 0
-		0.58518199999999998 0.103183 0
-		0.59420899999999999 0 0
-		0.58518199999999998 -0.103183 0
-		0.55837400000000004 -0.203232 0
-		0.51460099999999998 -0.29710500000000001 0
-		0.45519100000000001 -0.38195000000000001 0
-		0.38195099999999998 -0.45519100000000001 0
-		0.29710500000000001 -0.51460099999999998 0
-		0.203232 -0.55837400000000004 0
-		0.103183 -0.58518199999999998 0
-		0 -0.59420899999999999 0
-		-0.103183 -0.58518199999999998 0
-		-0.203232 -0.55837400000000004 0
-		-0.29710500000000001 -0.51460099999999998 0
-		-0.38195099999999998 -0.45519100000000001 0
-		-0.45519100000000001 -0.38195000000000001 0
-		-0.51460099999999998 -0.29710500000000001 0
-		-0.55837400000000004 -0.203232 0
-		-0.58518199999999998 -0.103183 0
-		-0.59421000000000002 0 0
-		-0.58518199999999998 0.103183 0
-		-0.55837400000000004 0.203232 0
-		-0.51460099999999998 0.29710500000000001 0
-		-0.45519100000000001 0.38195000000000001 0
-		-0.38195099999999998 0.45519100000000001 0
-		-0.29710500000000001 0.51460099999999998 0
-		-0.203232 0.55837400000000004 0
-		-0.103183 0.58518199999999998 0
-		0 0.59420899999999999 0
-		-3.0751100000000001e-09 0.58518199999999998 0.103183
-		-6.0567700000000004e-09 0.55837400000000004 0.203232
-		-8.8544099999999994e-09 0.51460099999999998 0.29710500000000001
-		-1.1383e-08 0.45519100000000001 0.38195099999999998
-		-1.3565700000000001e-08 0.38195000000000001 0.45519100000000001
-		-1.5336300000000002e-08 0.29710500000000001 0.51460099999999998
-		-1.6640900000000001e-08 0.203232 0.55837400000000004
-		-1.7439800000000002e-08 0.103183 0.58518199999999998
-		-1.7708799999999999e-08 0 0.59421000000000002
-		-0.18362100000000001 0 0.56512700000000005
-		-0.34926800000000002 0 0.48072599999999999
-		-0.48072599999999999 0 0.34926800000000002
-		-0.56512700000000005 0 0.18362100000000001
-		-0.59421000000000002 0 0
-		-0.56512700000000005 0 -0.18362100000000001
-		-0.48072599999999999 0 -0.34926800000000002
-		-0.34926800000000002 0 -0.48072599999999999
-		-0.18362100000000001 0 -0.56512700000000005
-		0 0 -0.59421000000000002
-		0.18362100000000001 0 -0.56512700000000005
-		0.34926800000000002 0 -0.48072599999999999
-		0.48072599999999999 0 -0.34926800000000002
-		0.56512700000000005 0 -0.18362100000000001
-		0.59420899999999999 0 0
-		0.56512700000000005 0 0.18362100000000001
-		0.48072599999999999 0 0.34926800000000002
-		0.34926800000000002 0 0.48072599999999999
-		0.18362100000000001 0 0.56512700000000005
-		-1.7708799999999999e-08 0 0.59421000000000002
-		;
-createNode nurbsCurve -n "L_Hand_Ring_00_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Ring_00_Guide";
-	rename -uid "AA33E704-49D5-EC78-5567-4AB211830A4B";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
-	setAttr -k off ".v";
-	setAttr ".ove" yes;
-	setAttr ".ovc" 13;
-	setAttr ".ls" 2;
-	setAttr ".cc" -type "nurbsCurve" 
-		1 9 0 no 3
-		10 0 1 2 3 4 5 6 7 8 9
-		10
-		-0.49999999999999994 -0.25000000000000011 -1.3977300000111021e-05
-		0.94513100000000017 -0.25591599999999975 -1.3977299999790138e-05
-		0.73965300000000012 -0.50644299999999987 -1.3977299999835763e-05
-		0.99018000000000017 -0.93915099999999974 -1.3977299999780135e-05
-		2.299302 -3.8742999948945234e-07 -1.3798499999489453e-05
-		0.99018099999999976 0.93915100000000018 -1.3977299999780135e-05
-		0.73965299999999989 0.50644200000000006 -1.3977299999835763e-05
-		0.94513099999999994 0.2532210000000002 -7.1674599997901393e-06
-		-0.5 0.24999999999999989 -1.3977300000111021e-05
-		-0.49999999999999994 -0.25000000000000011 -1.3977300000111021e-05
-		;
-createNode nurbsCurve -n "L_Hand_Ring_00_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Ring_00_Guide";
-	rename -uid "3F3697FB-4052-F267-5989-1589E221C659";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
-	setAttr -k off ".v";
-	setAttr ".ove" yes;
-	setAttr ".ovc" 6;
-	setAttr ".ls" 2;
-	setAttr ".cc" -type "nurbsCurve" 
-		1 9 0 no 3
-		10 0 1 2 3 4 5 6 7 8 9
-		10
-		0.25000000000000011 1.3977299999944488e-05 -0.49999999999999994
-		0.25591599999999975 1.3977299999943175e-05 0.94513100000000017
-		0.50644299999999987 1.3977299999887547e-05 0.73965300000000012
-		0.93915099999999974 1.3977299999791466e-05 0.99018000000000017
-		3.8742999948945541e-07 1.37985e-05 2.299302
-		-0.93915100000000018 1.3977300000208532e-05 0.99018099999999976
-		-0.50644200000000006 1.3977300000112451e-05 0.73965299999999989
-		-0.2532210000000002 7.1674600000562262e-06 0.94513099999999994
-		-0.24999999999999989 1.397730000005551e-05 -0.5
-		0.25000000000000011 1.3977299999944488e-05 -0.49999999999999994
-		;
-createNode joint -n "L_Hand_Ring_01_Guide" -p "L_Hand_Ring_00_Guide";
-	rename -uid "5E9F2773-4A73-092F-AB61-1ABDBCE05F41";
-	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
-	setAttr ".t" -type "double3" 0.85292575630835543 -4.5741188614556449e-14 -2.4868995751603507e-14 ;
-	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
-	setAttr ".mxrl" -type "double3" 360 360 360 ;
-	setAttr ".jo" -type "double3" 2.981770013872046e-16 1.5902773407317578e-14 1.2424041724466857e-16 ;
-	setAttr -cb on ".Helper" 1;
-createNode nurbsCurve -n "L_Hand_Ring_01_Guide_CtrlShape" -p "L_Hand_Ring_01_Guide";
-	rename -uid "36575EE0-49D5-3539-B7C0-A389832AD6FC";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
-	setAttr -k off ".v";
-	setAttr ".ove" yes;
-	setAttr ".ovc" 14;
-	setAttr ".ls" 2;
-	setAttr ".cc" -type "nurbsCurve" 
-		1 9 0 no 3
-		10 0 1 2 3 4 5 6 7 8 9
-		10
-		1.3977299999999999e-05 -0.5 0.25
-		1.3977299999999999e-05 0.94513100000000005 0.25591599999999998
-		1.3977299999999999e-05 0.739653 0.50644299999999998
-		1.3977299999999999e-05 0.99017999999999995 0.93915099999999996
-		1.37985e-05 2.299302 3.8742999999999997e-07
-		1.3977299999999999e-05 0.99018099999999998 -0.93915099999999996
-		1.3977299999999999e-05 0.739653 -0.50644199999999995
-		7.1674600000000002e-06 0.94513100000000005 -0.25322099999999997
-		1.3977299999999999e-05 -0.5 -0.25
-		1.3977299999999999e-05 -0.5 0.25
-		;
-createNode nurbsCurve -n "L_Hand_Ring_01_Guide_Ctrl_CtrlShape" -p "L_Hand_Ring_01_Guide";
-	rename -uid "02488725-4D95-7FBD-BFC9-13920D6274A8";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
-	setAttr -k off ".v";
-	setAttr ".ove" yes;
-	setAttr ".ovc" 18;
-	setAttr ".ls" 2;
-	setAttr ".cc" -type "nurbsCurve" 
-		1 101 0 no 3
-		102 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27
-		 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54
-		 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81
-		 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101
-		102
-		0 0.59420899999999999 0
-		-3.0751100000000001e-09 0.58518199999999998 0.103183
-		-6.0567700000000004e-09 0.55837400000000004 0.203232
-		-8.8544099999999994e-09 0.51460099999999998 0.29710500000000001
-		-1.1383e-08 0.45519100000000001 0.38195099999999998
-		-1.3565700000000001e-08 0.38195000000000001 0.45519100000000001
-		-1.5336300000000002e-08 0.29710500000000001 0.51460099999999998
-		-1.6640900000000001e-08 0.203232 0.55837400000000004
-		-1.7439800000000002e-08 0.103183 0.58518199999999998
-		-1.7708799999999999e-08 0 0.59421000000000002
-		-1.7439800000000002e-08 -0.103183 0.58518199999999998
-		-1.6640900000000001e-08 -0.203232 0.55837400000000004
-		-1.5336300000000002e-08 -0.29710500000000001 0.51460099999999998
-		-1.3565700000000001e-08 -0.38195000000000001 0.45519100000000001
-		-1.1383e-08 -0.45519100000000001 0.38195099999999998
-		-8.8544099999999994e-09 -0.51460099999999998 0.29710500000000001
-		-6.0567700000000004e-09 -0.55837400000000004 0.203232
-		-3.0751100000000001e-09 -0.58518199999999998 0.103183
-		0 -0.59420899999999999 0
-		0 -0.58518199999999998 -0.103183
-		0 -0.55837400000000004 -0.203232
-		0 -0.51460099999999998 -0.29710500000000001
-		0 -0.45519100000000001 -0.38195099999999998
-		0 -0.38195000000000001 -0.45519100000000001
-		0 -0.29710500000000001 -0.51460099999999998
-		0 -0.203232 -0.55837499999999995
-		0 -0.103183 -0.58518199999999998
-		0 0 -0.59421000000000002
-		0 0.103183 -0.58518199999999998
-		0 0.203232 -0.55837499999999995
-		0 0.29710500000000001 -0.51460099999999998
-		0 0.38195000000000001 -0.45519100000000001
-		0 0.45519100000000001 -0.38195099999999998
-		0 0.51460099999999998 -0.29710500000000001
-		0 0.55837400000000004 -0.203232
-		0 0.58518199999999998 -0.103183
-		0 0.59420899999999999 0
-		0.103183 0.58518199999999998 0
-		0.203232 0.55837400000000004 0
-		0.29710500000000001 0.51460099999999998 0
-		0.38195099999999998 0.45519100000000001 0
-		0.45519100000000001 0.38195000000000001 0
-		0.51460099999999998 0.29710500000000001 0
-		0.55837400000000004 0.203232 0
-		0.58518199999999998 0.103183 0
-		0.59420899999999999 0 0
-		0.58518199999999998 -0.103183 0
-		0.55837400000000004 -0.203232 0
-		0.51460099999999998 -0.29710500000000001 0
-		0.45519100000000001 -0.38195000000000001 0
-		0.38195099999999998 -0.45519100000000001 0
-		0.29710500000000001 -0.51460099999999998 0
-		0.203232 -0.55837400000000004 0
-		0.103183 -0.58518199999999998 0
-		0 -0.59420899999999999 0
-		-0.103183 -0.58518199999999998 0
-		-0.203232 -0.55837400000000004 0
-		-0.29710500000000001 -0.51460099999999998 0
-		-0.38195099999999998 -0.45519100000000001 0
-		-0.45519100000000001 -0.38195000000000001 0
-		-0.51460099999999998 -0.29710500000000001 0
-		-0.55837400000000004 -0.203232 0
-		-0.58518199999999998 -0.103183 0
-		-0.59421000000000002 0 0
-		-0.58518199999999998 0.103183 0
-		-0.55837400000000004 0.203232 0
-		-0.51460099999999998 0.29710500000000001 0
-		-0.45519100000000001 0.38195000000000001 0
-		-0.38195099999999998 0.45519100000000001 0
-		-0.29710500000000001 0.51460099999999998 0
-		-0.203232 0.55837400000000004 0
-		-0.103183 0.58518199999999998 0
-		0 0.59420899999999999 0
-		-3.0751100000000001e-09 0.58518199999999998 0.103183
-		-6.0567700000000004e-09 0.55837400000000004 0.203232
-		-8.8544099999999994e-09 0.51460099999999998 0.29710500000000001
-		-1.1383e-08 0.45519100000000001 0.38195099999999998
-		-1.3565700000000001e-08 0.38195000000000001 0.45519100000000001
-		-1.5336300000000002e-08 0.29710500000000001 0.51460099999999998
-		-1.6640900000000001e-08 0.203232 0.55837400000000004
-		-1.7439800000000002e-08 0.103183 0.58518199999999998
-		-1.7708799999999999e-08 0 0.59421000000000002
-		-0.18362100000000001 0 0.56512700000000005
-		-0.34926800000000002 0 0.48072599999999999
-		-0.48072599999999999 0 0.34926800000000002
-		-0.56512700000000005 0 0.18362100000000001
-		-0.59421000000000002 0 0
-		-0.56512700000000005 0 -0.18362100000000001
-		-0.48072599999999999 0 -0.34926800000000002
-		-0.34926800000000002 0 -0.48072599999999999
-		-0.18362100000000001 0 -0.56512700000000005
-		0 0 -0.59421000000000002
-		0.18362100000000001 0 -0.56512700000000005
-		0.34926800000000002 0 -0.48072599999999999
-		0.48072599999999999 0 -0.34926800000000002
-		0.56512700000000005 0 -0.18362100000000001
-		0.59420899999999999 0 0
-		0.56512700000000005 0 0.18362100000000001
-		0.48072599999999999 0 0.34926800000000002
-		0.34926800000000002 0 0.48072599999999999
-		0.18362100000000001 0 0.56512700000000005
-		-1.7708799999999999e-08 0 0.59421000000000002
-		;
-createNode nurbsCurve -n "L_Hand_Ring_01_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Ring_01_Guide";
-	rename -uid "EF638639-4E85-E23F-3E6B-BF9C0DA79309";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
-	setAttr -k off ".v";
-	setAttr ".ove" yes;
-	setAttr ".ovc" 13;
-	setAttr ".ls" 2;
-	setAttr ".cc" -type "nurbsCurve" 
-		1 9 0 no 3
-		10 0 1 2 3 4 5 6 7 8 9
-		10
-		-0.49999999999999994 -0.25000000000000011 -1.3977300000111021e-05
-		0.94513100000000017 -0.25591599999999975 -1.3977299999790138e-05
-		0.73965300000000012 -0.50644299999999987 -1.3977299999835763e-05
-		0.99018000000000017 -0.93915099999999974 -1.3977299999780135e-05
-		2.299302 -3.8742999948945234e-07 -1.3798499999489453e-05
-		0.99018099999999976 0.93915100000000018 -1.3977299999780135e-05
-		0.73965299999999989 0.50644200000000006 -1.3977299999835763e-05
-		0.94513099999999994 0.2532210000000002 -7.1674599997901393e-06
-		-0.5 0.24999999999999989 -1.3977300000111021e-05
-		-0.49999999999999994 -0.25000000000000011 -1.3977300000111021e-05
-		;
-createNode nurbsCurve -n "L_Hand_Ring_01_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Ring_01_Guide";
-	rename -uid "E5F6AD56-494F-2CBB-9E82-C697913940FE";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
-	setAttr -k off ".v";
-	setAttr ".ove" yes;
-	setAttr ".ovc" 6;
-	setAttr ".ls" 2;
-	setAttr ".cc" -type "nurbsCurve" 
-		1 9 0 no 3
-		10 0 1 2 3 4 5 6 7 8 9
-		10
-		0.25000000000000011 1.3977299999944488e-05 -0.49999999999999994
-		0.25591599999999975 1.3977299999943175e-05 0.94513100000000017
-		0.50644299999999987 1.3977299999887547e-05 0.73965300000000012
-		0.93915099999999974 1.3977299999791466e-05 0.99018000000000017
-		3.8742999948945541e-07 1.37985e-05 2.299302
-		-0.93915100000000018 1.3977300000208532e-05 0.99018099999999976
-		-0.50644200000000006 1.3977300000112451e-05 0.73965299999999989
-		-0.2532210000000002 7.1674600000562262e-06 0.94513099999999994
-		-0.24999999999999989 1.397730000005551e-05 -0.5
-		0.25000000000000011 1.3977299999944488e-05 -0.49999999999999994
-		;
-createNode joint -n "L_Hand_Ring_02_Guide" -p "L_Hand_Ring_01_Guide";
-	rename -uid "E1CB49E7-4D34-3505-2177-A3B4B9D6E3E0";
-	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
-	setAttr ".t" -type "double3" 0.85292575630851886 4.8849813083506888e-15 7.815970093361102e-14 ;
-	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
-	setAttr ".mxrl" -type "double3" 360 360 360 ;
-	setAttr ".jo" -type "double3" 1.490885006936023e-16 6.361109362927032e-15 2.4848083448933719e-17 ;
-	setAttr -cb on ".Helper" 1;
-createNode nurbsCurve -n "L_Hand_Ring_02_Guide_CtrlShape" -p "L_Hand_Ring_02_Guide";
-	rename -uid "E006B08D-479E-AFC8-F263-899842A5062F";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
-	setAttr -k off ".v";
-	setAttr ".ove" yes;
-	setAttr ".ovc" 14;
-	setAttr ".ls" 2;
-	setAttr ".cc" -type "nurbsCurve" 
-		1 9 0 no 3
-		10 0 1 2 3 4 5 6 7 8 9
-		10
-		1.3977299999999999e-05 -0.5 0.25
-		1.3977299999999999e-05 0.94513100000000005 0.25591599999999998
-		1.3977299999999999e-05 0.739653 0.50644299999999998
-		1.3977299999999999e-05 0.99017999999999995 0.93915099999999996
-		1.37985e-05 2.299302 3.8742999999999997e-07
-		1.3977299999999999e-05 0.99018099999999998 -0.93915099999999996
-		1.3977299999999999e-05 0.739653 -0.50644199999999995
-		7.1674600000000002e-06 0.94513100000000005 -0.25322099999999997
-		1.3977299999999999e-05 -0.5 -0.25
-		1.3977299999999999e-05 -0.5 0.25
-		;
-createNode nurbsCurve -n "L_Hand_Ring_02_Guide_Ctrl_CtrlShape" -p "L_Hand_Ring_02_Guide";
-	rename -uid "A1E45D8E-4BF0-E788-A7EF-588A3453F0D7";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
-	setAttr -k off ".v";
-	setAttr ".ove" yes;
-	setAttr ".ovc" 18;
-	setAttr ".ls" 2;
-	setAttr ".cc" -type "nurbsCurve" 
-		1 101 0 no 3
-		102 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27
-		 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54
-		 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81
-		 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101
-		102
-		0 0.59420899999999999 0
-		-3.0751100000000001e-09 0.58518199999999998 0.103183
-		-6.0567700000000004e-09 0.55837400000000004 0.203232
-		-8.8544099999999994e-09 0.51460099999999998 0.29710500000000001
-		-1.1383e-08 0.45519100000000001 0.38195099999999998
-		-1.3565700000000001e-08 0.38195000000000001 0.45519100000000001
-		-1.5336300000000002e-08 0.29710500000000001 0.51460099999999998
-		-1.6640900000000001e-08 0.203232 0.55837400000000004
-		-1.7439800000000002e-08 0.103183 0.58518199999999998
-		-1.7708799999999999e-08 0 0.59421000000000002
-		-1.7439800000000002e-08 -0.103183 0.58518199999999998
-		-1.6640900000000001e-08 -0.203232 0.55837400000000004
-		-1.5336300000000002e-08 -0.29710500000000001 0.51460099999999998
-		-1.3565700000000001e-08 -0.38195000000000001 0.45519100000000001
-		-1.1383e-08 -0.45519100000000001 0.38195099999999998
-		-8.8544099999999994e-09 -0.51460099999999998 0.29710500000000001
-		-6.0567700000000004e-09 -0.55837400000000004 0.203232
-		-3.0751100000000001e-09 -0.58518199999999998 0.103183
-		0 -0.59420899999999999 0
-		0 -0.58518199999999998 -0.103183
-		0 -0.55837400000000004 -0.203232
-		0 -0.51460099999999998 -0.29710500000000001
-		0 -0.45519100000000001 -0.38195099999999998
-		0 -0.38195000000000001 -0.45519100000000001
-		0 -0.29710500000000001 -0.51460099999999998
-		0 -0.203232 -0.55837499999999995
-		0 -0.103183 -0.58518199999999998
-		0 0 -0.59421000000000002
-		0 0.103183 -0.58518199999999998
-		0 0.203232 -0.55837499999999995
-		0 0.29710500000000001 -0.51460099999999998
-		0 0.38195000000000001 -0.45519100000000001
-		0 0.45519100000000001 -0.38195099999999998
-		0 0.51460099999999998 -0.29710500000000001
-		0 0.55837400000000004 -0.203232
-		0 0.58518199999999998 -0.103183
-		0 0.59420899999999999 0
-		0.103183 0.58518199999999998 0
-		0.203232 0.55837400000000004 0
-		0.29710500000000001 0.51460099999999998 0
-		0.38195099999999998 0.45519100000000001 0
-		0.45519100000000001 0.38195000000000001 0
-		0.51460099999999998 0.29710500000000001 0
-		0.55837400000000004 0.203232 0
-		0.58518199999999998 0.103183 0
-		0.59420899999999999 0 0
-		0.58518199999999998 -0.103183 0
-		0.55837400000000004 -0.203232 0
-		0.51460099999999998 -0.29710500000000001 0
-		0.45519100000000001 -0.38195000000000001 0
-		0.38195099999999998 -0.45519100000000001 0
-		0.29710500000000001 -0.51460099999999998 0
-		0.203232 -0.55837400000000004 0
-		0.103183 -0.58518199999999998 0
-		0 -0.59420899999999999 0
-		-0.103183 -0.58518199999999998 0
-		-0.203232 -0.55837400000000004 0
-		-0.29710500000000001 -0.51460099999999998 0
-		-0.38195099999999998 -0.45519100000000001 0
-		-0.45519100000000001 -0.38195000000000001 0
-		-0.51460099999999998 -0.29710500000000001 0
-		-0.55837400000000004 -0.203232 0
-		-0.58518199999999998 -0.103183 0
-		-0.59421000000000002 0 0
-		-0.58518199999999998 0.103183 0
-		-0.55837400000000004 0.203232 0
-		-0.51460099999999998 0.29710500000000001 0
-		-0.45519100000000001 0.38195000000000001 0
-		-0.38195099999999998 0.45519100000000001 0
-		-0.29710500000000001 0.51460099999999998 0
-		-0.203232 0.55837400000000004 0
-		-0.103183 0.58518199999999998 0
-		0 0.59420899999999999 0
-		-3.0751100000000001e-09 0.58518199999999998 0.103183
-		-6.0567700000000004e-09 0.55837400000000004 0.203232
-		-8.8544099999999994e-09 0.51460099999999998 0.29710500000000001
-		-1.1383e-08 0.45519100000000001 0.38195099999999998
-		-1.3565700000000001e-08 0.38195000000000001 0.45519100000000001
-		-1.5336300000000002e-08 0.29710500000000001 0.51460099999999998
-		-1.6640900000000001e-08 0.203232 0.55837400000000004
-		-1.7439800000000002e-08 0.103183 0.58518199999999998
-		-1.7708799999999999e-08 0 0.59421000000000002
-		-0.18362100000000001 0 0.56512700000000005
-		-0.34926800000000002 0 0.48072599999999999
-		-0.48072599999999999 0 0.34926800000000002
-		-0.56512700000000005 0 0.18362100000000001
-		-0.59421000000000002 0 0
-		-0.56512700000000005 0 -0.18362100000000001
-		-0.48072599999999999 0 -0.34926800000000002
-		-0.34926800000000002 0 -0.48072599999999999
-		-0.18362100000000001 0 -0.56512700000000005
-		0 0 -0.59421000000000002
-		0.18362100000000001 0 -0.56512700000000005
-		0.34926800000000002 0 -0.48072599999999999
-		0.48072599999999999 0 -0.34926800000000002
-		0.56512700000000005 0 -0.18362100000000001
-		0.59420899999999999 0 0
-		0.56512700000000005 0 0.18362100000000001
-		0.48072599999999999 0 0.34926800000000002
-		0.34926800000000002 0 0.48072599999999999
-		0.18362100000000001 0 0.56512700000000005
-		-1.7708799999999999e-08 0 0.59421000000000002
-		;
-createNode nurbsCurve -n "L_Hand_Ring_02_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Ring_02_Guide";
-	rename -uid "6F8DA214-4031-0635-BB41-638364721F00";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
-	setAttr -k off ".v";
-	setAttr ".ove" yes;
-	setAttr ".ovc" 13;
-	setAttr ".ls" 2;
-	setAttr ".cc" -type "nurbsCurve" 
-		1 9 0 no 3
-		10 0 1 2 3 4 5 6 7 8 9
-		10
-		-0.49999999999999994 -0.25000000000000011 -1.3977300000111021e-05
-		0.94513100000000017 -0.25591599999999975 -1.3977299999790138e-05
-		0.73965300000000012 -0.50644299999999987 -1.3977299999835763e-05
-		0.99018000000000017 -0.93915099999999974 -1.3977299999780135e-05
-		2.299302 -3.8742999948945234e-07 -1.3798499999489453e-05
-		0.99018099999999976 0.93915100000000018 -1.3977299999780135e-05
-		0.73965299999999989 0.50644200000000006 -1.3977299999835763e-05
-		0.94513099999999994 0.2532210000000002 -7.1674599997901393e-06
-		-0.5 0.24999999999999989 -1.3977300000111021e-05
-		-0.49999999999999994 -0.25000000000000011 -1.3977300000111021e-05
-		;
-createNode nurbsCurve -n "L_Hand_Ring_02_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Ring_02_Guide";
-	rename -uid "4FAAA07B-4A34-70FD-BA7B-818A4D5953B4";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
-	setAttr -k off ".v";
-	setAttr ".ove" yes;
-	setAttr ".ovc" 6;
-	setAttr ".ls" 2;
-	setAttr ".cc" -type "nurbsCurve" 
-		1 9 0 no 3
-		10 0 1 2 3 4 5 6 7 8 9
-		10
-		0.25000000000000011 1.3977299999944488e-05 -0.49999999999999994
-		0.25591599999999975 1.3977299999943175e-05 0.94513100000000017
-		0.50644299999999987 1.3977299999887547e-05 0.73965300000000012
-		0.93915099999999974 1.3977299999791466e-05 0.99018000000000017
-		3.8742999948945541e-07 1.37985e-05 2.299302
-		-0.93915100000000018 1.3977300000208532e-05 0.99018099999999976
-		-0.50644200000000006 1.3977300000112451e-05 0.73965299999999989
-		-0.2532210000000002 7.1674600000562262e-06 0.94513099999999994
-		-0.24999999999999989 1.397730000005551e-05 -0.5
-		0.25000000000000011 1.3977299999944488e-05 -0.49999999999999994
-		;
-createNode joint -n "L_Hand_Ring_03_Guide" -p "L_Hand_Ring_02_Guide";
-	rename -uid "F74E3F03-4905-4882-4712-5786CF83F13A";
-	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
-	setAttr ".t" -type "double3" 0.85292575630852241 -8.8817841970012523e-16 8.8817841970012523e-15 ;
-	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
-	setAttr ".mxrl" -type "double3" 360 360 360 ;
-	setAttr ".jo" -type "double3" 1.490885006936023e-16 6.361109362927032e-15 2.4848083448933719e-17 ;
-	setAttr -cb on ".Helper" 1;
-createNode nurbsCurve -n "L_Hand_Ring_03_Guide_CtrlShape" -p "L_Hand_Ring_03_Guide";
-	rename -uid "E43D855E-4C4E-6A15-280B-089BD8647222";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
-	setAttr -k off ".v";
-	setAttr ".ove" yes;
-	setAttr ".ovc" 14;
-	setAttr ".ls" 2;
-	setAttr ".cc" -type "nurbsCurve" 
-		1 9 0 no 3
-		10 0 1 2 3 4 5 6 7 8 9
-		10
-		1.3977299999999999e-05 -0.5 0.25
-		1.3977299999999999e-05 0.94513100000000005 0.25591599999999998
-		1.3977299999999999e-05 0.739653 0.50644299999999998
-		1.3977299999999999e-05 0.99017999999999995 0.93915099999999996
-		1.37985e-05 2.299302 3.8742999999999997e-07
-		1.3977299999999999e-05 0.99018099999999998 -0.93915099999999996
-		1.3977299999999999e-05 0.739653 -0.50644199999999995
-		7.1674600000000002e-06 0.94513100000000005 -0.25322099999999997
-		1.3977299999999999e-05 -0.5 -0.25
-		1.3977299999999999e-05 -0.5 0.25
-		;
-createNode nurbsCurve -n "L_Hand_Ring_03_Guide_Ctrl_CtrlShape" -p "L_Hand_Ring_03_Guide";
-	rename -uid "71D41E81-4950-6660-9538-91B216D87FDF";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
-	setAttr -k off ".v";
-	setAttr ".ove" yes;
-	setAttr ".ovc" 18;
-	setAttr ".ls" 2;
-	setAttr ".cc" -type "nurbsCurve" 
-		1 101 0 no 3
-		102 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27
-		 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54
-		 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81
-		 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101
-		102
-		0 0.59420899999999999 0
-		-3.0751100000000001e-09 0.58518199999999998 0.103183
-		-6.0567700000000004e-09 0.55837400000000004 0.203232
-		-8.8544099999999994e-09 0.51460099999999998 0.29710500000000001
-		-1.1383e-08 0.45519100000000001 0.38195099999999998
-		-1.3565700000000001e-08 0.38195000000000001 0.45519100000000001
-		-1.5336300000000002e-08 0.29710500000000001 0.51460099999999998
-		-1.6640900000000001e-08 0.203232 0.55837400000000004
-		-1.7439800000000002e-08 0.103183 0.58518199999999998
-		-1.7708799999999999e-08 0 0.59421000000000002
-		-1.7439800000000002e-08 -0.103183 0.58518199999999998
-		-1.6640900000000001e-08 -0.203232 0.55837400000000004
-		-1.5336300000000002e-08 -0.29710500000000001 0.51460099999999998
-		-1.3565700000000001e-08 -0.38195000000000001 0.45519100000000001
-		-1.1383e-08 -0.45519100000000001 0.38195099999999998
-		-8.8544099999999994e-09 -0.51460099999999998 0.29710500000000001
-		-6.0567700000000004e-09 -0.55837400000000004 0.203232
-		-3.0751100000000001e-09 -0.58518199999999998 0.103183
-		0 -0.59420899999999999 0
-		0 -0.58518199999999998 -0.103183
-		0 -0.55837400000000004 -0.203232
-		0 -0.51460099999999998 -0.29710500000000001
-		0 -0.45519100000000001 -0.38195099999999998
-		0 -0.38195000000000001 -0.45519100000000001
-		0 -0.29710500000000001 -0.51460099999999998
-		0 -0.203232 -0.55837499999999995
-		0 -0.103183 -0.58518199999999998
-		0 0 -0.59421000000000002
-		0 0.103183 -0.58518199999999998
-		0 0.203232 -0.55837499999999995
-		0 0.29710500000000001 -0.51460099999999998
-		0 0.38195000000000001 -0.45519100000000001
-		0 0.45519100000000001 -0.38195099999999998
-		0 0.51460099999999998 -0.29710500000000001
-		0 0.55837400000000004 -0.203232
-		0 0.58518199999999998 -0.103183
-		0 0.59420899999999999 0
-		0.103183 0.58518199999999998 0
-		0.203232 0.55837400000000004 0
-		0.29710500000000001 0.51460099999999998 0
-		0.38195099999999998 0.45519100000000001 0
-		0.45519100000000001 0.38195000000000001 0
-		0.51460099999999998 0.29710500000000001 0
-		0.55837400000000004 0.203232 0
-		0.58518199999999998 0.103183 0
-		0.59420899999999999 0 0
-		0.58518199999999998 -0.103183 0
-		0.55837400000000004 -0.203232 0
-		0.51460099999999998 -0.29710500000000001 0
-		0.45519100000000001 -0.38195000000000001 0
-		0.38195099999999998 -0.45519100000000001 0
-		0.29710500000000001 -0.51460099999999998 0
-		0.203232 -0.55837400000000004 0
-		0.103183 -0.58518199999999998 0
-		0 -0.59420899999999999 0
-		-0.103183 -0.58518199999999998 0
-		-0.203232 -0.55837400000000004 0
-		-0.29710500000000001 -0.51460099999999998 0
-		-0.38195099999999998 -0.45519100000000001 0
-		-0.45519100000000001 -0.38195000000000001 0
-		-0.51460099999999998 -0.29710500000000001 0
-		-0.55837400000000004 -0.203232 0
-		-0.58518199999999998 -0.103183 0
-		-0.59421000000000002 0 0
-		-0.58518199999999998 0.103183 0
-		-0.55837400000000004 0.203232 0
-		-0.51460099999999998 0.29710500000000001 0
-		-0.45519100000000001 0.38195000000000001 0
-		-0.38195099999999998 0.45519100000000001 0
-		-0.29710500000000001 0.51460099999999998 0
-		-0.203232 0.55837400000000004 0
-		-0.103183 0.58518199999999998 0
-		0 0.59420899999999999 0
-		-3.0751100000000001e-09 0.58518199999999998 0.103183
-		-6.0567700000000004e-09 0.55837400000000004 0.203232
-		-8.8544099999999994e-09 0.51460099999999998 0.29710500000000001
-		-1.1383e-08 0.45519100000000001 0.38195099999999998
-		-1.3565700000000001e-08 0.38195000000000001 0.45519100000000001
-		-1.5336300000000002e-08 0.29710500000000001 0.51460099999999998
-		-1.6640900000000001e-08 0.203232 0.55837400000000004
-		-1.7439800000000002e-08 0.103183 0.58518199999999998
-		-1.7708799999999999e-08 0 0.59421000000000002
-		-0.18362100000000001 0 0.56512700000000005
-		-0.34926800000000002 0 0.48072599999999999
-		-0.48072599999999999 0 0.34926800000000002
-		-0.56512700000000005 0 0.18362100000000001
-		-0.59421000000000002 0 0
-		-0.56512700000000005 0 -0.18362100000000001
-		-0.48072599999999999 0 -0.34926800000000002
-		-0.34926800000000002 0 -0.48072599999999999
-		-0.18362100000000001 0 -0.56512700000000005
-		0 0 -0.59421000000000002
-		0.18362100000000001 0 -0.56512700000000005
-		0.34926800000000002 0 -0.48072599999999999
-		0.48072599999999999 0 -0.34926800000000002
-		0.56512700000000005 0 -0.18362100000000001
-		0.59420899999999999 0 0
-		0.56512700000000005 0 0.18362100000000001
-		0.48072599999999999 0 0.34926800000000002
-		0.34926800000000002 0 0.48072599999999999
-		0.18362100000000001 0 0.56512700000000005
-		-1.7708799999999999e-08 0 0.59421000000000002
-		;
-createNode nurbsCurve -n "L_Hand_Ring_03_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Ring_03_Guide";
-	rename -uid "634ABD5B-458E-DCFF-7522-2E9DFE5A7D9B";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
-	setAttr -k off ".v";
-	setAttr ".ove" yes;
-	setAttr ".ovc" 13;
-	setAttr ".ls" 2;
-	setAttr ".cc" -type "nurbsCurve" 
-		1 9 0 no 3
-		10 0 1 2 3 4 5 6 7 8 9
-		10
-		-0.49999999999999994 -0.25000000000000011 -1.3977300000111021e-05
-		0.94513100000000017 -0.25591599999999975 -1.3977299999790138e-05
-		0.73965300000000012 -0.50644299999999987 -1.3977299999835763e-05
-		0.99018000000000017 -0.93915099999999974 -1.3977299999780135e-05
-		2.299302 -3.8742999948945234e-07 -1.3798499999489453e-05
-		0.99018099999999976 0.93915100000000018 -1.3977299999780135e-05
-		0.73965299999999989 0.50644200000000006 -1.3977299999835763e-05
-		0.94513099999999994 0.2532210000000002 -7.1674599997901393e-06
-		-0.5 0.24999999999999989 -1.3977300000111021e-05
-		-0.49999999999999994 -0.25000000000000011 -1.3977300000111021e-05
-		;
-createNode nurbsCurve -n "L_Hand_Ring_03_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Ring_03_Guide";
-	rename -uid "D6463CE0-4F21-1050-9B6D-A6976BA4D9C0";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
-	setAttr -k off ".v";
-	setAttr ".ove" yes;
-	setAttr ".ovc" 6;
-	setAttr ".ls" 2;
-	setAttr ".cc" -type "nurbsCurve" 
-		1 9 0 no 3
-		10 0 1 2 3 4 5 6 7 8 9
-		10
-		0.25000000000000011 1.3977299999944488e-05 -0.49999999999999994
-		0.25591599999999975 1.3977299999943175e-05 0.94513100000000017
-		0.50644299999999987 1.3977299999887547e-05 0.73965300000000012
-		0.93915099999999974 1.3977299999791466e-05 0.99018000000000017
-		3.8742999948945541e-07 1.37985e-05 2.299302
-		-0.93915100000000018 1.3977300000208532e-05 0.99018099999999976
-		-0.50644200000000006 1.3977300000112451e-05 0.73965299999999989
-		-0.2532210000000002 7.1674600000562262e-06 0.94513099999999994
-		-0.24999999999999989 1.397730000005551e-05 -0.5
-		0.25000000000000011 1.3977299999944488e-05 -0.49999999999999994
-		;
-createNode joint -n "L_Hand_Ring_04_Guide" -p "L_Hand_Ring_03_Guide";
-	rename -uid "4DCB4FC0-428D-8C97-E622-879DD98106DB";
-	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
-	setAttr ".t" -type "double3" 0.85292575630854373 -4.8849813083506888e-15 -1.9539925233402755e-14 ;
-	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
-	setAttr ".mxrl" -type "double3" 360 360 360 ;
-	setAttr ".jo" -type "double3" 1.490885006936023e-16 6.361109362927032e-15 2.4848083448933719e-17 ;
-	setAttr -cb on ".Helper" 1;
-createNode nurbsCurve -n "L_Hand_Ring_04_Guide_CtrlShape" -p "L_Hand_Ring_04_Guide";
-	rename -uid "40C5D418-4651-2082-516F-74A397F7624C";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
-	setAttr -k off ".v";
-	setAttr ".ove" yes;
-	setAttr ".ovc" 14;
-	setAttr ".ls" 2;
-	setAttr ".cc" -type "nurbsCurve" 
-		1 9 0 no 3
-		10 0 1 2 3 4 5 6 7 8 9
-		10
-		1.3977299999999999e-05 -0.5 0.25
-		1.3977299999999999e-05 0.94513100000000005 0.25591599999999998
-		1.3977299999999999e-05 0.739653 0.50644299999999998
-		1.3977299999999999e-05 0.99017999999999995 0.93915099999999996
-		1.37985e-05 2.299302 3.8742999999999997e-07
-		1.3977299999999999e-05 0.99018099999999998 -0.93915099999999996
-		1.3977299999999999e-05 0.739653 -0.50644199999999995
-		7.1674600000000002e-06 0.94513100000000005 -0.25322099999999997
-		1.3977299999999999e-05 -0.5 -0.25
-		1.3977299999999999e-05 -0.5 0.25
-		;
-createNode nurbsCurve -n "L_Hand_Ring_04_Guide_Ctrl_CtrlShape" -p "L_Hand_Ring_04_Guide";
-	rename -uid "441485AA-4858-C363-D87E-4F922C7F65BD";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
-	setAttr -k off ".v";
-	setAttr ".ove" yes;
-	setAttr ".ovc" 18;
-	setAttr ".ls" 2;
-	setAttr ".cc" -type "nurbsCurve" 
-		1 101 0 no 3
-		102 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27
-		 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54
-		 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81
-		 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101
-		102
-		0 0.59420899999999999 0
-		-3.0751100000000001e-09 0.58518199999999998 0.103183
-		-6.0567700000000004e-09 0.55837400000000004 0.203232
-		-8.8544099999999994e-09 0.51460099999999998 0.29710500000000001
-		-1.1383e-08 0.45519100000000001 0.38195099999999998
-		-1.3565700000000001e-08 0.38195000000000001 0.45519100000000001
-		-1.5336300000000002e-08 0.29710500000000001 0.51460099999999998
-		-1.6640900000000001e-08 0.203232 0.55837400000000004
-		-1.7439800000000002e-08 0.103183 0.58518199999999998
-		-1.7708799999999999e-08 0 0.59421000000000002
-		-1.7439800000000002e-08 -0.103183 0.58518199999999998
-		-1.6640900000000001e-08 -0.203232 0.55837400000000004
-		-1.5336300000000002e-08 -0.29710500000000001 0.51460099999999998
-		-1.3565700000000001e-08 -0.38195000000000001 0.45519100000000001
-		-1.1383e-08 -0.45519100000000001 0.38195099999999998
-		-8.8544099999999994e-09 -0.51460099999999998 0.29710500000000001
-		-6.0567700000000004e-09 -0.55837400000000004 0.203232
-		-3.0751100000000001e-09 -0.58518199999999998 0.103183
-		0 -0.59420899999999999 0
-		0 -0.58518199999999998 -0.103183
-		0 -0.55837400000000004 -0.203232
-		0 -0.51460099999999998 -0.29710500000000001
-		0 -0.45519100000000001 -0.38195099999999998
-		0 -0.38195000000000001 -0.45519100000000001
-		0 -0.29710500000000001 -0.51460099999999998
-		0 -0.203232 -0.55837499999999995
-		0 -0.103183 -0.58518199999999998
-		0 0 -0.59421000000000002
-		0 0.103183 -0.58518199999999998
-		0 0.203232 -0.55837499999999995
-		0 0.29710500000000001 -0.51460099999999998
-		0 0.38195000000000001 -0.45519100000000001
-		0 0.45519100000000001 -0.38195099999999998
-		0 0.51460099999999998 -0.29710500000000001
-		0 0.55837400000000004 -0.203232
-		0 0.58518199999999998 -0.103183
-		0 0.59420899999999999 0
-		0.103183 0.58518199999999998 0
-		0.203232 0.55837400000000004 0
-		0.29710500000000001 0.51460099999999998 0
-		0.38195099999999998 0.45519100000000001 0
-		0.45519100000000001 0.38195000000000001 0
-		0.51460099999999998 0.29710500000000001 0
-		0.55837400000000004 0.203232 0
-		0.58518199999999998 0.103183 0
-		0.59420899999999999 0 0
-		0.58518199999999998 -0.103183 0
-		0.55837400000000004 -0.203232 0
-		0.51460099999999998 -0.29710500000000001 0
-		0.45519100000000001 -0.38195000000000001 0
-		0.38195099999999998 -0.45519100000000001 0
-		0.29710500000000001 -0.51460099999999998 0
-		0.203232 -0.55837400000000004 0
-		0.103183 -0.58518199999999998 0
-		0 -0.59420899999999999 0
-		-0.103183 -0.58518199999999998 0
-		-0.203232 -0.55837400000000004 0
-		-0.29710500000000001 -0.51460099999999998 0
-		-0.38195099999999998 -0.45519100000000001 0
-		-0.45519100000000001 -0.38195000000000001 0
-		-0.51460099999999998 -0.29710500000000001 0
-		-0.55837400000000004 -0.203232 0
-		-0.58518199999999998 -0.103183 0
-		-0.59421000000000002 0 0
-		-0.58518199999999998 0.103183 0
-		-0.55837400000000004 0.203232 0
-		-0.51460099999999998 0.29710500000000001 0
-		-0.45519100000000001 0.38195000000000001 0
-		-0.38195099999999998 0.45519100000000001 0
-		-0.29710500000000001 0.51460099999999998 0
-		-0.203232 0.55837400000000004 0
-		-0.103183 0.58518199999999998 0
-		0 0.59420899999999999 0
-		-3.0751100000000001e-09 0.58518199999999998 0.103183
-		-6.0567700000000004e-09 0.55837400000000004 0.203232
-		-8.8544099999999994e-09 0.51460099999999998 0.29710500000000001
-		-1.1383e-08 0.45519100000000001 0.38195099999999998
-		-1.3565700000000001e-08 0.38195000000000001 0.45519100000000001
-		-1.5336300000000002e-08 0.29710500000000001 0.51460099999999998
-		-1.6640900000000001e-08 0.203232 0.55837400000000004
-		-1.7439800000000002e-08 0.103183 0.58518199999999998
-		-1.7708799999999999e-08 0 0.59421000000000002
-		-0.18362100000000001 0 0.56512700000000005
-		-0.34926800000000002 0 0.48072599999999999
-		-0.48072599999999999 0 0.34926800000000002
-		-0.56512700000000005 0 0.18362100000000001
-		-0.59421000000000002 0 0
-		-0.56512700000000005 0 -0.18362100000000001
-		-0.48072599999999999 0 -0.34926800000000002
-		-0.34926800000000002 0 -0.48072599999999999
-		-0.18362100000000001 0 -0.56512700000000005
-		0 0 -0.59421000000000002
-		0.18362100000000001 0 -0.56512700000000005
-		0.34926800000000002 0 -0.48072599999999999
-		0.48072599999999999 0 -0.34926800000000002
-		0.56512700000000005 0 -0.18362100000000001
-		0.59420899999999999 0 0
-		0.56512700000000005 0 0.18362100000000001
-		0.48072599999999999 0 0.34926800000000002
-		0.34926800000000002 0 0.48072599999999999
-		0.18362100000000001 0 0.56512700000000005
-		-1.7708799999999999e-08 0 0.59421000000000002
-		;
-createNode nurbsCurve -n "L_Hand_Ring_04_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Ring_04_Guide";
-	rename -uid "720F8479-4E71-0880-92C2-848C93884E55";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
-	setAttr -k off ".v";
-	setAttr ".ove" yes;
-	setAttr ".ovc" 13;
-	setAttr ".ls" 2;
-	setAttr ".cc" -type "nurbsCurve" 
-		1 9 0 no 3
-		10 0 1 2 3 4 5 6 7 8 9
-		10
-		-0.49999999999999994 -0.25000000000000011 -1.3977300000111021e-05
-		0.94513100000000017 -0.25591599999999975 -1.3977299999790138e-05
-		0.73965300000000012 -0.50644299999999987 -1.3977299999835763e-05
-		0.99018000000000017 -0.93915099999999974 -1.3977299999780135e-05
-		2.299302 -3.8742999948945234e-07 -1.3798499999489453e-05
-		0.99018099999999976 0.93915100000000018 -1.3977299999780135e-05
-		0.73965299999999989 0.50644200000000006 -1.3977299999835763e-05
-		0.94513099999999994 0.2532210000000002 -7.1674599997901393e-06
-		-0.5 0.24999999999999989 -1.3977300000111021e-05
-		-0.49999999999999994 -0.25000000000000011 -1.3977300000111021e-05
-		;
-createNode nurbsCurve -n "L_Hand_Ring_04_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Ring_04_Guide";
-	rename -uid "1B7ACAB8-4CD3-6C23-8667-D6A0FF32180F";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -8718,7 +7761,7 @@ createNode nurbsCurve -n "L_Hand_Ring_04_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_H
 createNode joint -n "L_Hand_Pinky_00_Guide" -p "L_Hand_OutterCup_Guide";
 	rename -uid "4E5B93C9-4E82-E778-ED55-16A47AD28DD7";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 1.0194700664873899 -1.1473359613331011 -0.54892761743196061 ;
 	setAttr ".r" -type "double3" 0 28.002467661996505 0 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
@@ -8726,7 +7769,7 @@ createNode joint -n "L_Hand_Pinky_00_Guide" -p "L_Hand_OutterCup_Guide";
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_Hand_Pinky_00_Guide_CtrlShape" -p "L_Hand_Pinky_00_Guide";
 	rename -uid "9C611962-46EE-7B17-3E61-0CA86CE38052";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -8748,7 +7791,7 @@ createNode nurbsCurve -n "L_Hand_Pinky_00_Guide_CtrlShape" -p "L_Hand_Pinky_00_G
 		;
 createNode nurbsCurve -n "L_Hand_Pinky_00_Guide_Ctrl_CtrlShape" -p "L_Hand_Pinky_00_Guide";
 	rename -uid "847C5D99-48AE-7BF0-2E6A-EFA1CB9F1030";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -8865,7 +7908,7 @@ createNode nurbsCurve -n "L_Hand_Pinky_00_Guide_Ctrl_CtrlShape" -p "L_Hand_Pinky
 		;
 createNode nurbsCurve -n "L_Hand_Pinky_00_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Pinky_00_Guide";
 	rename -uid "294F7A27-411A-9E9C-B595-F6963FA4E8A3";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -8887,7 +7930,7 @@ createNode nurbsCurve -n "L_Hand_Pinky_00_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_
 		;
 createNode nurbsCurve -n "L_Hand_Pinky_00_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Pinky_00_Guide";
 	rename -uid "BC0992C2-4B30-5FF6-FC71-9C8A124A343C";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -8910,14 +7953,14 @@ createNode nurbsCurve -n "L_Hand_Pinky_00_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_
 createNode joint -n "L_Hand_Pinky_01_Guide" -p "L_Hand_Pinky_00_Guide";
 	rename -uid "4BB174A0-415E-3005-9623-85982053F000";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 1.2477066454429702 9.3258734068513149e-15 5.3290705182007514e-15 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_Hand_Pinky_01_Guide_CtrlShape" -p "L_Hand_Pinky_01_Guide";
 	rename -uid "2BA4A733-4003-2F65-23D3-D88493C5CF39";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -8939,7 +7982,7 @@ createNode nurbsCurve -n "L_Hand_Pinky_01_Guide_CtrlShape" -p "L_Hand_Pinky_01_G
 		;
 createNode nurbsCurve -n "L_Hand_Pinky_01_Guide_Ctrl_CtrlShape" -p "L_Hand_Pinky_01_Guide";
 	rename -uid "00CE1218-4A67-BFBE-B268-0990643E7316";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -9056,7 +8099,7 @@ createNode nurbsCurve -n "L_Hand_Pinky_01_Guide_Ctrl_CtrlShape" -p "L_Hand_Pinky
 		;
 createNode nurbsCurve -n "L_Hand_Pinky_01_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Pinky_01_Guide";
 	rename -uid "ABF53F1D-4613-3086-44A6-C0A12B28DE32";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -9078,7 +8121,7 @@ createNode nurbsCurve -n "L_Hand_Pinky_01_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_
 		;
 createNode nurbsCurve -n "L_Hand_Pinky_01_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Pinky_01_Guide";
 	rename -uid "6ED8E839-44E9-2CED-40EC-1A9E8C7B604C";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -9101,14 +8144,14 @@ createNode nurbsCurve -n "L_Hand_Pinky_01_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_
 createNode joint -n "L_Hand_Pinky_02_Guide" -p "L_Hand_Pinky_01_Guide";
 	rename -uid "B267D66C-4F6E-B2E2-7C74-D299E796FC28";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 3.617478862334675 -2.2204460492503131e-15 -1.2434497875801753e-14 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_Hand_Pinky_02_Guide_CtrlShape" -p "L_Hand_Pinky_02_Guide";
 	rename -uid "0AC1592C-4C8A-7760-914A-F39AEF05AC10";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -9130,7 +8173,7 @@ createNode nurbsCurve -n "L_Hand_Pinky_02_Guide_CtrlShape" -p "L_Hand_Pinky_02_G
 		;
 createNode nurbsCurve -n "L_Hand_Pinky_02_Guide_Ctrl_CtrlShape" -p "L_Hand_Pinky_02_Guide";
 	rename -uid "4CD65B1E-4921-75DD-5FB7-1CA5BC39D082";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -9247,7 +8290,7 @@ createNode nurbsCurve -n "L_Hand_Pinky_02_Guide_Ctrl_CtrlShape" -p "L_Hand_Pinky
 		;
 createNode nurbsCurve -n "L_Hand_Pinky_02_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Pinky_02_Guide";
 	rename -uid "2EE03E91-40E1-533A-13BC-0A96FCB544D5";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -9269,7 +8312,7 @@ createNode nurbsCurve -n "L_Hand_Pinky_02_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_
 		;
 createNode nurbsCurve -n "L_Hand_Pinky_02_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Pinky_02_Guide";
 	rename -uid "935733FF-4802-5203-074E-22808649C88B";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -9292,14 +8335,14 @@ createNode nurbsCurve -n "L_Hand_Pinky_02_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_
 createNode joint -n "L_Hand_Pinky_03_Guide" -p "L_Hand_Pinky_02_Guide";
 	rename -uid "9CD37D95-458E-97B5-4847-41B0003828CD";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 3.2048014074867051 -1.7763568394002505e-15 -4.6375663725894967e-15 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_Hand_Pinky_03_Guide_CtrlShape" -p "L_Hand_Pinky_03_Guide";
 	rename -uid "273CCA05-4911-1236-1FC0-77AA53C60CBC";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -9321,7 +8364,7 @@ createNode nurbsCurve -n "L_Hand_Pinky_03_Guide_CtrlShape" -p "L_Hand_Pinky_03_G
 		;
 createNode nurbsCurve -n "L_Hand_Pinky_03_Guide_Ctrl_CtrlShape" -p "L_Hand_Pinky_03_Guide";
 	rename -uid "BFB080BB-4BFC-B46C-2835-42A9F980A1B2";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -9438,7 +8481,7 @@ createNode nurbsCurve -n "L_Hand_Pinky_03_Guide_Ctrl_CtrlShape" -p "L_Hand_Pinky
 		;
 createNode nurbsCurve -n "L_Hand_Pinky_03_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Pinky_03_Guide";
 	rename -uid "470F719F-47E5-E891-2E36-13A9EF64248E";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -9460,7 +8503,7 @@ createNode nurbsCurve -n "L_Hand_Pinky_03_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_
 		;
 createNode nurbsCurve -n "L_Hand_Pinky_03_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Pinky_03_Guide";
 	rename -uid "3762FE4B-4D83-AA7E-5E6B-E5B38CAE4FE1";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -9483,14 +8526,14 @@ createNode nurbsCurve -n "L_Hand_Pinky_03_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_
 createNode joint -n "L_Hand_Pinky_04_Guide" -p "L_Hand_Pinky_03_Guide";
 	rename -uid "4CC99C74-4962-370E-FBCF-5DBC6A37ADA7";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 2.6087816796840397 3.9968028886505635e-15 -3.7747582837255322e-15 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_Hand_Pinky_04_Guide_CtrlShape" -p "L_Hand_Pinky_04_Guide";
 	rename -uid "ACF12979-48D5-C52B-3770-418DB8E7447B";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -9512,7 +8555,7 @@ createNode nurbsCurve -n "L_Hand_Pinky_04_Guide_CtrlShape" -p "L_Hand_Pinky_04_G
 		;
 createNode nurbsCurve -n "L_Hand_Pinky_04_Guide_Ctrl_CtrlShape" -p "L_Hand_Pinky_04_Guide";
 	rename -uid "28B0EA9F-4E77-61BA-E9A3-4CB68EF520E1";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -9629,7 +8672,7 @@ createNode nurbsCurve -n "L_Hand_Pinky_04_Guide_Ctrl_CtrlShape" -p "L_Hand_Pinky
 		;
 createNode nurbsCurve -n "L_Hand_Pinky_04_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Pinky_04_Guide";
 	rename -uid "FB66DCBC-45DD-1449-5AAC-A5B72C1C8707";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -9651,7 +8694,7 @@ createNode nurbsCurve -n "L_Hand_Pinky_04_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_
 		;
 createNode nurbsCurve -n "L_Hand_Pinky_04_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Pinky_04_Guide";
 	rename -uid "1613D5BF-41A4-5B9E-0456-E099D0F5A904";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -9674,7 +8717,7 @@ createNode nurbsCurve -n "L_Hand_Pinky_04_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_
 createNode joint -n "L_Hand_Index_00_Guide" -p "L_Hand_Palm_Guide";
 	rename -uid "1DDDAC7B-4CC9-BF3F-EFFB-8A825AB1E818";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 1.304342322203772 -2.1456164171509622 2.4187818751800556 ;
 	setAttr ".r" -type "double3" 0 -47.719315304510474 0 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
@@ -9682,7 +8725,7 @@ createNode joint -n "L_Hand_Index_00_Guide" -p "L_Hand_Palm_Guide";
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_Hand_Index_00_Guide_CtrlShape" -p "L_Hand_Index_00_Guide";
 	rename -uid "E7A0A902-4256-CEB9-99B9-CB98CDF5CC27";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -9704,7 +8747,7 @@ createNode nurbsCurve -n "L_Hand_Index_00_Guide_CtrlShape" -p "L_Hand_Index_00_G
 		;
 createNode nurbsCurve -n "L_Hand_Index_00_Guide_Ctrl_CtrlShape" -p "L_Hand_Index_00_Guide";
 	rename -uid "B533BBBE-4B81-5959-A35C-7C8DE4869CE0";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -9821,7 +8864,7 @@ createNode nurbsCurve -n "L_Hand_Index_00_Guide_Ctrl_CtrlShape" -p "L_Hand_Index
 		;
 createNode nurbsCurve -n "L_Hand_Index_00_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Index_00_Guide";
 	rename -uid "000E602B-4944-7667-D452-2D85A82395FB";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -9843,7 +8886,7 @@ createNode nurbsCurve -n "L_Hand_Index_00_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_
 		;
 createNode nurbsCurve -n "L_Hand_Index_00_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Index_00_Guide";
 	rename -uid "22A1D38B-4672-2D9B-8BFD-C89A3B561F85";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -9866,7 +8909,7 @@ createNode nurbsCurve -n "L_Hand_Index_00_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_
 createNode joint -n "L_Hand_Index_01_Guide" -p "L_Hand_Index_00_Guide";
 	rename -uid "8D47BF3B-4FEE-0980-DDB5-E2B695C85DF6";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 1.1152511318329186 -1.7763568394002505e-15 3.5527136788005009e-15 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
@@ -9874,7 +8917,7 @@ createNode joint -n "L_Hand_Index_01_Guide" -p "L_Hand_Index_00_Guide";
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_Hand_Index_01_Guide_CtrlShape" -p "L_Hand_Index_01_Guide";
 	rename -uid "847D6D5C-457C-6480-BD99-68A65BC2ACF4";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -9896,7 +8939,7 @@ createNode nurbsCurve -n "L_Hand_Index_01_Guide_CtrlShape" -p "L_Hand_Index_01_G
 		;
 createNode nurbsCurve -n "L_Hand_Index_01_Guide_Ctrl_CtrlShape" -p "L_Hand_Index_01_Guide";
 	rename -uid "BB156E4F-4EBE-3425-F2B9-688844F594D8";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -10013,7 +9056,7 @@ createNode nurbsCurve -n "L_Hand_Index_01_Guide_Ctrl_CtrlShape" -p "L_Hand_Index
 		;
 createNode nurbsCurve -n "L_Hand_Index_01_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Index_01_Guide";
 	rename -uid "93F155FC-4A6C-84C2-9825-FDA436A2917C";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -10035,7 +9078,7 @@ createNode nurbsCurve -n "L_Hand_Index_01_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_
 		;
 createNode nurbsCurve -n "L_Hand_Index_01_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Index_01_Guide";
 	rename -uid "D1CAFDFC-49CA-32C1-94FC-12B7EC0F08C5";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -10058,7 +9101,7 @@ createNode nurbsCurve -n "L_Hand_Index_01_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_
 createNode joint -n "L_Hand_Index_02_Guide" -p "L_Hand_Index_01_Guide";
 	rename -uid "9DDB226D-4961-7670-7C85-6EBB1A4E916E";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 3.8731432786915283 8.8817841970012523e-16 2.4868995751603507e-14 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
@@ -10066,7 +9109,7 @@ createNode joint -n "L_Hand_Index_02_Guide" -p "L_Hand_Index_01_Guide";
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_Hand_Index_02_Guide_CtrlShape" -p "L_Hand_Index_02_Guide";
 	rename -uid "D14E651D-447F-FDD2-0BF7-61989F6A4103";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -10088,7 +9131,7 @@ createNode nurbsCurve -n "L_Hand_Index_02_Guide_CtrlShape" -p "L_Hand_Index_02_G
 		;
 createNode nurbsCurve -n "L_Hand_Index_02_Guide_Ctrl_CtrlShape" -p "L_Hand_Index_02_Guide";
 	rename -uid "BEE86B38-4822-DB55-2940-27B309BE4A70";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -10205,7 +9248,7 @@ createNode nurbsCurve -n "L_Hand_Index_02_Guide_Ctrl_CtrlShape" -p "L_Hand_Index
 		;
 createNode nurbsCurve -n "L_Hand_Index_02_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Index_02_Guide";
 	rename -uid "1EFEAC00-42E1-0EC0-878C-B181F6718769";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -10227,7 +9270,7 @@ createNode nurbsCurve -n "L_Hand_Index_02_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_
 		;
 createNode nurbsCurve -n "L_Hand_Index_02_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Index_02_Guide";
 	rename -uid "4DCC60FE-4018-2FAC-6259-84BF6732CF8A";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -10250,14 +9293,14 @@ createNode nurbsCurve -n "L_Hand_Index_02_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_
 createNode joint -n "L_Hand_Index_03_Guide" -p "L_Hand_Index_02_Guide";
 	rename -uid "EA82ED01-4A2E-7A6C-D17C-FB861FA67E74";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 2.5073767865971979 4.4408920985006262e-16 -6.1703029838322543e-14 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_Hand_Index_03_Guide_CtrlShape" -p "L_Hand_Index_03_Guide";
 	rename -uid "8B53B91E-4228-74F8-C344-A299EA6C4B77";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -10279,7 +9322,7 @@ createNode nurbsCurve -n "L_Hand_Index_03_Guide_CtrlShape" -p "L_Hand_Index_03_G
 		;
 createNode nurbsCurve -n "L_Hand_Index_03_Guide_Ctrl_CtrlShape" -p "L_Hand_Index_03_Guide";
 	rename -uid "158D800F-456A-2A72-43B5-47870E0A4496";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -10396,7 +9439,7 @@ createNode nurbsCurve -n "L_Hand_Index_03_Guide_Ctrl_CtrlShape" -p "L_Hand_Index
 		;
 createNode nurbsCurve -n "L_Hand_Index_03_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Index_03_Guide";
 	rename -uid "2F363870-42AB-981A-0F9C-2D876655A184";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -10418,7 +9461,7 @@ createNode nurbsCurve -n "L_Hand_Index_03_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_
 		;
 createNode nurbsCurve -n "L_Hand_Index_03_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Index_03_Guide";
 	rename -uid "00385A02-4D6D-CEF3-CAA1-318F89A5FD0F";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -10441,14 +9484,14 @@ createNode nurbsCurve -n "L_Hand_Index_03_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_
 createNode joint -n "L_Hand_Index_04_Guide" -p "L_Hand_Index_03_Guide";
 	rename -uid "029F9845-43A2-AF8A-4E8B-E9BD51C03D54";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 2.9569080348338561 8.4376949871511897e-15 -3.5971225997855072e-14 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_Hand_Index_04_Guide_CtrlShape" -p "L_Hand_Index_04_Guide";
 	rename -uid "AF3049BD-4387-CC13-1313-AFA7B82500E2";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -10470,7 +9513,7 @@ createNode nurbsCurve -n "L_Hand_Index_04_Guide_CtrlShape" -p "L_Hand_Index_04_G
 		;
 createNode nurbsCurve -n "L_Hand_Index_04_Guide_Ctrl_CtrlShape" -p "L_Hand_Index_04_Guide";
 	rename -uid "76707E74-479E-21B2-2CD7-139A991E1E94";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -10587,7 +9630,7 @@ createNode nurbsCurve -n "L_Hand_Index_04_Guide_Ctrl_CtrlShape" -p "L_Hand_Index
 		;
 createNode nurbsCurve -n "L_Hand_Index_04_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Index_04_Guide";
 	rename -uid "450A385E-476C-1099-8847-E988AEFB3D80";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -10609,7 +9652,7 @@ createNode nurbsCurve -n "L_Hand_Index_04_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_
 		;
 createNode nurbsCurve -n "L_Hand_Index_04_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Index_04_Guide";
 	rename -uid "E7E90196-47B0-A05F-D38C-E0B1314B6D95";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -10632,7 +9675,7 @@ createNode nurbsCurve -n "L_Hand_Index_04_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_
 createNode joint -n "L_Hand_Middle_00_Guide" -p "L_Hand_Palm_Guide";
 	rename -uid "88B0214D-4CD7-0DC0-424D-9CBC05B33FDA";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 2.612818629458999 -2.1654704449288724 0.78363421630006869 ;
 	setAttr ".r" -type "double3" 0 -14.158423916698991 0 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
@@ -10640,7 +9683,7 @@ createNode joint -n "L_Hand_Middle_00_Guide" -p "L_Hand_Palm_Guide";
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_Hand_Middle_00_Guide_CtrlShape" -p "L_Hand_Middle_00_Guide";
 	rename -uid "9C404600-4A8E-6B90-FE7F-8199584259CE";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -10662,7 +9705,7 @@ createNode nurbsCurve -n "L_Hand_Middle_00_Guide_CtrlShape" -p "L_Hand_Middle_00
 		;
 createNode nurbsCurve -n "L_Hand_Middle_00_Guide_Ctrl_CtrlShape" -p "L_Hand_Middle_00_Guide";
 	rename -uid "683A501A-44B5-D1FB-5B91-1C809F72E101";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -10779,7 +9822,7 @@ createNode nurbsCurve -n "L_Hand_Middle_00_Guide_Ctrl_CtrlShape" -p "L_Hand_Midd
 		;
 createNode nurbsCurve -n "L_Hand_Middle_00_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Middle_00_Guide";
 	rename -uid "631930E9-41B0-7877-36EA-189EF718E331";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -10801,7 +9844,7 @@ createNode nurbsCurve -n "L_Hand_Middle_00_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand
 		;
 createNode nurbsCurve -n "L_Hand_Middle_00_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Middle_00_Guide";
 	rename -uid "E25F18AD-48DD-AD16-A240-9B9AB6AD544E";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -10824,7 +9867,7 @@ createNode nurbsCurve -n "L_Hand_Middle_00_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L
 createNode joint -n "L_Hand_Middle_01_Guide" -p "L_Hand_Middle_00_Guide";
 	rename -uid "65BED825-42E3-7FBB-1E7F-65BF44EE3203";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 1.0600649934167563 -3.4194869158454821e-14 -5.3290705182007514e-15 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
@@ -10832,7 +9875,7 @@ createNode joint -n "L_Hand_Middle_01_Guide" -p "L_Hand_Middle_00_Guide";
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_Hand_Middle_01_Guide_CtrlShape" -p "L_Hand_Middle_01_Guide";
 	rename -uid "0FC05E54-4889-03B0-4C6B-DE94C728C54B";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -10854,7 +9897,7 @@ createNode nurbsCurve -n "L_Hand_Middle_01_Guide_CtrlShape" -p "L_Hand_Middle_01
 		;
 createNode nurbsCurve -n "L_Hand_Middle_01_Guide_Ctrl_CtrlShape" -p "L_Hand_Middle_01_Guide";
 	rename -uid "378C0C77-4156-0F4B-618F-8B8827C81315";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -10971,7 +10014,7 @@ createNode nurbsCurve -n "L_Hand_Middle_01_Guide_Ctrl_CtrlShape" -p "L_Hand_Midd
 		;
 createNode nurbsCurve -n "L_Hand_Middle_01_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Middle_01_Guide";
 	rename -uid "4F7F3C8D-4EB7-27C0-C182-DE9D354E9658";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -10993,7 +10036,7 @@ createNode nurbsCurve -n "L_Hand_Middle_01_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand
 		;
 createNode nurbsCurve -n "L_Hand_Middle_01_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Middle_01_Guide";
 	rename -uid "2AF515B7-49B2-20A5-4FEF-759B099AC3CC";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -11016,7 +10059,7 @@ createNode nurbsCurve -n "L_Hand_Middle_01_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L
 createNode joint -n "L_Hand_Middle_02_Guide" -p "L_Hand_Middle_01_Guide";
 	rename -uid "4F5D13B7-4E79-32B9-ACBB-B89686E953E1";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 4.3444966466689818 3.1086244689504383e-15 5.3290705182007514e-15 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
@@ -11024,7 +10067,7 @@ createNode joint -n "L_Hand_Middle_02_Guide" -p "L_Hand_Middle_01_Guide";
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_Hand_Middle_02_Guide_CtrlShape" -p "L_Hand_Middle_02_Guide";
 	rename -uid "D293ED44-4F0C-3C00-7894-3688B90D1D11";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -11046,7 +10089,7 @@ createNode nurbsCurve -n "L_Hand_Middle_02_Guide_CtrlShape" -p "L_Hand_Middle_02
 		;
 createNode nurbsCurve -n "L_Hand_Middle_02_Guide_Ctrl_CtrlShape" -p "L_Hand_Middle_02_Guide";
 	rename -uid "977AE144-4B0C-4BF4-0270-7EA52855BB61";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -11163,7 +10206,7 @@ createNode nurbsCurve -n "L_Hand_Middle_02_Guide_Ctrl_CtrlShape" -p "L_Hand_Midd
 		;
 createNode nurbsCurve -n "L_Hand_Middle_02_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Middle_02_Guide";
 	rename -uid "D6BA9971-4D85-05A0-54B1-D2BFD635C029";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -11185,7 +10228,7 @@ createNode nurbsCurve -n "L_Hand_Middle_02_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand
 		;
 createNode nurbsCurve -n "L_Hand_Middle_02_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Middle_02_Guide";
 	rename -uid "0A11287E-49B1-B1AD-80B2-B9906B5D930D";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -11208,7 +10251,7 @@ createNode nurbsCurve -n "L_Hand_Middle_02_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L
 createNode joint -n "L_Hand_Middle_03_Guide" -p "L_Hand_Middle_02_Guide";
 	rename -uid "A02BD4E2-46E9-EFC1-65BE-A095CE0198DC";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 2.3772281969370401 8.4376949871511897e-15 8.026673943561935e-14 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
@@ -11216,7 +10259,7 @@ createNode joint -n "L_Hand_Middle_03_Guide" -p "L_Hand_Middle_02_Guide";
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_Hand_Middle_03_Guide_CtrlShape" -p "L_Hand_Middle_03_Guide";
 	rename -uid "84B72676-42C6-E08F-E1E6-A2B1C0F97059";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -11238,7 +10281,7 @@ createNode nurbsCurve -n "L_Hand_Middle_03_Guide_CtrlShape" -p "L_Hand_Middle_03
 		;
 createNode nurbsCurve -n "L_Hand_Middle_03_Guide_Ctrl_CtrlShape" -p "L_Hand_Middle_03_Guide";
 	rename -uid "48ED0F68-41F7-32DD-FA09-71AB4B9A2558";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -11355,7 +10398,7 @@ createNode nurbsCurve -n "L_Hand_Middle_03_Guide_Ctrl_CtrlShape" -p "L_Hand_Midd
 		;
 createNode nurbsCurve -n "L_Hand_Middle_03_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Middle_03_Guide";
 	rename -uid "9A784950-40A8-76FB-A330-9C91641FACE0";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -11377,7 +10420,7 @@ createNode nurbsCurve -n "L_Hand_Middle_03_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand
 		;
 createNode nurbsCurve -n "L_Hand_Middle_03_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Middle_03_Guide";
 	rename -uid "D9AE6F98-43BD-A5F9-B7E5-338CB0F75EED";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -11400,7 +10443,7 @@ createNode nurbsCurve -n "L_Hand_Middle_03_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L
 createNode joint -n "L_Hand_Middle_04_Guide" -p "L_Hand_Middle_03_Guide";
 	rename -uid "153D4D4B-4A46-1E28-284D-FD8A213A6953";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 3.271304386796261 9.3258734068513149e-15 5.1292303737682232e-14 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
@@ -11408,7 +10451,7 @@ createNode joint -n "L_Hand_Middle_04_Guide" -p "L_Hand_Middle_03_Guide";
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_Hand_Middle_04_Guide_CtrlShape" -p "L_Hand_Middle_04_Guide";
 	rename -uid "1811F916-47FB-12EA-1C96-888FF0AA8EE5";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -11430,7 +10473,7 @@ createNode nurbsCurve -n "L_Hand_Middle_04_Guide_CtrlShape" -p "L_Hand_Middle_04
 		;
 createNode nurbsCurve -n "L_Hand_Middle_04_Guide_Ctrl_CtrlShape" -p "L_Hand_Middle_04_Guide";
 	rename -uid "6417EC41-4F01-A432-D8B6-FDBAE268EE33";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -11547,7 +10590,7 @@ createNode nurbsCurve -n "L_Hand_Middle_04_Guide_Ctrl_CtrlShape" -p "L_Hand_Midd
 		;
 createNode nurbsCurve -n "L_Hand_Middle_04_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Middle_04_Guide";
 	rename -uid "7C2F1766-4868-84D6-D5B4-80840FDA3166";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -11569,7 +10612,7 @@ createNode nurbsCurve -n "L_Hand_Middle_04_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand
 		;
 createNode nurbsCurve -n "L_Hand_Middle_04_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Middle_04_Guide";
 	rename -uid "4E22AE96-4206-8838-555E-55AEBE9DD0D4";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -11592,7 +10635,7 @@ createNode nurbsCurve -n "L_Hand_Middle_04_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L
 createNode joint -n "L_Hand_InnerCup_Guide" -p "L_Hand_Palm_Guide";
 	rename -uid "A9E2CD17-490C-9F57-DDE7-24B258990F37";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 0.093750000000004219 2.8421709430404007e-14 -1.5987211554602254e-14 ;
 	setAttr ".r" -type "double3" 0 -222.13732484118844 0 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
@@ -11600,7 +10643,7 @@ createNode joint -n "L_Hand_InnerCup_Guide" -p "L_Hand_Palm_Guide";
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_Hand_InnerCup_Guide_CtrlShape" -p "L_Hand_InnerCup_Guide";
 	rename -uid "1C8EF7C1-4AB5-F6B1-C48C-D9A4E1A20F86";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -11622,7 +10665,7 @@ createNode nurbsCurve -n "L_Hand_InnerCup_Guide_CtrlShape" -p "L_Hand_InnerCup_G
 		;
 createNode nurbsCurve -n "L_Hand_InnerCup_Guide_Ctrl_CtrlShape" -p "L_Hand_InnerCup_Guide";
 	rename -uid "15566F53-4104-5199-7FFF-7795A3B30DBF";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -11739,7 +10782,7 @@ createNode nurbsCurve -n "L_Hand_InnerCup_Guide_Ctrl_CtrlShape" -p "L_Hand_Inner
 		;
 createNode nurbsCurve -n "L_Hand_InnerCup_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_InnerCup_Guide";
 	rename -uid "BA460227-43FA-F388-7342-C28A1A4C4332";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -11761,7 +10804,7 @@ createNode nurbsCurve -n "L_Hand_InnerCup_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_
 		;
 createNode nurbsCurve -n "L_Hand_InnerCup_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Hand_InnerCup_Guide";
 	rename -uid "AA1E519F-4C4A-7A82-86C4-96A37770E535";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -11784,7 +10827,7 @@ createNode nurbsCurve -n "L_Hand_InnerCup_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_
 createNode joint -n "L_Hand_Thumb_00_Guide" -p "L_Hand_InnerCup_Guide";
 	rename -uid "9ED51ACC-45DE-B749-F8FE-8AB3D8F78ED9";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 2.188576717904978 -2.3271339883618687 -1.2656672147197767 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
@@ -11792,7 +10835,7 @@ createNode joint -n "L_Hand_Thumb_00_Guide" -p "L_Hand_InnerCup_Guide";
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_Hand_Thumb_00_Guide_CtrlShape" -p "L_Hand_Thumb_00_Guide";
 	rename -uid "9724DF4B-4563-406B-BF7E-7EAB4C73191B";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -11814,7 +10857,7 @@ createNode nurbsCurve -n "L_Hand_Thumb_00_Guide_CtrlShape" -p "L_Hand_Thumb_00_G
 		;
 createNode nurbsCurve -n "L_Hand_Thumb_00_Guide_Ctrl_CtrlShape" -p "L_Hand_Thumb_00_Guide";
 	rename -uid "C55AB605-4BD7-1F25-2D4A-6AB61357C4A0";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -11931,7 +10974,7 @@ createNode nurbsCurve -n "L_Hand_Thumb_00_Guide_Ctrl_CtrlShape" -p "L_Hand_Thumb
 		;
 createNode nurbsCurve -n "L_Hand_Thumb_00_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Thumb_00_Guide";
 	rename -uid "97425A15-4F47-6C9F-DC91-1DB39D37E070";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -11953,7 +10996,7 @@ createNode nurbsCurve -n "L_Hand_Thumb_00_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_
 		;
 createNode nurbsCurve -n "L_Hand_Thumb_00_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Thumb_00_Guide";
 	rename -uid "7DDAC22D-4D56-3CA8-ED6C-E2A266E96B0A";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -11976,7 +11019,7 @@ createNode nurbsCurve -n "L_Hand_Thumb_00_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_
 createNode joint -n "L_Hand_Thumb_01_Guide" -p "L_Hand_Thumb_00_Guide";
 	rename -uid "2669FCD4-432A-E3AE-614C-4E9CB965F965";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 3.7404587246092449 -1.3322676295501878e-15 -1.18551002348255e-14 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
@@ -11984,7 +11027,7 @@ createNode joint -n "L_Hand_Thumb_01_Guide" -p "L_Hand_Thumb_00_Guide";
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_Hand_Thumb_01_Guide_CtrlShape" -p "L_Hand_Thumb_01_Guide";
 	rename -uid "3C3DAE5C-4D49-1BC7-4307-5D9B83CD3389";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -12006,7 +11049,7 @@ createNode nurbsCurve -n "L_Hand_Thumb_01_Guide_CtrlShape" -p "L_Hand_Thumb_01_G
 		;
 createNode nurbsCurve -n "L_Hand_Thumb_01_Guide_Ctrl_CtrlShape" -p "L_Hand_Thumb_01_Guide";
 	rename -uid "84279E31-4905-183F-31FD-588AC341D852";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -12123,7 +11166,7 @@ createNode nurbsCurve -n "L_Hand_Thumb_01_Guide_Ctrl_CtrlShape" -p "L_Hand_Thumb
 		;
 createNode nurbsCurve -n "L_Hand_Thumb_01_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Thumb_01_Guide";
 	rename -uid "93D6D8CC-414B-A742-4F75-D7B2B67CA907";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -12145,7 +11188,7 @@ createNode nurbsCurve -n "L_Hand_Thumb_01_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_
 		;
 createNode nurbsCurve -n "L_Hand_Thumb_01_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Thumb_01_Guide";
 	rename -uid "90D571F5-4018-86CF-93E3-7780BDAE1134";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -12168,7 +11211,7 @@ createNode nurbsCurve -n "L_Hand_Thumb_01_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_
 createNode joint -n "L_Hand_Thumb_02_Guide" -p "L_Hand_Thumb_01_Guide";
 	rename -uid "4ED2BC5E-40DD-D250-4E31-0482404DD038";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 3.2440949387963198 8.8817841970012523e-16 7.5980888247784151e-16 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
@@ -12176,7 +11219,7 @@ createNode joint -n "L_Hand_Thumb_02_Guide" -p "L_Hand_Thumb_01_Guide";
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_Hand_Thumb_02_Guide_CtrlShape" -p "L_Hand_Thumb_02_Guide";
 	rename -uid "7A4CA76B-4040-6E58-52A8-9F914AA049B3";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -12198,7 +11241,7 @@ createNode nurbsCurve -n "L_Hand_Thumb_02_Guide_CtrlShape" -p "L_Hand_Thumb_02_G
 		;
 createNode nurbsCurve -n "L_Hand_Thumb_02_Guide_Ctrl_CtrlShape" -p "L_Hand_Thumb_02_Guide";
 	rename -uid "61BEA6AE-4160-E03B-5BC6-83885312233A";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -12315,7 +11358,7 @@ createNode nurbsCurve -n "L_Hand_Thumb_02_Guide_Ctrl_CtrlShape" -p "L_Hand_Thumb
 		;
 createNode nurbsCurve -n "L_Hand_Thumb_02_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Thumb_02_Guide";
 	rename -uid "E488EBBA-470A-DDE2-671D-608AA109BEB5";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -12337,7 +11380,7 @@ createNode nurbsCurve -n "L_Hand_Thumb_02_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_
 		;
 createNode nurbsCurve -n "L_Hand_Thumb_02_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Thumb_02_Guide";
 	rename -uid "AEE5A4F6-4421-0DFC-58C7-1EB368DEB2F3";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -12360,7 +11403,7 @@ createNode nurbsCurve -n "L_Hand_Thumb_02_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_
 createNode joint -n "L_Hand_Thumb_03_Guide" -p "L_Hand_Thumb_02_Guide";
 	rename -uid "91AD11CF-4EA7-E8AE-892A-E3855D2713C0";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 3.6594951399889943 -1.0658141036401503e-14 -2.5181245977279332e-14 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
@@ -12368,7 +11411,7 @@ createNode joint -n "L_Hand_Thumb_03_Guide" -p "L_Hand_Thumb_02_Guide";
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_Hand_Thumb_03_Guide_CtrlShape" -p "L_Hand_Thumb_03_Guide";
 	rename -uid "E25A2284-4E67-2D5B-06E0-17805DE6A1F6";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -12390,7 +11433,7 @@ createNode nurbsCurve -n "L_Hand_Thumb_03_Guide_CtrlShape" -p "L_Hand_Thumb_03_G
 		;
 createNode nurbsCurve -n "L_Hand_Thumb_03_Guide_Ctrl_CtrlShape" -p "L_Hand_Thumb_03_Guide";
 	rename -uid "4086518D-49EC-AE34-DA41-A3B1D6F72C88";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
@@ -12507,7 +11550,7 @@ createNode nurbsCurve -n "L_Hand_Thumb_03_Guide_Ctrl_CtrlShape" -p "L_Hand_Thumb
 		;
 createNode nurbsCurve -n "L_Hand_Thumb_03_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Thumb_03_Guide";
 	rename -uid "5A57F92C-4336-0455-782A-4ABAF69D6578";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -12529,7 +11572,7 @@ createNode nurbsCurve -n "L_Hand_Thumb_03_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Hand_
 		;
 createNode nurbsCurve -n "L_Hand_Thumb_03_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Hand_Thumb_03_Guide";
 	rename -uid "456861EE-43FE-E8E9-2AF1-EE9D3B3F53A8";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -12569,10 +11612,10 @@ createNode dagContainer -n "LabelJoints_Block" -p "Body";
 	setAttr ".nts" -type "string" "[]";
 createNode transform -n "LabelJoints_Loc" -p "LabelJoints_Block";
 	rename -uid "2A474C57-4131-92A1-3493-39878E270C89";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 createNode locator -n "LabelJoints_LocShape" -p "LabelJoints_Loc";
 	rename -uid "F707D856-4093-4541-32DC-3FB2E6803540";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 createNode dagContainer -n "WingWristJoint_Block" -p "Body";
 	rename -uid "3D6B51E2-4B32-1E85-ADE9-2F894EB2D869";
@@ -12594,10 +11637,10 @@ createNode dagContainer -n "WingWristJoint_Block" -p "Body";
 	setAttr ".nts" -type "string" "['L_WristBndReverse', 'R_wingWrist_Bnd_parentConstraint1', 'L_wingWrist_FK_jnt_parentConstraint1', 'L_wingWrist_IK_jnt_scaleConstraint1', 'L_wingWrist_FK_jnt', 'L_wingWrist_IK_jnt_parentConstraint1', 'R_wingWrist_IK_jnt', 'L_WingWrist_IKFKJoints_Grp', 'R_wingWrist_Bnd_scaleConstraint1', 'R_wingWrist_FK_jnt_scaleConstraint1', 'L_wingWrist_Bnd_parentConstraint1', 'L_wingWrist_Bnd_scaleConstraint1', 'R_wingWrist_FK_jnt_parentConstraint1', 'L_wingWrist_Bnd', 'R_WingWrist_IKFKJoints_Grp', 'L_wingWrist_IK_jnt', 'R_wingWrist_FK_jnt', 'R_wingWrist_IK_jnt_scaleConstraint1', 'L_wingWrist_FK_jnt_scaleConstraint1', 'R_WristBndReverse', 'R_wingWrist_IK_jnt_parentConstraint1', 'R_wingWrist_Bnd']";
 createNode transform -n "WingWristJoint_Loc" -p "WingWristJoint_Block";
 	rename -uid "ADDC0168-416A-A43D-71D9-E48B0BE1C2A9";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 createNode locator -n "WingWristJoint_LocShape" -p "WingWristJoint_Loc";
 	rename -uid "86B99F3C-4279-AE9F-D3F7-879130CCAC3F";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 createNode dagContainer -n "ParentWingToLimb_Block" -p "Body";
 	rename -uid "204E76F0-4E9D-1BC2-0F16-6F8FAD09011C";
@@ -12619,10 +11662,10 @@ createNode dagContainer -n "ParentWingToLimb_Block" -p "Body";
 	setAttr ".nts" -type "string" "['group2_parentConstraint1', 'group2', 'group6_scaleConstraint1', 'group1', 'group5_scaleConstraint1', 'group6_parentConstraint1', 'group5', 'group1_parentConstraint1', 'group4', 'group3', 'R_Wrist_Fk_Ctrl_Offset_Grp_parentConstraint1', 'L_Elbow_Fk_Ctrl_Offset_Grp_parentConstraint1', 'group4_parentConstraint1', 'L_Wrist_Fk_Ctrl_Offset_Grp_parentConstraint1', 'group2_scaleConstraint1', 'group3_parentConstraint1', 'group3_scaleConstraint1', 'R_Elbow_Fk_Ctrl_Offset_Grp_parentConstraint1', 'group6', 'group1_scaleConstraint1', 'group4_scaleConstraint1', 'group5_parentConstraint1']";
 createNode transform -n "ParentWingToLimb_Loc" -p "ParentWingToLimb_Block";
 	rename -uid "8B572F58-429D-60C9-91DB-BBBD95008932";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 createNode locator -n "ParentWingToLimb_LocShape" -p "ParentWingToLimb_Loc";
 	rename -uid "F7A70D75-4E2E-41D8-74E5-538B0C84FBF3";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 createNode dagContainer -n "Alula_Block" -p "Body";
 	rename -uid "39154442-4865-6B94-B926-AF8B8F128C4E";
@@ -12645,7 +11688,7 @@ createNode dagContainer -n "Alula_Block" -p "Body";
 		"['R_Alula_B_02_Ctrl', 'R_Alula_D_02_Bnd_scaleConstraint1', 'R_Alula_C_01_Jnt_Ctrl_tag', 'L_Alula_A_01_Ctrl', 'R_Alula_B_02_Jnt_Ctrl_tag', 'R_Alula_B_02_Bnd', 'R_Alula_C_01_Bnd_parentConstraint1', 'L_Alula_D_02_Jnt_Ctrl_tag', 'L_Alula_A_01_Bnd_parentConstraint1', 'L_Alula_B_02_CtrlShape', 'R_Alula_Control_Grp_scaleConstraint1', 'R_Alula_C_01_Ctrl_Offset_Grp', 'R_Alula_A_02_Bnd_parentConstraint1', 'R_Alula_D_01_Jnt_parentConstraint1', 'R_Alula_B_01_Bnd_parentConstraint1', 'L_Alula_D_02_Jnt_parentConstraint1', 'L_Alula_B_02_Jnt', 'R_Alula_A_02_Jnt_Ctrl_tag', 'R_Alula_B_02_Jnt_parentConstraint1', 'R_Alula_D_01_Bnd_parentConstraint1', 'L_Alula_A_01_Bnd', 'L_Alula_A_02_Bnd_parentConstraint1', 'L_Alula_A_01_Bnd_scaleConstraint1', 'L_Alula_C_01_Jnt_Ctrl_tag', 'R_Alula_D_02_CtrlShape', 'R_Alula_A_01_Jnt_parentConstraint1', 'L_Alula_D_02_CtrlShape', 'R_Alula_B_01_Jnt_scaleConstraint1', 'Alula_Ctrl_Grp', 'L_Alula_C_01_Ctrl_Offset_Grp', 'L_Alula_B_01_CtrlShape', 'R_Alula_B_01_Jnt', 'R_Alula_D_01_Ctrl_Offset_Grp', 'L_Alula_C_02_Ctrl', 'R_Alula_Control_Grp', 'L_Alula_C_01_Bnd', 'R_Alula_D_02_Bnd', 'R_Alula_A_02_Ctrl', 'L_Alula_C_02_Bnd', 'R_Alula_B_02_Jnt_scaleConstraint1', 'L_Alula_D_02_Bnd_parentConstraint1', 'L_Alula_D_02_Jnt', 'L_Alula_D_01_Jnt_parentConstraint1', 'L_Alula_D_01_Bnd_parentConstraint1', 'L_Alula_D_01_Bnd', 'R_Alula_B_01_Jnt_Ctrl_tag', 'R_Alula_C_02_Bnd_parentConstraint1', 'L_Alula_B_02_Jnt_Ctrl_tag', 'R_Alula_A_02_CtrlShape', 'R_Alula_C_01_Bnd_scaleConstraint1', 'R_Alula_C_02_Jnt', 'R_Alula_A_01_Jnt_Ctrl_tag', 'R_Alula_C_02_Jnt_parentConstraint1', 'R_Alula_D_01_Jnt', 'R_Alula_D_01_Jnt_scaleConstraint1', 'L_Alula_A_02_Bnd_scaleConstraint1', 'R_Alula_D_01_Ctrl', 'R_Alula_D_01_Jnt_Ctrl_tag', 'L_Alula_B_01_Ctrl_Offset_Grp', 'R_Alula_B_02_Bnd_parentConstraint1', 'L_Alula_C_02_Bnd_scaleConstraint1', 'L_Alula_B_01_Jnt', 'L_Alula_C_02_Ctrl_Offset_Grp', 'R_Alula_D_02_Jnt_parentConstraint1', 'L_Alula_C_01_Ctrl', 'R_Alula_C_01_Jnt_parentConstraint1', 'L_Alula_B_01_Jnt_Ctrl_tag', 'L_Alula_A_02_Bnd', 'L_Alula_B_01_Jnt_parentConstraint1', 'L_Alula_C_01_Jnt_scaleConstraint1', 'R_Alula_D_02_Bnd_parentConstraint1', 'R_Alula_A_01_Jnt', 'R_Alula_D_02_Jnt', 'R_Alula_B_02_Ctrl_Offset_Grp', 'L_Alula_B_02_Bnd', 'R_Alula_A_02_Ctrl_Offset_Grp', 'L_Alula_A_02_Ctrl', 'L_Alula_B_01_Bnd_parentConstraint1', 'R_Alula_A_01_Bnd_scaleConstraint1', 'L_Alula_D_01_Ctrl_Offset_Grp', 'L_Alula_D_01_Jnt_scaleConstraint1', 'L_Alula_C_01_Bnd_parentConstraint1', 'L_Alula_B_01_Ctrl', 'L_Alula_B_01_Jnt_scaleConstraint1', 'L_Alula_B_02_Ctrl', 'R_Alula_A_01_Ctrl', 'R_Alula_A_01_Jnt_scaleConstraint1', 'L_Alula_A_02_Ctrl_Offset_Grp', 'R_Alula_A_02_Jnt', 'R_Alula_B_01_Ctrl', 'R_Alula_A_01_Bnd_parentConstraint1', 'L_Alula_A_01_Ctrl_Offset_Grp', 'L_Alula_D_02_Ctrl', 'L_Alula_A_01_Jnt', 'R_Alula_C_01_Jnt_scaleConstraint1', 'L_Alula_C_02_Jnt_scaleConstraint1', 'R_Alula_D_02_Jnt_Ctrl_tag', 'R_Alula_A_01_Ctrl_Offset_Grp', 'R_Alula_C_02_Ctrl_Offset_Grp', 'L_Alula_A_01_CtrlShape', 'L_Alula_C_01_CtrlShape', 'R_Alula_A_02_Bnd', 'R_Alula_C_02_CtrlShape', 'L_Alula_D_01_Jnt', 'R_Alula_D_02_Ctrl', 'R_Alula_C_01_Jnt', 'L_Alula_B_02_Bnd_scaleConstraint1', 'L_Alula_A_02_CtrlShape', 'L_Alula_C_02_Jnt_parentConstraint1', 'L_Alula_D_02_Bnd', 'R_Alula_C_01_Ctrl', 'R_Alula_D_02_Ctrl_Offset_Grp', 'R_Alula_B_02_Jnt', 'L_Alula_C_01_Bnd_scaleConstraint1', 'R_Alula_A_01_Bnd', 'R_Alula_A_02_Bnd_scaleConstraint1', 'L_Alula_D_02_Bnd_scaleConstraint1', 'R_Alula_A_02_Jnt_scaleConstraint1', 'L_Alula_B_01_Bnd_scaleConstraint1', 'R_Alula_D_01_CtrlShape', 'R_Alula_B_01_Bnd', 'L_Alula_B_01_Bnd', 'L_Alula_C_02_Jnt_Ctrl_tag', 'L_Alula_A_01_Jnt_Ctrl_tag', 'R_Alula_B_01_Bnd_scaleConstraint1', 'L_Alula_D_02_Ctrl_Offset_Grp', 'Alula_Ctrl_Grp_scaleConstraint1', 'L_Alula_C_02_Jnt', 'L_Alula_D_01_Jnt_Ctrl_tag', 'L_Alula_D_01_CtrlShape', 'R_Alula_B_01_Ctrl_Offset_Grp', 'L_Alula_A_02_Jnt', 'R_Alula_B_01_Jnt_parentConstraint1', 'R_Alula_A_01_CtrlShape', 'Alula_Rig_Grp', 'L_Alula_B_02_Ctrl_Offset_Grp', 'R_Alula_C_01_Bnd', 'R_Alula_D_01_Bnd_scaleConstraint1', 'R_Alula_B_01_CtrlShape', 'L_Alula_D_01_Ctrl', 'R_Alula_D_02_Jnt_scaleConstraint1', 'R_Alula_B_02_CtrlShape', 'R_Alula_C_02_Jnt_scaleConstraint1', 'R_Alula_Control_Grp_parentConstraint1', 'R_Alula_C_02_Bnd_scaleConstraint1', 'R_Alula_C_02_Ctrl', 'L_Alula_A_02_Jnt_Ctrl_tag', 'L_Alula_B_02_Jnt_parentConstraint1', 'L_Alula_A_02_Jnt_scaleConstraint1', 'R_Alula_D_01_Bnd', 'L_Alula_D_01_Bnd_scaleConstraint1', 'L_Alula_B_02_Jnt_scaleConstraint1', 'R_Alula_C_02_Jnt_Ctrl_tag', 'L_Alula_A_01_Jnt_scaleConstraint1', 'L_Alula_B_02_Bnd_parentConstraint1', 'R_Alula_C_02_Bnd', 'L_Alula_C_02_Bnd_parentConstraint1', 'L_Alula_C_01_Jnt', 'L_Alula_A_01_Jnt_parentConstraint1', 'L_Alula_A_02_Jnt_parentConstraint1', 'L_Alula_D_02_Jnt_scaleConstraint1', 'L_Alula_C_02_CtrlShape', 'R_Alula_A_02_Jnt_parentConstraint1', 'R_Alula_C_01_CtrlShape', 'L_Alula_C_01_Jnt_parentConstraint1', 'R_Alula_B_02_Bnd_scaleConstraint1', 'Alula_Ctrl_Grp_parentConstraint1']");
 createNode joint -n "L_Alula_A_01_Guide" -p "Alula_Block";
 	rename -uid "31592178-41C7-B52B-182D-FCA38B500A43";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 70.584503173828125 62.708209991455078 10.560039520263672 ;
 	setAttr ".r" -type "double3" 0 13.466299423865276 0 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
@@ -12653,13 +11696,13 @@ createNode joint -n "L_Alula_A_01_Guide" -p "Alula_Block";
 	setAttr ".jo" -type "double3" 5.375240738290044 13.869941793534263 0.22798357490113613 ;
 createNode joint -n "L_Alula_A_02_Guide" -p "L_Alula_A_01_Guide";
 	rename -uid "1D34FC6A-479E-8AFC-4730-C1AA313CF078";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 8.5478251753608241 -1.1358969320696133e-14 5.1625370645069779e-15 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Alula_B_01_Guide" -p "Alula_Block";
 	rename -uid "2D6A90CA-436B-6470-BAD3-73A66FD71D7D";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 71.602645874023438 62.474601745605469 10.770298004150391 ;
 	setAttr ".r" -type "double3" 0 5.186179311206697 0 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
@@ -12667,13 +11710,13 @@ createNode joint -n "L_Alula_B_01_Guide" -p "Alula_Block";
 	setAttr ".jo" -type "double3" 5.3752407382900635 13.869941793534277 0.22798357490122423 ;
 createNode joint -n "L_Alula_B_02_Guide" -p "L_Alula_B_01_Guide";
 	rename -uid "82E71F83-4A89-23ED-90E6-989AEDA2ED85";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 9.1191263845619623 3.4000580129145419e-16 1.9984014443252818e-15 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Alula_C_01_Guide" -p "Alula_Block";
 	rename -uid "0BDDCD15-4284-A037-7E8F-AD890BDECD5C";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 73.053108215332031 62.154136657714844 10.859896659851074 ;
 	setAttr ".r" -type "double3" 0 1.8572494293707458 0 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
@@ -12681,13 +11724,13 @@ createNode joint -n "L_Alula_C_01_Guide" -p "Alula_Block";
 	setAttr ".jo" -type "double3" 5.3752407382900751 13.869941793534249 0.2279835749012275 ;
 createNode joint -n "L_Alula_C_02_Guide" -p "L_Alula_C_01_Guide";
 	rename -uid "2B034D6D-407C-0E7B-D78D-EEA37C2FEB7F";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 8.6515995722648142 1.3356503403283426e-14 -2.9837243786801082e-15 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 createNode joint -n "L_Alula_D_01_Guide" -p "Alula_Block";
 	rename -uid "FC00C14B-459E-D25E-EEA8-E9889F8063AC";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 74.137763977050781 61.813098907470703 11.011682510375977 ;
 	setAttr ".r" -type "double3" 0 -2.6701602912283113 0 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
@@ -12695,7 +11738,7 @@ createNode joint -n "L_Alula_D_01_Guide" -p "Alula_Block";
 	setAttr ".jo" -type "double3" 5.3752407382900707 13.869941793534256 0.22798357490122265 ;
 createNode joint -n "L_Alula_D_02_Guide" -p "L_Alula_D_01_Guide";
 	rename -uid "326699E2-415F-74FA-FB97-07817A2E3D70";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr ".t" -type "double3" 8.5478251753608099 -4.253541963095131e-15 8.7152507433074788e-15 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
@@ -12719,14 +11762,14 @@ createNode dagContainer -n "FeatherSubCtrlsVisAttrs_Block" -p "Body";
 	setAttr ".nts" -type "string" "[]";
 createNode transform -n "FeatherSubCtrlsVisAttrs_Loc" -p "FeatherSubCtrlsVisAttrs_Block";
 	rename -uid "5C70DCC2-4FFC-8FF2-C729-9684B5BFA6F5";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 createNode locator -n "FeatherSubCtrlsVisAttrs_LocShape" -p "FeatherSubCtrlsVisAttrs_Loc";
 	rename -uid "B01ACF8A-46AB-A7FD-D0D4-B280D83551FE";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 createNode transform -n "Spaces" -p "Mutant_Build";
 	rename -uid "602A16E0-4C34-DD15-054E-E9B20CB29D6C";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 createNode dagContainer -n "Eyes_Switches_Block" -p "Spaces";
 	rename -uid "13B27790-4CAB-F258-A4F8-9CA0990A5D63";
 	addAttr -ci true -sn "nts" -ln "notes" -dt "string";
@@ -12915,14 +11958,14 @@ createNode dagContainer -n "IkHead_Block" -p "Spaces";
 	setAttr ".nts" -type "string" "['Head_Ctrl_Lock_Grp_parentConstraint1', 'Head_Ctrl_IkHead_Neck_Ctrl_Condition', 'Head_Ctrl_IkHead_Head_Ctrl_Auto_SpSw_Grp_Condition', 'Head_Ctrl_IkHead_Mover_Ctrl_Condition', 'Head_Ctrl_IkHead_COG_Ctrl_Condition', 'Head_Ctrl_Lock_Grp']";
 createNode transform -n "IkHead_Loc" -p "IkHead_Block";
 	rename -uid "2C524303-43E9-E0BE-A047-0497EAFBCE85";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 createNode locator -n "IkHead_LocShape" -p "IkHead_Loc";
 	rename -uid "BF56660C-47BC-A9A4-BEB8-8A927B451D2F";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
 createNode transform -n "Attrs" -p "Mutant_Build";
 	rename -uid "A1DE5BA3-4837-776A-AA05-909954FB9840";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 createNode dagContainer -n "L_Legs_Attrs_Block" -p "Attrs";
 	rename -uid "251EFEBB-4160-033A-D323-7F8656A94E9E";
 	addAttr -ci true -sn "nts" -ln "notes" -dt "string";
@@ -13190,11 +12233,75 @@ createNode dagContainer -n "CleanUpAttrs_Block" -p "Extras";
 	setAttr ".nts" -type "string" "[]";
 createNode transform -n "CleanUpAttrs_Loc" -p "CleanUpAttrs_Block";
 	rename -uid "654A27E3-487F-FEFA-15B2-738AD73E919A";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 createNode locator -n "CleanUpAttrs_LocShape" -p "CleanUpAttrs_Loc";
 	rename -uid "630B6B68-4A13-7BCC-F5DB-3B8B26513CEF";
-	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha//b0004_Eagle/Rig/WIP/";
+	setAttr ".icn" -type "string" "E:/BlueTape/b0012_Gosha/b0004_Eagle/Rig/WIP/";
 	setAttr -k off ".v";
+createNode transform -s -n "persp";
+	rename -uid "ED895749-44B0-6A9D-8E5B-27A797D79D1B";
+	setAttr ".v" no;
+	setAttr ".t" -type "double3" 28 21 28 ;
+	setAttr ".r" -type "double3" -27.938352729602379 44.999999999999972 -5.172681101354183e-14 ;
+createNode camera -s -n "perspShape" -p "persp";
+	rename -uid "D5164401-4CB0-A848-9EE3-599CD2948661";
+	setAttr -k off ".v" no;
+	setAttr ".fl" 34.999999999999993;
+	setAttr ".coi" 44.82186966202994;
+	setAttr ".imn" -type "string" "persp";
+	setAttr ".den" -type "string" "persp_depth";
+	setAttr ".man" -type "string" "persp_mask";
+	setAttr ".hc" -type "string" "viewSet -p %camera";
+createNode transform -s -n "top";
+	rename -uid "99FB88C6-4F96-85BE-B614-3C8D55F4C125";
+	setAttr ".v" no;
+	setAttr ".t" -type "double3" 0 1000.1 0 ;
+	setAttr ".r" -type "double3" -90 0 0 ;
+createNode camera -s -n "topShape" -p "top";
+	rename -uid "2CC621CE-46E5-8EA9-D56B-A498DC2A9D27";
+	setAttr -k off ".v" no;
+	setAttr ".rnd" no;
+	setAttr ".coi" 1000.1;
+	setAttr ".ow" 30;
+	setAttr ".imn" -type "string" "top";
+	setAttr ".den" -type "string" "top_depth";
+	setAttr ".man" -type "string" "top_mask";
+	setAttr ".hc" -type "string" "viewSet -t %camera";
+	setAttr ".o" yes;
+	setAttr ".ai_translator" -type "string" "orthographic";
+createNode transform -s -n "front";
+	rename -uid "ED50368B-40E7-7475-E2C9-14BECAC41ABB";
+	setAttr ".v" no;
+	setAttr ".t" -type "double3" 0 0 1000.1 ;
+createNode camera -s -n "frontShape" -p "front";
+	rename -uid "D85AC490-485B-5AEB-F065-72BDE199FA76";
+	setAttr -k off ".v" no;
+	setAttr ".rnd" no;
+	setAttr ".coi" 1000.1;
+	setAttr ".ow" 30;
+	setAttr ".imn" -type "string" "front";
+	setAttr ".den" -type "string" "front_depth";
+	setAttr ".man" -type "string" "front_mask";
+	setAttr ".hc" -type "string" "viewSet -f %camera";
+	setAttr ".o" yes;
+	setAttr ".ai_translator" -type "string" "orthographic";
+createNode transform -s -n "side";
+	rename -uid "76D6A66B-4B14-F247-809D-C4A2000625D7";
+	setAttr ".v" no;
+	setAttr ".t" -type "double3" 1000.1 0 0 ;
+	setAttr ".r" -type "double3" 0 90 0 ;
+createNode camera -s -n "sideShape" -p "side";
+	rename -uid "A39ADFF0-4A75-14D4-1BA5-2B93D3898BEC";
+	setAttr -k off ".v" no;
+	setAttr ".rnd" no;
+	setAttr ".coi" 1000.1;
+	setAttr ".ow" 30;
+	setAttr ".imn" -type "string" "side";
+	setAttr ".den" -type "string" "side_depth";
+	setAttr ".man" -type "string" "side_mask";
+	setAttr ".hc" -type "string" "viewSet -s %camera";
+	setAttr ".o" yes;
+	setAttr ".ai_translator" -type "string" "orthographic";
 createNode hyperLayout -n "Human_Body_Template_hyperLayout13";
 	rename -uid "2A18231C-489C-FB0D-B0C3-B19FA88324F8";
 	setAttr ".ihi" 0;
@@ -13203,18 +12310,18 @@ createNode network -n "BaseA_Config";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
 	addAttr -ci true -sn "Name" -ln "Name" -dt "string";
 	addAttr -ci true -sn "CtrlScale" -ln "CtrlScale" -dv 4 -min 1 -max 20 -at "long";
 	addAttr -ci true -sn "CtrlColor" -ln "CtrlColor" -min 0 -max 7 -en "lightBlue:blue:white:purple:green:red:yellow:grey" 
 		-at "enum";
-	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
 	setAttr ".precode" -type "string" "";
-	setAttr -l on ".Build_Command" -type "string" "exec_baseA.build_baseA_block()";
-	setAttr -l on ".Import_Command" -type "string" "import exec_baseA ";
+	setAttr -l on ".Build_Command" -type "string" "exec_baseA_v001.build_baseA_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_baseA_v001 ";
+	setAttr ".postcode" -type "string" "";
 	setAttr ".Name" -type "string" "Mutant_Tools";
 	setAttr -k on ".CtrlScale";
 	setAttr -cb on ".CtrlColor";
-	setAttr ".postcode" -type "string" "";
 createNode hyperLayout -n "Human_Body_Template_hyperLayout14";
 	rename -uid "FFE660B3-4AAC-B25B-286A-ED996C53CD5C";
 	setAttr ".ihi" 0;
@@ -13223,13 +12330,13 @@ createNode network -n "Root_Config";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
-	addAttr -ci true -sn "SetParent" -ln "SetParent" -dt "string";
 	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	addAttr -ci true -sn "SetParent" -ln "SetParent" -dt "string";
 	setAttr ".precode" -type "string" "";
-	setAttr -l on ".Build_Command" -type "string" "exec_root.build_root_block()";
-	setAttr -l on ".Import_Command" -type "string" "import exec_root";
-	setAttr ".SetParent" -type "string" "Bind_Joints_Grp";
+	setAttr -l on ".Build_Command" -type "string" "exec_root_v001.build_root_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_root_v001";
 	setAttr ".postcode" -type "string" "";
+	setAttr ".SetParent" -type "string" "Bind_Joints_Grp";
 createNode hyperLayout -n "hyperLayout9";
 	rename -uid "CB6E6CFA-4078-3810-F97E-60B50984DD0F";
 	setAttr ".ihi" 0;
@@ -13239,29 +12346,41 @@ createNode network -n "COG_Config";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	addAttr -ci true -sn "SetCtrlParentHierarchy" -ln "SetCtrlParentHierarchy" -dt "string";
 	addAttr -ci true -sn "CtrlType" -ln "CtrlType" -min 0 -max 16 -en "sphere:cube:square:octagon:hexagon:pringle:feet:hand:circleX:circleY:circleZ:3dArrow:2dArrow:mover:2dArrow:root:cog" 
 		-at "enum";
 	addAttr -ci true -sn "CtrlSize" -ln "CtrlSize" -dv 4 -min 1 -max 20 -at "long";
-	addAttr -ci true -sn "SetJointParent" -ln "SetJointParent" -dt "string";
-	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
 	addAttr -ci true -sn "CtrlColor" -ln "CtrlColor" -min 0 -max 7 -en "lightBlue:blue:white:purple:green:red:yellow:grey" 
 		-at "enum";
-	addAttr -ci true -sn "CreateJoint" -ln "CreateJoint" -min 0 -max 1 -at "bool";
-	addAttr -ci true -sn "SetCtrlParent" -ln "SetCtrlParent" -dt "string";
-	addAttr -ci true -sn "Gimbal" -ln "Gimbal" -min 0 -max 1 -at "bool";
-	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	addAttr -ci true -sn "Mirror" -ln "Mirror" -min 0 -max 2 -en "False:True:Right_Only" 
+		-at "enum";
+	addAttr -ci true -sn "Gimbal" -ln "Gimbal" -dv 1 -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "CtrlOrientOffset" -ln "CtrlOrientOffset" -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "ShowOrientAttrs" -ln "ShowOrientAttrs" -dv 1 -min 0 -max 1 
+		-at "bool";
+	addAttr -ci true -sn "CreateJoint" -ln "CreateJoint" -dv 1 -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "SetJointParentHierarchy" -ln "SetJointParentHierarchy" -dt "string";
+	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
+	addAttr -ci true -sn "MutantBackup" -ln "MutantBackup" -dt "string";
 	setAttr ".precode" -type "string" "";
-	setAttr -l on ".Build_Command" -type "string" "exec_single_fk.build_single_fk_block()";
-	setAttr -l on ".Import_Command" -type "string" "import exec_single_fk";
+	setAttr -l on ".Build_Command" -type "string" "exec_single_fk_v001.build_single_fk_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_single_fk_v001";
+	setAttr ".postcode" -type "string" "";
+	setAttr ".SetCtrlParentHierarchy" -type "string" "Ctrl_Grp";
 	setAttr -cb on ".CtrlType" 16;
 	setAttr -k on ".CtrlSize";
-	setAttr ".SetJointParent" -type "string" "Miscellaneous_Grp";
-	setAttr ".Help" -type "string" "Possible parent: Bone_Jnt\n";
 	setAttr -cb on ".CtrlColor";
-	setAttr -cb on ".CreateJoint" yes;
-	setAttr ".SetCtrlParent" -type "string" "Rig_Ctrl_Grp";
-	setAttr -cb on ".Gimbal" yes;
-	setAttr ".postcode" -type "string" "";
+	setAttr -cb on ".Mirror";
+	setAttr -cb on ".Gimbal";
+	setAttr -cb on ".CtrlOrientOffset";
+	setAttr -cb on ".ShowOrientAttrs";
+	setAttr -cb on ".CreateJoint";
+	setAttr ".SetJointParentHierarchy" -type "string" "Miscellaneous_Grp";
+	setAttr ".Help" -type "string" (
+		"Overview:\n  This will create a Single FK Ctrl + Joint, Like for COG or Single Needs.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- CtrlType: choose one option (for example: sphere, cube, square, octagon).\n- CtrlSize: numeric value that controls size/amount/intensity (default 4).\n- CtrlColor: choose one option (for example: lightBlue, blue, white, purple).\n- Mirror: False builds as-is. True builds both L_ and R_ sides (auto-prefixes L_ if needed). Right_Only mirrors to the right side only.\n- Gimbal: turn this ON/OFF depending on whether you want that feature.\n- CtrlOrientOffset: adds an offset transform above the control so you can dynamically change the control orientation without affecting the zero pose.\n- ShowOrientAttrs: when ON, the orient proxy attrs (orientTranslate/Rotate/Scale) are visible on the ctrl channel box. Turn OFF to hide them for delivery.\n- CreateJoint: turn this ON/OFF depending on whether you want that feature.\n- SetCtrlParent_Hierarchy: set the node/object name this block should use.\n"
+		+ "\nTips:\n- if a field says left/right or mirror, use it to generate the opposite side quickly.");
+	setAttr -l on ".MutantBackup" -type "string" "{\"SetCtrlParent\": {\"type\": \"string\", \"value\": \"Rig_Ctrl_Grp\"}, \"SetJointParent\": {\"type\": \"string\", \"value\": \"Miscellaneous_Grp\"}}";
 createNode hyperLayout -n "hyperLayout2";
 	rename -uid "996EC16B-4211-85D9-16D8-C89119784FAE";
 	setAttr ".ihi" 0;
@@ -13271,21 +12390,33 @@ createNode network -n "Spine_Config";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
 	addAttr -ci true -sn "SetParent" -ln "SetParent" -dt "string";
 	addAttr -ci true -sn "CtrlSize" -ln "CtrlSize" -dv 4 -min 1 -max 20 -at "long";
 	addAttr -ci true -sn "SetGameParent" -ln "SetGameParent" -dt "string";
-	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
 	addAttr -ci true -sn "Breath" -ln "Breath" -min 0 -max 1 -at "bool";
-	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	addAttr -ci true -sn "OrientToWorld" -ln "OrientToWorld" -dv 1 -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "JointCount" -ln "JointCount" -min 0 -max 4 -en "3:5:7:9:11" 
+		-at "enum";
+	addAttr -ci true -sn "Tweakers" -ln "Tweakers" -dv 1 -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "DefaultCtrls" -ln "DefaultCtrls" -min 0 -max 2 -en "Both:IK:FK" 
+		-at "enum";
+	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
 	setAttr ".precode" -type "string" "";
-	setAttr -l on ".Build_Command" -type "string" "exec_spine.build_spine_block()";
-	setAttr -l on ".Import_Command" -type "string" "import exec_spine";
+	setAttr -l on ".Build_Command" -type "string" "exec_spine_v002.build_spine_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_spine_v002";
+	setAttr ".postcode" -type "string" "";
 	setAttr ".SetParent" -type "string" "COG_Jnt";
 	setAttr -k on ".CtrlSize";
 	setAttr ".SetGameParent" -type "string" "";
-	setAttr ".Help" -type "string" "Possible parent: Spine_End_Jnt or Spine_Inv_Jnt";
 	setAttr -cb on ".Breath";
-	setAttr ".postcode" -type "string" "";
+	setAttr -cb on ".OrientToWorld";
+	setAttr -cb on ".JointCount" 1;
+	setAttr -cb on ".Tweakers";
+	setAttr -cb on ".DefaultCtrls";
+	setAttr ".Help" -type "string" (
+		"Overview:\n  This will create a IK FK Spine System.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetParent: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- CtrlSize: numeric value that controls size/amount/intensity (default 4).\n- Breath: turn this ON/OFF depending on whether you want that feature.\n- OrientToWorld: turn this ON/OFF depending on whether you want that feature.\n- JointCount: how many joints along the spine (3, 5, 7, 9 or 11, default 5). Joints on a guide keep its name (Root, Base, Belly, Chest, End), in-betweens are MidXX.\n- DefaultCtrls: which controllers are visible after the build: Both, IK (FK hidden) or FK (IK hidden). The ikCtrls / fkCtrls attrs on the spine attrs still switch them later.\n- Tweakers: adds one extra controller per joint (tweakCtrls on the spine attrs) to move, rotate and scale each bind joint on its own.\n- SetGameParent: set the node/object name this block should use.\n- Template parent examples: Spine_End_Jnt, Spine_Inv_Jnt, Spine_F_Jnt.\n"
+		+ "\nTips:\n- if a field says left/right or mirror, use it to generate the opposite side quickly.");
 createNode hyperLayout -n "hyperLayout83";
 	rename -uid "C226ED3B-4189-E703-3163-15B6C7D95FD0";
 	setAttr ".ihi" 0;
@@ -13295,21 +12426,42 @@ createNode network -n "Wings_Config";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
-	addAttr -ci true -sn "SetParent" -ln "SetParent" -dt "string";
-	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
 	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
-	addAttr -ci true -sn "Scapular" -ln "Scapular" -dv 15 -min 0 -max 100000 -at "double";
-	addAttr -ci true -sn "Secundary" -ln "Secundary" -dv 18 -min 0 -max 100000 -at "double";
-	addAttr -ci true -sn "Primary" -ln "Primary" -dv 10 -min 0 -max 100000 -at "double";
+	addAttr -ci true -sn "SetParent" -ln "SetParent" -dt "string";
+	addAttr -ci true -sn "Scapular" -ln "Scapular" -dv 5 -min 1 -max 20 -at "long";
+	addAttr -ci true -sn "ScapularFeatherJoints" -ln "ScapularFeatherJoints" -dv 4 -min 
+		1 -max 20 -at "long";
+	addAttr -ci true -sn "ScapularPreview" -ln "ScapularPreview" -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "Secundary" -ln "Secundary" -dv 8 -min 1 -max 20 -at "long";
+	addAttr -ci true -sn "SecundaryFeatherJoints" -ln "SecundaryFeatherJoints" -dv 4 
+		-min 1 -max 20 -at "long";
+	addAttr -ci true -sn "SecundaryPreview" -ln "SecundaryPreview" -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "Primary" -ln "Primary" -dv 10 -min 1 -max 20 -at "long";
+	addAttr -ci true -sn "PrimaryFeatherJoints" -ln "PrimaryFeatherJoints" -dv 4 -min 
+		1 -max 20 -at "long";
+	addAttr -ci true -sn "PrimaryPreview" -ln "PrimaryPreview" -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "SpreadMode" -ln "SpreadMode" -min 0 -max 1 -en "Roll:Classic" 
+		-at "enum";
+	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
 	setAttr ".precode" -type "string" "";
-	setAttr -l on ".Build_Command" -type "string" "exec_wings.build_wings_block()";
-	setAttr -l on ".Import_Command" -type "string" "import exec_wings";
-	setAttr ".SetParent" -type "string" "Spine_Chest_Top_IK_Ctrl";
-	setAttr ".Help" -type "string" "Create Wings System RdM Wings";
+	setAttr -l on ".Build_Command" -type "string" "exec_wings_v002.build_wings_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_wings_v002";
 	setAttr ".postcode" -type "string" "";
-	setAttr -k on ".Scapular";
-	setAttr -k on ".Secundary";
+	setAttr ".SetParent" -type "string" "Spine_Chest_Top_IK_Ctrl";
+	setAttr -k on ".Scapular" 15;
+	setAttr -k on ".ScapularFeatherJoints";
+	setAttr -cb on ".ScapularPreview";
+	setAttr -k on ".Secundary" 18;
+	setAttr -k on ".SecundaryFeatherJoints";
+	setAttr -cb on ".SecundaryPreview";
 	setAttr -k on ".Primary";
+	setAttr -k on ".PrimaryFeatherJoints";
+	setAttr -cb on ".PrimaryPreview";
+	setAttr -cb on ".SpreadMode";
+	setAttr ".Help" -type "string" (
+		"Overview:\n  Create Wings System RdM Wings.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetParent: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- Scapular / Secundary / Primary: feathers in each part. Changing them in the builder adds or removes feather guides right away, the first and last feather stay and the fan is spread again between them (placement of the feathers in between is interpolated).\n- ScapularFeatherJoints / SecundaryFeatherJoints / PrimaryFeatherJoints: joints in every feather FK chain of that part (default 4: the feather joint and 3 bends, minimum 2). More joints bend smoother, the build adds or removes bends and spreads them on the feather.\n- ScapularPreview / SecundaryPreview / PrimaryPreview: On adds a guide inside every feather of that part for each joint between posStart and posEnd (posBend01, posBend02...), those are the feather FK joints, move them to curve the feather and the build uses them. Changing the part FeatherJoints while it is on spreads the new guides along the curve you have. Off goes back to straight feathers (posStart to posEnd), the bends are remembered if you turn it on again without moving posEnd.\n"
+		+ "- Elbow / Wrist spread (build): L/R_Elbow_Spread_Ctrl (Scapulars to Secondaries) and L/R_Wrist_Spread_Ctrl (Secondaries to Primaries) move the Spread_Out and Spread_In ctrls of both parts at once, so the parts spread together. AutoClose (0-1, default 1) turns the edge feathers half the elbow / wrist bend each, the parts do not open a gap when the arm bends. The old Spread ctrls keep their names and anim, SubCtrls on the new ctrl shows them.\n- SpreadMode: Roll (default) rolls every feather to aim its side at the next feather tip when the spread ctrls tilt them, the feathers stay one sheet and the overlap does not clip. SheetFollow (0-1) on each part Wing_000 ctrl blends it. Classic is the old spread, feathers tilt flat.\n- Pivots (build): the first ctrl of every feather (L/R_<Part>_JR_<i>_Ctrl) has PivotX / PivotY / PivotZ, an offset in the ctrl space that moves the pivot of the ctrl and of the automation groups above it (AutoFold, SpreadRoll, Spread groups), the feather and its automations turn around it.\n- Template parent examples: Spine_End_Jnt, Head_Jnt, L_Wrist_Jnt.\n"
+		+ "\nTips:\n- start with defaults, build once, then tweak only the fields you need.");
 createNode hyperLayout -n "hyperLayout62";
 	rename -uid "54B5DA9A-40EA-FC4F-46D2-15B30DB48F8F";
 	setAttr ".ihi" 0;
@@ -13319,12 +12471,17 @@ createNode network -n "L_Shoulder_Config";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
 	addAttr -ci true -sn "SetParent" -ln "SetParent" -dt "string";
 	addAttr -ci true -sn "Mirror" -ln "Mirror" -min 0 -max 2 -en "True:False:Right_Only" 
 		-at "enum";
-	addAttr -ci true -sn "Ribbons" -ln "Ribbons" -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "Ribbons" -ln "Ribbons" -dv 1 -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "Bendys" -ln "Bendys" -min 0 -max 1 -en "Default:SN" -at "enum";
+	addAttr -ci true -sn "ScaleTweakCtrls" -ln "ScaleTweakCtrls" -dv 1 -min 0 -max 1 
+		-at "bool";
+	addAttr -ci true -sn "ForceIkWorld" -ln "ForceIkWorld" -min 0 -max 1 -at "bool";
 	addAttr -ci true -sn "CtrlSize" -ln "CtrlSize" -dv 4 -min 1 -max 20 -at "long";
-	addAttr -ci true -sn "TwistAmount" -ln "TwistAmount" -dv 4 -min 1 -max 100 -at "long";
+	addAttr -ci true -sn "TwistAmount" -ln "TwistAmount" -dv 4 -min 1 -max 20 -at "long";
 	addAttr -ci true -sn "IkCtrlType" -ln "IkCtrlType" -min 0 -max 1 -en "cube:sphere" 
 		-at "enum";
 	addAttr -ci true -sn "PVCtrlType" -ln "PVCtrlType" -min 0 -max 1 -en "sphere:cube" 
@@ -13334,14 +12491,19 @@ createNode network -n "L_Shoulder_Config";
 	addAttr -ci true -sn "FKCtrlType" -ln "FKCtrlType" -min 0 -max 4 -en "bounding_cube:circleY:circleX:circleY:pin_cube" 
 		-at "enum";
 	addAttr -ci true -sn "SetGameParent" -ln "SetGameParent" -dt "string";
+	addAttr -ci true -sn "Orients" -ln "Orients" -min 0 -max 1 -en "Default:SN" -at "enum";
+	addAttr -ci true -sn "ArmsSoftIk" -ln "ArmsSoftIk" -min 0 -max 1 -at "bool";
 	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
-	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
 	setAttr ".precode" -type "string" "";
-	setAttr -l on ".Build_Command" -type "string" "exec_limb.build_limb_block()";
-	setAttr -l on ".Import_Command" -type "string" "import exec_limb";
+	setAttr -l on ".Build_Command" -type "string" "exec_limb_v002.build_limb_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_limb_v002";
+	setAttr ".postcode" -type "string" "";
 	setAttr ".SetParent" -type "string" "L_Clav_JR";
 	setAttr -cb on ".Mirror";
-	setAttr -cb on ".Ribbons" yes;
+	setAttr -cb on ".Ribbons";
+	setAttr -cb on ".Bendys";
+	setAttr -cb on ".ScaleTweakCtrls";
+	setAttr -cb on ".ForceIkWorld";
 	setAttr -k on ".CtrlSize";
 	setAttr -k on ".TwistAmount" 18;
 	setAttr -cb on ".IkCtrlType";
@@ -13349,8 +12511,12 @@ createNode network -n "L_Shoulder_Config";
 	setAttr -cb on ".IkTopCtrlType";
 	setAttr -cb on ".FKCtrlType";
 	setAttr ".SetGameParent" -type "string" "";
-	setAttr ".Help" -type "string" "Possible parent: L_Wrist_Jnt\n";
-	setAttr ".postcode" -type "string" "";
+	setAttr -cb on ".Orients";
+	setAttr -cb on ".ArmsSoftIk";
+	setAttr ".Help" -type "string" (
+		"Overview:\n  This will create a Limb System.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetParent: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- Mirror: choose one option (for example: True, False, Right_Only).\n- Ribbons: turn this ON/OFF depending on whether you want that feature.\n- Bendys (needs Ribbons): Default is the Mutant bendy system (ribbons, handles, tweakers, BendyCurve attrs). SN is the studio one: 5 controllers per limb (start, upper mid, mid, lower mid, end, like L_ArmBend1-5), the mid ones follow their neighbours and aim at the mid one, the binds get the bendy moves blended along the limb. Same bind joints in both, so the skin carries over. The SN controllers get the shoulder FK controller orient. AutoCurve attr (0-1, animatable, on the limb attrs and proxied on Bendy_3): 0 keeps the limb in straight lines through Bendy_3, 1 makes a smooth curve through it.\n- CtrlSize: numeric value that controls size/amount/intensity (default 4).\n"
+		+ "- TwistAmount: numeric value that controls size/amount/intensity (default 4).\n- IkCtrlType: choose one option (for example: cube, sphere).\n- ArmsSoftIk: adds the ArmsSoftIk attr (0-10) to arms, eases the elbow to straight instead of popping at full reach. Arms only, legs use the LegSoftIK block. Off by default.\n- Orients: Default keeps the Mutant controller orients, SN uses the studio orients (same as the Custom_Biped_Orients block FixArms/FixLegs, so that block is not needed for limbs).\n- ScaleTweakCtrls: not used in v002, the bendy tweakers always scale their own bind joint (non uniform).\n- Controllers scale: FK, IK, SubIk, Top IK and Bendy controllers scale the bind joints around them (uniform or non uniform), the controllers under them do not inherit it, except FK: it is a normal hierarchy, the FK shoulder scale goes to the FK elbow and wrist (the limb gets longer, the twist / bind joints stretch with it) and the FK elbow scale to the wrist. FK controllers count in FK, IK controllers in IK. The wrist FK / IK / SubIk controllers do not scale the arm bind joints, they scale the wrist joint (L_Wrist_Jnt) so a hand parented there follows.\n"
+		+ "- Template parent examples: L_Wrist_Jnt, L_Elbow_Bnd_2_Bnd, R_Elbow_Bnd_2_Bnd.\n\nTips:\n- if a field says left/right or mirror, use it to generate the opposite side quickly.");
 createNode hyperLayout -n "hyperLayout89";
 	rename -uid "FB1A8FBF-4DA2-E495-5CAA-DC87BB2A3A0C";
 	setAttr ".ihi" 0;
@@ -13360,17 +12526,21 @@ createNode network -n "ReorientClav_Config";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
-	addAttr -ci true -sn "Exec" -ln "Exec" -min 0 -max 1 -en "Python:Mel" -at "enum";
-	addAttr -ci true -sn "Code" -ln "Code" -dt "string";
 	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	addAttr -ci true -sn "Exec" -ln "Exec" -min 0 -max 1 -en "Python:Mel" -at "enum";
+	addAttr -ci true -sn "RunBeforeBuild" -ln "RunBeforeBuild" -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "RunAfterBuild" -ln "RunAfterBuild" -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "Code" -ln "Code" -dt "string";
 	setAttr ".precode" -type "string" "";
-	setAttr -l on ".Build_Command" -type "string" "exec_code.build_code_block()";
-	setAttr -l on ".Import_Command" -type "string" "import exec_code";
+	setAttr -l on ".Build_Command" -type "string" "exec_code_v001.build_code_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_code_v001";
+	setAttr ".postcode" -type "string" "";
 	setAttr -cb on ".Exec";
+	setAttr -cb on ".RunBeforeBuild";
+	setAttr -cb on ".RunAfterBuild";
 	setAttr ".Code" -type "string" (
 		"from maya import cmds\n###Re-orienting clavicle controller to rest of the arm. \n\n#Defining Attribute lists.\nattrs_0 = [\"translateX\", \"translateY\", \"translateZ\", \"rotateX\", \"rotateY\", \"rotateZ\"]\nattrs_1 = [\"scaleX\", \"scaleY\", \"scaleZ\"]\n\nfor lt in [\"L\", \"R\"]:\n    LocalOffset_group = cmds.group(name=\"{}_Clavicle_Ctrl_Offset_Grp\".format(lt), empty=True)\n    cmds.parent(LocalOffset_group, \"{}_Clavicle_Ctrl\".format(lt))\n\n    #Setting attributes to 0 and 1. \n    for attr in attrs_0:\n        cmds.setAttr(\"{}.{}\".format(LocalOffset_group, attr), 0)\n    for attr in attrs_1:\n        cmds.setAttr(\"{}.{}\".format(LocalOffset_group, attr), 1)\n        \n    ctrl_parent = cmds.listRelatives(\"{}_Clavicle_Ctrl\".format(lt), parent=True)\n    \n    #Placing ctrl inside offset group.\n    if ctrl_parent:\n        cmds.parent(LocalOffset_group, ctrl_parent)\n        cmds.parent(\"{}_Clavicle_Ctrl\".format(lt), LocalOffset_group)\n    \n    #Moving inside joints out of the way.\n    cmds.parent(\"{}_Clav_JR\".format(lt), world=True)\n    \n    cmds.matchTransform(LocalOffset_group, \"{}_Shoulder_Fk_Ctrl\".format(lt), rot=True)\n"
 		+ "    cmds.parent(\"{}_Clav_JR\".format(lt), \"{}_Clavicle_Ctrl\".format(lt))\n\n");
-	setAttr ".postcode" -type "string" "";
 createNode hyperLayout -n "hyperLayout13";
 	rename -uid "E10E2408-4479-6DED-30D3-E6A7F1F8C454";
 	setAttr ".ihi" 0;
@@ -13380,25 +12550,25 @@ createNode network -n "L_Pelvis_Config";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
 	addAttr -ci true -sn "SetParent" -ln "SetParent" -dt "string";
+	addAttr -ci true -sn "Mirror" -ln "Mirror" -min 0 -max 2 -en "True:False:Right_Only" 
+		-at "enum";
 	addAttr -ci true -sn "CtrlType" -ln "CtrlType" -min 0 -max 16 -en "hexagon:sphere:cube:square:octagon:pringle:feet:hand:circleY:circleX:circleZ:3dArrow:2dArrow:mover:2dArrow:root:cog" 
 		-at "enum";
 	addAttr -ci true -sn "CtrlSize" -ln "CtrlSize" -dv 4 -min 1 -max 20 -at "long";
 	addAttr -ci true -sn "SetGameParent" -ln "SetGameParent" -dt "string";
 	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
-	addAttr -ci true -sn "Mirror" -ln "Mirror" -min 0 -max 2 -en "True:False:Right_Only" 
-		-at "enum";
-	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
 	setAttr ".precode" -type "string" "";
-	setAttr -l on ".Build_Command" -type "string" "exec_pelvis.build_pelvis_block()";
-	setAttr -l on ".Import_Command" -type "string" "import exec_pelvis";
+	setAttr -l on ".Build_Command" -type "string" "exec_pelvis_v001.build_pelvis_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_pelvis_v001";
+	setAttr ".postcode" -type "string" "";
 	setAttr ".SetParent" -type "string" "Spine_Bottom_Ik_Ctrl";
+	setAttr -cb on ".Mirror";
 	setAttr -cb on ".CtrlType";
 	setAttr -k on ".CtrlSize";
 	setAttr ".SetGameParent" -type "string" "";
-	setAttr ".Help" -type "string" "Possible parent: L_Pelvis_Jnt\n";
-	setAttr -cb on ".Mirror";
-	setAttr ".postcode" -type "string" "";
+	setAttr ".Help" -type "string" "Overview:\n  This will create a Pelvis System to connect your legs.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetParent: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- Mirror: choose one option (for example: True, False, Right_Only).\n- CtrlType: choose one option (for example: hexagon, sphere, cube, square).\n- CtrlSize: numeric value that controls size/amount/intensity (default 4).\n- SetGameParent: set the node/object name this block should use.\n- Template parent examples: L_Pelvis_Jnt, L_Pelvis_Ctrl, L_LegSlideSlideDriver_Loc.\n\nTips:\n- start with defaults, build once, then tweak only the fields you need.";
 createNode hyperLayout -n "hyperLayout4";
 	rename -uid "12958830-4A41-776D-9F34-D99A4120AE76";
 	setAttr ".ihi" 0;
@@ -13408,38 +12578,52 @@ createNode network -n "L_Hip_Config";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
 	addAttr -ci true -sn "SetParent" -ln "SetParent" -dt "string";
-	addAttr -ci true -sn "IkTopCtrlType" -ln "IkTopCtrlType" -min 0 -max 5 -en "pin_cube:cube:sphere:circleY:circleX:circleY" 
-		-at "enum";
-	addAttr -ci true -sn "CtrlSize" -ln "CtrlSize" -dv 4 -min 1 -max 20 -at "long";
-	addAttr -ci true -sn "SetGameParent" -ln "SetGameParent" -dt "string";
-	addAttr -ci true -sn "TwistAmount" -ln "TwistAmount" -dv 4 -min 1 -max 20 -at "long";
-	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
 	addAttr -ci true -sn "Mirror" -ln "Mirror" -min 0 -max 2 -en "True:False:Right_Only" 
+		-at "enum";
+	addAttr -ci true -sn "Ribbons" -ln "Ribbons" -dv 1 -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "Bendys" -ln "Bendys" -min 0 -max 1 -en "Default:SN" -at "enum";
+	addAttr -ci true -sn "ScaleTweakCtrls" -ln "ScaleTweakCtrls" -dv 1 -min 0 -max 1 
+		-at "bool";
+	addAttr -ci true -sn "ForceIkWorld" -ln "ForceIkWorld" -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "CtrlSize" -ln "CtrlSize" -dv 4 -min 1 -max 20 -at "long";
+	addAttr -ci true -sn "TwistAmount" -ln "TwistAmount" -dv 4 -min 1 -max 20 -at "long";
+	addAttr -ci true -sn "IkCtrlType" -ln "IkCtrlType" -min 0 -max 1 -en "cube:sphere" 
 		-at "enum";
 	addAttr -ci true -sn "PVCtrlType" -ln "PVCtrlType" -min 0 -max 1 -en "sphere:cube" 
 		-at "enum";
-	addAttr -ci true -sn "IkCtrlType" -ln "IkCtrlType" -min 0 -max 1 -en "cube:sphere" 
+	addAttr -ci true -sn "IkTopCtrlType" -ln "IkTopCtrlType" -min 0 -max 5 -en "pin_cube:cube:sphere:circleY:circleX:circleY" 
 		-at "enum";
 	addAttr -ci true -sn "FKCtrlType" -ln "FKCtrlType" -min 0 -max 4 -en "bounding_cube:circleY:circleX:circleY:pin_cube" 
 		-at "enum";
-	addAttr -ci true -sn "Ribbons" -ln "Ribbons" -min 0 -max 1 -at "bool";
-	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	addAttr -ci true -sn "SetGameParent" -ln "SetGameParent" -dt "string";
+	addAttr -ci true -sn "Orients" -ln "Orients" -min 0 -max 1 -en "Default:SN" -at "enum";
+	addAttr -ci true -sn "ArmsSoftIk" -ln "ArmsSoftIk" -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
 	setAttr ".precode" -type "string" "";
-	setAttr -l on ".Build_Command" -type "string" "exec_limb.build_limb_block()";
-	setAttr -l on ".Import_Command" -type "string" "import exec_limb";
-	setAttr ".SetParent" -type "string" "L_Pelvis_Jnt";
-	setAttr -cb on ".IkTopCtrlType";
-	setAttr -k on ".CtrlSize";
-	setAttr ".SetGameParent" -type "string" "";
-	setAttr -k on ".TwistAmount";
-	setAttr ".Help" -type "string" "Possible parent: L_Wrist_Jnt\n";
-	setAttr -cb on ".Mirror";
-	setAttr -cb on ".PVCtrlType";
-	setAttr -cb on ".IkCtrlType";
-	setAttr -cb on ".FKCtrlType";
-	setAttr -cb on ".Ribbons" yes;
+	setAttr -l on ".Build_Command" -type "string" "exec_limb_v002.build_limb_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_limb_v002";
 	setAttr ".postcode" -type "string" "";
+	setAttr ".SetParent" -type "string" "L_Pelvis_Jnt";
+	setAttr -cb on ".Mirror";
+	setAttr -cb on ".Ribbons";
+	setAttr -cb on ".Bendys";
+	setAttr -cb on ".ScaleTweakCtrls";
+	setAttr -cb on ".ForceIkWorld";
+	setAttr -k on ".CtrlSize";
+	setAttr -k on ".TwistAmount";
+	setAttr -cb on ".IkCtrlType";
+	setAttr -cb on ".PVCtrlType";
+	setAttr -cb on ".IkTopCtrlType";
+	setAttr -cb on ".FKCtrlType";
+	setAttr ".SetGameParent" -type "string" "";
+	setAttr -cb on ".Orients";
+	setAttr -cb on ".ArmsSoftIk";
+	setAttr ".Help" -type "string" (
+		"Overview:\n  This will create a Limb System.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetParent: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- Mirror: choose one option (for example: True, False, Right_Only).\n- Ribbons: turn this ON/OFF depending on whether you want that feature.\n- Bendys (needs Ribbons): Default is the Mutant bendy system (ribbons, handles, tweakers, BendyCurve attrs). SN is the studio one: 5 controllers per limb (start, upper mid, mid, lower mid, end, like L_ArmBend1-5), the mid ones follow their neighbours and aim at the mid one, the binds get the bendy moves blended along the limb. Same bind joints in both, so the skin carries over. The SN controllers get the shoulder FK controller orient. AutoCurve attr (0-1, animatable, on the limb attrs and proxied on Bendy_3): 0 keeps the limb in straight lines through Bendy_3, 1 makes a smooth curve through it.\n- CtrlSize: numeric value that controls size/amount/intensity (default 4).\n"
+		+ "- TwistAmount: numeric value that controls size/amount/intensity (default 4).\n- IkCtrlType: choose one option (for example: cube, sphere).\n- ArmsSoftIk: adds the ArmsSoftIk attr (0-10) to arms, eases the elbow to straight instead of popping at full reach. Arms only, legs use the LegSoftIK block. Off by default.\n- Orients: Default keeps the Mutant controller orients, SN uses the studio orients (same as the Custom_Biped_Orients block FixArms/FixLegs, so that block is not needed for limbs).\n- ScaleTweakCtrls: not used in v002, the bendy tweakers always scale their own bind joint (non uniform).\n- Controllers scale: FK, IK, SubIk, Top IK and Bendy controllers scale the bind joints around them (uniform or non uniform), the controllers under them do not inherit it, except FK: it is a normal hierarchy, the FK shoulder scale goes to the FK elbow and wrist (the limb gets longer, the twist / bind joints stretch with it) and the FK elbow scale to the wrist. FK controllers count in FK, IK controllers in IK. The wrist FK / IK / SubIk controllers do not scale the arm bind joints, they scale the wrist joint (L_Wrist_Jnt) so a hand parented there follows.\n"
+		+ "- Template parent examples: L_Wrist_Jnt, L_Elbow_Bnd_2_Bnd, R_Elbow_Bnd_2_Bnd.\n\nTips:\n- if a field says left/right or mirror, use it to generate the opposite side quickly.");
 createNode hyperLayout -n "hyperLayout10";
 	rename -uid "A0F72653-44B6-2D26-CB8D-B293CBC495FA";
 	setAttr ".ihi" 0;
@@ -13449,30 +12633,36 @@ createNode network -n "Neck_Head_Config1";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
 	addAttr -ci true -sn "SetParent" -ln "SetParent" -dt "string";
-	addAttr -ci true -sn "Ribbon" -ln "Ribbon" -min 0 -max 1 -at "bool";
-	addAttr -ci true -sn "CtrlSize" -ln "CtrlSize" -dv 4 -min 1 -max 20 -at "long";
 	addAttr -ci true -sn "HeadCtrlType" -ln "HeadCtrlType" -min 0 -max 16 -en "octagon:hexagon:square:sphere:cube:pringle:feet:hand:circleY:circleX:circleZ:3dArrow:2dArrow:mover:2dArrow:root:cog" 
 		-at "enum";
-	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
+	addAttr -ci true -sn "Ribbon" -ln "Ribbon" -dv 1 -min 0 -max 1 -at "bool";
 	addAttr -ci true -sn "SecundaryRibbon" -ln "SecundaryRibbon" -dv 3 -min 1 -max 20 
 		-at "long";
+	addAttr -ci true -sn "CtrlSize" -ln "CtrlSize" -dv 4 -min 1 -max 20 -at "long";
 	addAttr -ci true -sn "CtrlColor" -ln "CtrlColor" -min 0 -max 7 -en "yellow:lightBlue:blue:white:purple:green:red:grey" 
 		-at "enum";
 	addAttr -ci true -sn "SetGameParent" -ln "SetGameParent" -dt "string";
-	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	addAttr -ci true -sn "SquashStretch" -ln "SquashStretch" -dv 1 -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "Orients" -ln "Orients" -min 0 -max 1 -en "Default:SN" -at "enum";
+	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
 	setAttr ".precode" -type "string" "";
-	setAttr -l on ".Build_Command" -type "string" "exec_head.build_head_block()";
-	setAttr -l on ".Import_Command" -type "string" "import exec_head";
+	setAttr -l on ".Build_Command" -type "string" "exec_head_v003.build_head_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_head_v003";
+	setAttr ".postcode" -type "string" "";
 	setAttr ".SetParent" -type "string" "Spine_Chest_Top_IK_Ctrl";
-	setAttr -cb on ".Ribbon" yes;
-	setAttr -k on ".CtrlSize";
 	setAttr -cb on ".HeadCtrlType";
-	setAttr ".Help" -type "string" "Possible parent: Head_Jnt\n";
+	setAttr -cb on ".Ribbon";
 	setAttr -k on ".SecundaryRibbon";
+	setAttr -k on ".CtrlSize";
 	setAttr -cb on ".CtrlColor";
 	setAttr ".SetGameParent" -type "string" "";
-	setAttr ".postcode" -type "string" "";
+	setAttr -cb on ".SquashStretch";
+	setAttr -cb on ".Orients";
+	setAttr ".Help" -type "string" (
+		"Overview:\n  This will create a Neck and a Head System.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetParent: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- HeadCtrlType: choose one option (for example: octagon, hexagon, square, sphere).\n- Ribbon: ON adds one sub controller per neck joint (Neck_1_Ctrl...), shown with Neck_Ctrl Vis.\n- SecundaryRibbon: how many neck joints (default 3). The first one sits on the Neck guide, Head_Bnd on the Head guide.\n- CtrlSize: numeric value that controls size/amount/intensity (default 4).\n- CtrlColor: choose one option (for example: yellow, lightBlue, blue, white).\n- SquashStretch: adds Volume on Neck_Ctrl, the neck gets thinner when it stretches and thicker when it squashes.\n- Orients: Default keeps Neck_Ctrl along the neck, SN aligns the neck controllers to the world like the spine and uses xzy rotate orders on Neck_Ctrl / Head_Ctrl.\n- Neck_Ctrl Stretch: 1 lets Head_Ctrl stretch the neck, 0 keeps the neck length (the head joint stays on the line to Head_Ctrl).\n"
+		+ "- Neck_End_Ctrl: under Head_Ctrl, on the Head guide. The neck goes to it, so Head_Ctrl moves it, and moving it changes where the neck enters the head without moving the head. Rotating it twists the top of the neck and curves the neck (it turns the end of the neck curve, a head rotation does not curve it, CurveAmount multiplies its rotation for the curve, default 2). Scaling it scales the neck joints with a falloff (none on the first joint, more near the head, Head_Bnd keeps Head_Ctrl scale). Hidden by default, NeckEndVis shows it.\n- Neck attrs on every controller: Stretch, CurveAmount, Volume, Vis and NeckEndVis live in a Neck_Attrs_Loc shape instanced under Neck_Ctrl, Head_Ctrl, Neck_End_Ctrl and the Neck_N sub controllers, like the Limb. The values are on a Neck_Attrs_Loc_Data node, the shape has proxies of them.\n- Template parent examples: Head_Jnt, L_Hand_Ankle_Jnt, Head_Ctrl.\n\nTips:\n- if a field says left/right or mirror, use it to generate the opposite side quickly.");
 createNode hyperLayout -n "hyperLayout5";
 	rename -uid "F5AC0CCF-4C62-3E4A-2C51-7AB104E08F08";
 	setAttr ".ihi" 0;
@@ -13482,19 +12672,19 @@ createNode network -n "L_Eyes_Config";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
 	addAttr -ci true -sn "SetParent" -ln "SetParent" -dt "string";
 	addAttr -ci true -sn "EyesAmount" -ln "EyesAmount" -min 0 -max 1 -en "Two:One" -at "enum";
-	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
 	addAttr -ci true -sn "CtrlSize" -ln "CtrlSize" -dv 4 -min 1 -max 20 -at "long";
-	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
 	setAttr ".precode" -type "string" "";
-	setAttr -l on ".Build_Command" -type "string" "exec_eyes.build_eyes_block()";
-	setAttr -l on ".Import_Command" -type "string" "import exec_eyes";
+	setAttr -l on ".Build_Command" -type "string" "exec_eyes_v001.build_eyes_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_eyes_v001";
+	setAttr ".postcode" -type "string" "";
 	setAttr ".SetParent" -type "string" "Head_Jnt";
 	setAttr -cb on ".EyesAmount";
-	setAttr ".Help" -type "string" "Possible parent: Create Eye aim system";
 	setAttr -k on ".CtrlSize";
-	setAttr ".postcode" -type "string" "";
+	setAttr ".Help" -type "string" "Overview:\n  Will create eyes aim system.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetParent: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- EyesAmount: choose one option (for example: Two, One).\n- CtrlSize: numeric value that controls size/amount/intensity (default 4).\n- Template parent examples: Spine_End_Jnt, Head_Jnt, L_Wrist_Jnt.\n\nTips:\n- start with defaults, build once, then tweak only the fields you need.";
 createNode hyperLayout -n "hyperLayout85";
 	rename -uid "D116AEAC-460E-F8B7-44FE-A1A951BD294F";
 	setAttr ".ihi" 0;
@@ -13504,9 +12694,13 @@ createNode network -n "L_Pupil_Config";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
 	addAttr -ci true -sn "SetParent" -ln "SetParent" -dt "string";
 	addAttr -ci true -sn "Mirror" -ln "Mirror" -min 0 -max 1 -at "bool";
 	addAttr -ci true -sn "AutoRotate" -ln "AutoRotate" -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "SegScaleCompensate" -ln "SegScaleCompensate" -dv 1 -min 0 
+		-max 1 -at "bool";
+	addAttr -ci true -sn "IndependentScale" -ln "IndependentScale" -min 0 -max 1 -at "bool";
 	addAttr -ci true -sn "CtrlSize" -ln "CtrlSize" -dv 1 -min 1 -max 20 -at "long";
 	addAttr -ci true -sn "CtrlColor" -ln "CtrlColor" -min 0 -max 7 -en "lightBlue:blue:white:purple:green:red:yellow:grey" 
 		-at "enum";
@@ -13514,19 +12708,20 @@ createNode network -n "L_Pupil_Config";
 		-at "enum";
 	addAttr -ci true -sn "TwistAxis" -ln "TwistAxis" -min 0 -max 2 -en "X:Y:Z" -at "enum";
 	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
-	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
 	setAttr ".precode" -type "string" "";
-	setAttr -l on ".Build_Command" -type "string" "exec_chain.build_chain_block()";
-	setAttr -l on ".Import_Command" -type "string" "import exec_chain";
+	setAttr -l on ".Build_Command" -type "string" "exec_chain_v001.build_chain_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_chain_v001";
+	setAttr ".postcode" -type "string" "# Hide Extra Attributes\n\nfor lttr in [\"L_\", \"R_\"]:\n    for attr in  [\"translateX\", \"translateY\", \"translateZ\", \"rotateY\", \"rotateZ\", \"scaleX\",\"RotateOrder\"]:\n        cmds.setAttr(\"{}Pupil_A_Ctrl.{}\".format(lttr, attr), e=True, lock=True, keyable=False)";
 	setAttr ".SetParent" -type "string" "L_Eyes_Bnd";
 	setAttr -cb on ".Mirror" yes;
 	setAttr -cb on ".AutoRotate";
+	setAttr -cb on ".SegScaleCompensate";
+	setAttr -cb on ".IndependentScale";
 	setAttr -k on ".CtrlSize" 3;
 	setAttr -cb on ".CtrlColor";
 	setAttr -cb on ".CtrlType" 9;
 	setAttr -cb on ".TwistAxis";
-	setAttr ".Help" -type "string" "Create a FK Chain";
-	setAttr ".postcode" -type "string" "# Hide Extra Attributes\n\nfor lttr in [\"L_\", \"R_\"]:\n    for attr in  [\"translateX\", \"translateY\", \"translateZ\", \"rotateY\", \"rotateZ\", \"scaleX\",\"RotateOrder\"]:\n        cmds.setAttr(\"{}Pupil_A_Ctrl.{}\".format(lttr, attr), e=True, lock=True, keyable=False)";
+	setAttr ".Help" -type "string" "Overview:\n  Create a FK Chain.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetParent: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- Mirror: turn this ON/OFF depending on whether you want that feature.\n- AutoRotate: turn this ON/OFF depending on whether you want that feature.\n- SegScaleCompensate: turn this ON/OFF to enable or disable segmentScaleCompensate on all joints (FK + bind). Default is ON.\n- CtrlSize: numeric value that controls size/amount/intensity (default 1).\n- CtrlColor: choose one option (for example: lightBlue, blue, white, purple).\n- CtrlType: choose one option (for example: square, sphere, cube, octagon).\n- Template parent examples: Spine_End_Jnt, Head_Jnt, L_Wrist_Jnt.\n\nTips:\n- if a field says left/right or mirror, use it to generate the opposite side quickly.";
 createNode hyperLayout -n "hyperLayout71";
 	rename -uid "D0B00D5E-414E-4B6B-1BAE-0785CC6D73D2";
 	setAttr ".ihi" 0;
@@ -13536,9 +12731,13 @@ createNode network -n "Tail_Config1";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
 	addAttr -ci true -sn "SetParent" -ln "SetParent" -dt "string";
 	addAttr -ci true -sn "Mirror" -ln "Mirror" -min 0 -max 1 -at "bool";
 	addAttr -ci true -sn "AutoRotate" -ln "AutoRotate" -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "SegScaleCompensate" -ln "SegScaleCompensate" -dv 1 -min 0 
+		-max 1 -at "bool";
+	addAttr -ci true -sn "IndependentScale" -ln "IndependentScale" -min 0 -max 1 -at "bool";
 	addAttr -ci true -sn "CtrlSize" -ln "CtrlSize" -dv 1 -min 1 -max 20 -at "long";
 	addAttr -ci true -sn "CtrlColor" -ln "CtrlColor" -min 0 -max 7 -en "lightBlue:blue:white:purple:green:red:yellow:grey" 
 		-at "enum";
@@ -13546,19 +12745,20 @@ createNode network -n "Tail_Config1";
 		-at "enum";
 	addAttr -ci true -sn "TwistAxis" -ln "TwistAxis" -min 0 -max 2 -en "X:Y:Z" -at "enum";
 	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
-	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
 	setAttr ".precode" -type "string" "";
-	setAttr -l on ".Build_Command" -type "string" "exec_chain.build_chain_block()";
-	setAttr -l on ".Import_Command" -type "string" "import exec_chain";
+	setAttr -l on ".Build_Command" -type "string" "exec_chain_v001.build_chain_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_chain_v001";
+	setAttr ".postcode" -type "string" "";
 	setAttr ".SetParent" -type "string" "Spine_Bottom_Ik_Ctrl";
 	setAttr -cb on ".Mirror";
 	setAttr -cb on ".AutoRotate" yes;
+	setAttr -cb on ".SegScaleCompensate";
+	setAttr -cb on ".IndependentScale";
 	setAttr -k on ".CtrlSize";
 	setAttr -cb on ".CtrlColor";
 	setAttr -cb on ".CtrlType" 9;
 	setAttr -cb on ".TwistAxis";
-	setAttr ".Help" -type "string" "Create a FK Chain";
-	setAttr ".postcode" -type "string" "";
+	setAttr ".Help" -type "string" "Overview:\n  Create a FK Chain.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetParent: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- Mirror: turn this ON/OFF depending on whether you want that feature.\n- AutoRotate: turn this ON/OFF depending on whether you want that feature.\n- SegScaleCompensate: turn this ON/OFF to enable or disable segmentScaleCompensate on all joints (FK + bind). Default is ON.\n- CtrlSize: numeric value that controls size/amount/intensity (default 1).\n- CtrlColor: choose one option (for example: lightBlue, blue, white, purple).\n- CtrlType: choose one option (for example: square, sphere, cube, octagon).\n- Template parent examples: Spine_End_Jnt, Head_Jnt, L_Wrist_Jnt.\n\nTips:\n- if a field says left/right or mirror, use it to generate the opposite side quickly.";
 createNode hyperLayout -n "hyperLayout80";
 	rename -uid "69CDEA6C-4547-00BD-8E25-10AAB611D05C";
 	setAttr ".ihi" 0;
@@ -13568,21 +12768,21 @@ createNode network -n "TailWing_Config";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
 	addAttr -ci true -sn "SetParent" -ln "SetParent" -dt "string";
 	addAttr -ci true -sn "Amount" -ln "Amount" -dv 5 -min 1 -max 20 -at "long";
-	addAttr -ci true -sn "Mirror" -ln "Mirror" -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "Mirror" -ln "Mirror" -dv 1 -min 0 -max 1 -at "bool";
 	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
-	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
 	setAttr ".precode" -type "string" "";
-	setAttr -l on ".Build_Command" -type "string" "exec_wingmodule.build_wingmodule_block()";
-	setAttr -l on ".Import_Command" -type "string" "import exec_wingmodule";
-	setAttr ".SetParent" -type "string" "Tail_B_Ctrl";
-	setAttr -k on ".Amount" 12;
-	setAttr -cb on ".Mirror";
-	setAttr ".Help" -type "string" "Will Create Single Wing Module";
+	setAttr -l on ".Build_Command" -type "string" "exec_wingmodule_v001.build_wingmodule_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_wingmodule_v001";
 	setAttr ".postcode" -type "string" (
 		"import maya.cmds as cmds\n\ndef parent_tailwing_feather_bends_chained(\n    part=\"TailWing_Start\"\n):\n    \"\"\"\n    Chains feather bend joints using string parsing only.\n    No regex, no assumptions about numbering length.\n    \"\"\"\n\n    joints = cmds.ls(type=\"joint\")\n\n    bases = {}\n    bends = {}\n\n    for j in joints:\n        if not j.startswith(f\"{part}_JR_Fthr_\"):\n            continue\n\n        # BASE: TailWing_Start_JR_Fthr_0010_Bnd\n        if \"Bend\" not in j and j.endswith(\"_Bnd\"):\n            feather_num = j.split(\"_JR_Fthr_\")[-1].replace(\"_Bnd\", \"\")\n            bases[feather_num] = j\n            continue\n\n        # BEND: TailWing_Start_JR_Fthr_0010Bend02_Bnd\n        if \"Bend\" in j and j.endswith(\"_Bnd\"):\n            tmp = j.split(\"_JR_Fthr_\")[-1].replace(\"_Bnd\", \"\")\n            feather_num, bend_part = tmp.split(\"Bend\")\n            bend_index = int(bend_part)\n\n            bends.setdefault(feather_num, {})[bend_index] = j\n\n    # build chained hierarchy\n    for feather_num, base_joint in bases.items():\n        if feather_num not in bends:\n"
 		+ "            continue\n\n        previous_parent = base_joint\n\n        for bend_index in sorted(bends[feather_num].keys()):\n            bend_joint = bends[feather_num][bend_index]\n\n            if cmds.listRelatives(bend_joint, parent=True) != [previous_parent]:\n                cmds.parent(bend_joint, previous_parent)\n\n            previous_parent = bend_joint\n\n    print(\"TailWing feather bend chained parenting completed.\")\n\nparent_tailwing_feather_bends_chained()\n");
+	setAttr ".SetParent" -type "string" "Tail_B_Ctrl";
+	setAttr -k on ".Amount" 12;
+	setAttr -cb on ".Mirror" no;
+	setAttr ".Help" -type "string" "Overview:\n  Will Create single Wing Module.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetParent: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- Amount: numeric value that controls size/amount/intensity (default 5).\n- Mirror: turn this ON/OFF depending on whether you want that feature.\n- Template parent examples: Spine_End_Jnt, Head_Jnt, L_Wrist_Jnt.\n\nTips:\n- if a field says left/right or mirror, use it to generate the opposite side quickly.";
 createNode hyperLayout -n "NewGuide_hyperLayout23";
 	rename -uid "27B98936-4B88-2A4A-E5B6-9399B643BBCF";
 	setAttr ".ihi" 0;
@@ -13592,6 +12792,7 @@ createNode network -n "L_Foot_Config";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
 	addAttr -ci true -sn "SetIKCtrl" -ln "SetIKCtrl" -dt "string";
 	addAttr -ci true -sn "SetFKCtrl" -ln "SetFKCtrl" -dt "string";
 	addAttr -ci true -sn "Mirror" -ln "Mirror" -min 0 -max 2 -en "True:False:Right_Only" 
@@ -13601,11 +12802,13 @@ createNode network -n "L_Foot_Config";
 	addAttr -ci true -sn "IKLeg" -ln "IKLeg" -dt "string";
 	addAttr -ci true -sn "CtrlSize" -ln "CtrlSize" -dv 1 -min 1 -max 20 -at "long";
 	addAttr -ci true -sn "SetGameParent" -ln "SetGameParent" -dt "string";
+	addAttr -ci true -sn "ParallelToFloor" -ln "ParallelToFloor" -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "Orients" -ln "Orients" -min 0 -max 1 -en "Default:SN" -at "enum";
 	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
-	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
 	setAttr ".precode" -type "string" "";
-	setAttr -l on ".Build_Command" -type "string" "exec_foot.build_foot_block()";
-	setAttr -l on ".Import_Command" -type "string" "import exec_foot";
+	setAttr -l on ".Build_Command" -type "string" "exec_foot_v002.build_foot_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_foot_v002";
+	setAttr ".postcode" -type "string" "";
 	setAttr ".SetIKCtrl" -type "string" "L_Ankle_SubIk_Ctrl";
 	setAttr ".SetFKCtrl" -type "string" "L_Ankle_Fk_Ctrl";
 	setAttr -cb on ".Mirror";
@@ -13614,8 +12817,11 @@ createNode network -n "L_Foot_Config";
 	setAttr ".IKLeg" -type "string" "L_Ankle_Ik_IKrp";
 	setAttr -k on ".CtrlSize" 2;
 	setAttr ".SetGameParent" -type "string" "L_Knee_Twist_3_Bnd";
-	setAttr ".Help" -type "string" "Possible parent: L_Foot_BallToes_Jnt\n";
-	setAttr ".postcode" -type "string" "";
+	setAttr -cb on ".ParallelToFloor";
+	setAttr -cb on ".Orients";
+	setAttr ".Help" -type "string" (
+		"Overview:\n  This will create a Foot System for FK and IK Legs.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- Mirror: choose one option (for example: True, False, Right_Only).\n- CtrlSize: numeric value that controls size/amount/intensity (default 1).\n- SetIKCtrl: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- SetFKCtrl: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- SwitchIKFKAttr: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- IkAttrsPosition: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- ParallelToFloor: if checked, the L_Foot_Toes_Ctrl will be oriented parallel to the floor (custom code required in Python).\n- Orients: Default keeps the Mutant controller orients, SN uses the studio orients on the toes controller (same as the Custom_Biped_Orients block FixToes, so that block skips these feet).\n- Template parent examples: L_Hand_Ankle_Jnt, L_Foot_Ankle_Jnt, L_LegSlideSlideDriver_Loc.\n"
+		+ "\nTips:\n- start with defaults, build once, then tweak only the fields you need.");
 createNode hyperLayout -n "hyperLayout63";
 	rename -uid "806D58C6-4BE0-D0D3-DEF1-4798296A3D12";
 	setAttr ".ihi" 0;
@@ -13624,19 +12830,24 @@ createNode network -n "Smart_RFL_Config";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
 	addAttr -ci true -sn "SetRFLAttrsPosition" -ln "SetRFLAttrsPosition" -dt "string";
-	addAttr -ci true -sn "AltMode" -ln "AltMode" -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "AltMode" -ln "AltMode" -min 0 -max 2 -en "Original:SCL:SN" 
+		-at "enum";
+	addAttr -ci true -sn "TransferAttrs" -ln "TransferAttrs" -dv 1 -min 0 -max 1 -at "bool";
 	addAttr -ci true -sn "SetFootBlockName" -ln "SetFootBlockName" -dt "string";
 	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
-	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	addAttr -ci true -sn "MutantBackup" -ln "MutantBackup" -dt "string";
 	setAttr ".precode" -type "string" "";
-	setAttr -l on ".Build_Command" -type "string" "exec_smart_rfl.build_smart_rfl_block()";
-	setAttr -l on ".Import_Command" -type "string" "import exec_smart_rfl";
-	setAttr ".SetRFLAttrsPosition" -type "string" "L_Ankle_Ik_Ctrl";
-	setAttr -cb on ".AltMode" yes;
-	setAttr ".SetFootBlockName" -type "string" "L_Foot";
-	setAttr ".Help" -type "string" "Will create a fancy RFL system for current Feet, Just put the name of the Feet name and the Attrs position ";
+	setAttr -l on ".Build_Command" -type "string" "exec_smart_rfl_v001.build_smart_rfl_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_smart_rfl_v001";
 	setAttr ".postcode" -type "string" "";
+	setAttr ".SetRFLAttrsPosition" -type "string" "L_Ankle_Ik_Ctrl";
+	setAttr -cb on ".AltMode";
+	setAttr -cb on ".TransferAttrs";
+	setAttr ".SetFootBlockName" -type "string" "L_Foot";
+	setAttr ".Help" -type "string" "Overview:\n  Will create a fancy RFL system for current Feet.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- AltMode: choose Original, SCL, or SN. Original keeps the classic Smart RFL behavior, SCL matches the legacy Alt Mode, and SN uses the alternate setup with RY behaving like PivotBallFloor.\n- TransferAttrs: turn this ON/OFF depending on whether you want that feature.\n- SetRFLAttrsPosition: set the node/object name this block should use.\n- SetFootBlockName: set the foot block base name this block should use for SCL and SN.\n\nTips:\n- if a field says left/right or mirror, use it to generate the opposite side quickly.";
+	setAttr -l on ".MutantBackup" -type "string" "{\"AltMode\": {\"type\": \"bool\", \"value\": true}}";
 createNode hyperLayout -n "hyperLayout65";
 	rename -uid "1D7BCABB-4215-5022-210F-DA8AE47C8C67";
 	setAttr ".ihi" 0;
@@ -13645,6 +12856,7 @@ createNode network -n "L_FootBox_Config";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
 	addAttr -ci true -sn "SetToes" -ln "SetToes" -dt "string";
 	addAttr -ci true -sn "SetBallFloor" -ln "SetBallFloor" -dt "string";
 	addAttr -ci true -sn "SetHeel" -ln "SetHeel" -dt "string";
@@ -13652,16 +12864,16 @@ createNode network -n "L_FootBox_Config";
 	addAttr -ci true -sn "SetOut" -ln "SetOut" -dt "string";
 	addAttr -ci true -sn "SetBallParent" -ln "SetBallParent" -dt "string";
 	addAttr -ci true -sn "SetHeelParent" -ln "SetHeelParent" -dt "string";
-	addAttr -ci true -sn "Mirror" -ln "Mirror" -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "Mirror" -ln "Mirror" -dv 1 -min 0 -max 1 -at "bool";
 	addAttr -ci true -sn "Color" -ln "Color" -min 0 -max 10 -en "pink:orange:blue:light_blue:red:green:purple:yellow:cyan:gray:brown" 
 		-at "enum";
 	addAttr -ci true -sn "SetAttrsPosition" -ln "SetAttrsPosition" -dt "string";
-	addAttr -ci true -sn "ForceYZero" -ln "ForceYZero" -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "ForceYZero" -ln "ForceYZero" -dv 1 -min 0 -max 1 -at "bool";
 	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
-	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
 	setAttr ".precode" -type "string" "";
-	setAttr -l on ".Build_Command" -type "string" "exec_footbox.build_footbox_block()";
-	setAttr -l on ".Import_Command" -type "string" "import exec_footbox";
+	setAttr -l on ".Build_Command" -type "string" "exec_footbox_v001.build_footbox_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_footbox_v001";
+	setAttr ".postcode" -type "string" "";
 	setAttr ".SetToes" -type "string" "L_Foot_Toes_RFL_Grp";
 	setAttr ".SetBallFloor" -type "string" "L_Foot_BallFloor_RFL_Grp";
 	setAttr ".SetHeel" -type "string" "L_Foot_Heel_RFL_Grp";
@@ -13669,12 +12881,11 @@ createNode network -n "L_FootBox_Config";
 	setAttr ".SetOut" -type "string" "L_Foot_Out_RFL_Grp";
 	setAttr ".SetBallParent" -type "string" "L_Foot_Toes_Ctrl";
 	setAttr ".SetHeelParent" -type "string" "L_Foot_Ankle_Bnd";
-	setAttr -cb on ".Mirror" yes;
+	setAttr -cb on ".Mirror";
 	setAttr -cb on ".Color";
 	setAttr ".SetAttrsPosition" -type "string" "L_Hip_Jnt_Switch_Loc";
-	setAttr -cb on ".ForceYZero" yes;
-	setAttr ".Help" -type "string" "Create foot boxes for the foot block";
-	setAttr ".postcode" -type "string" "";
+	setAttr -cb on ".ForceYZero";
+	setAttr ".Help" -type "string" "Overview:\n  Create foot boxes geos for the foot block.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetAttrsPosition: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- Mirror: turn this ON/OFF depending on whether you want that feature.\n- Color: choose one option (for example: pink, orange, blue, light_blue).\n- ForceYZero: turn this ON/OFF depending on whether you want that feature.\n- SetToes: set the node/object name this block should use.\n- SetBallFloor: set the node/object name this block should use.\n- Template parent examples: L_Foot_Ankle_Jnt, Spine_End_Jnt, Head_Jnt.\n- Template attrs-position examples: Vis_Ctrl, L_Eyelids_Scale_Ctrl, L_Brow_Ctrl.\n\nTips:\n- if a field says left/right or mirror, use it to generate the opposite side quickly.";
 createNode hyperLayout -n "hyperLayout11";
 	rename -uid "9581D4A1-47CE-8217-AE16-D1A89871035C";
 	setAttr ".ihi" 0;
@@ -13684,29 +12895,59 @@ createNode network -n "L_Hand_Config";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
 	addAttr -ci true -sn "SetParent" -ln "SetParent" -dt "string";
+	addAttr -ci true -sn "SetAttrsCtrl" -ln "SetAttrsCtrl" -dt "string";
+	addAttr -ci true -sn "CreateFingersAttrs" -ln "CreateFingersAttrs" -dv 1 -min 0 
+		-max 1 -at "bool";
+	addAttr -ci true -sn "SetVisAttr" -ln "SetVisAttr" -dt "string";
+	addAttr -ci true -sn "SetCtrlAttrsParent" -ln "SetCtrlAttrsParent" -dt "string";
+	addAttr -ci true -sn "CtrlSize" -ln "CtrlSize" -dv 4 -min 1 -max 20 -at "long";
 	addAttr -ci true -sn "CtrlType" -ln "CtrlType" -min 0 -max 4 -en "circleX:circleY:circleZ:bounding_cube:pin_cube" 
 		-at "enum";
-	addAttr -ci true -sn "CtrlSize" -ln "CtrlSize" -dv 4 -min 1 -max 20 -at "long";
-	addAttr -ci true -sn "SetAttrsCtrl" -ln "SetAttrsCtrl" -dt "string";
-	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
 	addAttr -ci true -sn "Mirror" -ln "Mirror" -min 0 -max 2 -en "True:False:Right_Only" 
 		-at "enum";
 	addAttr -ci true -sn "SetGameParent" -ln "SetGameParent" -dt "string";
-	addAttr -ci true -sn "SetCtrlAttrsParent" -ln "SetCtrlAttrsParent" -dt "string";
-	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	addAttr -ci true -sn "Orients" -ln "Orients" -min 0 -max 1 -en "Default:SN" -at "enum";
+	addAttr -ci true -sn "FingersIk" -ln "FingersIk" -dv 1 -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "Thumb" -ln "Thumb" -dv 1 -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "Index" -ln "Index" -dv 1 -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "Middle" -ln "Middle" -dv 1 -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "Ring" -ln "Ring" -dv 1 -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "Pinky" -ln "Pinky" -dv 1 -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "AutoCupPlacement" -ln "AutoCupPlacement" -dv 1 -min 0 -max 
+		1 -at "bool";
+	addAttr -ci true -sn "HandPoses" -ln "HandPoses" -dv 1 -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "FingerScale" -ln "FingerScale" -min 0 -max 1 -en "Phalanx:Finger" 
+		-at "enum";
+	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
 	setAttr ".precode" -type "string" "";
-	setAttr -l on ".Build_Command" -type "string" "exec_hand.build_hand_block()";
-	setAttr -l on ".Import_Command" -type "string" "import exec_hand";
+	setAttr -l on ".Build_Command" -type "string" "exec_hand_v002.build_hand_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_hand_v002";
+	setAttr ".postcode" -type "string" "#Attach front finger controls to ball joint. \n\nfor lt in [\"L\", \"R\"]:\n    for ctrl in [\"{}_Hand_Pinky_00_Ctrl_Offset_Grp\".format(lt), \"{}_Hand_Middle_00_Ctrl_Offset_Grp\".format(lt), \"{}_Hand_Index_00_Ctrl_Offset_Grp\".format(lt)]:\n        cmds.parentConstraint(\"{}_Foot_BallToes_Bnd\".format(lt), ctrl, mo=True)\n";
 	setAttr ".SetParent" -type "string" "L_Foot_Ankle_Bnd";
-	setAttr -cb on ".CtrlType";
-	setAttr -k on ".CtrlSize";
 	setAttr ".SetAttrsCtrl" -type "string" "new_ctrl";
-	setAttr ".Help" -type "string" "Possible parent: L_Hand_Thumb_03_Jnt, L_Hand_Index_04_Jnt\n";
+	setAttr -cb on ".CreateFingersAttrs";
+	setAttr ".SetVisAttr" -type "string" "";
+	setAttr ".SetCtrlAttrsParent" -type "string" "L_Hand_Palm_Jnt";
+	setAttr -k on ".CtrlSize";
+	setAttr -cb on ".CtrlType";
 	setAttr -cb on ".Mirror";
 	setAttr ".SetGameParent" -type "string" "";
-	setAttr ".SetCtrlAttrsParent" -type "string" "L_Hand_Palm_Jnt";
-	setAttr ".postcode" -type "string" "#Attach front finger controls to ball joint. \n\nfor lt in [\"L\", \"R\"]:\n    for ctrl in [\"{}_Hand_Pinky_00_Ctrl_Offset_Grp\".format(lt), \"{}_Hand_Middle_00_Ctrl_Offset_Grp\".format(lt), \"{}_Hand_Index_00_Ctrl_Offset_Grp\".format(lt)]:\n        cmds.parentConstraint(\"{}_Foot_BallToes_Bnd\".format(lt), ctrl, mo=True)\n\n#Delete extra ring finger\n\ncmds.delete(\"L_Hand_Ring_00_Ctrl_Offset_Grp\", \"R_Hand_Ring_00_Ctrl_Offset_Grp\", \"L_Hand_Ring_00_Bnd\", \"R_Hand_Ring_00_Bnd\", \"L_Hand_Ring_00_Jnt\", \"L_Hand_Ring_00_Jnt\")\ncmds.deleteAttr(\"L_Hand_Palm_Ctrl\", at=\"RingCurl\")\ncmds.deleteAttr(\"R_Hand_Palm_Ctrl\", at=\"RingCurl\")\n\n\n";
+	setAttr -cb on ".Orients";
+	setAttr -cb on ".FingersIk";
+	setAttr -cb on ".Thumb";
+	setAttr -cb on ".Index";
+	setAttr -cb on ".Middle";
+	setAttr -cb on ".Ring" no;
+	setAttr -cb on ".Pinky";
+	setAttr -cb on ".AutoCupPlacement";
+	setAttr -cb on ".HandPoses";
+	setAttr -cb on ".FingerScale";
+	setAttr ".Help" -type "string" (
+		"Overview:\n  Hand Block with 5 fingers or less.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetParent: set the target node name, the hand follows it (move, rotate and scale). new_locator makes a locator at world.\n- If left as default, the tool uses placeholder behavior for setup.\n- SetAttrsCtrl: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- CreateFingersAttrs: turn this ON/OFF depending on whether you want that feature.\n- CtrlSize: numeric value that controls size/amount/intensity (default 4).\n- CtrlType: choose one option (for example: circleX, circleY, circleZ, bounding_cube).\n- Mirror: choose one option (for example: True, False, Right_Only).\n- Orients: Default keeps the Mutant controller orients, SN uses the studio orients (same as the Custom_Biped_Orients block FixFingers, so that block skips this hand).\n- FingersIk: adds an IK to every finger (last 3 bones, the IK ctrl sits on the finger tip) and an <Finger>IkFk switch (0 FK, 1 IK) on the attrs ctrl, or on the Wrist ctrl when CreateFingersAttrs is off. The IK ctrls stay in place when the hand or its parent move, they only follow the Mover / Global. IK ctrl attrs: Twist, Stretch (0-1, the finger grows to reach the ctrl) and Volume (0-1, the stretched bones get thinner). IK ctrl scale scales the last bone (finger 03, thumb 02), every axis on its own (squash the finger pad for a touch), it never moves the IK.\n"
+		+ "- Thumb / Index / Middle / Ring / Pinky: turning a finger off in the builder deletes its guides, turning it on brings them back where they were (default place the first time). The cups guides stay, they are skipped at build when none of their fingers are built.\n- AutoCupPlacement: puts the InnerCup / OutterCup pivots on the palm fold lines (thumb side towards the index knuckle, pinky side between the middle and ring metacarpals), Inner_Cup and OutterCup then cup the palm (positive closes). Done at build, the guides are not moved.\n- HandPoses: adds the Fist, Point, Claw and Flat attrs on the attrs ctrl, added on top of the curls (-100 to 100). Off skips them (needs CreateFingersAttrs).\n- FingerScale: Phalanx (default) every finger controller scales its own joint only. Finger: a finger controller scale goes down the rest of the finger (scale 01 scales 01, 02, 03), the IK chain follows it too. Cups always scale their own joint.\n- Hand attrs on every controller: the curls, cups, poses, IkFk switches and CupCtrls live in a <Side>_Hand_Attrs_Loc shape instanced under every hand controller (fingers, IK, cups, Wrist and the attrs ctrl), like the Limb. The values are on a <Side>_Hand_Attrs_Loc_Data node, the shape has proxies of them.\n"
+		+ "- CupCtrls: Hide:Show attr on the attrs ctrl (or the Wrist ctrl when CreateFingersAttrs is off), hides the Inner_Cup / OutterCup controllers, Hide by default.\n- Controllers scale: cup controllers scale their own joint, the controllers under them do not inherit it.\n- Template parent examples: L_Hand_Ankle_Jnt, L_Hand_Palm_Jnt, Spine_End_Jnt.\n\nTips:\n- if a field says left/right or mirror, use it to generate the opposite side quickly.");
 createNode hyperLayout -n "hyperLayout73";
 	rename -uid "9E80BB62-4F4B-ED02-D2D1-748D3995BC8B";
 	setAttr ".ihi" 0;
@@ -13716,13 +12957,18 @@ createNode network -n "LabelJoints_Config";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
-	addAttr -ci true -sn "Exec" -ln "Exec" -min 0 -max 1 -en "Python:Mel" -at "enum";
-	addAttr -ci true -sn "Code" -ln "Code" -dt "string";
 	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	addAttr -ci true -sn "Exec" -ln "Exec" -min 0 -max 1 -en "Python:Mel" -at "enum";
+	addAttr -ci true -sn "RunBeforeBuild" -ln "RunBeforeBuild" -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "RunAfterBuild" -ln "RunAfterBuild" -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "Code" -ln "Code" -dt "string";
 	setAttr ".precode" -type "string" "";
-	setAttr -l on ".Build_Command" -type "string" "exec_code.build_code_block()";
-	setAttr -l on ".Import_Command" -type "string" "import exec_code";
+	setAttr -l on ".Build_Command" -type "string" "exec_code_v001.build_code_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_code_v001";
+	setAttr ".postcode" -type "string" "";
 	setAttr -cb on ".Exec";
+	setAttr -cb on ".RunBeforeBuild";
+	setAttr -cb on ".RunAfterBuild";
 	setAttr ".Code" -type "string" (
 		"\n\"\"\"   \n--------------------------LABEL JOINTS---------------------------\n\"\"\"\n\ndef mass_label_joints():\n    \"\"\"\n    #Description :\n        Label joints based on selection. \n\n    #Instructions:\n        Select either the specific joints you wish to label, the group they are under and run script. If nothing is selected\n        it will look for Mutant's \"Bind_Joints_Grp\" and label every joint in there; if the group doesn't exist then it will error. \n\n    # Return: None\n    \"\"\"\n\n\n    #Defining possible sufixes.\n    joint_naming_ends = [\"BND\", \"SKIN\", \"SKN\", \"JNT\"]\n\n    #Defining possible prefixes.\n    L_joint_prefixes = [\"L\", \"LF\", \"LB\", \"LC\"]\n    R_joint_prefixes = [\"R\", \"RF\", \"RB\", \"RC\"]\n    skirt_prefixes = [\"SKIRT\", \"COAT\", \"CAPE\", \"DRESS\", \"JACKET\", \"FLAPS\", \"SWEATER\"]\n\n\n    ###DEFINING LIST SCENARIOS BASED ON SELECTION###\n    bind_joint_sel = cmds.ls(sl=True)\n\n    #Check if selection has only one element.\n    if len(bind_joint_sel) == 1:\n        \n        ##If element is joint run as normal.\n        if cmds.objectType(bind_joint_sel[0]) == \"joint\":\n"
 		+ "            bind_joint_sel = cmds.ls(sl=True, type=\"joint\")\n            print(\"List contains one joint.\")\n\n        #If element is transform take all children joints.\n        elif cmds.objectType(bind_joint_sel[0]) == \"transform\":\n            bind_joint_sel = cmds.listRelatives(bind_joint_sel[0], allDescendents=True, type=\"joint\")\n            print(\"List contains one transform node. Taking all children joints.\")\n\n    #Check if selection has more than one element. If yes, take only the joints.\n    elif len(bind_joint_sel) > 1:\n        bind_joint_sel = cmds.ls(sl=True, type=\"joint\")\n\n    #When nothing is selected look for the mutant \"Bind_Joints_Grp\" and apply it to all it's children.          \n    else:\n        bind_joint_sel = cmds.listRelatives(\"Bind_Joints_Grp\", allDescendents=True, type=\"joint\")\n\n    #If the mutant \"Bind_Joints_Grp\" does not exist then ask for a selection. \n    if not bind_joint_sel:\n        cmds.error(\"No Mutant Bind_Joints_Grp found. Please select the joints you wish to add labels to.\")\n\n\n"
@@ -13730,7 +12976,6 @@ createNode network -n "LabelJoints_Config";
 		+ "            else:\n                cmds.setAttr(\"{}.side\".format(bind_joint), 0)\n        \n        #If no letter and no exception as first split, set as center.             \n        else:\n            cmds.setAttr(\"{}.side\".format(bind_joint), 0)\n            \n        #Setting type to \"Other\" for costume name.\n        cmds.setAttr(\"{}.type\".format(bind_joint), 18)\n        \n        \n        \"\"\"\n        #Idea to remove joint suffix. Not needed but will keep just in case.\n        #Determining what name to write in label box.\n        if bind_joint_names[-1].upper() in joint_naming_ends:\n            print(\"JOINT HAS SUFFIX\")\n            \n            if bind_joint_names[0].upper() in L_joint_prefixes or bind_joint_names[0] in R_joint_prefixes:\n                label_name = \"_\".join(bind_joint_names[1:-1])\n                print(\"JOINT HAS PREFIX\")\n            else:\n                label_name = \"_\".join(bind_joint_names[0:-1])\n                print(\"JOINT HAS NO PREFIX\")\n        else:\n            print(\"JOINT HAS NO SUFFIX\")\n"
 		+ "            if bind_joint_names[0].upper() in L_joint_prefixes or bind_joint_names[0] in R_joint_prefixes:\n                label_name = \"_\".join(bind_joint_names[1:])\n                print(\"JOINT HAS PREFIX\")\n                \n            \n            else:\n                label_name = \"_\".join(bind_joint_names)\n                print(\"JOINT HAS NO PREFIX\")\n        \"\"\"\n        \n        #Determining what name to write in label box.\n        if bind_joint_names[0].upper() in L_joint_prefixes or bind_joint_names[0].upper() in R_joint_prefixes:\n            label_name = \"_\".join(bind_joint_names[1:])\n            \n        elif bind_joint.upper().startswith(\"LEFT\"):\n            label_name = bind_joint.replace(\"Left\", \"\")\n            \n        elif bind_joint.upper().startswith(\"RIGHT\"):\n            label_name = bind_joint.replace(\"Right\", \"\")\n\n        else:\n            label_name = \"_\".join(bind_joint_names[0:])        \n        \n\n        #Setting the label name on the joint\n        cmds.setAttr(\"{}.otherType\".format(bind_joint), label_name, type=\"string\")  \n"
 		+ "        \ncmds.select(\"Bind_Joints_Grp\")\nmass_label_joints()\ncmds.select(cl=True)");
-	setAttr ".postcode" -type "string" "";
 createNode hyperLayout -n "hyperLayout74";
 	rename -uid "3688D6EB-4182-F3CE-0B0B-6AAB3260B765";
 	setAttr ".ihi" 0;
@@ -13740,18 +12985,22 @@ createNode network -n "WingWristJoint_Config";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
-	addAttr -ci true -sn "Exec" -ln "Exec" -min 0 -max 1 -en "Python:Mel" -at "enum";
-	addAttr -ci true -sn "Code" -ln "Code" -dt "string";
 	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	addAttr -ci true -sn "Exec" -ln "Exec" -min 0 -max 1 -en "Python:Mel" -at "enum";
+	addAttr -ci true -sn "RunBeforeBuild" -ln "RunBeforeBuild" -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "RunAfterBuild" -ln "RunAfterBuild" -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "Code" -ln "Code" -dt "string";
 	setAttr ".precode" -type "string" "";
-	setAttr -l on ".Build_Command" -type "string" "exec_code.build_code_block()";
-	setAttr -l on ".Import_Command" -type "string" "import exec_code";
+	setAttr -l on ".Build_Command" -type "string" "exec_code_v001.build_code_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_code_v001";
+	setAttr ".postcode" -type "string" "";
 	setAttr -cb on ".Exec";
+	setAttr -cb on ".RunBeforeBuild";
+	setAttr -cb on ".RunAfterBuild";
 	setAttr ".Code" -type "string" (
 		"#Creates joint IK, FK and Bnd joints for the wrist so we can skin it. \n\ncmds.select(cl=True)\nfor lt in [\"L\", \"R\"]:\n    #Create Wrist joint. \n    wrist_bnd_jnt = cmds.joint(name=\"{}_wingWrist_Bnd\".format(lt))\n    cmds.matchTransform(wrist_bnd_jnt, \"{}_Wrist_Fk_Ctrl\".format(lt))\n    cmds.makeIdentity(wrist_bnd_jnt)\n    \n    #Create IK FK Chain Joints\n    wrist_fk_jnt = cmds.duplicate(wrist_bnd_jnt, name = \"{}_wingWrist_FK_jnt\".format(lt))\n    wrist_ik_jnt = cmds.duplicate(wrist_bnd_jnt, name = \"{}_wingWrist_IK_jnt\".format(lt))\n    bnd_constraint = cmds.parentConstraint(wrist_ik_jnt, wrist_fk_jnt,wrist_bnd_jnt, mo=True)\n    bnd_scale_constraint = cmds.scaleConstraint(wrist_ik_jnt, wrist_fk_jnt,wrist_bnd_jnt, mo=True)\n    cmds.setAttr(\"{}.interpType\".format(bnd_constraint[0]), 2)\n    \n    #Connecting chain setups. \n    cmds.parentConstraint(\"{}_Wrist_Fk_Ctrl\".format(lt), wrist_fk_jnt, mo=True)\n    cmds.scaleConstraint(\"{}_Wrist_Fk_Ctrl\".format(lt), wrist_fk_jnt, mo=True)\n    cmds.parentConstraint(\"{}_Wrist_Ik_Ctrl\".format(lt), wrist_ik_jnt, mo=True)\n"
 		+ "    cmds.scaleConstraint(\"{}_Wrist_Ik_Ctrl\".format(lt), wrist_ik_jnt, mo=True)\n    \n    cmds.connectAttr(\"{}_Shoulder_Jnt_Switch_Loc.Switch_IK_FK\".format(lt), \"{}.{}_wingWrist_FK_jntW1\".format(bnd_constraint[0], lt))\n    cmds.connectAttr(\"{}_Shoulder_Jnt_Switch_Loc.Switch_IK_FK\".format(lt), \"{}.{}_wingWrist_FK_jntW1\".format(bnd_scale_constraint[0], lt))\n    reverseNode = cmds.shadingNode(\"reverse\", name=\"{}_WristBndReverse\".format(lt), asUtility=True)\n    cmds.connectAttr(\"{}_Shoulder_Jnt_Switch_Loc.Switch_IK_FK\".format(lt), \"{}.input.inputX\".format(reverseNode))\n    cmds.connectAttr(\"{}.output.outputX\".format(reverseNode), \"{}.{}_wingWrist_IK_jntW0\".format(bnd_constraint[0], lt))\n    cmds.connectAttr(\"{}.output.outputX\".format(reverseNode), \"{}.{}_wingWrist_IK_jntW0\".format(bnd_scale_constraint[0], lt))\n    \n    #Placing joints in groups\n    cmds.parent(wrist_bnd_jnt, \"Bind_Joints_Grp\")\n    IKFK_grp = cmds.group(\"{}_wingWrist_FK_jnt\".format(lt), \"{}_wingWrist_IK_jnt\".format(lt), name=\"{}_WingWrist_IKFKJoints_Grp\".format(lt))\n"
 		+ "    cmds.parent(IKFK_grp, \"Miscellaneous_Grp\")\n    \n    #Setting for next side\n    cmds.select(cl=True)\n\n\n\n");
-	setAttr ".postcode" -type "string" "";
 createNode hyperLayout -n "hyperLayout78";
 	rename -uid "5CFDE601-44C4-A101-F009-A3A856F1CDFD";
 	setAttr ".ihi" 0;
@@ -13761,18 +13010,22 @@ createNode network -n "ParentWingToLimb_Config";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
-	addAttr -ci true -sn "Exec" -ln "Exec" -min 0 -max 1 -en "Python:Mel" -at "enum";
-	addAttr -ci true -sn "Code" -ln "Code" -dt "string";
 	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	addAttr -ci true -sn "Exec" -ln "Exec" -min 0 -max 1 -en "Python:Mel" -at "enum";
+	addAttr -ci true -sn "RunBeforeBuild" -ln "RunBeforeBuild" -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "RunAfterBuild" -ln "RunAfterBuild" -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "Code" -ln "Code" -dt "string";
 	setAttr ".precode" -type "string" "";
-	setAttr -l on ".Build_Command" -type "string" "exec_code.build_code_block()";
-	setAttr -l on ".Import_Command" -type "string" "import exec_code";
+	setAttr -l on ".Build_Command" -type "string" "exec_code_v001.build_code_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_code_v001";
+	setAttr ".postcode" -type "string" "";
 	setAttr -cb on ".Exec";
+	setAttr -cb on ".RunBeforeBuild";
+	setAttr -cb on ".RunAfterBuild";
 	setAttr ".Code" -type "string" (
 		"import maya.cmds as cmds\nimport re\n\nfrom Mutant_Tools.Utils.Rigging import main_mutant\nreload(main_mutant)\n\nmt = main_mutant.Mutant()\n\n\n# --------------------------------------------------\n# Data\n# --------------------------------------------------\nSIDES = (\"L\", \"R\")\n\nWING_MAP = {\n    \"Scapulars\": \"Shoulder_Jnt\",\n    \"Secondaries\": \"Elbow_Jnt\",\n    \"Primaries\": \"Wrist_Jnt\",\n}\n\n\n# --------------------------------------------------\n# Build constraints\n# --------------------------------------------------\nfor side in SIDES:\n    for wing_part, fk_part in WING_MAP.items():\n\n        ctrl = f\"{side}_{wing_part}_JR_Wing_000_Ctrl\"\n        fk_ctrl = f\"{side}_{fk_part}\"\n\n        if not cmds.objExists(ctrl) or not cmds.objExists(fk_ctrl):\n            cmds.warning(f\"Missing objects: {ctrl} or {fk_ctrl}\")\n            continue\n\n        # Root group\n        root_grp = cmds.group(ctrl)\n        \n        \n        cmds.parentConstraint(fk_ctrl, root_grp, mo=True)\n        cmds.scaleConstraint(fk_ctrl, root_grp, mo=True)\n\n\n#----------------------------\n"
 		+ "\ndef get_latest_feather_ctrl(side, part):\n    prefix = f\"{side}_{part}_JR_Fthr_\"\n    suffix = \"_Ctrl\"\n\n    ctrls = cmds.ls(f\"{prefix}*{suffix}\", type='transform')\n    if not ctrls:\n        cmds.warning(f\"No controls found for {prefix}*\")\n        return None\n\n    max_index = -1\n    latest_ctrl = None\n\n    for ctrl in ctrls:\n        try:\n            number_part = ctrl.replace(prefix, '').replace(suffix, '')\n            index = int(number_part)\n        except ValueError:\n            continue\n\n        if index > max_index:\n            max_index = index\n            latest_ctrl = ctrl\n\n    return latest_ctrl\n\n# Scapulars ? Elbow\nfor side in ('L', 'R'):\n    src = get_latest_feather_ctrl(side, 'Scapulars')\n    if src:\n        cmds.parentConstraint(\n            src,\n            f\"{side}_Elbow_Fk_Ctrl_Offset_Grp\",\n            mo=True\n        )\n\n# Secondaries ? Wrist\nfor side in ('L', 'R'):\n    src = get_latest_feather_ctrl(side, 'Secondaries')\n    if src:\n        cmds.parentConstraint(\n            src,\n            f\"{side}_Wrist_Fk_Ctrl_Offset_Grp\",\n"
 		+ "            mo=True\n        )\n");
-	setAttr ".postcode" -type "string" "";
 createNode hyperLayout -n "hyperLayout87";
 	rename -uid "6F620378-4087-DC45-AC37-368EB13E1AC5";
 	setAttr ".ihi" 0;
@@ -13782,6 +13035,7 @@ createNode network -n "Alula_Config";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
 	addAttr -ci true -sn "SetParent" -ln "SetParent" -dt "string";
 	addAttr -ci true -sn "Mirror" -ln "Mirror" -min 0 -max 1 -at "bool";
 	addAttr -ci true -sn "AutoRotate" -ln "AutoRotate" -min 0 -max 1 -at "bool";
@@ -13796,10 +13050,10 @@ createNode network -n "Alula_Config";
 	addAttr -ci true -sn "SetLockGuides" -ln "SetLockGuides" -dt "string";
 	addAttr -ci true -sn "SetLockAttrs" -ln "SetLockAttrs" -dt "string";
 	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
-	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
 	setAttr ".precode" -type "string" "";
-	setAttr -l on ".Build_Command" -type "string" "exec_hair.build_hair_block()";
-	setAttr -l on ".Import_Command" -type "string" "import exec_hair";
+	setAttr -l on ".Build_Command" -type "string" "exec_hair_v001.build_hair_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_hair_v001";
+	setAttr ".postcode" -type "string" "# Fix Right Side Parenting \n\nR_alula_group = cmds.group([\"R_Alula_A_01_Ctrl_Offset_Grp\", \"R_Alula_B_01_Ctrl_Offset_Grp\", \"R_Alula_C_01_Ctrl_Offset_Grp\", \"R_Alula_D_01_Ctrl_Offset_Grp\"], name = \"R_Alula_Control_Grp\")\n\ncmds.parentConstraint(\"R_Primaries_JR_Wing_003_Bnd\", R_alula_group, mo=True)\ncmds.scaleConstraint(\"R_Primaries_JR_Wing_003_Bnd\", R_alula_group, mo=True)";
 	setAttr ".SetParent" -type "string" "L_Primaries_JR_Wing_003_Bnd";
 	setAttr -cb on ".Mirror" yes;
 	setAttr -cb on ".AutoRotate";
@@ -13811,8 +13065,7 @@ createNode network -n "Alula_Config";
 	setAttr ".SetLockPin" -type "string" "";
 	setAttr ".SetLockGuides" -type "string" "";
 	setAttr ".SetLockAttrs" -type "string" "";
-	setAttr ".Help" -type "string" "Will create multiple FK chains for a hair setup.\nFor SetLockCtrls set the guide from each chain you want to lock. \nFor SetLockParent set what to lock the ctrls to. \nFor SetLockAttrs set ctrl to have the lock attrs.";
-	setAttr ".postcode" -type "string" "# Fix Right Side Parenting \n\nR_alula_group = cmds.group([\"R_Alula_A_01_Ctrl_Offset_Grp\", \"R_Alula_B_01_Ctrl_Offset_Grp\", \"R_Alula_C_01_Ctrl_Offset_Grp\", \"R_Alula_D_01_Ctrl_Offset_Grp\"], name = \"R_Alula_Control_Grp\")\n\ncmds.parentConstraint(\"R_Primaries_JR_Wing_003_Bnd\", R_alula_group, mo=True)\ncmds.scaleConstraint(\"R_Primaries_JR_Wing_003_Bnd\", R_alula_group, mo=True)";
+	setAttr ".Help" -type "string" "Overview:\n  Will create multiple FK chains for a hair setup.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetParent: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- Mirror: turn this ON/OFF depending on whether you want that feature.\n- AutoRotate: turn this ON/OFF depending on whether you want that feature.\n- SubAutoRotate: turn this ON/OFF depending on whether you want that feature.\n- CtrlSize: numeric value that controls size/amount/intensity (default 1).\n- CtrlColor: choose one option (for example: lightBlue, blue, white, purple).\n- Template parent examples: Spine_End_Jnt, Head_Jnt, L_Wrist_Jnt.\n\nTips:\n- if a field says left/right or mirror, use it to generate the opposite side quickly.";
 createNode hyperLayout -n "hyperLayout88";
 	rename -uid "8C125D15-430E-19A2-C3CF-59ACA04202EF";
 	setAttr ".ihi" 0;
@@ -13822,15 +13075,19 @@ createNode network -n "FeatherSubCtrlsVisAttrs_Config";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
-	addAttr -ci true -sn "Exec" -ln "Exec" -min 0 -max 1 -en "Python:Mel" -at "enum";
-	addAttr -ci true -sn "Code" -ln "Code" -dt "string";
 	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	addAttr -ci true -sn "Exec" -ln "Exec" -min 0 -max 1 -en "Python:Mel" -at "enum";
+	addAttr -ci true -sn "RunBeforeBuild" -ln "RunBeforeBuild" -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "RunAfterBuild" -ln "RunAfterBuild" -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "Code" -ln "Code" -dt "string";
 	setAttr ".precode" -type "string" "";
-	setAttr -l on ".Build_Command" -type "string" "exec_code.build_code_block()";
-	setAttr -l on ".Import_Command" -type "string" "import exec_code";
-	setAttr -cb on ".Exec";
-	setAttr ".Code" -type "string" "# Feather sub controls vis switches\n\nfeather_controls = [\"Secondaries_JR_Wing_000_Ctrl\", \"Primaries_JR_Wing_000_Ctrl\"]\n\nfor lt in [\"L_\", \"R_\"]:\n    for ctrl in feather_controls:\n        cmds.addAttr(\"{}{}\".format(lt, ctrl), ln=\"FeatherSubControls\", at=\"enum\", en=\"Hide:Show:\", keyable=True)\n        \n\n\n\nfor lt in [\"L_\", \"R_\"]:\n    for ctrl, offsetGrp in zip([\"Secondaries_JR_Wing_000_Ctrl\", \"Primaries_JR_Wing_000_Ctrl\"], [cmds.ls(\"*Secondaries_JR_Fthr_00*_AutoJnt\"), cmds.ls(\"*Primaries_JR_Fthr_00*_AutoJnt\")]):\n        for grp in offsetGrp:\n            if grp.startswith(lt):\n                cmds.connectAttr(\"{}{}.FeatherSubControls\".format(lt, ctrl), \"{}.visibility\".format(grp))\n        \n        ";
+	setAttr -l on ".Build_Command" -type "string" "exec_code_v001.build_code_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_code_v001";
 	setAttr ".postcode" -type "string" "";
+	setAttr -cb on ".Exec";
+	setAttr -cb on ".RunBeforeBuild";
+	setAttr -cb on ".RunAfterBuild";
+	setAttr ".Code" -type "string" "# Feather sub controls vis switches\n\nfeather_controls = [\"Secondaries_JR_Wing_000_Ctrl\", \"Primaries_JR_Wing_000_Ctrl\"]\n\nfor lt in [\"L_\", \"R_\"]:\n    for ctrl in feather_controls:\n        cmds.addAttr(\"{}{}\".format(lt, ctrl), ln=\"FeatherSubControls\", at=\"enum\", en=\"Hide:Show:\", keyable=True)\n        \n\n\n\nfor lt in [\"L_\", \"R_\"]:\n    for ctrl, offsetGrp in zip([\"Secondaries_JR_Wing_000_Ctrl\", \"Primaries_JR_Wing_000_Ctrl\"], [cmds.ls(\"*Secondaries_JR_Fthr_00*_AutoJnt\"), cmds.ls(\"*Primaries_JR_Fthr_00*_AutoJnt\")]):\n        for grp in offsetGrp:\n            if grp.startswith(lt):\n                cmds.connectAttr(\"{}{}.FeatherSubControls\".format(lt, ctrl), \"{}.visibility\".format(grp))\n        \n        ";
 createNode hyperLayout -n "hyperLayout51";
 	rename -uid "4DCDBC0E-4080-D057-3775-98985CCBC620";
 	setAttr ".ihi" 0;
@@ -13839,28 +13096,42 @@ createNode network -n "Eyes_Switches_Config";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
-	addAttr -ci true -sn "Rotate" -ln "Rotate" -min 0 -max 1 -at "bool";
-	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
-	addAttr -ci true -sn "Translate" -ln "Translate" -min 0 -max 1 -at "bool";
-	addAttr -ci true -sn "SetTargetCtrl" -ln "SetTargetCtrl" -dt "string";
-	addAttr -ci true -sn "Spaces" -ln "Spaces" -dt "string";
-	addAttr -ci true -sn "Mirror" -ln "Mirror" -min 0 -max 1 -at "bool";
-	addAttr -ci true -sn "CreateProxyOnTargetCtrl" -ln "CreateProxyOnTargetCtrl" -min 
-		0 -max 1 -at "bool";
-	addAttr -ci true -sn "SetAttrsHolder" -ln "SetAttrsHolder" -dt "string";
 	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	addAttr -ci true -sn "SetTargetCtrl" -ln "SetTargetCtrl" -dt "string";
+	addAttr -ci true -sn "SetAttrsHolder" -ln "SetAttrsHolder" -dt "string";
+	addAttr -ci true -sn "Translate" -ln "Translate" -dv 1 -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "Animbot" -ln "Animbot" -dv 1 -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "Rotate" -ln "Rotate" -dv 1 -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "MaintainOffset" -ln "MaintainOffset" -dv 1 -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "Spaces" -ln "Spaces" -dt "string";
+	addAttr -ci true -sn "CustomNames" -ln "CustomNames" -dt "string";
+	addAttr -ci true -sn "Mirror" -ln "Mirror" -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "AttrName" -ln "AttrName" -dt "string";
+	addAttr -ci true -sn "SplitTranslateRotate" -ln "SplitTranslateRotate" -min 0 -max 
+		1 -at "bool";
+	addAttr -ci true -sn "RunAfterBuild" -ln "RunAfterBuild" -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
+	addAttr -ci true -sn "MutantBackup" -ln "MutantBackup" -dt "string";
 	setAttr ".precode" -type "string" "";
-	setAttr -l on ".Build_Command" -type "string" "exec_spaceSwitches.build_spaceSwitches_block()";
-	setAttr -l on ".Import_Command" -type "string" "import exec_spaceSwitches ";
-	setAttr -cb on ".Rotate" yes;
-	setAttr ".Help" -type "string" "Separate the space switches with a ','";
-	setAttr -cb on ".Translate" yes;
-	setAttr ".SetTargetCtrl" -type "string" "Eyes_Main_Ctrl";
-	setAttr ".Spaces" -type "string" "Head_Jnt, Mover_Gimbal_Ctrl, COG_Ctrl,  Mutant_Tools_Grp";
-	setAttr -cb on ".Mirror";
-	setAttr -cb on ".CreateProxyOnTargetCtrl" yes;
-	setAttr ".SetAttrsHolder" -type "string" "Eyes_Attrs_Loc";
+	setAttr -l on ".Build_Command" -type "string" "exec_spaceSwitches_v001.build_spaceSwitches_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_spaceSwitches_v001 ";
 	setAttr ".postcode" -type "string" "";
+	setAttr ".SetTargetCtrl" -type "string" "Eyes_Main_Ctrl";
+	setAttr ".SetAttrsHolder" -type "string" "Eyes_Attrs_Loc";
+	setAttr -cb on ".Translate";
+	setAttr -cb on ".Animbot";
+	setAttr -cb on ".Rotate";
+	setAttr -cb on ".MaintainOffset";
+	setAttr ".Spaces" -type "string" "Head_Jnt, Mover_Gimbal_Ctrl, COG_Ctrl,  Mutant_Tools_Grp";
+	setAttr ".CustomNames" -type "string" "";
+	setAttr -cb on ".Mirror";
+	setAttr ".AttrName" -type "string" "Follow";
+	setAttr -cb on ".SplitTranslateRotate";
+	setAttr -cb on ".RunAfterBuild";
+	setAttr ".Help" -type "string" (
+		"Overview:\n  This will add space switches to the target ctrl.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetTargetCtrl: set the node/object name this block should use.\n- SetAttrsHolder: set the node/object name this block should use.\n- Spaces: enter names separated by commas (example format: nameA,nameB,nameC).\n- CustomNames: optional display names for the enum, same count as Spaces (example: World,Global,Body). Leave empty to use defaults.\n- Translate: turn this ON/OFF depending on whether you want that feature.\n- Animbot: turn this ON/OFF depending on whether you want that feature.\n- Rotate: turn this ON/OFF depending on whether you want that feature.\n- MaintainOffset: turn this ON/OFF to enable/disable maintain offset on constraints (default: ON).\n- AttrName: custom name for the space switch attribute (default: Follow).\n- SplitTranslateRotate: when ON, creates separate Translate and Rotate space switch attributes instead of one combined attr.\n- RunAfterBuild: Check True to defer execution until after the full build finishes (recommended if target controllers or space references are generated by later blocks).\n"
+		+ "- Template target ctrl examples: Tail_1_Main_Ctrl, Eyes_Main_Ctrl, Head_Ctrl.\n\nTips:\n- if a field says left/right or mirror, use it to generate the opposite side quickly.");
+	setAttr -l on ".MutantBackup" -type "string" "{\"CreateProxyOnTargetCtrl\": {\"type\": \"bool\", \"value\": true}}";
 createNode hyperLayout -n "hyperLayout52";
 	rename -uid "CE7F1570-4544-93CC-6C31-B49F37C30350";
 	setAttr ".ihi" 0;
@@ -13869,28 +13140,42 @@ createNode network -n "Head_Switches_Config";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
-	addAttr -ci true -sn "Rotate" -ln "Rotate" -min 0 -max 1 -at "bool";
-	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
-	addAttr -ci true -sn "Translate" -ln "Translate" -min 0 -max 1 -at "bool";
-	addAttr -ci true -sn "SetTargetCtrl" -ln "SetTargetCtrl" -dt "string";
-	addAttr -ci true -sn "Spaces" -ln "Spaces" -dt "string";
-	addAttr -ci true -sn "Mirror" -ln "Mirror" -min 0 -max 1 -at "bool";
-	addAttr -ci true -sn "CreateProxyOnTargetCtrl" -ln "CreateProxyOnTargetCtrl" -min 
-		0 -max 1 -at "bool";
-	addAttr -ci true -sn "SetAttrsHolder" -ln "SetAttrsHolder" -dt "string";
 	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	addAttr -ci true -sn "SetTargetCtrl" -ln "SetTargetCtrl" -dt "string";
+	addAttr -ci true -sn "SetAttrsHolder" -ln "SetAttrsHolder" -dt "string";
+	addAttr -ci true -sn "Translate" -ln "Translate" -dv 1 -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "Animbot" -ln "Animbot" -dv 1 -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "Rotate" -ln "Rotate" -dv 1 -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "MaintainOffset" -ln "MaintainOffset" -dv 1 -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "Spaces" -ln "Spaces" -dt "string";
+	addAttr -ci true -sn "CustomNames" -ln "CustomNames" -dt "string";
+	addAttr -ci true -sn "Mirror" -ln "Mirror" -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "AttrName" -ln "AttrName" -dt "string";
+	addAttr -ci true -sn "SplitTranslateRotate" -ln "SplitTranslateRotate" -min 0 -max 
+		1 -at "bool";
+	addAttr -ci true -sn "RunAfterBuild" -ln "RunAfterBuild" -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
+	addAttr -ci true -sn "MutantBackup" -ln "MutantBackup" -dt "string";
 	setAttr ".precode" -type "string" "";
-	setAttr -l on ".Build_Command" -type "string" "exec_spaceSwitches.build_spaceSwitches_block()";
-	setAttr -l on ".Import_Command" -type "string" "import exec_spaceSwitches ";
-	setAttr -cb on ".Rotate" yes;
-	setAttr ".Help" -type "string" "Separate the space switches with a ','";
-	setAttr -cb on ".Translate";
-	setAttr ".SetTargetCtrl" -type "string" "Head_Ctrl";
-	setAttr ".Spaces" -type "string" "Mover_Gimbal_Ctrl, COG_Ctrl, Neck_Ctrl, Mutant_Tools_Grp";
-	setAttr -cb on ".Mirror";
-	setAttr -cb on ".CreateProxyOnTargetCtrl" yes;
-	setAttr ".SetAttrsHolder" -type "string" "Neck_Attrs_Loc";
+	setAttr -l on ".Build_Command" -type "string" "exec_spaceSwitches_v001.build_spaceSwitches_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_spaceSwitches_v001 ";
 	setAttr ".postcode" -type "string" "";
+	setAttr ".SetTargetCtrl" -type "string" "Head_Ctrl";
+	setAttr ".SetAttrsHolder" -type "string" "Neck_Attrs_Loc";
+	setAttr -cb on ".Translate" no;
+	setAttr -cb on ".Animbot";
+	setAttr -cb on ".Rotate";
+	setAttr -cb on ".MaintainOffset";
+	setAttr ".Spaces" -type "string" "Mover_Gimbal_Ctrl, COG_Ctrl, Neck_Ctrl, Mutant_Tools_Grp";
+	setAttr ".CustomNames" -type "string" "";
+	setAttr -cb on ".Mirror";
+	setAttr ".AttrName" -type "string" "Follow";
+	setAttr -cb on ".SplitTranslateRotate";
+	setAttr -cb on ".RunAfterBuild";
+	setAttr ".Help" -type "string" (
+		"Overview:\n  This will add space switches to the target ctrl.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetTargetCtrl: set the node/object name this block should use.\n- SetAttrsHolder: set the node/object name this block should use.\n- Spaces: enter names separated by commas (example format: nameA,nameB,nameC).\n- CustomNames: optional display names for the enum, same count as Spaces (example: World,Global,Body). Leave empty to use defaults.\n- Translate: turn this ON/OFF depending on whether you want that feature.\n- Animbot: turn this ON/OFF depending on whether you want that feature.\n- Rotate: turn this ON/OFF depending on whether you want that feature.\n- MaintainOffset: turn this ON/OFF to enable/disable maintain offset on constraints (default: ON).\n- AttrName: custom name for the space switch attribute (default: Follow).\n- SplitTranslateRotate: when ON, creates separate Translate and Rotate space switch attributes instead of one combined attr.\n- RunAfterBuild: Check True to defer execution until after the full build finishes (recommended if target controllers or space references are generated by later blocks).\n"
+		+ "- Template target ctrl examples: Tail_1_Main_Ctrl, Eyes_Main_Ctrl, Head_Ctrl.\n\nTips:\n- if a field says left/right or mirror, use it to generate the opposite side quickly.");
+	setAttr -l on ".MutantBackup" -type "string" "{\"CreateProxyOnTargetCtrl\": {\"type\": \"bool\", \"value\": true}}";
 createNode hyperLayout -n "hyperLayout53";
 	rename -uid "4EF8554C-477E-98E3-3158-C1A8298E83B4";
 	setAttr ".ihi" 0;
@@ -13899,28 +13184,42 @@ createNode network -n "Neck_Switches_Config";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
-	addAttr -ci true -sn "Rotate" -ln "Rotate" -min 0 -max 1 -at "bool";
-	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
-	addAttr -ci true -sn "Translate" -ln "Translate" -min 0 -max 1 -at "bool";
-	addAttr -ci true -sn "SetTargetCtrl" -ln "SetTargetCtrl" -dt "string";
-	addAttr -ci true -sn "Spaces" -ln "Spaces" -dt "string";
-	addAttr -ci true -sn "Mirror" -ln "Mirror" -min 0 -max 1 -at "bool";
-	addAttr -ci true -sn "CreateProxyOnTargetCtrl" -ln "CreateProxyOnTargetCtrl" -min 
-		0 -max 1 -at "bool";
-	addAttr -ci true -sn "SetAttrsHolder" -ln "SetAttrsHolder" -dt "string";
 	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	addAttr -ci true -sn "SetTargetCtrl" -ln "SetTargetCtrl" -dt "string";
+	addAttr -ci true -sn "SetAttrsHolder" -ln "SetAttrsHolder" -dt "string";
+	addAttr -ci true -sn "Translate" -ln "Translate" -dv 1 -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "Animbot" -ln "Animbot" -dv 1 -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "Rotate" -ln "Rotate" -dv 1 -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "MaintainOffset" -ln "MaintainOffset" -dv 1 -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "Spaces" -ln "Spaces" -dt "string";
+	addAttr -ci true -sn "CustomNames" -ln "CustomNames" -dt "string";
+	addAttr -ci true -sn "Mirror" -ln "Mirror" -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "AttrName" -ln "AttrName" -dt "string";
+	addAttr -ci true -sn "SplitTranslateRotate" -ln "SplitTranslateRotate" -min 0 -max 
+		1 -at "bool";
+	addAttr -ci true -sn "RunAfterBuild" -ln "RunAfterBuild" -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
+	addAttr -ci true -sn "MutantBackup" -ln "MutantBackup" -dt "string";
 	setAttr ".precode" -type "string" "";
-	setAttr -l on ".Build_Command" -type "string" "exec_spaceSwitches.build_spaceSwitches_block()";
-	setAttr -l on ".Import_Command" -type "string" "import exec_spaceSwitches ";
-	setAttr -cb on ".Rotate" yes;
-	setAttr ".Help" -type "string" "Separate the space switches with a ','";
-	setAttr -cb on ".Translate";
-	setAttr ".SetTargetCtrl" -type "string" "Neck_Ctrl";
-	setAttr ".Spaces" -type "string" "Spine_End_Jnt, Mover_Gimbal_Ctrl, COG_Ctrl, Mutant_Tools_Grp";
-	setAttr -cb on ".Mirror";
-	setAttr -cb on ".CreateProxyOnTargetCtrl" yes;
-	setAttr ".SetAttrsHolder" -type "string" "Neck_Attrs_Loc";
+	setAttr -l on ".Build_Command" -type "string" "exec_spaceSwitches_v001.build_spaceSwitches_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_spaceSwitches_v001 ";
 	setAttr ".postcode" -type "string" "";
+	setAttr ".SetTargetCtrl" -type "string" "Neck_Ctrl";
+	setAttr ".SetAttrsHolder" -type "string" "Neck_Attrs_Loc";
+	setAttr -cb on ".Translate" no;
+	setAttr -cb on ".Animbot";
+	setAttr -cb on ".Rotate";
+	setAttr -cb on ".MaintainOffset";
+	setAttr ".Spaces" -type "string" "Spine_End_Jnt, Mover_Gimbal_Ctrl, COG_Ctrl, Mutant_Tools_Grp";
+	setAttr ".CustomNames" -type "string" "";
+	setAttr -cb on ".Mirror";
+	setAttr ".AttrName" -type "string" "Follow";
+	setAttr -cb on ".SplitTranslateRotate";
+	setAttr -cb on ".RunAfterBuild";
+	setAttr ".Help" -type "string" (
+		"Overview:\n  This will add space switches to the target ctrl.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetTargetCtrl: set the node/object name this block should use.\n- SetAttrsHolder: set the node/object name this block should use.\n- Spaces: enter names separated by commas (example format: nameA,nameB,nameC).\n- CustomNames: optional display names for the enum, same count as Spaces (example: World,Global,Body). Leave empty to use defaults.\n- Translate: turn this ON/OFF depending on whether you want that feature.\n- Animbot: turn this ON/OFF depending on whether you want that feature.\n- Rotate: turn this ON/OFF depending on whether you want that feature.\n- MaintainOffset: turn this ON/OFF to enable/disable maintain offset on constraints (default: ON).\n- AttrName: custom name for the space switch attribute (default: Follow).\n- SplitTranslateRotate: when ON, creates separate Translate and Rotate space switch attributes instead of one combined attr.\n- RunAfterBuild: Check True to defer execution until after the full build finishes (recommended if target controllers or space references are generated by later blocks).\n"
+		+ "- Template target ctrl examples: Tail_1_Main_Ctrl, Eyes_Main_Ctrl, Head_Ctrl.\n\nTips:\n- if a field says left/right or mirror, use it to generate the opposite side quickly.");
+	setAttr -l on ".MutantBackup" -type "string" "{\"CreateProxyOnTargetCtrl\": {\"type\": \"bool\", \"value\": true}}";
 createNode hyperLayout -n "hyperLayout57";
 	rename -uid "33C0AF74-4436-9273-2BCF-28AB5452A6CD";
 	setAttr ".ihi" 0;
@@ -13929,28 +13228,42 @@ createNode network -n "L_IK_Hip_Switches_Config";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
-	addAttr -ci true -sn "Rotate" -ln "Rotate" -min 0 -max 1 -at "bool";
-	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
-	addAttr -ci true -sn "Translate" -ln "Translate" -min 0 -max 1 -at "bool";
-	addAttr -ci true -sn "SetTargetCtrl" -ln "SetTargetCtrl" -dt "string";
-	addAttr -ci true -sn "Spaces" -ln "Spaces" -dt "string";
-	addAttr -ci true -sn "Mirror" -ln "Mirror" -min 0 -max 1 -at "bool";
-	addAttr -ci true -sn "CreateProxyOnTargetCtrl" -ln "CreateProxyOnTargetCtrl" -min 
-		0 -max 1 -at "bool";
-	addAttr -ci true -sn "SetAttrsHolder" -ln "SetAttrsHolder" -dt "string";
 	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	addAttr -ci true -sn "SetTargetCtrl" -ln "SetTargetCtrl" -dt "string";
+	addAttr -ci true -sn "SetAttrsHolder" -ln "SetAttrsHolder" -dt "string";
+	addAttr -ci true -sn "Translate" -ln "Translate" -dv 1 -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "Animbot" -ln "Animbot" -dv 1 -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "Rotate" -ln "Rotate" -dv 1 -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "MaintainOffset" -ln "MaintainOffset" -dv 1 -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "Spaces" -ln "Spaces" -dt "string";
+	addAttr -ci true -sn "CustomNames" -ln "CustomNames" -dt "string";
+	addAttr -ci true -sn "Mirror" -ln "Mirror" -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "AttrName" -ln "AttrName" -dt "string";
+	addAttr -ci true -sn "SplitTranslateRotate" -ln "SplitTranslateRotate" -min 0 -max 
+		1 -at "bool";
+	addAttr -ci true -sn "RunAfterBuild" -ln "RunAfterBuild" -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
+	addAttr -ci true -sn "MutantBackup" -ln "MutantBackup" -dt "string";
 	setAttr ".precode" -type "string" "";
-	setAttr -l on ".Build_Command" -type "string" "exec_spaceSwitches.build_spaceSwitches_block()";
-	setAttr -l on ".Import_Command" -type "string" "import exec_spaceSwitches ";
-	setAttr -cb on ".Rotate" yes;
-	setAttr ".Help" -type "string" "Separate the space switches with a ','";
-	setAttr -cb on ".Translate" yes;
-	setAttr ".SetTargetCtrl" -type "string" "L_Ankle_Ik_Ctrl";
-	setAttr ".Spaces" -type "string" "Mover_Gimbal_Ctrl, COG_Ctrl, L_Pelvis_Jnt, Mutant_Tools_Grp";
-	setAttr -cb on ".Mirror" yes;
-	setAttr -cb on ".CreateProxyOnTargetCtrl" yes;
-	setAttr ".SetAttrsHolder" -type "string" "L_Hip_Jnt_Switch_Loc";
+	setAttr -l on ".Build_Command" -type "string" "exec_spaceSwitches_v001.build_spaceSwitches_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_spaceSwitches_v001 ";
 	setAttr ".postcode" -type "string" "";
+	setAttr ".SetTargetCtrl" -type "string" "L_Ankle_Ik_Ctrl";
+	setAttr ".SetAttrsHolder" -type "string" "L_Hip_Jnt_Switch_Loc";
+	setAttr -cb on ".Translate";
+	setAttr -cb on ".Animbot";
+	setAttr -cb on ".Rotate";
+	setAttr -cb on ".MaintainOffset";
+	setAttr ".Spaces" -type "string" "Mover_Gimbal_Ctrl, COG_Ctrl, L_Pelvis_Jnt, Mutant_Tools_Grp";
+	setAttr ".CustomNames" -type "string" "";
+	setAttr -cb on ".Mirror" yes;
+	setAttr ".AttrName" -type "string" "Follow";
+	setAttr -cb on ".SplitTranslateRotate";
+	setAttr -cb on ".RunAfterBuild";
+	setAttr ".Help" -type "string" (
+		"Overview:\n  This will add space switches to the target ctrl.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetTargetCtrl: set the node/object name this block should use.\n- SetAttrsHolder: set the node/object name this block should use.\n- Spaces: enter names separated by commas (example format: nameA,nameB,nameC).\n- CustomNames: optional display names for the enum, same count as Spaces (example: World,Global,Body). Leave empty to use defaults.\n- Translate: turn this ON/OFF depending on whether you want that feature.\n- Animbot: turn this ON/OFF depending on whether you want that feature.\n- Rotate: turn this ON/OFF depending on whether you want that feature.\n- MaintainOffset: turn this ON/OFF to enable/disable maintain offset on constraints (default: ON).\n- AttrName: custom name for the space switch attribute (default: Follow).\n- SplitTranslateRotate: when ON, creates separate Translate and Rotate space switch attributes instead of one combined attr.\n- RunAfterBuild: Check True to defer execution until after the full build finishes (recommended if target controllers or space references are generated by later blocks).\n"
+		+ "- Template target ctrl examples: Tail_1_Main_Ctrl, Eyes_Main_Ctrl, Head_Ctrl.\n\nTips:\n- if a field says left/right or mirror, use it to generate the opposite side quickly.");
+	setAttr -l on ".MutantBackup" -type "string" "{\"CreateProxyOnTargetCtrl\": {\"type\": \"bool\", \"value\": true}}";
 createNode hyperLayout -n "hyperLayout58";
 	rename -uid "71EE4A11-42B8-1D4C-83C8-188A07E75553";
 	setAttr ".ihi" 0;
@@ -13959,28 +13272,42 @@ createNode network -n "L_FK_Hip_Switches_Config";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
-	addAttr -ci true -sn "Rotate" -ln "Rotate" -min 0 -max 1 -at "bool";
-	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
-	addAttr -ci true -sn "Translate" -ln "Translate" -min 0 -max 1 -at "bool";
-	addAttr -ci true -sn "SetTargetCtrl" -ln "SetTargetCtrl" -dt "string";
-	addAttr -ci true -sn "Spaces" -ln "Spaces" -dt "string";
-	addAttr -ci true -sn "Mirror" -ln "Mirror" -min 0 -max 1 -at "bool";
-	addAttr -ci true -sn "CreateProxyOnTargetCtrl" -ln "CreateProxyOnTargetCtrl" -min 
-		0 -max 1 -at "bool";
-	addAttr -ci true -sn "SetAttrsHolder" -ln "SetAttrsHolder" -dt "string";
 	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	addAttr -ci true -sn "SetTargetCtrl" -ln "SetTargetCtrl" -dt "string";
+	addAttr -ci true -sn "SetAttrsHolder" -ln "SetAttrsHolder" -dt "string";
+	addAttr -ci true -sn "Translate" -ln "Translate" -dv 1 -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "Animbot" -ln "Animbot" -dv 1 -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "Rotate" -ln "Rotate" -dv 1 -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "MaintainOffset" -ln "MaintainOffset" -dv 1 -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "Spaces" -ln "Spaces" -dt "string";
+	addAttr -ci true -sn "CustomNames" -ln "CustomNames" -dt "string";
+	addAttr -ci true -sn "Mirror" -ln "Mirror" -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "AttrName" -ln "AttrName" -dt "string";
+	addAttr -ci true -sn "SplitTranslateRotate" -ln "SplitTranslateRotate" -min 0 -max 
+		1 -at "bool";
+	addAttr -ci true -sn "RunAfterBuild" -ln "RunAfterBuild" -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
+	addAttr -ci true -sn "MutantBackup" -ln "MutantBackup" -dt "string";
 	setAttr ".precode" -type "string" "";
-	setAttr -l on ".Build_Command" -type "string" "exec_spaceSwitches.build_spaceSwitches_block()";
-	setAttr -l on ".Import_Command" -type "string" "import exec_spaceSwitches ";
-	setAttr -cb on ".Rotate" yes;
-	setAttr ".Help" -type "string" "Separate the space switches with a ','";
-	setAttr -cb on ".Translate";
-	setAttr ".SetTargetCtrl" -type "string" "L_Hip_Fk_Ctrl";
-	setAttr ".Spaces" -type "string" "Mover_Gimbal_Ctrl, COG_Ctrl, L_Pelvis_Jnt, Mutant_Tools_Grp";
-	setAttr -cb on ".Mirror" yes;
-	setAttr -cb on ".CreateProxyOnTargetCtrl" yes;
-	setAttr ".SetAttrsHolder" -type "string" "L_Hip_Jnt_Switch_Loc";
+	setAttr -l on ".Build_Command" -type "string" "exec_spaceSwitches_v001.build_spaceSwitches_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_spaceSwitches_v001 ";
 	setAttr ".postcode" -type "string" "";
+	setAttr ".SetTargetCtrl" -type "string" "L_Hip_Fk_Ctrl";
+	setAttr ".SetAttrsHolder" -type "string" "L_Hip_Jnt_Switch_Loc";
+	setAttr -cb on ".Translate" no;
+	setAttr -cb on ".Animbot";
+	setAttr -cb on ".Rotate";
+	setAttr -cb on ".MaintainOffset";
+	setAttr ".Spaces" -type "string" "Mover_Gimbal_Ctrl, COG_Ctrl, L_Pelvis_Jnt, Mutant_Tools_Grp";
+	setAttr ".CustomNames" -type "string" "";
+	setAttr -cb on ".Mirror" yes;
+	setAttr ".AttrName" -type "string" "Follow";
+	setAttr -cb on ".SplitTranslateRotate";
+	setAttr -cb on ".RunAfterBuild";
+	setAttr ".Help" -type "string" (
+		"Overview:\n  This will add space switches to the target ctrl.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetTargetCtrl: set the node/object name this block should use.\n- SetAttrsHolder: set the node/object name this block should use.\n- Spaces: enter names separated by commas (example format: nameA,nameB,nameC).\n- CustomNames: optional display names for the enum, same count as Spaces (example: World,Global,Body). Leave empty to use defaults.\n- Translate: turn this ON/OFF depending on whether you want that feature.\n- Animbot: turn this ON/OFF depending on whether you want that feature.\n- Rotate: turn this ON/OFF depending on whether you want that feature.\n- MaintainOffset: turn this ON/OFF to enable/disable maintain offset on constraints (default: ON).\n- AttrName: custom name for the space switch attribute (default: Follow).\n- SplitTranslateRotate: when ON, creates separate Translate and Rotate space switch attributes instead of one combined attr.\n- RunAfterBuild: Check True to defer execution until after the full build finishes (recommended if target controllers or space references are generated by later blocks).\n"
+		+ "- Template target ctrl examples: Tail_1_Main_Ctrl, Eyes_Main_Ctrl, Head_Ctrl.\n\nTips:\n- if a field says left/right or mirror, use it to generate the opposite side quickly.");
+	setAttr -l on ".MutantBackup" -type "string" "{\"CreateProxyOnTargetCtrl\": {\"type\": \"bool\", \"value\": true}}";
 createNode hyperLayout -n "hyperLayout59";
 	rename -uid "CE24E307-4BE2-3136-FD85-94B2F2049236";
 	setAttr ".ihi" 0;
@@ -13989,28 +13316,42 @@ createNode network -n "L_PV_Hip_Switches_Config";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
-	addAttr -ci true -sn "Rotate" -ln "Rotate" -min 0 -max 1 -at "bool";
-	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
-	addAttr -ci true -sn "Translate" -ln "Translate" -min 0 -max 1 -at "bool";
-	addAttr -ci true -sn "SetTargetCtrl" -ln "SetTargetCtrl" -dt "string";
-	addAttr -ci true -sn "Spaces" -ln "Spaces" -dt "string";
-	addAttr -ci true -sn "Mirror" -ln "Mirror" -min 0 -max 1 -at "bool";
-	addAttr -ci true -sn "CreateProxyOnTargetCtrl" -ln "CreateProxyOnTargetCtrl" -min 
-		0 -max 1 -at "bool";
-	addAttr -ci true -sn "SetAttrsHolder" -ln "SetAttrsHolder" -dt "string";
 	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	addAttr -ci true -sn "SetTargetCtrl" -ln "SetTargetCtrl" -dt "string";
+	addAttr -ci true -sn "SetAttrsHolder" -ln "SetAttrsHolder" -dt "string";
+	addAttr -ci true -sn "Translate" -ln "Translate" -dv 1 -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "Animbot" -ln "Animbot" -dv 1 -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "Rotate" -ln "Rotate" -dv 1 -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "MaintainOffset" -ln "MaintainOffset" -dv 1 -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "Spaces" -ln "Spaces" -dt "string";
+	addAttr -ci true -sn "CustomNames" -ln "CustomNames" -dt "string";
+	addAttr -ci true -sn "Mirror" -ln "Mirror" -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "AttrName" -ln "AttrName" -dt "string";
+	addAttr -ci true -sn "SplitTranslateRotate" -ln "SplitTranslateRotate" -min 0 -max 
+		1 -at "bool";
+	addAttr -ci true -sn "RunAfterBuild" -ln "RunAfterBuild" -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
+	addAttr -ci true -sn "MutantBackup" -ln "MutantBackup" -dt "string";
 	setAttr ".precode" -type "string" "";
-	setAttr -l on ".Build_Command" -type "string" "exec_spaceSwitches.build_spaceSwitches_block()";
-	setAttr -l on ".Import_Command" -type "string" "import exec_spaceSwitches ";
-	setAttr -cb on ".Rotate" yes;
-	setAttr ".Help" -type "string" "Separate the space switches with a ','";
-	setAttr -cb on ".Translate" yes;
-	setAttr ".SetTargetCtrl" -type "string" "L_Ankle_Ik_PoleVector_Ctrl";
-	setAttr ".Spaces" -type "string" "L_Ankle_Ik_Ctrl, Mover_Gimbal_Ctrl, Mutant_Tools_Grp";
-	setAttr -cb on ".Mirror" yes;
-	setAttr -cb on ".CreateProxyOnTargetCtrl" yes;
-	setAttr ".SetAttrsHolder" -type "string" "L_Hip_Jnt_Switch_Loc";
+	setAttr -l on ".Build_Command" -type "string" "exec_spaceSwitches_v001.build_spaceSwitches_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_spaceSwitches_v001 ";
 	setAttr ".postcode" -type "string" "";
+	setAttr ".SetTargetCtrl" -type "string" "L_Ankle_Ik_PoleVector_Ctrl";
+	setAttr ".SetAttrsHolder" -type "string" "L_Hip_Jnt_Switch_Loc";
+	setAttr -cb on ".Translate";
+	setAttr -cb on ".Animbot";
+	setAttr -cb on ".Rotate";
+	setAttr -cb on ".MaintainOffset";
+	setAttr ".Spaces" -type "string" "L_Ankle_Ik_Ctrl, Mover_Gimbal_Ctrl, Mutant_Tools_Grp";
+	setAttr ".CustomNames" -type "string" "";
+	setAttr -cb on ".Mirror" yes;
+	setAttr ".AttrName" -type "string" "Follow";
+	setAttr -cb on ".SplitTranslateRotate";
+	setAttr -cb on ".RunAfterBuild";
+	setAttr ".Help" -type "string" (
+		"Overview:\n  This will add space switches to the target ctrl.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetTargetCtrl: set the node/object name this block should use.\n- SetAttrsHolder: set the node/object name this block should use.\n- Spaces: enter names separated by commas (example format: nameA,nameB,nameC).\n- CustomNames: optional display names for the enum, same count as Spaces (example: World,Global,Body). Leave empty to use defaults.\n- Translate: turn this ON/OFF depending on whether you want that feature.\n- Animbot: turn this ON/OFF depending on whether you want that feature.\n- Rotate: turn this ON/OFF depending on whether you want that feature.\n- MaintainOffset: turn this ON/OFF to enable/disable maintain offset on constraints (default: ON).\n- AttrName: custom name for the space switch attribute (default: Follow).\n- SplitTranslateRotate: when ON, creates separate Translate and Rotate space switch attributes instead of one combined attr.\n- RunAfterBuild: Check True to defer execution until after the full build finishes (recommended if target controllers or space references are generated by later blocks).\n"
+		+ "- Template target ctrl examples: Tail_1_Main_Ctrl, Eyes_Main_Ctrl, Head_Ctrl.\n\nTips:\n- if a field says left/right or mirror, use it to generate the opposite side quickly.");
+	setAttr -l on ".MutantBackup" -type "string" "{\"CreateProxyOnTargetCtrl\": {\"type\": \"bool\", \"value\": true}}";
 createNode hyperLayout -n "hyperLayout56";
 	rename -uid "7288C47D-4ADE-1079-A33B-A78D3EB0B436";
 	setAttr ".ihi" 0;
@@ -14019,30 +13360,42 @@ createNode network -n "L_PV_Arm_Switches_Config";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
-	addAttr -ci true -sn "Rotate" -ln "Rotate" -min 0 -max 1 -at "bool";
-	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
-	addAttr -ci true -sn "Translate" -ln "Translate" -min 0 -max 1 -at "bool";
-	addAttr -ci true -sn "SetTargetCtrl" -ln "SetTargetCtrl" -dt "string";
-	addAttr -ci true -sn "Spaces" -ln "Spaces" -dt "string";
-	addAttr -ci true -sn "Mirror" -ln "Mirror" -min 0 -max 1 -at "bool";
-	addAttr -ci true -sn "CreateProxyOnTargetCtrl" -ln "CreateProxyOnTargetCtrl" -min 
-		0 -max 1 -at "bool";
-	addAttr -ci true -sn "SetAttrsHolder" -ln "SetAttrsHolder" -dt "string";
 	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
-	addAttr -ci true -sn "Animbot" -ln "Animbot" -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "SetTargetCtrl" -ln "SetTargetCtrl" -dt "string";
+	addAttr -ci true -sn "SetAttrsHolder" -ln "SetAttrsHolder" -dt "string";
+	addAttr -ci true -sn "Translate" -ln "Translate" -dv 1 -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "Animbot" -ln "Animbot" -dv 1 -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "Rotate" -ln "Rotate" -dv 1 -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "MaintainOffset" -ln "MaintainOffset" -dv 1 -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "Spaces" -ln "Spaces" -dt "string";
+	addAttr -ci true -sn "CustomNames" -ln "CustomNames" -dt "string";
+	addAttr -ci true -sn "Mirror" -ln "Mirror" -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "AttrName" -ln "AttrName" -dt "string";
+	addAttr -ci true -sn "SplitTranslateRotate" -ln "SplitTranslateRotate" -min 0 -max 
+		1 -at "bool";
+	addAttr -ci true -sn "RunAfterBuild" -ln "RunAfterBuild" -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
+	addAttr -ci true -sn "MutantBackup" -ln "MutantBackup" -dt "string";
 	setAttr ".precode" -type "string" "";
-	setAttr -l on ".Build_Command" -type "string" "exec_spaceSwitches.build_spaceSwitches_block()";
-	setAttr -l on ".Import_Command" -type "string" "import exec_spaceSwitches ";
-	setAttr -cb on ".Rotate" yes;
-	setAttr ".Help" -type "string" "Separate the space switches with a ','";
-	setAttr -cb on ".Translate" yes;
-	setAttr ".SetTargetCtrl" -type "string" "L_Wrist_Ik_PoleVector_Ctrl";
-	setAttr ".Spaces" -type "string" "L_Wrist_Ik_Ctrl, Mover_Gimbal_Ctrl, Mutant_Tools_Grp,COG_Gimbal_Ctrl";
-	setAttr -cb on ".Mirror" yes;
-	setAttr -cb on ".CreateProxyOnTargetCtrl" yes;
-	setAttr ".SetAttrsHolder" -type "string" "L_Shoulder_Jnt_Switch_Loc";
+	setAttr -l on ".Build_Command" -type "string" "exec_spaceSwitches_v001.build_spaceSwitches_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_spaceSwitches_v001 ";
 	setAttr ".postcode" -type "string" "";
-	setAttr -k on ".Animbot" yes;
+	setAttr ".SetTargetCtrl" -type "string" "L_Wrist_Ik_PoleVector_Ctrl";
+	setAttr ".SetAttrsHolder" -type "string" "L_Shoulder_Jnt_Switch_Loc";
+	setAttr -cb on ".Translate";
+	setAttr -cb on ".Animbot";
+	setAttr -cb on ".Rotate";
+	setAttr -cb on ".MaintainOffset";
+	setAttr ".Spaces" -type "string" "L_Wrist_Ik_Ctrl, Mover_Gimbal_Ctrl, Mutant_Tools_Grp,COG_Gimbal_Ctrl";
+	setAttr ".CustomNames" -type "string" "";
+	setAttr -cb on ".Mirror" yes;
+	setAttr ".AttrName" -type "string" "Follow";
+	setAttr -cb on ".SplitTranslateRotate";
+	setAttr -cb on ".RunAfterBuild";
+	setAttr ".Help" -type "string" (
+		"Overview:\n  This will add space switches to the target ctrl.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetTargetCtrl: set the node/object name this block should use.\n- SetAttrsHolder: set the node/object name this block should use.\n- Spaces: enter names separated by commas (example format: nameA,nameB,nameC).\n- CustomNames: optional display names for the enum, same count as Spaces (example: World,Global,Body). Leave empty to use defaults.\n- Translate: turn this ON/OFF depending on whether you want that feature.\n- Animbot: turn this ON/OFF depending on whether you want that feature.\n- Rotate: turn this ON/OFF depending on whether you want that feature.\n- MaintainOffset: turn this ON/OFF to enable/disable maintain offset on constraints (default: ON).\n- AttrName: custom name for the space switch attribute (default: Follow).\n- SplitTranslateRotate: when ON, creates separate Translate and Rotate space switch attributes instead of one combined attr.\n- RunAfterBuild: Check True to defer execution until after the full build finishes (recommended if target controllers or space references are generated by later blocks).\n"
+		+ "- Template target ctrl examples: Tail_1_Main_Ctrl, Eyes_Main_Ctrl, Head_Ctrl.\n\nTips:\n- if a field says left/right or mirror, use it to generate the opposite side quickly.");
+	setAttr -l on ".MutantBackup" -type "string" "{\"CreateProxyOnTargetCtrl\": {\"type\": \"bool\", \"value\": true}}";
 createNode hyperLayout -n "hyperLayout55";
 	rename -uid "665152AF-4F66-8E15-DA25-B7B0A2650E88";
 	setAttr ".ihi" 0;
@@ -14051,30 +13404,42 @@ createNode network -n "L_FK_Arm_Switches_Config";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
-	addAttr -ci true -sn "Rotate" -ln "Rotate" -min 0 -max 1 -at "bool";
-	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
-	addAttr -ci true -sn "Translate" -ln "Translate" -min 0 -max 1 -at "bool";
-	addAttr -ci true -sn "SetTargetCtrl" -ln "SetTargetCtrl" -dt "string";
-	addAttr -ci true -sn "Spaces" -ln "Spaces" -dt "string";
-	addAttr -ci true -sn "Mirror" -ln "Mirror" -min 0 -max 1 -at "bool";
-	addAttr -ci true -sn "CreateProxyOnTargetCtrl" -ln "CreateProxyOnTargetCtrl" -min 
-		0 -max 1 -at "bool";
-	addAttr -ci true -sn "SetAttrsHolder" -ln "SetAttrsHolder" -dt "string";
 	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
-	addAttr -ci true -sn "Animbot" -ln "Animbot" -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "SetTargetCtrl" -ln "SetTargetCtrl" -dt "string";
+	addAttr -ci true -sn "SetAttrsHolder" -ln "SetAttrsHolder" -dt "string";
+	addAttr -ci true -sn "Translate" -ln "Translate" -dv 1 -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "Animbot" -ln "Animbot" -dv 1 -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "Rotate" -ln "Rotate" -dv 1 -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "MaintainOffset" -ln "MaintainOffset" -dv 1 -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "Spaces" -ln "Spaces" -dt "string";
+	addAttr -ci true -sn "CustomNames" -ln "CustomNames" -dt "string";
+	addAttr -ci true -sn "Mirror" -ln "Mirror" -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "AttrName" -ln "AttrName" -dt "string";
+	addAttr -ci true -sn "SplitTranslateRotate" -ln "SplitTranslateRotate" -min 0 -max 
+		1 -at "bool";
+	addAttr -ci true -sn "RunAfterBuild" -ln "RunAfterBuild" -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
+	addAttr -ci true -sn "MutantBackup" -ln "MutantBackup" -dt "string";
 	setAttr ".precode" -type "string" "";
-	setAttr -l on ".Build_Command" -type "string" "exec_spaceSwitches.build_spaceSwitches_block()";
-	setAttr -l on ".Import_Command" -type "string" "import exec_spaceSwitches ";
-	setAttr -cb on ".Rotate" yes;
-	setAttr ".Help" -type "string" "Separate the space switches with a ','";
-	setAttr -cb on ".Translate";
-	setAttr ".SetTargetCtrl" -type "string" "L_Shoulder_Fk_Ctrl";
-	setAttr ".Spaces" -type "string" "Mover_Gimbal_Ctrl, COG_Ctrl, L_Clavicle_Ctrl, Mutant_Tools_Grp";
-	setAttr -cb on ".Mirror" yes;
-	setAttr -cb on ".CreateProxyOnTargetCtrl" yes;
-	setAttr ".SetAttrsHolder" -type "string" "L_Shoulder_Jnt_Switch_Loc";
+	setAttr -l on ".Build_Command" -type "string" "exec_spaceSwitches_v001.build_spaceSwitches_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_spaceSwitches_v001 ";
 	setAttr ".postcode" -type "string" "";
-	setAttr -k on ".Animbot" yes;
+	setAttr ".SetTargetCtrl" -type "string" "L_Shoulder_Fk_Ctrl";
+	setAttr ".SetAttrsHolder" -type "string" "L_Shoulder_Jnt_Switch_Loc";
+	setAttr -cb on ".Translate" no;
+	setAttr -cb on ".Animbot";
+	setAttr -cb on ".Rotate";
+	setAttr -cb on ".MaintainOffset";
+	setAttr ".Spaces" -type "string" "Mover_Gimbal_Ctrl, COG_Ctrl, L_Clavicle_Ctrl, Mutant_Tools_Grp";
+	setAttr ".CustomNames" -type "string" "";
+	setAttr -cb on ".Mirror" yes;
+	setAttr ".AttrName" -type "string" "Follow";
+	setAttr -cb on ".SplitTranslateRotate";
+	setAttr -cb on ".RunAfterBuild";
+	setAttr ".Help" -type "string" (
+		"Overview:\n  This will add space switches to the target ctrl.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetTargetCtrl: set the node/object name this block should use.\n- SetAttrsHolder: set the node/object name this block should use.\n- Spaces: enter names separated by commas (example format: nameA,nameB,nameC).\n- CustomNames: optional display names for the enum, same count as Spaces (example: World,Global,Body). Leave empty to use defaults.\n- Translate: turn this ON/OFF depending on whether you want that feature.\n- Animbot: turn this ON/OFF depending on whether you want that feature.\n- Rotate: turn this ON/OFF depending on whether you want that feature.\n- MaintainOffset: turn this ON/OFF to enable/disable maintain offset on constraints (default: ON).\n- AttrName: custom name for the space switch attribute (default: Follow).\n- SplitTranslateRotate: when ON, creates separate Translate and Rotate space switch attributes instead of one combined attr.\n- RunAfterBuild: Check True to defer execution until after the full build finishes (recommended if target controllers or space references are generated by later blocks).\n"
+		+ "- Template target ctrl examples: Tail_1_Main_Ctrl, Eyes_Main_Ctrl, Head_Ctrl.\n\nTips:\n- if a field says left/right or mirror, use it to generate the opposite side quickly.");
+	setAttr -l on ".MutantBackup" -type "string" "{\"CreateProxyOnTargetCtrl\": {\"type\": \"bool\", \"value\": true}}";
 createNode hyperLayout -n "hyperLayout54";
 	rename -uid "066D165C-45B1-4908-8EE0-BFBDACC0EA8E";
 	setAttr ".ihi" 0;
@@ -14083,30 +13448,42 @@ createNode network -n "L_IK_Arm_Switches_Config";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
-	addAttr -ci true -sn "Rotate" -ln "Rotate" -min 0 -max 1 -at "bool";
-	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
-	addAttr -ci true -sn "Translate" -ln "Translate" -min 0 -max 1 -at "bool";
-	addAttr -ci true -sn "SetTargetCtrl" -ln "SetTargetCtrl" -dt "string";
-	addAttr -ci true -sn "Spaces" -ln "Spaces" -dt "string";
-	addAttr -ci true -sn "Mirror" -ln "Mirror" -min 0 -max 1 -at "bool";
-	addAttr -ci true -sn "CreateProxyOnTargetCtrl" -ln "CreateProxyOnTargetCtrl" -min 
-		0 -max 1 -at "bool";
-	addAttr -ci true -sn "SetAttrsHolder" -ln "SetAttrsHolder" -dt "string";
 	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
-	addAttr -ci true -sn "Animbot" -ln "Animbot" -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "SetTargetCtrl" -ln "SetTargetCtrl" -dt "string";
+	addAttr -ci true -sn "SetAttrsHolder" -ln "SetAttrsHolder" -dt "string";
+	addAttr -ci true -sn "Translate" -ln "Translate" -dv 1 -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "Animbot" -ln "Animbot" -dv 1 -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "Rotate" -ln "Rotate" -dv 1 -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "MaintainOffset" -ln "MaintainOffset" -dv 1 -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "Spaces" -ln "Spaces" -dt "string";
+	addAttr -ci true -sn "CustomNames" -ln "CustomNames" -dt "string";
+	addAttr -ci true -sn "Mirror" -ln "Mirror" -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "AttrName" -ln "AttrName" -dt "string";
+	addAttr -ci true -sn "SplitTranslateRotate" -ln "SplitTranslateRotate" -min 0 -max 
+		1 -at "bool";
+	addAttr -ci true -sn "RunAfterBuild" -ln "RunAfterBuild" -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
+	addAttr -ci true -sn "MutantBackup" -ln "MutantBackup" -dt "string";
 	setAttr ".precode" -type "string" "";
-	setAttr -l on ".Build_Command" -type "string" "exec_spaceSwitches.build_spaceSwitches_block()";
-	setAttr -l on ".Import_Command" -type "string" "import exec_spaceSwitches ";
-	setAttr -cb on ".Rotate" yes;
-	setAttr ".Help" -type "string" "Separate the space switches with a ','";
-	setAttr -cb on ".Translate" yes;
-	setAttr ".SetTargetCtrl" -type "string" "L_Wrist_Ik_Ctrl";
-	setAttr ".Spaces" -type "string" "Mover_Gimbal_Ctrl, COG_Ctrl, L_Clavicle_Ctrl, Mutant_Tools_Grp";
-	setAttr -cb on ".Mirror" yes;
-	setAttr -cb on ".CreateProxyOnTargetCtrl" yes;
-	setAttr ".SetAttrsHolder" -type "string" "L_Shoulder_Jnt_Switch_Loc";
+	setAttr -l on ".Build_Command" -type "string" "exec_spaceSwitches_v001.build_spaceSwitches_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_spaceSwitches_v001 ";
 	setAttr ".postcode" -type "string" "";
-	setAttr -k on ".Animbot" yes;
+	setAttr ".SetTargetCtrl" -type "string" "L_Wrist_Ik_Ctrl";
+	setAttr ".SetAttrsHolder" -type "string" "L_Shoulder_Jnt_Switch_Loc";
+	setAttr -cb on ".Translate";
+	setAttr -cb on ".Animbot";
+	setAttr -cb on ".Rotate";
+	setAttr -cb on ".MaintainOffset";
+	setAttr ".Spaces" -type "string" "Mover_Gimbal_Ctrl, COG_Ctrl, L_Clavicle_Ctrl, Mutant_Tools_Grp";
+	setAttr ".CustomNames" -type "string" "";
+	setAttr -cb on ".Mirror" yes;
+	setAttr ".AttrName" -type "string" "Follow";
+	setAttr -cb on ".SplitTranslateRotate";
+	setAttr -cb on ".RunAfterBuild";
+	setAttr ".Help" -type "string" (
+		"Overview:\n  This will add space switches to the target ctrl.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetTargetCtrl: set the node/object name this block should use.\n- SetAttrsHolder: set the node/object name this block should use.\n- Spaces: enter names separated by commas (example format: nameA,nameB,nameC).\n- CustomNames: optional display names for the enum, same count as Spaces (example: World,Global,Body). Leave empty to use defaults.\n- Translate: turn this ON/OFF depending on whether you want that feature.\n- Animbot: turn this ON/OFF depending on whether you want that feature.\n- Rotate: turn this ON/OFF depending on whether you want that feature.\n- MaintainOffset: turn this ON/OFF to enable/disable maintain offset on constraints (default: ON).\n- AttrName: custom name for the space switch attribute (default: Follow).\n- SplitTranslateRotate: when ON, creates separate Translate and Rotate space switch attributes instead of one combined attr.\n- RunAfterBuild: Check True to defer execution until after the full build finishes (recommended if target controllers or space references are generated by later blocks).\n"
+		+ "- Template target ctrl examples: Tail_1_Main_Ctrl, Eyes_Main_Ctrl, Head_Ctrl.\n\nTips:\n- if a field says left/right or mirror, use it to generate the opposite side quickly.");
+	setAttr -l on ".MutantBackup" -type "string" "{\"CreateProxyOnTargetCtrl\": {\"type\": \"bool\", \"value\": true}}";
 createNode hyperLayout -n "hyperLayout76";
 	rename -uid "352FF518-44FD-0788-994E-8F8AF4CDCA69";
 	setAttr ".ihi" 0;
@@ -14116,17 +13493,21 @@ createNode network -n "IkHead_Config";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
-	addAttr -ci true -sn "Exec" -ln "Exec" -min 0 -max 1 -en "Python:Mel" -at "enum";
-	addAttr -ci true -sn "Code" -ln "Code" -dt "string";
 	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	addAttr -ci true -sn "Exec" -ln "Exec" -min 0 -max 1 -en "Python:Mel" -at "enum";
+	addAttr -ci true -sn "RunBeforeBuild" -ln "RunBeforeBuild" -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "RunAfterBuild" -ln "RunAfterBuild" -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "Code" -ln "Code" -dt "string";
 	setAttr ".precode" -type "string" "";
-	setAttr -l on ".Build_Command" -type "string" "exec_code.build_code_block()";
-	setAttr -l on ".Import_Command" -type "string" "import exec_code";
+	setAttr -l on ".Build_Command" -type "string" "exec_code_v001.build_code_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_code_v001";
+	setAttr ".postcode" -type "string" "";
 	setAttr -cb on ".Exec";
+	setAttr -cb on ".RunBeforeBuild";
+	setAttr -cb on ".RunAfterBuild";
 	setAttr ".Code" -type "string" (
 		"from maya import cmds\nimport Mutant_Tools\nimport Mutant_Tools.Utils.Rigging\nfrom Mutant_Tools.Utils.Rigging import main_mutant\n\nmt = main_mutant.Mutant()\nnc, curve_data, setup = mt.import_configs()\n\n# --------------------------------------------------\n# Setup\n# --------------------------------------------------\nctrl = 'Head_Ctrl'\nspace_parents = 'Head_Ctrl_Auto_SpSw_Grp:Neck_Ctrl:COG_Ctrl:Mover_Ctrl'\n\n# Enum\nspace_attr = mt.new_enum(\n    input=ctrl,\n    name='IkHead',\n    enums=space_parents\n)\n\n# Lock group\nlock_grp = mt.root_grp(\n    input=ctrl,\n    custom=True,\n    custom_name='_Lock',\n    autoRoot=False,\n    replace_nc=False\n)[0]\n\nspaces = space_parents.split(':')\n\n# Parent constraint\npc = cmds.parentConstraint(spaces, lock_grp, mo=True)[0]\ncmds.setAttr(f'{pc}.interpType', 2)\n\n# --------------------------------------------------\n# ENUM ? CONSTRAINT LOGIC\n# --------------------------------------------------\n\n# Query weight attributes safely\nweight_attrs = cmds.parentConstraint(pc, q=True, wal=True)\n\nfor index, weight_attr in enumerate(weight_attrs):\n"
 		+ "    # Create condition\n    cond = cmds.shadingNode(\n        'condition',\n        asUtility=True,\n        n=f'{ctrl}_IkHead_{spaces[index]}{nc[\"condition\"]}'\n    )\n\n    # Condition setup\n    cmds.setAttr(f'{cond}.operation', 0)        # Equal\n    cmds.setAttr(f'{cond}.secondTerm', index)\n    cmds.setAttr(f'{cond}.colorIfTrueR', 1)\n    cmds.setAttr(f'{cond}.colorIfFalseR', 0)\n\n    # Connect enum ? condition\n    cmds.connectAttr(space_attr, f'{cond}.firstTerm', f=True)\n\n    # Connect condition ? constraint weight\n    cmds.connectAttr(\n        f'{cond}.outColorR',\n        f'{pc}.{weight_attr}',\n        f=True\n    )\n\n#Change Names\ncmds.addAttr(\n    'Head_Ctrl.IkHead',\n    e=True,\n    enumName=space_parents.replace('Head_Ctrl_Auto_SpSw_Grp', 'Off')\n)\n");
-	setAttr ".postcode" -type "string" "";
 createNode hyperLayout -n "hyperLayout41";
 	rename -uid "177D2F61-4B21-9F2A-FB40-158582E8025E";
 	setAttr ".ihi" 0;
@@ -14135,17 +13516,20 @@ createNode network -n "L_Legs_Attrs_Config";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
-	addAttr -ci true -sn "SetParent" -ln "SetParent" -dt "string";
-	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
-	addAttr -ci true -sn "SetCopyAttrsFrom" -ln "SetCopyAttrsFrom" -dt "string";
 	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	addAttr -ci true -sn "SetParent" -ln "SetParent" -dt "string";
+	addAttr -ci true -sn "SetCopyAttrsFrom" -ln "SetCopyAttrsFrom" -dt "string";
+	addAttr -ci true -sn "CtrlShape" -ln "CtrlShape" -min 0 -max 5 -en "cross:gear:hexagon:octagon:square:2dArrow" 
+		-at "enum";
+	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
 	setAttr ".precode" -type "string" "";
-	setAttr -l on ".Build_Command" -type "string" "exec_proxy_attr.build_proxy_attr_block()";
-	setAttr -l on ".Import_Command" -type "string" "import exec_proxy_attr";
-	setAttr ".SetParent" -type "string" "L_Hip_Jnt";
-	setAttr ".Help" -type "string" "Will duplicate and connect all proxy attrs from desire transform";
-	setAttr ".SetCopyAttrsFrom" -type "string" "L_Hip_Jnt_Switch_Loc";
+	setAttr -l on ".Build_Command" -type "string" "exec_proxy_attr_v001.build_proxy_attr_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_proxy_attr_v001";
 	setAttr ".postcode" -type "string" "";
+	setAttr ".SetParent" -type "string" "L_Hip_Jnt";
+	setAttr ".SetCopyAttrsFrom" -type "string" "L_Hip_Jnt_Switch_Loc";
+	setAttr -cb on ".CtrlShape";
+	setAttr ".Help" -type "string" "Overview:\n  Will duplicate and connect all proxy attrs from desire transform.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetParent: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- CtrlShape: choose one option (for example: cross, gear, hexagon, octagon).\n- SetCopyAttrsFrom: set the node/object name this block should use.\n- Template parent examples: L_Hand_Ankle_Jnt, L_Hand_Palm_Jnt, Spine_End_Jnt.\n\nTips:\n- start with defaults, build once, then tweak only the fields you need.";
 createNode hyperLayout -n "hyperLayout42";
 	rename -uid "8D138C9B-433C-BB9F-9661-3BA2B744ED91";
 	setAttr ".ihi" 0;
@@ -14154,17 +13538,20 @@ createNode network -n "R_Legs_Attrs_Config";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
-	addAttr -ci true -sn "SetParent" -ln "SetParent" -dt "string";
-	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
-	addAttr -ci true -sn "SetCopyAttrsFrom" -ln "SetCopyAttrsFrom" -dt "string";
 	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	addAttr -ci true -sn "SetParent" -ln "SetParent" -dt "string";
+	addAttr -ci true -sn "SetCopyAttrsFrom" -ln "SetCopyAttrsFrom" -dt "string";
+	addAttr -ci true -sn "CtrlShape" -ln "CtrlShape" -min 0 -max 5 -en "cross:gear:hexagon:octagon:square:2dArrow" 
+		-at "enum";
+	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
 	setAttr ".precode" -type "string" "";
-	setAttr -l on ".Build_Command" -type "string" "exec_proxy_attr.build_proxy_attr_block()";
-	setAttr -l on ".Import_Command" -type "string" "import exec_proxy_attr";
-	setAttr ".SetParent" -type "string" "R_Hip_Jnt";
-	setAttr ".Help" -type "string" "Will duplicate and connect all proxy attrs from desire transform";
-	setAttr ".SetCopyAttrsFrom" -type "string" "R_Hip_Jnt_Switch_Loc";
+	setAttr -l on ".Build_Command" -type "string" "exec_proxy_attr_v001.build_proxy_attr_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_proxy_attr_v001";
 	setAttr ".postcode" -type "string" "";
+	setAttr ".SetParent" -type "string" "R_Hip_Jnt";
+	setAttr ".SetCopyAttrsFrom" -type "string" "R_Hip_Jnt_Switch_Loc";
+	setAttr -cb on ".CtrlShape";
+	setAttr ".Help" -type "string" "Overview:\n  Will duplicate and connect all proxy attrs from desire transform.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetParent: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- CtrlShape: choose one option (for example: cross, gear, hexagon, octagon).\n- SetCopyAttrsFrom: set the node/object name this block should use.\n- Template parent examples: L_Hand_Ankle_Jnt, L_Hand_Palm_Jnt, Spine_End_Jnt.\n\nTips:\n- start with defaults, build once, then tweak only the fields you need.";
 createNode hyperLayout -n "hyperLayout44";
 	rename -uid "ACF9A92C-405F-984C-55FF-5D8990A82422";
 	setAttr ".ihi" 0;
@@ -14173,17 +13560,20 @@ createNode network -n "Head_Attrs_Config";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
-	addAttr -ci true -sn "SetParent" -ln "SetParent" -dt "string";
-	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
-	addAttr -ci true -sn "SetCopyAttrsFrom" -ln "SetCopyAttrsFrom" -dt "string";
 	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	addAttr -ci true -sn "SetParent" -ln "SetParent" -dt "string";
+	addAttr -ci true -sn "SetCopyAttrsFrom" -ln "SetCopyAttrsFrom" -dt "string";
+	addAttr -ci true -sn "CtrlShape" -ln "CtrlShape" -min 0 -max 5 -en "cross:gear:hexagon:octagon:square:2dArrow" 
+		-at "enum";
+	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
 	setAttr ".precode" -type "string" "";
-	setAttr -l on ".Build_Command" -type "string" "exec_proxy_attr.build_proxy_attr_block()";
-	setAttr -l on ".Import_Command" -type "string" "import exec_proxy_attr";
-	setAttr ".SetParent" -type "string" "Head_Ctrl";
-	setAttr ".Help" -type "string" "Will duplicate and connect all proxy attrs from desire transform";
-	setAttr ".SetCopyAttrsFrom" -type "string" "Neck_Attrs_Loc";
+	setAttr -l on ".Build_Command" -type "string" "exec_proxy_attr_v001.build_proxy_attr_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_proxy_attr_v001";
 	setAttr ".postcode" -type "string" "";
+	setAttr ".SetParent" -type "string" "Head_Ctrl";
+	setAttr ".SetCopyAttrsFrom" -type "string" "Neck_Attrs_Loc";
+	setAttr -cb on ".CtrlShape";
+	setAttr ".Help" -type "string" "Overview:\n  Will duplicate and connect all proxy attrs from desire transform.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetParent: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- CtrlShape: choose one option (for example: cross, gear, hexagon, octagon).\n- SetCopyAttrsFrom: set the node/object name this block should use.\n- Template parent examples: L_Hand_Ankle_Jnt, L_Hand_Palm_Jnt, Spine_End_Jnt.\n\nTips:\n- start with defaults, build once, then tweak only the fields you need.";
 createNode hyperLayout -n "hyperLayout45";
 	rename -uid "C7C04D54-4C91-787F-BEE6-198F28E74928";
 	setAttr ".ihi" 0;
@@ -14192,17 +13582,20 @@ createNode network -n "Spine_Attrs_Config";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
-	addAttr -ci true -sn "SetParent" -ln "SetParent" -dt "string";
-	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
-	addAttr -ci true -sn "SetCopyAttrsFrom" -ln "SetCopyAttrsFrom" -dt "string";
 	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	addAttr -ci true -sn "SetParent" -ln "SetParent" -dt "string";
+	addAttr -ci true -sn "SetCopyAttrsFrom" -ln "SetCopyAttrsFrom" -dt "string";
+	addAttr -ci true -sn "CtrlShape" -ln "CtrlShape" -min 0 -max 5 -en "cross:gear:hexagon:octagon:square:2dArrow" 
+		-at "enum";
+	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
 	setAttr ".precode" -type "string" "";
-	setAttr -l on ".Build_Command" -type "string" "exec_proxy_attr.build_proxy_attr_block()";
-	setAttr -l on ".Import_Command" -type "string" "import exec_proxy_attr";
-	setAttr ".SetParent" -type "string" "COG_Ctrl";
-	setAttr ".Help" -type "string" "Will duplicate and connect all proxy attrs from desire transform";
-	setAttr ".SetCopyAttrsFrom" -type "string" "Spine_Attrs_Loc";
+	setAttr -l on ".Build_Command" -type "string" "exec_proxy_attr_v001.build_proxy_attr_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_proxy_attr_v001";
 	setAttr ".postcode" -type "string" "";
+	setAttr ".SetParent" -type "string" "COG_Ctrl";
+	setAttr ".SetCopyAttrsFrom" -type "string" "Spine_Attrs_Loc";
+	setAttr -cb on ".CtrlShape";
+	setAttr ".Help" -type "string" "Overview:\n  Will duplicate and connect all proxy attrs from desire transform.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetParent: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- CtrlShape: choose one option (for example: cross, gear, hexagon, octagon).\n- SetCopyAttrsFrom: set the node/object name this block should use.\n- Template parent examples: L_Hand_Ankle_Jnt, L_Hand_Palm_Jnt, Spine_End_Jnt.\n\nTips:\n- start with defaults, build once, then tweak only the fields you need.";
 createNode hyperLayout -n "hyperLayout67";
 	rename -uid "B785C6D1-46DE-8F31-3E9A-71AE1303E8CD";
 	setAttr ".ihi" 0;
@@ -14211,20 +13604,20 @@ createNode network -n "L_Arm_Attrs_Config";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
 	addAttr -ci true -sn "SetParent" -ln "SetParent" -dt "string";
 	addAttr -ci true -sn "SetCopyAttrsFrom" -ln "SetCopyAttrsFrom" -dt "string";
 	addAttr -ci true -sn "CtrlShape" -ln "CtrlShape" -min 0 -max 5 -en "cross:gear:hexagon:octagon:square:2dArrow" 
 		-at "enum";
 	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
-	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
 	setAttr ".precode" -type "string" "";
-	setAttr -l on ".Build_Command" -type "string" "exec_proxy_attr.build_proxy_attr_block()";
-	setAttr -l on ".Import_Command" -type "string" "import exec_proxy_attr";
+	setAttr -l on ".Build_Command" -type "string" "exec_proxy_attr_v001.build_proxy_attr_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_proxy_attr_v001";
+	setAttr ".postcode" -type "string" "";
 	setAttr ".SetParent" -type "string" "L_Shoulder_Jnt";
 	setAttr ".SetCopyAttrsFrom" -type "string" "L_Shoulder_Jnt_Switch_Loc";
 	setAttr -cb on ".CtrlShape";
-	setAttr ".Help" -type "string" "Will duplicate and connect all proxy attrs from desire transform";
-	setAttr ".postcode" -type "string" "";
+	setAttr ".Help" -type "string" "Overview:\n  Will duplicate and connect all proxy attrs from desire transform.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetParent: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- CtrlShape: choose one option (for example: cross, gear, hexagon, octagon).\n- SetCopyAttrsFrom: set the node/object name this block should use.\n- Template parent examples: L_Hand_Ankle_Jnt, L_Hand_Palm_Jnt, Spine_End_Jnt.\n\nTips:\n- start with defaults, build once, then tweak only the fields you need.";
 createNode hyperLayout -n "hyperLayout68";
 	rename -uid "6B23AED1-4E19-A4F4-C7A1-DAB39D3AF619";
 	setAttr ".ihi" 0;
@@ -14233,20 +13626,20 @@ createNode network -n "R_Arm_Attrs_Config";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
 	addAttr -ci true -sn "SetParent" -ln "SetParent" -dt "string";
 	addAttr -ci true -sn "SetCopyAttrsFrom" -ln "SetCopyAttrsFrom" -dt "string";
 	addAttr -ci true -sn "CtrlShape" -ln "CtrlShape" -min 0 -max 5 -en "cross:gear:hexagon:octagon:square:2dArrow" 
 		-at "enum";
 	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
-	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
 	setAttr ".precode" -type "string" "";
-	setAttr -l on ".Build_Command" -type "string" "exec_proxy_attr.build_proxy_attr_block()";
-	setAttr -l on ".Import_Command" -type "string" "import exec_proxy_attr";
+	setAttr -l on ".Build_Command" -type "string" "exec_proxy_attr_v001.build_proxy_attr_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_proxy_attr_v001";
+	setAttr ".postcode" -type "string" "";
 	setAttr ".SetParent" -type "string" "R_Shoulder_Jnt";
 	setAttr ".SetCopyAttrsFrom" -type "string" "R_Shoulder_Jnt_Switch_Loc";
 	setAttr -cb on ".CtrlShape";
-	setAttr ".Help" -type "string" "Will duplicate and connect all proxy attrs from desire transform";
-	setAttr ".postcode" -type "string" "";
+	setAttr ".Help" -type "string" "Overview:\n  Will duplicate and connect all proxy attrs from desire transform.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetParent: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- CtrlShape: choose one option (for example: cross, gear, hexagon, octagon).\n- SetCopyAttrsFrom: set the node/object name this block should use.\n- Template parent examples: L_Hand_Ankle_Jnt, L_Hand_Palm_Jnt, Spine_End_Jnt.\n\nTips:\n- start with defaults, build once, then tweak only the fields you need.";
 createNode hyperLayout -n "hyperLayout24";
 	rename -uid "8898ACD9-4A11-B0E8-4430-E0A9ADE49C75";
 	setAttr ".ihi" 0;
@@ -14255,15 +13648,15 @@ createNode network -n "Load_Skin_Config";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
 	addAttr -ci true -sn "Path" -ln "Path" -dt "string";
 	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
-	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
 	setAttr ".precode" -type "string" "";
-	setAttr -l on ".Build_Command" -type "string" "exec_load_skin.build_load_skin_block()";
-	setAttr -l on ".Import_Command" -type "string" "import exec_load_skin";
-	setAttr ".Path" -type "string" "";
-	setAttr ".Help" -type "string" "Load Skin Cluster Data from Folder, you need nNgSkin tools installed for it to work.";
+	setAttr -l on ".Build_Command" -type "string" "exec_load_skin_v001.build_load_skin_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_load_skin_v001";
 	setAttr ".postcode" -type "string" "";
+	setAttr ".Path" -type "string" "";
+	setAttr ".Help" -type "string" "Overview:\n  Load SKin Cluster Data.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- Path: enter the file/folder path to the data you want to load.\n\nTips:\n- start with defaults, build once, then tweak only the fields you need.";
 createNode hyperLayout -n "hyperLayout25";
 	rename -uid "9358CB6F-47AC-4C7A-0FC1-C78299219BEA";
 	setAttr ".ihi" 0;
@@ -14272,15 +13665,15 @@ createNode network -n "Load_Ctrls_Config";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
 	addAttr -ci true -sn "File" -ln "File" -dt "string";
 	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
-	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
 	setAttr ".precode" -type "string" "";
-	setAttr -l on ".Build_Command" -type "string" "exec_load_ctrls.build_load_ctrls_block()";
-	setAttr -l on ".Import_Command" -type "string" "import exec_load_ctrls";
-	setAttr ".File" -type "string" "AG";
-	setAttr ".Help" -type "string" "Load Ctrls Data from File";
+	setAttr -l on ".Build_Command" -type "string" "exec_load_ctrls_v001.build_load_ctrls_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_load_ctrls_v001";
 	setAttr ".postcode" -type "string" "";
+	setAttr ".File" -type "string" "AG";
+	setAttr ".Help" -type "string" "Overview:\n  Load Ctrls Data from File.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- File: enter the file/folder path to the data you want to load, or type a preset name (AG, SP, Quad, Simple, Game, Pig, Shot, Neat).\n\nTips:\n- start with defaults, build once, then tweak only the fields you need.";
 createNode hyperLayout -n "SausageTemplate_hyperLayout37";
 	rename -uid "B50F3197-4448-660A-2BA2-84B3FBEC8B2B";
 	setAttr ".ihi" 0;
@@ -14289,15 +13682,15 @@ createNode network -n "Unselectable_Config";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
 	addAttr -ci true -sn "SetGeo" -ln "SetGeo" -dt "string";
 	addAttr -ci true -sn "LockAttr" -ln "LockAttr" -dt "string";
-	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
 	setAttr ".precode" -type "string" "";
-	setAttr -l on ".Build_Command" -type "string" "exec_unselectable.build_unselectable_block()";
-	setAttr -l on ".Import_Command" -type "string" "import exec_unselectable";
+	setAttr -l on ".Build_Command" -type "string" "exec_unselectable_v001.build_unselectable_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_unselectable_v001";
+	setAttr ".postcode" -type "string" "";
 	setAttr ".SetGeo" -type "string" "geo";
 	setAttr ".LockAttr" -type "string" "Global_Ctrl.Geo";
-	setAttr ".postcode" -type "string" "";
 createNode hyperLayout -n "hyperLayout47";
 	rename -uid "5128F565-4827-132A-1B9D-93AD4B58615B";
 	setAttr ".ihi" 0;
@@ -14306,13 +13699,13 @@ createNode network -n "DinamicScale_Config";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
-	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
 	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
 	setAttr ".precode" -type "string" "";
-	setAttr -l on ".Build_Command" -type "string" "exec_dinamic_scale.build_dinamic_scale_block()";
-	setAttr -l on ".Import_Command" -type "string" "import exec_dinamic_scale";
-	setAttr ".Help" -type "string" "Add Size Attrs and Extra Scale to Base";
+	setAttr -l on ".Build_Command" -type "string" "exec_dinamic_scale_v001.build_dinamic_scale_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_dinamic_scale_v001";
 	setAttr ".postcode" -type "string" "";
+	setAttr ".Help" -type "string" "Overview:\n  Add Size Attrs and Extra Scale to Base.\n\nHow To Use:\n  usually you can build directly with defaults, then adjust if needed.";
 createNode hyperLayout -n "hyperLayout48";
 	rename -uid "B162FAD1-4264-246E-19AD-C2A07313BA89";
 	setAttr ".ihi" 0;
@@ -14321,6 +13714,7 @@ createNode network -n "ChangeColors_Config";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
 	addAttr -ci true -sn "ChangeColors1" -ln "ChangeColors1" -dt "string";
 	addAttr -ci true -sn "ChangeColors2" -ln "ChangeColors2" -dt "string";
 	addAttr -ci true -sn "ChangeColors3" -ln "ChangeColors3" -dt "string";
@@ -14331,10 +13725,10 @@ createNode network -n "ChangeColors_Config";
 	addAttr -ci true -sn "ChangeColors8" -ln "ChangeColors8" -dt "string";
 	addAttr -ci true -sn "ChangeColors9" -ln "ChangeColors9" -dt "string";
 	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
-	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
 	setAttr ".precode" -type "string" "";
-	setAttr -l on ".Build_Command" -type "string" "exec_change_colors.build_change_colors_block()";
-	setAttr -l on ".Import_Command" -type "string" "import exec_change_colors";
+	setAttr -l on ".Build_Command" -type "string" "exec_change_colors_v001.build_change_colors_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_change_colors_v001";
+	setAttr ".postcode" -type "string" "";
 	setAttr ".ChangeColors1" -type "string" "Spine_Bottom_Ik_Ctrl:lightBlue";
 	setAttr ".ChangeColors2" -type "string" "Spine_Base_FK_Ctrl:green";
 	setAttr ".ChangeColors3" -type "string" "Spine_Belly_FK_Ctrl:green";
@@ -14344,8 +13738,7 @@ createNode network -n "ChangeColors_Config";
 	setAttr ".ChangeColors7" -type "string" "Spine_Base_IK_Ctrl:lightBlue";
 	setAttr ".ChangeColors8" -type "string" "Spine_Chest_IK_Ctrl:lightBlue";
 	setAttr ".ChangeColors9" -type "string" "Spine_End_IK_Ctrl:lightBlue";
-	setAttr ".Help" -type "string" "Example: Head_Ctrl:Blue";
-	setAttr ".postcode" -type "string" "";
+	setAttr ".Help" -type "string" "Overview:\n  Change Colors.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- ChangeColors1: set the node/object name this block should use.\n- ChangeColors2: set the node/object name this block should use.\n- ChangeColors3: set the node/object name this block should use.\n- ChangeColors4: set the node/object name this block should use.\n- ChangeColors5: set the node/object name this block should use.\n- ChangeColors6: set the node/object name this block should use.\n\nTips:\n- start with defaults, build once, then tweak only the fields you need.";
 createNode hyperLayout -n "hyperLayout61";
 	rename -uid "663FA319-459A-A469-2DAD-68B083FB6E97";
 	setAttr ".ihi" 0;
@@ -14354,31 +13747,31 @@ createNode network -n "ChangeMoreColors_Config";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
-	addAttr -ci true -sn "ChangeColors4" -ln "ChangeColors4" -dt "string";
-	addAttr -ci true -sn "ChangeColors1" -ln "ChangeColors1" -dt "string";
-	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
-	addAttr -ci true -sn "ChangeColors6" -ln "ChangeColors6" -dt "string";
-	addAttr -ci true -sn "ChangeColors9" -ln "ChangeColors9" -dt "string";
-	addAttr -ci true -sn "ChangeColors8" -ln "ChangeColors8" -dt "string";
-	addAttr -ci true -sn "ChangeColors3" -ln "ChangeColors3" -dt "string";
-	addAttr -ci true -sn "ChangeColors2" -ln "ChangeColors2" -dt "string";
-	addAttr -ci true -sn "ChangeColors5" -ln "ChangeColors5" -dt "string";
-	addAttr -ci true -sn "ChangeColors7" -ln "ChangeColors7" -dt "string";
 	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	addAttr -ci true -sn "ChangeColors1" -ln "ChangeColors1" -dt "string";
+	addAttr -ci true -sn "ChangeColors2" -ln "ChangeColors2" -dt "string";
+	addAttr -ci true -sn "ChangeColors3" -ln "ChangeColors3" -dt "string";
+	addAttr -ci true -sn "ChangeColors4" -ln "ChangeColors4" -dt "string";
+	addAttr -ci true -sn "ChangeColors5" -ln "ChangeColors5" -dt "string";
+	addAttr -ci true -sn "ChangeColors6" -ln "ChangeColors6" -dt "string";
+	addAttr -ci true -sn "ChangeColors7" -ln "ChangeColors7" -dt "string";
+	addAttr -ci true -sn "ChangeColors8" -ln "ChangeColors8" -dt "string";
+	addAttr -ci true -sn "ChangeColors9" -ln "ChangeColors9" -dt "string";
+	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
 	setAttr ".precode" -type "string" "";
-	setAttr -l on ".Build_Command" -type "string" "exec_change_colors.build_change_colors_block()";
-	setAttr -l on ".Import_Command" -type "string" "import exec_change_colors";
-	setAttr ".ChangeColors4" -type "string" "";
-	setAttr ".ChangeColors1" -type "string" "";
-	setAttr ".Help" -type "string" "Example: Head_Ctrl:Blue";
-	setAttr ".ChangeColors6" -type "string" "";
-	setAttr ".ChangeColors9" -type "string" "";
-	setAttr ".ChangeColors8" -type "string" "";
-	setAttr ".ChangeColors3" -type "string" "Neck_Ctrl:green";
-	setAttr ".ChangeColors2" -type "string" "Global_Ctrl:orange";
-	setAttr ".ChangeColors5" -type "string" "Mover_Ctrl:orange";
-	setAttr ".ChangeColors7" -type "string" "Mover_Gimbal_Ctrl:orange";
+	setAttr -l on ".Build_Command" -type "string" "exec_change_colors_v001.build_change_colors_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_change_colors_v001";
 	setAttr ".postcode" -type "string" "";
+	setAttr ".ChangeColors1" -type "string" "";
+	setAttr ".ChangeColors2" -type "string" "Global_Ctrl:orange";
+	setAttr ".ChangeColors3" -type "string" "Neck_Ctrl:green";
+	setAttr ".ChangeColors4" -type "string" "";
+	setAttr ".ChangeColors5" -type "string" "Mover_Ctrl:orange";
+	setAttr ".ChangeColors6" -type "string" "";
+	setAttr ".ChangeColors7" -type "string" "Mover_Gimbal_Ctrl:orange";
+	setAttr ".ChangeColors8" -type "string" "";
+	setAttr ".ChangeColors9" -type "string" "";
+	setAttr ".Help" -type "string" "Overview:\n  Change Colors.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- ChangeColors1: set the node/object name this block should use.\n- ChangeColors2: set the node/object name this block should use.\n- ChangeColors3: set the node/object name this block should use.\n- ChangeColors4: set the node/object name this block should use.\n- ChangeColors5: set the node/object name this block should use.\n- ChangeColors6: set the node/object name this block should use.\n\nTips:\n- start with defaults, build once, then tweak only the fields you need.";
 createNode hyperLayout -n "hyperLayout26";
 	rename -uid "21DAFF60-45BA-AE32-104D-BE871C77DEFE";
 	setAttr ".ihi" 0;
@@ -14388,15 +13781,19 @@ createNode network -n "Code_Config";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
-	addAttr -ci true -sn "Exec" -ln "Exec" -min 0 -max 1 -en "Python:Mel" -at "enum";
-	addAttr -ci true -sn "Code" -ln "Code" -dt "string";
 	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	addAttr -ci true -sn "Exec" -ln "Exec" -min 0 -max 1 -en "Python:Mel" -at "enum";
+	addAttr -ci true -sn "RunBeforeBuild" -ln "RunBeforeBuild" -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "RunAfterBuild" -ln "RunAfterBuild" -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "Code" -ln "Code" -dt "string";
 	setAttr ".precode" -type "string" "";
-	setAttr -l on ".Build_Command" -type "string" "exec_code.build_code_block()";
-	setAttr -l on ".Import_Command" -type "string" "import exec_code";
-	setAttr -cb on ".Exec";
-	setAttr ".Code" -type "string" "";
+	setAttr -l on ".Build_Command" -type "string" "exec_code_v001.build_code_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_code_v001";
 	setAttr ".postcode" -type "string" "";
+	setAttr -cb on ".Exec";
+	setAttr -cb on ".RunBeforeBuild";
+	setAttr -cb on ".RunAfterBuild";
+	setAttr ".Code" -type "string" "";
 createNode hyperLayout -n "hyperLayout86";
 	rename -uid "5920D3F6-4ACC-E3F8-EF9B-9B93B7AA4DAB";
 	setAttr ".ihi" 0;
@@ -14406,18 +13803,92 @@ createNode network -n "CleanUpAttrs_Config";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
-	addAttr -ci true -sn "Exec" -ln "Exec" -min 0 -max 1 -en "Python:Mel" -at "enum";
-	addAttr -ci true -sn "Code" -ln "Code" -dt "string";
 	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	addAttr -ci true -sn "Exec" -ln "Exec" -min 0 -max 1 -en "Python:Mel" -at "enum";
+	addAttr -ci true -sn "RunBeforeBuild" -ln "RunBeforeBuild" -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "RunAfterBuild" -ln "RunAfterBuild" -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "Code" -ln "Code" -dt "string";
 	setAttr ".precode" -type "string" "";
-	setAttr -l on ".Build_Command" -type "string" "exec_code.build_code_block()";
-	setAttr -l on ".Import_Command" -type "string" "import exec_code";
+	setAttr -l on ".Build_Command" -type "string" "exec_code_v001.build_code_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_code_v001";
+	setAttr ".postcode" -type "string" "";
 	setAttr -cb on ".Exec";
+	setAttr -cb on ".RunBeforeBuild";
+	setAttr -cb on ".RunAfterBuild";
 	setAttr ".Code" -type "string" (
 		"\n# Lock and hide extra attributes. \n\ndef lock_and_hide_attrs(ctrls=[], translate=True, rotate=True, scale=True, exclude=[], rotate_order=True, extras=[]):\n    transl = [\"translateX\", \"translateY\", \"translateZ\"]\n    rots = [\"rotateY\", \"rotateZ\", \"rotateX\"]\n    scales = [\"scaleX\", \"scaleY\", \"scaleZ\"]\n    rotate_order = [\"RotateOrder\"]\n    \n    attrs_to_lock = []\n    \n    if translate:\n        attrs_to_lock.extend(transl)\n    \n    if rotate:\n        attrs_to_lock.extend(rots)\n        \n    if scale:\n        attrs_to_lock.extend(scales)\n        \n    if rotate_order:\n        attrs_to_lock.extend(rotate_order)\n    \n    if extras:\n        attrs_to_lock.extend(extras)\n        \n        \n    if exclude:\n        for attr in exclude:\n            if attr in attrs_to_lock:\n                attrs_to_lock.remove(attr)\n    \n    for ctrl in ctrls: \n        if ctrl.startswith(\"L_\") or ctrl.startswith(\"R_\"):\n            name_part = \"_\".join(ctrl.split(\"_\")[1:])\n            for lttr in [\"L_\", \"R_\"]:\n                for attr in attrs_to_lock:\n"
-		+ "                    cmds.setAttr(\"{}{}.{}\".format(lttr, name_part, attr), e=True, keyable=False, channelBox=False)\n                    cmds.setAttr(\"{}{}.{}\".format(lttr, name_part, attr), e=True, lock=True, keyable=False, channelBox=False)\n        else:\n            for attr in attrs_to_lock:\n                cmds.setAttr(\"{}.{}\".format(ctrl, attr), e=True, keyable=False, channelBox=False)\n                cmds.setAttr(\"{}.{}\".format(ctrl, attr), e=True, lock=True, keyable=False, channelBox=False)\n\n\nlock_and_hide_attrs(ctrls=[\"L_Shoulder_Jnt_Switch_Loc\", \"L_Shoulder_Jnt_Switch_Ctrl\"],  translate=False, rotate=False, scale=False, exclude=[], rotate_order=False, \n                    extras=[\"Pole_Vector_Lock\", \"BendyMain\", \"BendyOffsets\", \"BendyEnds\", \"BendyTweeks\", \"_______\", \"______\", \"ShoulderBend\", \"ElbowShoulderBend\", \"ElbowWristBend\", \"WristBend\"])\n\n\n\n\nhide_scales = [\"TailWing_Start_JR_Spread_Out_Ctrl\", \"TailWing_Start_JR_Spread_In_Ctrl\", \"L_Secondaries_JR_Spread_In_Ctrl\", \"L_Secondaries_JR_Spread_Out_Ctrl\", \"L_Primaries_JR_Spread_In_Ctrl\", \"L_Primaries_JR_Spread_Out_Ctrl\",\"Global_Ctrl\",\n"
+		+ "                    cmds.setAttr(\"{}{}.{}\".format(lttr, name_part, attr), e=True, keyable=False, channelBox=False)\n                    cmds.setAttr(\"{}{}.{}\".format(lttr, name_part, attr), e=True, lock=True, keyable=False, channelBox=False)\n        else:\n            for attr in attrs_to_lock:\n                cmds.setAttr(\"{}.{}\".format(ctrl, attr), e=True, keyable=False, channelBox=False)\n                cmds.setAttr(\"{}.{}\".format(ctrl, attr), e=True, lock=True, keyable=False, channelBox=False)\n\n\nlock_and_hide_attrs(ctrls=[\"L_Shoulder_Jnt_Switch_Loc\", \"L_Shoulder_Jnt_Switch_Ctrl\"],  translate=False, rotate=False, scale=False, exclude=[], rotate_order=False, \n                    extras=[\"Pole_Vector_Lock\", \"BendyMain\", \"BendyOffsets\", \"BendyEnds\", \"BendyTweeks\", \"_______\", \"______\"])\n\n\n\n\nhide_scales = [\"TailWing_Start_JR_Spread_Out_Ctrl\", \"TailWing_Start_JR_Spread_In_Ctrl\", \"L_Secondaries_JR_Spread_In_Ctrl\", \"L_Secondaries_JR_Spread_Out_Ctrl\", \"L_Primaries_JR_Spread_In_Ctrl\", \"L_Primaries_JR_Spread_Out_Ctrl\",\"Global_Ctrl\",\n"
 		+ "                \"L_Clavicle_Ctrl\", \"L_Wrist_Ik_Ctrl\",\"L_Ankle_Ik_Ctrl\", \"L_KneeMid_Bendy_Ctrl\"]\n\nlock_and_hide_attrs(ctrls=hide_scales,  translate=False, rotate=False, scale=True, exclude=[], rotate_order=False, extras=[])\n\n\n\n\n\n");
-	setAttr ".postcode" -type "string" "";
+createNode lightLinker -s -n "lightLinker1";
+	rename -uid "B0FBEB0E-4B9B-1B2C-FC06-329CDD6B1C88";
+	setAttr -s 2 ".lnk";
+	setAttr -s 2 ".slnk";
+createNode shapeEditorManager -n "shapeEditorManager";
+	rename -uid "5EE1BD76-4770-95DC-628E-19947EC62191";
+createNode poseInterpolatorManager -n "poseInterpolatorManager";
+	rename -uid "1EB1ACF9-4508-763A-390E-5495B463C62D";
+createNode displayLayerManager -n "layerManager";
+	rename -uid "D68EB477-44BF-5F13-7CDC-D5BEF32DE50F";
+createNode displayLayer -n "defaultLayer";
+	rename -uid "AE6EEDEB-4941-B8B3-6918-AFB12FA5CF4A";
+	setAttr ".ufem" -type "stringArray" 0  ;
+createNode renderLayerManager -n "renderLayerManager";
+	rename -uid "7B03AC08-4F1C-0B3A-1BBE-27B9399D4778";
+createNode renderLayer -n "defaultRenderLayer";
+	rename -uid "80B0FC18-4916-9F9A-EE90-D086973F84CC";
+	setAttr ".g" yes;
+createNode script -n "uiConfigurationScriptNode";
+	rename -uid "CD20D619-4674-5263-3F6E-9996C177F546";
+	setAttr ".b" -type "string" (
+		"// Maya Mel UI Configuration File.\n//\n//  This script is machine generated.  Edit at your own risk.\n//\n//\n\nglobal string $gMainPane;\nif (`paneLayout -exists $gMainPane`) {\n\n\tglobal int $gUseScenePanelConfig;\n\tint    $useSceneConfig = $gUseScenePanelConfig;\n\tint    $nodeEditorPanelVisible = stringArrayContains(\"nodeEditorPanel1\", `getPanel -vis`);\n\tint    $nodeEditorWorkspaceControlOpen = (`workspaceControl -exists nodeEditorPanel1Window` && `workspaceControl -q -visible nodeEditorPanel1Window`);\n\tint    $menusOkayInPanels = `optionVar -q allowMenusInPanels`;\n\tint    $nVisPanes = `paneLayout -q -nvp $gMainPane`;\n\tint    $nPanes = 0;\n\tstring $editorName;\n\tstring $panelName;\n\tstring $itemFilterName;\n\tstring $panelConfig;\n\n\t//\n\t//  get current state of the UI\n\t//\n\tsceneUIReplacement -update $gMainPane;\n\n\t$panelName = `sceneUIReplacement -getNextPanel \"modelPanel\" (localizedPanelLabel(\"Top View\")) `;\n\tif (\"\" != $panelName) {\n\t\t$label = `panel -q -label $panelName`;\n\t\tmodelPanel -edit -l (localizedPanelLabel(\"Top View\")) -mbv $menusOkayInPanels  $panelName;\n"
+		+ "\t\t$editorName = $panelName;\n        modelEditor -e \n            -camera \"|top\" \n            -useInteractiveMode 0\n            -displayLights \"default\" \n            -displayAppearance \"smoothShaded\" \n            -activeOnly 0\n            -ignorePanZoom 0\n            -wireframeOnShaded 0\n            -headsUpDisplay 1\n            -holdOuts 1\n            -selectionHiliteDisplay 1\n            -useDefaultMaterial 0\n            -bufferMode \"double\" \n            -twoSidedLighting 0\n            -backfaceCulling 0\n            -xray 0\n            -jointXray 0\n            -activeComponentsXray 0\n            -displayTextures 0\n            -smoothWireframe 0\n            -lineWidth 1\n            -textureAnisotropic 0\n            -textureHilight 1\n            -textureSampling 2\n            -textureDisplay \"modulate\" \n            -textureMaxSize 32768\n            -fogging 0\n            -fogSource \"fragment\" \n            -fogMode \"linear\" \n            -fogStart 0\n            -fogEnd 100\n            -fogDensity 0.1\n            -fogColor 0.5 0.5 0.5 1 \n"
+		+ "            -depthOfFieldPreview 1\n            -maxConstantTransparency 1\n            -rendererName \"vp2Renderer\" \n            -objectFilterShowInHUD 1\n            -isFiltered 0\n            -colorResolution 256 256 \n            -bumpResolution 512 512 \n            -textureCompression 0\n            -transparencyAlgorithm \"frontAndBackCull\" \n            -transpInShadows 0\n            -cullingOverride \"none\" \n            -lowQualityLighting 0\n            -maximumNumHardwareLights 1\n            -occlusionCulling 0\n            -shadingModel 0\n            -useBaseRenderer 0\n            -useReducedRenderer 0\n            -smallObjectCulling 0\n            -smallObjectThreshold -1 \n            -interactiveDisableShadows 0\n            -interactiveBackFaceCull 0\n            -sortTransparent 1\n            -controllers 1\n            -nurbsCurves 1\n            -nurbsSurfaces 1\n            -polymeshes 1\n            -subdivSurfaces 1\n            -planes 1\n            -lights 1\n            -cameras 1\n            -controlVertices 1\n"
+		+ "            -hulls 1\n            -grid 1\n            -imagePlane 1\n            -joints 1\n            -ikHandles 1\n            -deformers 1\n            -dynamics 1\n            -particleInstancers 1\n            -fluids 1\n            -hairSystems 1\n            -follicles 1\n            -nCloths 1\n            -nParticles 1\n            -nRigids 1\n            -dynamicConstraints 1\n            -locators 1\n            -manipulators 1\n            -pluginShapes 1\n            -dimensions 1\n            -handles 1\n            -pivots 1\n            -textures 1\n            -strokes 1\n            -motionTrails 1\n            -clipGhosts 1\n            -bluePencil 1\n            -greasePencils 0\n            -excludeObjectPreset \"All\" \n            -shadows 0\n            -captureSequenceNumber -1\n            -width 1\n            -height 1\n            -sceneRenderFilter 0\n            $editorName;\n        modelEditor -e -viewSelected 0 $editorName;\n        modelEditor -e \n            -pluginObjects \"gpuCacheDisplayFilter\" 1 \n            $editorName;\n"
+		+ "\t\tif (!$useSceneConfig) {\n\t\t\tpanel -e -l $label $panelName;\n\t\t}\n\t}\n\n\n\t$panelName = `sceneUIReplacement -getNextPanel \"modelPanel\" (localizedPanelLabel(\"Side View\")) `;\n\tif (\"\" != $panelName) {\n\t\t$label = `panel -q -label $panelName`;\n\t\tmodelPanel -edit -l (localizedPanelLabel(\"Side View\")) -mbv $menusOkayInPanels  $panelName;\n\t\t$editorName = $panelName;\n        modelEditor -e \n            -camera \"|side\" \n            -useInteractiveMode 0\n            -displayLights \"default\" \n            -displayAppearance \"smoothShaded\" \n            -activeOnly 0\n            -ignorePanZoom 0\n            -wireframeOnShaded 0\n            -headsUpDisplay 1\n            -holdOuts 1\n            -selectionHiliteDisplay 1\n            -useDefaultMaterial 0\n            -bufferMode \"double\" \n            -twoSidedLighting 0\n            -backfaceCulling 0\n            -xray 0\n            -jointXray 0\n            -activeComponentsXray 0\n            -displayTextures 0\n            -smoothWireframe 0\n            -lineWidth 1\n            -textureAnisotropic 0\n"
+		+ "            -textureHilight 1\n            -textureSampling 2\n            -textureDisplay \"modulate\" \n            -textureMaxSize 32768\n            -fogging 0\n            -fogSource \"fragment\" \n            -fogMode \"linear\" \n            -fogStart 0\n            -fogEnd 100\n            -fogDensity 0.1\n            -fogColor 0.5 0.5 0.5 1 \n            -depthOfFieldPreview 1\n            -maxConstantTransparency 1\n            -rendererName \"vp2Renderer\" \n            -objectFilterShowInHUD 1\n            -isFiltered 0\n            -colorResolution 256 256 \n            -bumpResolution 512 512 \n            -textureCompression 0\n            -transparencyAlgorithm \"frontAndBackCull\" \n            -transpInShadows 0\n            -cullingOverride \"none\" \n            -lowQualityLighting 0\n            -maximumNumHardwareLights 1\n            -occlusionCulling 0\n            -shadingModel 0\n            -useBaseRenderer 0\n            -useReducedRenderer 0\n            -smallObjectCulling 0\n            -smallObjectThreshold -1 \n            -interactiveDisableShadows 0\n"
+		+ "            -interactiveBackFaceCull 0\n            -sortTransparent 1\n            -controllers 1\n            -nurbsCurves 1\n            -nurbsSurfaces 1\n            -polymeshes 1\n            -subdivSurfaces 1\n            -planes 1\n            -lights 1\n            -cameras 1\n            -controlVertices 1\n            -hulls 1\n            -grid 1\n            -imagePlane 1\n            -joints 1\n            -ikHandles 1\n            -deformers 1\n            -dynamics 1\n            -particleInstancers 1\n            -fluids 1\n            -hairSystems 1\n            -follicles 1\n            -nCloths 1\n            -nParticles 1\n            -nRigids 1\n            -dynamicConstraints 1\n            -locators 1\n            -manipulators 1\n            -pluginShapes 1\n            -dimensions 1\n            -handles 1\n            -pivots 1\n            -textures 1\n            -strokes 1\n            -motionTrails 1\n            -clipGhosts 1\n            -bluePencil 1\n            -greasePencils 0\n            -excludeObjectPreset \"All\" \n"
+		+ "            -shadows 0\n            -captureSequenceNumber -1\n            -width 1\n            -height 1\n            -sceneRenderFilter 0\n            $editorName;\n        modelEditor -e -viewSelected 0 $editorName;\n        modelEditor -e \n            -pluginObjects \"gpuCacheDisplayFilter\" 1 \n            $editorName;\n\t\tif (!$useSceneConfig) {\n\t\t\tpanel -e -l $label $panelName;\n\t\t}\n\t}\n\n\n\t$panelName = `sceneUIReplacement -getNextPanel \"modelPanel\" (localizedPanelLabel(\"Front View\")) `;\n\tif (\"\" != $panelName) {\n\t\t$label = `panel -q -label $panelName`;\n\t\tmodelPanel -edit -l (localizedPanelLabel(\"Front View\")) -mbv $menusOkayInPanels  $panelName;\n\t\t$editorName = $panelName;\n        modelEditor -e \n            -camera \"|front\" \n            -useInteractiveMode 0\n            -displayLights \"default\" \n            -displayAppearance \"smoothShaded\" \n            -activeOnly 0\n            -ignorePanZoom 0\n            -wireframeOnShaded 0\n            -headsUpDisplay 1\n            -holdOuts 1\n            -selectionHiliteDisplay 1\n"
+		+ "            -useDefaultMaterial 0\n            -bufferMode \"double\" \n            -twoSidedLighting 0\n            -backfaceCulling 0\n            -xray 0\n            -jointXray 0\n            -activeComponentsXray 0\n            -displayTextures 0\n            -smoothWireframe 0\n            -lineWidth 1\n            -textureAnisotropic 0\n            -textureHilight 1\n            -textureSampling 2\n            -textureDisplay \"modulate\" \n            -textureMaxSize 32768\n            -fogging 0\n            -fogSource \"fragment\" \n            -fogMode \"linear\" \n            -fogStart 0\n            -fogEnd 100\n            -fogDensity 0.1\n            -fogColor 0.5 0.5 0.5 1 \n            -depthOfFieldPreview 1\n            -maxConstantTransparency 1\n            -rendererName \"vp2Renderer\" \n            -objectFilterShowInHUD 1\n            -isFiltered 0\n            -colorResolution 256 256 \n            -bumpResolution 512 512 \n            -textureCompression 0\n            -transparencyAlgorithm \"frontAndBackCull\" \n            -transpInShadows 0\n"
+		+ "            -cullingOverride \"none\" \n            -lowQualityLighting 0\n            -maximumNumHardwareLights 1\n            -occlusionCulling 0\n            -shadingModel 0\n            -useBaseRenderer 0\n            -useReducedRenderer 0\n            -smallObjectCulling 0\n            -smallObjectThreshold -1 \n            -interactiveDisableShadows 0\n            -interactiveBackFaceCull 0\n            -sortTransparent 1\n            -controllers 1\n            -nurbsCurves 1\n            -nurbsSurfaces 1\n            -polymeshes 1\n            -subdivSurfaces 1\n            -planes 1\n            -lights 1\n            -cameras 1\n            -controlVertices 1\n            -hulls 1\n            -grid 1\n            -imagePlane 1\n            -joints 1\n            -ikHandles 1\n            -deformers 1\n            -dynamics 1\n            -particleInstancers 1\n            -fluids 1\n            -hairSystems 1\n            -follicles 1\n            -nCloths 1\n            -nParticles 1\n            -nRigids 1\n            -dynamicConstraints 1\n"
+		+ "            -locators 1\n            -manipulators 1\n            -pluginShapes 1\n            -dimensions 1\n            -handles 1\n            -pivots 1\n            -textures 1\n            -strokes 1\n            -motionTrails 1\n            -clipGhosts 1\n            -bluePencil 1\n            -greasePencils 0\n            -excludeObjectPreset \"All\" \n            -shadows 0\n            -captureSequenceNumber -1\n            -width 1\n            -height 1\n            -sceneRenderFilter 0\n            $editorName;\n        modelEditor -e -viewSelected 0 $editorName;\n        modelEditor -e \n            -pluginObjects \"gpuCacheDisplayFilter\" 1 \n            $editorName;\n\t\tif (!$useSceneConfig) {\n\t\t\tpanel -e -l $label $panelName;\n\t\t}\n\t}\n\n\n\t$panelName = `sceneUIReplacement -getNextPanel \"modelPanel\" (localizedPanelLabel(\"Persp View\")) `;\n\tif (\"\" != $panelName) {\n\t\t$label = `panel -q -label $panelName`;\n\t\tmodelPanel -edit -l (localizedPanelLabel(\"Persp View\")) -mbv $menusOkayInPanels  $panelName;\n\t\t$editorName = $panelName;\n        modelEditor -e \n"
+		+ "            -camera \"|persp\" \n            -useInteractiveMode 0\n            -displayLights \"default\" \n            -displayAppearance \"smoothShaded\" \n            -activeOnly 0\n            -ignorePanZoom 0\n            -wireframeOnShaded 0\n            -headsUpDisplay 1\n            -holdOuts 1\n            -selectionHiliteDisplay 1\n            -useDefaultMaterial 0\n            -bufferMode \"double\" \n            -twoSidedLighting 0\n            -backfaceCulling 0\n            -xray 0\n            -jointXray 0\n            -activeComponentsXray 0\n            -displayTextures 0\n            -smoothWireframe 0\n            -lineWidth 1\n            -textureAnisotropic 0\n            -textureHilight 1\n            -textureSampling 2\n            -textureDisplay \"modulate\" \n            -textureMaxSize 32768\n            -fogging 0\n            -fogSource \"fragment\" \n            -fogMode \"linear\" \n            -fogStart 0\n            -fogEnd 100\n            -fogDensity 0.1\n            -fogColor 0.5 0.5 0.5 1 \n            -depthOfFieldPreview 1\n"
+		+ "            -maxConstantTransparency 1\n            -rendererName \"vp2Renderer\" \n            -objectFilterShowInHUD 1\n            -isFiltered 0\n            -colorResolution 256 256 \n            -bumpResolution 512 512 \n            -textureCompression 0\n            -transparencyAlgorithm \"frontAndBackCull\" \n            -transpInShadows 0\n            -cullingOverride \"none\" \n            -lowQualityLighting 0\n            -maximumNumHardwareLights 1\n            -occlusionCulling 0\n            -shadingModel 0\n            -useBaseRenderer 0\n            -useReducedRenderer 0\n            -smallObjectCulling 0\n            -smallObjectThreshold -1 \n            -interactiveDisableShadows 0\n            -interactiveBackFaceCull 0\n            -sortTransparent 1\n            -controllers 1\n            -nurbsCurves 1\n            -nurbsSurfaces 1\n            -polymeshes 1\n            -subdivSurfaces 1\n            -planes 1\n            -lights 1\n            -cameras 1\n            -controlVertices 1\n            -hulls 1\n            -grid 1\n"
+		+ "            -imagePlane 1\n            -joints 1\n            -ikHandles 1\n            -deformers 1\n            -dynamics 1\n            -particleInstancers 1\n            -fluids 1\n            -hairSystems 1\n            -follicles 1\n            -nCloths 1\n            -nParticles 1\n            -nRigids 1\n            -dynamicConstraints 1\n            -locators 1\n            -manipulators 1\n            -pluginShapes 1\n            -dimensions 1\n            -handles 1\n            -pivots 1\n            -textures 1\n            -strokes 1\n            -motionTrails 1\n            -clipGhosts 1\n            -bluePencil 1\n            -greasePencils 0\n            -excludeObjectPreset \"All\" \n            -shadows 0\n            -captureSequenceNumber -1\n            -width 1580\n            -height 705\n            -sceneRenderFilter 0\n            $editorName;\n        modelEditor -e -viewSelected 0 $editorName;\n        modelEditor -e \n            -pluginObjects \"gpuCacheDisplayFilter\" 1 \n            $editorName;\n\t\tif (!$useSceneConfig) {\n"
+		+ "\t\t\tpanel -e -l $label $panelName;\n\t\t}\n\t}\n\n\n\t$panelName = `sceneUIReplacement -getNextPanel \"outlinerPanel\" (localizedPanelLabel(\"ToggledOutliner\")) `;\n\tif (\"\" != $panelName) {\n\t\t$label = `panel -q -label $panelName`;\n\t\toutlinerPanel -edit -l (localizedPanelLabel(\"ToggledOutliner\")) -mbv $menusOkayInPanels  $panelName;\n\t\t$editorName = $panelName;\n        outlinerEditor -e \n            -docTag \"isolOutln_fromSeln\" \n            -showShapes 0\n            -showAssignedMaterials 0\n            -showTimeEditor 1\n            -showReferenceNodes 1\n            -showReferenceMembers 1\n            -showAttributes 0\n            -showConnected 0\n            -showAnimCurvesOnly 0\n            -showMuteInfo 0\n            -organizeByLayer 1\n            -organizeByClip 1\n            -showAnimLayerWeight 1\n            -autoExpandLayers 1\n            -autoExpand 0\n            -showDagOnly 1\n            -showAssets 1\n            -showContainedOnly 0\n            -showPublishedAsConnected 0\n            -showParentContainers 1\n            -showContainerContents 1\n"
+		+ "            -ignoreDagHierarchy 0\n            -expandConnections 0\n            -showUpstreamCurves 1\n            -showUnitlessCurves 1\n            -showCompounds 1\n            -showLeafs 1\n            -showNumericAttrsOnly 0\n            -highlightActive 1\n            -autoSelectNewObjects 0\n            -doNotSelectNewObjects 0\n            -dropIsParent 1\n            -transmitFilters 0\n            -setFilter \"defaultSetFilter\" \n            -showSetMembers 1\n            -allowMultiSelection 1\n            -alwaysToggleSelect 0\n            -directSelect 0\n            -isSet 0\n            -isSetMember 0\n            -showUfeItems 1\n            -displayMode \"DAG\" \n            -expandObjects 0\n            -setsIgnoreFilters 1\n            -containersIgnoreFilters 1\n            -editAttrName 0\n            -showAttrValues 0\n            -highlightSecondary 0\n            -showUVAttrsOnly 0\n            -showTextureNodesOnly 0\n            -attrAlphaOrder \"default\" \n            -animLayerFilterOptions \"allAffecting\" \n            -sortOrder \"none\" \n"
+		+ "            -longNames 0\n            -niceNames 1\n            -selectCommand \"print(\\\"\\\")\" \n            -showNamespace 1\n            -showPinIcons 0\n            -mapMotionTrails 0\n            -ignoreHiddenAttribute 0\n            -ignoreOutlinerColor 0\n            -renderFilterVisible 0\n            -renderFilterIndex 0\n            -selectionOrder \"chronological\" \n            -expandAttribute 0\n            $editorName;\n\t\tif (!$useSceneConfig) {\n\t\t\tpanel -e -l $label $panelName;\n\t\t}\n\t}\n\n\n\t$panelName = `sceneUIReplacement -getNextPanel \"outlinerPanel\" (localizedPanelLabel(\"Outliner\")) `;\n\tif (\"\" != $panelName) {\n\t\t$label = `panel -q -label $panelName`;\n\t\toutlinerPanel -edit -l (localizedPanelLabel(\"Outliner\")) -mbv $menusOkayInPanels  $panelName;\n\t\t$editorName = $panelName;\n        outlinerEditor -e \n            -showShapes 0\n            -showAssignedMaterials 0\n            -showTimeEditor 1\n            -showReferenceNodes 0\n            -showReferenceMembers 0\n            -showAttributes 0\n            -showConnected 0\n"
+		+ "            -showAnimCurvesOnly 0\n            -showMuteInfo 0\n            -organizeByLayer 1\n            -organizeByClip 1\n            -showAnimLayerWeight 1\n            -autoExpandLayers 1\n            -autoExpand 0\n            -showDagOnly 1\n            -showAssets 1\n            -showContainedOnly 1\n            -showPublishedAsConnected 0\n            -showParentContainers 0\n            -showContainerContents 1\n            -ignoreDagHierarchy 0\n            -expandConnections 0\n            -showUpstreamCurves 1\n            -showUnitlessCurves 1\n            -showCompounds 1\n            -showLeafs 1\n            -showNumericAttrsOnly 0\n            -highlightActive 1\n            -autoSelectNewObjects 0\n            -doNotSelectNewObjects 0\n            -dropIsParent 1\n            -transmitFilters 0\n            -setFilter \"defaultSetFilter\" \n            -showSetMembers 1\n            -allowMultiSelection 1\n            -alwaysToggleSelect 0\n            -directSelect 0\n            -showUfeItems 1\n            -displayMode \"DAG\" \n"
+		+ "            -expandObjects 0\n            -setsIgnoreFilters 1\n            -containersIgnoreFilters 0\n            -editAttrName 0\n            -showAttrValues 0\n            -highlightSecondary 0\n            -showUVAttrsOnly 0\n            -showTextureNodesOnly 0\n            -attrAlphaOrder \"default\" \n            -animLayerFilterOptions \"allAffecting\" \n            -sortOrder \"none\" \n            -longNames 0\n            -niceNames 1\n            -showNamespace 1\n            -showPinIcons 0\n            -mapMotionTrails 0\n            -ignoreHiddenAttribute 0\n            -ignoreOutlinerColor 0\n            -renderFilterVisible 0\n            -ufeFilter \"MaterialX\" \"Hidden\" -ufeFilterValue 0\n            $editorName;\n\t\tif (!$useSceneConfig) {\n\t\t\tpanel -e -l $label $panelName;\n\t\t}\n\t}\n\n\n\t$panelName = `sceneUIReplacement -getNextScriptedPanel \"graphEditor\" (localizedPanelLabel(\"Graph Editor\")) `;\n\tif (\"\" != $panelName) {\n\t\t$label = `panel -q -label $panelName`;\n\t\tscriptedPanel -edit -l (localizedPanelLabel(\"Graph Editor\")) -mbv $menusOkayInPanels  $panelName;\n"
+		+ "\n\t\t\t$editorName = ($panelName+\"OutlineEd\");\n            outlinerEditor -e \n                -showShapes 1\n                -showAssignedMaterials 0\n                -showTimeEditor 1\n                -showReferenceNodes 0\n                -showReferenceMembers 0\n                -showAttributes 1\n                -showConnected 1\n                -showAnimCurvesOnly 1\n                -showMuteInfo 0\n                -organizeByLayer 1\n                -organizeByClip 1\n                -showAnimLayerWeight 1\n                -autoExpandLayers 1\n                -autoExpand 1\n                -showDagOnly 0\n                -showAssets 1\n                -showContainedOnly 0\n                -showPublishedAsConnected 0\n                -showParentContainers 0\n                -showContainerContents 0\n                -ignoreDagHierarchy 0\n                -expandConnections 1\n                -showUpstreamCurves 1\n                -showUnitlessCurves 1\n                -showCompounds 0\n                -showLeafs 1\n                -showNumericAttrsOnly 1\n"
+		+ "                -highlightActive 0\n                -autoSelectNewObjects 1\n                -doNotSelectNewObjects 0\n                -dropIsParent 1\n                -transmitFilters 1\n                -setFilter \"0\" \n                -showSetMembers 0\n                -allowMultiSelection 1\n                -alwaysToggleSelect 0\n                -directSelect 0\n                -showUfeItems 1\n                -displayMode \"DAG\" \n                -expandObjects 0\n                -setsIgnoreFilters 1\n                -containersIgnoreFilters 0\n                -editAttrName 0\n                -showAttrValues 0\n                -highlightSecondary 0\n                -showUVAttrsOnly 0\n                -showTextureNodesOnly 0\n                -attrAlphaOrder \"default\" \n                -animLayerFilterOptions \"allAffecting\" \n                -sortOrder \"none\" \n                -longNames 0\n                -niceNames 1\n                -showNamespace 1\n                -showPinIcons 1\n                -mapMotionTrails 1\n                -ignoreHiddenAttribute 0\n"
+		+ "                -ignoreOutlinerColor 0\n                -renderFilterVisible 0\n                $editorName;\n\n\t\t\t$editorName = ($panelName+\"GraphEd\");\n            animCurveEditor -e \n                -displayValues 0\n                -snapTime \"integer\" \n                -snapValue \"none\" \n                -showPlayRangeShades \"on\" \n                -lockPlayRangeShades \"off\" \n                -smoothness \"fine\" \n                -resultSamples 1\n                -resultScreenSamples 0\n                -resultUpdate \"delayed\" \n                -showUpstreamCurves 1\n                -tangentScale 1\n                -tangentLineThickness 1\n                -keyMinScale 1\n                -stackedCurvesMin -1\n                -stackedCurvesMax 1\n                -stackedCurvesSpace 0.2\n                -preSelectionHighlight 0\n                -limitToSelectedCurves 0\n                -constrainDrag 0\n                -valueLinesToggle 0\n                -outliner \"graphEditor1OutlineEd\" \n                -highlightAffectedCurves 0\n                $editorName;\n"
+		+ "\t\tif (!$useSceneConfig) {\n\t\t\tpanel -e -l $label $panelName;\n\t\t}\n\t}\n\n\n\t$panelName = `sceneUIReplacement -getNextScriptedPanel \"dopeSheetPanel\" (localizedPanelLabel(\"Dope Sheet\")) `;\n\tif (\"\" != $panelName) {\n\t\t$label = `panel -q -label $panelName`;\n\t\tscriptedPanel -edit -l (localizedPanelLabel(\"Dope Sheet\")) -mbv $menusOkayInPanels  $panelName;\n\n\t\t\t$editorName = ($panelName+\"OutlineEd\");\n            outlinerEditor -e \n                -showShapes 1\n                -showAssignedMaterials 0\n                -showTimeEditor 1\n                -showReferenceNodes 0\n                -showReferenceMembers 0\n                -showAttributes 1\n                -showConnected 1\n                -showAnimCurvesOnly 1\n                -showMuteInfo 0\n                -organizeByLayer 1\n                -organizeByClip 1\n                -showAnimLayerWeight 1\n                -autoExpandLayers 1\n                -autoExpand 1\n                -showDagOnly 0\n                -showAssets 1\n                -showContainedOnly 0\n                -showPublishedAsConnected 0\n"
+		+ "                -showParentContainers 0\n                -showContainerContents 0\n                -ignoreDagHierarchy 0\n                -expandConnections 1\n                -showUpstreamCurves 1\n                -showUnitlessCurves 0\n                -showCompounds 0\n                -showLeafs 1\n                -showNumericAttrsOnly 1\n                -highlightActive 0\n                -autoSelectNewObjects 0\n                -doNotSelectNewObjects 1\n                -dropIsParent 1\n                -transmitFilters 0\n                -setFilter \"0\" \n                -showSetMembers 1\n                -allowMultiSelection 1\n                -alwaysToggleSelect 0\n                -directSelect 0\n                -showUfeItems 1\n                -displayMode \"DAG\" \n                -expandObjects 0\n                -setsIgnoreFilters 1\n                -containersIgnoreFilters 0\n                -editAttrName 0\n                -showAttrValues 0\n                -highlightSecondary 0\n                -showUVAttrsOnly 0\n                -showTextureNodesOnly 0\n"
+		+ "                -attrAlphaOrder \"default\" \n                -animLayerFilterOptions \"allAffecting\" \n                -sortOrder \"none\" \n                -longNames 0\n                -niceNames 1\n                -showNamespace 1\n                -showPinIcons 0\n                -mapMotionTrails 1\n                -ignoreHiddenAttribute 0\n                -ignoreOutlinerColor 0\n                -renderFilterVisible 0\n                $editorName;\n\n\t\t\t$editorName = ($panelName+\"DopeSheetEd\");\n            dopeSheetEditor -e \n                -displayValues 0\n                -snapTime \"none\" \n                -snapValue \"none\" \n                -outliner \"dopeSheetPanel1OutlineEd\" \n                -hierarchyBelow 0\n                -selectionWindow 0 0 0 0 \n                $editorName;\n\t\tif (!$useSceneConfig) {\n\t\t\tpanel -e -l $label $panelName;\n\t\t}\n\t}\n\n\n\t$panelName = `sceneUIReplacement -getNextScriptedPanel \"timeEditorPanel\" (localizedPanelLabel(\"Time Editor\")) `;\n\tif (\"\" != $panelName) {\n\t\t$label = `panel -q -label $panelName`;\n"
+		+ "\t\tscriptedPanel -edit -l (localizedPanelLabel(\"Time Editor\")) -mbv $menusOkayInPanels  $panelName;\n\t\tif (!$useSceneConfig) {\n\t\t\tpanel -e -l $label $panelName;\n\t\t}\n\t}\n\n\n\t$panelName = `sceneUIReplacement -getNextScriptedPanel \"clipEditorPanel\" (localizedPanelLabel(\"Trax Editor\")) `;\n\tif (\"\" != $panelName) {\n\t\t$label = `panel -q -label $panelName`;\n\t\tscriptedPanel -edit -l (localizedPanelLabel(\"Trax Editor\")) -mbv $menusOkayInPanels  $panelName;\n\n\t\t\t$editorName = clipEditorNameFromPanel($panelName);\n            clipEditor -e \n                -displayValues 0\n                -snapTime \"none\" \n                -snapValue \"none\" \n                -initialized 0\n                -manageSequencer 0 \n                $editorName;\n\t\tif (!$useSceneConfig) {\n\t\t\tpanel -e -l $label $panelName;\n\t\t}\n\t}\n\n\n\t$panelName = `sceneUIReplacement -getNextScriptedPanel \"sequenceEditorPanel\" (localizedPanelLabel(\"Camera Sequencer\")) `;\n\tif (\"\" != $panelName) {\n\t\t$label = `panel -q -label $panelName`;\n\t\tscriptedPanel -edit -l (localizedPanelLabel(\"Camera Sequencer\")) -mbv $menusOkayInPanels  $panelName;\n"
+		+ "\n\t\t\t$editorName = sequenceEditorNameFromPanel($panelName);\n            clipEditor -e \n                -displayValues 0\n                -snapTime \"none\" \n                -snapValue \"none\" \n                -initialized 0\n                -manageSequencer 1 \n                $editorName;\n\t\tif (!$useSceneConfig) {\n\t\t\tpanel -e -l $label $panelName;\n\t\t}\n\t}\n\n\n\t$panelName = `sceneUIReplacement -getNextScriptedPanel \"hyperGraphPanel\" (localizedPanelLabel(\"Hypergraph Hierarchy\")) `;\n\tif (\"\" != $panelName) {\n\t\t$label = `panel -q -label $panelName`;\n\t\tscriptedPanel -edit -l (localizedPanelLabel(\"Hypergraph Hierarchy\")) -mbv $menusOkayInPanels  $panelName;\n\n\t\t\t$editorName = ($panelName+\"HyperGraphEd\");\n            hyperGraph -e \n                -graphLayoutStyle \"hierarchicalLayout\" \n                -orientation \"horiz\" \n                -mergeConnections 0\n                -zoom 1\n                -animateTransition 0\n                -showRelationships 1\n                -showShapes 0\n                -showDeformers 0\n                -showExpressions 0\n"
+		+ "                -showConstraints 0\n                -showConnectionFromSelected 0\n                -showConnectionToSelected 0\n                -showConstraintLabels 0\n                -showUnderworld 0\n                -showInvisible 0\n                -transitionFrames 1\n                -opaqueContainers 0\n                -freeform 0\n                -imagePosition 0 0 \n                -imageScale 1\n                -imageEnabled 0\n                -graphType \"DAG\" \n                -heatMapDisplay 0\n                -updateSelection 1\n                -updateNodeAdded 1\n                -useDrawOverrideColor 0\n                -limitGraphTraversal -1\n                -range 0 0 \n                -iconSize \"smallIcons\" \n                -showCachedConnections 0\n                $editorName;\n\t\tif (!$useSceneConfig) {\n\t\t\tpanel -e -l $label $panelName;\n\t\t}\n\t}\n\n\n\t$panelName = `sceneUIReplacement -getNextScriptedPanel \"hyperShadePanel\" (localizedPanelLabel(\"Hypershade\")) `;\n\tif (\"\" != $panelName) {\n\t\t$label = `panel -q -label $panelName`;\n"
+		+ "\t\tscriptedPanel -edit -l (localizedPanelLabel(\"Hypershade\")) -mbv $menusOkayInPanels  $panelName;\n\t\tif (!$useSceneConfig) {\n\t\t\tpanel -e -l $label $panelName;\n\t\t}\n\t}\n\n\n\t$panelName = `sceneUIReplacement -getNextScriptedPanel \"visorPanel\" (localizedPanelLabel(\"Visor\")) `;\n\tif (\"\" != $panelName) {\n\t\t$label = `panel -q -label $panelName`;\n\t\tscriptedPanel -edit -l (localizedPanelLabel(\"Visor\")) -mbv $menusOkayInPanels  $panelName;\n\t\tif (!$useSceneConfig) {\n\t\t\tpanel -e -l $label $panelName;\n\t\t}\n\t}\n\n\n\t$panelName = `sceneUIReplacement -getNextScriptedPanel \"nodeEditorPanel\" (localizedPanelLabel(\"Node Editor\")) `;\n\tif ($nodeEditorPanelVisible || $nodeEditorWorkspaceControlOpen) {\n\t\tif (\"\" == $panelName) {\n\t\t\tif ($useSceneConfig) {\n\t\t\t\t$panelName = `scriptedPanel -unParent  -type \"nodeEditorPanel\" -l (localizedPanelLabel(\"Node Editor\")) -mbv $menusOkayInPanels `;\n\n\t\t\t$editorName = ($panelName+\"NodeEditorEd\");\n            nodeEditor -e \n                -allAttributes 0\n                -allNodes 0\n                -autoSizeNodes 1\n"
+		+ "                -consistentNameSize 1\n                -createNodeCommand \"nodeEdCreateNodeCommand\" \n                -connectNodeOnCreation 0\n                -connectOnDrop 0\n                -copyConnectionsOnPaste 0\n                -connectionStyle \"bezier\" \n                -defaultPinnedState 0\n                -additiveGraphingMode 0\n                -connectedGraphingMode 1\n                -settingsChangedCallback \"nodeEdSyncControls\" \n                -traversalDepthLimit -1\n                -keyPressCommand \"nodeEdKeyPressCommand\" \n                -nodeTitleMode \"name\" \n                -gridSnap 0\n                -gridVisibility 1\n                -crosshairOnEdgeDragging 0\n                -popupMenuScript \"nodeEdBuildPanelMenus\" \n                -showNamespace 1\n                -showShapes 1\n                -showSGShapes 0\n                -showTransforms 1\n                -useAssets 1\n                -syncedSelection 1\n                -extendToShapes 1\n                -showUnitConversions 0\n                -editorMode \"default\" \n"
+		+ "                -hasWatchpoint 0\n                $editorName;\n\t\t\t}\n\t\t} else {\n\t\t\t$label = `panel -q -label $panelName`;\n\t\t\tscriptedPanel -edit -l (localizedPanelLabel(\"Node Editor\")) -mbv $menusOkayInPanels  $panelName;\n\n\t\t\t$editorName = ($panelName+\"NodeEditorEd\");\n            nodeEditor -e \n                -allAttributes 0\n                -allNodes 0\n                -autoSizeNodes 1\n                -consistentNameSize 1\n                -createNodeCommand \"nodeEdCreateNodeCommand\" \n                -connectNodeOnCreation 0\n                -connectOnDrop 0\n                -copyConnectionsOnPaste 0\n                -connectionStyle \"bezier\" \n                -defaultPinnedState 0\n                -additiveGraphingMode 0\n                -connectedGraphingMode 1\n                -settingsChangedCallback \"nodeEdSyncControls\" \n                -traversalDepthLimit -1\n                -keyPressCommand \"nodeEdKeyPressCommand\" \n                -nodeTitleMode \"name\" \n                -gridSnap 0\n                -gridVisibility 1\n"
+		+ "                -crosshairOnEdgeDragging 0\n                -popupMenuScript \"nodeEdBuildPanelMenus\" \n                -showNamespace 1\n                -showShapes 1\n                -showSGShapes 0\n                -showTransforms 1\n                -useAssets 1\n                -syncedSelection 1\n                -extendToShapes 1\n                -showUnitConversions 0\n                -editorMode \"default\" \n                -hasWatchpoint 0\n                $editorName;\n\t\t\tif (!$useSceneConfig) {\n\t\t\t\tpanel -e -l $label $panelName;\n\t\t\t}\n\t\t}\n\t}\n\n\n\t$panelName = `sceneUIReplacement -getNextScriptedPanel \"createNodePanel\" (localizedPanelLabel(\"Create Node\")) `;\n\tif (\"\" != $panelName) {\n\t\t$label = `panel -q -label $panelName`;\n\t\tscriptedPanel -edit -l (localizedPanelLabel(\"Create Node\")) -mbv $menusOkayInPanels  $panelName;\n\t\tif (!$useSceneConfig) {\n\t\t\tpanel -e -l $label $panelName;\n\t\t}\n\t}\n\n\n\t$panelName = `sceneUIReplacement -getNextScriptedPanel \"polyTexturePlacementPanel\" (localizedPanelLabel(\"UV Editor\")) `;\n\tif (\"\" != $panelName) {\n"
+		+ "\t\t$label = `panel -q -label $panelName`;\n\t\tscriptedPanel -edit -l (localizedPanelLabel(\"UV Editor\")) -mbv $menusOkayInPanels  $panelName;\n\t\tif (!$useSceneConfig) {\n\t\t\tpanel -e -l $label $panelName;\n\t\t}\n\t}\n\n\n\t$panelName = `sceneUIReplacement -getNextScriptedPanel \"renderWindowPanel\" (localizedPanelLabel(\"Render View\")) `;\n\tif (\"\" != $panelName) {\n\t\t$label = `panel -q -label $panelName`;\n\t\tscriptedPanel -edit -l (localizedPanelLabel(\"Render View\")) -mbv $menusOkayInPanels  $panelName;\n\t\tif (!$useSceneConfig) {\n\t\t\tpanel -e -l $label $panelName;\n\t\t}\n\t}\n\n\n\t$panelName = `sceneUIReplacement -getNextPanel \"shapePanel\" (localizedPanelLabel(\"Shape Editor\")) `;\n\tif (\"\" != $panelName) {\n\t\t$label = `panel -q -label $panelName`;\n\t\tshapePanel -edit -l (localizedPanelLabel(\"Shape Editor\")) -mbv $menusOkayInPanels  $panelName;\n\t\tif (!$useSceneConfig) {\n\t\t\tpanel -e -l $label $panelName;\n\t\t}\n\t}\n\n\n\t$panelName = `sceneUIReplacement -getNextPanel \"posePanel\" (localizedPanelLabel(\"Pose Editor\")) `;\n\tif (\"\" != $panelName) {\n\t\t$label = `panel -q -label $panelName`;\n"
+		+ "\t\tposePanel -edit -l (localizedPanelLabel(\"Pose Editor\")) -mbv $menusOkayInPanels  $panelName;\n\t\tif (!$useSceneConfig) {\n\t\t\tpanel -e -l $label $panelName;\n\t\t}\n\t}\n\n\n\t$panelName = `sceneUIReplacement -getNextScriptedPanel \"dynRelEdPanel\" (localizedPanelLabel(\"Dynamic Relationships\")) `;\n\tif (\"\" != $panelName) {\n\t\t$label = `panel -q -label $panelName`;\n\t\tscriptedPanel -edit -l (localizedPanelLabel(\"Dynamic Relationships\")) -mbv $menusOkayInPanels  $panelName;\n\t\tif (!$useSceneConfig) {\n\t\t\tpanel -e -l $label $panelName;\n\t\t}\n\t}\n\n\n\t$panelName = `sceneUIReplacement -getNextScriptedPanel \"relationshipPanel\" (localizedPanelLabel(\"Relationship Editor\")) `;\n\tif (\"\" != $panelName) {\n\t\t$label = `panel -q -label $panelName`;\n\t\tscriptedPanel -edit -l (localizedPanelLabel(\"Relationship Editor\")) -mbv $menusOkayInPanels  $panelName;\n\t\tif (!$useSceneConfig) {\n\t\t\tpanel -e -l $label $panelName;\n\t\t}\n\t}\n\n\n\t$panelName = `sceneUIReplacement -getNextScriptedPanel \"referenceEditorPanel\" (localizedPanelLabel(\"Reference Editor\")) `;\n\tif (\"\" != $panelName) {\n"
+		+ "\t\t$label = `panel -q -label $panelName`;\n\t\tscriptedPanel -edit -l (localizedPanelLabel(\"Reference Editor\")) -mbv $menusOkayInPanels  $panelName;\n\t\tif (!$useSceneConfig) {\n\t\t\tpanel -e -l $label $panelName;\n\t\t}\n\t}\n\n\n\t$panelName = `sceneUIReplacement -getNextScriptedPanel \"dynPaintScriptedPanelType\" (localizedPanelLabel(\"Paint Effects\")) `;\n\tif (\"\" != $panelName) {\n\t\t$label = `panel -q -label $panelName`;\n\t\tscriptedPanel -edit -l (localizedPanelLabel(\"Paint Effects\")) -mbv $menusOkayInPanels  $panelName;\n\t\tif (!$useSceneConfig) {\n\t\t\tpanel -e -l $label $panelName;\n\t\t}\n\t}\n\n\n\t$panelName = `sceneUIReplacement -getNextScriptedPanel \"scriptEditorPanel\" (localizedPanelLabel(\"Script Editor\")) `;\n\tif (\"\" != $panelName) {\n\t\t$label = `panel -q -label $panelName`;\n\t\tscriptedPanel -edit -l (localizedPanelLabel(\"Script Editor\")) -mbv $menusOkayInPanels  $panelName;\n\t\tif (!$useSceneConfig) {\n\t\t\tpanel -e -l $label $panelName;\n\t\t}\n\t}\n\n\n\t$panelName = `sceneUIReplacement -getNextScriptedPanel \"profilerPanel\" (localizedPanelLabel(\"Profiler Tool\")) `;\n"
+		+ "\tif (\"\" != $panelName) {\n\t\t$label = `panel -q -label $panelName`;\n\t\tscriptedPanel -edit -l (localizedPanelLabel(\"Profiler Tool\")) -mbv $menusOkayInPanels  $panelName;\n\t\tif (!$useSceneConfig) {\n\t\t\tpanel -e -l $label $panelName;\n\t\t}\n\t}\n\n\n\t$panelName = `sceneUIReplacement -getNextScriptedPanel \"motionMakerEditorPanel\" (localizedPanelLabel(\"MotionMaker Editor\")) `;\n\tif (\"\" != $panelName) {\n\t\t$label = `panel -q -label $panelName`;\n\t\tscriptedPanel -edit -l (localizedPanelLabel(\"MotionMaker Editor\")) -mbv $menusOkayInPanels  $panelName;\n\t\tif (!$useSceneConfig) {\n\t\t\tpanel -e -l $label $panelName;\n\t\t}\n\t}\n\n\n\t$panelName = `sceneUIReplacement -getNextScriptedPanel \"contentBrowserPanel\" (localizedPanelLabel(\"Content Browser\")) `;\n\tif (\"\" != $panelName) {\n\t\t$label = `panel -q -label $panelName`;\n\t\tscriptedPanel -edit -l (localizedPanelLabel(\"Content Browser\")) -mbv $menusOkayInPanels  $panelName;\n\t\tif (!$useSceneConfig) {\n\t\t\tpanel -e -l $label $panelName;\n\t\t}\n\t}\n\n\n\t$panelName = `sceneUIReplacement -getNextScriptedPanel \"Stereo\" (localizedPanelLabel(\"Stereo\")) `;\n"
+		+ "\tif (\"\" != $panelName) {\n\t\t$label = `panel -q -label $panelName`;\n\t\tscriptedPanel -edit -l (localizedPanelLabel(\"Stereo\")) -mbv $menusOkayInPanels  $panelName;\n{ string $editorName = ($panelName+\"Editor\");\n            stereoCameraView -e \n                -camera \"|persp\" \n                -useInteractiveMode 0\n                -displayLights \"default\" \n                -displayAppearance \"smoothShaded\" \n                -activeOnly 0\n                -ignorePanZoom 0\n                -wireframeOnShaded 0\n                -headsUpDisplay 1\n                -holdOuts 1\n                -selectionHiliteDisplay 1\n                -useDefaultMaterial 0\n                -bufferMode \"double\" \n                -twoSidedLighting 0\n                -backfaceCulling 0\n                -xray 0\n                -jointXray 0\n                -activeComponentsXray 0\n                -displayTextures 0\n                -smoothWireframe 0\n                -lineWidth 1\n                -textureAnisotropic 0\n                -textureHilight 1\n                -textureSampling 2\n"
+		+ "                -textureDisplay \"modulate\" \n                -textureMaxSize 32768\n                -fogging 0\n                -fogSource \"fragment\" \n                -fogMode \"linear\" \n                -fogStart 0\n                -fogEnd 100\n                -fogDensity 0.1\n                -fogColor 0.5 0.5 0.5 1 \n                -depthOfFieldPreview 1\n                -maxConstantTransparency 1\n                -objectFilterShowInHUD 1\n                -isFiltered 0\n                -colorResolution 4 4 \n                -bumpResolution 4 4 \n                -textureCompression 0\n                -transparencyAlgorithm \"frontAndBackCull\" \n                -transpInShadows 0\n                -cullingOverride \"none\" \n                -lowQualityLighting 0\n                -maximumNumHardwareLights 0\n                -occlusionCulling 0\n                -shadingModel 0\n                -useBaseRenderer 0\n                -useReducedRenderer 0\n                -smallObjectCulling 0\n                -smallObjectThreshold -1 \n                -interactiveDisableShadows 0\n"
+		+ "                -interactiveBackFaceCull 0\n                -sortTransparent 1\n                -controllers 1\n                -nurbsCurves 1\n                -nurbsSurfaces 1\n                -polymeshes 1\n                -subdivSurfaces 1\n                -planes 1\n                -lights 1\n                -cameras 1\n                -controlVertices 1\n                -hulls 1\n                -grid 1\n                -imagePlane 1\n                -joints 1\n                -ikHandles 1\n                -deformers 1\n                -dynamics 1\n                -particleInstancers 1\n                -fluids 1\n                -hairSystems 1\n                -follicles 1\n                -nCloths 1\n                -nParticles 1\n                -nRigids 1\n                -dynamicConstraints 1\n                -locators 1\n                -manipulators 1\n                -pluginShapes 1\n                -dimensions 1\n                -handles 1\n                -pivots 1\n                -textures 1\n                -strokes 1\n                -motionTrails 1\n"
+		+ "                -clipGhosts 1\n                -bluePencil 1\n                -greasePencils 0\n                -excludeObjectPreset \"All\" \n                -shadows 0\n                -captureSequenceNumber -1\n                -width 0\n                -height 0\n                -sceneRenderFilter 0\n                -displayMode \"centerEye\" \n                -viewColor 0 0 0 1 \n                -useCustomBackground 1\n                $editorName;\n            stereoCameraView -e -viewSelected 0 $editorName;\n            stereoCameraView -e \n                -pluginObjects \"gpuCacheDisplayFilter\" 1 \n                $editorName; };\n\t\tif (!$useSceneConfig) {\n\t\t\tpanel -e -l $label $panelName;\n\t\t}\n\t}\n\n\n\tif ($useSceneConfig) {\n        string $configName = `getPanel -cwl (localizedPanelLabel(\"Current Layout\"))`;\n        if (\"\" != $configName) {\n\t\t\tpanelConfiguration -edit -label (localizedPanelLabel(\"Current Layout\")) \n\t\t\t\t-userCreated false\n\t\t\t\t-defaultImage \"vacantCell.xP:/\"\n\t\t\t\t-image \"\"\n\t\t\t\t-sc false\n\t\t\t\t-configString \"global string $gMainPane; paneLayout -e -cn \\\"single\\\" -ps 1 100 100 $gMainPane;\"\n"
+		+ "\t\t\t\t-removeAllPanels\n\t\t\t\t-ap false\n\t\t\t\t\t(localizedPanelLabel(\"Persp View\")) \n\t\t\t\t\t\"modelPanel\"\n"
+		+ "\t\t\t\t\t\"$panelName = `modelPanel -unParent -l (localizedPanelLabel(\\\"Persp View\\\")) -mbv $menusOkayInPanels `;\\n$editorName = $panelName;\\nmodelEditor -e \\n    -cam `findStartUpCamera persp` \\n    -useInteractiveMode 0\\n    -displayLights \\\"default\\\" \\n    -displayAppearance \\\"smoothShaded\\\" \\n    -activeOnly 0\\n    -ignorePanZoom 0\\n    -wireframeOnShaded 0\\n    -headsUpDisplay 1\\n    -holdOuts 1\\n    -selectionHiliteDisplay 1\\n    -useDefaultMaterial 0\\n    -bufferMode \\\"double\\\" \\n    -twoSidedLighting 0\\n    -backfaceCulling 0\\n    -xray 0\\n    -jointXray 0\\n    -activeComponentsXray 0\\n    -displayTextures 0\\n    -smoothWireframe 0\\n    -lineWidth 1\\n    -textureAnisotropic 0\\n    -textureHilight 1\\n    -textureSampling 2\\n    -textureDisplay \\\"modulate\\\" \\n    -textureMaxSize 32768\\n    -fogging 0\\n    -fogSource \\\"fragment\\\" \\n    -fogMode \\\"linear\\\" \\n    -fogStart 0\\n    -fogEnd 100\\n    -fogDensity 0.1\\n    -fogColor 0.5 0.5 0.5 1 \\n    -depthOfFieldPreview 1\\n    -maxConstantTransparency 1\\n    -rendererName \\\"vp2Renderer\\\" \\n    -objectFilterShowInHUD 1\\n    -isFiltered 0\\n    -colorResolution 256 256 \\n    -bumpResolution 512 512 \\n    -textureCompression 0\\n    -transparencyAlgorithm \\\"frontAndBackCull\\\" \\n    -transpInShadows 0\\n    -cullingOverride \\\"none\\\" \\n    -lowQualityLighting 0\\n    -maximumNumHardwareLights 1\\n    -occlusionCulling 0\\n    -shadingModel 0\\n    -useBaseRenderer 0\\n    -useReducedRenderer 0\\n    -smallObjectCulling 0\\n    -smallObjectThreshold -1 \\n    -interactiveDisableShadows 0\\n    -interactiveBackFaceCull 0\\n    -sortTransparent 1\\n    -controllers 1\\n    -nurbsCurves 1\\n    -nurbsSurfaces 1\\n    -polymeshes 1\\n    -subdivSurfaces 1\\n    -planes 1\\n    -lights 1\\n    -cameras 1\\n    -controlVertices 1\\n    -hulls 1\\n    -grid 1\\n    -imagePlane 1\\n    -joints 1\\n    -ikHandles 1\\n    -deformers 1\\n    -dynamics 1\\n    -particleInstancers 1\\n    -fluids 1\\n    -hairSystems 1\\n    -follicles 1\\n    -nCloths 1\\n    -nParticles 1\\n    -nRigids 1\\n    -dynamicConstraints 1\\n    -locators 1\\n    -manipulators 1\\n    -pluginShapes 1\\n    -dimensions 1\\n    -handles 1\\n    -pivots 1\\n    -textures 1\\n    -strokes 1\\n    -motionTrails 1\\n    -clipGhosts 1\\n    -bluePencil 1\\n    -greasePencils 0\\n    -excludeObjectPreset \\\"All\\\" \\n    -shadows 0\\n    -captureSequenceNumber -1\\n    -width 1580\\n    -height 705\\n    -sceneRenderFilter 0\\n    $editorName;\\nmodelEditor -e -viewSelected 0 $editorName;\\nmodelEditor -e \\n    -pluginObjects \\\"gpuCacheDisplayFilter\\\" 1 \\n    $editorName\"\n"
+		+ "\t\t\t\t\t\"modelPanel -edit -l (localizedPanelLabel(\\\"Persp View\\\")) -mbv $menusOkayInPanels  $panelName;\\n$editorName = $panelName;\\nmodelEditor -e \\n    -cam `findStartUpCamera persp` \\n    -useInteractiveMode 0\\n    -displayLights \\\"default\\\" \\n    -displayAppearance \\\"smoothShaded\\\" \\n    -activeOnly 0\\n    -ignorePanZoom 0\\n    -wireframeOnShaded 0\\n    -headsUpDisplay 1\\n    -holdOuts 1\\n    -selectionHiliteDisplay 1\\n    -useDefaultMaterial 0\\n    -bufferMode \\\"double\\\" \\n    -twoSidedLighting 0\\n    -backfaceCulling 0\\n    -xray 0\\n    -jointXray 0\\n    -activeComponentsXray 0\\n    -displayTextures 0\\n    -smoothWireframe 0\\n    -lineWidth 1\\n    -textureAnisotropic 0\\n    -textureHilight 1\\n    -textureSampling 2\\n    -textureDisplay \\\"modulate\\\" \\n    -textureMaxSize 32768\\n    -fogging 0\\n    -fogSource \\\"fragment\\\" \\n    -fogMode \\\"linear\\\" \\n    -fogStart 0\\n    -fogEnd 100\\n    -fogDensity 0.1\\n    -fogColor 0.5 0.5 0.5 1 \\n    -depthOfFieldPreview 1\\n    -maxConstantTransparency 1\\n    -rendererName \\\"vp2Renderer\\\" \\n    -objectFilterShowInHUD 1\\n    -isFiltered 0\\n    -colorResolution 256 256 \\n    -bumpResolution 512 512 \\n    -textureCompression 0\\n    -transparencyAlgorithm \\\"frontAndBackCull\\\" \\n    -transpInShadows 0\\n    -cullingOverride \\\"none\\\" \\n    -lowQualityLighting 0\\n    -maximumNumHardwareLights 1\\n    -occlusionCulling 0\\n    -shadingModel 0\\n    -useBaseRenderer 0\\n    -useReducedRenderer 0\\n    -smallObjectCulling 0\\n    -smallObjectThreshold -1 \\n    -interactiveDisableShadows 0\\n    -interactiveBackFaceCull 0\\n    -sortTransparent 1\\n    -controllers 1\\n    -nurbsCurves 1\\n    -nurbsSurfaces 1\\n    -polymeshes 1\\n    -subdivSurfaces 1\\n    -planes 1\\n    -lights 1\\n    -cameras 1\\n    -controlVertices 1\\n    -hulls 1\\n    -grid 1\\n    -imagePlane 1\\n    -joints 1\\n    -ikHandles 1\\n    -deformers 1\\n    -dynamics 1\\n    -particleInstancers 1\\n    -fluids 1\\n    -hairSystems 1\\n    -follicles 1\\n    -nCloths 1\\n    -nParticles 1\\n    -nRigids 1\\n    -dynamicConstraints 1\\n    -locators 1\\n    -manipulators 1\\n    -pluginShapes 1\\n    -dimensions 1\\n    -handles 1\\n    -pivots 1\\n    -textures 1\\n    -strokes 1\\n    -motionTrails 1\\n    -clipGhosts 1\\n    -bluePencil 1\\n    -greasePencils 0\\n    -excludeObjectPreset \\\"All\\\" \\n    -shadows 0\\n    -captureSequenceNumber -1\\n    -width 1580\\n    -height 705\\n    -sceneRenderFilter 0\\n    $editorName;\\nmodelEditor -e -viewSelected 0 $editorName;\\nmodelEditor -e \\n    -pluginObjects \\\"gpuCacheDisplayFilter\\\" 1 \\n    $editorName\"\n"
+		+ "\t\t\t\t$configName;\n\n            setNamedPanelLayout (localizedPanelLabel(\"Current Layout\"));\n        }\n\n        panelHistory -e -clear mainPanelHistory;\n        sceneUIReplacement -clear;\n\t}\n\n\ngrid -spacing 5 -size 12 -divisions 5 -displayAxes yes -displayGridLines yes -displayDivisionLines yes -displayPerspectiveLabels no -displayOrthographicLabels no -displayAxesBold yes -perspectiveLabelPosition axis -orthographicLabelPosition edge;\nviewManip -drawCompass 0 -compassAngle 0 -frontParameters \"\" -homeParameters \"\" -selectionLockParameters \"\";\n}\n");
+	setAttr ".st" 3;
+createNode script -n "sceneConfigurationScriptNode";
+	rename -uid "BD6E1F68-4018-BD24-0420-27BF34B01A96";
+	setAttr ".b" -type "string" "playbackOptions -min 0 -max 1301.25 -ast 0 -aet 1301.25 ";
+	setAttr ".st" 6;
 select -ne :time1;
 	setAttr -av -k on ".cch";
 	setAttr -av -k on ".fzn";
@@ -14508,7 +13979,7 @@ select -ne :renderPartition;
 	setAttr -k on ".ihi";
 	setAttr -av -k on ".nds";
 	setAttr -cb on ".bnm";
-	setAttr -s 125 ".st";
+	setAttr -s 2 ".st";
 	setAttr -k on ".an";
 	setAttr -k on ".pt";
 select -ne :renderGlobalsList1;
@@ -14521,25 +13992,22 @@ select -ne :defaultShaderList1;
 	setAttr -k on ".ihi";
 	setAttr -av -k on ".nds";
 	setAttr -cb on ".bnm";
-	setAttr -s 76 ".s";
+	setAttr -s 6 ".s";
 select -ne :postProcessList1;
 	setAttr -k on ".cch";
 	setAttr -k on ".ihi";
 	setAttr -av -k on ".nds";
 	setAttr -cb on ".bnm";
 	setAttr -s 2 ".p";
-select -ne :defaultRenderUtilityList1;
-	setAttr -av -k on ".cch";
-	setAttr -cb on ".ihi";
-	setAttr -av -k on ".nds";
-	setAttr -cb on ".bnm";
-	setAttr -s 11379 ".u";
 select -ne :defaultRenderingList1;
 	setAttr -av -k on ".cch";
 	setAttr -k on ".ihi";
 	setAttr -av -k on ".nds";
 	setAttr -cb on ".bnm";
 select -ne :standardSurface1;
+	setAttr ".bc" -type "float3" 0.40000001 0.40000001 0.40000001 ;
+	setAttr ".sr" 0.5;
+select -ne :openPBR_shader1;
 	setAttr ".bc" -type "float3" 0.40000001 0.40000001 0.40000001 ;
 	setAttr ".sr" 0.5;
 select -ne :initialShadingGroup;
@@ -14552,7 +14020,6 @@ select -ne :initialShadingGroup;
 	setAttr -k on ".vwm";
 	setAttr -k on ".tpv";
 	setAttr -k on ".uit";
-	setAttr -s 57 ".dsm";
 	setAttr -k on ".mwc";
 	setAttr -av -k on ".an";
 	setAttr -k on ".il";
@@ -14561,7 +14028,6 @@ select -ne :initialShadingGroup;
 	setAttr -k on ".fo";
 	setAttr -k on ".epo";
 	setAttr -k on ".ro" yes;
-	setAttr -s 16 ".gn";
 	setAttr -k on ".hio";
 	setAttr -cb on ".ai_override";
 	setAttr -k on ".ai_surface_shader";
@@ -14574,17 +14040,23 @@ select -ne :initialShadingGroup;
 	setAttr -cb on ".ai_volume_shaderb";
 select -ne :initialParticleSE;
 	setAttr -av -k on ".cch";
+	setAttr -k on ".fzn";
 	setAttr -k on ".ihi";
 	setAttr -av -k on ".nds";
 	setAttr -cb on ".bnm";
+	setAttr -k on ".bbx";
+	setAttr -k on ".vwm";
+	setAttr -k on ".tpv";
+	setAttr -k on ".uit";
 	setAttr -k on ".mwc";
-	setAttr -k on ".an";
+	setAttr -av -k on ".an";
 	setAttr -k on ".il";
 	setAttr -k on ".vo";
 	setAttr -k on ".eo";
 	setAttr -k on ".fo";
 	setAttr -k on ".epo";
 	setAttr -k on ".ro" yes;
+	setAttr -k on ".hio";
 	setAttr -cb on ".ai_override";
 	setAttr -cb on ".ai_surface_shader";
 	setAttr -cb on ".ai_surface_shaderr";
@@ -14729,7 +14201,7 @@ select -ne :defaultColorMgtGlobals;
 	setAttr ".potn" -type "string" "ACES 1.0 SDR-video (sRGB)";
 select -ne :hardwareRenderGlobals;
 	setAttr -av -k on ".cch";
-	setAttr -cb on ".ihi";
+	setAttr -av -cb on ".ihi";
 	setAttr -av -k on ".nds";
 	setAttr -cb on ".bnm";
 	setAttr -av -k off -cb on ".ctrs" 256;
@@ -14756,23 +14228,15 @@ select -ne :hardwareRenderGlobals;
 	setAttr -av -k off -cb on ".mgcs";
 	setAttr -av -k off -cb on ".twa";
 	setAttr -av -k off -cb on ".twz";
-	setAttr -k on ".hwcc";
-	setAttr -k on ".hwdp";
-	setAttr -k on ".hwql";
-	setAttr -k on ".hwfr";
-	setAttr -k on ".soll";
-	setAttr -k on ".sosl";
-	setAttr -k on ".bswa";
-	setAttr -k on ".shml";
-	setAttr -k on ".hwel";
-select -ne :ikSystem;
-	setAttr -av -k on ".cch";
-	setAttr -av -k on ".ihi";
-	setAttr -av -k on ".nds";
-	setAttr -k on ".bnm";
-	setAttr -av -k on ".gsn";
-	setAttr -k on ".gsv";
-	setAttr -s 3 ".sol";
+	setAttr -av -k on ".hwcc";
+	setAttr -av -k on ".hwdp";
+	setAttr -av -k on ".hwql";
+	setAttr -av -k on ".hwfr";
+	setAttr -av -k on ".soll";
+	setAttr -av -k on ".sosl";
+	setAttr -av -k on ".bswa";
+	setAttr -av -k on ".shml";
+	setAttr -av -k on ".hwel";
 connectAttr "Human_Body_Template_hyperLayout13.msg" "BaseA_Block.hl";
 connectAttr "BaseA_Config.nds" "BaseA_Block.nds";
 connectAttr "Human_Body_Template_hyperLayout14.msg" "Root_Block.hl";
@@ -15413,46 +14877,6 @@ connectAttr "L_Hand_OutterCup_Guide.Helper" "L_Hand_OutterCup_Guide_Ctrl_CtrlSha
 connectAttr "L_Hand_OutterCup_Guide.Helper" "L_Hand_OutterCup_Guide_Ctrl_Ctrl_CtrlShape.v"
 		;
 connectAttr "L_Hand_OutterCup_Guide.Helper" "L_Hand_OutterCup_Guide_Ctrl_Ctrl_Ctrl_CtrlShape.v"
-		;
-connectAttr "L_Hand_OutterCup_Guide.s" "L_Hand_Ring_00_Guide.is";
-connectAttr "L_Hand_Ring_00_Guide.Helper" "L_Hand_Ring_00_Guide_CtrlShape.v";
-connectAttr "L_Hand_Ring_00_Guide.Helper" "L_Hand_Ring_00_Guide_Ctrl_CtrlShape.v"
-		;
-connectAttr "L_Hand_Ring_00_Guide.Helper" "L_Hand_Ring_00_Guide_Ctrl_Ctrl_CtrlShape.v"
-		;
-connectAttr "L_Hand_Ring_00_Guide.Helper" "L_Hand_Ring_00_Guide_Ctrl_Ctrl_Ctrl_CtrlShape.v"
-		;
-connectAttr "L_Hand_Ring_00_Guide.s" "L_Hand_Ring_01_Guide.is";
-connectAttr "L_Hand_Ring_01_Guide.Helper" "L_Hand_Ring_01_Guide_CtrlShape.v";
-connectAttr "L_Hand_Ring_01_Guide.Helper" "L_Hand_Ring_01_Guide_Ctrl_CtrlShape.v"
-		;
-connectAttr "L_Hand_Ring_01_Guide.Helper" "L_Hand_Ring_01_Guide_Ctrl_Ctrl_CtrlShape.v"
-		;
-connectAttr "L_Hand_Ring_01_Guide.Helper" "L_Hand_Ring_01_Guide_Ctrl_Ctrl_Ctrl_CtrlShape.v"
-		;
-connectAttr "L_Hand_Ring_01_Guide.s" "L_Hand_Ring_02_Guide.is";
-connectAttr "L_Hand_Ring_02_Guide.Helper" "L_Hand_Ring_02_Guide_CtrlShape.v";
-connectAttr "L_Hand_Ring_02_Guide.Helper" "L_Hand_Ring_02_Guide_Ctrl_CtrlShape.v"
-		;
-connectAttr "L_Hand_Ring_02_Guide.Helper" "L_Hand_Ring_02_Guide_Ctrl_Ctrl_CtrlShape.v"
-		;
-connectAttr "L_Hand_Ring_02_Guide.Helper" "L_Hand_Ring_02_Guide_Ctrl_Ctrl_Ctrl_CtrlShape.v"
-		;
-connectAttr "L_Hand_Ring_02_Guide.s" "L_Hand_Ring_03_Guide.is";
-connectAttr "L_Hand_Ring_03_Guide.Helper" "L_Hand_Ring_03_Guide_CtrlShape.v";
-connectAttr "L_Hand_Ring_03_Guide.Helper" "L_Hand_Ring_03_Guide_Ctrl_CtrlShape.v"
-		;
-connectAttr "L_Hand_Ring_03_Guide.Helper" "L_Hand_Ring_03_Guide_Ctrl_Ctrl_CtrlShape.v"
-		;
-connectAttr "L_Hand_Ring_03_Guide.Helper" "L_Hand_Ring_03_Guide_Ctrl_Ctrl_Ctrl_CtrlShape.v"
-		;
-connectAttr "L_Hand_Ring_03_Guide.s" "L_Hand_Ring_04_Guide.is";
-connectAttr "L_Hand_Ring_04_Guide.Helper" "L_Hand_Ring_04_Guide_CtrlShape.v";
-connectAttr "L_Hand_Ring_04_Guide.Helper" "L_Hand_Ring_04_Guide_Ctrl_CtrlShape.v"
-		;
-connectAttr "L_Hand_Ring_04_Guide.Helper" "L_Hand_Ring_04_Guide_Ctrl_Ctrl_CtrlShape.v"
-		;
-connectAttr "L_Hand_Ring_04_Guide.Helper" "L_Hand_Ring_04_Guide_Ctrl_Ctrl_Ctrl_CtrlShape.v"
 		;
 connectAttr "L_Hand_OutterCup_Guide.s" "L_Hand_Pinky_00_Guide.is";
 connectAttr "L_Hand_Pinky_00_Guide.Helper" "L_Hand_Pinky_00_Guide_CtrlShape.v";
@@ -16216,14 +15640,6 @@ connectAttr "L_Hand_InnerCup_Guide_Ctrl_Ctrl_CtrlShape.msg" "hyperLayout11.hyp[1
 		;
 connectAttr "L_Hand_InnerCup_Guide_Ctrl_Ctrl_Ctrl_CtrlShape.msg" "hyperLayout11.hyp[16159].dn"
 		;
-connectAttr "L_Hand_Ring_00_Guide.msg" "hyperLayout11.hyp[16180].dn";
-connectAttr "L_Hand_Ring_00_Guide_CtrlShape.msg" "hyperLayout11.hyp[16181].dn";
-connectAttr "L_Hand_Ring_00_Guide_Ctrl_CtrlShape.msg" "hyperLayout11.hyp[16182].dn"
-		;
-connectAttr "L_Hand_Ring_00_Guide_Ctrl_Ctrl_CtrlShape.msg" "hyperLayout11.hyp[16183].dn"
-		;
-connectAttr "L_Hand_Ring_00_Guide_Ctrl_Ctrl_Ctrl_CtrlShape.msg" "hyperLayout11.hyp[16184].dn"
-		;
 connectAttr "L_Hand_Pinky_00_Guide.msg" "hyperLayout11.hyp[16205].dn";
 connectAttr "L_Hand_Pinky_00_Guide_CtrlShape.msg" "hyperLayout11.hyp[16206].dn";
 connectAttr "L_Hand_Pinky_00_Guide_Ctrl_CtrlShape.msg" "hyperLayout11.hyp[16207].dn"
@@ -16231,38 +15647,6 @@ connectAttr "L_Hand_Pinky_00_Guide_Ctrl_CtrlShape.msg" "hyperLayout11.hyp[16207]
 connectAttr "L_Hand_Pinky_00_Guide_Ctrl_Ctrl_CtrlShape.msg" "hyperLayout11.hyp[16208].dn"
 		;
 connectAttr "L_Hand_Pinky_00_Guide_Ctrl_Ctrl_Ctrl_CtrlShape.msg" "hyperLayout11.hyp[16209].dn"
-		;
-connectAttr "L_Hand_Ring_01_Guide.msg" "hyperLayout11.hyp[16230].dn";
-connectAttr "L_Hand_Ring_01_Guide_CtrlShape.msg" "hyperLayout11.hyp[16231].dn";
-connectAttr "L_Hand_Ring_01_Guide_Ctrl_CtrlShape.msg" "hyperLayout11.hyp[16232].dn"
-		;
-connectAttr "L_Hand_Ring_01_Guide_Ctrl_Ctrl_CtrlShape.msg" "hyperLayout11.hyp[16233].dn"
-		;
-connectAttr "L_Hand_Ring_01_Guide_Ctrl_Ctrl_Ctrl_CtrlShape.msg" "hyperLayout11.hyp[16234].dn"
-		;
-connectAttr "L_Hand_Ring_02_Guide.msg" "hyperLayout11.hyp[16235].dn";
-connectAttr "L_Hand_Ring_02_Guide_CtrlShape.msg" "hyperLayout11.hyp[16236].dn";
-connectAttr "L_Hand_Ring_02_Guide_Ctrl_CtrlShape.msg" "hyperLayout11.hyp[16237].dn"
-		;
-connectAttr "L_Hand_Ring_02_Guide_Ctrl_Ctrl_CtrlShape.msg" "hyperLayout11.hyp[16238].dn"
-		;
-connectAttr "L_Hand_Ring_02_Guide_Ctrl_Ctrl_Ctrl_CtrlShape.msg" "hyperLayout11.hyp[16239].dn"
-		;
-connectAttr "L_Hand_Ring_03_Guide.msg" "hyperLayout11.hyp[16240].dn";
-connectAttr "L_Hand_Ring_03_Guide_CtrlShape.msg" "hyperLayout11.hyp[16241].dn";
-connectAttr "L_Hand_Ring_03_Guide_Ctrl_CtrlShape.msg" "hyperLayout11.hyp[16242].dn"
-		;
-connectAttr "L_Hand_Ring_03_Guide_Ctrl_Ctrl_CtrlShape.msg" "hyperLayout11.hyp[16243].dn"
-		;
-connectAttr "L_Hand_Ring_03_Guide_Ctrl_Ctrl_Ctrl_CtrlShape.msg" "hyperLayout11.hyp[16244].dn"
-		;
-connectAttr "L_Hand_Ring_04_Guide.msg" "hyperLayout11.hyp[16245].dn";
-connectAttr "L_Hand_Ring_04_Guide_CtrlShape.msg" "hyperLayout11.hyp[16246].dn";
-connectAttr "L_Hand_Ring_04_Guide_Ctrl_CtrlShape.msg" "hyperLayout11.hyp[16247].dn"
-		;
-connectAttr "L_Hand_Ring_04_Guide_Ctrl_Ctrl_CtrlShape.msg" "hyperLayout11.hyp[16248].dn"
-		;
-connectAttr "L_Hand_Ring_04_Guide_Ctrl_Ctrl_Ctrl_CtrlShape.msg" "hyperLayout11.hyp[16249].dn"
 		;
 connectAttr "L_Hand_Pinky_01_Guide.msg" "hyperLayout11.hyp[16250].dn";
 connectAttr "L_Hand_Pinky_01_Guide_CtrlShape.msg" "hyperLayout11.hyp[16251].dn";
@@ -16418,113 +15802,120 @@ connectAttr "Code_Loc.msg" "hyperLayout26.hyp[50].dn";
 connectAttr "Code_LocShape.msg" "hyperLayout26.hyp[51].dn";
 connectAttr "CleanUpAttrs_Loc.msg" "hyperLayout86.hyp[0].dn";
 connectAttr "CleanUpAttrs_LocShape.msg" "hyperLayout86.hyp[1].dn";
-dataStructure -fmt "raw" -as "name=faceConnectOutputStructure:bool=faceConnectOutput:string[200]=faceConnectOutputAttributes:string[200]=faceConnectOutputGroups";
-dataStructure -fmt "raw" -as "name=faceConnectMarkerStructure:bool=faceConnectMarker:string[200]=faceConnectOutputGroups";
-dataStructure -fmt "raw" -as "name=notes_pPlane3:string=value";
-dataStructure -fmt "raw" -as "name=mapManager_grass_c_geo:string=value";
-dataStructure -fmt "raw" -as "name=notes_groundA_parShape:string=value";
-dataStructure -fmt "raw" -as "name=mapManager_ground:string=value";
-dataStructure -fmt "raw" -as "name=notes_trees_left1:string=value";
-dataStructure -fmt "raw" -as "name=notes_grass_c_geo:string=value";
-dataStructure -fmt "raw" -as "name=OrgStruct:float[3]=Origin Point";
-dataStructure -fmt "raw" -as "name=notes_grass_c_geo1:string=value";
-dataStructure -fmt "raw" -as "name=DiffArea:float=value";
-dataStructure -fmt "raw" -as "name=mapManager_juneBackYard:string=value";
-dataStructure -fmt "raw" -as "name=notes_mountains_parShape:string=value";
-dataStructure -fmt "raw" -as "name=notes_baseLeaves:string=value";
-dataStructure -fmt "raw" -as "name=f_3:float[3]=value";
-dataStructure -fmt "raw" -as "name=mapManager_groundWoods_c_geo1:string=value";
-dataStructure -fmt "raw" -as "name=notes_wildPatchG_parShape:string=value";
-dataStructure -fmt "raw" -as "name=mapManager_grass_c_geo1:string=value";
-dataStructure -fmt "raw" -as "name=notes_pPlane1:string=value";
-dataStructure -fmt "raw" -as "name=DiffEdge:float=value";
-dataStructure -fmt "raw" -as "name=notes_ground:string=value";
-dataStructure -fmt "raw" -as "name=notes_grassBase:string=value";
-dataStructure -fmt "raw" -as "name=notes_snapshot_floor:string=value";
-dataStructure -fmt "raw" -as "name=notes_snapshot_CombinedGrass:string=value";
-dataStructure -fmt "raw" -as "name=mapManager_grassBase:string=value";
-dataStructure -fmt "raw" -as "name=notes_wildPatchD_parShape:string=value";
-dataStructure -fmt "raw" -as "name=mapManager_base_left:string=value";
-dataStructure -fmt "raw" -as "name=Blur3dMetaData:string=Blur3dValue";
+relationship "link" ":lightLinker1" ":initialShadingGroup.message" ":defaultLightSet.message";
+relationship "link" ":lightLinker1" ":initialParticleSE.message" ":defaultLightSet.message";
+relationship "shadowLink" ":lightLinker1" ":initialShadingGroup.message" ":defaultLightSet.message";
+relationship "shadowLink" ":lightLinker1" ":initialParticleSE.message" ":defaultLightSet.message";
+connectAttr "layerManager.dli[0]" "defaultLayer.id";
+connectAttr "renderLayerManager.rlmi[0]" "defaultRenderLayer.rlid";
+connectAttr "defaultRenderLayer.msg" ":defaultRenderingList1.r" -na;
 dataStructure -fmt "raw" -as "name=notes_wildPatchH_parShape:string=value";
-dataStructure -fmt "raw" -as "name=notes_base_left:string=value";
-dataStructure -fmt "raw" -as "name=f_1:float=value";
-dataStructure -fmt "raw" -as "name=notes_decayLeavesCarousel_parShape:string=value";
-dataStructure -fmt "raw" -as "name=NameAndID:string=name:int32=ID";
-dataStructure -fmt "raw" -as "name=notes_suelo:string=value";
-dataStructure -fmt "raw" -as "name=notes_baseScatter:string=value";
-dataStructure -fmt "raw" -as "name=notes_pPlane2:string=value";
-dataStructure -fmt "raw" -as "name=notes_decayGrassPatchC_parShape:string=value";
-dataStructure -fmt "raw" -as "name=OffStruct:float=Offset";
-dataStructure -fmt "raw" -as "name=mapManager_slopesMountainsGrass_Combined:string=value";
 dataStructure -fmt "raw" -as "name=notes_decayLeaves_parShape:string=value";
-dataStructure -fmt "raw" -as "name=notes_ground_c_geo:string=value";
-dataStructure -fmt "raw" -as "name=mapManager_base_hojas:string=value";
-dataStructure -fmt "raw" -as "name=mapManager_snapshot_CombinedGrass:string=value";
-dataStructure -fmt "raw" -as "name=notes_trees_parShape:string=value";
-dataStructure -fmt "raw" -as "name=notes_slopesGroundGrassD_Combined:string=value";
 dataStructure -fmt "raw" -as "name=notes_base_right:string=value";
-dataStructure -fmt "raw" -as "name=mapManager_trees_left1:string=value";
-dataStructure -fmt "raw" -as "name=notes_pPlane6:string=value";
-dataStructure -fmt "raw" -as "name=mapManager_suelo:string=value";
-dataStructure -fmt "raw" -as "name=Offset:float[3]=value";
-dataStructure -fmt "raw" -as "name=mapManager_baseScatt:string=value";
-dataStructure -fmt "raw" -as "name=notes_trees_left:string=value";
-dataStructure -fmt "raw" -as "name=keyValueStructure:string=value";
-dataStructure -fmt "raw" -as "name=notes_slopes_parShape:string=value";
-dataStructure -fmt "raw" -as "name=mapManager_baseLeaves:string=value";
-dataStructure -fmt "raw" -as "name=mapManager_pPlane2:string=value";
 dataStructure -fmt "raw" -as "name=mapManager_degraded:string=value";
-dataStructure -fmt "raw" -as "name=mapManager_slopesGroundGrassA_Combined:string=value";
-dataStructure -fmt "raw" -as "name=notes_wildPatchE_parShape:string=value";
-dataStructure -fmt "raw" -as "name=mapManager_slopesGroundGrassB_Combined:string=value";
-dataStructure -fmt "raw" -as "name=notes_grassJuneBackYard_parShape:string=value";
+dataStructure -fmt "raw" -as "name=mapManager_suelo:string=value";
+dataStructure -fmt "raw" -as "name=notes_baseScatter:string=value";
+dataStructure -fmt "raw" -as "name=notes_slopes_parShape:string=value";
 dataStructure -fmt "raw" -as "name=notes_slopesGroundGrassA_Combined:string=value";
 dataStructure -fmt "raw" -as "name=notes_floorOrangeConcrete_c_geo:string=value";
+dataStructure -fmt "raw" -as "name=mapManager_snapshot_CombinedGrass:string=value";
 dataStructure -fmt "raw" -as "name=notes_widlPatchB_parShape:string=value";
-dataStructure -fmt "raw" -as "name=notes_pPlane5:string=value";
-dataStructure -fmt "raw" -as "name=notes_polySurface56:string=value";
-dataStructure -fmt "raw" -as "name=mapManager_pPlane6:string=value";
+dataStructure -fmt "raw" -as "name=notes_base_left:string=value";
+dataStructure -fmt "raw" -as "name=notes_decayLeavesCarousel_parShape:string=value";
 dataStructure -fmt "raw" -as "name=notes_pPlane4:string=value";
-dataStructure -fmt "raw" -as "name=Curvature:float=mean:float=gaussian:float=ABS:float=RMS";
 dataStructure -fmt "raw" -as "name=notes_slopesGroundGrassC_Combined:string=value";
-dataStructure -fmt "raw" -as "name=mapManager_snapshot_Combined:string=value";
-dataStructure -fmt "raw" -as "name=idStructure:int32=ID";
-dataStructure -fmt "raw" -as "name=IdStruct:int32=ID";
-dataStructure -fmt "raw" -as "name=notes_juneBackYard:string=value";
-dataStructure -fmt "raw" -as "name=mapManager_slopesGroundGrassD_Combined:string=value";
-dataStructure -fmt "raw" -as "name=mapManager_base_right:string=value";
-dataStructure -fmt "raw" -as "name=notes_wildPatchDegraded_parShape:string=value";
+dataStructure -fmt "raw" -as "name=mapManager_baseScatt:string=value";
+dataStructure -fmt "raw" -as "name=mapManager_trees_left1:string=value";
 dataStructure -fmt "raw" -as "name=mapManager_pPlane4:string=value";
-dataStructure -fmt "raw" -as "name=mapManager_trees_left:string=value";
-dataStructure -fmt "raw" -as "name=notes_decayGrassPatchD_parShape:string=value";
-dataStructure -fmt "raw" -as "name=notes_groundB_parShape:string=value";
-dataStructure -fmt "raw" -as "name=notes_ferns_parShape:string=value";
+dataStructure -fmt "raw" -as "name=mapManager_slopesMountainsGrass_Combined:string=value";
+dataStructure -fmt "raw" -as "name=notes_wildPatchDegraded_parShape:string=value";
 dataStructure -fmt "raw" -as "name=mapManager_baseScatter:string=value";
-dataStructure -fmt "raw" -as "name=notes_wildPatchC_parShape:string=value";
 dataStructure -fmt "raw" -as "name=mapManager_snapshot_floor:string=value";
-dataStructure -fmt "raw" -as "name=mapManager_floorOrangeConcrete_c_geo:string=value";
+dataStructure -fmt "raw" -as "name=IdStruct:int32=ID";
 dataStructure -fmt "raw" -as "name=mapManager_pPlane3:string=value";
-dataStructure -fmt "raw" -as "name=notes_decayGrassesCenter_parShape:string=value";
-dataStructure -fmt "raw" -as "name=notes_baseScatt:string=value";
-dataStructure -fmt "raw" -as "name=notes_decayGrassPatchB_parShape:string=value";
-dataStructure -fmt "raw" -as "name=mapManager_polySurface56:string=value";
-dataStructure -fmt "raw" -as "name=notes_wildPatchF_parShape:string=value";
-dataStructure -fmt "raw" -as "name=notes_groundC_parShape:string=value";
+dataStructure -fmt "raw" -as "name=notes_suelo:string=value";
+dataStructure -fmt "raw" -as "name=notes_trees_parShape:string=value";
+dataStructure -fmt "raw" -as "name=mapManager_slopesGroundGrassA_Combined:string=value";
+dataStructure -fmt "raw" -as "name=notes_decayGrassPatchC_parShape:string=value";
+dataStructure -fmt "raw" -as "name=notes_ground_c_geo:string=value";
+dataStructure -fmt "raw" -as "name=notes_grassJuneBackYard_parShape:string=value";
+dataStructure -fmt "raw" -as "name=mapManager_pPlane2:string=value";
+dataStructure -fmt "raw" -as "name=notes_pPlane5:string=value";
+dataStructure -fmt "raw" -as "name=notes_groundB_parShape:string=value";
+dataStructure -fmt "raw" -as "name=notes_polySurface56:string=value";
+dataStructure -fmt "raw" -as "name=Offset:float[3]=value";
+dataStructure -fmt "raw" -as "name=mapManager_slopesGroundGrassB_Combined:string=value";
+dataStructure -fmt "raw" -as "name=notes_pPlane6:string=value";
+dataStructure -fmt "raw" -as "name=mapManager_pPlane6:string=value";
+dataStructure -fmt "raw" -as "name=mapManager_trees_left:string=value";
+dataStructure -fmt "raw" -as "name=mapManager_slopesGroundGrassD_Combined:string=value";
+dataStructure -fmt "raw" -as "name=notes_decayGrassPatchD_parShape:string=value";
 dataStructure -fmt "raw" -as "name=notes_degraded:string=value";
+dataStructure -fmt "raw" -as "name=notes_ferns_parShape:string=value";
+dataStructure -fmt "raw" -as "name=OffStruct:float=Offset";
+dataStructure -fmt "raw" -as "name=notes_wildPatchE_parShape:string=value";
+dataStructure -fmt "raw" -as "name=keyValueStructure:string=value";
+dataStructure -fmt "raw" -as "name=Curvature:float=mean:float=gaussian:float=ABS:float=RMS";
+dataStructure -fmt "raw" -as "name=mapManager_snapshot_Combined:string=value";
+dataStructure -fmt "raw" -as "name=notes_slopesGroundGrassD_Combined:string=value";
+dataStructure -fmt "raw" -as "name=notes_pPlane2:string=value";
+dataStructure -fmt "raw" -as "name=mapManager_base_hojas:string=value";
+dataStructure -fmt "raw" -as "name=notes_trees_left:string=value";
+dataStructure -fmt "raw" -as "name=notes_juneBackYard:string=value";
+dataStructure -fmt "raw" -as "name=mapManager_base_right:string=value";
+dataStructure -fmt "raw" -as "name=notes_wildPatchC_parShape:string=value";
+dataStructure -fmt "raw" -as "name=idStructure:int32=ID";
+dataStructure -fmt "raw" -as "name=mapManager_baseLeaves:string=value";
+dataStructure -fmt "raw" -as "name=NameAndID:string=name:int32=ID";
 dataStructure -fmt "raw" -as "name=notes_groundWoods_c_geo1:string=value";
+dataStructure -fmt "raw" -as "name=notes_baseScatt:string=value";
 dataStructure -fmt "raw" -as "name=notes_left_parShape:string=value";
-dataStructure -fmt "raw" -as "name=notes_base_hojas:string=value";
-dataStructure -fmt "raw" -as "name=notes_right_parShape:string=value";
-dataStructure -fmt "raw" -as "name=notes_bushes_parShape:string=value";
-dataStructure -fmt "raw" -as "name=notes_groundD_parShape:string=value";
-dataStructure -fmt "raw" -as "name=notes_wildPatchA_parShape:string=value";
-dataStructure -fmt "raw" -as "name=notes_slopesGroundGrassB_Combined:string=value";
-dataStructure -fmt "raw" -as "name=mapManager_ground_c_geo:string=value";
+dataStructure -fmt "raw" -as "name=notes_decayGrassPatchB_parShape:string=value";
 dataStructure -fmt "raw" -as "name=notes_decayGrassPatchA_parShape:string=value";
-dataStructure -fmt "raw" -as "name=notes_snapshot_Combined:string=value";
-dataStructure -fmt "raw" -as "name=notes_slopesMountainsGrass_Combined:string=value";
-dataStructure -fmt "raw" -as "name=mapManager_pPlane1:string=value";
-dataStructure -fmt "raw" -as "name=mapManager_slopesGroundGrassC_Combined:string=value";
 dataStructure -fmt "raw" -as "name=mapManager_pPlane5:string=value";
+dataStructure -fmt "raw" -as "name=notes_groundC_parShape:string=value";
+dataStructure -fmt "raw" -as "name=notes_right_parShape:string=value";
+dataStructure -fmt "raw" -as "name=notes_slopesMountainsGrass_Combined:string=value";
+dataStructure -fmt "raw" -as "name=notes_base_hojas:string=value";
+dataStructure -fmt "raw" -as "name=notes_bushes_parShape:string=value";
+dataStructure -fmt "raw" -as "name=notes_snapshot_Combined:string=value";
+dataStructure -fmt "raw" -as "name=notes_wildPatchF_parShape:string=value";
+dataStructure -fmt "raw" -as "name=notes_groundD_parShape:string=value";
+dataStructure -fmt "raw" -as "name=notes_slopesGroundGrassB_Combined:string=value";
+dataStructure -fmt "raw" -as "name=mapManager_slopesGroundGrassC_Combined:string=value";
+dataStructure -fmt "raw" -as "name=mapManager_ground_c_geo:string=value";
+dataStructure -fmt "raw" -as "name=mapManager_floorOrangeConcrete_c_geo:string=value";
+dataStructure -fmt "raw" -as "name=mapManager_pPlane1:string=value";
+dataStructure -fmt "raw" -as "name=mapManager_polySurface56:string=value";
+dataStructure -fmt "raw" -as "name=notes_wildPatchA_parShape:string=value";
+dataStructure -fmt "raw" -as "name=notes_decayGrassesCenter_parShape:string=value";
+dataStructure -fmt "raw" -as "name=faceConnectMarkerStructure:bool=faceConnectMarker:string[200]=faceConnectOutputGroups";
+dataStructure -fmt "raw" -as "name=notes_groundA_parShape:string=value";
+dataStructure -fmt "raw" -as "name=mapManager_grass_c_geo:string=value";
+dataStructure -fmt "raw" -as "name=faceConnectOutputStructure:bool=faceConnectOutput:string[200]=faceConnectOutputAttributes:string[200]=faceConnectOutputGroups";
+dataStructure -fmt "raw" -as "name=mapManager_ground:string=value";
+dataStructure -fmt "raw" -as "name=notes_trees_left1:string=value";
+dataStructure -fmt "raw" -as "name=notes_pPlane3:string=value";
+dataStructure -fmt "raw" -as "name=DiffArea:float=value";
+dataStructure -fmt "raw" -as "name=notes_ground:string=value";
+dataStructure -fmt "raw" -as "name=notes_snapshot_floor:string=value";
+dataStructure -fmt "raw" -as "name=mapManager_grassBase:string=value";
+dataStructure -fmt "raw" -as "name=mapManager_base_left:string=value";
+dataStructure -fmt "raw" -as "name=f_3:float[3]=value";
+dataStructure -fmt "raw" -as "name=f_1:float=value";
+dataStructure -fmt "raw" -as "name=notes_grass_c_geo:string=value";
+dataStructure -fmt "raw" -as "name=notes_grass_c_geo1:string=value";
+dataStructure -fmt "raw" -as "name=OrgStruct:float[3]=Origin Point";
+dataStructure -fmt "raw" -as "name=notes_baseLeaves:string=value";
+dataStructure -fmt "raw" -as "name=notes_snapshot_CombinedGrass:string=value";
+dataStructure -fmt "raw" -as "name=notes_pPlane1:string=value";
+dataStructure -fmt "raw" -as "name=notes_grassBase:string=value";
+dataStructure -fmt "raw" -as "name=Blur3dMetaData:string=Blur3dValue";
+dataStructure -fmt "raw" -as "name=notes_wildPatchG_parShape:string=value";
+dataStructure -fmt "raw" -as "name=notes_wildPatchD_parShape:string=value";
+dataStructure -fmt "raw" -as "name=mapManager_groundWoods_c_geo1:string=value";
+dataStructure -fmt "raw" -as "name=notes_mountains_parShape:string=value";
+dataStructure -fmt "raw" -as "name=mapManager_juneBackYard:string=value";
+dataStructure -fmt "raw" -as "name=mapManager_grass_c_geo1:string=value";
+dataStructure -fmt "raw" -as "name=DiffEdge:float=value";
 // End of BirdTemplate.ma

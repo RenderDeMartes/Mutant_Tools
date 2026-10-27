@@ -1435,7 +1435,11 @@ def build_limb_block():
         # Limb global scale: one more level under the Global controller, scales the whole limb from its start
         # (L_Arm_GlobalScale_Ctrl / L_Leg_GlobalScale_Ctrl), everything that followed the Global scale follows this
         side_prefix = str(side_guide).split('_')[0]
-        limb_label = {'Arms': 'Arm', 'Legs': 'Leg'}.get(mode, str(limb_a).split('_')[1] if '_' in str(limb_a) else 'Limb')
+        guide_label = str(limb_a).split('_')[1] if '_' in str(limb_a) else 'Limb'
+        limb_label = {'Arms': 'Arm', 'Legs': 'Leg'}.get(mode, guide_label)
+        # second leg / arm limb on the same side (quads: FrHip + Hip) -> name it from its guide
+        if cmds.objExists('{}_{}_GlobalScale{}'.format(side_prefix, limb_label, nc['ctrl'])):
+            limb_label = guide_label
         limb_global_ctrl = mt.curve(input=ikfk['ik_fk'][0][0], type='circleX', rename=True, custom_name=True,
                                     name='{}_{}_GlobalScale{}'.format(side_prefix, limb_label, nc['ctrl']),
                                     size=ctrl_size * 1.8)

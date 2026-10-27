@@ -1,22 +1,22 @@
-//Maya ASCII 2022 scene
+//Maya ASCII 2026 scene
 //Name: ToonFaceTemplate.ma
-//Last modified: Thu, Mar 23, 2023 12:43:19 PM
-//Codeset: UTF-8
-requires maya "2022";
-requires "stereoCamera" "10.0";
-requires "mtoa" "5.1.4";
+//Last modified: Tue, Oct 27, 2026 03:44:31 PM
+//Codeset: 1252
+requires maya "2026";
+requires -nodeType "aiOptions" -nodeType "aiAOVDriver" -nodeType "aiAOVFilter" -nodeType "aiImagerDenoiserOidn"
+		 "mtoa" "5.5.4.2";
 currentUnit -l centimeter -a degree -t film;
 fileInfo "application" "maya";
-fileInfo "product" "Maya 2022";
-fileInfo "version" "2022";
-fileInfo "cutIdentifier" "202110272215-ad32f8f1e6";
-fileInfo "osv" "Linux 3.10.0-1160.76.1.el7.x86_64 #1 SMP Wed Aug 10 16:21:17 UTC 2022 x86_64";
-fileInfo "UUID" "534BCD80-0000-084D-641C-ABD70000B113";
+fileInfo "product" "Maya 2026";
+fileInfo "version" "2026";
+fileInfo "cutIdentifier" "202510291147-60ec9eda33";
+fileInfo "osv" "Windows 11 Home v2009 (Build: 26300)";
+fileInfo "UUID" "312B7C35-4107-3028-ABC7-41B773E87BBF";
 createNode transform -n "Mutant_Build";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AF99";
 createNode transform -n "init" -p "Mutant_Build";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AF9A";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 createNode dagContainer -n "BaseA_Block" -p "init";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AF9B";
 	setAttr ".isc" yes;
@@ -53,7 +53,7 @@ createNode transform -n "Vis_Guide" -p "VisAttrs_Block";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AF9D";
 	addAttr -ci true -sn "naming" -ln "naming" -dt "string";
 	addAttr -ci true -sn "anim_preset" -ln "anim_preset" -dt "string";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off -cb on ".v";
 	setAttr ".rp" -type "double3" 0 28.404055917887469 0 ;
 	setAttr ".sp" -type "double3" 0 28.404055917887469 0 ;
@@ -62,14 +62,13 @@ createNode transform -n "Vis_Guide" -p "VisAttrs_Block";
 createNode nurbsCurve -n "Vis_GuideShape" -p "Vis_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AF9E";
 	addAttr -ci true -sn "shape" -ln "shape" -dt "string";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 1;
 	setAttr ".cc" -type "nurbsCurve" 
 		1 16 0 no 3
-		17 0 1 2 3 4 5 6 7 8 9 10
-		 11 12 13 14 15 16
+		17 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16
 		17
 		0.2284385747401998 27.94717876840707 0.39566703337876308
 		-0.2284385747401998 27.94717876840707 0.39566703337876308
@@ -108,19 +107,19 @@ createNode dagContainer -n "PhonemesUI_Block" -p "init";
 	setAttr -l on -k off ".sz";
 createNode transform -n "GUI_translate_Grp_Guide" -p "PhonemesUI_Block";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFA0";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr ".t" -type "double3" -3.0669156385914533 0.84389347774709833 0 ;
 	setAttr ".rp" -type "double3" 9.1462891717072861 23.577521918554464 -9.9213265573427738e-15 ;
 	setAttr ".sp" -type "double3" 9.1462891717072861 23.577521918554464 -9.9213265573427738e-15 ;
 createNode transform -n "Viseme_Main_Grp_Guide" -p "GUI_translate_Grp_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFA1";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr ".t" -type "double3" 2.3678379859079328 2.0093520089148207 0 ;
 	setAttr ".rp" -type "double3" 7.3668230209206804 27.785357602057381 -3.2224468387039557e-08 ;
 	setAttr ".sp" -type "double3" 7.3668230209206804 27.785357602057381 -3.2224468387039557e-08 ;
 createNode transform -n "Viseme_Letter_Grp_Guide" -p "Viseme_Main_Grp_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFA2";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 3;
 	setAttr ".t" -type "double3" -0.92217791267683857 -2.060253942084767 -0.017181905628110172 ;
@@ -129,20 +128,19 @@ createNode transform -n "Viseme_Letter_Grp_Guide" -p "Viseme_Main_Grp_Guide";
 	setAttr ".sp" -type "double3" 7.3668230209206804 28.066491384017084 -4.2526998916458322e-08 ;
 createNode transform -n "Viseme_Letter_Guide" -p "Viseme_Letter_Grp_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFA3";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr ".rp" -type "double3" 6.7961847597129275 26.98020299069433 -2.0605060768730254e-08 ;
 	setAttr ".sp" -type "double3" 6.7961847597129275 26.98020299069433 -2.0605060768730254e-08 ;
 createNode nurbsCurve -n "Viseme_Letter_GuideShape" -p "Viseme_Letter_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFA4";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 3;
 	setAttr ".cc" -type "nurbsCurve" 
 		1 27 2 no 3
-		28 0 1 2 3 4 5 6 7 8 9 10
-		 11 12 13 14 15 16 17 18 19 20 21 22
-		 23 24 25 26 27
+		28 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27
+		
 		28
 		6.0183010364275029 27.14653140628128 -2.0605060946063167e-08
 		5.9629503133241135 27.14653140628128 -2.0605060946063167e-08
@@ -175,12 +173,11 @@ createNode nurbsCurve -n "Viseme_Letter_GuideShape" -p "Viseme_Letter_Guide";
 		;
 createNode nurbsCurve -n "Viseme_Letter_GuideShape1" -p "Viseme_Letter_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFA5";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".cc" -type "nurbsCurve" 
 		1 21 2 no 3
-		22 0 1 2 3 4 5 6 7 8 9 10
-		 11 12 13 14 15 16 17 18 19 20 21
+		22 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21
 		22
 		7.4527478556172957 27.030771911326596 -2.0605060946063167e-08
 		7.462346332313758 27.030143935491495 -2.0605060946063167e-08
@@ -207,12 +204,11 @@ createNode nurbsCurve -n "Viseme_Letter_GuideShape1" -p "Viseme_Letter_Guide";
 		;
 createNode nurbsCurve -n "Viseme_Letter_GuideShape2" -p "Viseme_Letter_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFA6";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".cc" -type "nurbsCurve" 
 		1 21 2 no 3
-		22 0 1 2 3 4 5 6 7 8 9 10
-		 11 12 13 14 15 16 17 18 19 20 21
+		22 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21
 		22
 		6.7427650319536712 27.030771911326596 -2.0605060946063167e-08
 		6.7523635086501335 27.030143935491495 -2.0605060946063167e-08
@@ -239,16 +235,13 @@ createNode nurbsCurve -n "Viseme_Letter_GuideShape2" -p "Viseme_Letter_Guide";
 		;
 createNode nurbsCurve -n "Viseme_Letter_GuideShape3" -p "Viseme_Letter_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFA7";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".cc" -type "nurbsCurve" 
 		1 63 2 no 3
-		64 0 1 2 3 4 5 6 7 8 9 10
-		 11 12 13 14 15 16 17 18 19 20 21 22
-		 23 24 25 26 27 28 29 30 31 32 33 34
-		 35 36 37 38 39 40 41 42 43 44 45 46
-		 47 48 49 50 51 52 53 54 55 56 57 58
-		 59 60 61 62 63
+		64 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27
+		 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54
+		 55 56 57 58 59 60 61 62 63
 		64
 		7.4527578520210094 27.070952192993772 -2.0605060946063167e-08
 		7.4324465626771756 27.069556335515447 -2.0605060946063167e-08
@@ -317,18 +310,14 @@ createNode nurbsCurve -n "Viseme_Letter_GuideShape3" -p "Viseme_Letter_Guide";
 		;
 createNode nurbsCurve -n "Viseme_Letter_GuideShape4" -p "Viseme_Letter_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFA8";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".cc" -type "nurbsCurve" 
 		1 88 2 no 3
-		89 0 1 2 3 4 5 6 7 8 9 10
-		 11 12 13 14 15 16 17 18 19 20 21 22
-		 23 24 25 26 27 28 29 30 31 32 33 34
-		 35 36 37 38 39 40 41 42 43 44 45 46
-		 47 48 49 50 51 52 53 54 55 56 57 58
-		 59 60 61 62 63 64 65 66 67 68 69 70
-		 71 72 73 74 75 76 77 78 79 80 81 82
-		 83 84 85 86 87 88
+		89 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27
+		 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54
+		 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81
+		 82 83 84 85 86 87 88
 		89
 		7.192148625800427 27.070952192993772 -6.4448936886853478e-08
 		7.1820459445306453 27.07053758338094 -6.4448936886853478e-08
@@ -422,16 +411,13 @@ createNode nurbsCurve -n "Viseme_Letter_GuideShape4" -p "Viseme_Letter_Guide";
 		;
 createNode nurbsCurve -n "Viseme_Letter_GuideShape5" -p "Viseme_Letter_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFA9";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".cc" -type "nurbsCurve" 
 		1 63 2 no 3
-		64 0 1 2 3 4 5 6 7 8 9 10
-		 11 12 13 14 15 16 17 18 19 20 21 22
-		 23 24 25 26 27 28 29 30 31 32 33 34
-		 35 36 37 38 39 40 41 42 43 44 45 46
-		 47 48 49 50 51 52 53 54 55 56 57 58
-		 59 60 61 62 63
+		64 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27
+		 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54
+		 55 56 57 58 59 60 61 62 63
 		64
 		6.7427751160451388 27.070952192993772 -2.0605060946063167e-08
 		6.7224637390135529 27.069556335515447 -2.0605060946063167e-08
@@ -500,19 +486,14 @@ createNode nurbsCurve -n "Viseme_Letter_GuideShape5" -p "Viseme_Letter_Guide";
 		;
 createNode nurbsCurve -n "Viseme_Letter_GuideShape6" -p "Viseme_Letter_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFAA";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".cc" -type "nurbsCurve" 
 		1 102 2 no 3
-		103 0 1 2 3 4 5 6 7 8 9 10
-		 11 12 13 14 15 16 17 18 19 20 21 22
-		 23 24 25 26 27 28 29 30 31 32 33 34
-		 35 36 37 38 39 40 41 42 43 44 45 46
-		 47 48 49 50 51 52 53 54 55 56 57 58
-		 59 60 61 62 63 64 65 66 67 68 69 70
-		 71 72 73 74 75 76 77 78 79 80 81 82
-		 83 84 85 86 87 88 89 90 91 92 93 94
-		 95 96 97 98 99 100 101 102
+		103 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27
+		 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54
+		 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81
+		 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102
 		103
 		6.4983548025769311 27.070952192993772 -2.0605060946063167e-08
 		6.4813649498988672 27.070242733315236 -2.0605060946063167e-08
@@ -620,14 +601,12 @@ createNode nurbsCurve -n "Viseme_Letter_GuideShape6" -p "Viseme_Letter_Guide";
 		;
 createNode nurbsCurve -n "Viseme_Letter_GuideShape7" -p "Viseme_Letter_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFAB";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".cc" -type "nurbsCurve" 
 		1 40 2 no 3
-		41 0 1 2 3 4 5 6 7 8 9 10
-		 11 12 13 14 15 16 17 18 19 20 21 22
-		 23 24 25 26 27 28 29 30 31 32 33 34
-		 35 36 37 38 39 40
+		41 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27
+		 28 29 30 31 32 33 34 35 36 37 38 39 40
 		41
 		6.3158221368174443 27.161793722559526 -2.0605060946063167e-08
 		6.3103308228874875 27.161485039750964 -2.0605060946063167e-08
@@ -673,7 +652,7 @@ createNode nurbsCurve -n "Viseme_Letter_GuideShape7" -p "Viseme_Letter_Guide";
 		;
 createNode nurbsCurve -n "Viseme_Letter_GuideShape8" -p "Viseme_Letter_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFAC";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".cc" -type "nurbsCurve" 
 		1 4 2 no 3
@@ -687,7 +666,7 @@ createNode nurbsCurve -n "Viseme_Letter_GuideShape8" -p "Viseme_Letter_Guide";
 		;
 createNode transform -n "Viseme_Switch_Grp_Guide" -p "Viseme_Letter_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFAD";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr ".t" -type "double3" 6.6244899768071699 26.448054258886582 0 ;
 	setAttr ".s" -type "double3" 0.23919107459587796 0.23919107459587796 0.23919107459587796 ;
 	setAttr ".rp" -type "double3" 1.5933326298070622e-16 0 0 ;
@@ -715,8 +694,7 @@ createNode nurbsCurve -n "GUI_Border_GuideShape" -p "|Mutant_Build|init|Phonemes
 	setAttr ".ovc" 3;
 	setAttr ".cc" -type "nurbsCurve" 
 		3 8 2 no 3
-		13 -2 -1 0 1 2 3 4 5 6 7 8
-		 9 10
+		13 -2 -1 0 1 2 3 4 5 6 7 8 9 10
 		11
 		1.8720074141471945 -0.89764275178291231 -4.7148233156497756e-16
 		0.30918593103831277 -0.8652570454180748 -4.5447190250960529e-16
@@ -732,15 +710,14 @@ createNode nurbsCurve -n "GUI_Border_GuideShape" -p "|Mutant_Build|init|Phonemes
 		;
 createNode nurbsCurve -n "GUI_Border_GuideShape6" -p "|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_Switch_Grp_Guide|GUI_Border_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFB0";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ovdt" 1;
 	setAttr ".ove" yes;
 	setAttr ".ovc" 3;
 	setAttr ".cc" -type "nurbsCurve" 
 		3 8 2 no 3
-		13 -2 -1 0 1 2 3 4 5 6 7 8
-		 9 10
+		13 -2 -1 0 1 2 3 4 5 6 7 8 9 10
 		11
 		1.8048231542347382 -0.86163420333821084 -4.5256902296502794e-16
 		0.33350665135289664 -0.81789932060885895 -4.2959749622011788e-16
@@ -756,7 +733,7 @@ createNode nurbsCurve -n "GUI_Border_GuideShape6" -p "|Mutant_Build|init|Phoneme
 		;
 createNode transform -n "GUI_Ctrl_Guide" -p "|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_Switch_Grp_Guide|GUI_Border_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFB1";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -l on -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 26;
@@ -781,14 +758,13 @@ createNode transform -n "GUI_Ctrl_Guide" -p "|Mutant_Build|init|PhonemesUI_Block
 	setAttr ".xtze" yes;
 createNode nurbsCurve -n "GUI_Ctrl_GuideShape" -p "GUI_Ctrl_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFB2";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 23;
 	setAttr ".cc" -type "nurbsCurve" 
 		3 8 2 no 3
-		13 -2 -1 0 1 2 3 4 5 6 7 8
-		 9 10
+		13 -2 -1 0 1 2 3 4 5 6 7 8 9 10
 		11
 		0.72827446543465413 -0.72827446543465524 -2.0630336560419069e-16
 		-9.5709536125801816e-17 -0.83890943908056825 -2.3764370293575037e-16
@@ -804,14 +780,14 @@ createNode nurbsCurve -n "GUI_Ctrl_GuideShape" -p "GUI_Ctrl_Guide";
 		;
 createNode transform -n "Viseme_GUI_Main_Grp_Guide" -p "Viseme_Letter_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFB3";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr ".t" -type "double3" -3.2829418483048123 -2.0093520089148207 0 ;
 	setAttr ".s" -type "double3" 0.73284363350736981 0.73284363350736981 0.73284363350736981 ;
 	setAttr ".rp" -type "double3" 10.022370664847767 25.665664750250848 -3.9304747884759058e-15 ;
 	setAttr ".sp" -type "double3" 10.022370664847767 25.665664750250848 -3.9304747884759058e-15 ;
 createNode transform -n "GUI_Main_Border2_Guide" -p "Viseme_GUI_Main_Grp_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFB4";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -l on -k off ".v";
 	setAttr -l on -k off ".tx";
 	setAttr -l on -k off ".ty";
@@ -826,15 +802,14 @@ createNode transform -n "GUI_Main_Border2_Guide" -p "Viseme_GUI_Main_Grp_Guide";
 	setAttr ".sp" -type "double3" 9.9738061824239566 25.665664750250848 0 ;
 createNode nurbsCurve -n "GUI_Main_Border2_GuideShape" -p "GUI_Main_Border2_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFB5";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ovdt" 1;
 	setAttr ".ove" yes;
 	setAttr ".ovc" 3;
 	setAttr ".cc" -type "nurbsCurve" 
 		3 8 2 no 3
-		13 -2 -1 0 1 2 3 4 5 6 7 8
-		 9 10
+		13 -2 -1 0 1 2 3 4 5 6 7 8 9 10
 		11
 		12.334864315407529 17.969475595246795 -1.0208346200494405e-15
 		10.022370664847783 17.969475916632742 -9.1035614483070766e-16
@@ -850,23 +825,23 @@ createNode nurbsCurve -n "GUI_Main_Border2_GuideShape" -p "GUI_Main_Border2_Guid
 		;
 createNode transform -n "Viseme_Grp_Guide" -p "Viseme_GUI_Main_Grp_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFB6";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr ".rp" -type "double3" 10.003828479934576 26.781349106665182 -2.6645352591003757e-15 ;
 	setAttr ".sp" -type "double3" 10.003828479934576 26.781349106665182 -2.6645352591003757e-15 ;
 createNode transform -n "CDN_GUI_Main_Grp_Guide" -p "Viseme_Grp_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFB7";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr ".t" -type "double3" -7.9961715200654222 12.006669542359152 10.999999999999996 ;
 	setAttr ".rp" -type "double3" 17.9997344707769 16.008298839376614 -10.999999999999996 ;
 	setAttr ".sp" -type "double3" 17.9997344707769 16.008298839376614 -10.999999999999996 ;
 createNode transform -n "R_CDN_GUI_Grp_Guide" -p "CDN_GUI_Main_Grp_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFB8";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr ".t" -type "double3" 17.214981003928099 16 -10.999999999999996 ;
 	setAttr ".s" -type "double3" -0.337 0.33734754184396509 0.33734754184396509 ;
 createNode transform -n "R_CDN_GUI_Border_Guide" -p "R_CDN_GUI_Grp_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFB9";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -l on -k off ".v";
 	setAttr -l on -k off ".tx";
 	setAttr -l on -k off ".ty";
@@ -881,15 +856,14 @@ createNode transform -n "R_CDN_GUI_Border_Guide" -p "R_CDN_GUI_Grp_Guide";
 	setAttr ".sp" -type "double3" 6.6613381477509392e-16 0 0 ;
 createNode nurbsCurve -n "R_CDN_GUI_Border_GuideShape" -p "R_CDN_GUI_Border_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFBA";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ovdt" 1;
 	setAttr ".ove" yes;
 	setAttr ".ovc" 3;
 	setAttr ".cc" -type "nurbsCurve" 
 		3 8 2 no 3
-		13 -2 -1 0 1 2 3 4 5 6 7 8
-		 9 10
+		13 -2 -1 0 1 2 3 4 5 6 7 8 9 10
 		11
 		1.5292204491715105 -0.53251042175070018 2.4461625325021306e-14
 		0.82861627162539586 -0.55142976316770365 2.4490393905459678e-14
@@ -905,15 +879,14 @@ createNode nurbsCurve -n "R_CDN_GUI_Border_GuideShape" -p "R_CDN_GUI_Border_Guid
 		;
 createNode nurbsCurve -n "R_CDN_GUI_Border_GuideShape1" -p "R_CDN_GUI_Border_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFBB";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ovdt" 1;
 	setAttr ".ove" yes;
 	setAttr ".ovc" 3;
 	setAttr ".cc" -type "nurbsCurve" 
 		3 8 2 no 3
-		13 -2 -1 0 1 2 3 4 5 6 7 8
-		 9 10
+		13 -2 -1 0 1 2 3 4 5 6 7 8 9 10
 		11
 		1.4620361892590552 -0.46574428020042524 2.4500923093215242e-14
 		0.82861627162539586 -0.46362026529342848 2.4542077546487387e-14
@@ -929,7 +902,7 @@ createNode nurbsCurve -n "R_CDN_GUI_Border_GuideShape1" -p "R_CDN_GUI_Border_Gui
 		;
 createNode transform -n "R_CDN_Ctrl_Guide" -p "R_CDN_GUI_Border_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFBC";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -l on -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 26;
@@ -954,14 +927,13 @@ createNode transform -n "R_CDN_Ctrl_Guide" -p "R_CDN_GUI_Border_Guide";
 	setAttr ".xtze" yes;
 createNode nurbsCurve -n "R_CDN_Ctrl_GuideShape" -p "R_CDN_Ctrl_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFBD";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 4;
 	setAttr ".cc" -type "nurbsCurve" 
 		3 8 2 no 3
-		13 -2 -1 0 1 2 3 4 5 6 7 8
-		 9 10
+		13 -2 -1 0 1 2 3 4 5 6 7 8 9 10
 		11
 		0.32232138180166442 -0.32232138180165731 2.5157301519460845e-14
 		1.4210854715201997e-14 -0.45583126958672415 2.5078719164693116e-14
@@ -977,7 +949,7 @@ createNode nurbsCurve -n "R_CDN_Ctrl_GuideShape" -p "R_CDN_Ctrl_Guide";
 		;
 createNode transform -n "C_CDN_GUI_Grp_Guide" -p "CDN_GUI_Main_Grp_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFBE";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr ".t" -type "double3" 18 16 -10.999999999999996 ;
 	setAttr ".s" -type "double3" 0.33734754184396509 0.33734754184396509 0.33734754184396509 ;
 createNode transform -n "GUI_Border_Guide" -p "C_CDN_GUI_Grp_Guide";
@@ -1002,8 +974,7 @@ createNode nurbsCurve -n "GUI_Border_GuideShape" -p "|Mutant_Build|init|Phonemes
 	setAttr ".ovc" 3;
 	setAttr ".cc" -type "nurbsCurve" 
 		3 8 2 no 3
-		13 -2 -1 0 1 2 3 4 5 6 7 8
-		 9 10
+		13 -2 -1 0 1 2 3 4 5 6 7 8 9 10
 		11
 		0.61715775809925311 1.5541688048967324 4.8887857452480623e-15
 		0.63242932074018265 0.077912573165690419 -7.9770997833389313e-16
@@ -1019,15 +990,14 @@ createNode nurbsCurve -n "GUI_Border_GuideShape" -p "|Mutant_Build|init|Phonemes
 		;
 createNode nurbsCurve -n "GUI_Border_GuideShape5" -p "|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|CDN_GUI_Main_Grp_Guide|C_CDN_GUI_Grp_Guide|GUI_Border_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFC1";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ovdt" 1;
 	setAttr ".ove" yes;
 	setAttr ".ovc" 3;
 	setAttr ".cc" -type "nurbsCurve" 
 		3 8 2 no 3
-		13 -2 -1 0 1 2 3 4 5 6 7 8
-		 9 10
+		13 -2 -1 0 1 2 3 4 5 6 7 8 9 10
 		11
 		0.54373020278120499 1.4869679321151203 4.8981822244136372e-15
 		0.53486321419948601 0.077892708460993249 -7.5822502406214014e-16
@@ -1043,7 +1013,7 @@ createNode nurbsCurve -n "GUI_Border_GuideShape5" -p "|Mutant_Build|init|Phoneme
 		;
 createNode transform -n "Mrg_CDN_Ctrl_Guide" -p "|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|CDN_GUI_Main_Grp_Guide|C_CDN_GUI_Grp_Guide|GUI_Border_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFC2";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -l on -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 26;
@@ -1067,14 +1037,13 @@ createNode transform -n "Mrg_CDN_Ctrl_Guide" -p "|Mutant_Build|init|PhonemesUI_B
 	setAttr ".xtze" yes;
 createNode nurbsCurve -n "Mrg_CDN_Ctrl_GuideShape" -p "Mrg_CDN_Ctrl_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFC3";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 22;
 	setAttr ".cc" -type "nurbsCurve" 
 		3 8 2 no 3
-		13 -2 -1 0 1 2 3 4 5 6 7 8
-		 9 10
+		13 -2 -1 0 1 2 3 4 5 6 7 8 9 10
 		11
 		0.35575177077554426 -0.35575177077558334 2.0761457957271542e-14
 		-2.4868995751603494e-14 -0.50310897906908258 2.0728021259748436e-14
@@ -1090,12 +1059,12 @@ createNode nurbsCurve -n "Mrg_CDN_Ctrl_GuideShape" -p "Mrg_CDN_Ctrl_Guide";
 		;
 createNode transform -n "L_CDN_GUI_Grp_Guide" -p "CDN_GUI_Main_Grp_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFC4";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr ".t" -type "double3" 18.773704206391475 16 -10.999999999999996 ;
 	setAttr ".s" -type "double3" 0.337 0.33734754184396509 0.33734754184396509 ;
 createNode transform -n "L_CDN_GUI_Border_Guide" -p "L_CDN_GUI_Grp_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFC5";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -l on -k off ".v";
 	setAttr -l on -k off ".tx";
 	setAttr -l on -k off ".ty";
@@ -1110,15 +1079,14 @@ createNode transform -n "L_CDN_GUI_Border_Guide" -p "L_CDN_GUI_Grp_Guide";
 	setAttr ".sp" -type "double3" 6.6613381477509392e-16 0 0 ;
 createNode nurbsCurve -n "L_CDN_GUI_Border_GuideShape" -p "L_CDN_GUI_Border_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFC6";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ovdt" 1;
 	setAttr ".ove" yes;
 	setAttr ".ovc" 3;
 	setAttr ".cc" -type "nurbsCurve" 
 		3 8 2 no 3
-		13 -2 -1 0 1 2 3 4 5 6 7 8
-		 9 10
+		13 -2 -1 0 1 2 3 4 5 6 7 8 9 10
 		11
 		1.5292204491714643 -0.53251042175070018 2.4461625325021306e-14
 		0.82861627162536033 -0.55142976316770365 2.4490393905459678e-14
@@ -1134,15 +1102,14 @@ createNode nurbsCurve -n "L_CDN_GUI_Border_GuideShape" -p "L_CDN_GUI_Border_Guid
 		;
 createNode nurbsCurve -n "L_CDN_GUI_Border_GuideShape1" -p "L_CDN_GUI_Border_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFC7";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ovdt" 1;
 	setAttr ".ove" yes;
 	setAttr ".ovc" 3;
 	setAttr ".cc" -type "nurbsCurve" 
 		3 8 2 no 3
-		13 -2 -1 0 1 2 3 4 5 6 7 8
-		 9 10
+		13 -2 -1 0 1 2 3 4 5 6 7 8 9 10
 		11
 		1.4620361892590197 -0.46574428020042524 2.4500923093215242e-14
 		0.82861627162536033 -0.46362026529342848 2.4542077546487387e-14
@@ -1158,7 +1125,7 @@ createNode nurbsCurve -n "L_CDN_GUI_Border_GuideShape1" -p "L_CDN_GUI_Border_Gui
 		;
 createNode transform -n "L_CDN_Ctrl_Guide" -p "L_CDN_GUI_Border_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFC8";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -l on -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 26;
@@ -1183,14 +1150,13 @@ createNode transform -n "L_CDN_Ctrl_Guide" -p "L_CDN_GUI_Border_Guide";
 	setAttr ".xtze" yes;
 createNode nurbsCurve -n "L_CDN_Ctrl_GuideShape" -p "L_CDN_Ctrl_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFC9";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 15;
 	setAttr ".cc" -type "nurbsCurve" 
 		3 8 2 no 3
-		13 -2 -1 0 1 2 3 4 5 6 7 8
-		 9 10
+		13 -2 -1 0 1 2 3 4 5 6 7 8 9 10
 		11
 		0.322321381801636 -0.32232138180162889 2.5157301519460845e-14
 		-1.4210854715201997e-14 -0.45583126958672415 2.5078719164693113e-14
@@ -1206,14 +1172,14 @@ createNode nurbsCurve -n "L_CDN_Ctrl_GuideShape" -p "L_CDN_Ctrl_Guide";
 		;
 createNode transform -n "CDN_Grp_Guide" -p "CDN_GUI_Main_Grp_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFCA";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 3;
 	setAttr ".rp" -type "double3" 17.99723295378783 15.388094978633248 -11.000000000000002 ;
 	setAttr ".sp" -type "double3" 17.99723295378783 15.388094978633248 -11.000000000000002 ;
 createNode transform -n "CDN_letter_Guide" -p "CDN_Grp_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFCB";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -l on -k off ".v";
 	setAttr -l on -k off ".tx";
 	setAttr -l on -k off ".ty";
@@ -1228,24 +1194,18 @@ createNode transform -n "CDN_letter_Guide" -p "CDN_Grp_Guide";
 	setAttr ".sp" -type "double3" 16.555167045221179 15.259725658636219 -11 ;
 createNode nurbsCurve -n "CDN_letter_GuideShape" -p "CDN_letter_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFCC";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ovdt" 1;
 	setAttr ".ove" yes;
 	setAttr ".ovc" 3;
 	setAttr ".cc" -type "nurbsCurve" 
 		1 122 2 no 3
-		123 0 1 2 3 4 5 6 7 8 9 10
-		 11 12 13 14 15 16 17 18 19 20 21 22
-		 23 24 25 26 27 28 29 30 31 32 33 34
-		 35 36 37 38 39 40 41 42 43 44 45 46
-		 47 48 49 50 51 52 53 54 55 56 57 58
-		 59 60 61 62 63 64 65 66 67 68 69 70
-		 71 72 73 74 75 76 77 78 79 80 81 82
-		 83 84 85 86 87 88 89 90 91 92 93 94
-		 95 96 97 98 99 100 101 102 103 104 105 106
-		 107 108 109 110 111 112 113 114 115 116 117 118
-		 119 120 121 122
+		123 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27
+		 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54
+		 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81
+		 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103 104 105 106
+		 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122
 		123
 		16.699035270246632 15.520133911594902 -10.999999999999993
 		16.684498514857424 15.519555877912749 -10.999999999999993
@@ -1373,7 +1333,7 @@ createNode nurbsCurve -n "CDN_letter_GuideShape" -p "CDN_letter_Guide";
 		;
 createNode nurbsCurve -n "CDN_letter_GuideShape1" -p "CDN_letter_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFCD";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ovdt" 1;
 	setAttr ".ove" yes;
@@ -1389,16 +1349,14 @@ createNode nurbsCurve -n "CDN_letter_GuideShape1" -p "CDN_letter_Guide";
 		;
 createNode nurbsCurve -n "CDN_letter_GuideShape2" -p "CDN_letter_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFCE";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ovdt" 1;
 	setAttr ".ove" yes;
 	setAttr ".cc" -type "nurbsCurve" 
 		1 35 2 no 3
-		36 0 1 2 3 4 5 6 7 8 9 10
-		 11 12 13 14 15 16 17 18 19 20 21 22
-		 23 24 25 26 27 28 29 30 31 32 33 34
-		 35
+		36 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27
+		 28 29 30 31 32 33 34 35
 		36
 		17.064038673782754 15.516285303618778 -10.999999999999993
 		16.979197491731519 15.516285303618778 -10.999999999999993
@@ -1439,7 +1397,7 @@ createNode nurbsCurve -n "CDN_letter_GuideShape2" -p "CDN_letter_Guide";
 		;
 createNode nurbsCurve -n "CDN_letter_GuideShape3" -p "CDN_letter_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFCF";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ovdt" 1;
 	setAttr ".ove" yes;
@@ -1456,16 +1414,14 @@ createNode nurbsCurve -n "CDN_letter_GuideShape3" -p "CDN_letter_Guide";
 		;
 createNode nurbsCurve -n "CDN_letter_GuideShape4" -p "CDN_letter_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFD0";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ovdt" 1;
 	setAttr ".ove" yes;
 	setAttr ".cc" -type "nurbsCurve" 
 		1 34 2 no 3
-		35 0 1 2 3 4 5 6 7 8 9 10
-		 11 12 13 14 15 16 17 18 19 20 21 22
-		 23 24 25 26 27 28 29 30 31 32 33 34
-		
+		35 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27
+		 28 29 30 31 32 33 34
 		35
 		17.413073278948644 15.516285303618778 -10.999999999999993
 		17.372636641948823 15.516285303618778 -10.999999999999993
@@ -1505,7 +1461,7 @@ createNode nurbsCurve -n "CDN_letter_GuideShape4" -p "CDN_letter_Guide";
 		;
 createNode nurbsCurve -n "CDN_letter_GuideShape5" -p "CDN_letter_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFD1";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ovdt" 1;
 	setAttr ".ove" yes;
@@ -1521,16 +1477,14 @@ createNode nurbsCurve -n "CDN_letter_GuideShape5" -p "CDN_letter_Guide";
 		;
 createNode nurbsCurve -n "CDN_letter_GuideShape6" -p "CDN_letter_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFD2";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ovdt" 1;
 	setAttr ".ove" yes;
 	setAttr ".cc" -type "nurbsCurve" 
 		1 40 2 no 3
-		41 0 1 2 3 4 5 6 7 8 9 10
-		 11 12 13 14 15 16 17 18 19 20 21 22
-		 23 24 25 26 27 28 29 30 31 32 33 34
-		 35 36 37 38 39 40
+		41 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27
+		 28 29 30 31 32 33 34 35 36 37 38 39 40
 		41
 		17.886811326652683 15.516285303618778 -10.999999999999993
 		17.766075872543475 15.516285303618778 -10.999999999999993
@@ -1576,7 +1530,7 @@ createNode nurbsCurve -n "CDN_letter_GuideShape6" -p "CDN_letter_Guide";
 		;
 createNode nurbsCurve -n "CDN_letter_GuideShape7" -p "CDN_letter_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFD3";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ovdt" 1;
 	setAttr ".ove" yes;
@@ -1592,30 +1546,21 @@ createNode nurbsCurve -n "CDN_letter_GuideShape7" -p "CDN_letter_Guide";
 		;
 createNode nurbsCurve -n "CDN_letter_GuideShape8" -p "CDN_letter_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFD4";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ovdt" 1;
 	setAttr ".ove" yes;
 	setAttr ".cc" -type "nurbsCurve" 
 		1 202 2 no 3
-		203 0 1 2 3 4 5 6 7 8 9 10
-		 11 12 13 14 15 16 17 18 19 20 21 22
-		 23 24 25 26 27 28 29 30 31 32 33 34
-		 35 36 37 38 39 40 41 42 43 44 45 46
-		 47 48 49 50 51 52 53 54 55 56 57 58
-		 59 60 61 62 63 64 65 66 67 68 69 70
-		 71 72 73 74 75 76 77 78 79 80 81 82
-		 83 84 85 86 87 88 89 90 91 92 93 94
-		 95 96 97 98 99 100 101 102 103 104 105 106
-		 107 108 109 110 111 112 113 114 115 116 117 118
-		 119 120 121 122 123 124 125 126 127 128 129 130
-		 131 132 133 134 135 136 137 138 139 140 141 142
-		 143 144 145 146 147 148 149 150 151 152 153 154
-		 155 156 157 158 159 160 161 162 163 164 165 166
-		 167 168 169 170 171 172 173 174 175 176 177 178
-		 179 180 181 182 183 184 185 186 187 188 189 190
+		203 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27
+		 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54
+		 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81
+		 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103 104 105 106
+		 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127
+		 128 129 130 131 132 133 134 135 136 137 138 139 140 141 142 143 144 145 146 147 148
+		 149 150 151 152 153 154 155 156 157 158 159 160 161 162 163 164 165 166 167 168 169
+		 170 171 172 173 174 175 176 177 178 179 180 181 182 183 184 185 186 187 188 189 190
 		 191 192 193 194 195 196 197 198 199 200 201 202
-		
 		203
 		18.255309145343588 15.520133911594902 -10.999999999999993
 		18.245116976389788 15.519895231066618 -10.999999999999993
@@ -1823,7 +1768,7 @@ createNode nurbsCurve -n "CDN_letter_GuideShape8" -p "CDN_letter_Guide";
 		;
 createNode nurbsCurve -n "CDN_letter_GuideShape9" -p "CDN_letter_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFD5";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ovdt" 1;
 	setAttr ".ove" yes;
@@ -1839,7 +1784,7 @@ createNode nurbsCurve -n "CDN_letter_GuideShape9" -p "CDN_letter_Guide";
 		;
 createNode nurbsCurve -n "CDN_letter_GuideShape10" -p "CDN_letter_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFD6";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ovdt" 1;
 	setAttr ".ove" yes;
@@ -1859,7 +1804,7 @@ createNode nurbsCurve -n "CDN_letter_GuideShape10" -p "CDN_letter_Guide";
 		;
 createNode nurbsCurve -n "CDN_letter_GuideShape11" -p "CDN_letter_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFD7";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ovdt" 1;
 	setAttr ".ove" yes;
@@ -1875,14 +1820,13 @@ createNode nurbsCurve -n "CDN_letter_GuideShape11" -p "CDN_letter_Guide";
 		;
 createNode nurbsCurve -n "CDN_letter_GuideShape12" -p "CDN_letter_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFD8";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ovdt" 1;
 	setAttr ".ove" yes;
 	setAttr ".cc" -type "nurbsCurve" 
 		1 12 2 no 3
-		13 0 1 2 3 4 5 6 7 8 9 10
-		 11 12
+		13 0 1 2 3 4 5 6 7 8 9 10 11 12
 		13
 		18.885614948281216 15.516285303618778 -10.999999999999993
 		18.847218207939846 15.516285303618778 -10.999999999999993
@@ -1900,7 +1844,7 @@ createNode nurbsCurve -n "CDN_letter_GuideShape12" -p "CDN_letter_Guide";
 		;
 createNode nurbsCurve -n "CDN_letter_GuideShape13" -p "CDN_letter_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFD9";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ovdt" 1;
 	setAttr ".ove" yes;
@@ -1916,14 +1860,13 @@ createNode nurbsCurve -n "CDN_letter_GuideShape13" -p "CDN_letter_Guide";
 		;
 createNode nurbsCurve -n "CDN_letter_GuideShape14" -p "CDN_letter_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFDA";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ovdt" 1;
 	setAttr ".ove" yes;
 	setAttr ".cc" -type "nurbsCurve" 
 		1 10 2 no 3
 		11 0 1 2 3 4 5 6 7 8 9 10
-		
 		11
 		19.411851539756327 15.516285303618778 -10.999999999999993
 		19.229351561077614 15.516285303618778 -10.999999999999993
@@ -1939,16 +1882,14 @@ createNode nurbsCurve -n "CDN_letter_GuideShape14" -p "CDN_letter_Guide";
 		;
 createNode nurbsCurve -n "CDN_letter_GuideShape15" -p "CDN_letter_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFDB";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ovdt" 1;
 	setAttr ".ove" yes;
 	setAttr ".cc" -type "nurbsCurve" 
 		1 35 2 no 3
-		36 0 1 2 3 4 5 6 7 8 9 10
-		 11 12 13 14 15 16 17 18 19 20 21 22
-		 23 24 25 26 27 28 29 30 31 32 33 34
-		 35
+		36 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27
+		 28 29 30 31 32 33 34 35
 		36
 		17.063468677835182 15.487932878103662 -10.999999999999993
 		17.07437793327933 15.487584080611667 -10.999999999999993
@@ -1989,16 +1930,14 @@ createNode nurbsCurve -n "CDN_letter_GuideShape15" -p "CDN_letter_Guide";
 		;
 createNode nurbsCurve -n "CDN_letter_GuideShape16" -p "CDN_letter_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFDC";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ovdt" 1;
 	setAttr ".ove" yes;
 	setAttr ".cc" -type "nurbsCurve" 
 		1 35 2 no 3
-		36 0 1 2 3 4 5 6 7 8 9 10
-		 11 12 13 14 15 16 17 18 19 20 21 22
-		 23 24 25 26 27 28 29 30 31 32 33 34
-		 35
+		36 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27
+		 28 29 30 31 32 33 34 35
 		36
 		17.883314108337956 15.48819830419375 -10.999999999999993
 		17.890004397090991 15.488020187995508 -10.999999999999993
@@ -2066,18 +2005,18 @@ createNode nurbsCurve -n "Bookmark_GuideShape" -p "|Mutant_Build|init|PhonemesUI
 		;
 createNode transform -n "FV_GUI_Main_Grp_Guide" -p "Viseme_Grp_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFDF";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr ".t" -type "double3" -7.9961715200654222 10.03173364502873 10.999999999999996 ;
 	setAttr ".rp" -type "double3" 17.9997344707769 16.008298839376614 -10.999999999999996 ;
 	setAttr ".sp" -type "double3" 17.9997344707769 16.008298839376614 -10.999999999999996 ;
 createNode transform -n "R__FV_GUI_Grp_Guide" -p "FV_GUI_Main_Grp_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFE0";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr ".t" -type "double3" 17.214981003928099 16 -10.999999999999996 ;
 	setAttr ".s" -type "double3" -0.337 0.33734754184396509 0.33734754184396509 ;
 createNode transform -n "R__FV_GUI_Border_Guide" -p "R__FV_GUI_Grp_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFE1";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -l on -k off ".v";
 	setAttr -l on -k off ".tx";
 	setAttr -l on -k off ".ty";
@@ -2092,15 +2031,14 @@ createNode transform -n "R__FV_GUI_Border_Guide" -p "R__FV_GUI_Grp_Guide";
 	setAttr ".sp" -type "double3" 6.6613381477509392e-16 0 0 ;
 createNode nurbsCurve -n "R__FV_GUI_Border_GuideShape" -p "R__FV_GUI_Border_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFE2";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ovdt" 1;
 	setAttr ".ove" yes;
 	setAttr ".ovc" 3;
 	setAttr ".cc" -type "nurbsCurve" 
 		3 8 2 no 3
-		13 -2 -1 0 1 2 3 4 5 6 7 8
-		 9 10
+		13 -2 -1 0 1 2 3 4 5 6 7 8 9 10
 		11
 		1.5292204491714898 -0.53251042175068619 -1.1825282870401506e-14
 		0.82861627162537488 -0.55142976316770387 -1.2101548223450033e-14
@@ -2116,15 +2054,14 @@ createNode nurbsCurve -n "R__FV_GUI_Border_GuideShape" -p "R__FV_GUI_Border_Guid
 		;
 createNode nurbsCurve -n "R__FV_GUI_Border_GuideShape1" -p "R__FV_GUI_Border_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFE3";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ovdt" 1;
 	setAttr ".ove" yes;
 	setAttr ".ovc" 3;
 	setAttr ".cc" -type "nurbsCurve" 
 		3 8 2 no 3
-		13 -2 -1 0 1 2 3 4 5 6 7 8
-		 9 10
+		13 -2 -1 0 1 2 3 4 5 6 7 8 9 10
 		11
 		1.4620361892590346 -0.46574428020041125 -1.1836174629287639e-14
 		0.82861627162537488 -0.46362026529340028 -1.2076673817160546e-14
@@ -2140,7 +2077,7 @@ createNode nurbsCurve -n "R__FV_GUI_Border_GuideShape1" -p "R__FV_GUI_Border_Gui
 		;
 createNode transform -n "R__FV_Ctrl_Guide" -p "R__FV_GUI_Border_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFE4";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -l on -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 26;
@@ -2165,14 +2102,13 @@ createNode transform -n "R__FV_Ctrl_Guide" -p "R__FV_GUI_Border_Guide";
 	setAttr ".xtze" yes;
 createNode nurbsCurve -n "R__FV_Ctrl_GuideShape" -p "R__FV_Ctrl_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFE5";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 4;
 	setAttr ".cc" -type "nurbsCurve" 
 		3 8 2 no 3
-		13 -2 -1 0 1 2 3 4 5 6 7 8
-		 9 10
+		13 -2 -1 0 1 2 3 4 5 6 7 8 9 10
 		11
 		0.32232138180164327 -0.32232138180162906 -1.1729198457518474e-14
 		-7.1054273576010019e-15 -0.45583126958672437 -1.191001071342654e-14
@@ -2188,7 +2124,7 @@ createNode nurbsCurve -n "R__FV_Ctrl_GuideShape" -p "R__FV_Ctrl_Guide";
 		;
 createNode transform -n "C__FV_GUI_Grp_Guide" -p "FV_GUI_Main_Grp_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFE6";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr ".t" -type "double3" 18 16 -10.999999999999996 ;
 	setAttr ".s" -type "double3" 0.33734754184396509 0.33734754184396509 0.33734754184396509 ;
 createNode transform -n "GUI_Border_Guide" -p "C__FV_GUI_Grp_Guide";
@@ -2213,8 +2149,7 @@ createNode nurbsCurve -n "GUI_Border_GuideShape" -p "|Mutant_Build|init|Phonemes
 	setAttr ".ovc" 3;
 	setAttr ".cc" -type "nurbsCurve" 
 		3 8 2 no 3
-		13 -2 -1 0 1 2 3 4 5 6 7 8
-		 9 10
+		13 -2 -1 0 1 2 3 4 5 6 7 8 9 10
 		11
 		0.61715775809927109 1.5541688048967615 -3.4021103455932863e-14
 		0.63242932074020075 0.077912573165704657 -3.9263663359554809e-14
@@ -2230,15 +2165,14 @@ createNode nurbsCurve -n "GUI_Border_GuideShape" -p "|Mutant_Build|init|Phonemes
 		;
 createNode nurbsCurve -n "GUI_Border_GuideShape4" -p "|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|FV_GUI_Main_Grp_Guide|C__FV_GUI_Grp_Guide|GUI_Border_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFE9";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ovdt" 1;
 	setAttr ".ove" yes;
 	setAttr ".ovc" 3;
 	setAttr ".cc" -type "nurbsCurve" 
 		3 8 2 no 3
-		13 -2 -1 0 1 2 3 4 5 6 7 8
-		 9 10
+		13 -2 -1 0 1 2 3 4 5 6 7 8 9 10
 		11
 		0.54373020278122297 1.4869679321151352 -3.3958581403779689e-14
 		0.534863214199504 0.077892708461007487 -3.9180844285201802e-14
@@ -2254,7 +2188,7 @@ createNode nurbsCurve -n "GUI_Border_GuideShape4" -p "|Mutant_Build|init|Phoneme
 		;
 createNode transform -n "Mrg__FV_Ctrl_Guide" -p "|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|FV_GUI_Main_Grp_Guide|C__FV_GUI_Grp_Guide|GUI_Border_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFEA";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -l on -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 26;
@@ -2278,14 +2212,13 @@ createNode transform -n "Mrg__FV_Ctrl_Guide" -p "|Mutant_Build|init|PhonemesUI_B
 	setAttr ".xtze" yes;
 createNode nurbsCurve -n "Mrg__FV_Ctrl_GuideShape" -p "Mrg__FV_Ctrl_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFEB";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 22;
 	setAttr ".cc" -type "nurbsCurve" 
 		3 8 2 no 3
-		13 -2 -1 0 1 2 3 4 5 6 7 8
-		 9 10
+		13 -2 -1 0 1 2 3 4 5 6 7 8 9 10
 		11
 		0.35575177077556575 -0.3557517707755693 -1.7449223271011616e-14
 		-7.1054273576010019e-15 -0.50310897906905439 -1.7279684620237958e-14
@@ -2301,12 +2234,12 @@ createNode nurbsCurve -n "Mrg__FV_Ctrl_GuideShape" -p "Mrg__FV_Ctrl_Guide";
 		;
 createNode transform -n "L__FV_GUI_Grp_Guide" -p "FV_GUI_Main_Grp_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFEC";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr ".t" -type "double3" 18.773704206391475 16 -10.999999999999996 ;
 	setAttr ".s" -type "double3" 0.337 0.33734754184396509 0.33734754184396509 ;
 createNode transform -n "L__FV_GUI_Border_Guide" -p "L__FV_GUI_Grp_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFED";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -l on -k off ".v";
 	setAttr -l on -k off ".tx";
 	setAttr -l on -k off ".ty";
@@ -2321,15 +2254,14 @@ createNode transform -n "L__FV_GUI_Border_Guide" -p "L__FV_GUI_Grp_Guide";
 	setAttr ".sp" -type "double3" 6.6613381477509392e-16 0 0 ;
 createNode nurbsCurve -n "L__FV_GUI_Border_GuideShape" -p "L__FV_GUI_Border_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFEE";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ovdt" 1;
 	setAttr ".ove" yes;
 	setAttr ".ovc" 3;
 	setAttr ".cc" -type "nurbsCurve" 
 		3 8 2 no 3
-		13 -2 -1 0 1 2 3 4 5 6 7 8
-		 9 10
+		13 -2 -1 0 1 2 3 4 5 6 7 8 9 10
 		11
 		1.5292204491715005 -0.53251042175068619 -1.5234030098609426e-14
 		0.82861627162538909 -0.55142976316770387 -1.4888675006035612e-14
@@ -2345,15 +2277,14 @@ createNode nurbsCurve -n "L__FV_GUI_Border_GuideShape" -p "L__FV_GUI_Border_Guid
 		;
 createNode nurbsCurve -n "L__FV_GUI_Border_GuideShape1" -p "L__FV_GUI_Border_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFEF";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ovdt" 1;
 	setAttr ".ove" yes;
 	setAttr ".ovc" 3;
 	setAttr ".cc" -type "nurbsCurve" 
 		3 8 2 no 3
-		13 -2 -1 0 1 2 3 4 5 6 7 8
-		 9 10
+		13 -2 -1 0 1 2 3 4 5 6 7 8 9 10
 		11
 		1.4620361892590488 -0.46574428020041125 -1.5185311722523397e-14
 		0.82861627162538909 -0.46362026529340028 -1.4863800599746122e-14
@@ -2369,7 +2300,7 @@ createNode nurbsCurve -n "L__FV_GUI_Border_GuideShape1" -p "L__FV_GUI_Border_Gui
 		;
 createNode transform -n "L__FV_Ctrl_Guide" -p "L__FV_GUI_Border_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFF0";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -l on -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 26;
@@ -2394,14 +2325,13 @@ createNode transform -n "L__FV_Ctrl_Guide" -p "L__FV_GUI_Border_Guide";
 	setAttr ".xtze" yes;
 createNode nurbsCurve -n "L__FV_Ctrl_GuideShape" -p "L__FV_Ctrl_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFF1";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 15;
 	setAttr ".cc" -type "nurbsCurve" 
 		3 8 2 no 3
-		13 -2 -1 0 1 2 3 4 5 6 7 8
-		 9 10
+		13 -2 -1 0 1 2 3 4 5 6 7 8 9 10
 		11
 		0.32232138180165748 -0.32232138180162906 -1.4067108314034795e-14
 		7.1054273576010019e-15 -0.45583126958671016 -1.3961936604373426e-14
@@ -2417,7 +2347,7 @@ createNode nurbsCurve -n "L__FV_Ctrl_GuideShape" -p "L__FV_Ctrl_Guide";
 		;
 createNode transform -n "FV_Letter_Grp_Guide" -p "FV_GUI_Main_Grp_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFF2";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 3;
 	setAttr ".rp" -type "double3" 17.99723295378783 15.388094978633248 -11.000000000000002 ;
@@ -2429,7 +2359,7 @@ createNode transform -n "group3_Guide" -p "FV_Letter_Grp_Guide";
 	setAttr ".sp" -type "double3" 24.543604210366361 18.157411482195819 -11.000000000000007 ;
 createNode transform -n "polyToCurve19_Guide" -p "|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|FV_GUI_Main_Grp_Guide|FV_Letter_Grp_Guide|group3_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFF4";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -l on -k off ".v";
 	setAttr -l on -k off ".tx";
 	setAttr -l on -k off ".ty";
@@ -2444,14 +2374,13 @@ createNode transform -n "polyToCurve19_Guide" -p "|Mutant_Build|init|PhonemesUI_
 	setAttr ".sp" -type "double3" 24.20922075985451 18.021165115097727 -11.000000000000007 ;
 createNode nurbsCurve -n "polyToCurve19_GuideShape" -p "polyToCurve19_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFF5";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ovdt" 1;
 	setAttr ".ove" yes;
 	setAttr ".cc" -type "nurbsCurve" 
 		1 10 2 no 3
 		11 0 1 2 3 4 5 6 7 8 9 10
-		
 		11
 		24.435299900337583 18.293657849293915 -11.000000000000007
 		24.241711860649488 18.293657849293915 -11.000000000000007
@@ -2467,7 +2396,7 @@ createNode nurbsCurve -n "polyToCurve19_GuideShape" -p "polyToCurve19_Guide";
 		;
 createNode nurbsCurve -n "polyToCurve19_GuideShape1" -p "polyToCurve19_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFF6";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ovdt" 1;
 	setAttr ".ove" yes;
@@ -2483,15 +2412,14 @@ createNode nurbsCurve -n "polyToCurve19_GuideShape1" -p "polyToCurve19_Guide";
 		;
 createNode nurbsCurve -n "polyToCurve19_GuideShape2" -p "polyToCurve19_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFF7";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ovdt" 1;
 	setAttr ".ove" yes;
 	setAttr ".cc" -type "nurbsCurve" 
 		1 31 2 no 3
-		32 0 1 2 3 4 5 6 7 8 9 10
-		 11 12 13 14 15 16 17 18 19 20 21 22
-		 23 24 25 26 27 28 29 30 31
+		32 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27
+		 28 29 30 31
 		32
 		24.623627883165497 18.293657849293915 -11.000000000000007
 		24.584759757392693 18.293657849293915 -11.000000000000007
@@ -2555,18 +2483,18 @@ createNode nurbsCurve -n "Bookmark_GuideShape" -p "|Mutant_Build|init|PhonemesUI
 		;
 createNode transform -n "AEI_GUI_Main_Grp_Guide" -p "Viseme_Grp_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFFA";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr ".t" -type "double3" -7.9961715200654115 8.0880352247912484 10.999999999999996 ;
 	setAttr ".rp" -type "double3" 17.9997344707769 16.008298839376614 -10.999999999999996 ;
 	setAttr ".sp" -type "double3" 17.9997344707769 16.008298839376614 -10.999999999999996 ;
 createNode transform -n "R__AEI_GUI_Grp_Guide" -p "AEI_GUI_Main_Grp_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFFB";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr ".t" -type "double3" 17.214981003928099 16 -10.999999999999996 ;
 	setAttr ".s" -type "double3" -0.337 0.33734754184396509 0.33734754184396509 ;
 createNode transform -n "R__AEI_GUI_Border_Guide" -p "R__AEI_GUI_Grp_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFFC";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -l on -k off ".v";
 	setAttr -l on -k off ".tx";
 	setAttr -l on -k off ".ty";
@@ -2581,15 +2509,14 @@ createNode transform -n "R__AEI_GUI_Border_Guide" -p "R__AEI_GUI_Grp_Guide";
 	setAttr ".sp" -type "double3" 6.6613381477509392e-16 0 0 ;
 createNode nurbsCurve -n "R__AEI_GUI_Border_GuideShape" -p "R__AEI_GUI_Border_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFFD";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ovdt" 1;
 	setAttr ".ove" yes;
 	setAttr ".ovc" 3;
 	setAttr ".cc" -type "nurbsCurve" 
 		3 8 2 no 3
-		13 -2 -1 0 1 2 3 4 5 6 7 8
-		 9 10
+		13 -2 -1 0 1 2 3 4 5 6 7 8 9 10
 		11
 		1.5292204491714898 -0.53251042175068619 -1.1825282870401506e-14
 		0.82861627162537488 -0.55142976316770387 -1.2101548223450033e-14
@@ -2605,15 +2532,14 @@ createNode nurbsCurve -n "R__AEI_GUI_Border_GuideShape" -p "R__AEI_GUI_Border_Gu
 		;
 createNode nurbsCurve -n "R__AEI_GUI_Border_GuideShape1" -p "R__AEI_GUI_Border_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFFE";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ovdt" 1;
 	setAttr ".ove" yes;
 	setAttr ".ovc" 3;
 	setAttr ".cc" -type "nurbsCurve" 
 		3 8 2 no 3
-		13 -2 -1 0 1 2 3 4 5 6 7 8
-		 9 10
+		13 -2 -1 0 1 2 3 4 5 6 7 8 9 10
 		11
 		1.4620361892590346 -0.46574428020041125 -1.1836174629287639e-14
 		0.82861627162537488 -0.46362026529340028 -1.2076673817160546e-14
@@ -2629,7 +2555,7 @@ createNode nurbsCurve -n "R__AEI_GUI_Border_GuideShape1" -p "R__AEI_GUI_Border_G
 		;
 createNode transform -n "R__AEI_Ctrl_Guide" -p "R__AEI_GUI_Border_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000AFFF";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -l on -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 26;
@@ -2654,14 +2580,13 @@ createNode transform -n "R__AEI_Ctrl_Guide" -p "R__AEI_GUI_Border_Guide";
 	setAttr ".xtze" yes;
 createNode nurbsCurve -n "R__AEI_Ctrl_GuideShape" -p "R__AEI_Ctrl_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B000";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 4;
 	setAttr ".cc" -type "nurbsCurve" 
 		3 8 2 no 3
-		13 -2 -1 0 1 2 3 4 5 6 7 8
-		 9 10
+		13 -2 -1 0 1 2 3 4 5 6 7 8 9 10
 		11
 		0.32232138180164327 -0.32232138180162906 -1.1729198457518474e-14
 		-7.1054273576010019e-15 -0.45583126958672437 -1.191001071342654e-14
@@ -2677,7 +2602,7 @@ createNode nurbsCurve -n "R__AEI_Ctrl_GuideShape" -p "R__AEI_Ctrl_Guide";
 		;
 createNode transform -n "C__AEI_GUI_Grp_Guide" -p "AEI_GUI_Main_Grp_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B001";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr ".t" -type "double3" 18 16 -10.999999999999996 ;
 	setAttr ".s" -type "double3" 0.33734754184396509 0.33734754184396509 0.33734754184396509 ;
 createNode transform -n "GUI_Border_Guide" -p "C__AEI_GUI_Grp_Guide";
@@ -2702,8 +2627,7 @@ createNode nurbsCurve -n "GUI_Border_GuideShape" -p "|Mutant_Build|init|Phonemes
 	setAttr ".ovc" 3;
 	setAttr ".cc" -type "nurbsCurve" 
 		3 8 2 no 3
-		13 -2 -1 0 1 2 3 4 5 6 7 8
-		 9 10
+		13 -2 -1 0 1 2 3 4 5 6 7 8 9 10
 		11
 		0.61715775809927109 1.5541688048967615 -3.4021103455932863e-14
 		0.63242932074020075 0.077912573165704657 -3.9263663359554809e-14
@@ -2719,15 +2643,14 @@ createNode nurbsCurve -n "GUI_Border_GuideShape" -p "|Mutant_Build|init|Phonemes
 		;
 createNode nurbsCurve -n "GUI_Border_GuideShape3" -p "|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|AEI_GUI_Main_Grp_Guide|C__AEI_GUI_Grp_Guide|GUI_Border_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B004";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ovdt" 1;
 	setAttr ".ove" yes;
 	setAttr ".ovc" 3;
 	setAttr ".cc" -type "nurbsCurve" 
 		3 8 2 no 3
-		13 -2 -1 0 1 2 3 4 5 6 7 8
-		 9 10
+		13 -2 -1 0 1 2 3 4 5 6 7 8 9 10
 		11
 		0.54373020278122297 1.4869679321151352 -3.3958581403779689e-14
 		0.534863214199504 0.077892708461007487 -3.9180844285201802e-14
@@ -2743,7 +2666,7 @@ createNode nurbsCurve -n "GUI_Border_GuideShape3" -p "|Mutant_Build|init|Phoneme
 		;
 createNode transform -n "Mrg__AEI_Ctrl_Guide" -p "|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|AEI_GUI_Main_Grp_Guide|C__AEI_GUI_Grp_Guide|GUI_Border_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B005";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -l on -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 26;
@@ -2767,14 +2690,13 @@ createNode transform -n "Mrg__AEI_Ctrl_Guide" -p "|Mutant_Build|init|PhonemesUI_
 	setAttr ".xtze" yes;
 createNode nurbsCurve -n "Mrg__AEI_Ctrl_GuideShape" -p "Mrg__AEI_Ctrl_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B006";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 22;
 	setAttr ".cc" -type "nurbsCurve" 
 		3 8 2 no 3
-		13 -2 -1 0 1 2 3 4 5 6 7 8
-		 9 10
+		13 -2 -1 0 1 2 3 4 5 6 7 8 9 10
 		11
 		0.35575177077556575 -0.3557517707755693 -1.7449223271011616e-14
 		-7.1054273576010019e-15 -0.50310897906905439 -1.7279684620237958e-14
@@ -2790,12 +2712,12 @@ createNode nurbsCurve -n "Mrg__AEI_Ctrl_GuideShape" -p "Mrg__AEI_Ctrl_Guide";
 		;
 createNode transform -n "L__AEI_GUI_Grp_Guide" -p "AEI_GUI_Main_Grp_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B007";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr ".t" -type "double3" 18.773704206391475 16 -10.999999999999996 ;
 	setAttr ".s" -type "double3" 0.337 0.33734754184396509 0.33734754184396509 ;
 createNode transform -n "L__AEI_GUI_Border_Guide" -p "L__AEI_GUI_Grp_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B008";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -l on -k off ".v";
 	setAttr -l on -k off ".tx";
 	setAttr -l on -k off ".ty";
@@ -2810,15 +2732,14 @@ createNode transform -n "L__AEI_GUI_Border_Guide" -p "L__AEI_GUI_Grp_Guide";
 	setAttr ".sp" -type "double3" 6.6613381477509392e-16 0 0 ;
 createNode nurbsCurve -n "L__AEI_GUI_Border_GuideShape" -p "L__AEI_GUI_Border_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B009";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ovdt" 1;
 	setAttr ".ove" yes;
 	setAttr ".ovc" 3;
 	setAttr ".cc" -type "nurbsCurve" 
 		3 8 2 no 3
-		13 -2 -1 0 1 2 3 4 5 6 7 8
-		 9 10
+		13 -2 -1 0 1 2 3 4 5 6 7 8 9 10
 		11
 		1.5292204491715005 -0.53251042175068619 -1.5234030098609426e-14
 		0.82861627162538909 -0.55142976316770387 -1.4888675006035612e-14
@@ -2834,15 +2755,14 @@ createNode nurbsCurve -n "L__AEI_GUI_Border_GuideShape" -p "L__AEI_GUI_Border_Gu
 		;
 createNode nurbsCurve -n "L__AEI_GUI_Border_GuideShape1" -p "L__AEI_GUI_Border_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B00A";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ovdt" 1;
 	setAttr ".ove" yes;
 	setAttr ".ovc" 3;
 	setAttr ".cc" -type "nurbsCurve" 
 		3 8 2 no 3
-		13 -2 -1 0 1 2 3 4 5 6 7 8
-		 9 10
+		13 -2 -1 0 1 2 3 4 5 6 7 8 9 10
 		11
 		1.4620361892590488 -0.46574428020041125 -1.5185311722523397e-14
 		0.82861627162538909 -0.46362026529340028 -1.4863800599746122e-14
@@ -2858,7 +2778,7 @@ createNode nurbsCurve -n "L__AEI_GUI_Border_GuideShape1" -p "L__AEI_GUI_Border_G
 		;
 createNode transform -n "L__AEI_Ctrl_Guide" -p "L__AEI_GUI_Border_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B00B";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -l on -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 26;
@@ -2883,14 +2803,13 @@ createNode transform -n "L__AEI_Ctrl_Guide" -p "L__AEI_GUI_Border_Guide";
 	setAttr ".xtze" yes;
 createNode nurbsCurve -n "L__AEI_Ctrl_GuideShape" -p "L__AEI_Ctrl_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B00C";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 15;
 	setAttr ".cc" -type "nurbsCurve" 
 		3 8 2 no 3
-		13 -2 -1 0 1 2 3 4 5 6 7 8
-		 9 10
+		13 -2 -1 0 1 2 3 4 5 6 7 8 9 10
 		11
 		0.32232138180165748 -0.32232138180162906 -1.4067108314034795e-14
 		7.1054273576010019e-15 -0.45583126958671016 -1.3961936604373426e-14
@@ -2906,7 +2825,7 @@ createNode nurbsCurve -n "L__AEI_Ctrl_GuideShape" -p "L__AEI_Ctrl_Guide";
 		;
 createNode transform -n "AEI_Letter_Grp_Guide" -p "AEI_GUI_Main_Grp_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B00D";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 3;
 	setAttr ".rp" -type "double3" 17.99723295378783 15.388094978633248 -11.000000000000002 ;
@@ -2918,7 +2837,7 @@ createNode transform -n "group3_Guide" -p "AEI_Letter_Grp_Guide";
 	setAttr ".sp" -type "double3" 24.543604210366361 18.157411482195819 -11.000000000000007 ;
 createNode transform -n "polyToCurve21_Guide" -p "AEI_Letter_Grp_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B00F";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -l on -k off ".v";
 	setAttr ".t" -type "double3" 6.3035224179610641 9.8549814315524316 -25.426194923029904 ;
 	setAttr -l on -k off ".tx";
@@ -2938,7 +2857,7 @@ createNode transform -n "polyToCurve21_Guide" -p "AEI_Letter_Grp_Guide";
 	setAttr ".spt" -type "double3" -1.0881579636924292 -1.3947369864178034 0.51708731340191538 ;
 createNode nurbsCurve -n "polyToCurve21_GuideShape" -p "polyToCurve21_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B010";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ovdt" 1;
 	setAttr ".ove" yes;
@@ -2958,7 +2877,7 @@ createNode nurbsCurve -n "polyToCurve21_GuideShape" -p "polyToCurve21_Guide";
 		;
 createNode nurbsCurve -n "polyToCurve21_GuideShape1" -p "polyToCurve21_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B011";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ovdt" 1;
 	setAttr ".ove" yes;
@@ -2974,14 +2893,13 @@ createNode nurbsCurve -n "polyToCurve21_GuideShape1" -p "polyToCurve21_Guide";
 		;
 createNode nurbsCurve -n "polyToCurve21_GuideShape2" -p "polyToCurve21_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B012";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ovdt" 1;
 	setAttr ".ove" yes;
 	setAttr ".cc" -type "nurbsCurve" 
 		1 12 2 no 3
-		13 0 1 2 3 4 5 6 7 8 9 10
-		 11 12
+		13 0 1 2 3 4 5 6 7 8 9 10 11 12
 		13
 		13.040018680432025 15.820931909447706 -6.1643184830426669
 		12.813258148864785 15.820931909447706 -6.1643184830426669
@@ -2999,7 +2917,7 @@ createNode nurbsCurve -n "polyToCurve21_GuideShape2" -p "polyToCurve21_Guide";
 		;
 createNode nurbsCurve -n "polyToCurve21_GuideShape3" -p "polyToCurve21_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B013";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ovdt" 1;
 	setAttr ".ove" yes;
@@ -3015,7 +2933,7 @@ createNode nurbsCurve -n "polyToCurve21_GuideShape3" -p "polyToCurve21_Guide";
 		;
 createNode nurbsCurve -n "polyToCurve21_GuideShape4" -p "polyToCurve21_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B014";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ovdt" 1;
 	setAttr ".ove" yes;
@@ -3031,16 +2949,14 @@ createNode nurbsCurve -n "polyToCurve21_GuideShape4" -p "polyToCurve21_Guide";
 		;
 createNode nurbsCurve -n "polyToCurve21_GuideShape5" -p "polyToCurve21_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B015";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ovdt" 1;
 	setAttr ".ove" yes;
 	setAttr ".cc" -type "nurbsCurve" 
 		1 35 2 no 3
-		36 0 1 2 3 4 5 6 7 8 9 10
-		 11 12 13 14 15 16 17 18 19 20 21 22
-		 23 24 25 26 27 28 29 30 31 32 33 34
-		 35
+		36 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27
+		 28 29 30 31 32 33 34 35
 		36
 		12.488625846469025 15.820931909447706 -6.1334037757780138
 		12.48881169895118 15.820931909447706 -6.132664695892748
@@ -3108,18 +3024,18 @@ createNode nurbsCurve -n "Bookmark_GuideShape" -p "|Mutant_Build|init|PhonemesUI
 		;
 createNode transform -n "OUW_GUI_Main_Grp_Guide" -p "Viseme_Grp_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B018";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr ".t" -type "double3" -7.9961715200654062 6.1197017694671771 10.999999999999996 ;
 	setAttr ".rp" -type "double3" 17.9997344707769 16.008298839376614 -10.999999999999996 ;
 	setAttr ".sp" -type "double3" 17.9997344707769 16.008298839376614 -10.999999999999996 ;
 createNode transform -n "R__OUW_GUI_Grp_Guide" -p "OUW_GUI_Main_Grp_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B019";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr ".t" -type "double3" 17.214981003928099 16 -10.999999999999996 ;
 	setAttr ".s" -type "double3" -0.337 0.33734754184396509 0.33734754184396509 ;
 createNode transform -n "R__OUW_GUI_Border_Guide" -p "R__OUW_GUI_Grp_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B01A";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -l on -k off ".v";
 	setAttr -l on -k off ".tx";
 	setAttr -l on -k off ".ty";
@@ -3134,15 +3050,14 @@ createNode transform -n "R__OUW_GUI_Border_Guide" -p "R__OUW_GUI_Grp_Guide";
 	setAttr ".sp" -type "double3" 6.6613381477509392e-16 0 0 ;
 createNode nurbsCurve -n "R__OUW_GUI_Border_GuideShape" -p "R__OUW_GUI_Border_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B01B";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ovdt" 1;
 	setAttr ".ove" yes;
 	setAttr ".ovc" 3;
 	setAttr ".cc" -type "nurbsCurve" 
 		3 8 2 no 3
-		13 -2 -1 0 1 2 3 4 5 6 7 8
-		 9 10
+		13 -2 -1 0 1 2 3 4 5 6 7 8 9 10
 		11
 		1.5292204491714898 -0.53251042175068619 -1.1825282870401506e-14
 		0.82861627162537488 -0.55142976316770387 -1.2101548223450033e-14
@@ -3158,15 +3073,14 @@ createNode nurbsCurve -n "R__OUW_GUI_Border_GuideShape" -p "R__OUW_GUI_Border_Gu
 		;
 createNode nurbsCurve -n "R__OUW_GUI_Border_GuideShape1" -p "R__OUW_GUI_Border_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B01C";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ovdt" 1;
 	setAttr ".ove" yes;
 	setAttr ".ovc" 3;
 	setAttr ".cc" -type "nurbsCurve" 
 		3 8 2 no 3
-		13 -2 -1 0 1 2 3 4 5 6 7 8
-		 9 10
+		13 -2 -1 0 1 2 3 4 5 6 7 8 9 10
 		11
 		1.4620361892590346 -0.46574428020041125 -1.1836174629287639e-14
 		0.82861627162537488 -0.46362026529340028 -1.2076673817160546e-14
@@ -3182,7 +3096,7 @@ createNode nurbsCurve -n "R__OUW_GUI_Border_GuideShape1" -p "R__OUW_GUI_Border_G
 		;
 createNode transform -n "R__OUW_Ctrl_Guide" -p "R__OUW_GUI_Border_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B01D";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -l on -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 26;
@@ -3207,14 +3121,13 @@ createNode transform -n "R__OUW_Ctrl_Guide" -p "R__OUW_GUI_Border_Guide";
 	setAttr ".xtze" yes;
 createNode nurbsCurve -n "R__OUW_Ctrl_GuideShape" -p "R__OUW_Ctrl_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B01E";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 4;
 	setAttr ".cc" -type "nurbsCurve" 
 		3 8 2 no 3
-		13 -2 -1 0 1 2 3 4 5 6 7 8
-		 9 10
+		13 -2 -1 0 1 2 3 4 5 6 7 8 9 10
 		11
 		0.32232138180164327 -0.32232138180162906 -1.1729198457518474e-14
 		-7.1054273576010019e-15 -0.45583126958672437 -1.191001071342654e-14
@@ -3230,7 +3143,7 @@ createNode nurbsCurve -n "R__OUW_Ctrl_GuideShape" -p "R__OUW_Ctrl_Guide";
 		;
 createNode transform -n "C__OUW_GUI_Grp_Guide" -p "OUW_GUI_Main_Grp_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B01F";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr ".t" -type "double3" 18 16 -10.999999999999996 ;
 	setAttr ".s" -type "double3" 0.33734754184396509 0.33734754184396509 0.33734754184396509 ;
 createNode transform -n "GUI_Border_Guide" -p "C__OUW_GUI_Grp_Guide";
@@ -3255,8 +3168,7 @@ createNode nurbsCurve -n "GUI_Border_GuideShape" -p "|Mutant_Build|init|Phonemes
 	setAttr ".ovc" 3;
 	setAttr ".cc" -type "nurbsCurve" 
 		3 8 2 no 3
-		13 -2 -1 0 1 2 3 4 5 6 7 8
-		 9 10
+		13 -2 -1 0 1 2 3 4 5 6 7 8 9 10
 		11
 		0.61715775809927109 1.5541688048967615 -3.4021103455932863e-14
 		0.63242932074020075 0.077912573165704657 -3.9263663359554809e-14
@@ -3272,15 +3184,14 @@ createNode nurbsCurve -n "GUI_Border_GuideShape" -p "|Mutant_Build|init|Phonemes
 		;
 createNode nurbsCurve -n "GUI_Border_GuideShape2" -p "|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|OUW_GUI_Main_Grp_Guide|C__OUW_GUI_Grp_Guide|GUI_Border_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B022";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ovdt" 1;
 	setAttr ".ove" yes;
 	setAttr ".ovc" 3;
 	setAttr ".cc" -type "nurbsCurve" 
 		3 8 2 no 3
-		13 -2 -1 0 1 2 3 4 5 6 7 8
-		 9 10
+		13 -2 -1 0 1 2 3 4 5 6 7 8 9 10
 		11
 		0.54373020278122297 1.4869679321151352 -3.3958581403779689e-14
 		0.534863214199504 0.077892708461007487 -3.9180844285201802e-14
@@ -3296,7 +3207,7 @@ createNode nurbsCurve -n "GUI_Border_GuideShape2" -p "|Mutant_Build|init|Phoneme
 		;
 createNode transform -n "Mrg__OUW_Ctrl_Guide" -p "|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|OUW_GUI_Main_Grp_Guide|C__OUW_GUI_Grp_Guide|GUI_Border_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B023";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -l on -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 26;
@@ -3320,14 +3231,13 @@ createNode transform -n "Mrg__OUW_Ctrl_Guide" -p "|Mutant_Build|init|PhonemesUI_
 	setAttr ".xtze" yes;
 createNode nurbsCurve -n "Mrg__OUW_Ctrl_GuideShape" -p "Mrg__OUW_Ctrl_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B024";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 22;
 	setAttr ".cc" -type "nurbsCurve" 
 		3 8 2 no 3
-		13 -2 -1 0 1 2 3 4 5 6 7 8
-		 9 10
+		13 -2 -1 0 1 2 3 4 5 6 7 8 9 10
 		11
 		0.35575177077556575 -0.3557517707755693 -1.7449223271011616e-14
 		-7.1054273576010019e-15 -0.50310897906905439 -1.7279684620237958e-14
@@ -3343,12 +3253,12 @@ createNode nurbsCurve -n "Mrg__OUW_Ctrl_GuideShape" -p "Mrg__OUW_Ctrl_Guide";
 		;
 createNode transform -n "L__OUW_GUI_Grp_Guide" -p "OUW_GUI_Main_Grp_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B025";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr ".t" -type "double3" 18.773704206391475 16 -10.999999999999996 ;
 	setAttr ".s" -type "double3" 0.337 0.33734754184396509 0.33734754184396509 ;
 createNode transform -n "L__OUW_GUI_Border_Guide" -p "L__OUW_GUI_Grp_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B026";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -l on -k off ".v";
 	setAttr -l on -k off ".tx";
 	setAttr -l on -k off ".ty";
@@ -3363,15 +3273,14 @@ createNode transform -n "L__OUW_GUI_Border_Guide" -p "L__OUW_GUI_Grp_Guide";
 	setAttr ".sp" -type "double3" 6.6613381477509392e-16 0 0 ;
 createNode nurbsCurve -n "L__OUW_GUI_Border_GuideShape" -p "L__OUW_GUI_Border_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B027";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ovdt" 1;
 	setAttr ".ove" yes;
 	setAttr ".ovc" 3;
 	setAttr ".cc" -type "nurbsCurve" 
 		3 8 2 no 3
-		13 -2 -1 0 1 2 3 4 5 6 7 8
-		 9 10
+		13 -2 -1 0 1 2 3 4 5 6 7 8 9 10
 		11
 		1.5292204491715005 -0.53251042175068619 -1.5234030098609426e-14
 		0.82861627162538909 -0.55142976316770387 -1.4888675006035612e-14
@@ -3387,15 +3296,14 @@ createNode nurbsCurve -n "L__OUW_GUI_Border_GuideShape" -p "L__OUW_GUI_Border_Gu
 		;
 createNode nurbsCurve -n "L__OUW_GUI_Border_GuideShape1" -p "L__OUW_GUI_Border_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B028";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ovdt" 1;
 	setAttr ".ove" yes;
 	setAttr ".ovc" 3;
 	setAttr ".cc" -type "nurbsCurve" 
 		3 8 2 no 3
-		13 -2 -1 0 1 2 3 4 5 6 7 8
-		 9 10
+		13 -2 -1 0 1 2 3 4 5 6 7 8 9 10
 		11
 		1.4620361892590488 -0.46574428020041125 -1.5185311722523397e-14
 		0.82861627162538909 -0.46362026529340028 -1.4863800599746122e-14
@@ -3411,7 +3319,7 @@ createNode nurbsCurve -n "L__OUW_GUI_Border_GuideShape1" -p "L__OUW_GUI_Border_G
 		;
 createNode transform -n "L__OUW_Ctrl_Guide" -p "L__OUW_GUI_Border_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B029";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -l on -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 26;
@@ -3436,14 +3344,13 @@ createNode transform -n "L__OUW_Ctrl_Guide" -p "L__OUW_GUI_Border_Guide";
 	setAttr ".xtze" yes;
 createNode nurbsCurve -n "L__OUW_Ctrl_GuideShape" -p "L__OUW_Ctrl_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B02A";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 15;
 	setAttr ".cc" -type "nurbsCurve" 
 		3 8 2 no 3
-		13 -2 -1 0 1 2 3 4 5 6 7 8
-		 9 10
+		13 -2 -1 0 1 2 3 4 5 6 7 8 9 10
 		11
 		0.32232138180165748 -0.32232138180162906 -1.4067108314034795e-14
 		7.1054273576010019e-15 -0.45583126958671016 -1.3961936604373426e-14
@@ -3459,7 +3366,7 @@ createNode nurbsCurve -n "L__OUW_Ctrl_GuideShape" -p "L__OUW_Ctrl_Guide";
 		;
 createNode transform -n "OUW_Letter_Grp_Guide" -p "OUW_GUI_Main_Grp_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B02B";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 3;
 	setAttr ".rp" -type "double3" 17.99723295378783 15.388094978633248 -11.000000000000002 ;
@@ -3471,7 +3378,7 @@ createNode transform -n "group3_Guide" -p "OUW_Letter_Grp_Guide";
 	setAttr ".sp" -type "double3" 24.543604210366361 18.157411482195819 -11.000000000000007 ;
 createNode transform -n "OUW_Guide" -p "OUW_Letter_Grp_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B02D";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -l on -k off ".v";
 	setAttr ".t" -type "double3" 0.86300652738528516 7.5943932977132036 -25.426194923029904 ;
 	setAttr -l on -k off ".tx";
@@ -3491,18 +3398,15 @@ createNode transform -n "OUW_Guide" -p "OUW_Letter_Grp_Guide";
 	setAttr ".spt" -type "double3" -1.5998938138292633 -1.3947369864178052 0.73524903816622 ;
 createNode nurbsCurve -n "OUW_GuideShape" -p "OUW_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B02E";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ovdt" 1;
 	setAttr ".ove" yes;
 	setAttr ".cc" -type "nurbsCurve" 
 		1 64 2 no 3
-		65 0 1 2 3 4 5 6 7 8 9 10
-		 11 12 13 14 15 16 17 18 19 20 21 22
-		 23 24 25 26 27 28 29 30 31 32 33 34
-		 35 36 37 38 39 40 41 42 43 44 45 46
-		 47 48 49 50 51 52 53 54 55 56 57 58
-		 59 60 61 62 63 64
+		65 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27
+		 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54
+		 55 56 57 58 59 60 61 62 63 64
 		65
 		18.317154980223851 15.820931909447706 -8.6434770412916997
 		18.299749282627587 15.820931909447706 -8.6428037546596723
@@ -3572,7 +3476,7 @@ createNode nurbsCurve -n "OUW_GuideShape" -p "OUW_Guide";
 		;
 createNode nurbsCurve -n "OUW_GuideShape1" -p "OUW_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B02F";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ovdt" 1;
 	setAttr ".ove" yes;
@@ -3588,19 +3492,15 @@ createNode nurbsCurve -n "OUW_GuideShape1" -p "OUW_Guide";
 		;
 createNode nurbsCurve -n "OUW_GuideShape2" -p "OUW_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B030";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ovdt" 1;
 	setAttr ".ove" yes;
 	setAttr ".cc" -type "nurbsCurve" 
 		1 70 2 no 3
-		71 0 1 2 3 4 5 6 7 8 9 10
-		 11 12 13 14 15 16 17 18 19 20 21 22
-		 23 24 25 26 27 28 29 30 31 32 33 34
-		 35 36 37 38 39 40 41 42 43 44 45 46
-		 47 48 49 50 51 52 53 54 55 56 57 58
-		 59 60 61 62 63 64 65 66 67 68 69 70
-		
+		71 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27
+		 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54
+		 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70
 		71
 		18.704637428799685 15.820931909447706 -8.6389942293340969
 		18.664118287495096 15.820931909447706 -8.6389942293340969
@@ -3676,7 +3576,7 @@ createNode nurbsCurve -n "OUW_GuideShape2" -p "OUW_Guide";
 		;
 createNode nurbsCurve -n "OUW_GuideShape3" -p "OUW_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B031";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ovdt" 1;
 	setAttr ".ove" yes;
@@ -3692,21 +3592,16 @@ createNode nurbsCurve -n "OUW_GuideShape3" -p "OUW_Guide";
 		;
 createNode nurbsCurve -n "OUW_GuideShape4" -p "OUW_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B032";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ovdt" 1;
 	setAttr ".ove" yes;
 	setAttr ".cc" -type "nurbsCurve" 
 		1 105 2 no 3
-		106 0 1 2 3 4 5 6 7 8 9 10
-		 11 12 13 14 15 16 17 18 19 20 21 22
-		 23 24 25 26 27 28 29 30 31 32 33 34
-		 35 36 37 38 39 40 41 42 43 44 45 46
-		 47 48 49 50 51 52 53 54 55 56 57 58
-		 59 60 61 62 63 64 65 66 67 68 69 70
-		 71 72 73 74 75 76 77 78 79 80 81 82
-		 83 84 85 86 87 88 89 90 91 92 93 94
-		 95 96 97 98 99 100 101 102 103 104 105
+		106 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27
+		 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54
+		 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81
+		 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103 104 105
 		106
 		19.132981653839892 15.820931909447706 -8.6389942293340969
 		19.090764058883778 15.820931909447706 -8.6389942293340969
@@ -3817,18 +3712,15 @@ createNode nurbsCurve -n "OUW_GuideShape4" -p "OUW_Guide";
 		;
 createNode nurbsCurve -n "OUW_GuideShape5" -p "OUW_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B033";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ovdt" 1;
 	setAttr ".ove" yes;
 	setAttr ".cc" -type "nurbsCurve" 
 		1 64 2 no 3
-		65 0 1 2 3 4 5 6 7 8 9 10
-		 11 12 13 14 15 16 17 18 19 20 21 22
-		 23 24 25 26 27 28 29 30 31 32 33 34
-		 35 36 37 38 39 40 41 42 43 44 45 46
-		 47 48 49 50 51 52 53 54 55 56 57 58
-		 59 60 61 62 63 64
+		65 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27
+		 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54
+		 55 56 57 58 59 60 61 62 63 64
 		65
 		18.317153295017789 15.820931909447706 -8.6097515039424497
 		18.329739256472759 15.820931909447706 -8.6092241982853217
@@ -3925,18 +3817,18 @@ createNode nurbsCurve -n "Bookmark_GuideShape" -p "|Mutant_Build|init|PhonemesUI
 		;
 createNode transform -n "BMP_GUI_Main_Grp_Guide" -p "Viseme_Grp_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B036";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr ".t" -type "double3" -7.9961715200654062 4.1062777123070546 10.999999999999996 ;
 	setAttr ".rp" -type "double3" 17.9997344707769 16.008298839376614 -10.999999999999996 ;
 	setAttr ".sp" -type "double3" 17.9997344707769 16.008298839376614 -10.999999999999996 ;
 createNode transform -n "R__BMP_GUI_Grp_Guide" -p "BMP_GUI_Main_Grp_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B037";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr ".t" -type "double3" 17.214981003928099 16 -10.999999999999996 ;
 	setAttr ".s" -type "double3" -0.337 0.33734754184396509 0.33734754184396509 ;
 createNode transform -n "R__BMP_GUI_Border_Guide" -p "R__BMP_GUI_Grp_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B038";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -l on -k off ".v";
 	setAttr -l on -k off ".tx";
 	setAttr -l on -k off ".ty";
@@ -3951,15 +3843,14 @@ createNode transform -n "R__BMP_GUI_Border_Guide" -p "R__BMP_GUI_Grp_Guide";
 	setAttr ".sp" -type "double3" 6.6613381477509392e-16 0 0 ;
 createNode nurbsCurve -n "R__BMP_GUI_Border_GuideShape" -p "R__BMP_GUI_Border_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B039";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ovdt" 1;
 	setAttr ".ove" yes;
 	setAttr ".ovc" 3;
 	setAttr ".cc" -type "nurbsCurve" 
 		3 8 2 no 3
-		13 -2 -1 0 1 2 3 4 5 6 7 8
-		 9 10
+		13 -2 -1 0 1 2 3 4 5 6 7 8 9 10
 		11
 		1.5292204491714898 -0.53251042175068619 -1.1825282870401506e-14
 		0.82861627162537488 -0.55142976316770387 -1.2101548223450033e-14
@@ -3975,15 +3866,14 @@ createNode nurbsCurve -n "R__BMP_GUI_Border_GuideShape" -p "R__BMP_GUI_Border_Gu
 		;
 createNode nurbsCurve -n "R__BMP_GUI_Border_GuideShape1" -p "R__BMP_GUI_Border_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B03A";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ovdt" 1;
 	setAttr ".ove" yes;
 	setAttr ".ovc" 3;
 	setAttr ".cc" -type "nurbsCurve" 
 		3 8 2 no 3
-		13 -2 -1 0 1 2 3 4 5 6 7 8
-		 9 10
+		13 -2 -1 0 1 2 3 4 5 6 7 8 9 10
 		11
 		1.4620361892590346 -0.46574428020041125 -1.1836174629287639e-14
 		0.82861627162537488 -0.46362026529340028 -1.2076673817160546e-14
@@ -3999,7 +3889,7 @@ createNode nurbsCurve -n "R__BMP_GUI_Border_GuideShape1" -p "R__BMP_GUI_Border_G
 		;
 createNode transform -n "R__BMP_Ctrl_Guide" -p "R__BMP_GUI_Border_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B03B";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -l on -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 26;
@@ -4024,14 +3914,13 @@ createNode transform -n "R__BMP_Ctrl_Guide" -p "R__BMP_GUI_Border_Guide";
 	setAttr ".xtze" yes;
 createNode nurbsCurve -n "R__BMP_Ctrl_GuideShape" -p "R__BMP_Ctrl_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B03C";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 4;
 	setAttr ".cc" -type "nurbsCurve" 
 		3 8 2 no 3
-		13 -2 -1 0 1 2 3 4 5 6 7 8
-		 9 10
+		13 -2 -1 0 1 2 3 4 5 6 7 8 9 10
 		11
 		0.32232138180164327 -0.32232138180162906 -1.1729198457518474e-14
 		-7.1054273576010019e-15 -0.45583126958672437 -1.191001071342654e-14
@@ -4047,7 +3936,7 @@ createNode nurbsCurve -n "R__BMP_Ctrl_GuideShape" -p "R__BMP_Ctrl_Guide";
 		;
 createNode transform -n "C__BMP_GUI_Grp_Guide" -p "BMP_GUI_Main_Grp_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B03D";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr ".t" -type "double3" 18 16 -10.999999999999996 ;
 	setAttr ".s" -type "double3" 0.33734754184396509 0.33734754184396509 0.33734754184396509 ;
 createNode transform -n "GUI_Border_Guide" -p "C__BMP_GUI_Grp_Guide";
@@ -4072,8 +3961,7 @@ createNode nurbsCurve -n "GUI_Border_GuideShape" -p "|Mutant_Build|init|Phonemes
 	setAttr ".ovc" 3;
 	setAttr ".cc" -type "nurbsCurve" 
 		3 8 2 no 3
-		13 -2 -1 0 1 2 3 4 5 6 7 8
-		 9 10
+		13 -2 -1 0 1 2 3 4 5 6 7 8 9 10
 		11
 		0.61715775809927109 1.5541688048967615 -3.4021103455932863e-14
 		0.63242932074020075 0.077912573165704657 -3.9263663359554809e-14
@@ -4089,15 +3977,14 @@ createNode nurbsCurve -n "GUI_Border_GuideShape" -p "|Mutant_Build|init|Phonemes
 		;
 createNode nurbsCurve -n "GUI_Border_GuideShape1" -p "|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|BMP_GUI_Main_Grp_Guide|C__BMP_GUI_Grp_Guide|GUI_Border_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B040";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ovdt" 1;
 	setAttr ".ove" yes;
 	setAttr ".ovc" 3;
 	setAttr ".cc" -type "nurbsCurve" 
 		3 8 2 no 3
-		13 -2 -1 0 1 2 3 4 5 6 7 8
-		 9 10
+		13 -2 -1 0 1 2 3 4 5 6 7 8 9 10
 		11
 		0.54373020278122297 1.4869679321151352 -3.3958581403779689e-14
 		0.534863214199504 0.077892708461007487 -3.9180844285201802e-14
@@ -4113,7 +4000,7 @@ createNode nurbsCurve -n "GUI_Border_GuideShape1" -p "|Mutant_Build|init|Phoneme
 		;
 createNode transform -n "Mrg__BMP_Ctrl_Guide" -p "|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|BMP_GUI_Main_Grp_Guide|C__BMP_GUI_Grp_Guide|GUI_Border_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B041";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -l on -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 26;
@@ -4138,14 +4025,13 @@ createNode transform -n "Mrg__BMP_Ctrl_Guide" -p "|Mutant_Build|init|PhonemesUI_
 	setAttr ".xtze" yes;
 createNode nurbsCurve -n "Mrg__BMP_Ctrl_GuideShape" -p "Mrg__BMP_Ctrl_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B042";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 22;
 	setAttr ".cc" -type "nurbsCurve" 
 		3 8 2 no 3
-		13 -2 -1 0 1 2 3 4 5 6 7 8
-		 9 10
+		13 -2 -1 0 1 2 3 4 5 6 7 8 9 10
 		11
 		0.35575177077556575 -0.3557517707755693 -1.7449223271011616e-14
 		-7.1054273576010019e-15 -0.50310897906905439 -1.7279684620237958e-14
@@ -4161,12 +4047,12 @@ createNode nurbsCurve -n "Mrg__BMP_Ctrl_GuideShape" -p "Mrg__BMP_Ctrl_Guide";
 		;
 createNode transform -n "L__BMP_GUI_Grp_Guide" -p "BMP_GUI_Main_Grp_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B043";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr ".t" -type "double3" 18.773704206391475 16 -10.999999999999996 ;
 	setAttr ".s" -type "double3" 0.337 0.33734754184396509 0.33734754184396509 ;
 createNode transform -n "L__BMP_GUI_Border_Guide" -p "L__BMP_GUI_Grp_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B044";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -l on -k off ".v";
 	setAttr -l on -k off ".tx";
 	setAttr -l on -k off ".ty";
@@ -4181,15 +4067,14 @@ createNode transform -n "L__BMP_GUI_Border_Guide" -p "L__BMP_GUI_Grp_Guide";
 	setAttr ".sp" -type "double3" 6.6613381477509392e-16 0 0 ;
 createNode nurbsCurve -n "L__BMP_GUI_Border_GuideShape" -p "L__BMP_GUI_Border_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B045";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ovdt" 1;
 	setAttr ".ove" yes;
 	setAttr ".ovc" 3;
 	setAttr ".cc" -type "nurbsCurve" 
 		3 8 2 no 3
-		13 -2 -1 0 1 2 3 4 5 6 7 8
-		 9 10
+		13 -2 -1 0 1 2 3 4 5 6 7 8 9 10
 		11
 		1.5292204491715005 -0.53251042175068619 -1.5234030098609426e-14
 		0.82861627162538909 -0.55142976316770387 -1.4888675006035612e-14
@@ -4205,15 +4090,14 @@ createNode nurbsCurve -n "L__BMP_GUI_Border_GuideShape" -p "L__BMP_GUI_Border_Gu
 		;
 createNode nurbsCurve -n "L__BMP_GUI_Border_GuideShape1" -p "L__BMP_GUI_Border_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B046";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ovdt" 1;
 	setAttr ".ove" yes;
 	setAttr ".ovc" 3;
 	setAttr ".cc" -type "nurbsCurve" 
 		3 8 2 no 3
-		13 -2 -1 0 1 2 3 4 5 6 7 8
-		 9 10
+		13 -2 -1 0 1 2 3 4 5 6 7 8 9 10
 		11
 		1.4620361892590488 -0.46574428020041125 -1.5185311722523397e-14
 		0.82861627162538909 -0.46362026529340028 -1.4863800599746122e-14
@@ -4229,7 +4113,7 @@ createNode nurbsCurve -n "L__BMP_GUI_Border_GuideShape1" -p "L__BMP_GUI_Border_G
 		;
 createNode transform -n "L__BMP_Ctrl_Guide" -p "L__BMP_GUI_Border_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B047";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -l on -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 26;
@@ -4254,14 +4138,13 @@ createNode transform -n "L__BMP_Ctrl_Guide" -p "L__BMP_GUI_Border_Guide";
 	setAttr ".xtze" yes;
 createNode nurbsCurve -n "L__BMP_Ctrl_GuideShape" -p "L__BMP_Ctrl_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B048";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 15;
 	setAttr ".cc" -type "nurbsCurve" 
 		3 8 2 no 3
-		13 -2 -1 0 1 2 3 4 5 6 7 8
-		 9 10
+		13 -2 -1 0 1 2 3 4 5 6 7 8 9 10
 		11
 		0.32232138180165748 -0.32232138180162906 -1.4067108314034795e-14
 		7.1054273576010019e-15 -0.45583126958671016 -1.3961936604373426e-14
@@ -4277,14 +4160,14 @@ createNode nurbsCurve -n "L__BMP_Ctrl_GuideShape" -p "L__BMP_Ctrl_Guide";
 		;
 createNode transform -n "BMP_Letter_Grp_Guide" -p "BMP_GUI_Main_Grp_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B049";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 3;
 	setAttr ".rp" -type "double3" 17.99723295378783 15.388094978633248 -11.000000000000002 ;
 	setAttr ".sp" -type "double3" 17.99723295378783 15.388094978633248 -11.000000000000002 ;
 createNode transform -n "BMP_Guide" -p "BMP_Letter_Grp_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B04A";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -l on -k off ".v";
 	setAttr ".t" -type "double3" 9.7110512241050255 -12.855266035037584 -10.999999999999993 ;
 	setAttr -l on -k off ".tx";
@@ -4302,7 +4185,7 @@ createNode transform -n "BMP_Guide" -p "BMP_Letter_Grp_Guide";
 	setAttr ".spt" -type "double3" 2.0810607802123 7.4943401244838412 0 ;
 createNode nurbsCurve -n "BMP_GuideShape" -p "BMP_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B04B";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ovdt" 1;
 	setAttr ".ove" yes;
@@ -4318,14 +4201,13 @@ createNode nurbsCurve -n "BMP_GuideShape" -p "BMP_Guide";
 		;
 createNode nurbsCurve -n "BMP_GuideShape1" -p "BMP_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B04C";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ovdt" 1;
 	setAttr ".ove" yes;
 	setAttr ".cc" -type "nurbsCurve" 
 		1 19 2 no 3
-		20 0 1 2 3 4 5 6 7 8 9 10
-		 11 12 13 14 15 16 17 18 19
+		20 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19
 		20
 		6.4147809483042453 20.73827173633364 0
 		6.4237884156075848 20.737656270723559 0
@@ -4350,14 +4232,13 @@ createNode nurbsCurve -n "BMP_GuideShape1" -p "BMP_Guide";
 		;
 createNode nurbsCurve -n "BMP_GuideShape2" -p "BMP_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B04D";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ovdt" 1;
 	setAttr ".ove" yes;
 	setAttr ".cc" -type "nurbsCurve" 
 		1 19 2 no 3
-		20 0 1 2 3 4 5 6 7 8 9 10
-		 11 12 13 14 15 16 17 18 19
+		20 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19
 		20
 		5.8041276480825506 20.738309506208424 0
 		5.8134955059969426 20.737835414828684 0
@@ -4382,14 +4263,13 @@ createNode nurbsCurve -n "BMP_GuideShape2" -p "BMP_Guide";
 		;
 createNode nurbsCurve -n "BMP_GuideShape3" -p "BMP_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B04E";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ovdt" 1;
 	setAttr ".ove" yes;
 	setAttr ".cc" -type "nurbsCurve" 
 		1 19 2 no 3
-		20 0 1 2 3 4 5 6 7 8 9 10
-		 11 12 13 14 15 16 17 18 19
+		20 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19
 		20
 		5.8075249077519357 20.654731844466124 0
 		5.8178353868423054 20.654169054996942 0
@@ -4414,14 +4294,13 @@ createNode nurbsCurve -n "BMP_GuideShape3" -p "BMP_Guide";
 		;
 createNode nurbsCurve -n "BMP_GuideShape4" -p "BMP_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B04F";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ovdt" 1;
 	setAttr ".ove" yes;
 	setAttr ".cc" -type "nurbsCurve" 
 		1 21 2 no 3
-		22 0 1 2 3 4 5 6 7 8 9 10
-		 11 12 13 14 15 16 17 18 19 20 21
+		22 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21
 		22
 		6.4147670137873343 20.761059487447493 0
 		6.3527270730942691 20.761059487447493 0
@@ -4448,14 +4327,13 @@ createNode nurbsCurve -n "BMP_GuideShape4" -p "BMP_Guide";
 		;
 createNode nurbsCurve -n "BMP_GuideShape5" -p "BMP_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B050";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ovdt" 1;
 	setAttr ".ove" yes;
 	setAttr ".cc" -type "nurbsCurve" 
 		1 13 2 no 3
-		14 0 1 2 3 4 5 6 7 8 9 10
-		 11 12 13
+		14 0 1 2 3 4 5 6 7 8 9 10 11 12 13
 		14
 		6.0606868076206393 20.761059487447493 0
 		6.0197197190470781 20.761059487447493 0
@@ -4474,16 +4352,14 @@ createNode nurbsCurve -n "BMP_GuideShape5" -p "BMP_Guide";
 		;
 createNode nurbsCurve -n "BMP_GuideShape6" -p "BMP_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B051";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ovdt" 1;
 	setAttr ".ove" yes;
 	setAttr ".cc" -type "nurbsCurve" 
 		1 35 2 no 3
-		36 0 1 2 3 4 5 6 7 8 9 10
-		 11 12 13 14 15 16 17 18 19 20 21 22
-		 23 24 25 26 27 28 29 30 31 32 33 34
-		 35
+		36 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27
+		 28 29 30 31 32 33 34 35
 		36
 		5.8061749769796771 20.761059487447493 0
 		5.735951645923608 20.761059487447493 0
@@ -4524,7 +4400,7 @@ createNode nurbsCurve -n "BMP_GuideShape6" -p "BMP_Guide";
 		;
 createNode nurbsCurve -n "BMP_GuideShape7" -p "BMP_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B052";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ovdt" 1;
 	setAttr ".ove" yes;
@@ -4567,7 +4443,7 @@ createNode nurbsCurve -n "Bookmark_GuideShape" -p "|Mutant_Build|init|PhonemesUI
 		;
 createNode transform -n "bodyLocals" -p "Mutant_Build";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B0C3";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 createNode dagContainer -n "SkullLocal_Block" -p "bodyLocals";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B0C4";
 	setAttr ".isc" yes;
@@ -4602,7 +4478,7 @@ createNode dagContainer -n "Locals_Block" -p "bodyLocals";
 	setAttr -l on -k off ".sz";
 createNode transform -n "face" -p "Mutant_Build";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B055";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 createNode dagContainer -n "Skull_Block" -p "face";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B056";
 	setAttr ".isc" yes;
@@ -4622,14 +4498,14 @@ createNode dagContainer -n "Skull_Block" -p "face";
 createNode joint -n "Skull_Lwr_Guide" -p "Skull_Block";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B057";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr ".t" -type "double3" 0 22.522754334878819 0 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "Skull_Lwr_Guide_CtrlShape" -p "Skull_Lwr_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B058";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -4651,22 +4527,17 @@ createNode nurbsCurve -n "Skull_Lwr_Guide_CtrlShape" -p "Skull_Lwr_Guide";
 		;
 createNode nurbsCurve -n "Skull_Lwr_Guide_Ctrl_CtrlShape" -p "Skull_Lwr_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B059";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
 	setAttr ".ls" 2;
 	setAttr ".cc" -type "nurbsCurve" 
 		1 101 0 no 3
-		102 0 1 2 3 4 5 6 7 8 9 10
-		 11 12 13 14 15 16 17 18 19 20 21 22
-		 23 24 25 26 27 28 29 30 31 32 33 34
-		 35 36 37 38 39 40 41 42 43 44 45 46
-		 47 48 49 50 51 52 53 54 55 56 57 58
-		 59 60 61 62 63 64 65 66 67 68 69 70
-		 71 72 73 74 75 76 77 78 79 80 81 82
-		 83 84 85 86 87 88 89 90 91 92 93 94
-		 95 96 97 98 99 100 101
+		102 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27
+		 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54
+		 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81
+		 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101
 		102
 		0 0.59420899999999999 0
 		-3.0751100000000001e-09 0.58518199999999998 0.103183
@@ -4773,7 +4644,7 @@ createNode nurbsCurve -n "Skull_Lwr_Guide_Ctrl_CtrlShape" -p "Skull_Lwr_Guide";
 		;
 createNode nurbsCurve -n "Skull_Lwr_Guide_Ctrl_Ctrl_CtrlShape" -p "Skull_Lwr_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B05A";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -4795,7 +4666,7 @@ createNode nurbsCurve -n "Skull_Lwr_Guide_Ctrl_Ctrl_CtrlShape" -p "Skull_Lwr_Gui
 		;
 createNode nurbsCurve -n "Skull_Lwr_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "Skull_Lwr_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B05B";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -4818,14 +4689,14 @@ createNode nurbsCurve -n "Skull_Lwr_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "Skull_Lw
 createNode joint -n "Skull_Upr_Guide" -p "Skull_Lwr_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B05C";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr ".t" -type "double3" 0 0.15361118128087625 0 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "Skull_Upr_Guide_CtrlShape" -p "Skull_Upr_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B05D";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -4847,22 +4718,17 @@ createNode nurbsCurve -n "Skull_Upr_Guide_CtrlShape" -p "Skull_Upr_Guide";
 		;
 createNode nurbsCurve -n "Skull_Upr_Guide_Ctrl_CtrlShape" -p "Skull_Upr_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B05E";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
 	setAttr ".ls" 2;
 	setAttr ".cc" -type "nurbsCurve" 
 		1 101 0 no 3
-		102 0 1 2 3 4 5 6 7 8 9 10
-		 11 12 13 14 15 16 17 18 19 20 21 22
-		 23 24 25 26 27 28 29 30 31 32 33 34
-		 35 36 37 38 39 40 41 42 43 44 45 46
-		 47 48 49 50 51 52 53 54 55 56 57 58
-		 59 60 61 62 63 64 65 66 67 68 69 70
-		 71 72 73 74 75 76 77 78 79 80 81 82
-		 83 84 85 86 87 88 89 90 91 92 93 94
-		 95 96 97 98 99 100 101
+		102 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27
+		 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54
+		 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81
+		 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101
 		102
 		0 0.59420899999999999 0
 		-3.0751100000000001e-09 0.58518199999999998 0.103183
@@ -4969,7 +4835,7 @@ createNode nurbsCurve -n "Skull_Upr_Guide_Ctrl_CtrlShape" -p "Skull_Upr_Guide";
 		;
 createNode nurbsCurve -n "Skull_Upr_Guide_Ctrl_Ctrl_CtrlShape" -p "Skull_Upr_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B05F";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -4991,7 +4857,7 @@ createNode nurbsCurve -n "Skull_Upr_Guide_Ctrl_Ctrl_CtrlShape" -p "Skull_Upr_Gui
 		;
 createNode nurbsCurve -n "Skull_Upr_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "Skull_Upr_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B060";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -5029,7 +4895,7 @@ createNode dagContainer -n "L_Eyelids_Block" -p "face";
 	setAttr -l on -k off ".sz";
 createNode joint -n "Eye_Pivot" -p "L_Eyelids_Block";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B062";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr ".t" -type "double3" 0.46900005917996168 23.303999900817871 1.1191985607147217 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
@@ -5052,7 +4918,7 @@ createNode dagContainer -n "Lips_Block" -p "face";
 createNode joint -n "L_Lips_Orient_Guide_Guide" -p "Lips_Block";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B064";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr ".t" -type "double3" 0.67422693967819214 22.142971038818359 1.511141300201416 ;
 	setAttr ".r" -type "double3" 0 28.93634924877853 0 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
@@ -5060,7 +4926,7 @@ createNode joint -n "L_Lips_Orient_Guide_Guide" -p "Lips_Block";
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_Lips_Orient_Guide_Guide_CtrlShape" -p "L_Lips_Orient_Guide_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B065";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -5082,22 +4948,17 @@ createNode nurbsCurve -n "L_Lips_Orient_Guide_Guide_CtrlShape" -p "L_Lips_Orient
 		;
 createNode nurbsCurve -n "L_Lips_Orient_Guide_Guide_Ctrl_CtrlShape" -p "L_Lips_Orient_Guide_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B066";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
 	setAttr ".ls" 2;
 	setAttr ".cc" -type "nurbsCurve" 
 		1 101 0 no 3
-		102 0 1 2 3 4 5 6 7 8 9 10
-		 11 12 13 14 15 16 17 18 19 20 21 22
-		 23 24 25 26 27 28 29 30 31 32 33 34
-		 35 36 37 38 39 40 41 42 43 44 45 46
-		 47 48 49 50 51 52 53 54 55 56 57 58
-		 59 60 61 62 63 64 65 66 67 68 69 70
-		 71 72 73 74 75 76 77 78 79 80 81 82
-		 83 84 85 86 87 88 89 90 91 92 93 94
-		 95 96 97 98 99 100 101
+		102 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27
+		 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54
+		 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81
+		 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101
 		102
 		-5.0455796099943295e-17 0.23414575168856458 0
 		-1.2117352185111729e-09 0.23058869735163531 0.040658860933578907
@@ -5204,7 +5065,7 @@ createNode nurbsCurve -n "L_Lips_Orient_Guide_Guide_Ctrl_CtrlShape" -p "L_Lips_O
 		;
 createNode nurbsCurve -n "L_Lips_Orient_Guide_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Lips_Orient_Guide_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B067";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -5226,7 +5087,7 @@ createNode nurbsCurve -n "L_Lips_Orient_Guide_Guide_Ctrl_Ctrl_CtrlShape" -p "L_L
 		;
 createNode nurbsCurve -n "L_Lips_Orient_Guide_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Lips_Orient_Guide_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B068";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -5249,14 +5110,14 @@ createNode nurbsCurve -n "L_Lips_Orient_Guide_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p
 createNode joint -n "Lips_SlideCenter_Guide_Guide" -p "Lips_Block";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B069";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr ".t" -type "double3" 0 22.148385520837152 0.081941802541988573 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "Lips_SlideCenter_Guide_Guide_CtrlShape" -p "Lips_SlideCenter_Guide_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B06A";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -5278,22 +5139,17 @@ createNode nurbsCurve -n "Lips_SlideCenter_Guide_Guide_CtrlShape" -p "Lips_Slide
 		;
 createNode nurbsCurve -n "Lips_SlideCenter_Guide_Guide_Ctrl_CtrlShape" -p "Lips_SlideCenter_Guide_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B06B";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
 	setAttr ".ls" 2;
 	setAttr ".cc" -type "nurbsCurve" 
 		1 101 0 no 3
-		102 0 1 2 3 4 5 6 7 8 9 10
-		 11 12 13 14 15 16 17 18 19 20 21 22
-		 23 24 25 26 27 28 29 30 31 32 33 34
-		 35 36 37 38 39 40 41 42 43 44 45 46
-		 47 48 49 50 51 52 53 54 55 56 57 58
-		 59 60 61 62 63 64 65 66 67 68 69 70
-		 71 72 73 74 75 76 77 78 79 80 81 82
-		 83 84 85 86 87 88 89 90 91 92 93 94
-		 95 96 97 98 99 100 101
+		102 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27
+		 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54
+		 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81
+		 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101
 		102
 		0 0.59420899999999999 0
 		-3.0751100000000001e-09 0.58518199999999998 0.103183
@@ -5400,7 +5256,7 @@ createNode nurbsCurve -n "Lips_SlideCenter_Guide_Guide_Ctrl_CtrlShape" -p "Lips_
 		;
 createNode nurbsCurve -n "Lips_SlideCenter_Guide_Guide_Ctrl_Ctrl_CtrlShape" -p "Lips_SlideCenter_Guide_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B06C";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -5423,7 +5279,7 @@ createNode nurbsCurve -n "Lips_SlideCenter_Guide_Guide_Ctrl_Ctrl_CtrlShape" -p "
 createNode nurbsCurve -n "Lips_SlideCenter_Guide_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" 
 		-p "Lips_SlideCenter_Guide_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B06D";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -5461,12 +5317,12 @@ createNode dagContainer -n "L_Brow_Block" -p "face";
 	setAttr -l on -k off ".sz";
 createNode transform -n "L_Brow_Guide" -p "L_Brow_Block";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B06F";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr ".t" -type "double3" 0.66036994170543251 24.02816065560015 1.4886939805417116 ;
 	setAttr ".s" -type "double3" 0.21339257937502473 0.21339257937502473 0.21339257937502473 ;
 createNode nurbsSurface -n "L_Brow_GuideShape" -p "L_Brow_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B070";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".vir" yes;
 	setAttr ".vif" yes;
@@ -5478,7 +5334,8 @@ createNode nurbsSurface -n "L_Brow_GuideShape" -p "L_Brow_Guide";
 	setAttr ".cps" 4;
 	setAttr ".cc" -type "nurbsSurface" 
 		3 3 0 0 no 
-		10 0 0 0 0.20000000000000001 0.40000000000000002 0.60000000000000009 0.80000000000000004 1 1 1
+		10 0 0 0 0.20000000000000001 0.40000000000000002 0.60000000000000009 0.80000000000000004
+		 1 1 1
 		6 0 0 0 1 1 1
 		
 		32
@@ -5536,7 +5393,7 @@ createNode dagContainer -n "L_Cheecks_Block" -p "face";
 	setAttr -l on -k off ".sz";
 createNode transform -n "L_Cheecks_Border_Guide" -p "L_Cheecks_Block";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B072";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
 	setAttr ".t" -type "double3" -1.7319978273887635 19.394125348876955 1.483707070350647 ;
@@ -5544,7 +5401,7 @@ createNode transform -n "L_Cheecks_Border_Guide" -p "L_Cheecks_Block";
 	setAttr ".sp" -type "double3" 2.4838895000000001 2.6558509999999997 0 ;
 createNode nurbsCurve -n "curveShape1" -p "L_Cheecks_Border_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B073";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".cc" -type "nurbsCurve" 
 		1 5 0 no 3
@@ -5560,14 +5417,14 @@ createNode nurbsCurve -n "curveShape1" -p "L_Cheecks_Border_Guide";
 createNode joint -n "L_Cheecks_Guide" -p "L_Cheecks_Block";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B074";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr ".t" -type "double3" 0.90160522567683477 22.488129189345411 1.158319956192049 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "L_Cheecks_Guide_CtrlShape" -p "L_Cheecks_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B075";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -5589,22 +5446,17 @@ createNode nurbsCurve -n "L_Cheecks_Guide_CtrlShape" -p "L_Cheecks_Guide";
 		;
 createNode nurbsCurve -n "L_Cheecks_Guide_Ctrl_CtrlShape" -p "L_Cheecks_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B076";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
 	setAttr ".ls" 2;
 	setAttr ".cc" -type "nurbsCurve" 
 		1 101 0 no 3
-		102 0 1 2 3 4 5 6 7 8 9 10
-		 11 12 13 14 15 16 17 18 19 20 21 22
-		 23 24 25 26 27 28 29 30 31 32 33 34
-		 35 36 37 38 39 40 41 42 43 44 45 46
-		 47 48 49 50 51 52 53 54 55 56 57 58
-		 59 60 61 62 63 64 65 66 67 68 69 70
-		 71 72 73 74 75 76 77 78 79 80 81 82
-		 83 84 85 86 87 88 89 90 91 92 93 94
-		 95 96 97 98 99 100 101
+		102 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27
+		 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54
+		 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81
+		 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101
 		102
 		0 0.30683325293676161 0
 		-1.5879025804697751e-09 0.30217195737533425 0.053280875142877146
@@ -5711,7 +5563,7 @@ createNode nurbsCurve -n "L_Cheecks_Guide_Ctrl_CtrlShape" -p "L_Cheecks_Guide";
 		;
 createNode nurbsCurve -n "L_Cheecks_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Cheecks_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B077";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -5733,7 +5585,7 @@ createNode nurbsCurve -n "L_Cheecks_Guide_Ctrl_Ctrl_CtrlShape" -p "L_Cheecks_Gui
 		;
 createNode nurbsCurve -n "L_Cheecks_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Cheecks_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B078";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -5755,24 +5607,24 @@ createNode nurbsCurve -n "L_Cheecks_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "L_Cheeck
 		;
 createNode transform -n "L_Cheecks_DontTouch_Grp" -p "L_Cheecks_Block";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B079";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr ".rp" -type "double3" 3.2419447898864746 3.827925443649292 -1 ;
 	setAttr ".sp" -type "double3" 3.2419447898864746 3.827925443649292 -1 ;
 createNode transform -n "L_Cheecks_Guide_L_Cheecks_Border_Guide_Connected_Crv" -p
 		 "L_Cheecks_DontTouch_Grp";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B07A";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr ".ovdt" 2;
 	setAttr ".ove" yes;
 	setAttr ".it" no;
 createNode nurbsCurve -n "curveShape2" -p "L_Cheecks_Guide_L_Cheecks_Border_Guide_Connected_Crv";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B07B";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".tw" yes;
 createNode nurbsCurve -n "curveShape2Orig" -p "L_Cheecks_Guide_L_Cheecks_Border_Guide_Connected_Crv";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B07C";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".io" yes;
 	setAttr -s 2 ".gtag";
@@ -5793,21 +5645,21 @@ createNode nurbsCurve -n "curveShape2Orig" -p "L_Cheecks_Guide_L_Cheecks_Border_
 		"L_Cheecks_Guide_Cls" 1 "cv[0]";
 createNode transform -n "L_Cheecks_Guide_ClsHandle" -p "L_Cheecks_DontTouch_Grp";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B07D";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr ".v" no;
 	setAttr ".rp" -type "double3" 4 5 -2 ;
 	setAttr ".sp" -type "double3" 4 5 -2 ;
 createNode clusterHandle -n "L_Cheecks_Guide_ClsHandleShape" -p "L_Cheecks_Guide_ClsHandle";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B07E";
 	setAttr ".ihi" 0;
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".or" -type "double3" 4 5 -2 ;
 createNode parentConstraint -n "L_Cheecks_Guide_ClsHandle_parentConstraint1" -p "L_Cheecks_Guide_ClsHandle";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B07F";
 	addAttr -dcb 0 -ci true -k true -sn "w0" -ln "L_Cheecks_GuideW0" -dv 1 -min 0 -at "double";
 	setAttr -k on ".nds";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr -k off ".tx";
 	setAttr -k off ".ty";
@@ -5822,12 +5674,12 @@ createNode parentConstraint -n "L_Cheecks_Guide_ClsHandle_parentConstraint1" -p 
 	setAttr -k on ".w0";
 createNode transform -n "L_Cheecks_Border_Guide_ClsHandle" -p "L_Cheecks_DontTouch_Grp";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B080";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr ".v" no;
 createNode clusterHandle -n "L_Cheecks_Border_Guide_ClsHandleShape" -p "L_Cheecks_Border_Guide_ClsHandle";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B081";
 	setAttr ".ihi" 0;
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 createNode parentConstraint -n "L_Cheecks_Border_Guide_ClsHandle_parentConstraint1" 
 		-p "L_Cheecks_Border_Guide_ClsHandle";
@@ -5835,7 +5687,7 @@ createNode parentConstraint -n "L_Cheecks_Border_Guide_ClsHandle_parentConstrain
 	addAttr -dcb 0 -ci true -k true -sn "w0" -ln "L_Cheecks_Border_GuideW0" -dv 1 -min 
 		0 -at "double";
 	setAttr -k on ".nds";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr -k off ".tx";
 	setAttr -k off ".ty";
@@ -5868,14 +5720,14 @@ createNode dagContainer -n "Jaw_Block" -p "face";
 createNode joint -n "Jaw_Guide" -p "Jaw_Block";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B084";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr ".t" -type "double3" 0 22.353898658082315 0.16814060953824467 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "Jaw_Guide_CtrlShape" -p "Jaw_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B085";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -5897,22 +5749,17 @@ createNode nurbsCurve -n "Jaw_Guide_CtrlShape" -p "Jaw_Guide";
 		;
 createNode nurbsCurve -n "Jaw_Guide_Ctrl_CtrlShape" -p "Jaw_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B086";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
 	setAttr ".ls" 2;
 	setAttr ".cc" -type "nurbsCurve" 
 		1 101 0 no 3
-		102 0 1 2 3 4 5 6 7 8 9 10
-		 11 12 13 14 15 16 17 18 19 20 21 22
-		 23 24 25 26 27 28 29 30 31 32 33 34
-		 35 36 37 38 39 40 41 42 43 44 45 46
-		 47 48 49 50 51 52 53 54 55 56 57 58
-		 59 60 61 62 63 64 65 66 67 68 69 70
-		 71 72 73 74 75 76 77 78 79 80 81 82
-		 83 84 85 86 87 88 89 90 91 92 93 94
-		 95 96 97 98 99 100 101
+		102 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27
+		 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54
+		 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81
+		 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101
 		102
 		0 0.59420899999999999 0
 		-3.0751100000000001e-09 0.58518199999999998 0.103183
@@ -6019,7 +5866,7 @@ createNode nurbsCurve -n "Jaw_Guide_Ctrl_CtrlShape" -p "Jaw_Guide";
 		;
 createNode nurbsCurve -n "Jaw_Guide_Ctrl_Ctrl_CtrlShape" -p "Jaw_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B087";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -6041,7 +5888,7 @@ createNode nurbsCurve -n "Jaw_Guide_Ctrl_Ctrl_CtrlShape" -p "Jaw_Guide";
 		;
 createNode nurbsCurve -n "Jaw_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "Jaw_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B088";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -6064,14 +5911,14 @@ createNode nurbsCurve -n "Jaw_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "Jaw_Guide";
 createNode joint -n "JawUpperLip_Guide" -p "Jaw_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B089";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr ".t" -type "double3" 0 -0.13806106274022056 1.5035485751096231 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "JawUpperLip_Guide_CtrlShape" -p "JawUpperLip_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B08A";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -6093,22 +5940,17 @@ createNode nurbsCurve -n "JawUpperLip_Guide_CtrlShape" -p "JawUpperLip_Guide";
 		;
 createNode nurbsCurve -n "JawUpperLip_Guide_Ctrl_CtrlShape" -p "JawUpperLip_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B08B";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
 	setAttr ".ls" 2;
 	setAttr ".cc" -type "nurbsCurve" 
 		1 101 0 no 3
-		102 0 1 2 3 4 5 6 7 8 9 10
-		 11 12 13 14 15 16 17 18 19 20 21 22
-		 23 24 25 26 27 28 29 30 31 32 33 34
-		 35 36 37 38 39 40 41 42 43 44 45 46
-		 47 48 49 50 51 52 53 54 55 56 57 58
-		 59 60 61 62 63 64 65 66 67 68 69 70
-		 71 72 73 74 75 76 77 78 79 80 81 82
-		 83 84 85 86 87 88 89 90 91 92 93 94
-		 95 96 97 98 99 100 101
+		102 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27
+		 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54
+		 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81
+		 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101
 		102
 		0 0.31349319280744348 0
 		-1.6223686482939466e-09 0.30873072194033652 0.054437358090251804
@@ -6215,7 +6057,7 @@ createNode nurbsCurve -n "JawUpperLip_Guide_Ctrl_CtrlShape" -p "JawUpperLip_Guid
 		;
 createNode nurbsCurve -n "JawUpperLip_Guide_Ctrl_Ctrl_CtrlShape" -p "JawUpperLip_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B08C";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -6237,7 +6079,7 @@ createNode nurbsCurve -n "JawUpperLip_Guide_Ctrl_Ctrl_CtrlShape" -p "JawUpperLip
 		;
 createNode nurbsCurve -n "JawUpperLip_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "JawUpperLip_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B08D";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -6260,14 +6102,14 @@ createNode nurbsCurve -n "JawUpperLip_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "JawUpp
 createNode joint -n "JawLowerLip_Guide" -p "Jaw_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B08E";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr ".t" -type "double3" 0 -0.23806106274022065 1.5035485751096231 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "JawLowerLip_Guide_CtrlShape" -p "JawLowerLip_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B08F";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -6289,22 +6131,17 @@ createNode nurbsCurve -n "JawLowerLip_Guide_CtrlShape" -p "JawLowerLip_Guide";
 		;
 createNode nurbsCurve -n "JawLowerLip_Guide_Ctrl_CtrlShape" -p "JawLowerLip_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B090";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
 	setAttr ".ls" 2;
 	setAttr ".cc" -type "nurbsCurve" 
 		1 101 0 no 3
-		102 0 1 2 3 4 5 6 7 8 9 10
-		 11 12 13 14 15 16 17 18 19 20 21 22
-		 23 24 25 26 27 28 29 30 31 32 33 34
-		 35 36 37 38 39 40 41 42 43 44 45 46
-		 47 48 49 50 51 52 53 54 55 56 57 58
-		 59 60 61 62 63 64 65 66 67 68 69 70
-		 71 72 73 74 75 76 77 78 79 80 81 82
-		 83 84 85 86 87 88 89 90 91 92 93 94
-		 95 96 97 98 99 100 101
+		102 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27
+		 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54
+		 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81
+		 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101
 		102
 		0 0.31349319280744348 0
 		-1.6223686482939466e-09 0.30873072194033652 0.054437358090251804
@@ -6411,7 +6248,7 @@ createNode nurbsCurve -n "JawLowerLip_Guide_Ctrl_CtrlShape" -p "JawLowerLip_Guid
 		;
 createNode nurbsCurve -n "JawLowerLip_Guide_Ctrl_Ctrl_CtrlShape" -p "JawLowerLip_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B091";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -6433,7 +6270,7 @@ createNode nurbsCurve -n "JawLowerLip_Guide_Ctrl_Ctrl_CtrlShape" -p "JawLowerLip
 		;
 createNode nurbsCurve -n "JawLowerLip_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "JawLowerLip_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B092";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -6472,7 +6309,7 @@ createNode dagContainer -n "Tongue_Block" -p "face";
 createNode joint -n "Tongue_01_Guide" -p "Tongue_Block";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B094";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr ".t" -type "double3" 0.0036489665508270264 21.31451416015625 -0.40943287312984467 ;
 	setAttr ".r" -type "double3" -68.751113215656076 0 0 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
@@ -6480,7 +6317,7 @@ createNode joint -n "Tongue_01_Guide" -p "Tongue_Block";
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "Tongue_01_Guide_CtrlShape" -p "Tongue_01_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B095";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -6502,22 +6339,17 @@ createNode nurbsCurve -n "Tongue_01_Guide_CtrlShape" -p "Tongue_01_Guide";
 		;
 createNode nurbsCurve -n "Tongue_01_Guide_Ctrl_CtrlShape" -p "Tongue_01_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B096";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
 	setAttr ".ls" 2;
 	setAttr ".cc" -type "nurbsCurve" 
 		1 101 0 no 3
-		102 0 1 2 3 4 5 6 7 8 9 10
-		 11 12 13 14 15 16 17 18 19 20 21 22
-		 23 24 25 26 27 28 29 30 31 32 33 34
-		 35 36 37 38 39 40 41 42 43 44 45 46
-		 47 48 49 50 51 52 53 54 55 56 57 58
-		 59 60 61 62 63 64 65 66 67 68 69 70
-		 71 72 73 74 75 76 77 78 79 80 81 82
-		 83 84 85 86 87 88 89 90 91 92 93 94
-		 95 96 97 98 99 100 101
+		102 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27
+		 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54
+		 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81
+		 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101
 		102
 		2.2117114679877868e-19 0.2911707629826501 -1.811834034575595e-15
 		-1.5068471275664843e-09 0.28674740608727456 0.05056112047585553
@@ -6624,7 +6456,7 @@ createNode nurbsCurve -n "Tongue_01_Guide_Ctrl_CtrlShape" -p "Tongue_01_Guide";
 		;
 createNode nurbsCurve -n "Tongue_01_Guide_Ctrl_Ctrl_CtrlShape" -p "Tongue_01_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B097";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -6646,7 +6478,7 @@ createNode nurbsCurve -n "Tongue_01_Guide_Ctrl_Ctrl_CtrlShape" -p "Tongue_01_Gui
 		;
 createNode nurbsCurve -n "Tongue_01_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "Tongue_01_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B098";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -6669,7 +6501,7 @@ createNode nurbsCurve -n "Tongue_01_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "Tongue_0
 createNode joint -n "Tongue_02_Guide" -p "Tongue_01_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B099";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr ".t" -type "double3" -1.0711917464156784e-16 -0.045261897465368454 0.5094189153457499 ;
 	setAttr ".r" -type "double3" 23.600931791037553 0 0 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
@@ -6677,7 +6509,7 @@ createNode joint -n "Tongue_02_Guide" -p "Tongue_01_Guide";
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "Tongue_02_Guide_CtrlShape" -p "Tongue_02_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B09A";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -6699,22 +6531,17 @@ createNode nurbsCurve -n "Tongue_02_Guide_CtrlShape" -p "Tongue_02_Guide";
 		;
 createNode nurbsCurve -n "Tongue_02_Guide_Ctrl_CtrlShape" -p "Tongue_02_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B09B";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
 	setAttr ".ls" 2;
 	setAttr ".cc" -type "nurbsCurve" 
 		1 101 0 no 3
-		102 0 1 2 3 4 5 6 7 8 9 10
-		 11 12 13 14 15 16 17 18 19 20 21 22
-		 23 24 25 26 27 28 29 30 31 32 33 34
-		 35 36 37 38 39 40 41 42 43 44 45 46
-		 47 48 49 50 51 52 53 54 55 56 57 58
-		 59 60 61 62 63 64 65 66 67 68 69 70
-		 71 72 73 74 75 76 77 78 79 80 81 82
-		 83 84 85 86 87 88 89 90 91 92 93 94
-		 95 96 97 98 99 100 101
+		102 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27
+		 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54
+		 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81
+		 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101
 		102
 		-2.2117114679877868e-19 0.29117076298264943 0
 		-1.5068471280088274e-09 0.28674740608727362 0.050561120475857355
@@ -6821,7 +6648,7 @@ createNode nurbsCurve -n "Tongue_02_Guide_Ctrl_CtrlShape" -p "Tongue_02_Guide";
 		;
 createNode nurbsCurve -n "Tongue_02_Guide_Ctrl_Ctrl_CtrlShape" -p "Tongue_02_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B09C";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -6843,7 +6670,7 @@ createNode nurbsCurve -n "Tongue_02_Guide_Ctrl_Ctrl_CtrlShape" -p "Tongue_02_Gui
 		;
 createNode nurbsCurve -n "Tongue_02_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "Tongue_02_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B09D";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -6866,7 +6693,7 @@ createNode nurbsCurve -n "Tongue_02_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "Tongue_0
 createNode joint -n "Tongue_03_Guide" -p "Tongue_02_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B09E";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr ".t" -type "double3" -1.0711917464156784e-16 -0.040351959426207271 0.51138440351956893 ;
 	setAttr ".r" -type "double3" 26.144926791814409 0 0 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
@@ -6874,7 +6701,7 @@ createNode joint -n "Tongue_03_Guide" -p "Tongue_02_Guide";
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "Tongue_03_Guide_CtrlShape" -p "Tongue_03_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B09F";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -6896,22 +6723,17 @@ createNode nurbsCurve -n "Tongue_03_Guide_CtrlShape" -p "Tongue_03_Guide";
 		;
 createNode nurbsCurve -n "Tongue_03_Guide_Ctrl_CtrlShape" -p "Tongue_03_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B0A0";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
 	setAttr ".ls" 2;
 	setAttr ".cc" -type "nurbsCurve" 
 		1 101 0 no 3
-		102 0 1 2 3 4 5 6 7 8 9 10
-		 11 12 13 14 15 16 17 18 19 20 21 22
-		 23 24 25 26 27 28 29 30 31 32 33 34
-		 35 36 37 38 39 40 41 42 43 44 45 46
-		 47 48 49 50 51 52 53 54 55 56 57 58
-		 59 60 61 62 63 64 65 66 67 68 69 70
-		 71 72 73 74 75 76 77 78 79 80 81 82
-		 83 84 85 86 87 88 89 90 91 92 93 94
-		 95 96 97 98 99 100 101
+		102 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27
+		 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54
+		 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81
+		 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101
 		102
 		-2.2117114679877868e-19 0.29117076298265088 0
 		-1.5068471280088274e-09 0.28674740608727511 0.050561120475857355
@@ -7018,7 +6840,7 @@ createNode nurbsCurve -n "Tongue_03_Guide_Ctrl_CtrlShape" -p "Tongue_03_Guide";
 		;
 createNode nurbsCurve -n "Tongue_03_Guide_Ctrl_Ctrl_CtrlShape" -p "Tongue_03_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B0A1";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -7040,7 +6862,7 @@ createNode nurbsCurve -n "Tongue_03_Guide_Ctrl_Ctrl_CtrlShape" -p "Tongue_03_Gui
 		;
 createNode nurbsCurve -n "Tongue_03_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "Tongue_03_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B0A2";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -7063,7 +6885,7 @@ createNode nurbsCurve -n "Tongue_03_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "Tongue_0
 createNode joint -n "Tongue_04_Guide" -p "Tongue_03_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B0A3";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr ".t" -type "double3" -1.0711917464156784e-16 -0.039925587573256802 0.51153857448492912 ;
 	setAttr ".r" -type "double3" 19.726445469493104 0 0 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
@@ -7071,7 +6893,7 @@ createNode joint -n "Tongue_04_Guide" -p "Tongue_03_Guide";
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "Tongue_04_Guide_CtrlShape" -p "Tongue_04_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B0A4";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -7093,22 +6915,17 @@ createNode nurbsCurve -n "Tongue_04_Guide_CtrlShape" -p "Tongue_04_Guide";
 		;
 createNode nurbsCurve -n "Tongue_04_Guide_Ctrl_CtrlShape" -p "Tongue_04_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B0A5";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
 	setAttr ".ls" 2;
 	setAttr ".cc" -type "nurbsCurve" 
 		1 101 0 no 3
-		102 0 1 2 3 4 5 6 7 8 9 10
-		 11 12 13 14 15 16 17 18 19 20 21 22
-		 23 24 25 26 27 28 29 30 31 32 33 34
-		 35 36 37 38 39 40 41 42 43 44 45 46
-		 47 48 49 50 51 52 53 54 55 56 57 58
-		 59 60 61 62 63 64 65 66 67 68 69 70
-		 71 72 73 74 75 76 77 78 79 80 81 82
-		 83 84 85 86 87 88 89 90 91 92 93 94
-		 95 96 97 98 99 100 101
+		102 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27
+		 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54
+		 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81
+		 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101
 		102
 		2.2117114679877868e-19 0.29117076298264943 -2.8309906790243671e-17
 		-1.5068471275664843e-09 0.28674740608727362 0.050561120475857355
@@ -7215,7 +7032,7 @@ createNode nurbsCurve -n "Tongue_04_Guide_Ctrl_CtrlShape" -p "Tongue_04_Guide";
 		;
 createNode nurbsCurve -n "Tongue_04_Guide_Ctrl_Ctrl_CtrlShape" -p "Tongue_04_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B0A6";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -7237,7 +7054,7 @@ createNode nurbsCurve -n "Tongue_04_Guide_Ctrl_Ctrl_CtrlShape" -p "Tongue_04_Gui
 		;
 createNode nurbsCurve -n "Tongue_04_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "Tongue_04_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B0A7";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -7260,7 +7077,7 @@ createNode nurbsCurve -n "Tongue_04_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "Tongue_0
 createNode joint -n "Tongue_05_Guide" -p "Tongue_04_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B0A8";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr ".t" -type "double3" -1.0711917464156784e-16 -0.036277155612615498 0.51275430484601325 ;
 	setAttr ".r" -type "double3" 17.131759571535238 0 0 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
@@ -7268,7 +7085,7 @@ createNode joint -n "Tongue_05_Guide" -p "Tongue_04_Guide";
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "Tongue_05_Guide_CtrlShape" -p "Tongue_05_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B0A9";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -7290,22 +7107,17 @@ createNode nurbsCurve -n "Tongue_05_Guide_CtrlShape" -p "Tongue_05_Guide";
 		;
 createNode nurbsCurve -n "Tongue_05_Guide_Ctrl_CtrlShape" -p "Tongue_05_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B0AA";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
 	setAttr ".ls" 2;
 	setAttr ".cc" -type "nurbsCurve" 
 		1 101 0 no 3
-		102 0 1 2 3 4 5 6 7 8 9 10
-		 11 12 13 14 15 16 17 18 19 20 21 22
-		 23 24 25 26 27 28 29 30 31 32 33 34
-		 35 36 37 38 39 40 41 42 43 44 45 46
-		 47 48 49 50 51 52 53 54 55 56 57 58
-		 59 60 61 62 63 64 65 66 67 68 69 70
-		 71 72 73 74 75 76 77 78 79 80 81 82
-		 83 84 85 86 87 88 89 90 91 92 93 94
-		 95 96 97 98 99 100 101
+		102 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27
+		 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54
+		 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81
+		 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101
 		102
 		0 0.29117076298264943 -4.5295850864389874e-16
 		-1.5068471277876553e-09 0.28674740608727362 0.050561120475856897
@@ -7412,7 +7224,7 @@ createNode nurbsCurve -n "Tongue_05_Guide_Ctrl_CtrlShape" -p "Tongue_05_Guide";
 		;
 createNode nurbsCurve -n "Tongue_05_Guide_Ctrl_Ctrl_CtrlShape" -p "Tongue_05_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B0AB";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -7434,7 +7246,7 @@ createNode nurbsCurve -n "Tongue_05_Guide_Ctrl_Ctrl_CtrlShape" -p "Tongue_05_Gui
 		;
 createNode nurbsCurve -n "Tongue_05_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "Tongue_05_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B0AC";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -7473,14 +7285,14 @@ createNode dagContainer -n "Teeth_Block" -p "face";
 createNode joint -n "Teeth_Upr_Guide" -p "Teeth_Block";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B0AE";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr ".t" -type "double3" 0.00066721439361572266 22.403978684271383 0.76717668958008289 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "Teeth_Upr_Guide_CtrlShape" -p "Teeth_Upr_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B0AF";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -7502,22 +7314,17 @@ createNode nurbsCurve -n "Teeth_Upr_Guide_CtrlShape" -p "Teeth_Upr_Guide";
 		;
 createNode nurbsCurve -n "Teeth_Upr_Guide_Ctrl_CtrlShape" -p "Teeth_Upr_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B0B0";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
 	setAttr ".ls" 2;
 	setAttr ".cc" -type "nurbsCurve" 
 		1 101 0 no 3
-		102 0 1 2 3 4 5 6 7 8 9 10
-		 11 12 13 14 15 16 17 18 19 20 21 22
-		 23 24 25 26 27 28 29 30 31 32 33 34
-		 35 36 37 38 39 40 41 42 43 44 45 46
-		 47 48 49 50 51 52 53 54 55 56 57 58
-		 59 60 61 62 63 64 65 66 67 68 69 70
-		 71 72 73 74 75 76 77 78 79 80 81 82
-		 83 84 85 86 87 88 89 90 91 92 93 94
-		 95 96 97 98 99 100 101
+		102 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27
+		 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54
+		 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81
+		 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101
 		102
 		0 0.19454680853523612 0
 		-1.006805410882013e-09 0.19159132647312063 0.033782597276532739
@@ -7624,7 +7431,7 @@ createNode nurbsCurve -n "Teeth_Upr_Guide_Ctrl_CtrlShape" -p "Teeth_Upr_Guide";
 		;
 createNode nurbsCurve -n "Teeth_Upr_Guide_Ctrl_Ctrl_CtrlShape" -p "Teeth_Upr_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B0B1";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -7646,7 +7453,7 @@ createNode nurbsCurve -n "Teeth_Upr_Guide_Ctrl_Ctrl_CtrlShape" -p "Teeth_Upr_Gui
 		;
 createNode nurbsCurve -n "Teeth_Upr_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "Teeth_Upr_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B0B2";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -7669,14 +7476,14 @@ createNode nurbsCurve -n "Teeth_Upr_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "Teeth_Up
 createNode joint -n "Teeth_Lwr_Guide" -p "Teeth_Block";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B0B3";
 	addAttr -ci true -sn "Helper" -ln "Helper" -min 0 -max 1 -en "Hide:Show" -at "enum";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr ".t" -type "double3" -5.3644180297851562e-07 21.969689960172158 0.7565006164368242 ;
 	setAttr ".mnrl" -type "double3" -360 -360 -360 ;
 	setAttr ".mxrl" -type "double3" 360 360 360 ;
 	setAttr -cb on ".Helper" 1;
 createNode nurbsCurve -n "Teeth_Lwr_Guide_CtrlShape" -p "Teeth_Lwr_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B0B4";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
@@ -7698,22 +7505,17 @@ createNode nurbsCurve -n "Teeth_Lwr_Guide_CtrlShape" -p "Teeth_Lwr_Guide";
 		;
 createNode nurbsCurve -n "Teeth_Lwr_Guide_Ctrl_CtrlShape" -p "Teeth_Lwr_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B0B5";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
 	setAttr ".ls" 2;
 	setAttr ".cc" -type "nurbsCurve" 
 		1 101 0 no 3
-		102 0 1 2 3 4 5 6 7 8 9 10
-		 11 12 13 14 15 16 17 18 19 20 21 22
-		 23 24 25 26 27 28 29 30 31 32 33 34
-		 35 36 37 38 39 40 41 42 43 44 45 46
-		 47 48 49 50 51 52 53 54 55 56 57 58
-		 59 60 61 62 63 64 65 66 67 68 69 70
-		 71 72 73 74 75 76 77 78 79 80 81 82
-		 83 84 85 86 87 88 89 90 91 92 93 94
-		 95 96 97 98 99 100 101
+		102 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27
+		 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54
+		 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81
+		 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101
 		102
 		0 0.19454680853523612 0
 		-1.006805410882013e-09 0.19159132647312063 0.033782597276532739
@@ -7820,7 +7622,7 @@ createNode nurbsCurve -n "Teeth_Lwr_Guide_Ctrl_CtrlShape" -p "Teeth_Lwr_Guide";
 		;
 createNode nurbsCurve -n "Teeth_Lwr_Guide_Ctrl_Ctrl_CtrlShape" -p "Teeth_Lwr_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B0B6";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 13;
@@ -7842,7 +7644,7 @@ createNode nurbsCurve -n "Teeth_Lwr_Guide_Ctrl_Ctrl_CtrlShape" -p "Teeth_Lwr_Gui
 		;
 createNode nurbsCurve -n "Teeth_Lwr_Guide_Ctrl_Ctrl_Ctrl_CtrlShape" -p "Teeth_Lwr_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B0B7";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 6;
@@ -7880,7 +7682,7 @@ createNode dagContainer -n "Commissures_Block" -p "face";
 	setAttr -l on -k off ".sz";
 createNode transform -n "L_Commissures_Wide_Guide" -p "Commissures_Block";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B0B9";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 9;
 	setAttr ".t" -type "double3" -1.3332548141479492 22.133567810058594 1.5123715400695801 ;
@@ -7889,7 +7691,7 @@ createNode transform -n "L_Commissures_Wide_Guide" -p "Commissures_Block";
 	setAttr ".sp" -type "double3" 2 0 0 ;
 createNode nurbsCurve -n "curveShape3" -p "L_Commissures_Wide_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B0BA";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".cc" -type "nurbsCurve" 
 		3 2 0 no 3
@@ -7903,7 +7705,7 @@ createNode nurbsCurve -n "curveShape3" -p "L_Commissures_Wide_Guide";
 		;
 createNode transform -n "L_Commissures_Narrow_Guide" -p "Commissures_Block";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B0BB";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 14;
 	setAttr ".t" -type "double3" -1.3332548141479492 22.133567810058594 1.5123715400695801 ;
@@ -7912,7 +7714,7 @@ createNode transform -n "L_Commissures_Narrow_Guide" -p "Commissures_Block";
 	setAttr ".sp" -type "double3" 2 0 0 ;
 createNode nurbsCurve -n "curveShape4" -p "L_Commissures_Narrow_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B0BC";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".cc" -type "nurbsCurve" 
 		3 2 0 no 3
@@ -7926,7 +7728,7 @@ createNode nurbsCurve -n "curveShape4" -p "L_Commissures_Narrow_Guide";
 		;
 createNode transform -n "L_Commissures_Up_Guide" -p "Commissures_Block";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B0BD";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 18;
 	setAttr ".t" -type "double3" -1.3332548141479492 22.133567810058594 1.5123715400695801 ;
@@ -7935,7 +7737,7 @@ createNode transform -n "L_Commissures_Up_Guide" -p "Commissures_Block";
 	setAttr ".sp" -type "double3" 2 0 0 ;
 createNode nurbsCurve -n "curveShape5" -p "L_Commissures_Up_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B0BE";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".cc" -type "nurbsCurve" 
 		3 2 0 no 3
@@ -7949,7 +7751,7 @@ createNode nurbsCurve -n "curveShape5" -p "L_Commissures_Up_Guide";
 		;
 createNode transform -n "L_Commissures_Down_Guide" -p "Commissures_Block";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B0BF";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr ".ove" yes;
 	setAttr ".ovc" 17;
 	setAttr ".t" -type "double3" -1.3332548141479492 22.133567810058594 1.5123715400695801 ;
@@ -7958,7 +7760,7 @@ createNode transform -n "L_Commissures_Down_Guide" -p "Commissures_Block";
 	setAttr ".sp" -type "double3" 2 0 0 ;
 createNode nurbsCurve -n "curveShape6" -p "L_Commissures_Down_Guide";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B0C0";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 	setAttr ".cc" -type "nurbsCurve" 
 		3 2 0 no 3
@@ -7972,7 +7774,7 @@ createNode nurbsCurve -n "curveShape6" -p "L_Commissures_Down_Guide";
 		;
 createNode transform -n "null" -p "Mutant_Build";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B0C1";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 createNode dagContainer -n "NullJnt_Block" -p "null";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B0C2";
 	setAttr ".isc" yes;
@@ -7991,7 +7793,7 @@ createNode dagContainer -n "NullJnt_Block" -p "null";
 	setAttr -l on -k off ".sz";
 createNode transform -n "corectives" -p "Mutant_Build";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B0C6";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr ".t" -type "double3" 0 148.19816716577168 0 ;
 createNode dagContainer -n "Correctives_Block" -p "corectives";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B0C7";
@@ -8027,15 +7829,15 @@ createNode dagContainer -n "reorder_Block" -p "corectives";
 	setAttr -l on -k off ".sz";
 createNode transform -n "reorder_Loc" -p "reorder_Block";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B0C9";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr ".t" -type "double3" 0 -148.19816716577168 0 ;
 createNode locator -n "reorder_LocShape" -p "reorder_Loc";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B0CA";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 	setAttr -k off ".v";
 createNode transform -n "skin" -p "Mutant_Build";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B0CB";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 createNode dagContainer -n "BindSkull_Block" -p "skin";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B0CC";
 	setAttr ".isc" yes;
@@ -8198,7 +8000,7 @@ createNode dagContainer -n "BindMouthNarrow_Block" -p "skin";
 	setAttr -l on -k off ".sz";
 createNode transform -n "data" -p "Mutant_Build";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B0D6";
-	setAttr ".icn" -type "string" "/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/";
+	setAttr ".icn" -type "string" "C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/";
 createNode dagContainer -n "Load_Ctrls_Block" -p "data";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B0D7";
 	setAttr ".isc" yes;
@@ -8215,6 +8017,70 @@ createNode dagContainer -n "Load_Ctrls_Block" -p "data";
 	setAttr -l on -k off ".sx";
 	setAttr -l on -k off ".sy";
 	setAttr -l on -k off ".sz";
+createNode transform -s -n "persp";
+	rename -uid "D818333A-42AE-04CE-EF2E-85889408D0E5";
+	setAttr ".v" no;
+	setAttr ".t" -type "double3" 28 21 28 ;
+	setAttr ".r" -type "double3" -27.938352729602379 44.999999999999972 -5.172681101354183e-14 ;
+createNode camera -s -n "perspShape" -p "persp";
+	rename -uid "85190F7A-4C47-48B9-9C3D-778054BAF37B";
+	setAttr -k off ".v" no;
+	setAttr ".fl" 34.999999999999993;
+	setAttr ".coi" 44.82186966202994;
+	setAttr ".imn" -type "string" "persp";
+	setAttr ".den" -type "string" "persp_depth";
+	setAttr ".man" -type "string" "persp_mask";
+	setAttr ".hc" -type "string" "viewSet -p %camera";
+createNode transform -s -n "top";
+	rename -uid "0194DB78-4679-8314-D813-608907A42FDA";
+	setAttr ".v" no;
+	setAttr ".t" -type "double3" 0 1000.1 0 ;
+	setAttr ".r" -type "double3" -90 0 0 ;
+createNode camera -s -n "topShape" -p "top";
+	rename -uid "034F5A62-4A75-96A1-03BA-25935F339C02";
+	setAttr -k off ".v" no;
+	setAttr ".rnd" no;
+	setAttr ".coi" 1000.1;
+	setAttr ".ow" 30;
+	setAttr ".imn" -type "string" "top";
+	setAttr ".den" -type "string" "top_depth";
+	setAttr ".man" -type "string" "top_mask";
+	setAttr ".hc" -type "string" "viewSet -t %camera";
+	setAttr ".o" yes;
+	setAttr ".ai_translator" -type "string" "orthographic";
+createNode transform -s -n "front";
+	rename -uid "E872B1EB-4984-0469-F458-9BB460DD146F";
+	setAttr ".v" no;
+	setAttr ".t" -type "double3" 0 0 1000.1 ;
+createNode camera -s -n "frontShape" -p "front";
+	rename -uid "8AA1C1CB-445C-8606-DE3E-AEB2D20C63EC";
+	setAttr -k off ".v" no;
+	setAttr ".rnd" no;
+	setAttr ".coi" 1000.1;
+	setAttr ".ow" 30;
+	setAttr ".imn" -type "string" "front";
+	setAttr ".den" -type "string" "front_depth";
+	setAttr ".man" -type "string" "front_mask";
+	setAttr ".hc" -type "string" "viewSet -f %camera";
+	setAttr ".o" yes;
+	setAttr ".ai_translator" -type "string" "orthographic";
+createNode transform -s -n "side";
+	rename -uid "0576A2CC-4F94-D83D-FAFF-F881BB6A2590";
+	setAttr ".v" no;
+	setAttr ".t" -type "double3" 1000.1 0 0 ;
+	setAttr ".r" -type "double3" 0 90 0 ;
+createNode camera -s -n "sideShape" -p "side";
+	rename -uid "6545DDDF-49B0-3064-518D-C59D58E023FD";
+	setAttr -k off ".v" no;
+	setAttr ".rnd" no;
+	setAttr ".coi" 1000.1;
+	setAttr ".ow" 30;
+	setAttr ".imn" -type "string" "side";
+	setAttr ".den" -type "string" "side_depth";
+	setAttr ".man" -type "string" "side_mask";
+	setAttr ".hc" -type "string" "viewSet -s %camera";
+	setAttr ".o" yes;
+	setAttr ".ai_translator" -type "string" "orthographic";
 createNode hyperLayout -n "hyperLayout8";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B0D8";
 	setAttr ".ihi" 0;
@@ -8223,18 +8089,18 @@ createNode network -n "BaseA_Config";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	addAttr -ci true -sn "Name" -ln "Name" -dt "string";
+	addAttr -ci true -sn "CtrlScale" -ln "CtrlScale" -dv 4 -min 1 -max 20 -at "long";
 	addAttr -ci true -sn "CtrlColor" -ln "CtrlColor" -min 0 -max 7 -en "lightBlue:blue:white:purple:green:red:yellow:grey" 
 		-at "enum";
-	addAttr -ci true -sn "CtrlScale" -ln "CtrlScale" -dv 4 -min 1 -max 20 -at "long";
-	addAttr -ci true -sn "Name" -ln "Name" -dt "string";
-	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
 	setAttr ".precode" -type "string" "";
-	setAttr -l on ".Build_Command" -type "string" "exec_baseA.build_baseA_block()";
-	setAttr -l on ".Import_Command" -type "string" "import exec_baseA ";
-	setAttr -cb on ".CtrlColor";
-	setAttr -k on ".CtrlScale";
-	setAttr ".Name" -type "string" "Mutant_Tools";
+	setAttr -l on ".Build_Command" -type "string" "exec_baseA_v001.build_baseA_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_baseA_v001 ";
 	setAttr ".postcode" -type "string" "";
+	setAttr ".Name" -type "string" "Mutant_Tools";
+	setAttr -k on ".CtrlScale";
+	setAttr -cb on ".CtrlColor";
 createNode hyperLayout -n "hyperLayout7";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B0DA";
 	setAttr ".ihi" 0;
@@ -8244,15 +8110,19 @@ createNode network -n "VisAttrs_Config";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
-	addAttr -ci true -sn "Exec" -ln "Exec" -min 0 -max 1 -en "Python:Mel" -at "enum";
-	addAttr -ci true -sn "Code" -ln "Code" -dt "string";
 	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	addAttr -ci true -sn "Exec" -ln "Exec" -min 0 -max 1 -en "Python:Mel" -at "enum";
+	addAttr -ci true -sn "RunBeforeBuild" -ln "RunBeforeBuild" -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "RunAfterBuild" -ln "RunAfterBuild" -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "Code" -ln "Code" -dt "string";
 	setAttr ".precode" -type "string" "";
-	setAttr -l on ".Build_Command" -type "string" "exec_code.build_code_block()";
-	setAttr -l on ".Import_Command" -type "string" "import exec_code";
-	setAttr -cb on ".Exec";
-	setAttr ".Code" -type "string" "from maya import cmds, mel\nvis_ctrl = cmds.duplicate('Vis_Guide', n ='Vis_Ctrl')\ncmds.parent('Vis_Ctrl', 'Ctrl_Grp')\n\n#mel.eval('setAttr -lock true -keyable false -channelBox false \"Vis_Ctrl.tx\";')\n#mel.eval('setAttr -lock true -keyable false -channelBox false \"Vis_Ctrl.ty\";')\n#mel.eval('setAttr -lock true -keyable false -channelBox false \"Vis_Ctrl.tz\";')\nmel.eval('setAttr -lock true -keyable false -channelBox false \"Vis_Ctrl.rx\";')\nmel.eval('setAttr -lock true -keyable false -channelBox false \"Vis_Ctrl.ry\";')\nmel.eval('setAttr -lock true -keyable false -channelBox false \"Vis_Ctrl.rz\";')\nmel.eval('setAttr -lock true -keyable false -channelBox false \"Vis_Ctrl.sx\";')\nmel.eval('setAttr -lock true -keyable false -channelBox false \"Vis_Ctrl.sy\";')\nmel.eval('setAttr -lock true -keyable false -channelBox false \"Vis_Ctrl.sz\";')\nmel.eval('setAttr -lock true -keyable false -channelBox false \"Vis_Ctrl.v\";')\n";
+	setAttr -l on ".Build_Command" -type "string" "exec_code_v001.build_code_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_code_v001";
 	setAttr ".postcode" -type "string" "";
+	setAttr -cb on ".Exec";
+	setAttr -cb on ".RunBeforeBuild";
+	setAttr -cb on ".RunAfterBuild";
+	setAttr ".Code" -type "string" "from maya import cmds, mel\nvis_ctrl = cmds.duplicate('Vis_Guide', n ='Vis_Ctrl')\ncmds.parent('Vis_Ctrl', 'Ctrl_Grp')\n\n#mel.eval('setAttr -lock true -keyable false -channelBox false \"Vis_Ctrl.tx\";')\n#mel.eval('setAttr -lock true -keyable false -channelBox false \"Vis_Ctrl.ty\";')\n#mel.eval('setAttr -lock true -keyable false -channelBox false \"Vis_Ctrl.tz\";')\nmel.eval('setAttr -lock true -keyable false -channelBox false \"Vis_Ctrl.rx\";')\nmel.eval('setAttr -lock true -keyable false -channelBox false \"Vis_Ctrl.ry\";')\nmel.eval('setAttr -lock true -keyable false -channelBox false \"Vis_Ctrl.rz\";')\nmel.eval('setAttr -lock true -keyable false -channelBox false \"Vis_Ctrl.sx\";')\nmel.eval('setAttr -lock true -keyable false -channelBox false \"Vis_Ctrl.sy\";')\nmel.eval('setAttr -lock true -keyable false -channelBox false \"Vis_Ctrl.sz\";')\nmel.eval('setAttr -lock true -keyable false -channelBox false \"Vis_Ctrl.v\";')\n";
 createNode hyperLayout -n "hyperLayout20";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B0DC";
 	setAttr ".ihi" 0;
@@ -8262,15 +8132,19 @@ createNode network -n "PhonemesUI_Config";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
-	addAttr -ci true -sn "Exec" -ln "Exec" -min 0 -max 1 -en "Python:Mel" -at "enum";
-	addAttr -ci true -sn "Code" -ln "Code" -dt "string";
 	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	addAttr -ci true -sn "Exec" -ln "Exec" -min 0 -max 1 -en "Python:Mel" -at "enum";
+	addAttr -ci true -sn "RunBeforeBuild" -ln "RunBeforeBuild" -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "RunAfterBuild" -ln "RunAfterBuild" -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "Code" -ln "Code" -dt "string";
 	setAttr ".precode" -type "string" "";
-	setAttr -l on ".Build_Command" -type "string" "exec_code.build_code_block()";
-	setAttr -l on ".Import_Command" -type "string" "import exec_code";
-	setAttr -cb on ".Exec";
-	setAttr ".Code" -type "string" "from maya import cmds, mel\nvis_ctrl = cmds.duplicate('GUI_translate_Grp_Guide', n ='GUI_translate_Grp')\ncmds.parent('GUI_translate_Grp', 'Ctrl_Grp')\n\nchilds = cmds.listRelatives('GUI_translate_Grp', ad=True, fullPath=True)\nchilds_nice_names = cmds.listRelatives('GUI_translate_Grp', ad=True)\nfor child, child_nice in zip(childs, childs_nice_names):\n    cmds.rename(child, child_nice.replace('_Guide', ''))";
+	setAttr -l on ".Build_Command" -type "string" "exec_code_v001.build_code_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_code_v001";
 	setAttr ".postcode" -type "string" "";
+	setAttr -cb on ".Exec";
+	setAttr -cb on ".RunBeforeBuild";
+	setAttr -cb on ".RunAfterBuild";
+	setAttr ".Code" -type "string" "from maya import cmds, mel\nvis_ctrl = cmds.duplicate('GUI_translate_Grp_Guide', n ='GUI_translate_Grp')\ncmds.parent('GUI_translate_Grp', 'Ctrl_Grp')\n\nchilds = cmds.listRelatives('GUI_translate_Grp', ad=True, fullPath=True)\nchilds_nice_names = cmds.listRelatives('GUI_translate_Grp', ad=True)\nfor child, child_nice in zip(childs, childs_nice_names):\n    cmds.rename(child, child_nice.replace('_Guide', ''))";
 createNode animCurveUU -n "pasted__Viseme_GUI_Main_Grp_visibility";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B0DE";
 	setAttr ".tan" 18;
@@ -8284,17 +8158,19 @@ createNode network -n "SkullLocal_Config";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
 	addAttr -ci true -sn "SetGeo" -ln "SetGeo" -dt "string";
+	addAttr -ci true -sn "SetExtraGeos" -ln "SetExtraGeos" -dt "string";
 	addAttr -ci true -sn "NewNames" -ln "NewNames" -dt "string";
 	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
-	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
 	setAttr ".precode" -type "string" "";
-	setAttr -l on ".Build_Command" -type "string" "exec_locals.build_locals_block()";
-	setAttr -l on ".Import_Command" -type "string" "import exec_locals";
-	setAttr ".SetGeo" -type "string" "";
-	setAttr ".NewNames" -type "string" "BodySkull";
-	setAttr ".Help" -type "string" "Create Local Duplicates for Main Geo and Atach via BlendShape, separate names with comas ','";
+	setAttr -l on ".Build_Command" -type "string" "exec_locals_v001.build_locals_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_locals_v001";
 	setAttr ".postcode" -type "string" "";
+	setAttr ".SetGeo" -type "string" "";
+	setAttr ".SetExtraGeos" -type "string" "";
+	setAttr ".NewNames" -type "string" "BodySkull";
+	setAttr ".Help" -type "string" "Overview:\n  Create Local Duplicates for Main Geo and Atach via BlendShape.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetGeo: set the node/object name this block should use.\n- SetExtraGeos: set the node/object name this block should use.\n- NewNames: enter names separated by commas (example format: nameA,nameB,nameC).\n\nTips:\n- start with defaults, build once, then tweak only the fields you need.";
 createNode hyperLayout -n "hyperLayout17";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B0F7";
 	setAttr ".ihi" 0;
@@ -8303,17 +8179,19 @@ createNode network -n "Locals_Config";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
 	addAttr -ci true -sn "SetGeo" -ln "SetGeo" -dt "string";
+	addAttr -ci true -sn "SetExtraGeos" -ln "SetExtraGeos" -dt "string";
 	addAttr -ci true -sn "NewNames" -ln "NewNames" -dt "string";
 	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
-	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
 	setAttr ".precode" -type "string" "";
-	setAttr -l on ".Build_Command" -type "string" "exec_locals.build_locals_block()";
-	setAttr -l on ".Import_Command" -type "string" "import exec_locals";
-	setAttr ".SetGeo" -type "string" "BodySkull";
-	setAttr ".NewNames" -type "string" "BodyEyes,BodyLips,BodyBrows,BodyCheeks,BodyJaw,BodyMouthUp,BodyMouthDown,BodyMouthWide,BodyMouthNarrow,BodySquash";
-	setAttr ".Help" -type "string" "Create Local Duplicates for Main Geo and Atach via BlendShape, separate names with comas ','";
+	setAttr -l on ".Build_Command" -type "string" "exec_locals_v001.build_locals_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_locals_v001";
 	setAttr ".postcode" -type "string" "";
+	setAttr ".SetGeo" -type "string" "BodySkull";
+	setAttr ".SetExtraGeos" -type "string" "";
+	setAttr ".NewNames" -type "string" "BodyEyes,BodyLips,BodyBrows,BodyCheeks,BodyJaw,BodyMouthUp,BodyMouthDown,BodyMouthWide,BodyMouthNarrow,BodySquash";
+	setAttr ".Help" -type "string" "Overview:\n  Create Local Duplicates for Main Geo and Atach via BlendShape.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetGeo: set the node/object name this block should use.\n- SetExtraGeos: set the node/object name this block should use.\n- NewNames: enter names separated by commas (example format: nameA,nameB,nameC).\n\nTips:\n- start with defaults, build once, then tweak only the fields you need.";
 createNode hyperLayout -n "hyperLayout9";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B0DF";
 	setAttr ".ihi" 0;
@@ -8323,25 +8201,25 @@ createNode network -n "Skull_Config";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
 	addAttr -ci true -sn "SetParent" -ln "SetParent" -dt "string";
+	addAttr -ci true -sn "SetAttrsPosition" -ln "SetAttrsPosition" -dt "string";
 	addAttr -ci true -sn "CtrlType" -ln "CtrlType" -min 0 -max 4 -en "cube:square:circleX:circleY:circleZ" 
 		-at "enum";
 	addAttr -ci true -sn "CtrlSize" -ln "CtrlSize" -dv 4 -min 1 -max 20 -at "long";
-	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
-	addAttr -ci true -sn "SetAttrsPosition" -ln "SetAttrsPosition" -dt "string";
 	addAttr -ci true -sn "CtrlColor" -ln "CtrlColor" -min 0 -max 7 -en "lightBlue:blue:white:purple:green:red:yellow:grey" 
 		-at "enum";
-	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
 	setAttr ".precode" -type "string" "";
-	setAttr -l on ".Build_Command" -type "string" "exec_skull.build_skull_block()";
-	setAttr -l on ".Import_Command" -type "string" "import exec_skull";
+	setAttr -l on ".Build_Command" -type "string" "exec_skull_v001.build_skull_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_skull_v001";
+	setAttr ".postcode" -type "string" "";
 	setAttr ".SetParent" -type "string" "new_locator";
+	setAttr ".SetAttrsPosition" -type "string" "Vis_Ctrl";
 	setAttr -cb on ".CtrlType";
 	setAttr -k on ".CtrlSize";
-	setAttr ".Help" -type "string" "Possible parent: Head_Ctrl ";
-	setAttr ".SetAttrsPosition" -type "string" "Vis_Ctrl";
 	setAttr -cb on ".CtrlColor";
-	setAttr ".postcode" -type "string" "";
+	setAttr ".Help" -type "string" "Overview:\n  Create base structure for head rig.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetParent: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- SetAttrsPosition: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- CtrlType: choose one option (for example: cube, square, circleX, circleY).\n- CtrlSize: numeric value that controls size/amount/intensity (default 4).\n- CtrlColor: choose one option (for example: lightBlue, blue, white, purple).\n- Template parent examples: Head_Jnt, Head_Ctrl, Spine_End_Jnt.\n- Template attrs-position examples: Nose_Base_Ctrl, Vis_Ctrl, L_Brow_Ctrl.\n\nTips:\n- start with defaults, build once, then tweak only the fields you need.";
 createNode hyperLayout -n "hyperLayout12";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B0E1";
 	setAttr ".ihi" 0;
@@ -8350,28 +8228,35 @@ createNode network -n "L_Eyelids_Config";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
 	addAttr -ci true -sn "SetParent" -ln "SetParent" -dt "string";
+	addAttr -ci true -sn "SetAttrsPosition" -ln "SetAttrsPosition" -dt "string";
 	addAttr -ci true -sn "Mirror" -ln "Mirror" -min 0 -max 2 -en "True:False:Right_Only" 
 		-at "enum";
 	addAttr -ci true -sn "SetUpperEdge" -ln "SetUpperEdge" -dt "string";
-	addAttr -ci true -sn "CtrlSize" -ln "CtrlSize" -dv 4 -min 1 -max 20 -at "long";
-	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
-	addAttr -ci true -sn "SetAttrsPosition" -ln "SetAttrsPosition" -dt "string";
-	addAttr -ci true -sn "SetEyePivot" -ln "SetEyePivot" -dt "string";
 	addAttr -ci true -sn "SetLowerEdge" -ln "SetLowerEdge" -dt "string";
-	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	addAttr -ci true -sn "SetEyePivot" -ln "SetEyePivot" -dt "string";
+	addAttr -ci true -sn "CtrlSize" -ln "CtrlSize" -dv 4 -min 1 -max 20 -at "long";
+	addAttr -ci true -sn "LimitCtrl" -ln "LimitCtrl" -dv 1 -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "GameMode" -ln "GameMode" -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "BindJoints" -ln "BindJoints" -min 0 -max 2 -en "PerVtx:3:1" 
+		-at "enum";
+	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
 	setAttr ".precode" -type "string" "";
-	setAttr -l on ".Build_Command" -type "string" "exec_eyelids.build_eyelids_block()";
-	setAttr -l on ".Import_Command" -type "string" "import exec_eyelids";
+	setAttr -l on ".Build_Command" -type "string" "exec_eyelids_v001.build_eyelids_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_eyelids_v001";
+	setAttr ".postcode" -type "string" "";
 	setAttr ".SetParent" -type "string" "Skull_Upr_Ctrl";
+	setAttr ".SetAttrsPosition" -type "string" "Vis_Ctrl";
 	setAttr -cb on ".Mirror";
 	setAttr ".SetUpperEdge" -type "string" "";
-	setAttr -k on ".CtrlSize" 1;
-	setAttr ".Help" -type "string" "Create eyelids rig, based on Marco Giordano tutorial\n";
-	setAttr ".SetAttrsPosition" -type "string" "Vis_Ctrl";
-	setAttr ".SetEyePivot" -type "string" "Eye_Pivot";
 	setAttr ".SetLowerEdge" -type "string" "";
-	setAttr ".postcode" -type "string" "";
+	setAttr ".SetEyePivot" -type "string" "Eye_Pivot";
+	setAttr -k on ".CtrlSize" 1;
+	setAttr -cb on ".LimitCtrl";
+	setAttr -cb on ".GameMode";
+	setAttr -cb on ".BindJoints";
+	setAttr ".Help" -type "string" "Overview:\n  Eyelids Setup by Marco Giordano video.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetParent: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- SetAttrsPosition: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- Mirror: choose one option (for example: True, False, Right_Only).\n- CtrlSize: numeric value that controls size/amount/intensity (default 4).\n- LimitCtrl: turn this ON/OFF depending on whether you want that feature.\n- GameMode: turn this ON/OFF depending on whether you want that feature.\n- Template parent examples: Head_Jnt, Head_Ctrl, Spine_End_Jnt.\n- Template attrs-position examples: L_Eyelids_Scale_Ctrl, Vis_Ctrl, L_Brow_Ctrl.\n\nTips:\n- if a field says left/right or mirror, use it to generate the opposite side quickly.";
 createNode hyperLayout -n "hyperLayout11";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B0E3";
 	setAttr ".ihi" 0;
@@ -8381,26 +8266,29 @@ createNode network -n "Lips_Config";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
 	addAttr -ci true -sn "SetParent" -ln "SetParent" -dt "string";
+	addAttr -ci true -sn "SetAttrsPosition" -ln "SetAttrsPosition" -dt "string";
 	addAttr -ci true -sn "Mirror" -ln "Mirror" -min 0 -max 2 -en "True:False:Right_Only" 
 		-at "enum";
+	addAttr -ci true -sn "SetupOption" -ln "SetupOption" -min 0 -max 1 -en "Curve:Bezier" 
+		-at "enum";
 	addAttr -ci true -sn "SetUpperEdge" -ln "SetUpperEdge" -dt "string";
+	addAttr -ci true -sn "SetLowerEdge" -ln "SetLowerEdge" -dt "string";
 	addAttr -ci true -sn "CtrlSize" -ln "CtrlSize" -dv 4 -min 1 -max 20 -at "long";
 	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
-	addAttr -ci true -sn "SetAttrsPosition" -ln "SetAttrsPosition" -dt "string";
-	addAttr -ci true -sn "SetLowerEdge" -ln "SetLowerEdge" -dt "string";
-	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
 	setAttr ".precode" -type "string" "";
-	setAttr -l on ".Build_Command" -type "string" "exec_mouth.build_mouth_block()";
-	setAttr -l on ".Import_Command" -type "string" "import exec_mouth";
-	setAttr ".SetParent" -type "string" "Skull_Lwr_Ctrl";
-	setAttr -cb on ".Mirror";
-	setAttr ".SetUpperEdge" -type "string" "";
-	setAttr -k on ".CtrlSize" 1;
-	setAttr ".Help" -type "string" "Create mouth lips rig\n";
-	setAttr ".SetAttrsPosition" -type "string" "Vis_Ctrl";
-	setAttr ".SetLowerEdge" -type "string" "";
+	setAttr -l on ".Build_Command" -type "string" "exec_mouth_v002.build_mouth_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_mouth_v002";
 	setAttr ".postcode" -type "string" "";
+	setAttr ".SetParent" -type "string" "Skull_Lwr_Ctrl";
+	setAttr ".SetAttrsPosition" -type "string" "Vis_Ctrl";
+	setAttr -cb on ".Mirror";
+	setAttr -cb on ".SetupOption";
+	setAttr ".SetUpperEdge" -type "string" "";
+	setAttr ".SetLowerEdge" -type "string" "";
+	setAttr -k on ".CtrlSize" 1;
+	setAttr ".Help" -type "string" "Overview:\n  Will create mouth system (v002).\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetParent: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- SetAttrsPosition: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- Mirror: choose one option (for example: True, False, Right_Only).\n- SetupOption: choose one option (for example: Curve, Bezier).\n- CtrlSize: numeric value that controls size/amount/intensity (default 4).\n- SetUpperEdge: set the node/object name this block should use.\n- Template parent examples: Jaw_Jnt, Head_Jnt, Head_Ctrl.\n- Template attrs-position examples: Lips_Center_Ctrl, Vis_Ctrl, Mouth_Jaw_Ctrl.\n\nTips:\n- start with defaults, build once, then tweak only the fields you need.";
 createNode hyperLayout -n "hyperLayout10";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B0E5";
 	setAttr ".ihi" 0;
@@ -8410,22 +8298,24 @@ createNode network -n "L_Brow_Config";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
 	addAttr -ci true -sn "SetParent" -ln "SetParent" -dt "string";
 	addAttr -ci true -sn "Mirror" -ln "Mirror" -min 0 -max 2 -en "True:False:Right_Only" 
 		-at "enum";
 	addAttr -ci true -sn "SetAttrsPosition" -ln "SetAttrsPosition" -dt "string";
-	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
 	addAttr -ci true -sn "CtrlSize" -ln "CtrlSize" -dv 4 -min 1 -max 20 -at "long";
-	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	addAttr -ci true -sn "GameMode" -ln "GameMode" -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
 	setAttr ".precode" -type "string" "";
-	setAttr -l on ".Build_Command" -type "string" "exec_brows.build_brows_block()";
-	setAttr -l on ".Import_Command" -type "string" "import exec_brows";
+	setAttr -l on ".Build_Command" -type "string" "exec_brows_v001.build_brows_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_brows_v001";
+	setAttr ".postcode" -type "string" "";
 	setAttr ".SetParent" -type "string" "Skull_Upr_Ctrl";
 	setAttr -cb on ".Mirror";
 	setAttr ".SetAttrsPosition" -type "string" "Vis_Ctrl";
-	setAttr ".Help" -type "string" "Will crete brows rig system";
 	setAttr -k on ".CtrlSize" 1;
-	setAttr ".postcode" -type "string" "";
+	setAttr -cb on ".GameMode";
+	setAttr ".Help" -type "string" "Overview:\n  Will create a local Brows rig.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetParent: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- SetAttrsPosition: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- Mirror: choose one option (for example: True, False, Right_Only).\n- CtrlSize: numeric value that controls size/amount/intensity (default 4).\n- GameMode: turn this ON/OFF depending on whether you want that feature.\n- Template parent examples: Head_Jnt, Head_Ctrl, Spine_End_Jnt.\n- Template attrs-position examples: L_Brow_Ctrl, Vis_Ctrl, L_Eyelids_Scale_Ctrl.\n\nTips:\n- if a field says left/right or mirror, use it to generate the opposite side quickly.";
 createNode hyperLayout -n "hyperLayout3";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B0E7";
 	setAttr ".ihi" 0;
@@ -8435,32 +8325,30 @@ createNode network -n "L_Cheecks_Config";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
 	addAttr -ci true -sn "SetParent" -ln "SetParent" -dt "string";
 	addAttr -ci true -sn "SetAttrsPosition" -ln "SetAttrsPosition" -dt "string";
-	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
 	addAttr -ci true -sn "Mirror" -ln "Mirror" -min 0 -max 2 -en "True:False:Right_Only" 
 		-at "enum";
 	addAttr -ci true -sn "CtrlSize" -ln "CtrlSize" -dv 4 -min 1 -max 20 -at "long";
-	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
 	setAttr ".precode" -type "string" "";
-	setAttr -l on ".Build_Command" -type "string" "exec_cheeks.build_cheek_block()";
-	setAttr -l on ".Import_Command" -type "string" "import exec_cheeks";
+	setAttr -l on ".Build_Command" -type "string" "exec_cheeks_v001.build_cheek_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_cheeks_v001";
+	setAttr ".postcode" -type "string" "";
 	setAttr ".SetParent" -type "string" "Skull_Lwr_Ctrl";
 	setAttr ".SetAttrsPosition" -type "string" "Vis_Ctrl";
-	setAttr ".Help" -type "string" "Will crete cheek rig system";
 	setAttr -cb on ".Mirror";
 	setAttr -k on ".CtrlSize" 1;
-	setAttr ".postcode" -type "string" "";
+	setAttr ".Help" -type "string" "Overview:\n  Will create a local Cheeck rig.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetParent: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- SetAttrsPosition: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- Mirror: choose one option (for example: True, False, Right_Only).\n- CtrlSize: numeric value that controls size/amount/intensity (default 4).\n- Template parent examples: Head_Jnt, Head_Ctrl, Spine_End_Jnt.\n- Template attrs-position examples: L_Cheecks_Main_Ctrl, Vis_Ctrl, L_Brow_Ctrl.\n\nTips:\n- start with defaults, build once, then tweak only the fields you need.";
 createNode cluster -n "L_Cheecks_Border_Guide_Cls";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B0E9";
 	setAttr ".ip[0].gtg" -type "string" "L_Cheecks_Border_Guide_Cls";
-	setAttr ".gm[0]" -type "matrix" 1 0 0 0 0 1 0 0
-		 0 0 1 0 0 0 0 1;
+	setAttr ".gm[0]" -type "matrix" 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1;
 createNode cluster -n "L_Cheecks_Guide_Cls";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B0EA";
 	setAttr ".ip[0].gtg" -type "string" "L_Cheecks_Guide_Cls";
-	setAttr ".gm[0]" -type "matrix" 1 0 0 0 0 1 0 0
-		 0 0 1 0 0 0 0 1;
+	setAttr ".gm[0]" -type "matrix" 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1;
 createNode hyperLayout -n "hyperLayout2";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B0EB";
 	setAttr ".ihi" 0;
@@ -8470,22 +8358,24 @@ createNode network -n "Jaw_Config";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
 	addAttr -ci true -sn "SetParent" -ln "SetParent" -dt "string";
 	addAttr -ci true -sn "SetAttrsPosition" -ln "SetAttrsPosition" -dt "string";
-	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
 	addAttr -ci true -sn "CtrlType" -ln "CtrlType" -min 0 -max 3 -en "circleY:circleX:circleZ:square" 
 		-at "enum";
 	addAttr -ci true -sn "CtrlSize" -ln "CtrlSize" -dv 4 -min 1 -max 20 -at "long";
-	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	addAttr -ci true -sn "GameMode" -ln "GameMode" -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
 	setAttr ".precode" -type "string" "";
-	setAttr -l on ".Build_Command" -type "string" "exec_jaw.build_jaw_block()";
-	setAttr -l on ".Import_Command" -type "string" "import exec_jaw";
+	setAttr -l on ".Build_Command" -type "string" "exec_jaw_v001.build_jaw_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_jaw_v001";
+	setAttr ".postcode" -type "string" "";
 	setAttr ".SetParent" -type "string" "Skull_Lwr_Ctrl";
 	setAttr ".SetAttrsPosition" -type "string" "Vis_Ctrl";
-	setAttr ".Help" -type "string" "Possible parent: JawEnd_Jnt ";
 	setAttr -cb on ".CtrlType";
 	setAttr -k on ".CtrlSize" 1;
-	setAttr ".postcode" -type "string" "";
+	setAttr -cb on ".GameMode";
+	setAttr ".Help" -type "string" "Overview:\n  Will create jaw rig.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetParent: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- SetAttrsPosition: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- CtrlType: choose one option (for example: circleY, circleX, circleZ, square).\n- CtrlSize: numeric value that controls size/amount/intensity (default 4).\n- GameMode: turn this ON/OFF depending on whether you want that feature.\n- Template parent examples: Jaw_Jnt, Head_Jnt, Head_Ctrl.\n- Template attrs-position examples: Vis_Ctrl, Jaw_Ctrl, Lips_Center_Ctrl.\n\nTips:\n- if a field says left/right or mirror, use it to generate the opposite side quickly.";
 createNode hyperLayout -n "hyperLayout14";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B0ED";
 	setAttr ".ihi" 0;
@@ -8495,22 +8385,22 @@ createNode network -n "Tongue_Config";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
 	addAttr -ci true -sn "SetParent" -ln "SetParent" -dt "string";
 	addAttr -ci true -sn "SetAttrsPosition" -ln "SetAttrsPosition" -dt "string";
+	addAttr -ci true -sn "CtrlSize" -ln "CtrlSize" -dv 4 -min 1 -max 20 -at "long";
 	addAttr -ci true -sn "CtrlColor" -ln "CtrlColor" -min 0 -max 7 -en "lightBlue:blue:white:purple:green:red:yellow:grey" 
 		-at "enum";
 	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
-	addAttr -ci true -sn "CtrlSize" -ln "CtrlSize" -dv 4 -min 1 -max 20 -at "long";
-	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
 	setAttr ".precode" -type "string" "";
-	setAttr -l on ".Build_Command" -type "string" "exec_tongue.build_tongue_block()";
-	setAttr -l on ".Import_Command" -type "string" "import exec_tongue";
+	setAttr -l on ".Build_Command" -type "string" "exec_tongue_v001.build_tongue_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_tongue_v001";
+	setAttr ".postcode" -type "string" "";
 	setAttr ".SetParent" -type "string" "Jaw_Ctrl";
 	setAttr ".SetAttrsPosition" -type "string" "Vis_Ctrl";
-	setAttr -cb on ".CtrlColor";
-	setAttr ".Help" -type "string" "Create Tongue System";
 	setAttr -k on ".CtrlSize" 1;
-	setAttr ".postcode" -type "string" "";
+	setAttr -cb on ".CtrlColor";
+	setAttr ".Help" -type "string" "Overview:\n  create Tongue system.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetParent: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- SetAttrsPosition: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- CtrlSize: numeric value that controls size/amount/intensity (default 4).\n- CtrlColor: choose one option (for example: lightBlue, blue, white, purple).\n- Template parent examples: Jaw_Jnt, Head_Jnt, Head_Ctrl.\n- Template attrs-position examples: Vis_Ctrl, Lips_Center_Ctrl, Jaw_Ctrl.\n\nTips:\n- start with defaults, build once, then tweak only the fields you need.";
 createNode hyperLayout -n "hyperLayout19";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B0EF";
 	setAttr ".ihi" 0;
@@ -8520,25 +8410,27 @@ createNode network -n "Teeth_Config";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
-	addAttr -ci true -sn "SetLwrParent" -ln "SetLwrParent" -dt "string";
-	addAttr -ci true -sn "SetUprParent" -ln "SetUprParent" -dt "string";
-	addAttr -ci true -sn "CtrlSize" -ln "CtrlSize" -dv 4 -min 1 -max 20 -at "long";
-	addAttr -ci true -sn "LwrTeeth" -ln "LwrTeeth" -min 0 -max 1 -at "bool";
-	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
-	addAttr -ci true -sn "SetAttrsPosition" -ln "SetAttrsPosition" -dt "string";
-	addAttr -ci true -sn "UprTeeth" -ln "UprTeeth" -min 0 -max 1 -at "bool";
 	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	addAttr -ci true -sn "SetUprParent" -ln "SetUprParent" -dt "string";
+	addAttr -ci true -sn "SetLwrParent" -ln "SetLwrParent" -dt "string";
+	addAttr -ci true -sn "SetAttrsPosition" -ln "SetAttrsPosition" -dt "string";
+	addAttr -ci true -sn "SetJawJnt" -ln "SetJawJnt" -dt "string";
+	addAttr -ci true -sn "UprTeeth" -ln "UprTeeth" -dv 1 -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "LwrTeeth" -ln "LwrTeeth" -dv 1 -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "CtrlSize" -ln "CtrlSize" -dv 4 -min 1 -max 20 -at "long";
+	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
 	setAttr ".precode" -type "string" "";
-	setAttr -l on ".Build_Command" -type "string" "exec_teeth.build_teeth_block()";
-	setAttr -l on ".Import_Command" -type "string" "import exec_teeth";
-	setAttr ".SetLwrParent" -type "string" "Jaw_Ctrl";
-	setAttr ".SetUprParent" -type "string" "Skull_Lwr_Ctrl";
-	setAttr -k on ".CtrlSize" 1;
-	setAttr -cb on ".LwrTeeth" yes;
-	setAttr ".Help" -type "string" "Will Create Teeth System";
-	setAttr ".SetAttrsPosition" -type "string" "Vis_Ctrl";
-	setAttr -cb on ".UprTeeth" yes;
+	setAttr -l on ".Build_Command" -type "string" "exec_teeth_v001.build_teeth_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_teeth_v001";
 	setAttr ".postcode" -type "string" "";
+	setAttr ".SetUprParent" -type "string" "Skull_Lwr_Ctrl";
+	setAttr ".SetLwrParent" -type "string" "Jaw_Ctrl";
+	setAttr ".SetAttrsPosition" -type "string" "Vis_Ctrl";
+	setAttr ".SetJawJnt" -type "string" "";
+	setAttr -cb on ".UprTeeth";
+	setAttr -cb on ".LwrTeeth";
+	setAttr -k on ".CtrlSize" 1;
+	setAttr ".Help" -type "string" "Overview:\n  Will Create Teeth System.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetAttrsPosition: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- UprTeeth: turn this ON/OFF depending on whether you want that feature.\n- LwrTeeth: turn this ON/OFF depending on whether you want that feature.\n- CtrlSize: numeric value that controls size/amount/intensity (default 4).\n- SetUprParent: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- SetLwrParent: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- Template parent examples: Jaw_Jnt, Head_Jnt, Head_Ctrl.\n- Template attrs-position examples: Vis_Ctrl, Lips_Center_Ctrl, Jaw_Ctrl.\n\nTips:\n- if a field says left/right or mirror, use it to generate the opposite side quickly.";
 createNode hyperLayout -n "hyperLayout16";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B0F1";
 	setAttr ".ihi" 0;
@@ -8548,17 +8440,17 @@ createNode network -n "Commissures_Config";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
 	addAttr -ci true -sn "LeftCornerCtrl" -ln "LeftCornerCtrl" -dt "string";
 	addAttr -ci true -sn "RightCornerCtrl" -ln "RightCornerCtrl" -dt "string";
 	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
-	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
 	setAttr ".precode" -type "string" "";
-	setAttr -l on ".Build_Command" -type "string" "exec_commissures.build_commissures_block()";
-	setAttr -l on ".Import_Command" -type "string" "import exec_commissures";
+	setAttr -l on ".Build_Command" -type "string" "exec_commissures_v001.build_commissures_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_commissures_v001";
+	setAttr ".postcode" -type "string" "";
 	setAttr ".LeftCornerCtrl" -type "string" "L_Lips_Main_Ctrl";
 	setAttr ".RightCornerCtrl" -type "string" "R_Lips_Main_Ctrl";
-	setAttr ".Help" -type "string" "This will create a commissures slide systeam for the lips blendshapes";
-	setAttr ".postcode" -type "string" "";
+	setAttr ".Help" -type "string" "Overview:\n  This will create a commissures systeam for the lips blendshapes.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- LeftCornerCtrl: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- RightCornerCtrl: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n\nTips:\n- start with defaults, build once, then tweak only the fields you need.";
 createNode hyperLayout -n "hyperLayout13";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B0F3";
 	setAttr ".ihi" 0;
@@ -8567,15 +8459,19 @@ createNode network -n "NullJnt_Config";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
-	addAttr -ci true -sn "Exec" -ln "Exec" -min 0 -max 1 -en "Python:Mel" -at "enum";
-	addAttr -ci true -sn "Code" -ln "Code" -dt "string";
 	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	addAttr -ci true -sn "Exec" -ln "Exec" -min 0 -max 1 -en "Python:Mel" -at "enum";
+	addAttr -ci true -sn "RunBeforeBuild" -ln "RunBeforeBuild" -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "RunAfterBuild" -ln "RunAfterBuild" -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "Code" -ln "Code" -dt "string";
 	setAttr ".precode" -type "string" "";
-	setAttr -l on ".Build_Command" -type "string" "exec_code.build_code_block()";
-	setAttr -l on ".Import_Command" -type "string" "import exec_code";
-	setAttr -cb on ".Exec";
-	setAttr ".Code" -type "string" "from maya import cmds\ncmds.select(cl=True)\ncmds.joint(n='Null_Local_Bnd')\ncmds.parent('Null_Local_Bnd', 'Bind_Joints_Grp')";
+	setAttr -l on ".Build_Command" -type "string" "exec_code_v001.build_code_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_code_v001";
 	setAttr ".postcode" -type "string" "";
+	setAttr -cb on ".Exec";
+	setAttr -cb on ".RunBeforeBuild";
+	setAttr -cb on ".RunAfterBuild";
+	setAttr ".Code" -type "string" "from maya import cmds\ncmds.select(cl=True)\ncmds.joint(n='Null_Local_Bnd')\ncmds.parent('Null_Local_Bnd', 'Bind_Joints_Grp')";
 createNode hyperLayout -n "hyperLayout41";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B0F9";
 	setAttr ".ihi" 0;
@@ -8584,17 +8480,17 @@ createNode network -n "Correctives_Config";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
 	addAttr -ci true -sn "SetGeo" -ln "SetGeo" -dt "string";
 	addAttr -ci true -sn "NewNames" -ln "NewNames" -dt "string";
 	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
-	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
 	setAttr ".precode" -type "string" "";
-	setAttr -l on ".Build_Command" -type "string" "exec_blendshape.build_blendshape_block()";
-	setAttr -l on ".Import_Command" -type "string" "import exec_blendshape";
+	setAttr -l on ".Build_Command" -type "string" "exec_blendshape_v001.build_blendshape_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_blendshape_v001";
+	setAttr ".postcode" -type "string" "";
 	setAttr ".SetGeo" -type "string" "BodySkull";
 	setAttr ".NewNames" -type "string" "L_MouthUp_Corrective,R_MouthUp_Corrective,L_MouthDown_Corrective,R_MouthDown_Corrective,L_MouthWide_Corrective,R_MouthWide_Corrective,L_MouthNarrow_Corrective,R_MouthNarrow_Corrective,L_BrowUp,R_BrowUp,L_BrowDown,R_BrowDown,L_Puff,R_Puff";
-	setAttr ".Help" -type "string" "Create Shapes for nain Geo and connect them via BlendShape, separate names with comas ','";
-	setAttr ".postcode" -type "string" "";
+	setAttr ".Help" -type "string" "Overview:\n  This will create blendshapes for the selected geo.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetGeo: set the node/object name this block should use.\n- NewNames: enter names separated by commas (example format: nameA,nameB,nameC).\n\nTips:\n- start with defaults, build once, then tweak only the fields you need.";
 createNode hyperLayout -n "hyperLayout42";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B0FB";
 	setAttr ".ihi" 0;
@@ -8604,15 +8500,19 @@ createNode network -n "reorder_Config";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
-	addAttr -ci true -sn "Exec" -ln "Exec" -min 0 -max 1 -en "Python:Mel" -at "enum";
-	addAttr -ci true -sn "Code" -ln "Code" -dt "string";
 	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
+	addAttr -ci true -sn "Exec" -ln "Exec" -min 0 -max 1 -en "Python:Mel" -at "enum";
+	addAttr -ci true -sn "RunBeforeBuild" -ln "RunBeforeBuild" -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "RunAfterBuild" -ln "RunAfterBuild" -min 0 -max 1 -at "bool";
+	addAttr -ci true -sn "Code" -ln "Code" -dt "string";
 	setAttr ".precode" -type "string" "";
-	setAttr -l on ".Build_Command" -type "string" "exec_code.build_code_block()";
-	setAttr -l on ".Import_Command" -type "string" "import exec_code";
-	setAttr -cb on ".Exec";
-	setAttr ".Code" -type "string" "try:cmds.reorderDeformers('Correctives_BSP', 'Locals_BSP', 'BodySkull')\nexcept Exception as e:\n    print(e)\n";
+	setAttr -l on ".Build_Command" -type "string" "exec_code_v001.build_code_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_code_v001";
 	setAttr ".postcode" -type "string" "";
+	setAttr -cb on ".Exec";
+	setAttr -cb on ".RunBeforeBuild";
+	setAttr -cb on ".RunAfterBuild";
+	setAttr ".Code" -type "string" "try:cmds.reorderDeformers('Correctives_BSP', 'Locals_BSP', 'BodySkull')\nexcept Exception as e:\n    print(e)\n";
 createNode hyperLayout -n "hyperLayout29";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B0FD";
 	setAttr ".ihi" 0;
@@ -8621,17 +8521,17 @@ createNode network -n "BindSkull_Config";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
 	addAttr -ci true -sn "SetGeo" -ln "SetGeo" -dt "string";
 	addAttr -ci true -sn "SetJoints" -ln "SetJoints" -dt "string";
 	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
-	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
 	setAttr ".precode" -type "string" "";
-	setAttr -l on ".Build_Command" -type "string" "exec_skin.build_skin_block()";
-	setAttr -l on ".Import_Command" -type "string" "import exec_skin";
+	setAttr -l on ".Build_Command" -type "string" "exec_skin_v001.build_skin_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_skin_v001";
+	setAttr ".postcode" -type "string" "";
 	setAttr ".SetGeo" -type "string" "BodySkull";
 	setAttr ".SetJoints" -type "string" "Skull_Lwr_Bnd, Skull_Upr_Bnd,Null_Local_Bnd";
-	setAttr ".Help" -type "string" "Skin desire joints to geo, you can give names and * for overall parts, separate with ', comas', the command will select and then skin it";
-	setAttr ".postcode" -type "string" "";
+	setAttr ".Help" -type "string" "Overview:\n  Will skin joints to geos.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetGeo: set the node/object name this block should use.\n- SetJoints: node name or pattern.\n- You can use * as a wildcard when useful.\n\nTips:\n- start with defaults, build once, then tweak only the fields you need.";
 createNode hyperLayout -n "hyperLayout30";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B0FF";
 	setAttr ".ihi" 0;
@@ -8640,17 +8540,17 @@ createNode network -n "BindEyelids_Config";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
 	addAttr -ci true -sn "SetGeo" -ln "SetGeo" -dt "string";
 	addAttr -ci true -sn "SetJoints" -ln "SetJoints" -dt "string";
 	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
-	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
 	setAttr ".precode" -type "string" "";
-	setAttr -l on ".Build_Command" -type "string" "exec_skin.build_skin_block()";
-	setAttr -l on ".Import_Command" -type "string" "import exec_skin";
+	setAttr -l on ".Build_Command" -type "string" "exec_skin_v001.build_skin_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_skin_v001";
+	setAttr ".postcode" -type "string" "";
 	setAttr ".SetGeo" -type "string" "BodyEyes";
 	setAttr ".SetJoints" -type "string" "*_Eyelids_Up_*_Bnd,*_Eyelids_Dw_*_Bnd,*_Eyelids_Scale_Bnd,Null_Local_Bnd";
-	setAttr ".Help" -type "string" "Skin desire joints to geo, you can give names and * for overall parts, separate with ', comas', the command will select and then skin it";
-	setAttr ".postcode" -type "string" "";
+	setAttr ".Help" -type "string" "Overview:\n  Will skin joints to geos.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetGeo: set the node/object name this block should use.\n- SetJoints: node name or pattern.\n- You can use * as a wildcard when useful.\n\nTips:\n- start with defaults, build once, then tweak only the fields you need.";
 createNode hyperLayout -n "hyperLayout31";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B101";
 	setAttr ".ihi" 0;
@@ -8659,17 +8559,17 @@ createNode network -n "BindLips_Config";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
 	addAttr -ci true -sn "SetGeo" -ln "SetGeo" -dt "string";
 	addAttr -ci true -sn "SetJoints" -ln "SetJoints" -dt "string";
 	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
-	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
 	setAttr ".precode" -type "string" "";
-	setAttr -l on ".Build_Command" -type "string" "exec_skin.build_skin_block()";
-	setAttr -l on ".Import_Command" -type "string" "import exec_skin";
+	setAttr -l on ".Build_Command" -type "string" "exec_skin_v001.build_skin_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_skin_v001";
+	setAttr ".postcode" -type "string" "";
 	setAttr ".SetGeo" -type "string" "BodyLips";
 	setAttr ".SetJoints" -type "string" "Lips_Up_*_Bnd,Lips_Dw_*_Bnd,Null_Local_Bnd";
-	setAttr ".Help" -type "string" "Skin desire joints to geo, you can give names and * for overall parts, separate with ', comas', the command will select and then skin it";
-	setAttr ".postcode" -type "string" "";
+	setAttr ".Help" -type "string" "Overview:\n  Will skin joints to geos.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetGeo: set the node/object name this block should use.\n- SetJoints: node name or pattern.\n- You can use * as a wildcard when useful.\n\nTips:\n- start with defaults, build once, then tweak only the fields you need.";
 createNode hyperLayout -n "hyperLayout32";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B103";
 	setAttr ".ihi" 0;
@@ -8678,17 +8578,17 @@ createNode network -n "BindBrows_Config";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
 	addAttr -ci true -sn "SetGeo" -ln "SetGeo" -dt "string";
 	addAttr -ci true -sn "SetJoints" -ln "SetJoints" -dt "string";
 	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
-	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
 	setAttr ".precode" -type "string" "";
-	setAttr -l on ".Build_Command" -type "string" "exec_skin.build_skin_block()";
-	setAttr -l on ".Import_Command" -type "string" "import exec_skin";
+	setAttr -l on ".Build_Command" -type "string" "exec_skin_v001.build_skin_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_skin_v001";
+	setAttr ".postcode" -type "string" "";
 	setAttr ".SetGeo" -type "string" "BodyBrows";
 	setAttr ".SetJoints" -type "string" "*_Brow_*_Bnd,Null_Local_Bnd";
-	setAttr ".Help" -type "string" "Skin desire joints to geo, you can give names and * for overall parts, separate with ', comas', the command will select and then skin it";
-	setAttr ".postcode" -type "string" "";
+	setAttr ".Help" -type "string" "Overview:\n  Will skin joints to geos.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetGeo: set the node/object name this block should use.\n- SetJoints: node name or pattern.\n- You can use * as a wildcard when useful.\n\nTips:\n- start with defaults, build once, then tweak only the fields you need.";
 createNode hyperLayout -n "hyperLayout33";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B105";
 	setAttr ".ihi" 0;
@@ -8697,17 +8597,17 @@ createNode network -n "BindCheeks_Config";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
 	addAttr -ci true -sn "SetGeo" -ln "SetGeo" -dt "string";
 	addAttr -ci true -sn "SetJoints" -ln "SetJoints" -dt "string";
 	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
-	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
 	setAttr ".precode" -type "string" "";
-	setAttr -l on ".Build_Command" -type "string" "exec_skin.build_skin_block()";
-	setAttr -l on ".Import_Command" -type "string" "import exec_skin";
+	setAttr -l on ".Build_Command" -type "string" "exec_skin_v001.build_skin_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_skin_v001";
+	setAttr ".postcode" -type "string" "";
 	setAttr ".SetGeo" -type "string" "BodyCheeks";
 	setAttr ".SetJoints" -type "string" "*_Cheecks_*_Bnd,Null_Local_Bnd";
-	setAttr ".Help" -type "string" "Skin desire joints to geo, you can give names and * for overall parts, separate with ', comas', the command will select and then skin it";
-	setAttr ".postcode" -type "string" "";
+	setAttr ".Help" -type "string" "Overview:\n  Will skin joints to geos.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetGeo: set the node/object name this block should use.\n- SetJoints: node name or pattern.\n- You can use * as a wildcard when useful.\n\nTips:\n- start with defaults, build once, then tweak only the fields you need.";
 createNode hyperLayout -n "hyperLayout34";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B107";
 	setAttr ".ihi" 0;
@@ -8716,17 +8616,17 @@ createNode network -n "BindJaw_Config";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
 	addAttr -ci true -sn "SetGeo" -ln "SetGeo" -dt "string";
 	addAttr -ci true -sn "SetJoints" -ln "SetJoints" -dt "string";
 	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
-	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
 	setAttr ".precode" -type "string" "";
-	setAttr -l on ".Build_Command" -type "string" "exec_skin.build_skin_block()";
-	setAttr -l on ".Import_Command" -type "string" "import exec_skin";
+	setAttr -l on ".Build_Command" -type "string" "exec_skin_v001.build_skin_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_skin_v001";
+	setAttr ".postcode" -type "string" "";
 	setAttr ".SetGeo" -type "string" "BodyJaw";
 	setAttr ".SetJoints" -type "string" "Jaw_Bnd, JawUpperLipPivot_Bnd,Null_Local_Bnd";
-	setAttr ".Help" -type "string" "Skin desire joints to geo, you can give names and * for overall parts, separate with ', comas', the command will select and then skin it";
-	setAttr ".postcode" -type "string" "";
+	setAttr ".Help" -type "string" "Overview:\n  Will skin joints to geos.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetGeo: set the node/object name this block should use.\n- SetJoints: node name or pattern.\n- You can use * as a wildcard when useful.\n\nTips:\n- start with defaults, build once, then tweak only the fields you need.";
 createNode hyperLayout -n "hyperLayout35";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B109";
 	setAttr ".ihi" 0;
@@ -8735,17 +8635,17 @@ createNode network -n "BindMouthUp_Config";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
 	addAttr -ci true -sn "SetGeo" -ln "SetGeo" -dt "string";
 	addAttr -ci true -sn "SetJoints" -ln "SetJoints" -dt "string";
 	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
-	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
 	setAttr ".precode" -type "string" "";
-	setAttr -l on ".Build_Command" -type "string" "exec_skin.build_skin_block()";
-	setAttr -l on ".Import_Command" -type "string" "import exec_skin";
+	setAttr -l on ".Build_Command" -type "string" "exec_skin_v001.build_skin_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_skin_v001";
+	setAttr ".postcode" -type "string" "";
 	setAttr ".SetGeo" -type "string" "BodyMouthUp";
 	setAttr ".SetJoints" -type "string" "*_Commissures_Up_Bnd,Null_Local_Bnd";
-	setAttr ".Help" -type "string" "Skin desire joints to geo, you can give names and * for overall parts, separate with ', comas', the command will select and then skin it";
-	setAttr ".postcode" -type "string" "";
+	setAttr ".Help" -type "string" "Overview:\n  Will skin joints to geos.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetGeo: set the node/object name this block should use.\n- SetJoints: node name or pattern.\n- You can use * as a wildcard when useful.\n\nTips:\n- start with defaults, build once, then tweak only the fields you need.";
 createNode hyperLayout -n "hyperLayout36";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B10B";
 	setAttr ".ihi" 0;
@@ -8754,17 +8654,17 @@ createNode network -n "BindMouthDown_Config";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
 	addAttr -ci true -sn "SetGeo" -ln "SetGeo" -dt "string";
 	addAttr -ci true -sn "SetJoints" -ln "SetJoints" -dt "string";
 	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
-	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
 	setAttr ".precode" -type "string" "";
-	setAttr -l on ".Build_Command" -type "string" "exec_skin.build_skin_block()";
-	setAttr -l on ".Import_Command" -type "string" "import exec_skin";
+	setAttr -l on ".Build_Command" -type "string" "exec_skin_v001.build_skin_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_skin_v001";
+	setAttr ".postcode" -type "string" "";
 	setAttr ".SetGeo" -type "string" "BodyMouthDown";
 	setAttr ".SetJoints" -type "string" "*_Commissures_Down_Bnd,Null_Local_Bnd";
-	setAttr ".Help" -type "string" "Skin desire joints to geo, you can give names and * for overall parts, separate with ', comas', the command will select and then skin it";
-	setAttr ".postcode" -type "string" "";
+	setAttr ".Help" -type "string" "Overview:\n  Will skin joints to geos.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetGeo: set the node/object name this block should use.\n- SetJoints: node name or pattern.\n- You can use * as a wildcard when useful.\n\nTips:\n- start with defaults, build once, then tweak only the fields you need.";
 createNode hyperLayout -n "hyperLayout37";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B10D";
 	setAttr ".ihi" 0;
@@ -8773,17 +8673,17 @@ createNode network -n "BindMouthWide_Config";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
 	addAttr -ci true -sn "SetGeo" -ln "SetGeo" -dt "string";
 	addAttr -ci true -sn "SetJoints" -ln "SetJoints" -dt "string";
 	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
-	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
 	setAttr ".precode" -type "string" "";
-	setAttr -l on ".Build_Command" -type "string" "exec_skin.build_skin_block()";
-	setAttr -l on ".Import_Command" -type "string" "import exec_skin";
+	setAttr -l on ".Build_Command" -type "string" "exec_skin_v001.build_skin_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_skin_v001";
+	setAttr ".postcode" -type "string" "";
 	setAttr ".SetGeo" -type "string" "BodyMouthWide";
 	setAttr ".SetJoints" -type "string" "*_Commissures_Wide_Bnd,Null_Local_Bnd";
-	setAttr ".Help" -type "string" "Skin desire joints to geo, you can give names and * for overall parts, separate with ', comas', the command will select and then skin it";
-	setAttr ".postcode" -type "string" "";
+	setAttr ".Help" -type "string" "Overview:\n  Will skin joints to geos.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetGeo: set the node/object name this block should use.\n- SetJoints: node name or pattern.\n- You can use * as a wildcard when useful.\n\nTips:\n- start with defaults, build once, then tweak only the fields you need.";
 createNode hyperLayout -n "hyperLayout38";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B10F";
 	setAttr ".ihi" 0;
@@ -8792,17 +8692,17 @@ createNode network -n "BindMouthNarrow_Config";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
 	addAttr -ci true -sn "SetGeo" -ln "SetGeo" -dt "string";
 	addAttr -ci true -sn "SetJoints" -ln "SetJoints" -dt "string";
 	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
-	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
 	setAttr ".precode" -type "string" "";
-	setAttr -l on ".Build_Command" -type "string" "exec_skin.build_skin_block()";
-	setAttr -l on ".Import_Command" -type "string" "import exec_skin";
+	setAttr -l on ".Build_Command" -type "string" "exec_skin_v001.build_skin_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_skin_v001";
+	setAttr ".postcode" -type "string" "";
 	setAttr ".SetGeo" -type "string" "BodyMouthNarrow";
 	setAttr ".SetJoints" -type "string" "*_Commissures_Narrow_Bnd,Null_Local_Bnd";
-	setAttr ".Help" -type "string" "Skin desire joints to geo, you can give names and * for overall parts, separate with ', comas', the command will select and then skin it";
-	setAttr ".postcode" -type "string" "";
+	setAttr ".Help" -type "string" "Overview:\n  Will skin joints to geos.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetGeo: set the node/object name this block should use.\n- SetJoints: node name or pattern.\n- You can use * as a wildcard when useful.\n\nTips:\n- start with defaults, build once, then tweak only the fields you need.";
 createNode hyperLayout -n "hyperLayout40";
 	rename -uid "534BCD80-0000-084D-641C-AB9C0000B111";
 	setAttr ".ihi" 0;
@@ -8811,15 +8711,52 @@ createNode network -n "Load_Ctrls_Config";
 	addAttr -ci true -sn "precode" -ln "precode" -dt "string";
 	addAttr -ci true -sn "Build_Command" -ln "Build_Command" -dt "string";
 	addAttr -ci true -sn "Import_Command" -ln "Import_Command" -dt "string";
+	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
 	addAttr -ci true -sn "File" -ln "File" -dt "string";
 	addAttr -ci true -sn "Help" -ln "Help" -dt "string";
-	addAttr -ci true -sn "postcode" -ln "postcode" -dt "string";
 	setAttr ".precode" -type "string" "";
-	setAttr -l on ".Build_Command" -type "string" "exec_load_ctrls.build_load_ctrls_block()";
-	setAttr -l on ".Import_Command" -type "string" "import exec_load_ctrls";
-	setAttr ".File" -type "string" "";
-	setAttr ".Help" -type "string" "Load Ctrls Data from File, you can put show keys to define the default ones.";
+	setAttr -l on ".Build_Command" -type "string" "exec_load_ctrls_v001.build_load_ctrls_block()";
+	setAttr -l on ".Import_Command" -type "string" "import exec_load_ctrls_v001";
 	setAttr ".postcode" -type "string" "";
+	setAttr ".File" -type "string" "";
+	setAttr ".Help" -type "string" "Overview:\n  Load Ctrls Data from File.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- File: enter the file/folder path to the data you want to load, or type a preset name (AG, SP, Quad, Simple, Game, Pig, Shot, Neat).\n\nTips:\n- start with defaults, build once, then tweak only the fields you need.";
+createNode lightLinker -s -n "lightLinker1";
+	rename -uid "765FF856-4F35-C0C7-F77B-ACA90B0B5A6F";
+	setAttr -s 2 ".lnk";
+	setAttr -s 2 ".slnk";
+createNode aiOptions -s -n "defaultArnoldRenderOptions";
+	rename -uid "B8E53995-4BCA-7896-005A-BAA75A6F8405";
+	setAttr ".version" -type "string" "5.5.4.2";
+createNode aiAOVFilter -s -n "defaultArnoldFilter";
+	rename -uid "F475D34C-400E-08D0-9280-41A231893721";
+	setAttr ".ai_translator" -type "string" "gaussian";
+createNode aiAOVDriver -s -n "defaultArnoldDriver";
+	rename -uid "1591CF4C-41BD-7365-595E-8E82DBDB19A5";
+	setAttr ".ai_translator" -type "string" "exr";
+createNode aiAOVDriver -s -n "defaultArnoldDisplayDriver";
+	rename -uid "F6956D08-4F3F-7192-C110-BF946F14BCFA";
+	setAttr ".ai_translator" -type "string" "maya";
+	setAttr ".output_mode" 0;
+createNode aiImagerDenoiserOidn -s -n "defaultArnoldDenoiser";
+	rename -uid "A4FD3650-4B53-FC41-73FB-85B3ADA58E72";
+createNode displayLayerManager -n "layerManager";
+	rename -uid "64156E9E-4A78-A2E8-1A59-A4B9858D83DC";
+createNode displayLayer -n "defaultLayer";
+	rename -uid "9B227958-48B6-F202-36E1-B4A2866A19B2";
+	setAttr ".ufem" -type "stringArray" 0  ;
+createNode renderLayerManager -n "renderLayerManager";
+	rename -uid "E632365A-4FFC-1600-7FF1-44A89EE60E21";
+createNode renderLayer -n "defaultRenderLayer";
+	rename -uid "98C2A797-4130-4DB0-C6D9-179A32D9C4C7";
+	setAttr ".g" yes;
+createNode script -n "uiConfigurationScriptNode";
+	rename -uid "B14EBD27-4583-04CB-51F6-1D9B6DE57D09";
+	setAttr ".b" -type "string" "// Maya Mel UI Configuration File.\n// No UI generated in batch mode.\n";
+	setAttr ".st" 3;
+createNode script -n "sceneConfigurationScriptNode";
+	rename -uid "C671E45B-434F-D87E-3D01-8999DF72A6EE";
+	setAttr ".b" -type "string" "playbackOptions -min 1 -max 120 -ast 1 -aet 200 ";
+	setAttr ".st" 6;
 select -ne :time1;
 	setAttr -av -k on ".cch";
 	setAttr -k on ".fzn";
@@ -8899,8 +8836,9 @@ select -ne :hardwareRenderingGlobals;
 	setAttr -k on ".aasc";
 	setAttr -k on ".aasq";
 	setAttr -k on ".laa";
+	setAttr ".dli" 1;
 	setAttr -k on ".fprt" yes;
-	setAttr -k on ".rtfm";
+	setAttr -k on ".rtfm" 1;
 select -ne :renderPartition;
 	setAttr -av -k on ".cch";
 	setAttr -cb on ".ihi";
@@ -8919,7 +8857,7 @@ select -ne :defaultShaderList1;
 	setAttr -cb on ".ihi";
 	setAttr -k on ".nds";
 	setAttr -cb on ".bnm";
-	setAttr -s 5 ".s";
+	setAttr -s 6 ".s";
 select -ne :postProcessList1;
 	setAttr -k on ".cch";
 	setAttr -cb on ".ihi";
@@ -8928,6 +8866,8 @@ select -ne :postProcessList1;
 	setAttr -s 2 ".p";
 select -ne :defaultRenderingList1;
 	setAttr -k on ".ihi";
+select -ne :standardSurface1;
+	setAttr ".sr" 0.40000000596046448;
 select -ne :initialShadingGroup;
 	setAttr -av -k on ".cch";
 	setAttr -k on ".fzn";
@@ -8982,6 +8922,7 @@ select -ne :defaultRenderGlobals;
 	addAttr -ci true -sn "auto_pipeline" -ln "auto_pipeline" -min 0 -max 1 -at "bool";
 	addAttr -ci true -sn "auto_pipeline_task_id" -ln "auto_pipeline_task_id" -at "long";
 	addAttr -ci true -sn "auto_pipeline_preset_id" -ln "auto_pipeline_preset_id" -at "long";
+	addAttr -ci true -h true -sn "dss" -ln "defaultSurfaceShader" -dt "string";
 	setAttr -av -k on ".cch";
 	setAttr -cb on ".ihi";
 	setAttr -av -k on ".nds";
@@ -9084,6 +9025,7 @@ select -ne :defaultRenderGlobals;
 	setAttr ".auto_pipeline" yes;
 	setAttr ".auto_pipeline_task_id" 221430;
 	setAttr ".auto_pipeline_preset_id" 36;
+	setAttr ".dss" -type "string" "lambert1";
 select -ne :defaultResolution;
 	setAttr -av -k on ".cch";
 	setAttr -av -k on ".ihi";
@@ -9103,13 +9045,13 @@ select -ne :defaultResolution;
 	setAttr -av -k on ".pdu";
 select -ne :defaultColorMgtGlobals;
 	setAttr ".cfe" yes;
-	setAttr ".cfp" -type "string" "/net/pipeline/common/media/ocio/config/aces_1.1/config.ocio";
-	setAttr ".vtn" -type "string" "sRGB (ACES)";
-	setAttr ".vn" -type "string" "sRGB";
-	setAttr ".dn" -type "string" "ACES";
-	setAttr ".wsn" -type "string" "ACES - ACEScg";
-	setAttr ".otn" -type "string" "sRGB (ACES)";
-	setAttr ".potn" -type "string" "sRGB (ACES)";
+	setAttr ".cfp" -type "string" "<MAYA_RESOURCES>/OCIO-configs/Maya2022-default/config.ocio";
+	setAttr ".vtn" -type "string" "ACES 1.0 SDR-video (sRGB)";
+	setAttr ".vn" -type "string" "ACES 1.0 SDR-video";
+	setAttr ".dn" -type "string" "sRGB";
+	setAttr ".wsn" -type "string" "ACEScg";
+	setAttr ".otn" -type "string" "ACES 1.0 SDR-video (sRGB)";
+	setAttr ".potn" -type "string" "ACES 1.0 SDR-video (sRGB)";
 select -ne :hardwareRenderGlobals;
 	setAttr -av -k on ".cch";
 	setAttr -av -cb on ".ihi";
@@ -9721,114 +9663,130 @@ connectAttr "L_Commissures_Wide_Guide.msg" "hyperLayout16.hyp[6].dn";
 connectAttr "curveShape3.msg" "hyperLayout16.hyp[7].dn";
 connectAttr "reorder_Loc.msg" "hyperLayout42.hyp[0].dn";
 connectAttr "reorder_LocShape.msg" "hyperLayout42.hyp[1].dn";
+relationship "link" ":lightLinker1" ":initialShadingGroup.message" ":defaultLightSet.message";
+relationship "link" ":lightLinker1" ":initialParticleSE.message" ":defaultLightSet.message";
+relationship "shadowLink" ":lightLinker1" ":initialShadingGroup.message" ":defaultLightSet.message";
+relationship "shadowLink" ":lightLinker1" ":initialParticleSE.message" ":defaultLightSet.message";
+connectAttr ":defaultArnoldDenoiser.msg" ":defaultArnoldRenderOptions.imagers" -na
+		;
+connectAttr ":defaultArnoldDisplayDriver.msg" ":defaultArnoldRenderOptions.drivers"
+		 -na;
+connectAttr ":defaultArnoldFilter.msg" ":defaultArnoldRenderOptions.filt";
+connectAttr ":defaultArnoldDriver.msg" ":defaultArnoldRenderOptions.drvr";
+connectAttr "layerManager.dli[0]" "defaultLayer.id";
+connectAttr "renderLayerManager.rlmi[0]" "defaultRenderLayer.rlid";
+connectAttr "defaultRenderLayer.msg" ":defaultRenderingList1.r" -na;
 connectAttr "L_Brow_GuideShape.iog" ":initialShadingGroup.dsm" -na;
-dataStructure -fmt "raw" -as "name=OrgStruct:float[3]=Origin Point";
-dataStructure -fmt "raw" -as "name=notes_trees_parShape:string=value";
+dataStructure -fmt "raw" -as "name=notes_base_right:string=value";
+dataStructure -fmt "raw" -as "name=notes_wildPatchC_parShape:string=value";
+dataStructure -fmt "raw" -as "name=notes_groundC_parShape:string=value";
+dataStructure -fmt "raw" -as "name=mapManager_base_hojas:string=value";
+dataStructure -fmt "raw" -as "name=notes_slopesGroundGrassB_Combined:string=value";
+dataStructure -fmt "raw" -as "name=notes_left_parShape:string=value";
+dataStructure -fmt "raw" -as "name=mapManager_slopesGroundGrassD_Combined:string=value";
 dataStructure -fmt "raw" -as "name=notes_wildPatchD_parShape:string=value";
 dataStructure -fmt "raw" -as "name=notes_slopesMountainsGrass_Combined:string=value";
-dataStructure -fmt "raw" -as "name=mapManager_floorOrangeConcrete_c_geo:string=value";
-dataStructure -fmt "raw" -as "name=notes_decayGrassesCenter_parShape:string=value";
-dataStructure -fmt "raw" -as "name=notes_wildPatchE_parShape:string=value";
-dataStructure -fmt "raw" -as "name=notes_slopesGroundGrassB_Combined:string=value";
-dataStructure -fmt "raw" -as "name=notes_base_right:string=value";
-dataStructure -fmt "raw" -as "name=notes_decayGrassPatchC_parShape:string=value";
-dataStructure -fmt "raw" -as "name=notes_wildPatchC_parShape:string=value";
-dataStructure -fmt "raw" -as "name=notes_wildPatchF_parShape:string=value";
-dataStructure -fmt "raw" -as "name=notes_left_parShape:string=value";
-dataStructure -fmt "raw" -as "name=notes_ferns_parShape:string=value";
-dataStructure -fmt "raw" -as "name=notes_decayGrassPatchB_parShape:string=value";
-dataStructure -fmt "raw" -as "name=notes_groundC_parShape:string=value";
-dataStructure -fmt "raw" -as "name=mapManager_pPlane6:string=value";
-dataStructure -fmt "raw" -as "name=mapManager_slopesGroundGrassD_Combined:string=value";
-dataStructure -fmt "raw" -as "name=notes_snapshot_CombinedGrass:string=value";
-dataStructure -fmt "raw" -as "name=notes_decayLeavesCarousel_parShape:string=value";
-dataStructure -fmt "raw" -as "name=NameAndID:string=name:int32=ID";
-dataStructure -fmt "raw" -as "name=mapManager_suelo:string=value";
-dataStructure -fmt "raw" -as "name=mapManager_snapshot_floor:string=value";
-dataStructure -fmt "raw" -as "name=mapManager_grass_c_geo1:string=value";
 dataStructure -fmt "raw" -as "name=notes_pPlane1:string=value";
-dataStructure -fmt "raw" -as "name=mapManager_base_hojas:string=value";
+dataStructure -fmt "raw" -as "name=notes_trees_parShape:string=value";
+dataStructure -fmt "raw" -as "name=mapManager_floorOrangeConcrete_c_geo:string=value";
 dataStructure -fmt "raw" -as "name=mapManager_grassBase:string=value";
+dataStructure -fmt "raw" -as "name=notes_decayLeavesCarousel_parShape:string=value";
+dataStructure -fmt "raw" -as "name=mapManager_snapshot_floor:string=value";
 dataStructure -fmt "raw" -as "name=Curvature:float=mean:float=gaussian:float=ABS:float=RMS";
 dataStructure -fmt "raw" -as "name=notes_groundB_parShape:string=value";
-dataStructure -fmt "raw" -as "name=mapManager_juneBackYard:string=value";
-dataStructure -fmt "raw" -as "name=mapManager_pPlane4:string=value";
 dataStructure -fmt "raw" -as "name=notes_wildPatchG_parShape:string=value";
+dataStructure -fmt "raw" -as "name=notes_wildPatchE_parShape:string=value";
+dataStructure -fmt "raw" -as "name=mapManager_pPlane4:string=value";
 dataStructure -fmt "raw" -as "name=notes_ground_c_geo:string=value";
 dataStructure -fmt "raw" -as "name=notes_wildPatchH_parShape:string=value";
+dataStructure -fmt "raw" -as "name=notes_decayGrassesCenter_parShape:string=value";
+dataStructure -fmt "raw" -as "name=notes_decayGrassPatchB_parShape:string=value";
+dataStructure -fmt "raw" -as "name=notes_decayGrassPatchC_parShape:string=value";
+dataStructure -fmt "raw" -as "name=mapManager_pPlane6:string=value";
+dataStructure -fmt "raw" -as "name=notes_snapshot_CombinedGrass:string=value";
+dataStructure -fmt "raw" -as "name=OrgStruct:float[3]=Origin Point";
+dataStructure -fmt "raw" -as "name=notes_wildPatchF_parShape:string=value";
+dataStructure -fmt "raw" -as "name=NameAndID:string=name:int32=ID";
+dataStructure -fmt "raw" -as "name=mapManager_suelo:string=value";
+dataStructure -fmt "raw" -as "name=notes_ferns_parShape:string=value";
 dataStructure -fmt "raw" -as "name=DiffArea:float=value";
-dataStructure -fmt "raw" -as "name=mapManager_pPlane2:string=value";
-dataStructure -fmt "raw" -as "name=notes_pPlane4:string=value";
-dataStructure -fmt "raw" -as "name=f_1:float=value";
-dataStructure -fmt "raw" -as "name=notes_groundD_parShape:string=value";
-dataStructure -fmt "raw" -as "name=mapManager_pPlane1:string=value";
+dataStructure -fmt "raw" -as "name=mapManager_grass_c_geo1:string=value";
+dataStructure -fmt "raw" -as "name=mapManager_juneBackYard:string=value";
+dataStructure -fmt "raw" -as "name=notes_groundWoods_c_geo1:string=value";
+dataStructure -fmt "raw" -as "name=Blur3dMetaData:string=Blur3dValue";
 dataStructure -fmt "raw" -as "name=mapManager_baseLeaves:string=value";
-dataStructure -fmt "raw" -as "name=mapManager_slopesMountainsGrass_Combined:string=value";
 dataStructure -fmt "raw" -as "name=mapManager_baseScatt:string=value";
-dataStructure -fmt "raw" -as "name=mapManager_trees_left:string=value";
-dataStructure -fmt "raw" -as "name=mapManager_slopesGroundGrassC_Combined:string=value";
-dataStructure -fmt "raw" -as "name=notes_decayGrassPatchA_parShape:string=value";
-dataStructure -fmt "raw" -as "name=notes_wildPatchDegraded_parShape:string=value";
-dataStructure -fmt "raw" -as "name=notes_slopesGroundGrassC_Combined:string=value";
-dataStructure -fmt "raw" -as "name=notes_slopes_parShape:string=value";
-dataStructure -fmt "raw" -as "name=notes_grass_c_geo1:string=value";
-dataStructure -fmt "raw" -as "name=mapManager_base_right:string=value";
-dataStructure -fmt "raw" -as "name=notes_slopesGroundGrassA_Combined:string=value";
-dataStructure -fmt "raw" -as "name=mapManager_ground:string=value";
-dataStructure -fmt "raw" -as "name=notes_base_hojas:string=value";
-dataStructure -fmt "raw" -as "name=notes_pPlane2:string=value";
-dataStructure -fmt "raw" -as "name=notes_base_left:string=value";
-dataStructure -fmt "raw" -as "name=Offset:float[3]=value";
+dataStructure -fmt "raw" -as "name=notes_grassJuneBackYard_parShape:string=value";
 dataStructure -fmt "raw" -as "name=idStructure:int32=ID";
-dataStructure -fmt "raw" -as "name=notes_grass_c_geo:string=value";
-dataStructure -fmt "raw" -as "name=notes_pPlane5:string=value";
-dataStructure -fmt "raw" -as "name=notes_bushes_parShape:string=value";
+dataStructure -fmt "raw" -as "name=notes_decayGrassPatchA_parShape:string=value";
+dataStructure -fmt "raw" -as "name=notes_grass_c_geo1:string=value";
+dataStructure -fmt "raw" -as "name=mapManager_trees_left1:string=value";
+dataStructure -fmt "raw" -as "name=notes_snapshot_floor:string=value";
+dataStructure -fmt "raw" -as "name=notes_trees_left:string=value";
+dataStructure -fmt "raw" -as "name=notes_pPlane2:string=value";
+dataStructure -fmt "raw" -as "name=notes_pPlane6:string=value";
+dataStructure -fmt "raw" -as "name=mapManager_groundWoods_c_geo1:string=value";
 dataStructure -fmt "raw" -as "name=notes_trees_left1:string=value";
 dataStructure -fmt "raw" -as "name=mapManager_ground_c_geo:string=value";
-dataStructure -fmt "raw" -as "name=notes_groundWoods_c_geo1:string=value";
-dataStructure -fmt "raw" -as "name=mapManager_trees_left1:string=value";
-dataStructure -fmt "raw" -as "name=Blur3dMetaData:string=Blur3dValue";
-dataStructure -fmt "raw" -as "name=notes_grassJuneBackYard_parShape:string=value";
-dataStructure -fmt "raw" -as "name=notes_floorOrangeConcrete_c_geo:string=value";
-dataStructure -fmt "raw" -as "name=OffStruct:float=Offset";
-dataStructure -fmt "raw" -as "name=faceConnectOutputStructure:bool=faceConnectOutput:string[200]=faceConnectOutputAttributes:string[200]=faceConnectOutputGroups";
-dataStructure -fmt "raw" -as "name=notes_groundA_parShape:string=value";
-dataStructure -fmt "raw" -as "name=notes_decayGrassPatchD_parShape:string=value";
-dataStructure -fmt "raw" -as "name=mapManager_degraded:string=value";
-dataStructure -fmt "raw" -as "name=notes_suelo:string=value";
-dataStructure -fmt "raw" -as "name=notes_wildPatchA_parShape:string=value";
-dataStructure -fmt "raw" -as "name=mapManager_grass_c_geo:string=value";
-dataStructure -fmt "raw" -as "name=f_3:float[3]=value";
-dataStructure -fmt "raw" -as "name=notes_trees_left:string=value";
-dataStructure -fmt "raw" -as "name=mapManager_groundWoods_c_geo1:string=value";
-dataStructure -fmt "raw" -as "name=notes_juneBackYard:string=value";
-dataStructure -fmt "raw" -as "name=notes_pPlane6:string=value";
-dataStructure -fmt "raw" -as "name=notes_snapshot_floor:string=value";
-dataStructure -fmt "raw" -as "name=notes_grassBase:string=value";
 dataStructure -fmt "raw" -as "name=notes_baseScatt:string=value";
+dataStructure -fmt "raw" -as "name=mapManager_slopesMountainsGrass_Combined:string=value";
+dataStructure -fmt "raw" -as "name=notes_slopes_parShape:string=value";
+dataStructure -fmt "raw" -as "name=OffStruct:float=Offset";
+dataStructure -fmt "raw" -as "name=mapManager_degraded:string=value";
+dataStructure -fmt "raw" -as "name=notes_decayGrassPatchD_parShape:string=value";
+dataStructure -fmt "raw" -as "name=notes_juneBackYard:string=value";
+dataStructure -fmt "raw" -as "name=notes_baseLeaves:string=value";
+dataStructure -fmt "raw" -as "name=mapManager_base_left:string=value";
+dataStructure -fmt "raw" -as "name=faceConnectMarkerStructure:bool=faceConnectMarker:string[200]=faceConnectOutputGroups";
+dataStructure -fmt "raw" -as "name=notes_groundA_parShape:string=value";
+dataStructure -fmt "raw" -as "name=notes_wildPatchA_parShape:string=value";
+dataStructure -fmt "raw" -as "name=notes_suelo:string=value";
+dataStructure -fmt "raw" -as "name=f_1:float=value";
+dataStructure -fmt "raw" -as "name=mapManager_slopesGroundGrassC_Combined:string=value";
+dataStructure -fmt "raw" -as "name=notes_decayLeaves_parShape:string=value";
+dataStructure -fmt "raw" -as "name=notes_base_hojas:string=value";
+dataStructure -fmt "raw" -as "name=f_3:float[3]=value";
+dataStructure -fmt "raw" -as "name=mapManager_pPlane2:string=value";
+dataStructure -fmt "raw" -as "name=notes_grassBase:string=value";
+dataStructure -fmt "raw" -as "name=mapManager_pPlane5:string=value";
+dataStructure -fmt "raw" -as "name=mapManager_base_right:string=value";
+dataStructure -fmt "raw" -as "name=notes_grass_c_geo:string=value";
+dataStructure -fmt "raw" -as "name=mapManager_grass_c_geo:string=value";
+dataStructure -fmt "raw" -as "name=notes_degraded:string=value";
+dataStructure -fmt "raw" -as "name=mapManager_slopesGroundGrassA_Combined:string=value";
+dataStructure -fmt "raw" -as "name=notes_baseScatter:string=value";
+dataStructure -fmt "raw" -as "name=mapManager_trees_left:string=value";
+dataStructure -fmt "raw" -as "name=notes_floorOrangeConcrete_c_geo:string=value";
+dataStructure -fmt "raw" -as "name=faceConnectOutputStructure:bool=faceConnectOutput:string[200]=faceConnectOutputAttributes:string[200]=faceConnectOutputGroups";
 dataStructure -fmt "raw" -as "name=DiffEdge:float=value";
 dataStructure -fmt "raw" -as "name=mapManager_slopesGroundGrassB_Combined:string=value";
-dataStructure -fmt "raw" -as "name=notes_decayLeaves_parShape:string=value";
-dataStructure -fmt "raw" -as "name=mapManager_pPlane5:string=value";
-dataStructure -fmt "raw" -as "name=notes_baseLeaves:string=value";
-dataStructure -fmt "raw" -as "name=notes_baseScatter:string=value";
-dataStructure -fmt "raw" -as "name=mapManager_base_left:string=value";
-dataStructure -fmt "raw" -as "name=mapManager_slopesGroundGrassA_Combined:string=value";
-dataStructure -fmt "raw" -as "name=faceConnectMarkerStructure:bool=faceConnectMarker:string[200]=faceConnectOutputGroups";
-dataStructure -fmt "raw" -as "name=mapManager_pPlane3:string=value";
-dataStructure -fmt "raw" -as "name=mapManager_snapshot_CombinedGrass:string=value";
-dataStructure -fmt "raw" -as "name=notes_mountains_parShape:string=value";
-dataStructure -fmt "raw" -as "name=mapManager_snapshot_Combined:string=value";
-dataStructure -fmt "raw" -as "name=mapManager_polySurface56:string=value";
-dataStructure -fmt "raw" -as "name=notes_polySurface56:string=value";
-dataStructure -fmt "raw" -as "name=notes_degraded:string=value";
-dataStructure -fmt "raw" -as "name=notes_ground:string=value";
-dataStructure -fmt "raw" -as "name=notes_right_parShape:string=value";
+dataStructure -fmt "raw" -as "name=notes_pPlane4:string=value";
+dataStructure -fmt "raw" -as "name=notes_groundD_parShape:string=value";
+dataStructure -fmt "raw" -as "name=notes_slopesGroundGrassC_Combined:string=value";
+dataStructure -fmt "raw" -as "name=notes_slopesGroundGrassA_Combined:string=value";
+dataStructure -fmt "raw" -as "name=notes_base_left:string=value";
+dataStructure -fmt "raw" -as "name=notes_pPlane5:string=value";
+dataStructure -fmt "raw" -as "name=notes_bushes_parShape:string=value";
+dataStructure -fmt "raw" -as "name=mapManager_ground:string=value";
+dataStructure -fmt "raw" -as "name=Offset:float[3]=value";
+dataStructure -fmt "raw" -as "name=mapManager_pPlane1:string=value";
+dataStructure -fmt "raw" -as "name=notes_wildPatchDegraded_parShape:string=value";
 dataStructure -fmt "raw" -as "name=notes_snapshot_Combined:string=value";
+dataStructure -fmt "raw" -as "name=mapManager_pPlane3:string=value";
 dataStructure -fmt "raw" -as "name=notes_pPlane3:string=value";
-dataStructure -fmt "raw" -as "name=keyValueStructure:string=value";
-dataStructure -fmt "raw" -as "name=notes_widlPatchB_parShape:string=value";
-dataStructure -fmt "raw" -as "name=IdStruct:int32=ID";
+dataStructure -fmt "raw" -as "name=mapManager_polySurface56:string=value";
 dataStructure -fmt "raw" -as "name=mapManager_baseScatter:string=value";
+dataStructure -fmt "raw" -as "name=IdStruct:int32=ID";
+dataStructure -fmt "raw" -as "name=notes_mountains_parShape:string=value";
+dataStructure -fmt "raw" -as "name=notes_ground:string=value";
+dataStructure -fmt "raw" -as "name=notes_polySurface56:string=value";
 dataStructure -fmt "raw" -as "name=notes_slopesGroundGrassD_Combined:string=value";
+dataStructure -fmt "raw" -as "name=mapManager_snapshot_Combined:string=value";
+dataStructure -fmt "raw" -as "name=notes_right_parShape:string=value";
+dataStructure -fmt "raw" -as "name=keyValueStructure:string=value";
+dataStructure -fmt "raw" -as "name=mapManager_snapshot_CombinedGrass:string=value";
+dataStructure -fmt "raw" -as "name=notes_widlPatchB_parShape:string=value";
+dataStructure -fmt "raw" -as "name=externalContentTable:string=node:string=key:string=upath:uint32=upathcrc:string=rpath:string=roles";
+applyMetadata -fmt "raw" -v "channel\nname externalContentTable\nstream\nname v1.0\nindexType numeric\nstructure externalContentTable\n0\n\"|Mutant_Build|init\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n1\n\"|Mutant_Build|init|BaseA_Block\" \"iconName\" \"/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/BaseA.png\" 1101999856 \"\" \"ui\"\n2\n\"|Mutant_Build|init|VisAttrs_Block\" \"iconName\" \"/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/CODE.png\" 2270353712 \"\" \"ui\"\n3\n\"|Mutant_Build|init|VisAttrs_Block|Vis_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n4\n\"|Mutant_Build|init|VisAttrs_Block|Vis_Guide|Vis_GuideShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n5\n\"|Mutant_Build|init|PhonemesUI_Block\" \"iconName\" \"/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/CODE.png\" 2270353712 \"\" \"ui\"\n6\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n7\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n8\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n9\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n10\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_Letter_GuideShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n11\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_Letter_GuideShape1\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n12\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_Letter_GuideShape2\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n13\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_Letter_GuideShape3\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n14\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_Letter_GuideShape4\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n15\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_Letter_GuideShape5\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n16\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_Letter_GuideShape6\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n17\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_Letter_GuideShape7\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n18\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_Letter_GuideShape8\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n19\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_Switch_Grp_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n20\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_Switch_Grp_Guide|GUI_Border_Guide|GUI_Border_GuideShape6\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n21\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_Switch_Grp_Guide|GUI_Border_Guide|GUI_Ctrl_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n22\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_Switch_Grp_Guide|GUI_Border_Guide|GUI_Ctrl_Guide|GUI_Ctrl_GuideShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n23\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n24\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|GUI_Main_Border2_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n25\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|GUI_Main_Border2_Guide|GUI_Main_Border2_GuideShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n26\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n27\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|CDN_GUI_Main_Grp_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n28\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|CDN_GUI_Main_Grp_Guide|R_CDN_GUI_Grp_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n29\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|CDN_GUI_Main_Grp_Guide|R_CDN_GUI_Grp_Guide|R_CDN_GUI_Border_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n30\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|CDN_GUI_Main_Grp_Guide|R_CDN_GUI_Grp_Guide|R_CDN_GUI_Border_Guide|R_CDN_GUI_Border_GuideShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n31\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|CDN_GUI_Main_Grp_Guide|R_CDN_GUI_Grp_Guide|R_CDN_GUI_Border_Guide|R_CDN_GUI_Border_GuideShape1\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n32\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|CDN_GUI_Main_Grp_Guide|R_CDN_GUI_Grp_Guide|R_CDN_GUI_Border_Guide|R_CDN_Ctrl_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n33\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|CDN_GUI_Main_Grp_Guide|R_CDN_GUI_Grp_Guide|R_CDN_GUI_Border_Guide|R_CDN_Ctrl_Guide|R_CDN_Ctrl_GuideShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n34\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|CDN_GUI_Main_Grp_Guide|C_CDN_GUI_Grp_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n35\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|CDN_GUI_Main_Grp_Guide|C_CDN_GUI_Grp_Guide|GUI_Border_Guide|GUI_Border_GuideShape5\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n36\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|CDN_GUI_Main_Grp_Guide|C_CDN_GUI_Grp_Guide|GUI_Border_Guide|Mrg_CDN_Ctrl_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n37\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|CDN_GUI_Main_Grp_Guide|C_CDN_GUI_Grp_Guide|GUI_Border_Guide|Mrg_CDN_Ctrl_Guide|Mrg_CDN_Ctrl_GuideShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n38\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|CDN_GUI_Main_Grp_Guide|L_CDN_GUI_Grp_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n39\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|CDN_GUI_Main_Grp_Guide|L_CDN_GUI_Grp_Guide|L_CDN_GUI_Border_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n40\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|CDN_GUI_Main_Grp_Guide|L_CDN_GUI_Grp_Guide|L_CDN_GUI_Border_Guide|L_CDN_GUI_Border_GuideShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n41\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|CDN_GUI_Main_Grp_Guide|L_CDN_GUI_Grp_Guide|L_CDN_GUI_Border_Guide|L_CDN_GUI_Border_GuideShape1\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n42\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|CDN_GUI_Main_Grp_Guide|L_CDN_GUI_Grp_Guide|L_CDN_GUI_Border_Guide|L_CDN_Ctrl_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n43\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|CDN_GUI_Main_Grp_Guide|L_CDN_GUI_Grp_Guide|L_CDN_GUI_Border_Guide|L_CDN_Ctrl_Guide|L_CDN_Ctrl_GuideShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n44\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|CDN_GUI_Main_Grp_Guide|CDN_Grp_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n45\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|CDN_GUI_Main_Grp_Guide|CDN_Grp_Guide|CDN_letter_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n46\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|CDN_GUI_Main_Grp_Guide|CDN_Grp_Guide|CDN_letter_Guide|CDN_letter_GuideShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n47\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|CDN_GUI_Main_Grp_Guide|CDN_Grp_Guide|CDN_letter_Guide|CDN_letter_GuideShape1\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n48\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|CDN_GUI_Main_Grp_Guide|CDN_Grp_Guide|CDN_letter_Guide|CDN_letter_GuideShape2\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n49\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|CDN_GUI_Main_Grp_Guide|CDN_Grp_Guide|CDN_letter_Guide|CDN_letter_GuideShape3\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n50\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|CDN_GUI_Main_Grp_Guide|CDN_Grp_Guide|CDN_letter_Guide|CDN_letter_GuideShape4\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n51\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|CDN_GUI_Main_Grp_Guide|CDN_Grp_Guide|CDN_letter_Guide|CDN_letter_GuideShape5\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n52\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|CDN_GUI_Main_Grp_Guide|CDN_Grp_Guide|CDN_letter_Guide|CDN_letter_GuideShape6\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n53\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|CDN_GUI_Main_Grp_Guide|CDN_Grp_Guide|CDN_letter_Guide|CDN_letter_GuideShape7\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n54\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|CDN_GUI_Main_Grp_Guide|CDN_Grp_Guide|CDN_letter_Guide|CDN_letter_GuideShape8\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n55\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|CDN_GUI_Main_Grp_Guide|CDN_Grp_Guide|CDN_letter_Guide|CDN_letter_GuideShape9\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n56\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|CDN_GUI_Main_Grp_Guide|CDN_Grp_Guide|CDN_letter_Guide|CDN_letter_GuideShape10\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n57\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|CDN_GUI_Main_Grp_Guide|CDN_Grp_Guide|CDN_letter_Guide|CDN_letter_GuideShape11\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n58\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|CDN_GUI_Main_Grp_Guide|CDN_Grp_Guide|CDN_letter_Guide|CDN_letter_GuideShape12\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n59\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|CDN_GUI_Main_Grp_Guide|CDN_Grp_Guide|CDN_letter_Guide|CDN_letter_GuideShape13\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n60\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|CDN_GUI_Main_Grp_Guide|CDN_Grp_Guide|CDN_letter_Guide|CDN_letter_GuideShape14\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n61\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|CDN_GUI_Main_Grp_Guide|CDN_Grp_Guide|CDN_letter_Guide|CDN_letter_GuideShape15\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n62\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|CDN_GUI_Main_Grp_Guide|CDN_Grp_Guide|CDN_letter_Guide|CDN_letter_GuideShape16\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n63\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|FV_GUI_Main_Grp_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n64\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|FV_GUI_Main_Grp_Guide|R__FV_GUI_Grp_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n65\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|FV_GUI_Main_Grp_Guide|R__FV_GUI_Grp_Guide|R__FV_GUI_Border_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n66\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|FV_GUI_Main_Grp_Guide|R__FV_GUI_Grp_Guide|R__FV_GUI_Border_Guide|R__FV_GUI_Border_GuideShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n67\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|FV_GUI_Main_Grp_Guide|R__FV_GUI_Grp_Guide|R__FV_GUI_Border_Guide|R__FV_GUI_Border_GuideShape1\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n68\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|FV_GUI_Main_Grp_Guide|R__FV_GUI_Grp_Guide|R__FV_GUI_Border_Guide|R__FV_Ctrl_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n69\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|FV_GUI_Main_Grp_Guide|R__FV_GUI_Grp_Guide|R__FV_GUI_Border_Guide|R__FV_Ctrl_Guide|R__FV_Ctrl_GuideShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n70\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|FV_GUI_Main_Grp_Guide|C__FV_GUI_Grp_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n71\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|FV_GUI_Main_Grp_Guide|C__FV_GUI_Grp_Guide|GUI_Border_Guide|GUI_Border_GuideShape4\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n72\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|FV_GUI_Main_Grp_Guide|C__FV_GUI_Grp_Guide|GUI_Border_Guide|Mrg__FV_Ctrl_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n73\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|FV_GUI_Main_Grp_Guide|C__FV_GUI_Grp_Guide|GUI_Border_Guide|Mrg__FV_Ctrl_Guide|Mrg__FV_Ctrl_GuideShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n74\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|FV_GUI_Main_Grp_Guide|L__FV_GUI_Grp_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n75\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|FV_GUI_Main_Grp_Guide|L__FV_GUI_Grp_Guide|L__FV_GUI_Border_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n76\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|FV_GUI_Main_Grp_Guide|L__FV_GUI_Grp_Guide|L__FV_GUI_Border_Guide|L__FV_GUI_Border_GuideShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n77\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|FV_GUI_Main_Grp_Guide|L__FV_GUI_Grp_Guide|L__FV_GUI_Border_Guide|L__FV_GUI_Border_GuideShape1\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n78\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|FV_GUI_Main_Grp_Guide|L__FV_GUI_Grp_Guide|L__FV_GUI_Border_Guide|L__FV_Ctrl_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n79\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|FV_GUI_Main_Grp_Guide|L__FV_GUI_Grp_Guide|L__FV_GUI_Border_Guide|L__FV_Ctrl_Guide|L__FV_Ctrl_GuideShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n80\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|FV_GUI_Main_Grp_Guide|FV_Letter_Grp_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n81\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|FV_GUI_Main_Grp_Guide|FV_Letter_Grp_Guide|group3_Guide|polyToCurve19_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n82\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|FV_GUI_Main_Grp_Guide|FV_Letter_Grp_Guide|group3_Guide|polyToCurve19_Guide|polyToCurve19_GuideShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n83\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|FV_GUI_Main_Grp_Guide|FV_Letter_Grp_Guide|group3_Guide|polyToCurve19_Guide|polyToCurve19_GuideShape1\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n84\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|FV_GUI_Main_Grp_Guide|FV_Letter_Grp_Guide|group3_Guide|polyToCurve19_Guide|polyToCurve19_GuideShape2\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n85\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|AEI_GUI_Main_Grp_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n86\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|AEI_GUI_Main_Grp_Guide|R__AEI_GUI_Grp_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n87\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|AEI_GUI_Main_Grp_Guide|R__AEI_GUI_Grp_Guide|R__AEI_GUI_Border_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n88\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|AEI_GUI_Main_Grp_Guide|R__AEI_GUI_Grp_Guide|R__AEI_GUI_Border_Guide|R__AEI_GUI_Border_GuideShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n89\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|AEI_GUI_Main_Grp_Guide|R__AEI_GUI_Grp_Guide|R__AEI_GUI_Border_Guide|R__AEI_GUI_Border_GuideShape1\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n90\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|AEI_GUI_Main_Grp_Guide|R__AEI_GUI_Grp_Guide|R__AEI_GUI_Border_Guide|R__AEI_Ctrl_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n91\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|AEI_GUI_Main_Grp_Guide|R__AEI_GUI_Grp_Guide|R__AEI_GUI_Border_Guide|R__AEI_Ctrl_Guide|R__AEI_Ctrl_GuideShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n92\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|AEI_GUI_Main_Grp_Guide|C__AEI_GUI_Grp_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n93\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|AEI_GUI_Main_Grp_Guide|C__AEI_GUI_Grp_Guide|GUI_Border_Guide|GUI_Border_GuideShape3\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n94\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|AEI_GUI_Main_Grp_Guide|C__AEI_GUI_Grp_Guide|GUI_Border_Guide|Mrg__AEI_Ctrl_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n95\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|AEI_GUI_Main_Grp_Guide|C__AEI_GUI_Grp_Guide|GUI_Border_Guide|Mrg__AEI_Ctrl_Guide|Mrg__AEI_Ctrl_GuideShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n96\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|AEI_GUI_Main_Grp_Guide|L__AEI_GUI_Grp_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n97\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|AEI_GUI_Main_Grp_Guide|L__AEI_GUI_Grp_Guide|L__AEI_GUI_Border_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n98\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|AEI_GUI_Main_Grp_Guide|L__AEI_GUI_Grp_Guide|L__AEI_GUI_Border_Guide|L__AEI_GUI_Border_GuideShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n99\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|AEI_GUI_Main_Grp_Guide|L__AEI_GUI_Grp_Guide|L__AEI_GUI_Border_Guide|L__AEI_GUI_Border_GuideShape1\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n100\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|AEI_GUI_Main_Grp_Guide|L__AEI_GUI_Grp_Guide|L__AEI_GUI_Border_Guide|L__AEI_Ctrl_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n101\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|AEI_GUI_Main_Grp_Guide|L__AEI_GUI_Grp_Guide|L__AEI_GUI_Border_Guide|L__AEI_Ctrl_Guide|L__AEI_Ctrl_GuideShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n102\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|AEI_GUI_Main_Grp_Guide|AEI_Letter_Grp_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n103\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|AEI_GUI_Main_Grp_Guide|AEI_Letter_Grp_Guide|polyToCurve21_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n104\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|AEI_GUI_Main_Grp_Guide|AEI_Letter_Grp_Guide|polyToCurve21_Guide|polyToCurve21_GuideShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n105\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|AEI_GUI_Main_Grp_Guide|AEI_Letter_Grp_Guide|polyToCurve21_Guide|polyToCurve21_GuideShape1\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n106\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|AEI_GUI_Main_Grp_Guide|AEI_Letter_Grp_Guide|polyToCurve21_Guide|polyToCurve21_GuideShape2\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n107\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|AEI_GUI_Main_Grp_Guide|AEI_Letter_Grp_Guide|polyToCurve21_Guide|polyToCurve21_GuideShape3\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n108\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|AEI_GUI_Main_Grp_Guide|AEI_Letter_Grp_Guide|polyToCurve21_Guide|polyToCurve21_GuideShape4\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n109\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|AEI_GUI_Main_Grp_Guide|AEI_Letter_Grp_Guide|polyToCurve21_Guide|polyToCurve21_GuideShape5\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n110\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|OUW_GUI_Main_Grp_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n111\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|OUW_GUI_Main_Grp_Guide|R__OUW_GUI_Grp_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n112\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|OUW_GUI_Main_Grp_Guide|R__OUW_GUI_Grp_Guide|R__OUW_GUI_Border_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n113\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|OUW_GUI_Main_Grp_Guide|R__OUW_GUI_Grp_Guide|R__OUW_GUI_Border_Guide|R__OUW_GUI_Border_GuideShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n114\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|OUW_GUI_Main_Grp_Guide|R__OUW_GUI_Grp_Guide|R__OUW_GUI_Border_Guide|R__OUW_GUI_Border_GuideShape1\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n115\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|OUW_GUI_Main_Grp_Guide|R__OUW_GUI_Grp_Guide|R__OUW_GUI_Border_Guide|R__OUW_Ctrl_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n116\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|OUW_GUI_Main_Grp_Guide|R__OUW_GUI_Grp_Guide|R__OUW_GUI_Border_Guide|R__OUW_Ctrl_Guide|R__OUW_Ctrl_GuideShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n117\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|OUW_GUI_Main_Grp_Guide|C__OUW_GUI_Grp_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n118\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|OUW_GUI_Main_Grp_Guide|C__OUW_GUI_Grp_Guide|GUI_Border_Guide|GUI_Border_GuideShape2\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n119\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|OUW_GUI_Main_Grp_Guide|C__OUW_GUI_Grp_Guide|GUI_Border_Guide|Mrg__OUW_Ctrl_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n120\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|OUW_GUI_Main_Grp_Guide|C__OUW_GUI_Grp_Guide|GUI_Border_Guide|Mrg__OUW_Ctrl_Guide|Mrg__OUW_Ctrl_GuideShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n121\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|OUW_GUI_Main_Grp_Guide|L__OUW_GUI_Grp_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n122\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|OUW_GUI_Main_Grp_Guide|L__OUW_GUI_Grp_Guide|L__OUW_GUI_Border_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n123\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|OUW_GUI_Main_Grp_Guide|L__OUW_GUI_Grp_Guide|L__OUW_GUI_Border_Guide|L__OUW_GUI_Border_GuideShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n124\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|OUW_GUI_Main_Grp_Guide|L__OUW_GUI_Grp_Guide|L__OUW_GUI_Border_Guide|L__OUW_GUI_Border_GuideShape1\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n125\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|OUW_GUI_Main_Grp_Guide|L__OUW_GUI_Grp_Guide|L__OUW_GUI_Border_Guide|L__OUW_Ctrl_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n126\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|OUW_GUI_Main_Grp_Guide|L__OUW_GUI_Grp_Guide|L__OUW_GUI_Border_Guide|L__OUW_Ctrl_Guide|L__OUW_Ctrl_GuideShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n127\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|OUW_GUI_Main_Grp_Guide|OUW_Letter_Grp_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n128\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|OUW_GUI_Main_Grp_Guide|OUW_Letter_Grp_Guide|OUW_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n129\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|OUW_GUI_Main_Grp_Guide|OUW_Letter_Grp_Guide|OUW_Guide|OUW_GuideShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n130\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|OUW_GUI_Main_Grp_Guide|OUW_Letter_Grp_Guide|OUW_Guide|OUW_GuideShape1\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n131\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|OUW_GUI_Main_Grp_Guide|OUW_Letter_Grp_Guide|OUW_Guide|OUW_GuideShape2\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n132\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|OUW_GUI_Main_Grp_Guide|OUW_Letter_Grp_Guide|OUW_Guide|OUW_GuideShape3\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n133\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|OUW_GUI_Main_Grp_Guide|OUW_Letter_Grp_Guide|OUW_Guide|OUW_GuideShape4\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n134\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|OUW_GUI_Main_Grp_Guide|OUW_Letter_Grp_Guide|OUW_Guide|OUW_GuideShape5\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n135\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|BMP_GUI_Main_Grp_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n136\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|BMP_GUI_Main_Grp_Guide|R__BMP_GUI_Grp_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n137\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|BMP_GUI_Main_Grp_Guide|R__BMP_GUI_Grp_Guide|R__BMP_GUI_Border_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n138\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|BMP_GUI_Main_Grp_Guide|R__BMP_GUI_Grp_Guide|R__BMP_GUI_Border_Guide|R__BMP_GUI_Border_GuideShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n139\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|BMP_GUI_Main_Grp_Guide|R__BMP_GUI_Grp_Guide|R__BMP_GUI_Border_Guide|R__BMP_GUI_Border_GuideShape1\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n140\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|BMP_GUI_Main_Grp_Guide|R__BMP_GUI_Grp_Guide|R__BMP_GUI_Border_Guide|R__BMP_Ctrl_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n141\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|BMP_GUI_Main_Grp_Guide|R__BMP_GUI_Grp_Guide|R__BMP_GUI_Border_Guide|R__BMP_Ctrl_Guide|R__BMP_Ctrl_GuideShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n142\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|BMP_GUI_Main_Grp_Guide|C__BMP_GUI_Grp_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n143\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|BMP_GUI_Main_Grp_Guide|C__BMP_GUI_Grp_Guide|GUI_Border_Guide|GUI_Border_GuideShape1\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n144\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|BMP_GUI_Main_Grp_Guide|C__BMP_GUI_Grp_Guide|GUI_Border_Guide|Mrg__BMP_Ctrl_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n145\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|BMP_GUI_Main_Grp_Guide|C__BMP_GUI_Grp_Guide|GUI_Border_Guide|Mrg__BMP_Ctrl_Guide|Mrg__BMP_Ctrl_GuideShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n146\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|BMP_GUI_Main_Grp_Guide|L__BMP_GUI_Grp_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n147\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|BMP_GUI_Main_Grp_Guide|L__BMP_GUI_Grp_Guide|L__BMP_GUI_Border_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n148\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|BMP_GUI_Main_Grp_Guide|L__BMP_GUI_Grp_Guide|L__BMP_GUI_Border_Guide|L__BMP_GUI_Border_GuideShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n149\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|BMP_GUI_Main_Grp_Guide|L__BMP_GUI_Grp_Guide|L__BMP_GUI_Border_Guide|L__BMP_GUI_Border_GuideShape1\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n150\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|BMP_GUI_Main_Grp_Guide|L__BMP_GUI_Grp_Guide|L__BMP_GUI_Border_Guide|L__BMP_Ctrl_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n151\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|BMP_GUI_Main_Grp_Guide|L__BMP_GUI_Grp_Guide|L__BMP_GUI_Border_Guide|L__BMP_Ctrl_Guide|L__BMP_Ctrl_GuideShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n152\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|BMP_GUI_Main_Grp_Guide|BMP_Letter_Grp_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n153\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|BMP_GUI_Main_Grp_Guide|BMP_Letter_Grp_Guide|BMP_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n154\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|BMP_GUI_Main_Grp_Guide|BMP_Letter_Grp_Guide|BMP_Guide|BMP_GuideShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n155\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|BMP_GUI_Main_Grp_Guide|BMP_Letter_Grp_Guide|BMP_Guide|BMP_GuideShape1\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n156\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|BMP_GUI_Main_Grp_Guide|BMP_Letter_Grp_Guide|BMP_Guide|BMP_GuideShape2\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n157\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|BMP_GUI_Main_Grp_Guide|BMP_Letter_Grp_Guide|BMP_Guide|BMP_GuideShape3\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n158\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|BMP_GUI_Main_Grp_Guide|BMP_Letter_Grp_Guide|BMP_Guide|BMP_GuideShape4\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n159\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|BMP_GUI_Main_Grp_Guide|BMP_Letter_Grp_Guide|BMP_Guide|BMP_GuideShape5\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n160\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|BMP_GUI_Main_Grp_Guide|BMP_Letter_Grp_Guide|BMP_Guide|BMP_GuideShape6\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n161\n\"|Mutant_Build|init|PhonemesUI_Block|GUI_translate_Grp_Guide|Viseme_Main_Grp_Guide|Viseme_Letter_Grp_Guide|Viseme_Letter_Guide|Viseme_GUI_Main_Grp_Guide|Viseme_Grp_Guide|BMP_GUI_Main_Grp_Guide|BMP_Letter_Grp_Guide|BMP_Guide|BMP_GuideShape7\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n162\n\"|Mutant_Build|bodyLocals\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n163\n\"|Mutant_Build|bodyLocals|SkullLocal_Block\" \"iconName\" \"/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/Locals.png\" 1976494189 \"\" \"ui\"\n164\n\"|Mutant_Build|bodyLocals|Locals_Block\" \"iconName\" \"/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/Locals.png\" 1976494189 \"\" \"ui\"\n165\n\"|Mutant_Build|face\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n166\n\"|Mutant_Build|face|Skull_Block\" \"iconName\" \"/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/Skull.png\" 375057229 \"\" \"ui\"\n167\n\"|Mutant_Build|face|Skull_Block|Skull_Lwr_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n168\n\"|Mutant_Build|face|Skull_Block|Skull_Lwr_Guide|Skull_Lwr_Guide_CtrlShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n169\n\"|Mutant_Build|face|Skull_Block|Skull_Lwr_Guide|Skull_Lwr_Guide_Ctrl_CtrlShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n170\n\"|Mutant_Build|face|Skull_Block|Skull_Lwr_Guide|Skull_Lwr_Guide_Ctrl_Ctrl_CtrlShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n171\n\"|Mutant_Build|face|Skull_Block|Skull_Lwr_Guide|Skull_Lwr_Guide_Ctrl_Ctrl_Ctrl_CtrlShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n172\n\"|Mutant_Build|face|Skull_Block|Skull_Lwr_Guide|Skull_Upr_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n173\n\"|Mutant_Build|face|Skull_Block|Skull_Lwr_Guide|Skull_Upr_Guide|Skull_Upr_Guide_CtrlShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n174\n\"|Mutant_Build|face|Skull_Block|Skull_Lwr_Guide|Skull_Upr_Guide|Skull_Upr_Guide_Ctrl_CtrlShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n175\n\"|Mutant_Build|face|Skull_Block|Skull_Lwr_Guide|Skull_Upr_Guide|Skull_Upr_Guide_Ctrl_Ctrl_CtrlShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n176\n\"|Mutant_Build|face|Skull_Block|Skull_Lwr_Guide|Skull_Upr_Guide|Skull_Upr_Guide_Ctrl_Ctrl_Ctrl_CtrlShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n177\n\"|Mutant_Build|face|L_Eyelids_Block\" \"iconName\" \"/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/Eyes.png\" 1746918250 \"\" \"ui\"\n178\n\"|Mutant_Build|face|L_Eyelids_Block|Eye_Pivot\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n179\n\"|Mutant_Build|face|Lips_Block\" \"iconName\" \"/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/Lips.png\" 1133891495 \"\" \"ui\"\n180\n\"|Mutant_Build|face|Lips_Block|L_Lips_Orient_Guide_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n181\n\"|Mutant_Build|face|Lips_Block|L_Lips_Orient_Guide_Guide|L_Lips_Orient_Guide_Guide_CtrlShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n182\n\"|Mutant_Build|face|Lips_Block|L_Lips_Orient_Guide_Guide|L_Lips_Orient_Guide_Guide_Ctrl_CtrlShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n183\n\"|Mutant_Build|face|Lips_Block|L_Lips_Orient_Guide_Guide|L_Lips_Orient_Guide_Guide_Ctrl_Ctrl_CtrlShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n184\n\"|Mutant_Build|face|Lips_Block|L_Lips_Orient_Guide_Guide|L_Lips_Orient_Guide_Guide_Ctrl_Ctrl_Ctrl_CtrlShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n185\n\"|Mutant_Build|face|Lips_Block|Lips_SlideCenter_Guide_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n186\n\"|Mutant_Build|face|Lips_Block|Lips_SlideCenter_Guide_Guide|Lips_SlideCenter_Guide_Guide_CtrlShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n187\n\"|Mutant_Build|face|Lips_Block|Lips_SlideCenter_Guide_Guide|Lips_SlideCenter_Guide_Guide_Ctrl_CtrlShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n188\n\"|Mutant_Build|face|Lips_Block|Lips_SlideCenter_Guide_Guide|Lips_SlideCenter_Guide_Guide_Ctrl_Ctrl_CtrlShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n189\n\"|Mutant_Build|face|Lips_Block|Lips_SlideCenter_Guide_Guide|Lips_SlideCenter_Guide_Guide_Ctrl_Ctrl_Ctrl_CtrlShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n190\n\"|Mutant_Build|face|L_Brow_Block\" \"iconName\" \"/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/Brows.png\" 2249893620 \"\" \"ui\"\n191\n\"|Mutant_Build|face|L_Brow_Block|L_Brow_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n192\n\"|Mutant_Build|face|L_Brow_Block|L_Brow_Guide|L_Brow_GuideShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n193\n\"|Mutant_Build|face|L_Cheecks_Block\" \"iconName\" \"/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/Cheeks.png\" 3481387781 \"\" \"ui\"\n194\n\"|Mutant_Build|face|L_Cheecks_Block|L_Cheecks_Border_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n195\n\"|Mutant_Build|face|L_Cheecks_Block|L_Cheecks_Border_Guide|curveShape1\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n196\n\"|Mutant_Build|face|L_Cheecks_Block|L_Cheecks_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n197\n\"|Mutant_Build|face|L_Cheecks_Block|L_Cheecks_Guide|L_Cheecks_Guide_CtrlShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n198\n\"|Mutant_Build|face|L_Cheecks_Block|L_Cheecks_Guide|L_Cheecks_Guide_Ctrl_CtrlShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n199\n\"|Mutant_Build|face|L_Cheecks_Block|L_Cheecks_Guide|L_Cheecks_Guide_Ctrl_Ctrl_CtrlShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n200\n\"|Mutant_Build|face|L_Cheecks_Block|L_Cheecks_Guide|L_Cheecks_Guide_Ctrl_Ctrl_Ctrl_CtrlShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n201\n\"|Mutant_Build|face|L_Cheecks_Block|L_Cheecks_DontTouch_Grp\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n202\n\"|Mutant_Build|face|L_Cheecks_Block|L_Cheecks_DontTouch_Grp|L_Cheecks_Guide_L_Cheecks_Border_Guide_Connected_Crv\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n203\n\"|Mutant_Build|face|L_Cheecks_Block|L_Cheecks_DontTouch_Grp|L_Cheecks_Guide_L_Cheecks_Border_Guide_Connected_Crv|curveShape2\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n204\n\"|Mutant_Build|face|L_Cheecks_Block|L_Cheecks_DontTouch_Grp|L_Cheecks_Guide_L_Cheecks_Border_Guide_Connected_Crv|curveShape2Orig\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n205\n\"|Mutant_Build|face|L_Cheecks_Block|L_Cheecks_DontTouch_Grp|L_Cheecks_Guide_ClsHandle\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n206\n\"|Mutant_Build|face|L_Cheecks_Block|L_Cheecks_DontTouch_Grp|L_Cheecks_Guide_ClsHandle|L_Cheecks_Guide_ClsHandleShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n207\n\"|Mutant_Build|face|L_Cheecks_Block|L_Cheecks_DontTouch_Grp|L_Cheecks_Guide_ClsHandle|L_Cheecks_Guide_ClsHandle_parentConstraint1\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n208\n\"|Mutant_Build|face|L_Cheecks_Block|L_Cheecks_DontTouch_Grp|L_Cheecks_Border_Guide_ClsHandle\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n209\n\"|Mutant_Build|face|L_Cheecks_Block|L_Cheecks_DontTouch_Grp|L_Cheecks_Border_Guide_ClsHandle|L_Cheecks_Border_Guide_ClsHandleShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n210\n\"|Mutant_Build|face|L_Cheecks_Block|L_Cheecks_DontTouch_Grp|L_Cheecks_Border_Guide_ClsHandle|L_Cheecks_Border_Guide_ClsHandle_parentConstraint1\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n211\n\"|Mutant_Build|face|Jaw_Block\" \"iconName\" \"/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/Jaw.png\" 1010271696 \"\" \"ui\"\n212\n\"|Mutant_Build|face|Jaw_Block|Jaw_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n213\n\"|Mutant_Build|face|Jaw_Block|Jaw_Guide|Jaw_Guide_CtrlShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n214\n\"|Mutant_Build|face|Jaw_Block|Jaw_Guide|Jaw_Guide_Ctrl_CtrlShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n215\n\"|Mutant_Build|face|Jaw_Block|Jaw_Guide|Jaw_Guide_Ctrl_Ctrl_CtrlShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n216\n\"|Mutant_Build|face|Jaw_Block|Jaw_Guide|Jaw_Guide_Ctrl_Ctrl_Ctrl_CtrlShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n217\n\"|Mutant_Build|face|Jaw_Block|Jaw_Guide|JawUpperLip_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n218\n\"|Mutant_Build|face|Jaw_Block|Jaw_Guide|JawUpperLip_Guide|JawUpperLip_Guide_CtrlShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n219\n\"|Mutant_Build|face|Jaw_Block|Jaw_Guide|JawUpperLip_Guide|JawUpperLip_Guide_Ctrl_CtrlShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n220\n\"|Mutant_Build|face|Jaw_Block|Jaw_Guide|JawUpperLip_Guide|JawUpperLip_Guide_Ctrl_Ctrl_CtrlShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n221\n\"|Mutant_Build|face|Jaw_Block|Jaw_Guide|JawUpperLip_Guide|JawUpperLip_Guide_Ctrl_Ctrl_Ctrl_CtrlShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n222\n\"|Mutant_Build|face|Jaw_Block|Jaw_Guide|JawLowerLip_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n223\n\"|Mutant_Build|face|Jaw_Block|Jaw_Guide|JawLowerLip_Guide|JawLowerLip_Guide_CtrlShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n224\n\"|Mutant_Build|face|Jaw_Block|Jaw_Guide|JawLowerLip_Guide|JawLowerLip_Guide_Ctrl_CtrlShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n225\n\"|Mutant_Build|face|Jaw_Block|Jaw_Guide|JawLowerLip_Guide|JawLowerLip_Guide_Ctrl_Ctrl_CtrlShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n226\n\"|Mutant_Build|face|Jaw_Block|Jaw_Guide|JawLowerLip_Guide|JawLowerLip_Guide_Ctrl_Ctrl_Ctrl_CtrlShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n227\n\"|Mutant_Build|face|Tongue_Block\" \"iconName\" \"/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/Tongue.png\" 1914386667 \"\" \"ui\"\n228\n\"|Mutant_Build|face|Tongue_Block|Tongue_01_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n229\n\"|Mutant_Build|face|Tongue_Block|Tongue_01_Guide|Tongue_01_Guide_CtrlShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n230\n\"|Mutant_Build|face|Tongue_Block|Tongue_01_Guide|Tongue_01_Guide_Ctrl_CtrlShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n231\n\"|Mutant_Build|face|Tongue_Block|Tongue_01_Guide|Tongue_01_Guide_Ctrl_Ctrl_CtrlShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n232\n\"|Mutant_Build|face|Tongue_Block|Tongue_01_Guide|Tongue_01_Guide_Ctrl_Ctrl_Ctrl_CtrlShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n233\n\"|Mutant_Build|face|Tongue_Block|Tongue_01_Guide|Tongue_02_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n234\n\"|Mutant_Build|face|Tongue_Block|Tongue_01_Guide|Tongue_02_Guide|Tongue_02_Guide_CtrlShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n235\n\"|Mutant_Build|face|Tongue_Block|Tongue_01_Guide|Tongue_02_Guide|Tongue_02_Guide_Ctrl_CtrlShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n236\n\"|Mutant_Build|face|Tongue_Block|Tongue_01_Guide|Tongue_02_Guide|Tongue_02_Guide_Ctrl_Ctrl_CtrlShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n237\n\"|Mutant_Build|face|Tongue_Block|Tongue_01_Guide|Tongue_02_Guide|Tongue_02_Guide_Ctrl_Ctrl_Ctrl_CtrlShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n238\n\"|Mutant_Build|face|Tongue_Block|Tongue_01_Guide|Tongue_02_Guide|Tongue_03_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n239\n\"|Mutant_Build|face|Tongue_Block|Tongue_01_Guide|Tongue_02_Guide|Tongue_03_Guide|Tongue_03_Guide_CtrlShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n240\n\"|Mutant_Build|face|Tongue_Block|Tongue_01_Guide|Tongue_02_Guide|Tongue_03_Guide|Tongue_03_Guide_Ctrl_CtrlShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n241\n\"|Mutant_Build|face|Tongue_Block|Tongue_01_Guide|Tongue_02_Guide|Tongue_03_Guide|Tongue_03_Guide_Ctrl_Ctrl_CtrlShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n242\n\"|Mutant_Build|face|Tongue_Block|Tongue_01_Guide|Tongue_02_Guide|Tongue_03_Guide|Tongue_03_Guide_Ctrl_Ctrl_Ctrl_CtrlShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n243\n\"|Mutant_Build|face|Tongue_Block|Tongue_01_Guide|Tongue_02_Guide|Tongue_03_Guide|Tongue_04_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n244\n\"|Mutant_Build|face|Tongue_Block|Tongue_01_Guide|Tongue_02_Guide|Tongue_03_Guide|Tongue_04_Guide|Tongue_04_Guide_CtrlShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n245\n\"|Mutant_Build|face|Tongue_Block|Tongue_01_Guide|Tongue_02_Guide|Tongue_03_Guide|Tongue_04_Guide|Tongue_04_Guide_Ctrl_CtrlShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n246\n\"|Mutant_Build|face|Tongue_Block|Tongue_01_Guide|Tongue_02_Guide|Tongue_03_Guide|Tongue_04_Guide|Tongue_04_Guide_Ctrl_Ctrl_CtrlShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n247\n\"|Mutant_Build|face|Tongue_Block|Tongue_01_Guide|Tongue_02_Guide|Tongue_03_Guide|Tongue_04_Guide|Tongue_04_Guide_Ctrl_Ctrl_Ctrl_CtrlShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n248\n\"|Mutant_Build|face|Tongue_Block|Tongue_01_Guide|Tongue_02_Guide|Tongue_03_Guide|Tongue_04_Guide|Tongue_05_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n249\n\"|Mutant_Build|face|Tongue_Block|Tongue_01_Guide|Tongue_02_Guide|Tongue_03_Guide|Tongue_04_Guide|Tongue_05_Guide|Tongue_05_Guide_CtrlShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n250\n\"|Mutant_Build|face|Tongue_Block|Tongue_01_Guide|Tongue_02_Guide|Tongue_03_Guide|Tongue_04_Guide|Tongue_05_Guide|Tongue_05_Guide_Ctrl_CtrlShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n251\n\"|Mutant_Build|face|Tongue_Block|Tongue_01_Guide|Tongue_02_Guide|Tongue_03_Guide|Tongue_04_Guide|Tongue_05_Guide|Tongue_05_Guide_Ctrl_Ctrl_CtrlShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n252\n\"|Mutant_Build|face|Tongue_Block|Tongue_01_Guide|Tongue_02_Guide|Tongue_03_Guide|Tongue_04_Guide|Tongue_05_Guide|Tongue_05_Guide_Ctrl_Ctrl_Ctrl_CtrlShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n253\n\"|Mutant_Build|face|Teeth_Block\" \"iconName\" \"/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/Teeth.png\" 443166286 \"\" \"ui\"\n254\n\"|Mutant_Build|face|Teeth_Block|Teeth_Upr_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n255\n\"|Mutant_Build|face|Teeth_Block|Teeth_Upr_Guide|Teeth_Upr_Guide_CtrlShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n256\n\"|Mutant_Build|face|Teeth_Block|Teeth_Upr_Guide|Teeth_Upr_Guide_Ctrl_CtrlShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n257\n\"|Mutant_Build|face|Teeth_Block|Teeth_Upr_Guide|Teeth_Upr_Guide_Ctrl_Ctrl_CtrlShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n258\n\"|Mutant_Build|face|Teeth_Block|Teeth_Upr_Guide|Teeth_Upr_Guide_Ctrl_Ctrl_Ctrl_CtrlShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n259\n\"|Mutant_Build|face|Teeth_Block|Teeth_Lwr_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n260\n\"|Mutant_Build|face|Teeth_Block|Teeth_Lwr_Guide|Teeth_Lwr_Guide_CtrlShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n261\n\"|Mutant_Build|face|Teeth_Block|Teeth_Lwr_Guide|Teeth_Lwr_Guide_Ctrl_CtrlShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n262\n\"|Mutant_Build|face|Teeth_Block|Teeth_Lwr_Guide|Teeth_Lwr_Guide_Ctrl_Ctrl_CtrlShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n263\n\"|Mutant_Build|face|Teeth_Block|Teeth_Lwr_Guide|Teeth_Lwr_Guide_Ctrl_Ctrl_Ctrl_CtrlShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n264\n\"|Mutant_Build|face|Commissures_Block\" \"iconName\" \"/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/Commissures.png\" 59527749 \"\" \"ui\"\n265\n\"|Mutant_Build|face|Commissures_Block|L_Commissures_Wide_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n266\n\"|Mutant_Build|face|Commissures_Block|L_Commissures_Wide_Guide|curveShape3\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n267\n\"|Mutant_Build|face|Commissures_Block|L_Commissures_Narrow_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n268\n\"|Mutant_Build|face|Commissures_Block|L_Commissures_Narrow_Guide|curveShape4\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n269\n\"|Mutant_Build|face|Commissures_Block|L_Commissures_Up_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n270\n\"|Mutant_Build|face|Commissures_Block|L_Commissures_Up_Guide|curveShape5\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n271\n\"|Mutant_Build|face|Commissures_Block|L_Commissures_Down_Guide\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n272\n\"|Mutant_Build|face|Commissures_Block|L_Commissures_Down_Guide|curveShape6\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n273\n\"|Mutant_Build|null\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n274\n\"|Mutant_Build|null|NullJnt_Block\" \"iconName\" \"/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/CODE.png\" 2270353712 \"\" \"ui\"\n275\n\"|Mutant_Build|corectives\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n276\n\"|Mutant_Build|corectives|Correctives_Block\" \"iconName\" \"/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/Blendshape.png\" 1918847009 \"\" \"ui\"\n277\n\"|Mutant_Build|corectives|reorder_Block\" \"iconName\" \"/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/CODE.png\" 2270353712 \"\" \"ui\"\n278\n\"|Mutant_Build|corectives|reorder_Block|reorder_Loc\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n279\n\"|Mutant_Build|corectives|reorder_Block|reorder_Loc|reorder_LocShape\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n280\n\"|Mutant_Build|skin\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n281\n\"|Mutant_Build|skin|BindSkull_Block\" \"iconName\" \"/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/Skin.png\" 3443064169 \"\" \"ui\"\n282\n\"|Mutant_Build|skin|BindEyelids_Block\" \"iconName\" \"/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/Skin.png\" 3443064169 \"\" \"ui\"\n283\n\"|Mutant_Build|skin|BindLips_Block\" \"iconName\" \"/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/Skin.png\" 3443064169 \"\" \"ui\"\n284\n\"|Mutant_Build|skin|BindBrows_Block\" \"iconName\" \"/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/Skin.png\" 3443064169 \"\" \"ui\"\n285\n\"|Mutant_Build|skin|BindCheeks_Block\" \"iconName\" \"/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/Skin.png\" 3443064169 \"\" \"ui\"\n286\n\"|Mutant_Build|skin|BindJaw_Block\" \"iconName\" \"/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/Skin.png\" 3443064169 \"\" \"ui\"\n287\n\"|Mutant_Build|skin|BindMouthUp_Block\" \"iconName\" \"/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/Skin.png\" 3443064169 \"\" \"ui\"\n288\n\"|Mutant_Build|skin|BindMouthDown_Block\" \"iconName\" \"/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/Skin.png\" 3443064169 \"\" \"ui\"\n289\n\"|Mutant_Build|skin|BindMouthWide_Block\" \"iconName\" \"/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/Skin.png\" 3443064169 \"\" \"ui\"\n290\n\"|Mutant_Build|skin|BindMouthNarrow_Block\" \"iconName\" \"/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/Skin.png\" 3443064169 \"\" \"ui\"\n291\n\"|Mutant_Build|data\" \"iconName\" \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" 2106001608 \"C:/Users/rodri/Documents/maya/2026/scripts/Mutant_Tools/Utils/IO/Guide_Data/\" \"ui\"\n292\n\"|Mutant_Build|data|Load_Ctrls_Block\" \"iconName\" \"/net/pipeline/git/esteban.rodriguez/rigging/Mutant_Tools/Icons/Controller.png\" 1800604306 \"\" \"ui\"\nendStream\nendChannel\nendAssociations\n" 
+		-scn;
 // End of ToonFaceTemplate.ma
