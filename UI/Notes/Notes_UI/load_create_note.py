@@ -23,6 +23,7 @@ except:
 
 import Mutant_Tools
 from Mutant_Tools.UI.Notes.Utils.notes_util import *
+from Mutant_Tools.UI.CustomWidgets import button_help
 reload (Mutant_Tools.UI.Notes.Utils.notes_util)
 
 import tempfile
@@ -66,6 +67,8 @@ class Create_UI(QtWidgets.QDialog):
         self.ui = loader.load(f, parentWidget=self)
 
         f.close()
+
+        button_help.install_later(self.ui, ui_path)
 
     def create_layout(self):
         

@@ -1,0 +1,43 @@
+{
+    "min_button": {
+        "tip": "Minimize or restore the window.",
+        "what": "Collapses the window to its title bar, click again to bring it back.",
+        "examples": [
+            "Minimize the tool while you work in the viewport.",
+            "Keep Helpers minimized on a second monitor and open it only when needed."
+        ],
+        "details": "Hides the tool body and shrinks the window; clicking again restores the saved size.",
+        "code": {
+            "file": "UI/QtMutantWindow.py",
+            "function": "minimize",
+            "connect": "self.minimize"
+        }
+    },
+    "max_button": {
+        "tip": "Toggle full size.",
+        "what": "Switches the window between its normal size and full screen.",
+        "examples": [
+            "Make the AutoRigger big to see more blocks at once.",
+            "Go full size on Helpers to see every tab button at once."
+        ],
+        "details": "showMaximized() / normal state. A right double click on the title bar does the same.",
+        "code": {
+            "file": "UI/QtMutantWindow.py",
+            "function": "check_size",
+            "connect": "self.check_size"
+        }
+    },
+    "close_button": {
+        "tip": "Close the tool.",
+        "what": "Closes this tool window. Nothing in the scene changes.",
+        "examples": [
+            "Click X when you are done with the tool.",
+            "Close and reopen a tool after editing its code to load the changes."
+        ],
+        "code": {
+            "file": "UI/QtMutantWindow.py",
+            "function": "exit_ui",
+            "connect": "self.exit_ui"
+        }
+    }
+}

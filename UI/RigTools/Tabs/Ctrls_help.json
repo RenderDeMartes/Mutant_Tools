@@ -1,0 +1,527 @@
+{
+    "translate": {
+        "tip": "Connect translate from first to last selected.",
+        "what": "Connects the checked translate axes of the first selected object into the last one.",
+        "steps": [
+            "Check the axes.",
+            "Select the driver first, the target last.",
+            "Click Connect Translate."
+        ],
+        "examples": [
+            "Select the driver ctrl, then the target, check X and Y, click it.",
+            "Make a prop follow a ctrl translate only."
+        ],
+        "details": "connectAttr first.attr -> last.attr for each checked axis. Errors if the target attr is locked or already connected.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_CtrlsTab.py",
+            "function": "connect_translate",
+            "connect": "self.connect_translate"
+        }
+    },
+    "rotate": {
+        "tip": "Connect rotate from first to last selected.",
+        "what": "Connects the checked rotate axes of the first selected object into the last one.",
+        "steps": [
+            "Check the axes.",
+            "Select the driver first, the target last.",
+            "Click Connect Rotate."
+        ],
+        "examples": [
+            "Make a wheel spin with a ctrl: select ctrl, then wheel, check X, click it.",
+            "Spin all wheels from one ctrl."
+        ],
+        "details": "connectAttr first.attr -> last.attr for each checked axis. Errors if the target attr is locked or already connected.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_CtrlsTab.py",
+            "function": "connect_rotate",
+            "connect": "self.connect_rotate"
+        }
+    },
+    "scale": {
+        "tip": "Connect scale from first to last selected.",
+        "what": "Connects the checked scale axes of the first selected object into the last one.",
+        "steps": [
+            "Check the axes.",
+            "Select the driver first, the target last.",
+            "Click Connect Scale."
+        ],
+        "examples": [
+            "Make a prop scale with its ctrl: select ctrl, then prop, click it.",
+            "Scale an accessory with a squash ctrl."
+        ],
+        "details": "connectAttr first.attr -> last.attr for each checked axis. Errors if the target attr is locked or already connected.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_CtrlsTab.py",
+            "function": "connect_scale",
+            "connect": "self.connect_scale"
+        }
+    },
+    "color_wheel": {
+        "tip": "Pick any color.",
+        "what": "Opens Maya's color picker to choose a custom color for the selection.",
+        "examples": [
+            "Pick the exact color the art director asked for.",
+            "Match the client color guide exactly."
+        ],
+        "details": "cmds.colorEditor(), then assign_color_rgb with the picked color on each selected object.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_CtrlsTab.py",
+            "function": "rgb_pick_color",
+            "connect": "self.rgb_pick_color"
+        }
+    },
+    "red": {
+        "tip": "Color the selected ctrls red.",
+        "what": "Sets the override color of the selected controllers to red.",
+        "examples": [
+            "Select the left side ctrls and click it so animators tell sides apart.",
+            "Color all the IK ctrls one color and FK another so the switch reads at a glance.",
+            "Use red for one rig part on every rig so animators learn the colors."
+        ],
+        "details": "mt.assign_color(color): sets overrideEnabled + overrideColor (index color) on the shapes of the selected curves.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_CtrlsTab.py",
+            "function": "assign_color",
+            "connect": "lambda: self.assign_color(color='red')"
+        }
+    },
+    "blue": {
+        "tip": "Color the selected ctrls blue.",
+        "what": "Sets the override color of the selected controllers to blue.",
+        "examples": [
+            "Select the left side ctrls and click it so animators tell sides apart.",
+            "Color all the IK ctrls one color and FK another so the switch reads at a glance.",
+            "Use blue for one rig part on every rig so animators learn the colors."
+        ],
+        "details": "mt.assign_color(color): sets overrideEnabled + overrideColor (index color) on the shapes of the selected curves.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_CtrlsTab.py",
+            "function": "assign_color",
+            "connect": "lambda: self.assign_color(color='blue')"
+        }
+    },
+    "green": {
+        "tip": "Color the selected ctrls green.",
+        "what": "Sets the override color of the selected controllers to green.",
+        "examples": [
+            "Select the left side ctrls and click it so animators tell sides apart.",
+            "Color all the IK ctrls one color and FK another so the switch reads at a glance.",
+            "Use green for one rig part on every rig so animators learn the colors."
+        ],
+        "details": "mt.assign_color(color): sets overrideEnabled + overrideColor (index color) on the shapes of the selected curves.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_CtrlsTab.py",
+            "function": "assign_color",
+            "connect": "lambda: self.assign_color(color='green')"
+        }
+    },
+    "white": {
+        "tip": "Color the selected ctrls white.",
+        "what": "Sets the override color of the selected controllers to white.",
+        "examples": [
+            "Select the left side ctrls and click it so animators tell sides apart.",
+            "Color all the IK ctrls one color and FK another so the switch reads at a glance.",
+            "Use white for one rig part on every rig so animators learn the colors."
+        ],
+        "details": "mt.assign_color(color): sets overrideEnabled + overrideColor (index color) on the shapes of the selected curves.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_CtrlsTab.py",
+            "function": "assign_color",
+            "connect": "lambda: self.assign_color(color='white')"
+        }
+    },
+    "purple": {
+        "tip": "Color the selected ctrls purple.",
+        "what": "Sets the override color of the selected controllers to purple.",
+        "examples": [
+            "Select the left side ctrls and click it so animators tell sides apart.",
+            "Color all the IK ctrls one color and FK another so the switch reads at a glance.",
+            "Use purple for one rig part on every rig so animators learn the colors."
+        ],
+        "details": "mt.assign_color(color): sets overrideEnabled + overrideColor (index color) on the shapes of the selected curves.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_CtrlsTab.py",
+            "function": "assign_color",
+            "connect": "lambda: self.assign_color(color='purple')"
+        }
+    },
+    "yellow": {
+        "tip": "Color the selected ctrls yellow.",
+        "what": "Sets the override color of the selected controllers to yellow.",
+        "examples": [
+            "Select the left side ctrls and click it so animators tell sides apart.",
+            "Color all the IK ctrls one color and FK another so the switch reads at a glance.",
+            "Use yellow for one rig part on every rig so animators learn the colors."
+        ],
+        "details": "mt.assign_color(color): sets overrideEnabled + overrideColor (index color) on the shapes of the selected curves.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_CtrlsTab.py",
+            "function": "assign_color",
+            "connect": "lambda: self.assign_color(color='yellow')"
+        }
+    },
+    "light_blue": {
+        "tip": "Color the selected ctrls light blue.",
+        "what": "Sets the override color of the selected controllers to light blue.",
+        "examples": [
+            "Select the left side ctrls and click it so animators tell sides apart.",
+            "Color all the IK ctrls one color and FK another so the switch reads at a glance.",
+            "Use light blue for one rig part on every rig so animators learn the colors."
+        ],
+        "details": "mt.assign_color(color): sets overrideEnabled + overrideColor (index color) on the shapes of the selected curves.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_CtrlsTab.py",
+            "function": "assign_color",
+            "connect": "lambda: self.assign_color(color='lightBlue')"
+        }
+    },
+    "black": {
+        "tip": "Color the selected ctrls grey.",
+        "what": "Sets the override color of the selected controllers to grey.",
+        "examples": [
+            "Select the left side ctrls and click it so animators tell sides apart.",
+            "Color all the IK ctrls one color and FK another so the switch reads at a glance.",
+            "Use black for one rig part on every rig so animators learn the colors."
+        ],
+        "details": "mt.assign_color(color): sets overrideEnabled + overrideColor (index color) on the shapes of the selected curves.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_CtrlsTab.py",
+            "function": "assign_color",
+            "connect": "lambda: self.assign_color(color='grey')"
+        }
+    },
+    "rgb1": {
+        "tip": "Color the selected ctrls with this swatch.",
+        "what": "Sets the selected controllers to this RGB color (swatch 1).",
+        "examples": [
+            "Select the face ctrls and click a soft swatch so they read well on the skin.",
+            "Pick the same swatch on every character for that part."
+        ],
+        "details": "mt.assign_color_rgb(r, g, b in 0-1): overrideRGBColors on the shapes, one object at a time.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_CtrlsTab.py",
+            "function": "rgb_color",
+            "connect": "lambda: self.rgb_color(color=[230, 176, 170])"
+        }
+    },
+    "rgb2": {
+        "tip": "Color the selected ctrls with this swatch.",
+        "what": "Sets the selected controllers to this RGB color (swatch 2).",
+        "examples": [
+            "Select the face ctrls and click a soft swatch so they read well on the skin.",
+            "Pick the same swatch on every character for that part."
+        ],
+        "details": "mt.assign_color_rgb(r, g, b in 0-1): overrideRGBColors on the shapes, one object at a time.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_CtrlsTab.py",
+            "function": "rgb_color",
+            "connect": "lambda: self.rgb_color(color=[195, 155, 211])"
+        }
+    },
+    "rgb3": {
+        "tip": "Color the selected ctrls with this swatch.",
+        "what": "Sets the selected controllers to this RGB color (swatch 3).",
+        "examples": [
+            "Select the face ctrls and click a soft swatch so they read well on the skin.",
+            "Pick the same swatch on every character for that part."
+        ],
+        "details": "mt.assign_color_rgb(r, g, b in 0-1): overrideRGBColors on the shapes, one object at a time.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_CtrlsTab.py",
+            "function": "rgb_color",
+            "connect": "lambda: self.rgb_color(color=[127, 179, 213])"
+        }
+    },
+    "rgb4": {
+        "tip": "Color the selected ctrls with this swatch.",
+        "what": "Sets the selected controllers to this RGB color (swatch 4).",
+        "examples": [
+            "Select the face ctrls and click a soft swatch so they read well on the skin.",
+            "Pick the same swatch on every character for that part."
+        ],
+        "details": "mt.assign_color_rgb(r, g, b in 0-1): overrideRGBColors on the shapes, one object at a time.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_CtrlsTab.py",
+            "function": "rgb_color",
+            "connect": "lambda: self.rgb_color(color=[155, 198, 182])"
+        }
+    },
+    "rgb5": {
+        "tip": "Color the selected ctrls with this swatch.",
+        "what": "Sets the selected controllers to this RGB color (swatch 5).",
+        "examples": [
+            "Select the face ctrls and click a soft swatch so they read well on the skin.",
+            "Pick the same swatch on every character for that part."
+        ],
+        "details": "mt.assign_color_rgb(r, g, b in 0-1): overrideRGBColors on the shapes, one object at a time.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_CtrlsTab.py",
+            "function": "rgb_color",
+            "connect": "lambda: self.rgb_color(color=[130, 224, 170])"
+        }
+    },
+    "rgb6": {
+        "tip": "Color the selected ctrls with this swatch.",
+        "what": "Sets the selected controllers to this RGB color (swatch 6).",
+        "examples": [
+            "Select the face ctrls and click a soft swatch so they read well on the skin.",
+            "Pick the same swatch on every character for that part."
+        ],
+        "details": "mt.assign_color_rgb(r, g, b in 0-1): overrideRGBColors on the shapes, one object at a time.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_CtrlsTab.py",
+            "function": "rgb_color",
+            "connect": "lambda: self.rgb_color(color=[245, 176, 65])"
+        }
+    },
+    "rgb7": {
+        "tip": "Color the selected ctrls with this swatch.",
+        "what": "Sets the selected controllers to this RGB color (swatch 7).",
+        "examples": [
+            "Select the face ctrls and click a soft swatch so they read well on the skin.",
+            "Pick the same swatch on every character for that part."
+        ],
+        "details": "mt.assign_color_rgb(r, g, b in 0-1): overrideRGBColors on the shapes, one object at a time.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_CtrlsTab.py",
+            "function": "rgb_color",
+            "connect": "lambda: self.rgb_color(color=[229, 152, 102])"
+        }
+    },
+    "rgb8": {
+        "tip": "Color the selected ctrls with this swatch.",
+        "what": "Sets the selected controllers to this RGB color (swatch 8).",
+        "examples": [
+            "Select the face ctrls and click a soft swatch so they read well on the skin.",
+            "Pick the same swatch on every character for that part."
+        ],
+        "details": "mt.assign_color_rgb(r, g, b in 0-1): overrideRGBColors on the shapes, one object at a time.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_CtrlsTab.py",
+            "function": "rgb_color",
+            "connect": "lambda: self.rgb_color(color=[133, 146, 158])"
+        }
+    },
+    "rgb9": {
+        "tip": "Color the selected ctrls with this swatch.",
+        "what": "Sets the selected controllers to this RGB color (swatch 9).",
+        "examples": [
+            "Select the face ctrls and click a soft swatch so they read well on the skin.",
+            "Pick the same swatch on every character for that part."
+        ],
+        "details": "mt.assign_color_rgb(r, g, b in 0-1): overrideRGBColors on the shapes, one object at a time.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_CtrlsTab.py",
+            "function": "rgb_color",
+            "connect": "lambda: self.rgb_color(color=[146, 43, 33])"
+        }
+    },
+    "rgb10": {
+        "tip": "Color the selected ctrls with this swatch.",
+        "what": "Sets the selected controllers to this RGB color (swatch 10).",
+        "examples": [
+            "Select the face ctrls and click a soft swatch so they read well on the skin.",
+            "Pick the same swatch on every character for that part."
+        ],
+        "details": "mt.assign_color_rgb(r, g, b in 0-1): overrideRGBColors on the shapes, one object at a time.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_CtrlsTab.py",
+            "function": "rgb_color",
+            "connect": "lambda: self.rgb_color(color=[14, 102, 85])"
+        }
+    },
+    "rgb11": {
+        "tip": "Color the selected ctrls with this swatch.",
+        "what": "Sets the selected controllers to this RGB color (swatch 11).",
+        "examples": [
+            "Select the face ctrls and click a soft swatch so they read well on the skin.",
+            "Pick the same swatch on every character for that part."
+        ],
+        "details": "mt.assign_color_rgb(r, g, b in 0-1): overrideRGBColors on the shapes, one object at a time.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_CtrlsTab.py",
+            "function": "rgb_color",
+            "connect": "lambda: self.rgb_color(color=[118, 68, 138])"
+        }
+    },
+    "rgb12": {
+        "tip": "Color the selected ctrls with this swatch.",
+        "what": "Sets the selected controllers to this RGB color (swatch 12).",
+        "examples": [
+            "Select the face ctrls and click a soft swatch so they read well on the skin.",
+            "Pick the same swatch on every character for that part."
+        ],
+        "details": "mt.assign_color_rgb(r, g, b in 0-1): overrideRGBColors on the shapes, one object at a time.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_CtrlsTab.py",
+            "function": "rgb_color",
+            "connect": "lambda: self.rgb_color(color=[31, 97, 141])"
+        }
+    },
+    "rgb13": {
+        "tip": "Color the selected ctrls with this swatch.",
+        "what": "Sets the selected controllers to this RGB color (swatch 13).",
+        "examples": [
+            "Select the face ctrls and click a soft swatch so they read well on the skin.",
+            "Pick the same swatch on every character for that part."
+        ],
+        "details": "mt.assign_color_rgb(r, g, b in 0-1): overrideRGBColors on the shapes, one object at a time.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_CtrlsTab.py",
+            "function": "rgb_color",
+            "connect": "lambda: self.rgb_color(color=[34, 153, 84])"
+        }
+    },
+    "rgb14": {
+        "tip": "Color the selected ctrls with this swatch.",
+        "what": "Sets the selected controllers to this RGB color (swatch 14).",
+        "examples": [
+            "Select the face ctrls and click a soft swatch so they read well on the skin.",
+            "Pick the same swatch on every character for that part."
+        ],
+        "details": "mt.assign_color_rgb(r, g, b in 0-1): overrideRGBColors on the shapes, one object at a time.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_CtrlsTab.py",
+            "function": "rgb_color",
+            "connect": "lambda: self.rgb_color(color=[110, 44, 0])"
+        }
+    },
+    "rgb15": {
+        "tip": "Color the selected ctrls with this swatch.",
+        "what": "Sets the selected controllers to this RGB color (swatch 15).",
+        "examples": [
+            "Select the face ctrls and click a soft swatch so they read well on the skin.",
+            "Pick the same swatch on every character for that part."
+        ],
+        "details": "mt.assign_color_rgb(r, g, b in 0-1): overrideRGBColors on the shapes, one object at a time.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_CtrlsTab.py",
+            "function": "rgb_color",
+            "connect": "lambda: self.rgb_color(color=[46, 64, 83])"
+        }
+    },
+    "rgb_random": {
+        "tip": "One random color for the selection.",
+        "what": "Gives all the selected controllers the same random color.",
+        "examples": [
+            "Quickly tell a group of tweak ctrls apart.",
+            "Color a temp test set of ctrls."
+        ],
+        "details": "One random RGB, assign_color_rgb on every selected object.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_CtrlsTab.py",
+            "function": "random_color",
+            "connect": "self.random_color"
+        }
+    },
+    "rgb_random_each": {
+        "tip": "A random color for each selected ctrl.",
+        "what": "Gives every selected controller its own random color.",
+        "examples": [
+            "Color each finger differently to check their order.",
+            "Check the order of many similar ctrls."
+        ],
+        "details": "A new random RGB per selected object.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_CtrlsTab.py",
+            "function": "random_color_each",
+            "connect": "self.random_color_each"
+        }
+    },
+    "mutant_controller": {
+        "tip": "Turn the selection into Mutant controllers.",
+        "what": "Tags the selected curves (or every *_Ctrl if nothing is selected) as Mutant controllers: thicker lines, rotate order attr, saved on rebuild.",
+        "steps": [
+            "Select your curves (or nothing for every *_Ctrl).",
+            "Click it."
+        ],
+        "examples": [
+            "Select ctrls you made by hand and click it so the rebuild keeps their shapes.",
+            "Make ctrls from another tool work with the Global ctrl visibility.",
+            "Tag ctrls you made in Rig Tools so rebuilds keep their shapes."
+        ],
+        "details": "Per ctrl: lineWidth 2, a RotateOrder attr connected to the rotate order (mt.connect_rotate_order), TagAsController, and <ctrl>_tag.visibilityMode driven by Global_Ctrl.CtrlVis.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_CtrlsTab.py",
+            "function": "tag_mutant_controller",
+            "connect": "self.tag_mutant_controller"
+        }
+    },
+    "mirror_behavior": {
+        "tip": "Mirror the selection with behavior.",
+        "what": "Puts the selection in a group that mirrors it to the other side, like Maya mirror joint behavior.",
+        "examples": [
+            "Select the left prop ctrl group, click it: the copy moves mirrored.",
+            "Mirror a left prop rig to the right."
+        ],
+        "details": "mt.mirror_group(world=False): a parent group scaled -1 so local moves mirror, like joint mirror behavior.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_CtrlsTab.py",
+            "function": "mirror_behavior",
+            "connect": "self.mirror_behavior"
+        }
+    },
+    "world_mirror": {
+        "tip": "Mirror the selection in world space.",
+        "what": "Puts the selection in a group that mirrors it across the world X axis.",
+        "examples": [
+            "Mirror a ctrl so both sides move the same way in world.",
+            "Mirror a ctrl for world space movement like a foot."
+        ],
+        "details": "mt.mirror_group(world=True): the -1 group mirrors in world space, so both sides move the same world direction.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_CtrlsTab.py",
+            "function": "mirror_world",
+            "connect": "self.mirror_world"
+        }
+    },
+    "root_auto": {
+        "tip": "Add Root and Auto groups.",
+        "what": "Adds a Root group and an Auto group above each selected ctrl, so you can drive it and still animate it.",
+        "steps": [
+            "Select ctrls.",
+            "Click it.",
+            "Connect or constrain the Auto group."
+        ],
+        "examples": [
+            "Select a ctrl, click it, then connect drivers to the Auto group.",
+            "Drive a foot roll on the Auto group while animators still key the ctrl.",
+            "Add auto groups for a breathing system."
+        ],
+        "details": "mt.root_grp(autoRoot=True): <ctrl>_Root_Grp (keeps the rest pose) > <ctrl>_Auto_Grp (for drivers) > ctrl.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_CtrlsTab.py",
+            "function": "root_auto",
+            "connect": "self.root_auto"
+        }
+    },
+    "offset": {
+        "tip": "Add an offset group.",
+        "what": "Adds an offset group above each selected ctrl so its values are zero.",
+        "examples": [
+            "Select a ctrl with values, click it: the ctrl reads 0 again.",
+            "Clean a ctrl that has values before giving it to animators."
+        ],
+        "details": "mt.root_grp(): an offset / root group that takes the ctrl transform, so the ctrl reads zero.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_CtrlsTab.py",
+            "function": "offset_grp",
+            "connect": "self.offset_grp"
+        }
+    },
+    "match": {
+        "tip": "Match transforms to the last selected.",
+        "what": "Moves and rotates every selected object to the last selected one.",
+        "examples": [
+            "Select the ctrl group, then the joint, click it to snap the ctrl to the joint.",
+            "Select several locators, then the joint: all of them snap to it.",
+            "Snap a locator to a joint to read its position."
+        ],
+        "details": "parentConstraint from the last selected to each other one, deleted right away (position + rotation, no scale).",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_CtrlsTab.py",
+            "function": "match_transform",
+            "connect": "self.match_transform"
+        }
+    }
+}

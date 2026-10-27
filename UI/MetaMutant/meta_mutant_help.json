@@ -1,0 +1,534 @@
+{
+    "build_template_btn": {
+        "tip": "Build the chosen MetaHuman template.",
+        "what": "Builds a simple MetaHuman rig from the template picked in the list.",
+        "examples": [
+            "Pick a template and click it to get a ready face rig to test.",
+            "Build a template to see how the MetaHuman rig works."
+        ],
+        "details": "meta_mutant.create_simple_metahuman(template): builds from a stored template .dna.",
+        "code": {
+            "file": "UI/MetaMutant/load_meta_mutant.py",
+            "function": "build_template",
+            "connect": "self.build_template"
+        }
+    },
+    "load_dna_builder_button": {
+        "tip": "Browse for a .dna file.",
+        "what": "Opens a file browser and puts the chosen MetaHuman .dna file in the field.",
+        "examples": [
+            "Pick the .dna exported from MetaHuman Creator.",
+            "Pick a .dna from Quixel Bridge."
+        ],
+        "code": {
+            "file": "UI/MetaMutant/load_meta_mutant.py",
+            "function": "get_builder_dna_into_line",
+            "connect": "self.get_builder_dna_into_line"
+        }
+    },
+    "build_dna_button": {
+        "tip": "Build a MetaHuman from the .dna file.",
+        "what": "Builds the MetaHuman rig described by the .dna file in the field.",
+        "examples": [
+            "Load your character .dna and click Build.",
+            "Build the client MetaHuman from their .dna."
+        ],
+        "details": "create_simple_metahuman(dna_path=field): the DNA holds joints, blendshapes and the rig logic.",
+        "code": {
+            "file": "UI/MetaMutant/load_meta_mutant.py",
+            "function": "template_build",
+            "connect": "self.template_build"
+        }
+    },
+    "export_face_sel": {
+        "tip": "Export the selected head to wrap.",
+        "what": "Exports the selected head geometry so you can wrap the MetaHuman topology onto it in Wrap.",
+        "steps": [
+            "Select your head geo.",
+            "Click it.",
+            "Wrap the MetaHuman head onto it in Wrap.",
+            "Export the result as .abc."
+        ],
+        "examples": [
+            "Select your character head, click it, then Open Wrap.",
+            "Export a sculpted creature head to wrap."
+        ],
+        "details": "export_geo_for_wrap(mode=\"Face\"): obj into the project data folder, versioned.",
+        "code": {
+            "file": "UI/MetaMutant/load_meta_mutant.py",
+            "function": "export_geo_for_wrap_face",
+            "connect": "self.export_geo_for_wrap_face"
+        }
+    },
+    "open_wrap_btn": {
+        "tip": "Open R3DS Wrap.",
+        "what": "Starts the Wrap application to fit the MetaHuman head to your model.",
+        "examples": [
+            "Click it after exporting the head.",
+            "Open Wrap to fit the MetaHuman head to a scan."
+        ],
+        "details": "Runs r3ds_wrap (or \"sclenv r3ds_wrap\" on studio Linux).",
+        "code": {
+            "file": "UI/MetaMutant/load_meta_mutant.py",
+            "function": "open_wrap_3d",
+            "connect": "self.open_wrap_3d"
+        }
+    },
+    "open_meta_mutant_btn": {
+        "tip": "Open the MetaMutant folder.",
+        "what": "Opens the folder with the exported and wrapped geometry.",
+        "examples": [
+            "Find the wrapped head Wrap saved.",
+            "Find the exported obj to drag into Wrap."
+        ],
+        "code": {
+            "file": "UI/MetaMutant/load_meta_mutant.py",
+            "function": "open_meta_mutant_folder",
+            "connect": "self.open_meta_mutant_folder"
+        }
+    },
+    "wrapped_head_btn": {
+        "tip": "Browse for the wrapped head (.abc).",
+        "what": "Opens a file browser and puts the wrapped head alembic in the field.",
+        "examples": [
+            "Pick the .abc you exported from Wrap.",
+            "Pick the abc saved from Wrap."
+        ],
+        "code": {
+            "file": "UI/MetaMutant/load_meta_mutant.py",
+            "function": "put_wrapped_head_in_line",
+            "connect": "self.put_wrapped_head_in_line"
+        }
+    },
+    "import_wrapped_head_btn": {
+        "tip": "Import the wrapped head.",
+        "what": "Imports the wrapped head alembic from the field into the scene.",
+        "examples": [
+            "Click it, then fill the pivot fields below.",
+            "Import it to check the wrap before building."
+        ],
+        "details": "AbcImport -mode import <field>.",
+        "code": {
+            "file": "UI/MetaMutant/load_meta_mutant.py",
+            "function": "import_wrapped_head",
+            "connect": "self.import_wrapped_head"
+        }
+    },
+    "l_eye_pivot_btn": {
+        "tip": "Use the selected object as the left eye pivot.",
+        "what": "Select the left eye pivot in the scene and click <<: its name goes in the field next to the button.",
+        "examples": [
+            "Select the left eyeball and click <<.",
+            "A locator works too: place it where the l eye pivot btn pivot should be and pick it."
+        ],
+        "details": "selection_to_line_edit(): writes the cleaned selection in the field; asks before replacing a filled field. Save the fields with S to reuse them.",
+        "code": {
+            "file": "UI/MetaMutant/load_meta_mutant.py",
+            "function": "selection_to_line_edit",
+            "connect": "lambda: self.selection_to_line_edit(self.ui.l_eye_pivot_line)"
+        }
+    },
+    "r_eye_pivot_btn": {
+        "tip": "Use the selected object as the right eye pivot.",
+        "what": "Select the right eye pivot in the scene and click <<: its name goes in the field next to the button.",
+        "examples": [
+            "Select the right eyeball and click <<.",
+            "A locator works too: place it where the r eye pivot btn pivot should be and pick it."
+        ],
+        "details": "selection_to_line_edit(): writes the cleaned selection in the field; asks before replacing a filled field. Save the fields with S to reuse them.",
+        "code": {
+            "file": "UI/MetaMutant/load_meta_mutant.py",
+            "function": "selection_to_line_edit",
+            "connect": "lambda: self.selection_to_line_edit(self.ui.r_eye_pivot_line)"
+        }
+    },
+    "uppr_teeth_btn": {
+        "tip": "Use the selected object as the upper teeth.",
+        "what": "Select the upper teeth in the scene and click <<: its name goes in the field next to the button.",
+        "examples": [
+            "Select the upper teeth geo and click <<.",
+            "A locator works too: place it where the uppr teeth btn pivot should be and pick it."
+        ],
+        "details": "selection_to_line_edit(): writes the cleaned selection in the field; asks before replacing a filled field. Save the fields with S to reuse them.",
+        "code": {
+            "file": "UI/MetaMutant/load_meta_mutant.py",
+            "function": "selection_to_line_edit",
+            "connect": "lambda: self.selection_to_line_edit(self.ui.uppr_teeth_line)"
+        }
+    },
+    "lwr_teeth_btn": {
+        "tip": "Use the selected object as the lower teeth.",
+        "what": "Select the lower teeth in the scene and click <<: its name goes in the field next to the button.",
+        "examples": [
+            "Select the lower teeth geo and click <<.",
+            "A locator works too: place it where the lwr teeth btn pivot should be and pick it."
+        ],
+        "details": "selection_to_line_edit(): writes the cleaned selection in the field; asks before replacing a filled field. Save the fields with S to reuse them.",
+        "code": {
+            "file": "UI/MetaMutant/load_meta_mutant.py",
+            "function": "selection_to_line_edit",
+            "connect": "lambda: self.selection_to_line_edit(self.ui.lwr_teeth_line)"
+        }
+    },
+    "tongue_start_btn": {
+        "tip": "Use the selected object as the tongue start.",
+        "what": "Select the tongue start in the scene and click <<: its name goes in the field next to the button.",
+        "examples": [
+            "Select the vertex at the tongue root and click <<.",
+            "A locator works too: place it where the tongue start btn pivot should be and pick it."
+        ],
+        "details": "selection_to_line_edit(): writes the cleaned selection in the field; asks before replacing a filled field. Save the fields with S to reuse them.",
+        "code": {
+            "file": "UI/MetaMutant/load_meta_mutant.py",
+            "function": "selection_to_line_edit",
+            "connect": "lambda: self.selection_to_line_edit(self.ui.tongue_start_line)"
+        }
+    },
+    "tongue_end_btn": {
+        "tip": "Use the selected object as the tongue end.",
+        "what": "Select the tongue end in the scene and click <<: its name goes in the field next to the button.",
+        "examples": [
+            "Select the vertex at the tongue tip and click <<.",
+            "A locator works too: place it where the tongue end btn pivot should be and pick it."
+        ],
+        "details": "selection_to_line_edit(): writes the cleaned selection in the field; asks before replacing a filled field. Save the fields with S to reuse them.",
+        "code": {
+            "file": "UI/MetaMutant/load_meta_mutant.py",
+            "function": "selection_to_line_edit",
+            "connect": "lambda: self.selection_to_line_edit(self.ui.tongue_end_line)"
+        }
+    },
+    "tongue_left_btn": {
+        "tip": "Use the selected object as the tongue left side.",
+        "what": "Select the tongue left side in the scene and click <<: its name goes in the field next to the button.",
+        "examples": [
+            "Select a vertex on the left side of the tongue and click <<.",
+            "A locator works too: place it where the tongue left btn pivot should be and pick it."
+        ],
+        "details": "selection_to_line_edit(): writes the cleaned selection in the field; asks before replacing a filled field. Save the fields with S to reuse them.",
+        "code": {
+            "file": "UI/MetaMutant/load_meta_mutant.py",
+            "function": "selection_to_line_edit",
+            "connect": "lambda: self.selection_to_line_edit(self.ui.tongue_left_line)"
+        }
+    },
+    "tongue_right_btn": {
+        "tip": "Use the selected object as the tongue right side.",
+        "what": "Select the tongue right side in the scene and click <<: its name goes in the field next to the button.",
+        "examples": [
+            "Select a vertex on the right side of the tongue and click <<.",
+            "A locator works too: place it where the tongue right btn pivot should be and pick it."
+        ],
+        "details": "selection_to_line_edit(): writes the cleaned selection in the field; asks before replacing a filled field. Save the fields with S to reuse them.",
+        "code": {
+            "file": "UI/MetaMutant/load_meta_mutant.py",
+            "function": "selection_to_line_edit",
+            "connect": "lambda: self.selection_to_line_edit(self.ui.tongue_right_line)"
+        }
+    },
+    "tongue_up_btn": {
+        "tip": "Use the selected object as the tongue top.",
+        "what": "Select the tongue top in the scene and click <<: its name goes in the field next to the button.",
+        "examples": [
+            "Select a vertex on top of the tongue and click <<.",
+            "A locator works too: place it where the tongue up btn pivot should be and pick it."
+        ],
+        "details": "selection_to_line_edit(): writes the cleaned selection in the field; asks before replacing a filled field. Save the fields with S to reuse them.",
+        "code": {
+            "file": "UI/MetaMutant/load_meta_mutant.py",
+            "function": "selection_to_line_edit",
+            "connect": "lambda: self.selection_to_line_edit(self.ui.tongue_up_line)"
+        }
+    },
+    "jaw_btn": {
+        "tip": "Use the selected object as the jaw pivot.",
+        "what": "Select the jaw pivot in the scene and click <<: its name goes in the field next to the button.",
+        "examples": [
+            "Select the vertex or locator at the jaw hinge and click <<.",
+            "A locator works too: place it where the jaw btn pivot should be and pick it."
+        ],
+        "details": "selection_to_line_edit(): writes the cleaned selection in the field; asks before replacing a filled field. Save the fields with S to reuse them.",
+        "code": {
+            "file": "UI/MetaMutant/load_meta_mutant.py",
+            "function": "selection_to_line_edit",
+            "connect": "lambda: self.selection_to_line_edit(self.ui.jaw_line)"
+        }
+    },
+    "main_geo_load_btn": {
+        "tip": "Use the selected object as the main face geo.",
+        "what": "Select the main face geo in the scene and click <<: its name goes in the field next to the button.",
+        "examples": [
+            "Select the head mesh and click <<.",
+            "A locator works too: place it where the main geo load btn pivot should be and pick it."
+        ],
+        "details": "selection_to_line_edit(): writes the cleaned selection in the field; asks before replacing a filled field. Save the fields with S to reuse them.",
+        "code": {
+            "file": "UI/MetaMutant/load_meta_mutant.py",
+            "function": "selection_to_line_edit",
+            "connect": "lambda: self.selection_to_line_edit(self.ui.main_geo_line)"
+        }
+    },
+    "create_position_locators_btn": {
+        "tip": "Create locators at the picked positions.",
+        "what": "Makes a locator at each position filled above so you can check and adjust them.",
+        "examples": [
+            "Click it and move the jaw locator if the hinge is off.",
+            "Check the tongue locators sit inside the mouth."
+        ],
+        "details": "create_position_locators(fields): one locator per filled field, to check before building.",
+        "code": {
+            "file": "UI/MetaMutant/load_meta_mutant.py",
+            "function": "create_position_locators",
+            "connect": "self.create_position_locators"
+        }
+    },
+    "save_btn": {
+        "tip": "Save the position fields.",
+        "what": "Saves every field above to a json file.",
+        "examples": [
+            "Save them to rebuild the same character later.",
+            "Save the pivots of a character to rebuild after model changes."
+        ],
+        "details": "Writes every pivot / teeth / tongue / jaw field to a json you pick.",
+        "code": {
+            "file": "UI/MetaMutant/load_meta_mutant.py",
+            "function": "save_settings",
+            "connect": "self.save_settings"
+        }
+    },
+    "load_btn": {
+        "tip": "Load saved position fields.",
+        "what": "Loads a json saved with S and fills the fields.",
+        "examples": [
+            "Load last session settings and click Build Custom Meta Human.",
+            "Load the pivots for a new version of the head."
+        ],
+        "details": "Reads that json back into the fields.",
+        "code": {
+            "file": "UI/MetaMutant/load_meta_mutant.py",
+            "function": "load_settings",
+            "connect": "self.load_settings"
+        }
+    },
+    "build_custom_btn": {
+        "tip": "Build the MetaHuman on your head.",
+        "what": "Builds a MetaHuman rig fitted to the wrapped head, using the positions above.",
+        "steps": [
+            "Import the wrapped head.",
+            "Fill every position field (S to save them).",
+            "Click it and wait.",
+            "Save As Temp File."
+        ],
+        "examples": [
+            "Fill every field, click it and wait.",
+            "Build a MetaHuman face on a stylized character head.",
+            "Rebuild after moving the jaw pivot."
+        ],
+        "details": "create_custom_metahuman(new_geo, custom_data, custom_data_positions): fits the MetaHuman joints to the wrapped head and the picked pivots, then saves the settings.",
+        "code": {
+            "file": "UI/MetaMutant/load_meta_mutant.py",
+            "function": "build_custom_metahuman",
+            "connect": "self.build_custom_metahuman"
+        }
+    },
+    "save_temp_btn": {
+        "tip": "Save the scene as a temp file.",
+        "what": "Saves the current scene to a temp MetaMutant file.",
+        "examples": [
+            "Save before a long step so you can go back.",
+            "Save before extracting shapes in case it crashes."
+        ],
+        "details": "Renames the scene to %TEMP%/MetaMutant/MetaMutant_Build.ma and saves it: the scene name changes, save to your own path after.",
+        "code": {
+            "file": "UI/MetaMutant/load_meta_mutant.py",
+            "function": "save_as_temp_file",
+            "connect": "self.save_as_temp_file"
+        }
+    },
+    "load_temp_btn": {
+        "tip": "Import the temp file.",
+        "what": "Imports the temp MetaMutant file saved before.",
+        "examples": [
+            "Bring back the build you saved as temp.",
+            "Import the temp build into a clean scene."
+        ],
+        "details": "Imports %TEMP%/MetaMutant/MetaMutant_Build.ma into the current scene.",
+        "code": {
+            "file": "UI/MetaMutant/load_meta_mutant.py",
+            "function": "import_temp_file",
+            "connect": "self.import_temp_file"
+        }
+    },
+    "trasnfer_to_sel_btn": {
+        "tip": "Transfer the MetaHuman skin to the selected head.",
+        "what": "Skins the selected head to the MetaHuman joints and copies the weights from the MetaHuman head.",
+        "examples": [
+            "Select your head mesh and click it.",
+            "Skin a stylized head with MetaHuman weights."
+        ],
+        "details": "Skins the selected mesh to every joint under spine_04, then copySkinWeights from head_lod0_mesh.",
+        "code": {
+            "file": "UI/MetaMutant/load_meta_mutant.py",
+            "function": "trasnfer_to_sel",
+            "connect": "self.trasnfer_to_sel"
+        }
+    },
+    "skin_r_eye_btn": {
+        "tip": "Skin the selection to the right eye joint.",
+        "what": "Skins the selected geo fully to the MetaHuman right eye joint.",
+        "examples": [
+            "Select the right eyeball geo and click it.",
+            "Skin the right cornea geo too."
+        ],
+        "details": "skin_this_joint_to_sel(\"FACIAL_R_Eye\").",
+        "code": {
+            "file": "UI/MetaMutant/load_meta_mutant.py",
+            "function": "skin_r_eye",
+            "connect": "self.skin_r_eye"
+        }
+    },
+    "skin_l_eye_btn": {
+        "tip": "Skin the selection to the left eye joint.",
+        "what": "Skins the selected geo fully to the MetaHuman left eye joint.",
+        "examples": [
+            "Select the left eyeball geo and click it.",
+            "Skin the left cornea geo too."
+        ],
+        "details": "skin_this_joint_to_sel(\"FACIAL_L_Eye\").",
+        "code": {
+            "file": "UI/MetaMutant/load_meta_mutant.py",
+            "function": "skin_l_eye",
+            "connect": "self.skin_l_eye"
+        }
+    },
+    "skin_upper_teeth_btn": {
+        "tip": "Skin the selection to the upper teeth joint.",
+        "what": "Skins the selected geo to the MetaHuman upper teeth joint.",
+        "examples": [
+            "Select the upper teeth and gums and click it.",
+            "Skin the upper gums."
+        ],
+        "details": "skin_this_joint_to_sel(\"FACIAL_C_TeethUpper\").",
+        "code": {
+            "file": "UI/MetaMutant/load_meta_mutant.py",
+            "function": "skin_upper_teeth",
+            "connect": "self.skin_upper_teeth"
+        }
+    },
+    "skin_lower_teeth_btn": {
+        "tip": "Skin the selection to the lower teeth joint.",
+        "what": "Skins the selected geo to the MetaHuman lower teeth joint.",
+        "examples": [
+            "Select the lower teeth and click it.",
+            "Skin the lower gums."
+        ],
+        "details": "skin_this_joint_to_sel(\"FACIAL_C_TeethLower\").",
+        "code": {
+            "file": "UI/MetaMutant/load_meta_mutant.py",
+            "function": "skin_lower_teeth",
+            "connect": "self.skin_lower_teeth"
+        }
+    },
+    "skin_tongue_btn": {
+        "tip": "Skin the selection to the tongue joints.",
+        "what": "Skins the selected geo to the MetaHuman tongue joints.",
+        "examples": [
+            "Select the tongue geo and click it.",
+            "Skin a stylized tongue."
+        ],
+        "details": "Skins to FACIAL_C_Tongue1-4, TongueUpper2-3, TongueLower3 and L / R TongueSide2-3.",
+        "code": {
+            "file": "UI/MetaMutant/load_meta_mutant.py",
+            "function": "skin_tongue",
+            "connect": "self.skin_tongue"
+        }
+    },
+    "animate_btn": {
+        "tip": "Animate the face poses.",
+        "what": "Keys the MetaHuman face through its poses so the shapes can be extracted.",
+        "examples": [
+            "Click it, then Extract Shapes.",
+            "Animate, then scrub to check every expression."
+        ],
+        "details": "meta_mutant.animate(): keys the face rig through every expression, one per frame.",
+        "code": {
+            "file": "UI/MetaMutant/load_meta_mutant.py",
+            "function": "animate",
+            "connect": "self.animate"
+        }
+    },
+    "extract_shapes_btn": {
+        "tip": "Extract the face shapes.",
+        "what": "Makes one shape per pose from the main face geo.",
+        "examples": [
+            "Click it after Animate.",
+            "Extract shapes to use outside the MetaHuman rig."
+        ],
+        "details": "extract_shapes(main_geo): duplicates the main geo at each keyed pose into one shape per expression.",
+        "code": {
+            "file": "UI/MetaMutant/load_meta_mutant.py",
+            "function": "extract_shapes",
+            "connect": "self.extract_shapes"
+        }
+    },
+    "save_as_temp_btn": {
+        "tip": "Save the extracted shapes as temp.",
+        "what": "Saves the extracted shapes to a temp file.",
+        "examples": [
+            "Save them before splitting.",
+            "Save the shapes before splitting."
+        ],
+        "code": {
+            "file": "UI/MetaMutant/load_meta_mutant.py",
+            "function": "save_extracted_shapes_as_temp",
+            "connect": "self.save_extracted_shapes_as_temp"
+        }
+    },
+    "load_as_temp_btn": {
+        "tip": "Load the temp shapes.",
+        "what": "Loads the shapes saved with Save as Temp.",
+        "examples": [
+            "Bring the shapes back in a new scene.",
+            "Load the shapes into the Mutant face scene."
+        ],
+        "code": {
+            "file": "UI/MetaMutant/load_meta_mutant.py",
+            "function": "load_extracted_shapes_as_temp",
+            "connect": "self.load_extracted_shapes_as_temp"
+        }
+    },
+    "split_shapes_btn": {
+        "tip": "Split the shapes with SHAPES.",
+        "what": "Opens the shapes in the SHAPES tool to split them into left / right.",
+        "examples": [
+            "Click it and split the smile shape.",
+            "Split a wide smile into left and right."
+        ],
+        "details": "open_shapes(): opens the SHAPES plugin UI.",
+        "code": {
+            "file": "UI/MetaMutant/load_meta_mutant.py",
+            "function": "split_shapes",
+            "connect": "self.split_shapes"
+        }
+    },
+    "connect_shapes_btn": {
+        "tip": "Connect the shapes to the Mutant face.",
+        "what": "Connects the shapes to the Mutant face rig ctrls.",
+        "steps": [
+            "Animate.",
+            "Extract Shapes.",
+            "Split in SHAPES.",
+            "Connect Shapes."
+        ],
+        "examples": [
+            "Last step: click it and test the face ctrls.",
+            "Connect, then test the smile ctrl."
+        ],
+        "details": "connect_shapes_to_mutant_face(): blendShape on the Mutant face with each shape driven by its face ctrl.",
+        "code": {
+            "file": "UI/MetaMutant/load_meta_mutant.py",
+            "function": "connect_shapes",
+            "connect": "self.connect_shapes"
+        }
+    }
+}

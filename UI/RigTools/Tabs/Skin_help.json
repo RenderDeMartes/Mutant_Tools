@@ -1,0 +1,259 @@
+{
+    "softSelectBtn": {
+        "tip": "Skin a first pass with soft selection.",
+        "what": "Select joints: each one gets the vertices closest to it with a soft falloff (falloff slider and curve).",
+        "steps": [
+            "Fill the mesh with <<<.",
+            "Set Falloff and the curve side.",
+            "Select the joints.",
+            "Click SoftSelect Skinning."
+        ],
+        "examples": [
+            "Load the mesh, select the spine joints, click it for a smooth first pass.",
+            "Soft first pass on a belly."
+        ],
+        "details": "SkinUtils.soft_select_skin_pass(mesh, joint_dict=selected joints, expand, falloff, curve, mirror): for each joint takes the closest vertex, grows it by Expand rings and / or fades it with the falloff curve, and writes the weights. Mirror does the other side too. Here expand is 0.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_SkinTab.py",
+            "connect": "lambda: ms.soft_select_skin_pass( mirror=self.ui.mirrorBox.isChecked(), expand=0, curve=curve_values[self.sidesGrp.checkedButton().text()], falloff=float('.'+self.ui.falloffValueLabel.text()), mesh=self.ui.meshNameLoadField.text(), joint_dict=cmds.ls(sl=True))"
+        }
+    },
+    "growSelectBtn": {
+        "tip": "Skin a first pass by growing the selection.",
+        "what": "Select joints: each one gets the closest vertices grown by the Expand amount, hard edged.",
+        "steps": [
+            "Fill the mesh with <<<.",
+            "Set Expand.",
+            "Select the joints.",
+            "Click GrowSelect Skinning."
+        ],
+        "examples": [
+            "Use it for armor plates that should not bend.",
+            "Hard first pass on plates of armor."
+        ],
+        "details": "SkinUtils.soft_select_skin_pass(mesh, joint_dict=selected joints, expand, falloff, curve, mirror): for each joint takes the closest vertex, grows it by Expand rings and / or fades it with the falloff curve, and writes the weights. Mirror does the other side too. Here falloff is 0 (hard edges).",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_SkinTab.py",
+            "connect": "lambda: ms.soft_select_skin_pass( mirror=self.ui.mirrorBox.isChecked(), expand=int(self.ui.expandValueLabel.text()), falloff=0, mesh=self.ui.meshNameLoadField.text(), joint_dict=cmds.ls(sl=True))"
+        }
+    },
+    "combinedBtn": {
+        "tip": "Skin a first pass, grow plus soft falloff.",
+        "what": "Combines Grow and SoftSelect: grows the closest vertices, then fades them with the falloff.",
+        "steps": [
+            "Fill the mesh with <<<.",
+            "Set Expand, Falloff and the curve.",
+            "Select the joints.",
+            "Click Combined Skinning."
+        ],
+        "examples": [
+            "The usual first pass for a body: select all joints, click it.",
+            "First pass on a whole creature body."
+        ],
+        "details": "SkinUtils.soft_select_skin_pass(mesh, joint_dict=selected joints, expand, falloff, curve, mirror): for each joint takes the closest vertex, grows it by Expand rings and / or fades it with the falloff curve, and writes the weights. Mirror does the other side too.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_SkinTab.py",
+            "connect": "lambda: ms.soft_select_skin_pass( mirror=self.ui.mirrorBox.isChecked(), expand=int(self.ui.expandValueLabel.text()), curve=curve_values[self.sidesGrp.checkedButton().text()], falloff=float('.'+self.ui.falloffValueLabel.text()), mesh=self.ui.meshNameLoadField.text(), joint_dict=cmds.ls(sl=True))"
+        }
+    },
+    "dualquatnonriging_btn": {
+        "tip": "Set every skin to Dual Quaternion non rigid.",
+        "what": "Switches all skinClusters to Dual Quaternion with non rigid support, to keep volume on twists.",
+        "examples": [
+            "Click it when wrists lose volume on a twist.",
+            "Keep the forearm volume on twist."
+        ],
+        "details": "skinningMethod 1 (Dual Quaternion) and dqsSupportNonRigid 1 on every skinCluster in the scene.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_SkinTab.py",
+            "function": "makes_dual_quaternion_non_rigids",
+            "connect": "self.makes_dual_quaternion_non_rigids"
+        }
+    },
+    "deltascale_btn": {
+        "tip": "Make the delta mushes follow the global scale.",
+        "what": "Connects the Global ctrl rig scale to every delta mush, so the smoothing scales with the rig.",
+        "examples": [
+            "Click it when the character looks blurry once scaled down.",
+            "Fix deltaMush blur on a small scaled rig."
+        ],
+        "details": "Connects Global_Ctrl.rigScale to scaleX / Y / Z of every deltaMush. Errors if one is already connected.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_SkinTab.py",
+            "function": "connect_deltas_to_global_ctrl",
+            "connect": "self.connect_deltas_to_global_ctrl"
+        }
+    },
+    "offskin_btn": {
+        "tip": "Back to normal skinning (Move Joints mode off).",
+        "what": "Turns off Move Joints mode on every skinCluster: moving joints deforms the meshes again.",
+        "examples": [
+            "Click it after moving joints with Turn On Skins.",
+            "Go back to normal skinning after moving joints."
+        ],
+        "details": "skinCluster -e -moveJointsMode false on every skinCluster.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_SkinTab.py",
+            "function": "turn_off_skins",
+            "connect": "self.turn_off_skins"
+        }
+    },
+    "on_skins": {
+        "tip": "Move joints without moving the meshes.",
+        "what": "Turns on Move Joints mode on every skinCluster: you can move or reorient joints and the skinned meshes stay put.",
+        "examples": [
+            "Slide the elbow joint to a better spot without breaking the skin, then Turn Off Skins.",
+            "Fix a joint pivot after skinning without reskinning."
+        ],
+        "details": "skinCluster -e -moveJointsMode true on every skinCluster. Remember to turn it off: in this mode nothing deforms.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_SkinTab.py",
+            "function": "turn_on_skins",
+            "connect": "self.turn_on_skins"
+        }
+    },
+    "meshNameLoadBtn": {
+        "tip": "Use the selected mesh.",
+        "what": "Puts the selected mesh in the mesh field used by the first pass buttons.",
+        "examples": [
+            "Select the body and click <<<.",
+            "Load the head mesh before a face first pass."
+        ],
+        "details": "First selected object name into the mesh field.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_SkinTab.py",
+            "connect": "lambda:self.ui.meshNameLoadField.setText(str(cmds.ls(sl=True)[0]))"
+        }
+    },
+    "select_bind_jnts": {
+        "tip": "Select the bind joints of the mesh.",
+        "what": "Selects the joints the mesh in the field should be skinned to.",
+        "examples": [
+            "Click it, then shift select the mesh and bind.",
+            "Select joints to bind a duplicate of the mesh."
+        ],
+        "details": "Selects the skinCluster influences of the mesh (field or selection); with the null check on, Null_Local_Bnd is left out.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_SkinTab.py",
+            "function": "select_bind_joints",
+            "connect": "lambda: self.select_bind_joints(mesh=self.ui.meshNameLoadField.text(), null_jnt_check=self.ui.null_check.isChecked())"
+        }
+    },
+    "save_skin_button": {
+        "tip": "Save the skins of the scene.",
+        "what": "Saves the current skin weights to the pipeline skin folder.",
+        "examples": [
+            "Save before a rebuild or a model update.",
+            "Save before a model update."
+        ],
+        "details": "Studio pipeline (rigSystem / rstar): saves every skinCluster with the IO skin format into the asset SID folder.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_SkinTab.py",
+            "function": "save_skin",
+            "connect": "self.save_skin"
+        }
+    },
+    "load_button": {
+        "tip": "List the assets of this type.",
+        "what": "Fills the asset list with the assets of the type picked above.",
+        "examples": [
+            "Pick \"Characters\" and click Load.",
+            "List props to find the one you need."
+        ],
+        "details": "star Project.findby_name(show): fills the type and asset lists.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_SkinTab.py",
+            "function": "list_assests_by_type",
+            "connect": "self.list_assests_by_type"
+        }
+    },
+    "version_load_button": {
+        "tip": "List the versions of the asset.",
+        "what": "Fills the version list with the published versions of the asset.",
+        "examples": [
+            "Pick the asset, click it, then pick the version with good skin.",
+            "List versions to load the skin from last week."
+        ],
+        "details": "Lists the work versions of the asset and the skin files found in them.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_SkinTab.py",
+            "function": "populate_versions",
+            "connect": "self.populate_versions"
+        }
+    },
+    "load_skin_button": {
+        "tip": "Load the chosen skin.",
+        "what": "Loads the skin file picked in the list onto the geo picked in the list.",
+        "examples": [
+            "Load the last approved skin on the new model.",
+            "Load skin on a new model version."
+        ],
+        "details": "rigSystem skin.load(json): on the geo picked, or Everything.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_SkinTab.py",
+            "function": "load_skin",
+            "connect": "self.load_skin"
+        }
+    },
+    "ref_copy_btn": {
+        "tip": "Reference a version and copy its skin.",
+        "what": "References the chosen version and copies the skin of each geo by closest point.",
+        "examples": [
+            "The model changed a little: copy the old skin onto it.",
+            "Copy skin after the modeler moved some verts."
+        ],
+        "details": "References the version with namespace SkinningRef, copySkinWeights closest point per geo, then removes the reference.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_SkinTab.py",
+            "function": "reference_and_copy",
+            "connect": "lambda: self.reference_and_copy(version_path=None, geos=[], mode = 'HelloThere')"
+        }
+    },
+    "ref_copy_uv_btn": {
+        "tip": "Reference a version and copy its skin by UVs.",
+        "what": "Same as Ref-Copy but matches by UVs, for models that changed shape but kept UVs.",
+        "examples": [
+            "The model was resculpted: copy the skin by UVs.",
+            "Copy skin after a big resculpt with the same UVs."
+        ],
+        "details": "Same as Ref-Copy with -uvSpace: matches by UVs instead of position.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_SkinTab.py",
+            "function": "reference_and_copy",
+            "connect": "lambda: self.reference_and_copy(version_path=None, geos=[], mode = 'UV')"
+        }
+    },
+    "copy_skin_to_nurb": {
+        "tip": "Copy the skin from a mesh to a NURBS surface.",
+        "what": "Select the mesh, then the NURBS: the NURBS gets the same weights.",
+        "steps": [
+            "Select the skinned mesh.",
+            "Shift select the NURBS surface.",
+            "Click it."
+        ],
+        "examples": [
+            "Make a ribbon follow the skin of the body.",
+            "Skin a ribbon to follow a skirt."
+        ],
+        "details": "Skins the NURBS to the mesh joints and copies the weight of the closest mesh point to each CV ((spansU+degreeU) x (spansV+degreeV) CVs).",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_SkinTab.py",
+            "function": "copy_skin_nurb",
+            "connect": "lambda: self.copy_skin_nurb(geo=cmds.ls(sl=True)[0], nurb=cmds.ls(sl=True)[1])"
+        }
+    },
+    "click_copy_button": {
+        "tip": "Copy the skin from first to last selected.",
+        "what": "Skins the last selected geo to the same joints as the first one and copies the weights.",
+        "examples": [
+            "Select the body, then the shirt, click it: the shirt deforms like the body.",
+            "Copy body skin to a jacket."
+        ],
+        "details": "skinCluster the last selected to the influences of the first (detaching an old skin if needed), then copySkinWeights closest point, closest joint.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_SkinTab.py",
+            "function": "click_copy",
+            "connect": "self.click_copy"
+        }
+    }
+}

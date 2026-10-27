@@ -1,0 +1,76 @@
+{
+    "add_btn": {
+        "tip": "Add a guide placement row.",
+        "what": "Adds a row with a guide field, a position target, an aim target and its axes. Each field has a << button to fill it from the selection.",
+        "examples": [
+            "Click +, fill the elbow guide and the vertex it should sit on.",
+            "Add one row per finger knuckle to place a hand from vertices."
+        ],
+        "code": {
+            "file": "UI/GuidePlacements/load_guide_placements.py",
+            "function": "create_place_guide_widget",
+            "connect": "self.create_place_guide_widget"
+        }
+    },
+    "place_guide_btn": {
+        "tip": "Place the guides.",
+        "what": "Moves every guide in the list to its target position.",
+        "steps": [
+            "Fill the rows.",
+            "Click Place Guides.",
+            "Check the aims on elbows and knees."
+        ],
+        "examples": [
+            "After loading a new model, click it to snap all guides to their spots.",
+            "Place the guides again after the model changed proportions."
+        ],
+        "details": "For each row: moves the guide to the target position (a cluster on the components if they are vertices), then aims it with the aim / up axes. One undo chunk.",
+        "code": {
+            "file": "UI/GuidePlacements/load_guide_placements.py",
+            "function": "place_guides",
+            "connect": "self.place_guides"
+        }
+    },
+    "create_ik_refs_btn": {
+        "tip": "Create the IK reference planes.",
+        "what": "Makes reference planes from the start / mid / end guides of each row, used to keep IK chains flat.",
+        "examples": [
+            "Fill shoulder / elbow / wrist and click it to see the arm plane.",
+            "Check the leg guides are flat before building the knee."
+        ],
+        "details": "Builds a reference plane through start / mid / end so the mid guide stays on the chain plane.",
+        "code": {
+            "file": "UI/GuidePlacements/load_guide_placements.py",
+            "function": "create_ref_planes",
+            "connect": "self.create_ref_planes"
+        }
+    },
+    "add_ref_btn": {
+        "tip": "Add an IK reference row.",
+        "what": "Adds a new start / mid / end row for one more IK chain.",
+        "examples": [
+            "Click + once per limb: arms and legs.",
+            "Add a row for the tail if you rig it with IK."
+        ],
+        "details": "Adds start / mid / end fields, each with a << button that copies the selection.",
+        "code": {
+            "file": "UI/GuidePlacements/load_guide_placements.py",
+            "function": "create_ik_ref_widget",
+            "connect": "self.create_ik_ref_widget"
+        }
+    },
+    "run_btn": {
+        "tip": "Run the code in the field.",
+        "what": "Runs the Python or MEL code typed in the field (pick the language above).",
+        "examples": [
+            "Paste a small script that moves extra guides and click Run.",
+            "Snap custom extra guides after Place Guides."
+        ],
+        "details": "exec() for Python or mel.eval for MEL, inside one undo chunk.",
+        "code": {
+            "file": "UI/GuidePlacements/load_guide_placements.py",
+            "function": "exec_code_field",
+            "connect": "self.exec_code_field"
+        }
+    }
+}

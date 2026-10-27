@@ -1,0 +1,120 @@
+{
+    "search_button": {
+        "tip": "Search blocks.",
+        "what": "Runs the block search with the text in the search field.",
+        "examples": [
+            "Type \"hand\" and click it to find every hand block.",
+            "Clear the search to see every block again.",
+            "Search \"skin\" to find Load Skin and the other skin blocks."
+        ],
+        "details": "Restarts a debounce timer; the search runs when it fires. Right click it for Reload All Blocks / Update All Blocks.",
+        "code": {
+            "file": "UI/AutoRigger/load_autoRigger.py",
+            "function": "search_command",
+            "connect": "self.search_command"
+        }
+    },
+    "prebuild": {
+        "tip": "Edit the pre-build code of the selected block.",
+        "what": "Opens the code that runs right before this block builds. For riggers.",
+        "steps": [
+            "Select a block.",
+            "Click the pre-build icon.",
+            "Write Python and save."
+        ],
+        "examples": [
+            "Unlock a joint chain or rename a node before the block uses it.",
+            "Delete a leftover node from an old build before the block runs."
+        ],
+        "details": "Edits the string attr <Block>_Config.precode, run right before that block builds. It is saved in the scene, not in the block file.",
+        "code": {
+            "file": "UI/AutoRigger/load_autoRigger.py",
+            "function": "edit_prebuild_code",
+            "connect": "lambda : self.edit_prebuild_code(self.current_block)"
+        }
+    },
+    "current_code": {
+        "tip": "View the build code of the selected block.",
+        "what": "Shows the Python code this block runs when it builds. Read only.",
+        "examples": [
+            "Check what a block does before changing its options.",
+            "Copy a line from the block code to use it in a postbuild."
+        ],
+        "details": "Finds the exec_*.py from the block Import_Command (legacy names map to _v001) under Blocks/ and opens it read only.",
+        "code": {
+            "file": "UI/AutoRigger/load_autoRigger.py",
+            "function": "view_build_code",
+            "connect": "lambda : self.view_build_code(self.current_block)"
+        }
+    },
+    "postbuild": {
+        "tip": "Edit the post-build code of the selected block.",
+        "what": "Opens the code that runs right after this block builds. For riggers.",
+        "steps": [
+            "Select a block.",
+            "Click the post-build icon.",
+            "Write Python and save."
+        ],
+        "examples": [
+            "Add an extra constraint or set a default value once the block is built.",
+            "Lock and hide an attr animators should not touch."
+        ],
+        "details": "Edits <Block>_Config.postcode, run right after that block builds. Find nodes by name: they are rebuilt every time.",
+        "code": {
+            "file": "UI/AutoRigger/load_autoRigger.py",
+            "function": "edit_postbuild_code",
+            "connect": "lambda : self.edit_postbuild_code(self.current_block)"
+        }
+    },
+    "reload_ui": {
+        "tip": "Reload the AutoRigger.",
+        "what": "Clears the search and the properties panel and redraws all the blocks of the scene.",
+        "examples": [
+            "Click it after adding blocks by script so they show up.",
+            "Reload after undoing a block delete."
+        ],
+        "details": "Clears the search and the properties panel, then create_layout() reads Mutant_Build again.",
+        "code": {
+            "file": "UI/AutoRigger/load_autoRigger.py",
+            "function": "reload_ui",
+            "connect": "self.reload_ui"
+        }
+    },
+    "log": {
+        "tip": "View the build log.",
+        "what": "Opens the log of the last build: every block, the time it took and any error.",
+        "examples": [
+            "After a failed build, open it to see which block broke and why.",
+            "Send it with a bug report.",
+            "Check how long each block took to find the slow one."
+        ],
+        "details": "Reads Mutant_log.txt from the Maya user script folder (cmds.internalVar(usd=True)).",
+        "code": {
+            "file": "UI/AutoRigger/load_autoRigger.py",
+            "function": "view_log",
+            "connect": "lambda : self.view_log()"
+        }
+    },
+    "build_btn": {
+        "tip": "Build the rig.",
+        "what": "Builds every block under Mutant_Build (or the selected block / group, from the menu next to it). If a rig is already built it asks to rebuild, saving and loading back skins and controller shapes.",
+        "steps": [
+            "Place the guides.",
+            "Pick the build mode in the menu next to it.",
+            "Click Build.",
+            "Read the IO report if one shows up."
+        ],
+        "examples": [
+            "Place the guides, click Build, wait for the bar to finish.",
+            "Choose \"Build Selected Block\" in the menu to test only one block.",
+            "Rebuild after moving guides: skins and ctrl shapes come back.",
+            "Build Selected Group to test one part of the rig."
+        ],
+        "details": "build_autorigger(): one undo chunk. Delete and Rebuild saves skins (IOSkin pack or EasySkin json) and ctrl shapes to temp, deletes Mutant_Tools_Grp, runs RunBeforeBuild blocks, builds each block (precode, Build_Command, postcode), then loads skins and ctrls back. If a block fails the build stops there and skins are NOT loaded back, so reopen the file instead of rebuilding again from that state.",
+        "code": {
+            "file": "UI/AutoRigger/load_autoRigger.py",
+            "function": "build_autorigger",
+            "connect": "self.build_autorigger"
+        }
+    }
+}

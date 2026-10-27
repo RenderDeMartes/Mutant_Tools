@@ -1,0 +1,52 @@
+{
+    "loadMesh_bttn": {
+        "tip": "Load the selected mesh.",
+        "what": "Sets the selected mesh as the main mesh the variants work on.",
+        "examples": [
+            "Select the body mesh and click <<.",
+            "Load the head mesh to manage hair variants on it."
+        ],
+        "code": {
+            "file": "UI/VariantManagerSystem/VariantManager_ui.py",
+            "function": "load_mesh_cb",
+            "connect": "self.load_mesh_cb"
+        }
+    },
+    "break_connections_btn": {
+        "tip": "Break the visibility driven keys.",
+        "what": "Removes the set driven keys that control the variants visibility.",
+        "examples": [
+            "Click it before changing the variants by hand.",
+            "Break them to key the variants by hand for a shot."
+        ],
+        "details": "variant_manager.break_sdk_viz_connections(): disconnects the set driven key curves on the variant visibilities.",
+        "code": {
+            "file": "UI/VariantManagerSystem/VariantManager_ui.py",
+            "connect": "self.variant_manager.break_sdk_viz_connections"
+        }
+    },
+    "reloadUdims_bttn": {
+        "tip": "Reload the UDIM textures.",
+        "what": "Reloads the UDIM textures of the variants.",
+        "examples": [
+            "Click it after the textures were updated on disk.",
+            "Reload after the texture artist published new maps."
+        ],
+        "code": {
+            "file": "UI/VariantManagerSystem/VariantManager_ui.py",
+            "connect": "self.variant_manager.reload_udims"
+        }
+    },
+    "openHpShade_bttn": {
+        "tip": "Open the Hypershade.",
+        "what": "Opens Maya's Hypershade to check the variant materials.",
+        "examples": [
+            "Click it to see which material each variant uses.",
+            "Check the variant shaders are connected."
+        ],
+        "code": {
+            "file": "UI/VariantManagerSystem/VariantManager_ui.py",
+            "connect": "self.variant_manager.open_hyper_shade"
+        }
+    }
+}

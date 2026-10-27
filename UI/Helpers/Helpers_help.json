@@ -1,0 +1,1787 @@
+{
+    "initialize_rig_button": {
+        "tip": "Start a rig from the latest publish.",
+        "what": "Finds the asset picked above in the show and sets up a rig scene from its latest model publish.",
+        "examples": [
+            "Pick show and asset, click __init__ to start rigging it.",
+            "Start rigging a new asset from its approved model."
+        ],
+        "details": "star Project.findby_name(show), finds the asset and its latest publish, and sets up the rig scene from it. Studio pipeline only.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "initialize_rig",
+            "connect": "self.initialize_rig"
+        }
+    },
+    "shampooBtn": {
+        "tip": "Open Shampoo (asset checks).",
+        "what": "Opens the asset checks tool to find and fix scene problems before publishing.",
+        "examples": [
+            "Run it before every publish.",
+            "Run checks after a rebuild."
+        ],
+        "details": "assetChecks.UI.open_ui() (studio pipeline).",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "shampoo",
+            "connect": "self.shampoo"
+        }
+    },
+    "unlock_geo": {
+        "tip": "Make the geo selectable.",
+        "what": "Sets the Global ctrl Geo display to normal so you can select the meshes.",
+        "examples": [
+            "Unlock to pick a mesh and paint weights.",
+            "Unlock to select a mesh for the skin tools."
+        ],
+        "details": "Global_Ctrl.Geo = 0 (normal) and overrideEnabled 0 on everything under \"geo\".",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "unlock_geo",
+            "connect": "self.unlock_geo"
+        }
+    },
+    "lock_geo": {
+        "tip": "Make the geo unselectable.",
+        "what": "Sets the Global ctrl Geo display to reference so clicks go to the ctrls, not the meshes.",
+        "examples": [
+            "Lock it before giving the rig to animators.",
+            "Lock before a playblast so clicks hit ctrls."
+        ],
+        "details": "Global_Ctrl.Geo = 2 (reference display) and overrideEnabled 0 under \"geo\" so the Global ctrl override wins.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "lock_geo",
+            "connect": "self.lock_geo"
+        }
+    },
+    "wip": {
+        "tip": "Switch the rig to WIP mode.",
+        "what": "Shows rig, bind and ctrls, unlocks the geo and takes Mutant_Build out so you can keep rigging.",
+        "steps": [
+            "Open the published rig.",
+            "Click Wip.",
+            "Rig, then Complete before publishing."
+        ],
+        "examples": [
+            "Open a published rig, click Wip to work on it again.",
+            "Wip before a rebuild."
+        ],
+        "details": "Shows rig / bind / control, unlocks the geo, unparents Mutant_Build and Mutant_Tools_Grp to the world so the AutoRigger finds them.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "activate_wip_mode",
+            "connect": "self.activate_wip_mode"
+        }
+    },
+    "complete": {
+        "tip": "Switch the rig to Complete mode.",
+        "what": "Puts Mutant_Build and the rig groups in their final places, ready to publish.",
+        "examples": [
+            "Click it right before publishing.",
+            "Complete before publishing."
+        ],
+        "details": "Mutant_Build under Template_Grp, Mutant_Tools_Grp under rig, Ctrl_Grp under control, Rig / Bind groups into the studio hierarchy.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "activate_complete_mode",
+            "connect": "self.activate_complete_mode"
+        }
+    },
+    "zeroX": {
+        "tip": "Put the selected guides at X 0.",
+        "what": "Moves the selected guides to the center line (X = 0), keeping Y and Z.",
+        "steps": [
+            "Select guides.",
+            "Click X."
+        ],
+        "examples": [
+            "Center the spine guides that drifted off the middle.",
+            "Center the jaw and nose guides."
+        ],
+        "details": "Moves each selected guide to world X 0 keeping Y / Z. Guides are unparented first and parented back after (block order kept), so children do not move with the guide.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "zero",
+            "connect": "lambda: self.zero(axis='X')"
+        }
+    },
+    "zeroY": {
+        "tip": "Put the selected guides at Y 0.",
+        "what": "Moves the selected guides to the ground (Y = 0), keeping X and Z.",
+        "steps": [
+            "Select guides.",
+            "Click Y."
+        ],
+        "examples": [
+            "Put the heel guides on the floor.",
+            "Put foot heels on the ground."
+        ],
+        "details": "Moves each selected guide to world Y 0 keeping X / Z. Guides are unparented first and parented back after (block order kept), so children do not move with the guide.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "zero",
+            "connect": "lambda: self.zero(axis='Y')"
+        }
+    },
+    "zeroZ": {
+        "tip": "Put the selected guides at Z 0.",
+        "what": "Moves the selected guides to Z = 0, keeping X and Y.",
+        "steps": [
+            "Select guides.",
+            "Click Z."
+        ],
+        "examples": [
+            "Line up the arm guides on one plane.",
+            "Align the clavicles in depth."
+        ],
+        "details": "Moves each selected guide to world Z 0 keeping X / Y. Guides are unparented first and parented back after (block order kept), so children do not move with the guide.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "zero",
+            "connect": "lambda: self.zero(axis='Z')"
+        }
+    },
+    "line_up_finger": {
+        "tip": "Line up the finger guides.",
+        "what": "Gives every selected guide the same Z as the first one, so the finger is straight.",
+        "steps": [
+            "Select the finger guides, base first.",
+            "Click it."
+        ],
+        "examples": [
+            "Select the index guides, base first, click it.",
+            "Straighten every finger chain."
+        ],
+        "details": "Sets translateZ of every selected guide to the first one. Guides are unparented first and parented back after (block order kept), so children do not move with the guide.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "line_up_finger",
+            "connect": "self.line_up_finger"
+        }
+    },
+    "unparent_guides": {
+        "tip": "Unparent the guides.",
+        "what": "Takes the guides out of their hierarchy so you can move each one alone.",
+        "examples": [
+            "Unparent, move a single guide, then Parent.",
+            "Unparent to move the wrist without moving the fingers."
+        ],
+        "details": "Stores block order and hierarchy, then unparents every guide under the *_Block nodes (PhonemesUI_Block is skipped).",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "unparent_guides",
+            "connect": "self.unparent_guides"
+        }
+    },
+    "parent_guides": {
+        "tip": "Parent the guides back.",
+        "what": "Puts the guides back in their hierarchy and block order.",
+        "examples": [
+            "Click it after Unparent and your fixes.",
+            "Parent back before building."
+        ],
+        "details": "Skeletor.parent_hierarchy(stored hierarchy) + reorder_block_guides(stored order). Needs an Unparent from this same session.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "parent_guides",
+            "connect": "self.parent_guides"
+        }
+    },
+    "ankle_to_ankle": {
+        "tip": "Snap the foot ankle to the leg ankle.",
+        "what": "Moves the foot block ankle guide onto the leg ankle guide.",
+        "examples": [
+            "Click it when the foot floats away from the leg.",
+            "Snap after resizing legs."
+        ],
+        "details": "Point snaps L_Foot_Ankle_Guide onto L_Ankle_Guide (left side only, the build mirrors). Guides are unparented first and parented back after (block order kept), so children do not move with the guide.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "ankle_to_ankle",
+            "connect": "self.ankle_to_ankle"
+        }
+    },
+    "wrist_to_writs": {
+        "tip": "Snap the hand to the wrist.",
+        "what": "Moves the hand palm guide onto the arm wrist guide.",
+        "examples": [
+            "Click it when the hand is detached from the arm.",
+            "Snap after scaling the arm."
+        ],
+        "details": "Point snaps L_Hand_Palm_Guide onto L_Wrist_Guide (left side only). Guides are unparented first and parented back after (block order kept), so children do not move with the guide.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "wrist_to_writs",
+            "connect": "self.wrist_to_writs"
+        }
+    },
+    "neck_to_spine": {
+        "tip": "Snap the neck to the spine end.",
+        "what": "Moves the neck guide onto the end of the spine.",
+        "examples": [
+            "Click it when there is a gap between spine and neck.",
+            "Snap after resizing the spine."
+        ],
+        "details": "Point snaps Neck_Guide onto Spine_End_Guide. Guides are unparented first and parented back after (block order kept), so children do not move with the guide.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "neck_to_spine",
+            "connect": "self.neck_to_spine"
+        }
+    },
+    "fix_arms": {
+        "tip": "Fix the arm guide orientation.",
+        "what": "Re-aims the arm guides so the joints come out with clean orients.",
+        "examples": [
+            "Click it after auto placing the guides, before building.",
+            "Run every Fix button in order (COG, pelvis, spine, legs, foot, clavicle, arms, head) after Auto Place Guides.",
+            "Run fix arms again after moving its guides by hand."
+        ],
+        "details": "wrap_utils.Wrap3D().fix_*_orientation(): re-aims the guides of that part from their own positions (no positions change). Runs on the L side; the build mirrors it.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "fix_arms",
+            "connect": "self.fix_arms"
+        }
+    },
+    "fix_clav": {
+        "tip": "Fix the clavicle guide orientation.",
+        "what": "Re-aims the clavicle guides so the joints come out with clean orients.",
+        "examples": [
+            "Click it after auto placing the guides, before building.",
+            "Run every Fix button in order (COG, pelvis, spine, legs, foot, clavicle, arms, head) after Auto Place Guides.",
+            "Run fix clav again after moving its guides by hand."
+        ],
+        "details": "wrap_utils.Wrap3D().fix_*_orientation(): re-aims the guides of that part from their own positions (no positions change). Runs on the L side; the build mirrors it.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "fix_clav",
+            "connect": "self.fix_clav"
+        }
+    },
+    "fix_pelvis": {
+        "tip": "Fix the pelvis guide orientation.",
+        "what": "Re-aims the pelvis guides so the joints come out with clean orients.",
+        "examples": [
+            "Click it after auto placing the guides, before building.",
+            "Run every Fix button in order (COG, pelvis, spine, legs, foot, clavicle, arms, head) after Auto Place Guides.",
+            "Run fix pelvis again after moving its guides by hand."
+        ],
+        "details": "wrap_utils.Wrap3D().fix_*_orientation(): re-aims the guides of that part from their own positions (no positions change). Runs on the L side; the build mirrors it.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "fix_pelvis",
+            "connect": "self.fix_pelvis"
+        }
+    },
+    "fix_legs": {
+        "tip": "Fix the leg guide orientation.",
+        "what": "Re-aims the leg guides so the joints come out with clean orients.",
+        "examples": [
+            "Click it after auto placing the guides, before building.",
+            "Run every Fix button in order (COG, pelvis, spine, legs, foot, clavicle, arms, head) after Auto Place Guides.",
+            "Run fix legs again after moving its guides by hand."
+        ],
+        "details": "wrap_utils.Wrap3D().fix_*_orientation(): re-aims the guides of that part from their own positions (no positions change). Runs on the L side; the build mirrors it.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "fix_legs",
+            "connect": "self.fix_legs"
+        }
+    },
+    "fix_spine": {
+        "tip": "Fix the spine guide orientation.",
+        "what": "Re-aims the spine guides so the joints come out with clean orients.",
+        "examples": [
+            "Click it after auto placing the guides, before building.",
+            "Run every Fix button in order (COG, pelvis, spine, legs, foot, clavicle, arms, head) after Auto Place Guides.",
+            "Run fix spine again after moving its guides by hand."
+        ],
+        "details": "wrap_utils.Wrap3D().fix_*_orientation(): re-aims the guides of that part from their own positions (no positions change). Runs on the L side; the build mirrors it.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "fix_spine",
+            "connect": "self.fix_spine"
+        }
+    },
+    "fix_head": {
+        "tip": "Fix the head guide orientation.",
+        "what": "Re-aims the head guides so the joints come out with clean orients.",
+        "examples": [
+            "Click it after auto placing the guides, before building.",
+            "Run every Fix button in order (COG, pelvis, spine, legs, foot, clavicle, arms, head) after Auto Place Guides.",
+            "Run fix head again after moving its guides by hand."
+        ],
+        "details": "wrap_utils.Wrap3D().fix_*_orientation(): re-aims the guides of that part from their own positions (no positions change). Runs on the L side; the build mirrors it.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "fix_head",
+            "connect": "self.fix_head"
+        }
+    },
+    "fix_foot": {
+        "tip": "Fix the foot guide orientation.",
+        "what": "Re-aims the foot guides so the joints come out with clean orients.",
+        "examples": [
+            "Click it after auto placing the guides, before building.",
+            "Run every Fix button in order (COG, pelvis, spine, legs, foot, clavicle, arms, head) after Auto Place Guides.",
+            "Run fix foot again after moving its guides by hand."
+        ],
+        "details": "wrap_utils.Wrap3D().fix_*_orientation(): re-aims the guides of that part from their own positions (no positions change). Runs on the L side; the build mirrors it.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "fix_foot",
+            "connect": "self.fix_foot"
+        }
+    },
+    "fix_cog": {
+        "tip": "Fix the COG guide orientation.",
+        "what": "Re-aims the COG guides so the joints come out with clean orients.",
+        "examples": [
+            "Click it after auto placing the guides, before building.",
+            "Run every Fix button in order (COG, pelvis, spine, legs, foot, clavicle, arms, head) after Auto Place Guides.",
+            "Run fix cog again after moving its guides by hand."
+        ],
+        "details": "wrap_utils.Wrap3D().fix_*_orientation(): re-aims the guides of that part from their own positions (no positions change). Runs on the L side; the build mirrors it.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "fix_cog",
+            "connect": "self.fix_cog"
+        }
+    },
+    "fix_fingers_t": {
+        "tip": "Fix the finger orients for a T pose.",
+        "what": "Re-aims every finger guide for a character in T pose.",
+        "examples": [
+            "Use it on a model with flat, straight arms.",
+            "Fix finger orients after auto placing a T pose."
+        ],
+        "details": "wrap_utils.fix_fingers_orientations(pose=\"T\").",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "fix_fingers_t",
+            "connect": "self.fix_fingers_t"
+        }
+    },
+    "fix_fingers_a": {
+        "tip": "Fix the finger orients for an A pose.",
+        "what": "Re-aims every finger guide for a character in A pose.",
+        "examples": [
+            "Use it on a model with arms angled down.",
+            "Fix finger orients after auto placing an A pose."
+        ],
+        "details": "wrap_utils.fix_fingers_orientations(pose=\"A\").",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "fix_fingers_a",
+            "connect": "self.fix_fingers_a"
+        }
+    },
+    "thumb_reset": {
+        "tip": "Reset the thumb guides.",
+        "what": "Puts the thumb guides back to their default straight pose.",
+        "examples": [
+            "Click it when the thumb guides came out twisted.",
+            "Reset before Normalize Fingers when the thumb reset came out bent."
+        ],
+        "details": "wrap_utils.zero_specific_finger(<finger>): zeroes the rotations of that finger guides.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "zero_thumb",
+            "connect": "self.zero_thumb"
+        }
+    },
+    "index_reset": {
+        "tip": "Reset the index guides.",
+        "what": "Puts the index guides back to their default straight pose.",
+        "examples": [
+            "Click it when the index guides came out twisted.",
+            "Reset before Normalize Fingers when the index reset came out bent."
+        ],
+        "details": "wrap_utils.zero_specific_finger(<finger>): zeroes the rotations of that finger guides.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "zero_index",
+            "connect": "self.zero_index"
+        }
+    },
+    "middle_reset": {
+        "tip": "Reset the middle guides.",
+        "what": "Puts the middle guides back to their default straight pose.",
+        "examples": [
+            "Click it when the middle guides came out twisted.",
+            "Reset before Normalize Fingers when the middle reset came out bent."
+        ],
+        "details": "wrap_utils.zero_specific_finger(<finger>): zeroes the rotations of that finger guides.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "zero_middle",
+            "connect": "self.zero_middle"
+        }
+    },
+    "ring_reset": {
+        "tip": "Reset the ring guides.",
+        "what": "Puts the ring guides back to their default straight pose.",
+        "examples": [
+            "Click it when the ring guides came out twisted.",
+            "Reset before Normalize Fingers when the ring reset came out bent."
+        ],
+        "details": "wrap_utils.zero_specific_finger(<finger>): zeroes the rotations of that finger guides.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "zero_ring",
+            "connect": "self.zero_ring"
+        }
+    },
+    "pinky_reset": {
+        "tip": "Reset the pinky guides.",
+        "what": "Puts the pinky guides back to their default straight pose.",
+        "examples": [
+            "Click it when the pinky guides came out twisted.",
+            "Reset before Normalize Fingers when the pinky reset came out bent."
+        ],
+        "details": "wrap_utils.zero_specific_finger(<finger>): zeroes the rotations of that finger guides.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "zero_pinky",
+            "connect": "self.zero_pinky"
+        }
+    },
+    "normalize_fingers_btn": {
+        "tip": "Even out the finger guides.",
+        "what": "Spaces the finger guides evenly along each finger.",
+        "examples": [
+            "Click it when the knuckles are bunched up.",
+            "Even out fingers after moving knuckles."
+        ],
+        "details": "wrap_utils.normalize_fingers(): evens the spacing of each finger guide chain.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "normalize_fingers",
+            "connect": "self.normalize_fingers"
+        }
+    },
+    "shoe_to_guides": {
+        "tip": "Fit the foot guides to the selected shoe.",
+        "what": "Select the shoe geo: places the toe, heel and side guides on its bounding box.",
+        "steps": [
+            "Select the left shoe geo.",
+            "Click it.",
+            "Check the toe, heel and side pivots."
+        ],
+        "examples": [
+            "Select the left shoe and click it.",
+            "Fit foot guides to boots."
+        ],
+        "details": "Duplicates the shoe, makes its bounding box (geomToBBox) and snaps the foot guides to its edges with clusters, then deletes the helpers.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "shoe_to_guides",
+            "connect": "self.shoe_to_guides"
+        }
+    },
+    "place_push_loc_btn": {
+        "tip": "Place the push joint locators.",
+        "what": "Creates the push joint locators around knees, hips, elbows and shoulders, sized with the slider.",
+        "steps": [
+            "Set the size slider.",
+            "Click it.",
+            "Move the locators.",
+            "Mirror Push Joints Grp."
+        ],
+        "examples": [
+            "Click it, move the locators where the skin should push out.",
+            "Place push locators on a new character."
+        ],
+        "details": "Creates L_Push_*_loc locators (knee front / back, hip front / back / out, elbow, shoulder...) parented to their guides, in L_PushJointCreationLocators_Grp.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "place_push_locators",
+            "connect": "self.place_push_locators"
+        }
+    },
+    "mirror_push_joints_grp_btn": {
+        "tip": "Mirror the push locators.",
+        "what": "Mirrors the left push locators group to the right side.",
+        "examples": [
+            "Place the left side only, click it.",
+            "Mirror the locators after placing the left side."
+        ],
+        "details": "Mirrors the selected group (or L_PushJointCreationLocators_Grp) to its R_ name.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "mirror_push_joints_grp",
+            "connect": "self.mirror_push_joints_grp"
+        }
+    },
+    "remove_duplicate_names": {
+        "tip": "Fix duplicate names.",
+        "what": "Renames nodes that share a name so every node name is unique.",
+        "examples": [
+            "Click it when a check says names are not unique.",
+            "Fix names before publishing."
+        ],
+        "details": "Studio asset check CheckUniqueNames on the SID, then renames each clash with a random number.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "remove_dup_names",
+            "connect": "self.remove_dup_names"
+        }
+    },
+    "studio_tag_ctrls": {
+        "tip": "Tag the ctrls for the studio pipeline.",
+        "what": "Tags every *_Ctrl as an animation controller for the pipeline.",
+        "examples": [
+            "Click it before publishing so the anim tools find the ctrls.",
+            "Tag ctrls so the pipeline anim tools find them."
+        ],
+        "details": "rigSystem: tags every *_Ctrl as \"animctrl\" on the SID tag node.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "tag_controllers",
+            "connect": "self.tag_controllers"
+        }
+    },
+    "remove_render_tag": {
+        "tip": "Remove the render tag from the selected geo.",
+        "what": "Renames _hi geos to _Geo and disconnects their render tag.",
+        "examples": [
+            "Select the proxy geos that should not render and click it.",
+            "Untag proxy geos so they do not render."
+        ],
+        "details": "Renames *_hi to *_Geo and disconnects every .message connection of the geo (the render tag link).",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "remove_render_tag",
+            "connect": "self.remove_render_tag"
+        }
+    },
+    "skull": {
+        "tip": "Show only the skull part of the face rig.",
+        "what": "Hides the other face parts and shows the skull geo, joints and ctrls so you can work on it alone.",
+        "steps": [
+            "Click the part.",
+            "Paint or fix it.",
+            "Click Wip (or another part) when done."
+        ],
+        "examples": [
+            "Click it to paint or fix the skull without the rest of the face in the way.",
+            "Isolate skull to check its ctrls drive only that area."
+        ],
+        "details": "hide_face_componets() switches to WIP mode and hides Miscellaneous / Bind / Ctrl / BodySkull locals children, then show_this() shows that part rig groups, *_Bnd joints, its face head (BodyXxx) and its Local_Extra group.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "show_skull",
+            "connect": "self.show_skull"
+        }
+    },
+    "eyes": {
+        "tip": "Show only the eyes part of the face rig.",
+        "what": "Hides the other face parts and shows the eyes geo, joints and ctrls so you can work on it alone.",
+        "steps": [
+            "Click the part.",
+            "Paint or fix it.",
+            "Click Wip (or another part) when done."
+        ],
+        "examples": [
+            "Click it to paint or fix the eyes without the rest of the face in the way.",
+            "Isolate eyes to check its ctrls drive only that area."
+        ],
+        "details": "hide_face_componets() switches to WIP mode and hides Miscellaneous / Bind / Ctrl / BodySkull locals children, then show_this() shows that part rig groups, *_Bnd joints, its face head (BodyXxx) and its Local_Extra group.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "show_eyes",
+            "connect": "self.show_eyes"
+        }
+    },
+    "lips": {
+        "tip": "Show only the lips part of the face rig.",
+        "what": "Hides the other face parts and shows the lips geo, joints and ctrls so you can work on it alone.",
+        "steps": [
+            "Click the part.",
+            "Paint or fix it.",
+            "Click Wip (or another part) when done."
+        ],
+        "examples": [
+            "Click it to paint or fix the lips without the rest of the face in the way.",
+            "Isolate lips to check its ctrls drive only that area."
+        ],
+        "details": "hide_face_componets() switches to WIP mode and hides Miscellaneous / Bind / Ctrl / BodySkull locals children, then show_this() shows that part rig groups, *_Bnd joints, its face head (BodyXxx) and its Local_Extra group.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "show_lips",
+            "connect": "self.show_lips"
+        }
+    },
+    "brows": {
+        "tip": "Show only the brows part of the face rig.",
+        "what": "Hides the other face parts and shows the brows geo, joints and ctrls so you can work on it alone.",
+        "steps": [
+            "Click the part.",
+            "Paint or fix it.",
+            "Click Wip (or another part) when done."
+        ],
+        "examples": [
+            "Click it to paint or fix the brows without the rest of the face in the way.",
+            "Isolate brows to check its ctrls drive only that area."
+        ],
+        "details": "hide_face_componets() switches to WIP mode and hides Miscellaneous / Bind / Ctrl / BodySkull locals children, then show_this() shows that part rig groups, *_Bnd joints, its face head (BodyXxx) and its Local_Extra group.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "show_brows",
+            "connect": "self.show_brows"
+        }
+    },
+    "cheecks": {
+        "tip": "Show only the cheeks part of the face rig.",
+        "what": "Hides the other face parts and shows the cheeks geo, joints and ctrls so you can work on it alone.",
+        "steps": [
+            "Click the part.",
+            "Paint or fix it.",
+            "Click Wip (or another part) when done."
+        ],
+        "examples": [
+            "Click it to paint or fix the cheeks without the rest of the face in the way.",
+            "Isolate cheecks to check its ctrls drive only that area."
+        ],
+        "details": "hide_face_componets() switches to WIP mode and hides Miscellaneous / Bind / Ctrl / BodySkull locals children, then show_this() shows that part rig groups, *_Bnd joints, its face head (BodyXxx) and its Local_Extra group.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "show_cheecks",
+            "connect": "self.show_cheecks"
+        }
+    },
+    "jaw": {
+        "tip": "Show only the jaw part of the face rig.",
+        "what": "Hides the other face parts and shows the jaw geo, joints and ctrls so you can work on it alone.",
+        "steps": [
+            "Click the part.",
+            "Paint or fix it.",
+            "Click Wip (or another part) when done."
+        ],
+        "examples": [
+            "Click it to paint or fix the jaw without the rest of the face in the way.",
+            "Isolate jaw to check its ctrls drive only that area."
+        ],
+        "details": "hide_face_componets() switches to WIP mode and hides Miscellaneous / Bind / Ctrl / BodySkull locals children, then show_this() shows that part rig groups, *_Bnd joints, its face head (BodyXxx) and its Local_Extra group.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "show_jaw",
+            "connect": "self.show_jaw"
+        }
+    },
+    "nose": {
+        "tip": "Show only the nose part of the face rig.",
+        "what": "Hides the other face parts and shows the nose geo, joints and ctrls so you can work on it alone.",
+        "steps": [
+            "Click the part.",
+            "Paint or fix it.",
+            "Click Wip (or another part) when done."
+        ],
+        "examples": [
+            "Click it to paint or fix the nose without the rest of the face in the way.",
+            "Isolate nose to check its ctrls drive only that area."
+        ],
+        "details": "hide_face_componets() switches to WIP mode and hides Miscellaneous / Bind / Ctrl / BodySkull locals children, then show_this() shows that part rig groups, *_Bnd joints, its face head (BodyXxx) and its Local_Extra group.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "show_nose",
+            "connect": "self.show_nose"
+        }
+    },
+    "mouth_up": {
+        "tip": "Show only the mouth up part of the face rig.",
+        "what": "Hides the other face parts and shows the mouth up geo, joints and ctrls so you can work on it alone.",
+        "steps": [
+            "Click the part.",
+            "Paint or fix it.",
+            "Click Wip (or another part) when done."
+        ],
+        "examples": [
+            "Click it to paint or fix the mouth up without the rest of the face in the way.",
+            "Isolate mouth up to check its ctrls drive only that area."
+        ],
+        "details": "hide_face_componets() switches to WIP mode and hides Miscellaneous / Bind / Ctrl / BodySkull locals children, then show_this() shows that part rig groups, *_Bnd joints, its face head (BodyXxx) and its Local_Extra group.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "show_mouth_up",
+            "connect": "self.show_mouth_up"
+        }
+    },
+    "mouth_down": {
+        "tip": "Show only the mouth down part of the face rig.",
+        "what": "Hides the other face parts and shows the mouth down geo, joints and ctrls so you can work on it alone.",
+        "steps": [
+            "Click the part.",
+            "Paint or fix it.",
+            "Click Wip (or another part) when done."
+        ],
+        "examples": [
+            "Click it to paint or fix the mouth down without the rest of the face in the way.",
+            "Isolate mouth down to check its ctrls drive only that area."
+        ],
+        "details": "hide_face_componets() switches to WIP mode and hides Miscellaneous / Bind / Ctrl / BodySkull locals children, then show_this() shows that part rig groups, *_Bnd joints, its face head (BodyXxx) and its Local_Extra group.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "show_mouth_down",
+            "connect": "self.show_mouth_down"
+        }
+    },
+    "mouth_wide": {
+        "tip": "Show only the mouth wide part of the face rig.",
+        "what": "Hides the other face parts and shows the mouth wide geo, joints and ctrls so you can work on it alone.",
+        "steps": [
+            "Click the part.",
+            "Paint or fix it.",
+            "Click Wip (or another part) when done."
+        ],
+        "examples": [
+            "Click it to paint or fix the mouth wide without the rest of the face in the way.",
+            "Isolate mouth wide to check its ctrls drive only that area."
+        ],
+        "details": "hide_face_componets() switches to WIP mode and hides Miscellaneous / Bind / Ctrl / BodySkull locals children, then show_this() shows that part rig groups, *_Bnd joints, its face head (BodyXxx) and its Local_Extra group.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "show_mouth_wide",
+            "connect": "self.show_mouth_wide"
+        }
+    },
+    "mouth_narrow": {
+        "tip": "Show only the mouth narrow part of the face rig.",
+        "what": "Hides the other face parts and shows the mouth narrow geo, joints and ctrls so you can work on it alone.",
+        "steps": [
+            "Click the part.",
+            "Paint or fix it.",
+            "Click Wip (or another part) when done."
+        ],
+        "examples": [
+            "Click it to paint or fix the mouth narrow without the rest of the face in the way.",
+            "Isolate mouth narrow to check its ctrls drive only that area."
+        ],
+        "details": "hide_face_componets() switches to WIP mode and hides Miscellaneous / Bind / Ctrl / BodySkull locals children, then show_this() shows that part rig groups, *_Bnd joints, its face head (BodyXxx) and its Local_Extra group.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "show_mouth_narrow",
+            "connect": "self.show_mouth_narrow"
+        }
+    },
+    "add_extra_geos": {
+        "tip": "Add the extra geos to the face.",
+        "what": "Makes the local system for the selected extra geos so they follow the face.",
+        "examples": [
+            "Select eyelashes and eyebrows and click it.",
+            "Add eyelashes after the face install."
+        ],
+        "details": "Deletes and rebuilds Local_Extra / Skull_Local_Extra: each extra geo gets a local copy that follows the face rig.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "add_extra_geos",
+            "connect": "self.add_extra_geos"
+        }
+    },
+    "l_add_to_eyes_wires": {
+        "tip": "Add the selection to the left eyelid wires.",
+        "what": "Adds the selected geos to the left eyelid wire deformers so they blink with the lids.",
+        "examples": [
+            "Select the left eyelashes and click it.",
+            "Add the left lashes to the lid wire."
+        ],
+        "details": "deformer -e -g <geo> on L_Eyelids_Up_ClusterWire and L_Eyelids_Dw_ClusterWire.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "l_add_to_eyes_wires",
+            "connect": "self.l_add_to_eyes_wires"
+        }
+    },
+    "r_add_to_eyes_wires": {
+        "tip": "Add the selection to the right eyelid wires.",
+        "what": "Adds the selected geos to the right eyelid wire deformers so they blink with the lids.",
+        "examples": [
+            "Select the right eyelashes and click it.",
+            "Add the right lashes to the lid wire."
+        ],
+        "details": "deformer -e -g <geo> on R_Eyelids_Up_ClusterWire and R_Eyelids_Dw_ClusterWire.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "r_add_to_eyes_wires",
+            "connect": "self.r_add_to_eyes_wires"
+        }
+    },
+    "auto_skin_lips": {
+        "tip": "Auto skin the lips.",
+        "what": "Skins the lips from the upper and lower edges set in the Lips block.",
+        "steps": [
+            "Set the upper / lower lip edges in the Lips block.",
+            "Build.",
+            "Click it."
+        ],
+        "examples": [
+            "Set the lip edges in the block, build, click it.",
+            "Skin the lips of a new face quickly."
+        ],
+        "details": "auto_skin_helpers: reads Lips_Config.SetUpperEdge / SetLowerEdge (mesh.e[...]) and weights the lip loops to the lip joints.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "auto_skin_lips",
+            "connect": "self.auto_skin_lips"
+        }
+    },
+    "auto_skin_eyes": {
+        "tip": "Auto skin the eyelids.",
+        "what": "Skins the eyelids from the edges set in the Eyelids block.",
+        "steps": [
+            "Set the eyelid edges in the Eyelids block.",
+            "Build.",
+            "Click it."
+        ],
+        "examples": [
+            "Set the eyelid edges in the block, build, click it.",
+            "Skin the eyelids of a new face quickly."
+        ],
+        "details": "auto_skin_helpers: reads L_Eyelids_Config.SetUpperEdge / SetLowerEdge and weights the lid loops to the eyelid joints.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "auto_skin_eyes",
+            "connect": "self.auto_skin_eyes"
+        }
+    },
+    "upr_eyes_up": {
+        "tip": "Move the upper eyelid ctrl shapes up.",
+        "what": "Moves the shapes (not the ctrls) of the upper eyelid controllers up, so they sit outside the mesh.",
+        "examples": [
+            "Click it a few times until the upper eyelid ctrls are easy to pick.",
+            "Click upr eyes up a few times on a character with a big face so the ctrls clear the mesh."
+        ],
+        "details": "Moves the CVs of the L side eyelid / lip ctrls 0.15 units (relative); the R side follows through the mirror. The ctrls themselves do not move, so no animation changes.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "eyes_up",
+            "connect": "lambda: self.eyes_up(mult=1)"
+        }
+    },
+    "upr_eyes_dw": {
+        "tip": "Move the upper eyelid ctrl shapes down.",
+        "what": "Moves the shapes (not the ctrls) of the upper eyelid controllers down, so they sit outside the mesh.",
+        "examples": [
+            "Click it a few times until the upper eyelid ctrls are easy to pick.",
+            "Click upr eyes dw a few times on a character with a big face so the ctrls clear the mesh."
+        ],
+        "details": "Moves the CVs of the L side eyelid / lip ctrls 0.15 units (relative); the R side follows through the mirror. The ctrls themselves do not move, so no animation changes.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "eyes_up",
+            "connect": "lambda: self.eyes_up(mult=-1)"
+        }
+    },
+    "lwr_eyes_up": {
+        "tip": "Move the lower eyelid ctrl shapes up.",
+        "what": "Moves the shapes (not the ctrls) of the lower eyelid controllers up, so they sit outside the mesh.",
+        "examples": [
+            "Click it a few times until the lower eyelid ctrls are easy to pick.",
+            "Click lwr eyes up a few times on a character with a big face so the ctrls clear the mesh."
+        ],
+        "details": "Moves the CVs of the L side eyelid / lip ctrls 0.15 units (relative); the R side follows through the mirror. The ctrls themselves do not move, so no animation changes.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "eyes_down",
+            "connect": "lambda: self.eyes_down(mult=-1)"
+        }
+    },
+    "lwr_eyes_dw": {
+        "tip": "Move the lower eyelid ctrl shapes down.",
+        "what": "Moves the shapes (not the ctrls) of the lower eyelid controllers down, so they sit outside the mesh.",
+        "examples": [
+            "Click it a few times until the lower eyelid ctrls are easy to pick.",
+            "Click lwr eyes dw a few times on a character with a big face so the ctrls clear the mesh."
+        ],
+        "details": "Moves the CVs of the L side eyelid / lip ctrls 0.15 units (relative); the R side follows through the mirror. The ctrls themselves do not move, so no animation changes.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "eyes_down",
+            "connect": "lambda: self.eyes_down(mult=1)"
+        }
+    },
+    "upr_lips_up": {
+        "tip": "Move the upper lip ctrl shapes up.",
+        "what": "Moves the shapes (not the ctrls) of the upper lip controllers up, so they sit outside the mesh.",
+        "examples": [
+            "Click it a few times until the upper lip ctrls are easy to pick.",
+            "Click upr lips up a few times on a character with a big face so the ctrls clear the mesh."
+        ],
+        "details": "Moves the CVs of the L side eyelid / lip ctrls 0.15 units (relative); the R side follows through the mirror. The ctrls themselves do not move, so no animation changes.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "lips_up",
+            "connect": "lambda: self.lips_up(mult=1)"
+        }
+    },
+    "upr_lips_dw": {
+        "tip": "Move the upper lip ctrl shapes down.",
+        "what": "Moves the shapes (not the ctrls) of the upper lip controllers down, so they sit outside the mesh.",
+        "examples": [
+            "Click it a few times until the upper lip ctrls are easy to pick.",
+            "Click upr lips dw a few times on a character with a big face so the ctrls clear the mesh."
+        ],
+        "details": "Moves the CVs of the L side eyelid / lip ctrls 0.15 units (relative); the R side follows through the mirror. The ctrls themselves do not move, so no animation changes.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "lips_up",
+            "connect": "lambda: self.lips_up(mult=-1)"
+        }
+    },
+    "lwr_lips_up": {
+        "tip": "Move the lower lip ctrl shapes up.",
+        "what": "Moves the shapes (not the ctrls) of the lower lip controllers up, so they sit outside the mesh.",
+        "examples": [
+            "Click it a few times until the lower lip ctrls are easy to pick.",
+            "Click lwr lips up a few times on a character with a big face so the ctrls clear the mesh."
+        ],
+        "details": "Moves the CVs of the L side eyelid / lip ctrls 0.15 units (relative); the R side follows through the mirror. The ctrls themselves do not move, so no animation changes.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "lips_down",
+            "connect": "lambda: self.lips_down(mult=-1)"
+        }
+    },
+    "lwr_lips_dw": {
+        "tip": "Move the lower lip ctrl shapes down.",
+        "what": "Moves the shapes (not the ctrls) of the lower lip controllers down, so they sit outside the mesh.",
+        "examples": [
+            "Click it a few times until the lower lip ctrls are easy to pick.",
+            "Click lwr lips dw a few times on a character with a big face so the ctrls clear the mesh."
+        ],
+        "details": "Moves the CVs of the L side eyelid / lip ctrls 0.15 units (relative); the R side follows through the mirror. The ctrls themselves do not move, so no animation changes.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "lips_down",
+            "connect": "lambda: self.lips_down(mult=1)"
+        }
+    },
+    "reload_jaw_tester": {
+        "tip": "Create the jaw tester.",
+        "what": "Opens the jaw 45 degrees and makes test shapes on the mouth geos to check the jaw skin.",
+        "examples": [
+            "Click R, look at the mouth shapes, fix weights, click R again.",
+            "Compare jaw open shapes after painting."
+        ],
+        "details": "Rotates Jaw_Ctrl.rx 45, duplicates BodyJaw as *_JawTester targets on the mouth heads (BodyMouthUp / Down / Wide / Narrow, BodyLips) so you compare them with the jaw open.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "reload_jaw_tester",
+            "connect": "self.reload_jaw_tester"
+        }
+    },
+    "delete_jaw_tester": {
+        "tip": "Delete the jaw tester.",
+        "what": "Removes the jaw tester shapes.",
+        "examples": [
+            "Click X when you are done checking.",
+            "Delete before saving."
+        ],
+        "details": "Deletes every *JawTester* blendShape and node.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "delete_jaw_tester",
+            "connect": "self.delete_jaw_tester"
+        }
+    },
+    "tools_ui": {
+        "tip": "Open Rig Tools.",
+        "what": "Opens the Rig Tools window.",
+        "examples": [
+            "Open it for renaming, ctrl colors and skin tools.",
+            "Open Rig Tools to color ctrls."
+        ],
+        "details": "load_RigTools.RigTools_UI().show().",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "open_tools_ui",
+            "connect": "self.open_tools_ui"
+        }
+    },
+    "ribbonizer_ui_btn": {
+        "tip": "Open Ribbonizer.",
+        "what": "Opens the Ribbonizer tool to make ribbon setups.",
+        "examples": [
+            "Make a ribbon for a belt or a strap.",
+            "Make a ribbon for a scarf."
+        ],
+        "details": "Utils/External/Ribbonizer.UI().",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "open_ribbonizer_ui",
+            "connect": "self.open_ribbonizer_ui"
+        }
+    },
+    "prop_get_clean_selection_button": {
+        "tip": "Use the selection.",
+        "what": "Puts the selected objects or components in the field as clean text.",
+        "examples": [
+            "Select vertices on the prop and click <<.",
+            "Fill the field with the vertices of a hinge."
+        ],
+        "details": "Flattened selection (components too) as comma separated text.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "prop_get_clean_selection_to_line",
+            "connect": "self.prop_get_clean_selection_to_line"
+        }
+    },
+    "prop_aim_to_vtx_button": {
+        "tip": "Aim the selected object at the vertices.",
+        "what": "Aims the selected objects at a cluster made from the components in the field.",
+        "steps": [
+            "Select the components and click <<.",
+            "Select the object to aim.",
+            "Click Aim To Vtx."
+        ],
+        "examples": [
+            "Make a lamp point at a spot on the table.",
+            "Aim a camera prop at a point on a mesh."
+        ],
+        "details": "Makes a cluster on the components in the field and aims the selected objects at it.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "prop_aim_selected_to_clean_selection_cluster",
+            "connect": "self.prop_aim_selected_to_clean_selection_cluster"
+        }
+    },
+    "prop_get_spaces_selection_button": {
+        "tip": "Use the selection as spaces.",
+        "what": "Puts the selected objects in the spaces field.",
+        "examples": [
+            "Select Global_Ctrl, the hand ctrls, click <<.",
+            "Fill spaces with the hand ctrls."
+        ],
+        "details": "Selected object names, comma separated, into the spaces field.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "prop_get_clean_selection_to_spaces_line",
+            "connect": "self.prop_get_clean_selection_to_spaces_line"
+        }
+    },
+    "prop_spaces_on_sel_ctrl_button": {
+        "tip": "Add space switches to the selected ctrls.",
+        "what": "Gives the selected ctrls a space switch to every object in the spaces field.",
+        "steps": [
+            "Fill the spaces field (<< or type names).",
+            "Select the ctrls.",
+            "Click it.",
+            "Switch spaces with the new enum attr."
+        ],
+        "examples": [
+            "Let a sword ctrl follow world, the right hand or the left hand.",
+            "Let a cup ctrl switch between table and hand."
+        ],
+        "details": "Adds a space enum on each selected ctrl and constrains its offset group to every space, driven by the enum. Missing spaces are warned and skipped.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "prop_create_space_switches_on_selected_controllers",
+            "connect": "self.prop_create_space_switches_on_selected_controllers"
+        }
+    },
+    "prop_match_pivots_btn": {
+        "tip": "Match pivots to the last selected.",
+        "what": "Moves the pivot of every selected object to the pivot of the last one.",
+        "examples": [
+            "Put the door pivot on the hinge object.",
+            "Put a lid pivot on the hinge."
+        ],
+        "details": "xform -rotatePivot / -scalePivot of each selected object = the last selected pivot (world).",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "prop_match_pivots_to_last_selected",
+            "connect": "self.prop_match_pivots_to_last_selected"
+        }
+    },
+    "prop_skin_mode_on_btn": {
+        "tip": "Move joints without moving the skin.",
+        "what": "Turns on Move Joints mode on every skinCluster: you can move joints and the meshes stay where they are.",
+        "examples": [
+            "Turn it on, slide a pivot joint to the hinge, then turn it off.",
+            "Move joints of a skinned prop."
+        ],
+        "details": "moveJointsMode 1 on every skinCluster in the scene.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "prop_skin_mode_on",
+            "connect": "self.prop_skin_mode_on"
+        }
+    },
+    "prop_skin_mode_off_btn": {
+        "tip": "Back to normal skinning.",
+        "what": "Turns off Move Joints mode on every skinCluster, so joints deform the meshes again.",
+        "examples": [
+            "Turn it off after moving the joints.",
+            "Turn off after moving the prop joints."
+        ],
+        "details": "moveJointsMode 0 on every skinCluster in the scene.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "prop_skin_mode_off",
+            "connect": "self.prop_skin_mode_off"
+        }
+    },
+    "reorder_sns": {
+        "tip": "Fix the squash and stretch deformer order.",
+        "what": "Reorders the deformers on the selected geo: squash, bend side, bend front, then skin.",
+        "examples": [
+            "Click it when the head squash moves the skin the wrong way.",
+            "Fix the order after adding a new deformer to the head."
+        ],
+        "details": "reorderDeformers so the history reads: squash (bottom), bend side, bend front, skinCluster (top).",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "reorder_deformers_on_selection",
+            "connect": "self.reorder_deformers_on_selection"
+        }
+    },
+    "create_skirt_mirror_offsets": {
+        "tip": "Mirror the skirt guides while you move them.",
+        "what": "Adds mirrored offset groups on the skirt guides (block prefix in the field) so moving one side moves the other.",
+        "steps": [
+            "Type the skirt block prefix.",
+            "Click Create.",
+            "Move the left guides.",
+            "Delete the offsets."
+        ],
+        "examples": [
+            "Click it, shape the left half of the skirt, the right half follows. Delete the offsets when done.",
+            "Shape a symmetric skirt fast."
+        ],
+        "details": "skirt_helpers.create_mirror_skirt_groups(block_prefix): -1 scaled offset groups above the right skirt guides driven by the left ones.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "create_skirt_mirror_offsets",
+            "connect": "self.create_skirt_mirror_offsets"
+        }
+    },
+    "delete_skirt_mirror_offsets": {
+        "tip": "Remove the skirt mirror offsets.",
+        "what": "Deletes the mirror offset groups and puts the skirt guides back, keeping their new positions.",
+        "examples": [
+            "Click it once the skirt guides are placed, before building.",
+            "Delete before building."
+        ],
+        "details": "skirt_helpers.delete_mirror_skirt_groups(block_prefix): bakes the guide positions and removes the groups.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "delete_skirt_mirror_offsets",
+            "connect": "self.delete_skirt_mirror_offsets"
+        }
+    },
+    "create_skirt_rigmeshes": {
+        "tip": "Create the skirt rig meshes.",
+        "what": "Makes skinned rig meshes for the skirt to copy weights from (uses the selected objects).",
+        "examples": [
+            "Click it, then copy the weights from the rig mesh to the real skirt.",
+            "Make rig meshes to copy skirt weights."
+        ],
+        "details": "Makes cylinder rig meshes along the skirt chains (fixed vertex lists) skinned to them, to copy weights from.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "create_skirt_rigmeshes",
+            "connect": "self.create_skirt_rigmeshes"
+        }
+    },
+    "create_skirt_vis_toggle": {
+        "tip": "Add the skirt IK / FK visibility toggle.",
+        "what": "Adds attrs that show or hide the skirt FK and IK ctrls, on the object in the attribute field.",
+        "examples": [
+            "Put the toggle on the COG ctrl so animators can hide the skirt ctrls.",
+            "Add the toggle on the hip ctrl."
+        ],
+        "details": "skirt_helpers.add_skirt_vis_toggle(block_prefix, attribute_location): FK / IK vis attrs on that node.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "create_skirt_vis_toggle",
+            "connect": "self.create_skirt_vis_toggle"
+        }
+    },
+    "fix_quad_foot": {
+        "tip": "Fix the quadruped feet orientation.",
+        "what": "Re-aims the front and back foot guides of a quadruped.",
+        "examples": [
+            "Click it after placing a quad's guides.",
+            "Fix feet orients on a dog rig."
+        ],
+        "details": "wrap_utils.fix_foot_quadruped_orientation(leg=\"Fr\") and (leg=\"Bk\").",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "fix_quad_foot",
+            "connect": "self.fix_quad_foot"
+        }
+    },
+    "feather_pivots_btn": {
+        "tip": "Open Feather Pivots.",
+        "what": "Opens the Feather Pivots helper to edit the feather pivot attrs of a Wings block.",
+        "examples": [
+            "Adjust where each feather rotates from.",
+            "Adjust feather pivots on a bird wing."
+        ],
+        "details": "helpers_utils.feather_pivots.show().",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "open_feather_pivots",
+            "connect": "self.open_feather_pivots"
+        }
+    },
+    "head": {
+        "tip": "Skin the selected geo to the head joints.",
+        "what": "Binds each selected geo to the crowd skeleton joints of the head only.",
+        "steps": [
+            "Select the geos.",
+            "Click the body part.",
+            "Check with a ROM, then paint."
+        ],
+        "examples": [
+            "Select the hat and click it.",
+            "Rigid accessory on head: skin it here, then copy finer weights if needed."
+        ],
+        "details": "skin_this_to_selected(joints): skinCluster -tsb on each selected geo with the crowd *_Skl joints of that part that exist (Hips / Spine / LeftArm... naming). A geo that already has a skinCluster errors."
+    },
+    "neck_head": {
+        "tip": "Skin the selected geo to the neck and head joints.",
+        "what": "Binds each selected geo to the crowd skeleton joints of the neck and head only.",
+        "steps": [
+            "Select the geos.",
+            "Click the body part.",
+            "Check with a ROM, then paint."
+        ],
+        "examples": [
+            "Select a scarf hood and click it.",
+            "Rigid accessory on neck head: skin it here, then copy finer weights if needed."
+        ],
+        "details": "skin_this_to_selected(joints): skinCluster -tsb on each selected geo with the crowd *_Skl joints of that part that exist (Hips / Spine / LeftArm... naming). A geo that already has a skinCluster errors."
+    },
+    "spine": {
+        "tip": "Skin the selected geo to the spine joints.",
+        "what": "Binds each selected geo to the crowd skeleton joints of the spine only.",
+        "steps": [
+            "Select the geos.",
+            "Click the body part.",
+            "Check with a ROM, then paint."
+        ],
+        "examples": [
+            "Select a belt and click it.",
+            "Rigid accessory on spine: skin it here, then copy finer weights if needed."
+        ],
+        "details": "skin_this_to_selected(joints): skinCluster -tsb on each selected geo with the crowd *_Skl joints of that part that exist (Hips / Spine / LeftArm... naming). A geo that already has a skinCluster errors."
+    },
+    "spine_clavs": {
+        "tip": "Skin the selected geo to the spine and clavicles joints.",
+        "what": "Binds each selected geo to the crowd skeleton joints of the spine and clavicles only.",
+        "steps": [
+            "Select the geos.",
+            "Click the body part.",
+            "Check with a ROM, then paint."
+        ],
+        "examples": [
+            "Select a backpack and click it.",
+            "Rigid accessory on spine clavs: skin it here, then copy finer weights if needed."
+        ],
+        "details": "skin_this_to_selected(joints): skinCluster -tsb on each selected geo with the crowd *_Skl joints of that part that exist (Hips / Spine / LeftArm... naming). A geo that already has a skinCluster errors."
+    },
+    "neck_spine_head": {
+        "tip": "Skin the selected geo to the spine, neck and head joints.",
+        "what": "Binds each selected geo to the crowd skeleton joints of the spine, neck and head only.",
+        "steps": [
+            "Select the geos.",
+            "Click the body part.",
+            "Check with a ROM, then paint."
+        ],
+        "examples": [
+            "Select a long collar and click it.",
+            "Rigid accessory on neck spine head: skin it here, then copy finer weights if needed."
+        ],
+        "details": "skin_this_to_selected(joints): skinCluster -tsb on each selected geo with the crowd *_Skl joints of that part that exist (Hips / Spine / LeftArm... naming). A geo that already has a skinCluster errors."
+    },
+    "neck_spine_head_clavs": {
+        "tip": "Skin the selected geo to the spine, clavicles, neck and head joints.",
+        "what": "Binds each selected geo to the crowd skeleton joints of the spine, clavicles, neck and head only.",
+        "steps": [
+            "Select the geos.",
+            "Click the body part.",
+            "Check with a ROM, then paint."
+        ],
+        "examples": [
+            "Select a jacket top and click it.",
+            "Rigid accessory on neck spine head clavs: skin it here, then copy finer weights if needed."
+        ],
+        "details": "skin_this_to_selected(joints): skinCluster -tsb on each selected geo with the crowd *_Skl joints of that part that exist (Hips / Spine / LeftArm... naming). A geo that already has a skinCluster errors."
+    },
+    "left_eye": {
+        "tip": "Skin the selected geo to the left eye joints.",
+        "what": "Binds each selected geo to the crowd skeleton joints of the left eye only.",
+        "steps": [
+            "Select the geos.",
+            "Click the body part.",
+            "Check with a ROM, then paint."
+        ],
+        "examples": [
+            "Select the left eyeball and click it.",
+            "Rigid accessory on left eye: skin it here, then copy finer weights if needed."
+        ],
+        "details": "skin_this_to_selected(joints): skinCluster -tsb on each selected geo with the crowd *_Skl joints of that part that exist (Hips / Spine / LeftArm... naming). A geo that already has a skinCluster errors."
+    },
+    "right_eye": {
+        "tip": "Skin the selected geo to the right eye joints.",
+        "what": "Binds each selected geo to the crowd skeleton joints of the right eye only.",
+        "steps": [
+            "Select the geos.",
+            "Click the body part.",
+            "Check with a ROM, then paint."
+        ],
+        "examples": [
+            "Select the right eyeball and click it.",
+            "Rigid accessory on right eye: skin it here, then copy finer weights if needed."
+        ],
+        "details": "skin_this_to_selected(joints): skinCluster -tsb on each selected geo with the crowd *_Skl joints of that part that exist (Hips / Spine / LeftArm... naming). A geo that already has a skinCluster errors."
+    },
+    "left_arm": {
+        "tip": "Skin the selected geo to the left arm joints.",
+        "what": "Binds each selected geo to the crowd skeleton joints of the left arm only.",
+        "steps": [
+            "Select the geos.",
+            "Click the body part.",
+            "Check with a ROM, then paint."
+        ],
+        "examples": [
+            "Select the left sleeve and click it.",
+            "Rigid accessory on left arm: skin it here, then copy finer weights if needed."
+        ],
+        "details": "skin_this_to_selected(joints): skinCluster -tsb on each selected geo with the crowd *_Skl joints of that part that exist (Hips / Spine / LeftArm... naming). A geo that already has a skinCluster errors."
+    },
+    "left_hand": {
+        "tip": "Skin the selected geo to the left hand joints.",
+        "what": "Binds each selected geo to the crowd skeleton joints of the left hand only.",
+        "steps": [
+            "Select the geos.",
+            "Click the body part.",
+            "Check with a ROM, then paint."
+        ],
+        "examples": [
+            "Select the left glove and click it.",
+            "Rigid accessory on left hand: skin it here, then copy finer weights if needed."
+        ],
+        "details": "skin_this_to_selected(joints): skinCluster -tsb on each selected geo with the crowd *_Skl joints of that part that exist (Hips / Spine / LeftArm... naming). A geo that already has a skinCluster errors."
+    },
+    "left_arm_hand": {
+        "tip": "Skin the selected geo to the left arm and hand joints.",
+        "what": "Binds each selected geo to the crowd skeleton joints of the left arm and hand only.",
+        "steps": [
+            "Select the geos.",
+            "Click the body part.",
+            "Check with a ROM, then paint."
+        ],
+        "examples": [
+            "Select a left long glove and click it.",
+            "Rigid accessory on left arm hand: skin it here, then copy finer weights if needed."
+        ],
+        "details": "skin_this_to_selected(joints): skinCluster -tsb on each selected geo with the crowd *_Skl joints of that part that exist (Hips / Spine / LeftArm... naming). A geo that already has a skinCluster errors."
+    },
+    "rigth_arm": {
+        "tip": "Skin the selected geo to the right arm joints.",
+        "what": "Binds each selected geo to the crowd skeleton joints of the right arm only.",
+        "steps": [
+            "Select the geos.",
+            "Click the body part.",
+            "Check with a ROM, then paint."
+        ],
+        "examples": [
+            "Select the right sleeve and click it.",
+            "Rigid accessory on rigth arm: skin it here, then copy finer weights if needed."
+        ],
+        "details": "skin_this_to_selected(joints): skinCluster -tsb on each selected geo with the crowd *_Skl joints of that part that exist (Hips / Spine / LeftArm... naming). A geo that already has a skinCluster errors."
+    },
+    "right_hand": {
+        "tip": "Skin the selected geo to the right hand joints.",
+        "what": "Binds each selected geo to the crowd skeleton joints of the right hand only.",
+        "steps": [
+            "Select the geos.",
+            "Click the body part.",
+            "Check with a ROM, then paint."
+        ],
+        "examples": [
+            "Select the right glove and click it.",
+            "Rigid accessory on right hand: skin it here, then copy finer weights if needed."
+        ],
+        "details": "skin_this_to_selected(joints): skinCluster -tsb on each selected geo with the crowd *_Skl joints of that part that exist (Hips / Spine / LeftArm... naming). A geo that already has a skinCluster errors."
+    },
+    "right_arm_hand": {
+        "tip": "Skin the selected geo to the right arm and hand joints.",
+        "what": "Binds each selected geo to the crowd skeleton joints of the right arm and hand only.",
+        "steps": [
+            "Select the geos.",
+            "Click the body part.",
+            "Check with a ROM, then paint."
+        ],
+        "examples": [
+            "Select a right long glove and click it.",
+            "Rigid accessory on right arm hand: skin it here, then copy finer weights if needed."
+        ],
+        "details": "skin_this_to_selected(joints): skinCluster -tsb on each selected geo with the crowd *_Skl joints of that part that exist (Hips / Spine / LeftArm... naming). A geo that already has a skinCluster errors."
+    },
+    "left_leg": {
+        "tip": "Skin the selected geo to the left leg joints.",
+        "what": "Binds each selected geo to the crowd skeleton joints of the left leg only.",
+        "steps": [
+            "Select the geos.",
+            "Click the body part.",
+            "Check with a ROM, then paint."
+        ],
+        "examples": [
+            "Select the left pant leg and click it.",
+            "Rigid accessory on left leg: skin it here, then copy finer weights if needed."
+        ],
+        "details": "skin_this_to_selected(joints): skinCluster -tsb on each selected geo with the crowd *_Skl joints of that part that exist (Hips / Spine / LeftArm... naming). A geo that already has a skinCluster errors."
+    },
+    "left_foot": {
+        "tip": "Skin the selected geo to the left foot joints.",
+        "what": "Binds each selected geo to the crowd skeleton joints of the left foot only.",
+        "steps": [
+            "Select the geos.",
+            "Click the body part.",
+            "Check with a ROM, then paint."
+        ],
+        "examples": [
+            "Select the left shoe and click it.",
+            "Rigid accessory on left foot: skin it here, then copy finer weights if needed."
+        ],
+        "details": "skin_this_to_selected(joints): skinCluster -tsb on each selected geo with the crowd *_Skl joints of that part that exist (Hips / Spine / LeftArm... naming). A geo that already has a skinCluster errors."
+    },
+    "left_leg_foot": {
+        "tip": "Skin the selected geo to the left leg and foot joints.",
+        "what": "Binds each selected geo to the crowd skeleton joints of the left leg and foot only.",
+        "steps": [
+            "Select the geos.",
+            "Click the body part.",
+            "Check with a ROM, then paint."
+        ],
+        "examples": [
+            "Select a left boot and click it.",
+            "Rigid accessory on left leg foot: skin it here, then copy finer weights if needed."
+        ],
+        "details": "skin_this_to_selected(joints): skinCluster -tsb on each selected geo with the crowd *_Skl joints of that part that exist (Hips / Spine / LeftArm... naming). A geo that already has a skinCluster errors."
+    },
+    "right_leg": {
+        "tip": "Skin the selected geo to the right leg joints.",
+        "what": "Binds each selected geo to the crowd skeleton joints of the right leg only.",
+        "steps": [
+            "Select the geos.",
+            "Click the body part.",
+            "Check with a ROM, then paint."
+        ],
+        "examples": [
+            "Select the right pant leg and click it.",
+            "Rigid accessory on right leg: skin it here, then copy finer weights if needed."
+        ],
+        "details": "skin_this_to_selected(joints): skinCluster -tsb on each selected geo with the crowd *_Skl joints of that part that exist (Hips / Spine / LeftArm... naming). A geo that already has a skinCluster errors."
+    },
+    "right_foot": {
+        "tip": "Skin the selected geo to the right foot joints.",
+        "what": "Binds each selected geo to the crowd skeleton joints of the right foot only.",
+        "steps": [
+            "Select the geos.",
+            "Click the body part.",
+            "Check with a ROM, then paint."
+        ],
+        "examples": [
+            "Select the right shoe and click it.",
+            "Rigid accessory on right foot: skin it here, then copy finer weights if needed."
+        ],
+        "details": "skin_this_to_selected(joints): skinCluster -tsb on each selected geo with the crowd *_Skl joints of that part that exist (Hips / Spine / LeftArm... naming). A geo that already has a skinCluster errors."
+    },
+    "right_leg_foot": {
+        "tip": "Skin the selected geo to the right leg and foot joints.",
+        "what": "Binds each selected geo to the crowd skeleton joints of the right leg and foot only.",
+        "steps": [
+            "Select the geos.",
+            "Click the body part.",
+            "Check with a ROM, then paint."
+        ],
+        "examples": [
+            "Select a right boot and click it.",
+            "Rigid accessory on right leg foot: skin it here, then copy finer weights if needed."
+        ],
+        "details": "skin_this_to_selected(joints): skinCluster -tsb on each selected geo with the crowd *_Skl joints of that part that exist (Hips / Spine / LeftArm... naming). A geo that already has a skinCluster errors."
+    },
+    "copy_selected_skin": {
+        "tip": "Copy skin from first to second selected.",
+        "what": "Copies the weights from the first selected geo to the second, by closest point and closest joint.",
+        "examples": [
+            "Select the old shirt, then the new shirt, click it.",
+            "Copy skin between two versions of a mesh."
+        ],
+        "details": "copySkinWeights -noMirror -surfaceAssociation closestComponent -influenceAssociation closestBone (both geos must be skinned).",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "copy_selected_skin",
+            "connect": "self.copy_selected_skin"
+        }
+    },
+    "copy_ns_skin": {
+        "tip": "Copy skin from a namespace to the scene.",
+        "what": "For each selected geo with a namespace, copies its skin to the geo with the same name without the namespace.",
+        "examples": [
+            "Reference the old rig, select its geos, click it.",
+            "Copy skin from a referenced old rig."
+        ],
+        "details": "For each selected ns:geo, selects it and the same name without the namespace, then copySkinWeights.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "copy_ns_skin",
+            "connect": "self.copy_ns_skin"
+        }
+    },
+    "reload_udims": {
+        "tip": "Reload the UDIM textures.",
+        "what": "Refreshes the viewport and reloads the UDIM textures.",
+        "examples": [
+            "Click it when the textures show as tiles or black.",
+            "Reload UDIMs after texture updates."
+        ],
+        "details": "Switches the viewport to Viewport 2.0 and regenerates the UDIM previews of the file textures.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "reload_udims",
+            "connect": "self.reload_udims"
+        }
+    },
+    "label_joints": {
+        "tip": "Label every joint.",
+        "what": "Sets side and type labels on all joints, so skin mirroring and copying by label work.",
+        "examples": [
+            "Click it before mirroring skin weights.",
+            "Label before copying skin by label."
+        ],
+        "details": "Misc.label_joints.split_label_joints(): side from the L_ / R_ prefix and type \"Other\" with the name, on every joint.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "label_joints",
+            "connect": "self.label_joints"
+        }
+    },
+    "proxy_maker": {
+        "tip": "Open Proxy Maker.",
+        "what": "Opens Proxy Maker to make a fast cut-up proxy of the skinned character.",
+        "examples": [
+            "Make a light rig version for blocking.",
+            "Make a light proxy for layout."
+        ],
+        "details": "Opens load_proxy_maker.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "proxy_maker",
+            "connect": "self.proxy_maker"
+        }
+    },
+    "fari_deformersWeightsEditor": {
+        "tip": "Open the deformer weights editor.",
+        "what": "Opens a tool to edit and copy the weights of deformers (not skins).",
+        "examples": [
+            "Paint the weights of a cluster or wire.",
+            "Paint cluster weights on a face."
+        ],
+        "details": "helpers_utils.fari_deformersWeightsEditor.DeformersWeightsEditor.showUI().",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "fari_deformersWeightsEditor",
+            "connect": "self.fari_deformersWeightsEditor"
+        }
+    },
+    "switch_ikfk": {
+        "tip": "Switch the selected limb between IK and FK.",
+        "what": "Matches IK to FK (or FK to IK) on the selected limb ctrl and flips the switch, without the pose jumping.",
+        "steps": [
+            "Select a limb ctrl.",
+            "Click IK FK Switch.",
+            "Key it if you are animating."
+        ],
+        "examples": [
+            "Select the wrist ctrl, click it to go from FK to IK at this frame.",
+            "Switch the leg to FK for a jump."
+        ],
+        "details": "Animation.ikfk_match.ikfk_match_callback(): reads the limb switch attr, snaps the other mode ctrls to the current pose, then flips the switch.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "switch_ikfk",
+            "connect": "self.switch_ikfk"
+        }
+    },
+    "dont_press": {
+        "tip": "Don't press it.",
+        "what": "Makes the window almost see through. Close and open the tool to get it back.",
+        "examples": [
+            "You were warned.",
+            "Do it on a colleague machine."
+        ],
+        "details": "setWindowOpacity(0.1) on the tool. Close and reopen to get it back.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "dont_press",
+            "connect": "self.dont_press"
+        }
+    },
+    "reset_profile": {
+        "tip": "Count a profile reset.",
+        "what": "Adds one to the team profile reset counter.",
+        "examples": [
+            "Click it after resetting your Maya profile.",
+            "Count it after a broken prefs reset."
+        ],
+        "details": "Studio only: bumps the counter in /job/anythinggoes/share/rigging/team/Esteban/reset_profile.json.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "add_to_reset",
+            "connect": "self.add_to_reset"
+        }
+    },
+    "skin_to_other_button": {
+        "tip": "Copy skin from the first geo to the rest.",
+        "what": "Select the source geo first, then the targets: each target gets the source skin and weights.",
+        "examples": [
+            "Select the body, then shirt, pants and shoes, click it.",
+            "Copy body skin to all clothes."
+        ],
+        "details": "Binds each target to the source skinCluster influences, then copySkinWeights source > target (closest point).",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "copy_skin_from_first_to_rest",
+            "connect": "self.copy_skin_from_first_to_rest"
+        }
+    },
+    "save_skin_joints": {
+        "tip": "Save the skin joints of the selection.",
+        "what": "Saves the joints the selected geos are skinned to, to a temp file another Maya can read.",
+        "examples": [
+            "Save in the old scene, then Select Saved Skin Joints in the new one.",
+            "Save the joints before a scene crash test."
+        ],
+        "details": "Writes the influences of the selected geos, with their world positions, to a temp json.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "save_skin_joints",
+            "connect": "self.save_skin_joints"
+        }
+    },
+    "load_skin_joints": {
+        "tip": "Select the saved skin joints.",
+        "what": "Selects the joints saved with Save Skin Joints; missing joints can be made at their saved positions.",
+        "examples": [
+            "In the new scene, click it, then shift select the geo and bind.",
+            "Select the joints to bind a new mesh."
+        ],
+        "details": "Reads that temp json and selects the joints; missing ones can be created at the saved positions, parented to the world.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "load_skin_joints",
+            "connect": "self.load_skin_joints"
+        }
+    },
+    "fix_legs_orients": {
+        "tip": "Fix the leg orients for mocap.",
+        "what": "Fixes the leg joint orients so mocap retargets cleanly.",
+        "examples": [
+            "Click it before loading mocap.",
+            "Fix leg orients before a mocap retarget."
+        ],
+        "details": "mocap_helpers.fix_legs_orient().",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "fix_legs_orients_mocap",
+            "connect": "self.fix_legs_orients_mocap"
+        }
+    },
+    "l_thumb_orient_plus": {
+        "tip": "Nudge the left thumb orient up.",
+        "what": "Rotates the left thumb joint orients by the amount in the field (up), saving and loading back the skin so the mesh does not move.",
+        "steps": [
+            "Type the step in degrees.",
+            "Click + or - until the thumb curls right.",
+            "Rebuild or keep going."
+        ],
+        "examples": [
+            "Click it until the thumb curls toward the palm, not across it.",
+            "Use small steps (2-5) and test with a fist pose after each l thumb orient plus."
+        ],
+        "details": "mocap_helpers.nudge_thumb_orient(joints, amount): saves the skins of the geos using the thumb joints, removes them, rotates the joint orients, puts constraints back and loads the skins again.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "nudge_thumb_orient",
+            "connect": "partial(self.nudge_thumb_orient, 'l', 1)"
+        }
+    },
+    "l_thumb_orient_minus": {
+        "tip": "Nudge the left thumb orient down.",
+        "what": "Rotates the left thumb joint orients by the amount in the field (down), saving and loading back the skin so the mesh does not move.",
+        "steps": [
+            "Type the step in degrees.",
+            "Click + or - until the thumb curls right.",
+            "Rebuild or keep going."
+        ],
+        "examples": [
+            "Click it until the thumb curls toward the palm, not across it.",
+            "Use small steps (2-5) and test with a fist pose after each l thumb orient minus."
+        ],
+        "details": "mocap_helpers.nudge_thumb_orient(joints, amount): saves the skins of the geos using the thumb joints, removes them, rotates the joint orients, puts constraints back and loads the skins again.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "nudge_thumb_orient",
+            "connect": "partial(self.nudge_thumb_orient, 'l', -1)"
+        }
+    },
+    "r_thumb_orient_plus": {
+        "tip": "Nudge the right thumb orient up.",
+        "what": "Rotates the right thumb joint orients by the amount in the field (up), saving and loading back the skin so the mesh does not move.",
+        "steps": [
+            "Type the step in degrees.",
+            "Click + or - until the thumb curls right.",
+            "Rebuild or keep going."
+        ],
+        "examples": [
+            "Click it until the thumb curls toward the palm, not across it.",
+            "Use small steps (2-5) and test with a fist pose after each r thumb orient plus."
+        ],
+        "details": "mocap_helpers.nudge_thumb_orient(joints, amount): saves the skins of the geos using the thumb joints, removes them, rotates the joint orients, puts constraints back and loads the skins again.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "nudge_thumb_orient",
+            "connect": "partial(self.nudge_thumb_orient, 'r', 1)"
+        }
+    },
+    "r_thumb_orient_minus": {
+        "tip": "Nudge the right thumb orient down.",
+        "what": "Rotates the right thumb joint orients by the amount in the field (down), saving and loading back the skin so the mesh does not move.",
+        "steps": [
+            "Type the step in degrees.",
+            "Click + or - until the thumb curls right.",
+            "Rebuild or keep going."
+        ],
+        "examples": [
+            "Click it until the thumb curls toward the palm, not across it.",
+            "Use small steps (2-5) and test with a fist pose after each r thumb orient minus."
+        ],
+        "details": "mocap_helpers.nudge_thumb_orient(joints, amount): saves the skins of the geos using the thumb joints, removes them, rotates the joint orients, puts constraints back and loads the skins again.",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "nudge_thumb_orient",
+            "connect": "partial(self.nudge_thumb_orient, 'r', -1)"
+        }
+    },
+    "arkkit_btn": {
+        "tip": "Open ArkKit.",
+        "what": "Opens ArkKit to make the 52 ARKit face blendshapes from a face rig.",
+        "examples": [
+            "Make the ARKit shapes for a face to use with live face capture.",
+            "Make ARKit shapes for a VTuber character."
+        ],
+        "details": "Opens load_arkkit (ARKit 52 shapes authoring).",
+        "code": {
+            "file": "UI/Helpers/load_helpers.py",
+            "function": "open_arkkit",
+            "connect": "self.open_arkkit"
+        }
+    }
+}

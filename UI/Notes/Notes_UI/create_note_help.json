@@ -1,0 +1,53 @@
+{
+    "viewport_draw": {
+        "tip": "Draw on the viewport.",
+        "what": "Starts the grease pencil so you can draw on top of the viewport for this note.",
+        "examples": [
+            "Circle the elbow that pinches, then Capture.",
+            "Draw an arrow showing where the skin should go."
+        ],
+        "code": {
+            "file": "UI/Notes/Notes_UI/load_create_note.py",
+            "function": "start_grease_pencil",
+            "connect": "self.start_grease_pencil"
+        }
+    },
+    "clear_viewport": {
+        "tip": "Erase the viewport drawings.",
+        "what": "Deletes every grease pencil drawing in the scene.",
+        "examples": [
+            "Click it after the note is created.",
+            "Clear the old drawings before starting a new note."
+        ],
+        "code": {
+            "file": "UI/Notes/Notes_UI/load_create_note.py",
+            "connect": "lambda: cmds.delete('greasePencil*')"
+        }
+    },
+    "capture_image": {
+        "tip": "Capture the viewport for the note.",
+        "what": "Takes a picture of the viewport (with or without the HUD) and attaches it to the note.",
+        "examples": [
+            "Draw on the problem, click Capture, then Create Note.",
+            "Turn off ornaments to capture a clean picture."
+        ],
+        "code": {
+            "file": "UI/Notes/Notes_UI/load_create_note.py",
+            "function": "capture_viewport_ui",
+            "connect": "self.capture_viewport_ui"
+        }
+    },
+    "create_note": {
+        "tip": "Create the note.",
+        "what": "Saves the note with its title, text, frame and captured image.",
+        "examples": [
+            "Title \"Elbow pinch\", text \"frame 24, needs more weight on the upper arm\", Create Note.",
+            "Mark the note as urgent so it shows first."
+        ],
+        "code": {
+            "file": "UI/Notes/Notes_UI/load_create_note.py",
+            "function": "create_file_note_ui",
+            "connect": "self.create_file_note_ui"
+        }
+    }
+}

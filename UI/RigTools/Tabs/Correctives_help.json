@@ -1,0 +1,118 @@
+{
+    "load_joint_Btn": {
+        "tip": "Use the selected joint for the push system.",
+        "what": "Puts the selected joint in the field; the push guides are made around it.",
+        "steps": [
+            "Check the sides you want (front / back / in / out).",
+            "Select the joint.",
+            "Click <<."
+        ],
+        "examples": [
+            "Select the elbow joint and click <<.",
+            "Load the elbow to add push joints to an arm."
+        ],
+        "details": "fill_push_object(): PushCorrectives.PushSystem().identify_push_joints(source, side) for each checked side, so Build can reuse push joints that already exist.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_CorrectivesTab.py",
+            "function": "fill_push_object",
+            "connect": "lambda:self.fill_push_object( sides=[self.ui.FrontCheckBox, self.ui.BackCheckBox, self.ui.InCheckBox, self.ui.OutCheckBox ])"
+        }
+    },
+    "push_guides_Btn": {
+        "tip": "Create the push guides.",
+        "what": "Creates the guides for a push joint system around the joint in the field.",
+        "steps": [
+            "Load the joint.",
+            "Check the sides.",
+            "Click Create guides.",
+            "Move the guides out to where the skin should push.",
+            "Click Build."
+        ],
+        "examples": [
+            "Load the knee joint, click it, move the guides to where the skin should push out.",
+            "Create guides on the hip for the buttock push."
+        ],
+        "details": "PushSystem().create_push_joints(source, side) per checked side.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_CorrectivesTab.py",
+            "function": "create_push_guides",
+            "connect": "lambda:self.create_push_guides(source=self.ui.load_joint_edit.text(), sides=[self.ui.FrontCheckBox, self.ui.BackCheckBox, self.ui.InCheckBox, self.ui.OutCheckBox ])"
+        }
+    },
+    "push_build_Btn": {
+        "tip": "Build the push joints.",
+        "what": "Builds the push joint systems from the push guides.",
+        "examples": [
+            "Click it, bend the knee: the push joints keep the volume.",
+            "Build, then skin the push joints in the bend area."
+        ],
+        "details": "create_push_system() on every push system made by Create guides in this session. Reopening the tool forgets them: load the joint again.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_CorrectivesTab.py",
+            "function": "build_push_correctives",
+            "connect": "lambda:self.build_push_correctives()"
+        }
+    },
+    "geo_line_button": {
+        "tip": "Use the selected geo.",
+        "what": "Puts the selected geometry in the geo field.",
+        "examples": [
+            "Select the body mesh and click <<.",
+            "Load the body before Create."
+        ],
+        "code": {
+            "file": "UI/RigTools/Tabs/load_CorrectivesTab.py",
+            "function": "put_geo_in_line",
+            "connect": "self.put_geo_in_line"
+        }
+    },
+    "create_correctives_button": {
+        "tip": "Create the corrective blendshapes.",
+        "what": "Makes the corrective shapes on the geo for the template picked in the list.",
+        "steps": [
+            "Fill the geo with <<.",
+            "Pick the template.",
+            "Click Create.",
+            "Sculpt each target.",
+            "Connect to Controllers."
+        ],
+        "examples": [
+            "Pick the biped template, click Create, then sculpt each shape.",
+            "Make shoulder correctives for a muscular character."
+        ],
+        "details": "blendshapes_correctives.BSP_Correctives(geo, template).create_correctives(): one blendShape target per pose in the template.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_CorrectivesTab.py",
+            "function": "create_blendshapes",
+            "connect": "self.create_blendshapes"
+        }
+    },
+    "connect_button": {
+        "tip": "Connect the correctives to the controllers.",
+        "what": "Drives each corrective shape from the rig pose that needs it.",
+        "examples": [
+            "Click it, bend the elbow: the corrective turns on by itself.",
+            "Connect so correctives fire with animation."
+        ],
+        "details": "connect_correctives(geo, blendshape_name, template): each target weight is driven by its pose reader on the rig.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_CorrectivesTab.py",
+            "function": "connect_controllers",
+            "connect": "self.connect_controllers"
+        }
+    },
+    "connect_mirror_button": {
+        "tip": "Mirror and connect the correctives.",
+        "what": "Mirrors the correctives to the other side and connects them.",
+        "examples": [
+            "Sculpt the left side only, click it to get the right side.",
+            "Mirror the left knee correctives to the right."
+        ],
+        "details": "connect_correctives(..., mirror=True): mirrors the targets to the other side and connects them.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_CorrectivesTab.py",
+            "function": "mirror_blendshapes",
+            "connect": "self.mirror_blendshapes"
+        }
+    }
+}

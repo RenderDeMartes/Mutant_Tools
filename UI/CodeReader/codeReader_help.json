@@ -1,0 +1,40 @@
+{
+    "down_button": {
+        "tip": "Jump to the end of the code.",
+        "what": "Scrolls the code view to the last line.",
+        "examples": [
+            "Open the build log and click it to see the last lines first.",
+            "Jump to the error at the end of a long build log."
+        ],
+        "code": {
+            "file": "UI/CodeReader/load_codeReader.py",
+            "function": "slider_changed",
+            "connect": "self.slider_changed"
+        }
+    },
+    "close_btn": {
+        "tip": "Close this window.",
+        "what": "Closes the code viewer. Unsaved edits are lost.",
+        "examples": [
+            "Click it after reading the log.",
+            "Close after copying the function you needed."
+        ],
+        "code": {
+            "file": "UI/CodeReader/load_codeReader.py",
+            "connect": "self.close"
+        }
+    },
+    "explorer": {
+        "tip": "Show the file in the Windows explorer.",
+        "what": "Opens the folder that holds this code file, with the file selected.",
+        "examples": [
+            "Click it to copy the log file and send it with a bug report.",
+            "Open the folder to diff two versions of a block file."
+        ],
+        "details": "Windows only: explorer /select on the code file path.",
+        "code": {
+            "file": "UI/CodeReader/load_codeReader.py",
+            "connect": "lambda: subprocess.call('explorer /select, {}'.format(code_path.replace('/', '\\\\'), shell=True))"
+        }
+    }
+}

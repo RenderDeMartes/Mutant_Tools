@@ -1,0 +1,133 @@
+{
+    "ChangeNameBtn": {
+        "tip": "Search and replace in the selected names.",
+        "what": "Replaces the Search text with the Replace text in the selected node names.",
+        "examples": [
+            "Search \"L_\", replace \"R_\" on a copied left side.",
+            "Replace \"Geo\" with \"Proxy\" on duplicated meshes."
+        ],
+        "details": "mel searchReplaceNames <search> <replace> \"selected\", one undo chunk.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_RenameTab.py",
+            "function": "search_replace",
+            "connect": "lambda: self.search_replace(hierarchy=False)"
+        }
+    },
+    "ChangeNameBtn2": {
+        "tip": "Search and replace in the whole hierarchy.",
+        "what": "Same as Name, but also renames every child of the selection.",
+        "examples": [
+            "Select the top group of a duplicated arm and swap L_ for R_ in one go.",
+            "Rename a whole duplicated leg hierarchy to the right side."
+        ],
+        "details": "mel searchReplaceNames <search> <replace> \"hierarchy\" on each selected node.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_RenameTab.py",
+            "function": "search_replace",
+            "connect": "lambda: self.search_replace(hierarchy=True)"
+        }
+    },
+    "prefixBtn": {
+        "tip": "Add the prefix to the selection.",
+        "what": "Adds the prefix text plus \"_\" in front of each selected name.",
+        "examples": [
+            "Type \"Hat\" and click it: \"Ctrl\" becomes \"Hat_Ctrl\".",
+            "Prefix \"Old\" on nodes before a swap."
+        ],
+        "details": "<prefix>_<name> for each selected node; the selection is kept on the renamed nodes.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_RenameTab.py",
+            "function": "add_prefix",
+            "connect": "self.add_prefix"
+        }
+    },
+    "RenameBtn": {
+        "tip": "Rename the selection.",
+        "what": "Gives the selection the new name, numbered when the number check is on.",
+        "steps": [
+            "Select in the order you want the numbers.",
+            "Type the name, turn numbers on.",
+            "Click Rename."
+        ],
+        "examples": [
+            "Select 5 joints, type \"Tail\", check numbers: Tail_01 ... Tail_05.",
+            "Name a new tail chain Tail_01 to Tail_10."
+        ],
+        "details": "Renames to a temp name first so swapping names does not clash, then <name>_<num> (when numbers are on).",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_RenameTab.py",
+            "function": "rename",
+            "connect": "self.rename"
+        }
+    },
+    "sufixBtn": {
+        "tip": "Add the suffix to the selection.",
+        "what": "Adds \"_\" plus the suffix text at the end of each selected name.",
+        "examples": [
+            "Type \"Grp\" and click it: \"Hat\" becomes \"Hat_Grp\".",
+            "Add \"Grp\" to empty groups."
+        ],
+        "details": "<name>_<suffix> for each selected node.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_RenameTab.py",
+            "function": "add_sufix",
+            "connect": "self.add_sufix"
+        }
+    },
+    "right": {
+        "tip": "Add the right side prefix.",
+        "what": "Adds the right side prefix (R) to the selected names.",
+        "examples": [
+            "Select the right arm joints and click it.",
+            "Prefix the right side joints of a mirrored chain."
+        ],
+        "details": "Fills the prefix field with the right side name from the naming config and runs Prefix.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_RenameTab.py",
+            "function": "quick_prefix",
+            "connect": "lambda: self.quick_prefix(text=nc['right'])"
+        }
+    },
+    "left": {
+        "tip": "Add the left side prefix.",
+        "what": "Adds the left side prefix (L) to the selected names.",
+        "examples": [
+            "Select the left arm joints and click it.",
+            "Prefix the left side joints."
+        ],
+        "details": "Fills the prefix field with the left side name from the naming config and runs Prefix.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_RenameTab.py",
+            "function": "quick_prefix",
+            "connect": "lambda: self.quick_prefix(text=nc['left'])"
+        }
+    },
+    "ctrl": {
+        "tip": "Add the controller suffix.",
+        "what": "Adds the controller suffix (_Ctrl) to the selected names so Mutant finds them.",
+        "examples": [
+            "Select the curves you drew and click it.",
+            "Suffix new curves so Mutant treats them as ctrls."
+        ],
+        "details": "Fills the suffix field with the controller name from the naming config and runs Suffix.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_RenameTab.py",
+            "function": "quick_sufix",
+            "connect": "lambda: self.quick_sufix(text=nc['ctrl'])"
+        }
+    },
+    "joint": {
+        "tip": "Add the joint suffix.",
+        "what": "Adds the joint suffix (_Jnt) to the selected names.",
+        "examples": [
+            "Select joints made by hand and click it.",
+            "Suffix new joints."
+        ],
+        "details": "Fills the suffix field with the joint name from the naming config and runs Suffix.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_RenameTab.py",
+            "function": "quick_sufix",
+            "connect": "lambda: self.quick_sufix(text=nc['joint'])"
+        }
+    }
+}

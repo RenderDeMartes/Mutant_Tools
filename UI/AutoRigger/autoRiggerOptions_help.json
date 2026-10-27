@@ -1,0 +1,83 @@
+{
+    "change_name_button": {
+        "tip": "Rename the selected blocks.",
+        "what": "Changes the name of the selected blocks; their guides, joints and controllers use the new name on the next build.",
+        "steps": [
+            "Select the blocks in the AutoRigger.",
+            "Click Change Name.",
+            "Type the new name."
+        ],
+        "examples": [
+            "Rename \"Limb\" to \"L_Arm\" so the arm controllers are easy to find.",
+            "Rename \"Tail\" to \"Tail_Short\" before duplicating it for a second tail."
+        ],
+        "details": "Renames the block, its config and guides (mt.ask_name). Code blocks or postcode that use the old names as strings are not updated.",
+        "code": {
+            "file": "UI/AutoRigger/load_autoRiggerOptions.py",
+            "function": "change_name_cmd",
+            "connect": "self.change_name_cmd"
+        }
+    },
+    "duplicate_button": {
+        "tip": "Duplicate the selected blocks.",
+        "what": "Makes a copy of the selected blocks with their guides and options.",
+        "examples": [
+            "Duplicate a tail block to make a second tail with the same settings.",
+            "Duplicate the L ear block and move its guides for a third ear."
+        ],
+        "details": "Copies the block and its guides under a new name; config values come along.",
+        "code": {
+            "file": "UI/AutoRigger/load_autoRiggerOptions.py",
+            "function": "duplicate_cmd",
+            "connect": "self.duplicate_cmd"
+        }
+    },
+    "delete_button": {
+        "tip": "Delete the selected blocks.",
+        "what": "Removes the selected blocks and their guides from Mutant_Build.",
+        "examples": [
+            "Delete a block you added by mistake.",
+            "Remove a test block before publishing the template."
+        ],
+        "details": "cmds.delete on the block nodes and removes their row in the AutoRigger. Undo works.",
+        "code": {
+            "file": "UI/AutoRigger/load_autoRiggerOptions.py",
+            "function": "delete_cmd",
+            "connect": "self.delete_cmd"
+        }
+    },
+    "delete_build_button": {
+        "tip": "Delete what the selected blocks built.",
+        "what": "Removes the joints and controllers made by the selected blocks, but keeps the blocks and guides.",
+        "examples": [
+            "Clear one block's rig, move its guides, and build it again.",
+            "Clear only the face build to try new eyelid options."
+        ],
+        "details": "Deletes the nodes listed in the block notes attr (what it created on the last build). Blocks built before notes existed may leave nodes behind.",
+        "code": {
+            "file": "UI/AutoRigger/load_autoRiggerOptions.py",
+            "function": "delete_build_cmd",
+            "connect": "self.delete_build_cmd"
+        }
+    },
+    "update_button": {
+        "tip": "Update the selected blocks to another version.",
+        "what": "Moves the selected blocks to the latest (or chosen) block version and keeps your option values. Removed options go to a backup.",
+        "steps": [
+            "Select blocks.",
+            "Click Update.",
+            "Pick tab / type / version (latest by default) and read the changes.",
+            "Rebuild."
+        ],
+        "examples": [
+            "Update an old Limb block to v002 to get the faster limb, then rebuild.",
+            "Move a whole old rig to the new block versions, then rebuild."
+        ],
+        "details": "config_update.update_config() repoints Import_Command / Build_Command to the chosen json and rebuilds the config attrs keeping your values (same name, or same name ignoring case and underscores). Values that do not fit go to the locked MutantBackup attr and come back if you go back to a version that has them.",
+        "code": {
+            "file": "UI/AutoRigger/load_autoRiggerOptions.py",
+            "function": "update_cmd",
+            "connect": "self.update_cmd"
+        }
+    }
+}

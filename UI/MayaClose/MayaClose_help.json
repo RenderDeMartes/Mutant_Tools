@@ -1,0 +1,15 @@
+{
+    "red_button": {
+        "tip": "Force quit Maya without saving.",
+        "what": "Asks to confirm, shows a joke \"Deleting everything\" bar (nothing is deleted), opens a video in your browser and force quits Maya. Unsaved work is lost.",
+        "examples": [
+            "Only when you really want Maya gone and you already saved.",
+            "Show it to a colleague who never saves."
+        ],
+        "code": {
+            "file": "UI/MayaClose/load_maya_close.py",
+            "function": "close_cmd",
+            "connect": "self.close_cmd"
+        }
+    }
+}

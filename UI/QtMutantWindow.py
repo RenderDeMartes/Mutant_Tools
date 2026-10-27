@@ -61,6 +61,7 @@ except:
     import imp;from imp import reload
 
 from Mutant_Tools.UI.AutoRigger import load_autoRiggerMenu
+from Mutant_Tools.UI.CustomWidgets import button_help
 
 #--------------------------------------------------------------------------------
 PATH = os.path.dirname(__file__)
@@ -78,6 +79,7 @@ except Exception:
 
 if _dev_mode:
     reload(load_autoRiggerMenu)
+    reload(button_help)
 
 PATH = os.path.join(FOLDER, 'UI')
 ICONS_FOLDER = os.path.join(FOLDER,'Icons')
@@ -662,6 +664,8 @@ class Qt_Mutant(QtWidgets.QMainWindow):
 
         f.close()
 
+        button_help.install_later(self.master_ui, ui_file)
+
     def designer_loader_child(self, path, ui_file):
         """
         Load child UI elements and add them to the main UI.
@@ -681,6 +685,8 @@ class Qt_Mutant(QtWidgets.QMainWindow):
         self.master_ui.mutant_Layout.addWidget(self.ui)
 
         f.close()
+
+        button_help.install_later(self.ui, ui_file)
 
     # ------------------------------------------------
 

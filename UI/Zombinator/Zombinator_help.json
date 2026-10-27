@@ -1,0 +1,466 @@
+{
+    "export_geo_for_wrap": {
+        "tip": "Export the selected body to wrap.",
+        "what": "Exports the selected geo as an obj so the base mesh can be wrapped onto it in Wrap 3D.",
+        "steps": [
+            "Select the character body.",
+            "Click it.",
+            "Wrap the base mesh onto it in Wrap 3D.",
+            "Save the alembic in the data folder."
+        ],
+        "examples": [
+            "Select the character body and click it.",
+            "Export a new outfit body to wrap."
+        ],
+        "details": "Writes <SID>_ForWrapGeo (or Model_ForWrapGeo) .obj, versioned, into <workspace>/data (modeling path swapped for rigging).",
+        "code": {
+            "file": "UI/Zombinator/load_zombinator.py",
+            "function": "export_geo_for_wrap",
+            "connect": "self.export_geo_for_wrap"
+        }
+    },
+    "export_geo_for_wrap_face": {
+        "tip": "Export the selected head to wrap.",
+        "what": "Exports the selected head geo as an obj for wrapping the face.",
+        "examples": [
+            "Select the head and click it.",
+            "Export a creature head."
+        ],
+        "code": {
+            "file": "UI/Zombinator/load_zombinator.py",
+            "function": "export_geo_for_wrap_face",
+            "connect": "self.export_geo_for_wrap_face"
+        }
+    },
+    "open_wrap_3d": {
+        "tip": "Open R3DS Wrap.",
+        "what": "Starts Wrap 3D to fit the base mesh to your character.",
+        "examples": [
+            "Click it after exporting.",
+            "Open Wrap to fit the base mesh to a sculpt."
+        ],
+        "details": "Runs r3ds_wrap (or \"sclenv r3ds_wrap\" on studio Linux).",
+        "code": {
+            "file": "UI/Zombinator/load_zombinator.py",
+            "function": "open_wrap_3d",
+            "connect": "self.open_wrap_3d"
+        }
+    },
+    "open_folder_with_wrapped_geos": {
+        "tip": "Open the wrapped geo folder.",
+        "what": "Opens the folder where the exported and wrapped geos are saved.",
+        "examples": [
+            "Check Wrap saved the alembic there.",
+            "Check the abc from Wrap was saved."
+        ],
+        "details": "<workspace>/data with \"modeling\" replaced by \"rigging\".",
+        "code": {
+            "file": "UI/Zombinator/load_zombinator.py",
+            "function": "open_folder_with_wrapped_geos",
+            "connect": "self.open_folder_with_wrapped_geos"
+        }
+    },
+    "import_wrapped_geo": {
+        "tip": "Import the latest wrapped geo.",
+        "what": "Imports the newest wrapped alembic from the project data folder.",
+        "examples": [
+            "Click it after Wrap finished.",
+            "Import the newest wrap after fixing it in Wrap."
+        ],
+        "details": "Imports the newest .abc (by date) in <workspace>/data. transf0 is the base mesh wrapped onto your character (what Wrap exports); the tools use it when it exists, else the base mesh.",
+        "code": {
+            "file": "UI/Zombinator/load_zombinator.py",
+            "function": "import_wrapped_geo",
+            "connect": "self.import_wrapped_geo"
+        }
+    },
+    "auto_zombify": {
+        "tip": "Run every body step at once.",
+        "what": "Imports the biped guide, places it on the wrapped geo, builds the rig, loads the skin and the ROM.",
+        "steps": [
+            "Import the wrapped geo.",
+            "Pick T or A pose and the skin version.",
+            "Click Run Body Zombinator.",
+            "Check the ROM that loads."
+        ],
+        "examples": [
+            "Import the wrapped geo, click it and wait: you get a rigged, skinned body.",
+            "Rig a scanned or sculpted character in minutes.",
+            "Run it on every new zombie variant."
+        ],
+        "details": "run_zombify(): import_biped_guide, auto_place_guides, build_rig, load_skinning, load_rom in a row. If one step fails, run the next ones with their own buttons.",
+        "code": {
+            "file": "UI/Zombinator/load_zombinator.py",
+            "function": "run_zombify",
+            "connect": "self.run_zombify"
+        }
+    },
+    "import_biped_guide": {
+        "tip": "Import the biped guide.",
+        "what": "Creates the human body template blocks.",
+        "examples": [
+            "Step 1 when running the body steps by hand.",
+            "Import the guide to place it by hand instead."
+        ],
+        "details": "exec_humanBodyTemplate.create_humanBodyTemplate_block(); opens the AutoRigger to import it if the block module is not found.",
+        "code": {
+            "file": "UI/Zombinator/load_zombinator.py",
+            "function": "import_biped_guide",
+            "connect": "self.import_biped_guide"
+        }
+    },
+    "auto_place_guides": {
+        "tip": "Place the guides on the wrapped geo.",
+        "what": "Moves the guides to the wrapped base mesh, in T or A pose (pick it above).",
+        "examples": [
+            "Step 2: click it and check the knees and elbows.",
+            "Use A pose for characters modeled with arms down."
+        ],
+        "details": "wrap_utils.place_mutant_on_wrap_geo(): the guides follow stored vertices of the base mesh topology, then the T / A pose fixes run. transf0 is the base mesh wrapped onto your character (what Wrap exports); the tools use it when it exists, else the base mesh.",
+        "code": {
+            "file": "UI/Zombinator/load_zombinator.py",
+            "function": "auto_place_guides",
+            "connect": "self.auto_place_guides"
+        }
+    },
+    "build_rig": {
+        "tip": "Build the rig.",
+        "what": "Builds the AutoRigger blocks with only the progress bar showing.",
+        "examples": [
+            "Step 3: click it once the guides look right.",
+            "Rebuild after fixing guides."
+        ],
+        "details": "AutoRigger().build_autorigger(only_progressbar=True).",
+        "code": {
+            "file": "UI/Zombinator/load_zombinator.py",
+            "function": "build_rig",
+            "connect": "self.build_rig"
+        }
+    },
+    "load_skinning": {
+        "tip": "Load the base skinning.",
+        "what": "Loads the base mesh skin version picked in the list on the wrapped geo.",
+        "examples": [
+            "Step 4: click it after building.",
+            "Load another skin version and compare."
+        ],
+        "details": "Loads Utils/Wrap/BaseMesh/<basemesh>/Skins/<version>/<basemesh>.json on transf0 (or the base mesh).",
+        "code": {
+            "file": "UI/Zombinator/load_zombinator.py",
+            "function": "load_skinning",
+            "connect": "self.load_skinning"
+        }
+    },
+    "copy_skinning_to_sel": {
+        "tip": "Copy the skin to the selected geos.",
+        "what": "Copies the skin weights from the wrapped base mesh to each selected geo.",
+        "examples": [
+            "Select clothes and props and click it so they deform with the body.",
+            "Copy skin to torn clothes."
+        ],
+        "details": "copySkinWeights from transf0 to each selected geo; geos without skin get bound to *_Bnd first.",
+        "code": {
+            "file": "UI/Zombinator/load_zombinator.py",
+            "function": "copy_skinning_to_sel",
+            "connect": "self.copy_skinning_to_sel"
+        }
+    },
+    "open_helpers": {
+        "tip": "Open Helpers.",
+        "what": "Opens the Helpers tool.",
+        "examples": [
+            "Open it to fix a few weights after copying skins.",
+            "Fix guide orients in Helpers."
+        ],
+        "details": "Opens Helpers (load_helpers.HelperUI).",
+        "code": {
+            "file": "UI/Zombinator/load_zombinator.py",
+            "function": "open_helpers",
+            "connect": "self.open_helpers"
+        }
+    },
+    "load_roms": {
+        "tip": "Open the ROM loader.",
+        "what": "Opens the AnimLoader to put a range of motion on the rig.",
+        "examples": [
+            "Load a ROM and check the deformation.",
+            "Load a ROM to check deformation."
+        ],
+        "details": "Opens AnimLoader (load_anim_loader.AnimLoaderUI).",
+        "code": {
+            "file": "UI/Zombinator/load_zombinator.py",
+            "function": "load_rom",
+            "connect": "self.load_rom"
+        }
+    },
+    "reset_arms": {
+        "tip": "Reset the arm guides.",
+        "what": "Puts the arm guides back in a straight line with the right lengths.",
+        "examples": [
+            "Click it when the arm guides came out bent.",
+            "Reset when the elbow guide bent backwards."
+        ],
+        "details": "Re-places the arm guides in a straight line keeping the measured bone lengths.",
+        "code": {
+            "file": "UI/Zombinator/load_zombinator.py",
+            "function": "reset_arms",
+            "connect": "self.reset_arms"
+        }
+    },
+    "reset_legs": {
+        "tip": "Reset the leg guides.",
+        "what": "Puts the leg guides back in a straight line with the right lengths.",
+        "examples": [
+            "Click it when the leg guides came out bent.",
+            "Reset when the knee guide went behind the leg."
+        ],
+        "details": "Re-places the leg guides in a straight line keeping the measured bone lengths.",
+        "code": {
+            "file": "UI/Zombinator/load_zombinator.py",
+            "function": "reset_legs",
+            "connect": "self.reset_legs"
+        }
+    },
+    "unparent_guides": {
+        "tip": "Unparent the guides.",
+        "what": "Takes the guides out of their hierarchy so you can move each one alone.",
+        "examples": [
+            "Unparent, move a single guide, then Parent Guides.",
+            "Unparent to move only the elbow guide."
+        ],
+        "details": "Stores the block order and hierarchy, then unparents every guide under the *_Block nodes (PhonemesUI_Block is skipped).",
+        "code": {
+            "file": "UI/Zombinator/load_zombinator.py",
+            "function": "unparent_guides",
+            "connect": "self.unparent_guides"
+        }
+    },
+    "parent_guides": {
+        "tip": "Parent the guides back.",
+        "what": "Puts the guides back in their hierarchy and block order.",
+        "examples": [
+            "Click it after Unparent Guides and your fixes.",
+            "Parent back before building."
+        ],
+        "details": "Skeletor.parent_hierarchy(stored hierarchy) + wrap_utils.reorder_block_guides(stored order). Use it after Unparent in the same session.",
+        "code": {
+            "file": "UI/Zombinator/load_zombinator.py",
+            "function": "parent_guides",
+            "connect": "self.parent_guides"
+        }
+    },
+    "import_face_guide": {
+        "tip": "Import the face guide.",
+        "what": "Creates the human face template blocks.",
+        "examples": [
+            "Step 1 for the face.",
+            "Import the face guide for a zombie face."
+        ],
+        "details": "exec_humanFaceTemplate.create_humanFaceTemplate_block().",
+        "code": {
+            "file": "UI/Zombinator/load_zombinator.py",
+            "function": "import_face_guide",
+            "connect": "self.import_face_guide"
+        }
+    },
+    "load_eyeball_geo": {
+        "tip": "Use the selected object as the eyeball geo.",
+        "what": "Select the eyeball geo in the scene and click <<: its name goes in the field next to the button.",
+        "examples": [
+            "Select the left eyeball and click <<.",
+            "Select several objects to fill the load eyeball geo field with all of them."
+        ],
+        "details": "put_selection_on_field(): the selection names, comma separated.",
+        "code": {
+            "file": "UI/Zombinator/load_zombinator.py",
+            "function": "put_selection_on_field",
+            "connect": "lambda: self.put_selection_on_field(field=self.ui.eyeball_line)"
+        }
+    },
+    "load_face_geo": {
+        "tip": "Use the selected object as the face geo.",
+        "what": "Select the face geo in the scene and click <<: its name goes in the field next to the button.",
+        "examples": [
+            "Select the head mesh and click <<.",
+            "Select several objects to fill the load face geo field with all of them."
+        ],
+        "details": "put_selection_on_field(): the selection names, comma separated.",
+        "code": {
+            "file": "UI/Zombinator/load_zombinator.py",
+            "function": "put_selection_on_field",
+            "connect": "lambda: self.put_selection_on_field(field=self.ui.face_geo_line)"
+        }
+    },
+    "auto_place_guides_face": {
+        "tip": "Place the face guides.",
+        "what": "Moves the face guides to the wrapped geo and fixes the eye and face orientations.",
+        "examples": [
+            "Fill the eyeball and face fields, click it.",
+            "Place face guides on a wrapped head."
+        ],
+        "details": "place_mutant_on_wrap_geo() then fix_all_face_orientations(eyeball, face_geo). transf0 is the base mesh wrapped onto your character (what Wrap exports); the tools use it when it exists, else the base mesh.",
+        "code": {
+            "file": "UI/Zombinator/load_zombinator.py",
+            "function": "auto_place_guides_face",
+            "connect": "self.auto_place_guides_face"
+        }
+    },
+    "build_rig_face": {
+        "tip": "Build the face rig.",
+        "what": "Builds the face blocks with only the progress bar showing.",
+        "examples": [
+            "Click it after placing the face guides.",
+            "Build the face after the body."
+        ],
+        "details": "AutoRigger.show_bar_only() + build_autorigger(only_progressbar=True).",
+        "code": {
+            "file": "UI/Zombinator/load_zombinator.py",
+            "function": "build_rig_face",
+            "connect": "self.build_rig_face"
+        }
+    },
+    "load_skinning_face": {
+        "tip": "Load the base face skinning.",
+        "what": "Loads the face skin version picked in the list.",
+        "examples": [
+            "Click it after building the face.",
+            "Load the face skin version that matches the body."
+        ],
+        "details": "Loads Utils/Wrap/BaseMesh/<basemesh>/Skins/<version>/BodyEyes.json and the other face head skins.",
+        "code": {
+            "file": "UI/Zombinator/load_zombinator.py",
+            "function": "load_skinning_face",
+            "connect": "self.load_skinning_face"
+        }
+    },
+    "create_real_head_based_on_sel": {
+        "tip": "Use the selected object as the real head.",
+        "what": "Select the real head in the scene and click <<: its name goes in the field next to the button.",
+        "examples": [
+            "Select your character head and click <<.",
+            "Select several objects to fill the create real head based on sel field with all of them."
+        ],
+        "details": "put_selection_on_field(): the selection names, comma separated.",
+        "code": {
+            "file": "UI/Zombinator/load_zombinator.py",
+            "function": "put_selection_on_field",
+            "connect": "lambda: self.put_selection_on_field(field=self.ui.real_face_line)"
+        }
+    },
+    "create_face_geos": {
+        "tip": "Create the face rig geos.",
+        "what": "Makes the face rig heads (skull, eyes, lips, brows...) from the real head in the field.",
+        "examples": [
+            "Fill the real head field and click it.",
+            "Make the face heads for a new character."
+        ],
+        "details": "Makes the face rig heads (BodySkull, BodyEyes, BodyLips, BodyBrows, BodyCheeks, BodyJaw, BodyNose, BodyMouthUp / Down / Wide / Narrow, BodySquash) from the real head.",
+        "code": {
+            "file": "UI/Zombinator/load_zombinator.py",
+            "function": "create_face_geos",
+            "connect": "self.create_face_geos"
+        }
+    },
+    "copy_skinning_to_sel_face": {
+        "tip": "Copy the skin to the face geos.",
+        "what": "Copies the face skinning to every face rig geo.",
+        "examples": [
+            "Click it after Create Face Geos.",
+            "Copy face skin after Create Face Geos."
+        ],
+        "details": "For each face head: binds it to its joint set, then copies weights from Wrap_<geo>.",
+        "code": {
+            "file": "UI/Zombinator/load_zombinator.py",
+            "function": "copy_skinning_to_sel_face",
+            "connect": "self.copy_skinning_to_sel_face"
+        }
+    },
+    "add_to_extra_geos_line": {
+        "tip": "Use the selected object as the extra geos.",
+        "what": "Select the extra geos in the scene and click <<: its name goes in the field next to the button.",
+        "examples": [
+            "Select the eyebrows and eyelashes and click <<.",
+            "Select several objects to fill the add to extra geos line field with all of them."
+        ],
+        "details": "put_selection_on_field(): the selection names, comma separated.",
+        "code": {
+            "file": "UI/Zombinator/load_zombinator.py",
+            "function": "put_selection_on_field",
+            "connect": "lambda: self.put_selection_on_field(field=self.ui.extra_geos_line)"
+        }
+    },
+    "add_extra_geos": {
+        "tip": "Add the extra geos to the face.",
+        "what": "Makes the local system for the selected extra geos so they follow the face.",
+        "examples": [
+            "Select eyelashes and eyebrows and click it.",
+            "Add teeth and tongue geos."
+        ],
+        "details": "Rebuilds Local_Extra / Skull_Local_Extra groups: extra geos get local copies that follow the face rig.",
+        "code": {
+            "file": "UI/Zombinator/load_zombinator.py",
+            "function": "add_extra_geos",
+            "connect": "self.add_extra_geos"
+        }
+    },
+    "open_helpers_face": {
+        "tip": "Open Helpers.",
+        "what": "Opens the Helpers tool.",
+        "examples": [
+            "Open it to fix the face weights.",
+            "Fix face weights in Helpers."
+        ],
+        "details": "Opens Helpers (load_helpers.HelperUI).",
+        "code": {
+            "file": "UI/Zombinator/load_zombinator.py",
+            "function": "open_helpers_face",
+            "connect": "self.open_helpers_face"
+        }
+    },
+    "load_guides": {
+        "tip": "Use the selected joints.",
+        "what": "Puts the selected joints in the field, comma separated.",
+        "examples": [
+            "Select the joints to keep when updating the geo and click it.",
+            "Keep only the spine joints while updating the geo."
+        ],
+        "code": {
+            "file": "UI/Zombinator/load_zombinator.py",
+            "function": "load_guides",
+            "connect": "self.load_guides"
+        }
+    },
+    "update_geo": {
+        "tip": "Swap the old geo for the new one.",
+        "what": "Select the old geo, then the new geo. Moves the rig and skin from the old geo to the new one.",
+        "steps": [
+            "Select the joints to keep with << Joints (or leave it empty for the guides).",
+            "Select the old geo, then the new geo.",
+            "Click it."
+        ],
+        "examples": [
+            "The model changed: select old, then new, and click it.",
+            "Swap a WIP model for the final one keeping the rig."
+        ],
+        "details": "Saves the skeleton / skin to %TEMP%/ZombinatorTemp, then moves them from the old geo to the new one (Skeletor).",
+        "code": {
+            "file": "UI/Zombinator/load_zombinator.py",
+            "function": "update_geo",
+            "connect": "self.update_geo"
+        }
+    },
+    "f_help": {
+        "tip": "Online help.",
+        "what": "Points you to www.mutanttools.com for the Zombinator guide.",
+        "examples": [
+            "Click it when you are stuck.",
+            "Read the online guide for Wrap tips."
+        ],
+        "details": "Only prints www.mutanttools.com in the script editor.",
+        "code": {
+            "file": "UI/Zombinator/load_zombinator.py",
+            "function": "open_online_help",
+            "connect": "self.open_online_help"
+        }
+    }
+}

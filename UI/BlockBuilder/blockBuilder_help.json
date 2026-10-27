@@ -1,0 +1,16 @@
+{
+    "create_button": {
+        "tip": "Create the new block.",
+        "what": "Creates a new block with the name and options filled in above.",
+        "examples": [
+            "Fill in the name \"Antenna\", choose a type, click Create.",
+            "Make a studio block for a code snippet you run on every rig."
+        ],
+        "details": "create_config() writes the new block config; with \"close after\" on, the window closes.",
+        "code": {
+            "file": "UI/BlockBuilder/load_blockBuilder.py",
+            "function": "create_block",
+            "connect": "self.create_block"
+        }
+    }
+}

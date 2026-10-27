@@ -70,6 +70,7 @@ except:pass
 
 import Mutant_Tools
 from Mutant_Tools.UI.WebsiteViewer import load_website_viewer
+from Mutant_Tools.UI.CustomWidgets import button_help
 reload(load_website_viewer)
 viewer = load_website_viewer.WebsiteViewerUI()
 
@@ -175,6 +176,8 @@ class RenameTab(QtWidgets.QDialog):
 		self.ui = loader.load(f, parentWidget=self)
 
 		f.close()
+
+		button_help.install_later(self.ui, UIPath)
 
 	# -------------------------------------------------------------------
 

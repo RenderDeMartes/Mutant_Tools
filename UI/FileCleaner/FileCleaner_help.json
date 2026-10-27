@@ -1,0 +1,49 @@
+{
+    "plugin_manager_button": {
+        "tip": "Open the Maya Plug-in Manager.",
+        "what": "Opens Maya's Plug-in Manager to see or unload plugins the scene needs.",
+        "examples": [
+            "Unload mtoa before cleaning a scene that should not need Arnold.",
+            "Turn off \"Auto load\" on a plugin the rig should not need."
+        ],
+        "code": {
+            "file": "UI/FileCleaner/load_file_cleaner.py",
+            "function": "open_plugin_manager",
+            "connect": "self.open_plugin_manager"
+        }
+    },
+    "clean_arnold": {
+        "tip": "Save a copy without Arnold, then QUIT Maya.",
+        "what": "Saves the scene to a temp file, writes a clean copy without the mtoa (Arnold) lines, then closes Maya. Open Maya again and click Open Clean Scene.",
+        "steps": [
+            "Save your scene.",
+            "Click Clean Scene (Maya quits).",
+            "Open Maya and click Open Clean Scene.",
+            "Save it where you want."
+        ],
+        "examples": [
+            "Click it when the scene asks for Arnold on machines that do not have it. Save your work first: Maya quits.",
+            "Clean a rig file before sending it to a client without Arnold."
+        ],
+        "details": "Saves %TEMP%/Arnold_Clean/dirty_scene.ma, writes clean_scene.ma without the lines that mention mtoa, then cmds.quit(force=True).",
+        "code": {
+            "file": "UI/FileCleaner/load_file_cleaner.py",
+            "function": "clean_arnold",
+            "connect": "self.clean_arnold"
+        }
+    },
+    "import_arnold_button": {
+        "tip": "Open the cleaned scene.",
+        "what": "Opens the clean copy made by Clean Scene, deletes unknown nodes and saves it.",
+        "examples": [
+            "Run Clean Scene first, then click it and save the file where you need it.",
+            "Open the clean scene and Save As over your rig file."
+        ],
+        "details": "Opens %TEMP%/Arnold_Clean/clean_scene.ma, deletes unknown nodes and saves it in place (mayaAscii).",
+        "code": {
+            "file": "UI/FileCleaner/load_file_cleaner.py",
+            "function": "import_cleaned_arnold_scene",
+            "connect": "self.import_cleaned_arnold_scene"
+        }
+    }
+}

@@ -1,0 +1,16 @@
+{
+    "reload_button": {
+        "tip": "Reload the lists.",
+        "what": "Reads the scene again and refreshes the lists.",
+        "examples": [
+            "Click it after selecting another mesh.",
+            "Reload after adding joints to the skin."
+        ],
+        "details": "populate_combos() + populate_layout().",
+        "code": {
+            "file": "UI/StrictSkinning/load_strictSkinning.py",
+            "function": "reload",
+            "connect": "self.reload"
+        }
+    }
+}

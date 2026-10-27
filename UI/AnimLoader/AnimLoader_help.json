@@ -1,0 +1,294 @@
+{
+    "select_ctrls": {
+        "tip": "Select every animation controller of the rig.",
+        "what": "Finds the rig node (SID) in the scene and selects all its animation controllers, ready to key, copy or clear.",
+        "steps": [
+            "Open the rig scene.",
+            "Click Select Ctrls From Node.",
+            "Key, copy or clear what is selected."
+        ],
+        "examples": [
+            "Click it, then press S to key the whole rig on the current frame.",
+            "Click it before Copy Anim to copy the animation of the whole character.",
+            "Select everything, then Clear Keys to reset only what the SID knows about.",
+            "Select them, then Save Anim to Desktop to keep a pose library."
+        ],
+        "details": "Calls animation_utils.select_ctrls_from_sid(): reads the controllers listed on the rig SID node, so ctrls not tagged on the SID are not picked. If nothing gets selected, check the SID exists (AssetsRigger > Create Rig Sid).",
+        "code": {
+            "file": "UI/AnimLoader/load_anim_loader.py",
+            "connect": "lambda: animation_utils.select_ctrls_from_sid()"
+        }
+    },
+    "load_anim": {
+        "tip": "Load the animation picked in the list onto the rig.",
+        "what": "Loads the Studio Library animation chosen in the paths list onto the rig controllers.",
+        "steps": [
+            "Pick an animation in the paths list.",
+            "Click Load Anim.",
+            "Play the timeline."
+        ],
+        "examples": [
+            "Pick a walk cycle in the list, click Load Anim to see the rig walk.",
+            "Use it to test a new rig with a known animation before sending it.",
+            "Load the same ROM on every new version of a rig to compare deformation.",
+            "Load a walk on two rig versions side by side to spot skin changes."
+        ],
+        "details": "studio_library_utils.load_rom(path) loads a Studio Library .anim onto the scene objects by name. Ctrls missing in the rig are skipped silently, so renamed ctrls simply get no keys.",
+        "code": {
+            "file": "UI/AnimLoader/load_anim_loader.py",
+            "function": "load_animation",
+            "connect": "self.load_animation"
+        }
+    },
+    "prev_key": {
+        "tip": "Go to the previous key and frame the selection.",
+        "what": "Jumps the time slider to the previous key of the selected objects and frames them in the viewport.",
+        "examples": [
+            "Select a hand ctrl, click << to step back through its keys.",
+            "Use it with the Rotate 90 test to walk a joint through its keys.",
+            "Step back to the frame where a joint popped to find the bad key."
+        ],
+        "details": "mel: PreviousKey; FrameSelectedWithoutChildren;",
+        "code": {
+            "file": "UI/AnimLoader/load_anim_loader.py",
+            "connect": "lambda: mel.eval('PreviousKey;FrameSelectedWithoutChildren;')"
+        }
+    },
+    "next_key": {
+        "tip": "Go to the next key and frame the selection.",
+        "what": "Jumps the time slider to the next key of the selected objects and frames them in the viewport.",
+        "examples": [
+            "Select a hand ctrl, click >> to step forward through its keys.",
+            "Check every pose of a ROM one by one on the selected ctrl.",
+            "Walk the ROM key by key while painting weights."
+        ],
+        "details": "mel: NextKey; FrameSelectedWithoutChildren;",
+        "code": {
+            "file": "UI/AnimLoader/load_anim_loader.py",
+            "connect": "lambda: mel.eval('NextKey;FrameSelectedWithoutChildren;')"
+        }
+    },
+    "next_key_2": {
+        "tip": "Go to the next key.",
+        "what": "Jumps the time slider to the next key of the selected objects, the camera does not move.",
+        "examples": [
+            "Step through a ROM pose by pose without the view jumping around.",
+            "Step keys while you keep the camera framed on the face."
+        ],
+        "details": "mel: NextKey; (no framing).",
+        "code": {
+            "file": "UI/AnimLoader/load_anim_loader.py",
+            "connect": "lambda: mel.eval('NextKey;')"
+        }
+    },
+    "GlobalTester": {
+        "tip": "Key test moves on the Global controller.",
+        "what": "Adds a quick animation to the Global ctrl (move, rotate, scale) to check that the whole rig follows.",
+        "steps": [
+            "Click it.",
+            "Play the timeline.",
+            "Look for anything left behind: geo, ctrls, constraints."
+        ],
+        "examples": [
+            "Click it, play the timeline: everything should move and scale together, skin included.",
+            "Find a mesh that is not under the rig scale: it stays put while the rest scales.",
+            "Check a prop rig scales with its Global ctrl before publishing."
+        ],
+        "details": "animation_utils.global_ctrl_movements() keys translate / rotate / scale on the Global ctrl. Anything not inheriting from it (world space constraints, unparented geo, deltaMush without the rig scale connected) shows up as left behind.",
+        "code": {
+            "file": "UI/AnimLoader/load_anim_loader.py",
+            "connect": "lambda: animation_utils.global_ctrl_movements()"
+        }
+    },
+    "Rotate90": {
+        "tip": "Key a 90 degree rotation test on the selection.",
+        "what": "Keys the selected controllers rotating 90 degrees, a fast way to check deformation.",
+        "steps": [
+            "Select one or more ctrls.",
+            "Click it.",
+            "Play and watch the deformation."
+        ],
+        "examples": [
+            "Select the elbow FK ctrl, click it, play to see how the arm bends.",
+            "Select all finger FK ctrls and test the knuckles in one go.",
+            "Test the spine twist: select the chest ctrl and click it."
+        ],
+        "details": "animation_utils.create_rotate_nighty() keys the selection rotating 90 degrees. Clear Keys afterwards.",
+        "code": {
+            "file": "UI/AnimLoader/load_anim_loader.py",
+            "connect": "lambda: animation_utils.create_rotate_nighty()"
+        }
+    },
+    "copy_anim": {
+        "tip": "Copy the animation of the selected controllers.",
+        "what": "Saves the animation of the selection to a temporary file so you can paste it on another rig or scene.",
+        "steps": [
+            "Select the ctrls.",
+            "Click Copy Anim.",
+            "Select the same ctrls on the other rig and Paste Anim."
+        ],
+        "examples": [
+            "Select the ctrls of rig A, Copy Anim, open rig B, select the same ctrls, Paste Anim.",
+            "Copy a test animation before a rebuild, paste it after to compare."
+        ],
+        "details": "Saves a baked Studio Library .anim of the selection to the tool temp folder (AnimLoaderCopy.anim, replaced every time). Paste matches by node name.",
+        "code": {
+            "file": "UI/AnimLoader/load_anim_loader.py",
+            "function": "copy_animation",
+            "connect": "self.copy_animation"
+        }
+    },
+    "paste_anim": {
+        "tip": "Paste the copied animation on the selection.",
+        "what": "Loads the animation saved with Copy Anim onto the selected controllers (matched by name).",
+        "examples": [
+            "After a rebuild, paste back the test animation you copied before.",
+            "Paste the same animation onto a copy of the rig.",
+            "Paste a facial test on the new face install."
+        ],
+        "details": "Loads AnimLoaderCopy.anim from the temp folder onto the selection by name. Nothing copied yet means nothing to paste.",
+        "code": {
+            "file": "UI/AnimLoader/load_anim_loader.py",
+            "function": "paste_animation",
+            "connect": "self.paste_animation"
+        }
+    },
+    "save_anim_to_desktop": {
+        "tip": "Save the selection animation to the desktop.",
+        "what": "Asks for a name and saves the animation of the selected controllers to your desktop.",
+        "steps": [
+            "Select the ctrls.",
+            "Click it and type a name.",
+            "Find it in Desktop/AnimLoader."
+        ],
+        "examples": [
+            "Save \"walk_test\" to share it with a teammate or keep it between sessions.",
+            "Save a stress pose the animators reported, to test fixes against it."
+        ],
+        "details": "Saves a baked .anim to ~/Desktop/AnimLoader/<name>.anim with studio_library_utils.save_rom.",
+        "code": {
+            "file": "UI/AnimLoader/load_anim_loader.py",
+            "function": "save_anim_to_desktop",
+            "connect": "self.save_anim_to_desktop"
+        }
+    },
+    "load_anim_from_desktop": {
+        "tip": "Load an animation saved on the desktop.",
+        "what": "Asks for the name you used in Save Anim to Desktop and loads it on the selection.",
+        "steps": [
+            "Select the ctrls.",
+            "Click it and type the saved name."
+        ],
+        "examples": [
+            "Type \"walk_test\" to load the walk you saved earlier.",
+            "Load the reported stress pose after each skin fix."
+        ],
+        "details": "Loads ~/Desktop/AnimLoader/<name>.anim onto the selection.",
+        "code": {
+            "file": "UI/AnimLoader/load_anim_loader.py",
+            "function": "load_from_dekstop",
+            "connect": "self.load_from_dekstop"
+        }
+    },
+    "clear": {
+        "tip": "Delete all keys and reset the rig.",
+        "what": "Removes the keys of the rig controllers and sets them back to their default pose.",
+        "examples": [
+            "Click it after testing to give the rig back clean, with no animation.",
+            "Clean a rig after a test session before saving it."
+        ],
+        "details": "studio_library_utils.delete_keys(), then resets some extra attrs by name (legacy master_2_sub_ctrl / legIK autoStrech and the Hip switch bend attrs). Missing attrs only print a warning.",
+        "code": {
+            "file": "UI/AnimLoader/load_anim_loader.py",
+            "function": "clear",
+            "connect": "self.clear"
+        }
+    },
+    "load_mocap": {
+        "tip": "Load the chosen Mixamo mocap on the rig.",
+        "what": "Retargets the Mixamo animation picked in the list onto the Mutant rig.",
+        "steps": [
+            "Pick a Mixamo clip in the list.",
+            "Click Load Mocap.",
+            "Play, then Restore Mutant Rig."
+        ],
+        "examples": [
+            "Pick \"Running\", click Load Mocap to see the rig run.",
+            "Use Restore Mutant Rig afterwards to go back to the normal rig.",
+            "Check shoulders and knees on fast motion like a jump.",
+            "Show a client the rig moving with a mocap run cycle."
+        ],
+        "details": "retarget.Retarget().load_mixamo_animation() builds a temporary retarget setup from the Mixamo skeleton to the Mutant ctrls. Restore Mutant Rig removes it.",
+        "code": {
+            "file": "UI/AnimLoader/load_anim_loader.py",
+            "function": "load_mixamo_mocap",
+            "connect": "self.load_mixamo_mocap"
+        }
+    },
+    "restore_mutant_rig": {
+        "tip": "Undo the mocap setup and restore the rig.",
+        "what": "Removes the retarget setup made by Load Mocap and gives you the normal rig back.",
+        "examples": [
+            "After checking a mocap clip, click it before you keep working on the rig.",
+            "Restore before saving so the retarget nodes do not get published."
+        ],
+        "details": "retarget.Retarget().restore_scene(): deletes the retarget nodes and gives the ctrls back.",
+        "code": {
+            "file": "UI/AnimLoader/load_anim_loader.py",
+            "function": "restore_mutant_rig",
+            "connect": "self.restore_mutant_rig"
+        }
+    },
+    "create_rom": {
+        "tip": "Create the range of motion animation.",
+        "what": "Keys a ROM (range of motion) on the rig: every part moves through its range so you can check skinning.",
+        "steps": [
+            "Click Run.",
+            "Scrub the timeline.",
+            "Fix weights, then Clean."
+        ],
+        "examples": [
+            "Click Run, scrub the timeline and look for bad deformations.",
+            "Run it after every big skin change."
+        ],
+        "details": "calisthenics_utils.create_rom() keys a fixed set of body poses on the Mutant ctrls by name.",
+        "code": {
+            "file": "UI/AnimLoader/load_anim_loader.py",
+            "function": "create_rom",
+            "connect": "self.create_rom"
+        }
+    },
+    "clean_rom": {
+        "tip": "Remove the range of motion keys.",
+        "what": "Deletes the ROM created by Run and puts the rig back to its default pose.",
+        "examples": [
+            "Click Clean before saving the rig file.",
+            "Clean, then save: published rigs should have no keys."
+        ],
+        "details": "calisthenics_utils.clean_rom(): removes the ROM keys and zeroes the ctrls.",
+        "code": {
+            "file": "UI/AnimLoader/load_anim_loader.py",
+            "function": "clean_rom",
+            "connect": "self.clean_rom"
+        }
+    },
+    "run_import": {
+        "tip": "Open a new scene, import the published rig and run the ROM.",
+        "what": "Starts a new scene, imports the latest published rig version and creates the ROM on it.",
+        "steps": [
+            "Make sure the rig is published.",
+            "Click Run.",
+            "Check the ROM on the published rig."
+        ],
+        "examples": [
+            "Check the published rig, not your work file, with one click.",
+            "Check the publish did not lose the skin of a prop."
+        ],
+        "details": "New scene (unsaved changes are lost), imports the latest pipeline publish of the rig, then create_rom(). Needs the studio pipeline (star).",
+        "code": {
+            "file": "UI/AnimLoader/load_anim_loader.py",
+            "function": "import_and_run",
+            "connect": "self.import_and_run"
+        }
+    }
+}

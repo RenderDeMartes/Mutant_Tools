@@ -1,0 +1,72 @@
+{
+    "load_button": {
+        "tip": "Reference the chosen body part.",
+        "what": "Brings the body part picked in the list into the scene as a reference.",
+        "examples": [
+            "Pick \"Arm\" and click Load to see the arm guides on your model.",
+            "Load \"Hand\" to copy finger guide positions from a reference rig."
+        ],
+        "details": "References the part file with namespace Butcher and puts its blocks under Butcher_Grp.",
+        "code": {
+            "file": "UI/Butcher/load_butcher.py",
+            "function": "reference_asset",
+            "connect": "self.reference_asset"
+        }
+    },
+    "match_button": {
+        "tip": "Match the guides to the loaded body part.",
+        "what": "Moves the block guides to the positions of the referenced body part.",
+        "examples": [
+            "Load a body part, click Match to copy its guide positions.",
+            "Match the spine guides to a body part from another character."
+        ],
+        "details": "Parent constrains every guide to its Butcher: twin by name to copy the pose (the constraints are cleaned up).",
+        "code": {
+            "file": "UI/Butcher/load_butcher.py",
+            "function": "match_guides",
+            "connect": "self.match_guides"
+        }
+    },
+    "ref_all_button": {
+        "tip": "Reference every body part.",
+        "what": "Loads all the body parts in the list as references at once.",
+        "examples": [
+            "Click it to compare every part with your model in one go.",
+            "Reference all parts to compare proportions with your model."
+        ],
+        "details": "Calls Load for every item in the list.",
+        "code": {
+            "file": "UI/Butcher/load_butcher.py",
+            "function": "reference_all",
+            "connect": "self.reference_all"
+        }
+    },
+    "match_sel_button": {
+        "tip": "Match only the selected body part.",
+        "what": "Removes the other references and matches the guides of the selected block.",
+        "examples": [
+            "Select the Leg block, click it to fit just the leg.",
+            "Match only the head block, keep your own arms."
+        ],
+        "details": "Removes every other Butcher reference, then matches only the selected *Block*.",
+        "code": {
+            "file": "UI/Butcher/load_butcher.py",
+            "function": "match_selection",
+            "connect": "self.match_selection"
+        }
+    },
+    "remove_parts_button": {
+        "tip": "Remove every loaded body part.",
+        "what": "Unloads all the body part references and deletes their group.",
+        "examples": [
+            "Click it when you are done matching, to clean the scene.",
+            "Remove the parts before saving so no references stay in the rig."
+        ],
+        "details": "cmds.file(rr=True) on each Butcher reference, then deletes Butcher_Grp.",
+        "code": {
+            "file": "UI/Butcher/load_butcher.py",
+            "function": "remove_all_references",
+            "connect": "self.remove_all_references"
+        }
+    }
+}

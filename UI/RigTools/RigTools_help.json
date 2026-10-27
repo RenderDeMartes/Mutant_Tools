@@ -1,0 +1,16 @@
+{
+    "hide_shelfs": {
+        "tip": "Show or hide the shelves.",
+        "what": "Shows or hides the rigging and sculpting shelves at the top of Rig Tools.",
+        "examples": [
+            "Hide them to make the window shorter.",
+            "Show them again to use the fake rigging shelf buttons."
+        ],
+        "details": "Hides the sculpt and rig shelf frames and shrinks the window by 170 px.",
+        "code": {
+            "file": "UI/RigTools/load_RigTools.py",
+            "function": "toggle_shelfs_vis",
+            "connect": "self.toggle_shelfs_vis"
+        }
+    }
+}

@@ -1,0 +1,77 @@
+{
+    "load_current_user": {
+        "tip": "Load your user name.",
+        "what": "Fills the user field with the user logged in to the pipeline.",
+        "examples": [
+            "Click it to see only the assets assigned to you.",
+            "Load it on a shared machine so tasks show under your name."
+        ],
+        "details": "star.entities.User.find_current(); without the studio pipeline it stays empty.",
+        "code": {
+            "file": "UI/AssetsRigger/load_AssetsRigger.py",
+            "function": "get_user_name",
+            "connect": "self.get_user_name"
+        }
+    },
+    "autorig_button": {
+        "tip": "Auto rig the chosen asset in a new scene.",
+        "what": "Opens a new scene and builds the auto rig for the asset and show picked in the lists.",
+        "steps": [
+            "Pick show and asset.",
+            "Turn on extra scales if needed.",
+            "Click Auto Rig."
+        ],
+        "examples": [
+            "Pick the asset \"Boar\", click Auto Rig and wait for the build.",
+            "Rig a batch of background props one after another."
+        ],
+        "details": "New scene, then core02.build_auto_rig(asset, show, skin=False, scale_multiply=0.75, extra_scales). Skin is not loaded: load or paint it after.",
+        "code": {
+            "file": "UI/AssetsRigger/load_AssetsRigger.py",
+            "function": "autorig_asset",
+            "connect": "self.autorig_asset"
+        }
+    },
+    "autorig_current_button": {
+        "tip": "Auto rig the asset open in this scene.",
+        "what": "Builds the auto rig on the asset that is already open, without opening a new scene.",
+        "examples": [
+            "Open the model file, click it to rig what you have open.",
+            "Fix the model in the scene and rig it again without reopening it."
+        ],
+        "details": "core02.build_auto_rig(rig_current_scene=True, skin=False, scale_multiply=0.75) on what is already open.",
+        "code": {
+            "file": "UI/AssetsRigger/load_AssetsRigger.py",
+            "function": "autorig_current",
+            "connect": "self.autorig_current"
+        }
+    },
+    "create_rig_sid": {
+        "tip": "Create the rig SID node.",
+        "what": "Creates the SID node that identifies the rig for the pipeline and the animation tools.",
+        "examples": [
+            "Click it on a rig made by hand so Select Ctrls and the anim tools find it.",
+            "Add it to an old rig so AnimLoader Select Ctrls works on it."
+        ],
+        "details": "core02.create_sid_node(): the SID lists the rig parts that the pipeline and AnimLoader read.",
+        "code": {
+            "file": "UI/AssetsRigger/load_AssetsRigger.py",
+            "function": "create_rig_sid",
+            "connect": "self.create_rig_sid"
+        }
+    },
+    "create_base_only": {
+        "tip": "Create only the base rig groups.",
+        "what": "Makes the Mutant base hierarchy (Global ctrl and groups) without building any block.",
+        "examples": [
+            "Use it when you want to rig a prop by hand inside the Mutant structure.",
+            "Start a vehicle rig by hand with the Mutant Global / Mover ctrls."
+        ],
+        "details": "mt.check_is_there_is_base(): makes the Base block / Global ctrl hierarchy only if it does not exist.",
+        "code": {
+            "file": "UI/AssetsRigger/load_AssetsRigger.py",
+            "function": "create_base_only",
+            "connect": "self.create_base_only"
+        }
+    }
+}

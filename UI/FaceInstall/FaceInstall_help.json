@@ -1,0 +1,409 @@
+{
+    "openFaceFile": {
+        "tip": "Open the face rig file.",
+        "what": "Opens the face rig picked in the list (or the custom path, if filled) in a new scene.",
+        "examples": [
+            "Open the face to fix something before installing it again.",
+            "Open the face to add a missing blendshape target."
+        ],
+        "details": "New scene (unsaved changes lost), opens the custom path or the list item, then removes the SHAPES node so the file opens clean.",
+        "code": {
+            "file": "UI/FaceInstall/load_face_install.py",
+            "function": "open_clean",
+            "connect": "lambda: self.open_clean(rig='Face')"
+        }
+    },
+    "populate_face_line": {
+        "tip": "Browse for a face rig file.",
+        "what": "Opens a file browser and puts the chosen face file in the custom face field.",
+        "examples": [
+            "Use it when the face is not in the list, e.g. a WIP file on your disk.",
+            "Browse a face from another project to reuse it."
+        ],
+        "details": "mh.import_window(extension=\"maya_file\"); the custom field wins over the list.",
+        "code": {
+            "file": "UI/FaceInstall/load_face_install.py",
+            "function": "populate_face_line",
+            "connect": "self.populate_face_line"
+        }
+    },
+    "openBodyFile": {
+        "tip": "Open the body rig file.",
+        "what": "Opens the body rig picked in the list (or the custom path, if filled) in a new scene.",
+        "examples": [
+            "Open the body to check its skin before installing the face.",
+            "Open the body to fix the neck skin before installing."
+        ],
+        "details": "Same as the face Open: new scene, open, remove the SHAPES node.",
+        "code": {
+            "file": "UI/FaceInstall/load_face_install.py",
+            "function": "open_clean",
+            "connect": "lambda: self.open_clean(rig='Body')"
+        }
+    },
+    "populate_body_line": {
+        "tip": "Browse for a body rig file.",
+        "what": "Opens a file browser and puts the chosen body file in the custom body field.",
+        "examples": [
+            "Pick the latest body WIP from the asset folder.",
+            "Browse a body variant (e.g. armored) to install the same face."
+        ],
+        "details": "mh.import_window(extension=\"maya_file\"); the custom field wins over the list.",
+        "code": {
+            "file": "UI/FaceInstall/load_face_install.py",
+            "function": "populate_body_line",
+            "connect": "self.populate_body_line"
+        }
+    },
+    "installFaceBtn": {
+        "tip": "Install the face rig on the body rig.",
+        "what": "Opens the face and the body, merges them into one rig and connects the face to the head. Errors are listed at the end.",
+        "steps": [
+            "Pick or browse the face file.",
+            "Pick or browse the body file.",
+            "Click Install Face.",
+            "Read the error list, then test the face ctrls with the head."
+        ],
+        "examples": [
+            "Pick face and body, click Install Face, then check the face ctrls follow the head.",
+            "Re-install after fixing the face file: the data node remembers both paths.",
+            "Install the same face on a second body variant."
+        ],
+        "details": "install_face(): cleans temp files, opens the face, prefixes the rig top groups (geo, rig, control, Global_Ctrl, Mutant_Build...) so they do not clash, imports it into the body and connects the face to the head. Paths and custom code are stored on the Mutant_FaceInstall node (Face / Body / Code attrs).",
+        "code": {
+            "file": "UI/FaceInstall/load_face_install.py",
+            "function": "install_face",
+            "connect": "self.install_face"
+        }
+    },
+    "add_rivets": {
+        "tip": "Make the selected ctrls ride on the geo.",
+        "what": "Select the face ctrls, then the geometry last. The ctrls get rivets so they stick to the skin as it deforms.",
+        "steps": [
+            "Select the face ctrls.",
+            "Shift select the geo last.",
+            "Click it.",
+            "Open the jaw and check the ctrls ride on the skin."
+        ],
+        "examples": [
+            "Select the cheek ctrls, then the head geo, click it: the cheeks follow when the jaw opens.",
+            "Rivet the nose ctrls so they follow a big snarl shape.",
+            "Rivet the brow ctrls to follow the forehead shapes."
+        ],
+        "details": "mt.rivets_ctrls(geometry=last, selection_ctrls=rest): each ctrl gets a rivet on the closest point of the geo and follows it, so ctrls stay on the skin when deformers move it.",
+        "code": {
+            "file": "UI/FaceInstall/load_face_install.py",
+            "function": "add_rivets",
+            "connect": "self.add_rivets"
+        }
+    },
+    "remove_rivets": {
+        "tip": "Remove the rivets from the selected ctrls.",
+        "what": "Takes the rivets off the selected ctrls (select the geo last, like when adding).",
+        "examples": [
+            "Remove them before moving a ctrl to a new spot, then add them again.",
+            "Remove rivets from a ctrl that should stay in place."
+        ],
+        "details": "mt.remove_rivets_ctrls(selection_ctrls=all but last): keep the geo selected last, the same way you added them.",
+        "code": {
+            "file": "UI/FaceInstall/load_face_install.py",
+            "function": "remove_rivets",
+            "connect": "self.remove_rivets"
+        }
+    },
+    "head_sns": {
+        "tip": "Add squash and stretch to the head.",
+        "what": "Adds the head squash and stretch deformers driven by the upper skull ctrl, on the selected geo.",
+        "steps": [
+            "Select the head geo.",
+            "Click it.",
+            "Scale / bend Skull_Upr_Ctrl."
+        ],
+        "examples": [
+            "Select the head geo, click it, scale Skull_Upr_Ctrl to squash the head.",
+            "Give a cartoon character a squashy head for takes."
+        ],
+        "details": "mt.bend_and_squash_head(geo, \"Skull_Upr_Ctrl\"): adds SS_Head (squash) and SS_Head_Bend_Side / SS_Head_Bend_Front_Back (bends) driven by the upper skull ctrl.",
+        "code": {
+            "file": "UI/FaceInstall/load_face_install.py",
+            "connect": "lambda: mt.bend_and_squash_head(cmds.ls(sl=True)[0], 'Skull_Upr_Ctrl')"
+        }
+    },
+    "addToSnS": {
+        "tip": "Add the selection to the head squash and stretch.",
+        "what": "Adds the selected geos (eyes, teeth, hair...) to the head squash and stretch deformers.",
+        "steps": [
+            "Select the extra geos.",
+            "Click it.",
+            "Squash the head to check."
+        ],
+        "examples": [
+            "Select the eyebrows geo and click it so they squash with the head.",
+            "Add the hat so it squashes with the head.",
+            "Add the eyes and teeth so nothing pokes out when squashing."
+        ],
+        "details": "Adds each selected geo to SS_Head_Bend_Side, SS_Head_Bend_Front_Back and SS_Head (cmds.deformer -e -g). Run Helpers > Reorder SnS if the deformer order ends up wrong.",
+        "code": {
+            "file": "UI/FaceInstall/load_face_install.py",
+            "function": "add_to_face_sns",
+            "connect": "self.add_to_face_sns"
+        }
+    },
+    "extra_eyes_button": {
+        "tip": "Add the extra eye setup.",
+        "what": "Builds the extra eye controls on top of the installed face.",
+        "examples": [
+            "Click it once after Install Face when the character needs them.",
+            "Add the extras for close up shots of the eyes."
+        ],
+        "details": "build_extra_eyes(): adds the extra eye ctrls on the installed face.",
+        "code": {
+            "file": "UI/FaceInstall/load_face_install.py",
+            "function": "extra_eyes_button",
+            "connect": "self.extra_eyes_button"
+        }
+    },
+    "create_MouthIn": {
+        "tip": "Create the Mouth In blendshape.",
+        "what": "Makes the Mouth In shape on the selected geometry so the lips can be pulled into the mouth.",
+        "steps": [
+            "Select the face geos.",
+            "Click it.",
+            "Sculpt the Mouth In target."
+        ],
+        "examples": [
+            "Select the head and lips geos, click it, sculpt the shape, test with the mouth ctrl.",
+            "Use it for characters that bite their lips."
+        ],
+        "details": "faceinstall_utils.mouth_faceinstall.create_MouthIn(): makes the blendShape target on the selected geos (or the known face geos) inside the facial add-on group.",
+        "code": {
+            "file": "UI/FaceInstall/load_face_install.py",
+            "function": "create_MouthIn",
+            "connect": "self.create_MouthIn"
+        }
+    },
+    "create_Mouth_RollPull": {
+        "tip": "Create the lip Roll and Pull blendshapes.",
+        "what": "Makes the lip roll and lip pull shapes on the selected geometry.",
+        "examples": [
+            "Select the head geo, click it, then sculpt the roll shapes.",
+            "Sculpt a lip roll for M / B / P mouth shapes."
+        ],
+        "details": "mouth_faceinstall.create_Mouth_RollPull(): Lip_Roll / Lip_Pull targets on the selected geos, wired to the lip ctrls.",
+        "code": {
+            "file": "UI/FaceInstall/load_face_install.py",
+            "function": "create_Mouth_RollPull",
+            "connect": "self.create_Mouth_RollPull"
+        }
+    },
+    "mouth_control_follow_setup": {
+        "tip": "Make the mouth ctrls follow the jaw.",
+        "what": "Constrains the mouth main ctrls to the jaw and lower skull so they move with them.",
+        "examples": [
+            "Click it once, then open the jaw: the lower lip ctrls follow.",
+            "Run it after installing a face made before the follow setup existed."
+        ],
+        "details": "Parent constrains the lower mouth main ctrl offset to Jaw_Ctrl and the corners to Jaw_Ctrl + Skull_Lwr_Ctrl (mo=True), with follow groups on top. Run it once: it makes groups and constraints with fixed names, a second run errors or doubles them.",
+        "code": {
+            "file": "UI/FaceInstall/load_face_install.py",
+            "function": "mouth_control_follow_setup",
+            "connect": "self.mouth_control_follow_setup"
+        }
+    },
+    "eyes_follow_head": {
+        "tip": "Turn off the eyes follow.",
+        "what": "Sets Eyes_Main_Ctrl Follow to 0 so the eyes stay with the head.",
+        "examples": [
+            "Click it when the eyes drift while turning the head.",
+            "Turn it off for a shot where the eyes should lock on a target."
+        ],
+        "details": "setAttr Eyes_Main_Ctrl.Follow 0.",
+        "code": {
+            "file": "UI/FaceInstall/load_face_install.py",
+            "function": "eyes_follow_head",
+            "connect": "self.eyes_follow_head"
+        }
+    },
+    "eyelids_control_follow_setup": {
+        "tip": "Make the eyelid ctrls follow the blinks.",
+        "what": "Groups the mid eyelid ctrls and connects them so they move with the blink.",
+        "examples": [
+            "Click it once, then blink: the mid lid ctrls ride along.",
+            "Run it so animators can tweak the lid shape mid blink."
+        ],
+        "details": "Groups <side>Eyelids_UpMid / DwMid ctrls under *_Blinks_Follow_Grp and connects the blink ctrls tx into them. Run it once: it makes groups and constraints with fixed names, a second run errors or doubles them.",
+        "code": {
+            "file": "UI/FaceInstall/load_face_install.py",
+            "function": "eyelids_control_follow_setup",
+            "connect": "self.eyelids_control_follow_setup"
+        }
+    },
+    "openInstalledFace": {
+        "tip": "Open the face file this rig was installed from.",
+        "what": "Reads the face path saved in this rig and opens that file.",
+        "examples": [
+            "Go back to the face source to fix a shape.",
+            "Fix a face shape and Install Face again."
+        ],
+        "details": "Reads Mutant_FaceInstall.Face and opens that file (force, unsaved changes lost).",
+        "code": {
+            "file": "UI/FaceInstall/load_face_install.py",
+            "function": "from_installed_open_face",
+            "connect": "self.from_installed_open_face"
+        }
+    },
+    "openInstalledBody": {
+        "tip": "Open the body file this rig was installed from.",
+        "what": "Reads the body path saved in this rig and opens that file.",
+        "examples": [
+            "Go back to the body source to fix its skin.",
+            "Paint body weights and Install Face again."
+        ],
+        "details": "Reads Mutant_FaceInstall.Body and opens that file (force, unsaved changes lost).",
+        "code": {
+            "file": "UI/FaceInstall/load_face_install.py",
+            "function": "from_installed_open_body",
+            "connect": "self.from_installed_open_body"
+        }
+    },
+    "load_from_node": {
+        "tip": "Load the saved custom code.",
+        "what": "Shows the custom code stored in this rig in the field below.",
+        "examples": [
+            "Check what extra code ran on the last install.",
+            "Copy the custom code to another character install."
+        ],
+        "details": "Shows Mutant_FaceInstall.Code in the field. Edit it there to keep fixes with the rig.",
+        "code": {
+            "file": "UI/FaceInstall/load_face_install.py",
+            "function": "load_from_node",
+            "connect": "self.load_from_node"
+        }
+    },
+    "run": {
+        "tip": "Run the saved custom code.",
+        "what": "Runs the custom code stored in this rig (Python, or MEL if it is not Python).",
+        "examples": [
+            "Run the extra fixes again after changing the face.",
+            "Run the fixes again after a manual change on the rig."
+        ],
+        "details": "exec() the code in Mutant_FaceInstall.Code; if Python fails it is tried as MEL.",
+        "code": {
+            "file": "UI/FaceInstall/load_face_install.py",
+            "function": "run_custom_code",
+            "connect": "self.run_custom_code"
+        }
+    },
+    "move_master": {
+        "tip": "Move the Global ctrl far away.",
+        "what": "Moves and rotates the Global ctrl a lot, to test that the whole face follows.",
+        "examples": [
+            "Click it, look for any face part left behind, then Restore Master.",
+            "Find a face part that does not follow the Global scale."
+        ],
+        "details": "Global_Ctrl to translate 300 / rotate 300 / scale 5 (or .size 5 on rigs without scale). Restore Master puts it back to 0 / 1.",
+        "code": {
+            "file": "UI/FaceInstall/load_face_install.py",
+            "function": "move_master",
+            "connect": "self.move_master"
+        }
+    },
+    "restore_master": {
+        "tip": "Put the Global ctrl back.",
+        "what": "Sets the Global ctrl back to zero after Move Master.",
+        "examples": [
+            "Click it after checking the rig follows.",
+            "Restore before saving the rig."
+        ],
+        "details": "Global_Ctrl translate and rotate 0, scale 1 (or .size 1).",
+        "code": {
+            "file": "UI/FaceInstall/load_face_install.py",
+            "function": "restore_master",
+            "connect": "self.restore_master"
+        }
+    },
+    "show_all_face_ctrls": {
+        "tip": "Show every face ctrl.",
+        "what": "Turns on all the face ctrl visibility switches.",
+        "examples": [
+            "Show them all to check every ctrl moves the right area.",
+            "Show everything for a skinning check, then restore preset A."
+        ],
+        "details": "Sets every face visibility attr on Vis_Ctrl to 1 (skull, eyes, lips, brows, cheeks, jaw, tongue, teeth, nose; main / mid / tweak).",
+        "code": {
+            "file": "UI/FaceInstall/load_face_install.py",
+            "function": "change_face_vis_to_animation_requests",
+            "connect": "lambda: self.change_face_vis_to_animation_requests(show=True)"
+        }
+    },
+    "restore_vis_switches_a": {
+        "tip": "Set the face ctrls visibility to preset A.",
+        "what": "Sets the face visibility switches back to the A preset for animators.",
+        "examples": [
+            "Click it before publishing the rig.",
+            "Give animators the default face ctrl set."
+        ],
+        "details": "Sets the Vis_Ctrl face attrs to preset A (main and mid ctrls on, tweaks off).",
+        "code": {
+            "file": "UI/FaceInstall/load_face_install.py",
+            "function": "change_face_vis_to_animation_requests",
+            "connect": "lambda: self.change_face_vis_to_animation_requests(restore=True, mode='A')"
+        }
+    },
+    "restore_vis_switches_b": {
+        "tip": "Set the face ctrls visibility to preset B.",
+        "what": "Sets the face visibility switches to the B preset (fewer ctrls).",
+        "examples": [
+            "Use it for animators that only want the main face ctrls.",
+            "Use B for crowd shots where the face only needs main ctrls."
+        ],
+        "details": "Sets the Vis_Ctrl face attrs to preset B.",
+        "code": {
+            "file": "UI/FaceInstall/load_face_install.py",
+            "function": "change_face_vis_to_animation_requests",
+            "connect": "lambda: self.change_face_vis_to_animation_requests(restore=True, mode='B')"
+        }
+    },
+    "frame_face": {
+        "tip": "Frame the face in the viewport.",
+        "what": "Selects the skull ctrls for a moment and frames them, so the camera fits the face.",
+        "examples": [
+            "Click it to jump back to the face after looking at the body.",
+            "Frame the face before capturing a note."
+        ],
+        "details": "Shows Vis_Ctrl.skullMainCtrls for a moment, frames Skull_Lwr_Ctrl + Skull_Upr_Ctrl, then puts the vis back.",
+        "code": {
+            "file": "UI/FaceInstall/load_face_install.py",
+            "function": "frame_face",
+            "connect": "self.frame_face"
+        }
+    },
+    "frame_body": {
+        "tip": "Frame the whole character.",
+        "what": "Frames the whole rig in the viewport.",
+        "examples": [
+            "Click it to see the full body again.",
+            "Frame the body after Move Master to find the rig."
+        ],
+        "code": {
+            "file": "UI/FaceInstall/load_face_install.py",
+            "function": "frame_body",
+            "connect": "self.frame_body"
+        }
+    },
+    "zero_all": {
+        "tip": "Reset every controller.",
+        "what": "Puts every ctrl back to its rest pose (translate, rotate and scale), except the Vis ctrl.",
+        "examples": [
+            "Click it after testing poses to give the rig back clean.",
+            "Reset after testing the face sliders.",
+            "Zero everything before a ROM so the poses start clean."
+        ],
+        "details": "Every *_Ctrl except Vis_Ctrl: translate / rotate to 0, scale to 1 (locked attrs are skipped), and the tool sliders back to 0.",
+        "code": {
+            "file": "UI/FaceInstall/load_face_install.py",
+            "function": "zero_all",
+            "connect": "self.zero_all"
+        }
+    }
+}

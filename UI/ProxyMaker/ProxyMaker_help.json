@@ -1,0 +1,15 @@
+{
+    "create_proxy": {
+        "tip": "Make a fast proxy from the skin.",
+        "what": "Cuts the skinned meshes into pieces by their main joint and parents each piece to it, for a fast proxy rig.",
+        "examples": [
+            "Click it on a skinned character to get a light version for blocking animation.",
+            "Make a proxy for layout artists who need a fast rig."
+        ],
+        "code": {
+            "file": "UI/ProxyMaker/load_proxy_maker.py",
+            "function": "create_proxy",
+            "connect": "self.create_proxy"
+        }
+    }
+}

@@ -1,0 +1,82 @@
+{
+    "open_button": {
+        "tip": "Open the file in the path field.",
+        "what": "Opens the Maya file in the path field as the current scene (unsaved changes are lost).",
+        "examples": [
+            "Pick a saved base scene and click Open to start from it.",
+            "Open a saved test scene with ROM animation."
+        ],
+        "code": {
+            "file": "UI/Shelves/load_shelves.py",
+            "function": "open",
+            "connect": "self.open"
+        }
+    },
+    "import_button": {
+        "tip": "Import the file in the path field.",
+        "what": "Imports the file in the path field into the current scene.",
+        "examples": [
+            "Pick a saved ctrl shape file, click Import.",
+            "Import a saved set of locators you use on every rig."
+        ],
+        "code": {
+            "file": "UI/Shelves/load_shelves.py",
+            "function": "import_file",
+            "connect": "self.import_file"
+        }
+    },
+    "reference_button": {
+        "tip": "Reference the file in the path field.",
+        "what": "Brings the file in the path field into the scene as a reference.",
+        "examples": [
+            "Reference a model to rig on top without importing it.",
+            "Reference the latest model to check it against the rig."
+        ],
+        "code": {
+            "file": "UI/Shelves/load_shelves.py",
+            "function": "reference",
+            "connect": "self.reference"
+        }
+    },
+    "save_button": {
+        "tip": "Save the scene to the shelf.",
+        "what": "Saves the whole scene under the name in the field, with a preview image.",
+        "examples": [
+            "Name it \"Boar_base\" and click Save.",
+            "Save a clean starting scene for a new character."
+        ],
+        "details": "cShelves.save_file(name) + create_image() for the thumbnail, then refreshes the list.",
+        "code": {
+            "file": "UI/Shelves/load_shelves.py",
+            "function": "save",
+            "connect": "self.save"
+        }
+    },
+    "export_sel_button": {
+        "tip": "Export the selection to the shelf.",
+        "what": "Exports only the selected objects under the name in the field, with a preview image.",
+        "examples": [
+            "Select a ctrl set, name it \"face_ctrls\", Export Sel.",
+            "Export a nice ctrl shape library to reuse on other rigs."
+        ],
+        "details": "cShelves.export_sel(name) exports the selection only, with a thumbnail.",
+        "code": {
+            "file": "UI/Shelves/load_shelves.py",
+            "function": "export_sel",
+            "connect": "self.export_sel"
+        }
+    },
+    "explorer_button": {
+        "tip": "Open the shelf folder.",
+        "what": "Opens the folder where the shelf files are saved, in the Windows explorer.",
+        "examples": [
+            "Click it to copy shelf files to another machine.",
+            "Delete old shelf files you do not need."
+        ],
+        "code": {
+            "file": "UI/Shelves/load_shelves.py",
+            "function": "open_explorer",
+            "connect": "self.open_explorer"
+        }
+    }
+}

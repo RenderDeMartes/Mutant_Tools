@@ -1,0 +1,15 @@
+{
+    "create_file_note": {
+        "tip": "Make a new note.",
+        "what": "Opens the note editor to write a note with a captured image for this scene.",
+        "examples": [
+            "Click it to leave feedback on a frame for the rigger.",
+            "Leave a to do for yourself on a frame before closing for the day."
+        ],
+        "code": {
+            "file": "UI/Notes/rdm_notes_start.py",
+            "function": "load_create_file_note_ui",
+            "connect": "self.load_create_file_note_ui"
+        }
+    }
+}

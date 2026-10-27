@@ -1,0 +1,356 @@
+{
+    "smallerGuideBtn": {
+        "tip": "Make the guides smaller.",
+        "what": "Scales the shape of every guide down a bit (x0.75). Positions do not change.",
+        "examples": [
+            "Click it when guides hide a small character.",
+            "Shrink guides on a mouse character."
+        ],
+        "details": "Scales the CVs of the guide shapes (*_Guide ..._CtrlShape) x0.75; transforms do not move.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_ToolsTab.py",
+            "function": "resize_guides",
+            "connect": "lambda: self.resize_guides(0.75)"
+        }
+    },
+    "biggerGuideBtn": {
+        "tip": "Make the guides bigger.",
+        "what": "Scales the shape of every guide up a bit (x1.25). Positions do not change.",
+        "examples": [
+            "Click it when guides are too small to pick.",
+            "Grow guides on a giant."
+        ],
+        "details": "Scales the CVs of the guide shapes x1.25; transforms do not move.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_ToolsTab.py",
+            "function": "resize_guides",
+            "connect": "lambda: self.resize_guides(1.25)"
+        }
+    },
+    "smallerCtrlsBtn": {
+        "tip": "Make the controllers smaller.",
+        "what": "Scales the shape of every controller down (x0.75).",
+        "examples": [
+            "Click it when ctrls cover the face.",
+            "Shrink ctrls on a small prop."
+        ],
+        "details": "Scales the CVs of every *_Ctrl shape x0.75 around its pivot. A rebuild keeps it (ctrl shapes are saved).",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_ToolsTab.py",
+            "function": "resize_Ctrls",
+            "connect": "lambda: self.resize_Ctrls(0.75)"
+        }
+    },
+    "biggerCtrlsBtn": {
+        "tip": "Make the controllers bigger.",
+        "what": "Scales the shape of every controller up (x1.25).",
+        "examples": [
+            "Click it when ctrls are hidden inside the mesh.",
+            "Grow ctrls for a big creature."
+        ],
+        "details": "Scales the CVs of every *_Ctrl shape x1.25 around its pivot.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_ToolsTab.py",
+            "function": "resize_Ctrls",
+            "connect": "lambda: self.resize_Ctrls(1.25)"
+        }
+    },
+    "scale_guides_button": {
+        "tip": "Scale the whole guide template.",
+        "what": "Scales the Mutant guide template by the number in the field.",
+        "examples": [
+            "Type 0.5 and click it to fit the guides on a small creature.",
+            "Type 2 to fit a template to a tall character."
+        ],
+        "details": "Scales the children of Mutant_Build by the value. Errors if there is no Mutant_Build or more than one.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_ToolsTab.py",
+            "function": "scale_mutant_template",
+            "connect": "lambda: self.scale_mutant_template(float(self.ui.scale_guides_line.text()), float(self.ui.scale_guides_line.text()), float(self.ui.scale_guides_line.text()))"
+        }
+    },
+    "ShowAxisBtn": {
+        "tip": "Show joint axes.",
+        "what": "Shows the local axis of the selected joints, or of every joint if nothing is selected.",
+        "examples": [
+            "Check that the arm joints point down the bone.",
+            "Check finger orients before building."
+        ],
+        "details": "displayLocalAxis 1 on the selected joints, or on every joint when no joint is selected.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_ToolsTab.py",
+            "function": "toggle_axis",
+            "connect": "lambda: self.toggle_axis(True)"
+        }
+    },
+    "HideAxisBtn": {
+        "tip": "Hide joint axes.",
+        "what": "Hides the local axis of the selected joints, or of every joint.",
+        "examples": [
+            "Clean the viewport after checking orients.",
+            "Hide them for a clean playblast."
+        ],
+        "details": "displayLocalAxis 0 on the selected joints, or on every joint.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_ToolsTab.py",
+            "function": "toggle_axis",
+            "connect": "lambda: self.toggle_axis(False)"
+        }
+    },
+    "lockContainerBtn": {
+        "tip": "Lock the rig containers.",
+        "what": "Puts the rig nodes back in their containers so animators can't select the inside of the rig.",
+        "examples": [
+            "Lock them before publishing.",
+            "Lock before handing the rig over."
+        ],
+        "details": "Puts the nodes listed in RigTools.settings (Maya user script folder) back into the rig containers.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_ToolsTab.py",
+            "function": "toogle_contrainers",
+            "connect": "lambda: self.toogle_contrainers(True)"
+        }
+    },
+    "unlockContainerBtn": {
+        "tip": "Open the rig containers.",
+        "what": "Takes the nodes out of the rig containers so you can edit them.",
+        "examples": [
+            "Open them to fix a node, then Lock Containers.",
+            "Open to fix a node inside the rig."
+        ],
+        "details": "Takes the rig nodes out of their containers and writes the list to RigTools.settings, so Lock can put them back.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_ToolsTab.py",
+            "function": "toogle_contrainers",
+            "connect": "lambda: self.toogle_contrainers(False)"
+        }
+    },
+    "help_button": {
+        "tip": "Visemes help.",
+        "what": "Opens the online help for the visemes tools.",
+        "examples": [
+            "Watch how to make the mouth shapes.",
+            "Read how to set up visemes."
+        ],
+        "code": {
+            "file": "UI/RigTools/Tabs/load_ToolsTab.py",
+            "function": "open_visemes_help",
+            "connect": "self.open_visemes_help"
+        }
+    },
+    "keyVisemes": {
+        "tip": "Key the viseme poses.",
+        "what": "Keys the mouth ctrls through the viseme poses (AEI, OUW, FV, BMP, CDN), 10 frames apart.",
+        "steps": [
+            "Set the multiplier.",
+            "Click Key.",
+            "Adjust each viseme pose on its frame.",
+            "Select the head and Bake."
+        ],
+        "examples": [
+            "Click it, then pose each viseme frame.",
+            "Key the visemes for a lip sync test."
+        ],
+        "details": "Deletes keys, then keys the lip ctrls for AEI, OUW, FV, BMP, CDN 10 frames apart, scaled by the multiplier.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_ToolsTab.py",
+            "function": "key_visemes",
+            "connect": "self.key_visemes"
+        }
+    },
+    "bakeVisemes": {
+        "tip": "Bake the visemes into shapes.",
+        "what": "Select the head geo: duplicates it at each viseme frame into a Visemes group.",
+        "examples": [
+            "Click it once the poses look right.",
+            "Bake the visemes into shapes for a game rig."
+        ],
+        "details": "Duplicates each selected geo at the viseme frames (10, 30...) into a Visemes group: <geo>_AEI, _OUW...",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_ToolsTab.py",
+            "function": "bake_visemes",
+            "connect": "self.bake_visemes"
+        }
+    },
+    "splitVisemes": {
+        "tip": "Open SHAPES to split.",
+        "what": "Opens the SHAPES tool to split the viseme shapes.",
+        "examples": [
+            "Split each viseme into left and right.",
+            "Split visemes for asymmetrical mouths."
+        ],
+        "code": {
+            "file": "UI/RigTools/Tabs/load_ToolsTab.py",
+            "function": "split_visemes",
+            "connect": "self.split_visemes"
+        }
+    },
+    "load_blendshapes": {
+        "tip": "List the blendshapes of the selected head.",
+        "what": "Fills the list with the blendShape nodes on the selected head geo.",
+        "examples": [
+            "Select the head and click <<.",
+            "List the blendshapes on the head."
+        ],
+        "details": "Lists the blendShape nodes in the history of the selected geo.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_ToolsTab.py",
+            "function": "load_blendshapes_from_sel",
+            "connect": "self.load_blendshapes_from_sel"
+        }
+    },
+    "connectVisemes": {
+        "tip": "Connect the visemes.",
+        "what": "Connects the viseme shapes of the chosen blendShape node to the rig.",
+        "examples": [
+            "Pick the blendShape and click it.",
+            "Connect the baked visemes to the rig."
+        ],
+        "details": "Connects the rig viseme attrs to the AEI / OUW / FV / BMP / CDN targets of the chosen blendShape (missing targets are skipped).",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_ToolsTab.py",
+            "function": "connect_visemes",
+            "connect": "self.connect_visemes"
+        }
+    },
+    "HideBtn": {
+        "tip": "Hide the checked attrs on the selection.",
+        "what": "Locks and hides translate / rotate / scale / visibility (the checked ones) on the selected objects.",
+        "examples": [
+            "Hide scale on every FK ctrl so animators don't scale them.",
+            "Hide visibility on ctrls so animators do not key it."
+        ],
+        "details": "ShowHideAttr.hideSelection(T, R, S, V): lock + hide (keyable off) the checked channels on the selection.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_ToolsTab.py",
+            "function": "hide_attrs",
+            "connect": "self.hide_attrs"
+        }
+    },
+    "RevealBtn": {
+        "tip": "Show every hidden attr.",
+        "what": "Unlocks and shows all the attrs hidden on the selection.",
+        "examples": [
+            "Get back an attr you hid by mistake.",
+            "Reveal attrs to debug a rig."
+        ],
+        "details": "ShowHideAttr.showAll(): unlock and show every channel on the selection.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_ToolsTab.py",
+            "function": "show_attrs",
+            "connect": "self.show_attrs"
+        }
+    },
+    "SimpleFKBtn": {
+        "tip": "Make an FK chain on the selected joints.",
+        "what": "Creates FK ctrls on the selected joints with the size, color and shape set below.",
+        "steps": [
+            "Select the joints in order.",
+            "Set size, color and shape.",
+            "Click Simple FK."
+        ],
+        "examples": [
+            "Select the tail joints and click it.",
+            "Make an FK chain on antennas."
+        ],
+        "details": "mt.fk_chain(size, color, curve_type) on the selected joints: a ctrl with root group per joint, each parented to the previous one.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_ToolsTab.py",
+            "connect": "lambda: mt.fk_chain(size = self.ui.SimpleFKSizeSlider.value(), color = self.ui.SimpleFKColorBox.currentText(), curve_type = self.ui.SimpleFKShapeBox.currentText())"
+        }
+    },
+    "TubeFKBtn": {
+        "tip": "Make an FK chain from vertices.",
+        "what": "Select edge loops or vertices of a tube: makes clusters and an FK chain along it.",
+        "steps": [
+            "Select one edge loop per joint, in order.",
+            "Turn on flip if the chain comes out reversed.",
+            "Click Tube FK."
+        ],
+        "examples": [
+            "Rig a cable or a tentacle in seconds.",
+            "Make an FK chain along a hose."
+        ],
+        "details": "One cluster per selected component group, joints at their centers, then an FK chain on them.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_ToolsTab.py",
+            "function": "tube_fk_chain",
+            "connect": "self.tube_fk_chain"
+        }
+    },
+    "auto_rotate_fk": {
+        "tip": "Rotate a chain with one ctrl.",
+        "what": "Select ctrls in order: makes one new ctrl that rotates all of them together.",
+        "examples": [
+            "Curl a whole tail with one ctrl.",
+            "Curl all fingers with one ctrl."
+        ],
+        "details": "Builds an FK chain on the selection with scale, then mt.create_auto rotate: one new ctrl adds its rotation to every ctrl (twist axis Y).",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_ToolsTab.py",
+            "function": "auto_rotate_fk",
+            "connect": "self.auto_rotate_fk"
+        }
+    },
+    "dynamic_fk_btn": {
+        "tip": "Make a dynamic FK chain.",
+        "what": "Creates an FK chain with dynamics so it follows through on its own.",
+        "examples": [
+            "Add jiggle to a ponytail.",
+            "Add follow through to a tail."
+        ],
+        "details": "mt.create_dynamic_fk(): hair system driven chain blended over the FK.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_ToolsTab.py",
+            "function": "create_dynamic_fk_ui",
+            "connect": "self.create_dynamic_fk_ui"
+        }
+    },
+    "connect_to_scale_reader": {
+        "tip": "Connect the selection to the scale reader.",
+        "what": "Connects the rig scale reader to the selected delta mush or nodes, so they scale with the rig.",
+        "examples": [
+            "Select a delta mush that blurs when scaled, click it.",
+            "Fix a deltaMush that blurs when the rig scales."
+        ],
+        "details": "deltaMush selected: connects scale_reader.sx/sy/sz into it. Anything else: scaleConstraint from scale_reader.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_ToolsTab.py",
+            "function": "connect_to_scale_reader",
+            "connect": "self.connect_to_scale_reader"
+        }
+    },
+    "soft_cluster": {
+        "tip": "Make a cluster from the soft selection.",
+        "what": "Creates a cluster with the weights of your soft selection.",
+        "steps": [
+            "Soft select the area (B key).",
+            "Click Soft Cluster.",
+            "Move the cluster to test."
+        ],
+        "examples": [
+            "Soft select a cheek area and click it to get a cheek puff cluster.",
+            "Make a soft cluster for a belly breathing."
+        ],
+        "details": "Reads the rich (soft) selection with OpenMaya and makes a cluster with those weights.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_ToolsTab.py",
+            "function": "soft_cluster",
+            "connect": "self.soft_cluster"
+        }
+    },
+    "rivet_on_face": {
+        "tip": "Pin the selection to a mesh face.",
+        "what": "Creates a rivet on the selected face so an object can follow the mesh.",
+        "examples": [
+            "Select a face on the chest and click it to pin a badge.",
+            "Pin buttons to a shirt."
+        ],
+        "details": "mt.rivet_constraint(selection): a rivet (follicle / uvPin style) on the selected face that follows the deformed mesh.",
+        "code": {
+            "file": "UI/RigTools/Tabs/load_ToolsTab.py",
+            "function": "rivet_on_face",
+            "connect": "self.rivet_on_face"
+        }
+    }
+}

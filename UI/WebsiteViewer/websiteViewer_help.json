@@ -1,0 +1,15 @@
+{
+    "explorer_btn": {
+        "tip": "Open the page in your browser.",
+        "what": "Opens this page in your web browser.",
+        "examples": [
+            "Click it to watch the tutorial video full size.",
+            "Open the docs page to copy a code sample."
+        ],
+        "code": {
+            "file": "UI/WebsiteViewer/load_website_viewer.py",
+            "function": "open_link",
+            "connect": "lambda: self.open_link(self.website)"
+        }
+    }
+}

@@ -1,0 +1,427 @@
+{
+    "transfer_skinning_button": {
+        "tip": "Transfer the rig from a basemesh to a new mesh.",
+        "what": "Select the geo group of the closest basemesh, then the new mesh. Copies the skins and attachment groups across.",
+        "steps": [
+            "Import the matching basemesh.",
+            "Select its geo group.",
+            "Shift select the new character geo.",
+            "Click Transfer Rig."
+        ],
+        "examples": [
+            "Rig a new crowd character from the male basemesh in one click.",
+            "Make ten crowd variants from one rigged basemesh.",
+            "Transfer to a new outfit that has the same hierarchy names."
+        ],
+        "details": "zombie_crowd_copy.name_transfer_hierarchy_skins() copies skins by matching names in the hierarchy, then attachment_groups_copy() rebuilds the attachment groups.",
+        "code": {
+            "file": "UI/GamesCrowds/load_games_crowds.py",
+            "function": "copy_skinning_to_generic",
+            "connect": "self.copy_skinning_to_generic"
+        }
+    },
+    "import_male_button": {
+        "tip": "Import the male basemesh.",
+        "what": "Imports the rigged male basemeshes to transfer the rig from.",
+        "examples": [
+            "Import it, then use Transfer Rig on a male character.",
+            "Compare your model with the male basemesh proportions."
+        ],
+        "details": "zombie_crowd_copy.import_male_basemeshes().",
+        "code": {
+            "file": "UI/GamesCrowds/load_games_crowds.py",
+            "function": "import_male_basemesh",
+            "connect": "self.import_male_basemesh"
+        }
+    },
+    "import_female_button": {
+        "tip": "Import the female basemesh.",
+        "what": "Imports the rigged female basemeshes to transfer the rig from.",
+        "examples": [
+            "Import it, then use Transfer Rig on a female character.",
+            "Use it for female crowd agents."
+        ],
+        "details": "zombie_crowd_copy.import_female_basemeshes().",
+        "code": {
+            "file": "UI/GamesCrowds/load_games_crowds.py",
+            "function": "import_female_basemesh",
+            "connect": "self.import_female_basemesh"
+        }
+    },
+    "add_combo_button": {
+        "tip": "Add an asset to the combo.",
+        "what": "Adds a row for the asset picked above, with its file path, to the combo list.",
+        "examples": [
+            "Add \"Zombie_Body\" and \"Zombie_Hat\" to make one combined rig.",
+            "Add a hat and a backpack asset to the body combo."
+        ],
+        "details": "crowds_combo_utils.CrowdsCombo(show).find_asset_path(asset) fills the row; you can edit the path by hand.",
+        "code": {
+            "file": "UI/GamesCrowds/load_games_crowds.py",
+            "function": "add_asset_to_ui",
+            "connect": "self.add_asset_to_ui"
+        }
+    },
+    "create_combo_button": {
+        "tip": "Create the combo rig.",
+        "what": "Imports every asset in the list and combines them into one rig named after the combined asset.",
+        "steps": [
+            "Add every asset with +.",
+            "Set the combined name with <<.",
+            "Click Create."
+        ],
+        "examples": [
+            "Fill the list and the combined name, click Create.",
+            "Make one rig with body, clothes and props for a crowd agent."
+        ],
+        "details": "CrowdsCombo(show).create_combo_rig(paths, asset): imports each file and merges them into one rig. Errors if the name or the list is empty.",
+        "code": {
+            "file": "UI/GamesCrowds/load_games_crowds.py",
+            "function": "create_combo_rig",
+            "connect": "self.create_combo_rig"
+        }
+    },
+    "save_combo": {
+        "tip": "Save this combo list.",
+        "what": "Saves the list of asset paths and the combined name to a json file.",
+        "examples": [
+            "Save it to build the same combo again next week.",
+            "Save one combo per agent type."
+        ],
+        "details": "Writes {\"paths\": [...], \"asset\": name} to the json you pick.",
+        "code": {
+            "file": "UI/GamesCrowds/load_games_crowds.py",
+            "function": "save_combo_prefs",
+            "connect": "self.save_combo_prefs"
+        }
+    },
+    "load_combo": {
+        "tip": "Load a saved combo list.",
+        "what": "Loads a combo json saved before and fills the list.",
+        "examples": [
+            "Load last week's combo and click Create.",
+            "Load the soldier combo and build it on the new body."
+        ],
+        "details": "Reads that json, adds one row per path and sets the combined name.",
+        "code": {
+            "file": "UI/GamesCrowds/load_games_crowds.py",
+            "function": "load_combo_prefs",
+            "connect": "self.load_combo_prefs"
+        }
+    },
+    "set_combine": {
+        "tip": "Use the picked asset as the combined name.",
+        "what": "Copies the asset picked above into the combined asset field.",
+        "examples": [
+            "Pick the main body asset and click << to name the combo after it.",
+            "Name the combo after the body so the files sort together."
+        ],
+        "code": {
+            "file": "UI/GamesCrowds/load_games_crowds.py",
+            "function": "set_combined_asset",
+            "connect": "self.set_combined_asset"
+        }
+    },
+    "ImportSkeleton": {
+        "tip": "Import the crowd skeleton.",
+        "what": "Imports the crowd skeleton for the type picked in the list (AG, SP, BD...).",
+        "examples": [
+            "Pick AG and click it to get the Atoms skeleton.",
+            "Import the toon skeleton (SP) for stylized agents."
+        ],
+        "details": "AG > atoms skeleton; SP and BD > atoms_toon skeleton (crowd_utils).",
+        "code": {
+            "file": "UI/GamesCrowds/load_games_crowds.py",
+            "function": "ImportSkeleton",
+            "connect": "self.ImportSkeleton"
+        }
+    },
+    "ReparentSkeleton": {
+        "tip": "Fit the crowd skeleton to the rig.",
+        "what": "Matches and parents the crowd skeleton to the rig joints for the type picked in the list.",
+        "examples": [
+            "Import the skeleton, then click it so it follows the rig.",
+            "Reparent after building the rig so the skeleton follows it."
+        ],
+        "details": "match_crowd_to_rig with the joint maps: AG atoms_map > mutant_map, SP atoms_toon_map > mutant_toon_map, BD atoms_toon_map > bd_toon_map.",
+        "code": {
+            "file": "UI/GamesCrowds/load_games_crowds.py",
+            "function": "ReparentSkeleton",
+            "connect": "self.ReparentSkeleton"
+        }
+    },
+    "ReferenceSinning": {
+        "tip": "Transfer skin from the reference.",
+        "what": "Copies the skinning from the reference crowd geo onto the rig geo.",
+        "examples": [
+            "Use it when the meshes match the reference crowd character.",
+            "Copy the skin from the hero agent to a variant."
+        ],
+        "details": "transfer_skin_reference(main_geo_grp=\"geo\", crowds_map=\"atoms_map\", main_joint=\"Hips\"); the reference is kept.",
+        "code": {
+            "file": "UI/GamesCrowds/load_games_crowds.py",
+            "function": "ReferenceSinning",
+            "connect": "self.ReferenceSinning"
+        }
+    },
+    "OneToOneSkinning": {
+        "tip": "Copy the skin joint by joint.",
+        "what": "Copies the skin weights straight from one joint to its matching joint.",
+        "examples": [
+            "Use it when both skeletons have the same joints.",
+            "Move weights from the Mutant joints to the Atoms joints."
+        ],
+        "details": "transfer_skin_one_to_one(): weights move joint to joint by the map, no closest point guessing.",
+        "code": {
+            "file": "UI/GamesCrowds/load_games_crowds.py",
+            "function": "OneToOneSkinning",
+            "connect": "self.OneToOneSkinning"
+        }
+    },
+    "OffLabelSkinning": {
+        "tip": "Copy the skin by joint labels.",
+        "what": "Copies the skin weights by matching joint labels instead of names.",
+        "examples": [
+            "Use it when the joint names differ but the labels are set.",
+            "Transfer between skeletons with different naming."
+        ],
+        "details": "transfer_skin_labels(): matches joints by their side / type labels. Run Helpers > Label All Joints first if labels are missing.",
+        "code": {
+            "file": "UI/GamesCrowds/load_games_crowds.py",
+            "function": "OffLabelSkinning",
+            "connect": "self.OffLabelSkinning"
+        }
+    },
+    "create_game_joints_button": {
+        "tip": "Create the game joints.",
+        "what": "Makes the game skeleton from the biped rig, and moves the skin to it if the check is on.",
+        "steps": [
+            "Build the rig.",
+            "Turn on the skin check to move the skin too.",
+            "Click it.",
+            "Export the game skeleton."
+        ],
+        "examples": [
+            "Turn on the skin check, click it, export the game skeleton.",
+            "Make the export skeleton for Unreal."
+        ],
+        "details": "games_utils.create_biped_game_joints(do_skins): a clean *_Skl skeleton driven by the rig; with do_skins the skins move from the bind joints to it.",
+        "code": {
+            "file": "UI/GamesCrowds/load_games_crowds.py",
+            "function": "create_game_joints",
+            "connect": "self.create_game_joints"
+        }
+    },
+    "simplify_btn": {
+        "tip": "Simplify the skeleton.",
+        "what": "Turns the hero template skeleton into the simple game skeleton (fewer joints).",
+        "examples": [
+            "Use it for background characters that need fewer bones.",
+            "Cut the joint count for mobile games."
+        ],
+        "details": "convert_hero_template_skl_to_simple_skl(): merges extra joints (rolls, tweaks) into their parents, weights included.",
+        "code": {
+            "file": "UI/GamesCrowds/load_games_crowds.py",
+            "function": "simplify_btn",
+            "connect": "self.simplify_btn"
+        }
+    },
+    "import_face_skeleton_button": {
+        "tip": "Import the face skeleton.",
+        "what": "Creates the game face skeleton.",
+        "examples": [
+            "Import it, then Setup Face Skeleton.",
+            "Add a face skeleton to a game character."
+        ],
+        "code": {
+            "file": "UI/GamesCrowds/load_games_crowds.py",
+            "function": "import_face_skeleton",
+            "connect": "self.import_face_skeleton"
+        }
+    },
+    "setup_face_skeleton_button": {
+        "tip": "Set up the face skeleton.",
+        "what": "Connects the game face skeleton to the face rig.",
+        "examples": [
+            "Click it after Import Face Skeleton.",
+            "Drive the game face joints from the face ctrls."
+        ],
+        "code": {
+            "file": "UI/GamesCrowds/load_games_crowds.py",
+            "function": "setup_face_skeleton",
+            "connect": "self.setup_face_skeleton"
+        }
+    },
+    "clasic_linear_skin_button": {
+        "tip": "Set the skins to Classic Linear.",
+        "what": "Switches the skinClusters to Classic Linear, the method game engines use.",
+        "examples": [
+            "Click it before exporting to the engine so it looks the same there.",
+            "Match what the engine will show before exporting."
+        ],
+        "details": "skinningMethod = Classic Linear on every skinCluster.",
+        "code": {
+            "file": "UI/GamesCrowds/load_games_crowds.py",
+            "function": "clasic_linear_skin",
+            "connect": "self.clasic_linear_skin"
+        }
+    },
+    "set_max_inf_to_four_button": {
+        "tip": "Limit the skins to 4 influences.",
+        "what": "Sets every skin to at most 4 joints per vertex, as most engines need.",
+        "examples": [
+            "Click it before the FBX export.",
+            "Fix \"too many influences\" errors on FBX import."
+        ],
+        "details": "set_max_inf(4): prunes and normalizes every skin to 4 influences per vertex.",
+        "code": {
+            "file": "UI/GamesCrowds/load_games_crowds.py",
+            "function": "set_max_inf_to_four",
+            "connect": "self.set_max_inf_to_four"
+        }
+    },
+    "delete_constriants_button": {
+        "tip": "Delete the constraints in the skeleton.",
+        "what": "Removes the constraints inside the main skeleton, leaving clean joints for export.",
+        "examples": [
+            "Click it on a copy of the rig, right before exporting.",
+            "Clean a baked skeleton copy before export."
+        ],
+        "details": "Deletes the constraints under the main game skeleton. The skeleton stops following the rig: do it on an export copy.",
+        "code": {
+            "file": "UI/GamesCrowds/load_games_crowds.py",
+            "function": "delete_constriants",
+            "connect": "self.delete_constriants"
+        }
+    },
+    "SegmentScaleOn_Bttn": {
+        "tip": "Turn segment scale compensate on.",
+        "what": "Turns on segment scale compensate on the skeleton joints.",
+        "examples": [
+            "Turn it on to go back to the Maya default.",
+            "Turn it back on after the export test."
+        ],
+        "details": "segmentScaleCompensate 1 on the game skeleton joints.",
+        "code": {
+            "file": "UI/GamesCrowds/load_games_crowds.py",
+            "function": "turn_on_scale_compensate",
+            "connect": "self.turn_on_scale_compensate"
+        }
+    },
+    "SegmentScaleOff_Bttn": {
+        "tip": "Turn segment scale compensate off.",
+        "what": "Turns off segment scale compensate on the skeleton joints, as game engines expect.",
+        "examples": [
+            "Turn it off so scaled joints look the same in the engine.",
+            "Check the arm scale looks the same as in the engine."
+        ],
+        "details": "segmentScaleCompensate 0 on the game skeleton joints (Unreal / Unity do not have it).",
+        "code": {
+            "file": "UI/GamesCrowds/load_games_crowds.py",
+            "function": "turn_off_scale_compensate",
+            "connect": "self.turn_off_scale_compensate"
+        }
+    },
+    "turn_off_inherits_transform_on_selected_btn": {
+        "tip": "Inherits Transform off on the selected joints.",
+        "what": "Turns off Inherits Transform on the selected joints.",
+        "examples": [
+            "Select the joints that double transform and click it.",
+            "Stop a joint double scaling with its parent."
+        ],
+        "details": "setAttr inheritsTransform 0 on the selected joints.",
+        "code": {
+            "file": "UI/GamesCrowds/load_games_crowds.py",
+            "function": "turn_off_inherits_transform_on_selected",
+            "connect": "self.turn_off_inherits_transform_on_selected"
+        }
+    },
+    "turn_on_inherits_transform_on_selected_btn": {
+        "tip": "Inherits Transform on, on the selected joints.",
+        "what": "Turns Inherits Transform back on for the selected joints.",
+        "examples": [
+            "Undo the OFF button on some joints.",
+            "Restore the default on joints after a test."
+        ],
+        "details": "setAttr inheritsTransform 1 on the selected joints.",
+        "code": {
+            "file": "UI/GamesCrowds/load_games_crowds.py",
+            "function": "turn_on_inherits_transform_on_selected",
+            "connect": "self.turn_on_inherits_transform_on_selected"
+        }
+    },
+    "AnimateFaceRig": {
+        "tip": "Animate the face for the export.",
+        "what": "Keys the face ctrls through the poses in the SDK map, to feed the DemBones process.",
+        "examples": [
+            "Click it, then Export Alembic, FBX, DemBones.",
+            "Animate the face to bake DemBones for a crowd agent."
+        ],
+        "details": "Reads crowd_utils/SDKMap.json (SDKMap_BD.json on BD rigs with Geo_Grp / Control_Grp) and keys the face ctrls through those poses, one per frame.",
+        "code": {
+            "file": "UI/GamesCrowds/load_games_crowds.py",
+            "function": "AnimateFaceRig",
+            "connect": "self.AnimateFaceRig"
+        }
+    },
+    "LoadFaceGeo": {
+        "tip": "Use the selected geo as the face geo.",
+        "what": "Puts the selected geometry in the face geo field.",
+        "examples": [
+            "Select the head mesh and click <<.",
+            "Load the face mesh of the agent before exporting."
+        ],
+        "code": {
+            "file": "UI/GamesCrowds/load_games_crowds.py",
+            "function": "put_selection_on_field",
+            "connect": "lambda:self.put_selection_on_field(field=self.ui.faceGeoText)"
+        }
+    },
+    "ExportData": {
+        "tip": "Export Alembic, FBX and run DemBones.",
+        "what": "Exports the animated face geo and runs DemBones to make joints that copy the face shapes.",
+        "steps": [
+            "Animate the face rig.",
+            "Fill the face geo field with <<.",
+            "Click it and wait for DemBones."
+        ],
+        "examples": [
+            "Animate the face first, then click it and wait.",
+            "Export once per agent face variant."
+        ],
+        "details": "face crowds generate_output(geo): FBX + Alembic of the animated face, then runs DemBones to solve joints and weights that copy the shapes.",
+        "code": {
+            "file": "UI/GamesCrowds/load_games_crowds.py",
+            "function": "ExportData",
+            "connect": "self.ExportData"
+        }
+    },
+    "ImportData": {
+        "tip": "Import the DemBones joints.",
+        "what": "Brings back the joints and geo made by DemBones.",
+        "examples": [
+            "Click it once the export finished.",
+            "Import to check the solved joints follow the shapes."
+        ],
+        "details": "import_dembones_output(): brings back the solved joints and the skinned geo.",
+        "code": {
+            "file": "UI/GamesCrowds/load_games_crowds.py",
+            "function": "ImportData",
+            "connect": "self.ImportData"
+        }
+    },
+    "ConnectFaceRig": {
+        "tip": "Connect the DemBones joints to the crowd rig.",
+        "what": "Drives the DemBones joints from the crowd rig ctrls, hides the extra ctrls and cleans the skin.",
+        "examples": [
+            "Last step: click it and test the face ctrls.",
+            "Connect so the crowd agent face uses the rig ctrls."
+        ],
+        "details": "connect_ctrls_2_dembones(): drives the DemBones joints from the crowd rig ctrls, hides unused ctrls and cleans the skinCluster.",
+        "code": {
+            "file": "UI/GamesCrowds/load_games_crowds.py",
+            "function": "ConnectFaceRig",
+            "connect": "self.ConnectFaceRig"
+        }
+    }
+}
