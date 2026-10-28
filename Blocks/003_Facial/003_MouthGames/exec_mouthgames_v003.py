@@ -137,6 +137,18 @@ def build_mouthgames_block():
     else:
         bind_joints_mode = 'PerVtx'
 
+    def config_value(attr, default):
+        """Block attr, or its JSON default on blocks made before it existed."""
+        if cmds.attributeQuery(attr, n=config, exists=True):
+            return cmds.getAttr('{}.{}'.format(config, attr))
+        return default
+
+    # v003: mid ctrls own tangent handles on the driver curve (rotation bends the lip)
+    mid_tangents = bool(config_value('MidCtrlTangents', True))
+    buccal_flap = bool(config_value('BuccalFlap', False))
+    flap_joint_names = {'Up': (config_value('SetFlapUpperJoint', '') or '').strip(),
+                        'Dw': (config_value('SetFlapLowerJoint', '') or '').strip()}
+
     upper_edge = cmds.getAttr('{}.SetUpperEdge'.format(config), asString=True).split(',')
     lower_edge = cmds.getAttr('{}.SetLowerEdge'.format(config), asString=True).split(',')
     attrs_position = cmds.getAttr('{}.SetAttrsPosition'.format(config), asString=True)
@@ -297,11 +309,23 @@ def build_mouthgames_block():
         spans = num_ctrls - 1
         degree = 3
 
-        five_curve = cmds.duplicate(linear_curve, n=name + '_WireDriver' + nc['curve'])[0]
-        mel.eval('rebuildCurve -ch 1 -rpo 1 -rt 0 -end 1 -kr 0'
-                 ''
-                 ''
-                 ' -kcp 0 -kep 1 -kt 0 -s {} -d {} -tol 0.01 "{}";'.format(spans, degree, five_curve))
+        if mid_tangents:
+            # v003: ctrls evenly spaced ON the lip, driver curve is a bezier
+            # through them (3 CVs per ctrl: in handle, point, out handle, all
+            # skinned to that ctrl), so rotating a ctrl turns its handles and
+            # bends the lip around it
+            ctrl_positions = [cmds.pointPosition('{}.u[{}]'.format(linear_curve_shape, p), w=True)
+                              for p in params_by_length(linear_curve_shape, num_ctrls + 2)]
+            five_curve = bezier_curve(ctrl_positions, name + '_WireDriver' + nc['curve'])
+            cv_to_add_ctrl_to = ctrl_positions
+        else:
+            five_curve = cmds.duplicate(linear_curve, n=name + '_WireDriver' + nc['curve'])[0]
+            mel.eval('rebuildCurve -ch 1 -rpo 1 -rt 0 -end 1 -kr 0'
+                     ''
+                     ''
+                     ' -kcp 0 -kep 1 -kt 0 -s {} -d {} -tol 0.01 "{}";'.format(spans, degree, five_curve))
+            # Dynamically create CV list
+            cv_to_add_ctrl_to = ['{}.cv[{}]'.format(five_curve, i) for i in range(num_ctrls + 2)]
         five_curve_shape = cmds.listRelatives(five_curve, s=True)[0]
 
         wire = mel.eval(
@@ -315,9 +339,6 @@ def build_mouthgames_block():
         #-------------------------------------
         #-------------------------------------
 
-        # Dynamically create CV list
-        cv_to_add_ctrl_to = ['{}.cv[{}]'.format(five_curve, i) for i in range(num_ctrls + 2)]
-        print('cv_to_add_ctrl_to', cv_to_add_ctrl_to)
 
         mid_index = num_ctrls // 2
         main_ctrl_names = []
@@ -352,14 +373,22 @@ def build_mouthgames_block():
 
         main_joint_grp = cmds.group(em=True, n='{}{}{}'.format(name, nc['joint'], nc['group']))
 
+        # driver curve index of every sec joint (bezier skin weights)
+        jnt_by_index = {}
+        left_indices = []
+
         #Left side first
         for num, cv in enumerate(cv_to_add_ctrl_to):
 
             if main_ctrl_names[num].startswith(nc['right']):
                 continue
 
-            cmds.select(cv)
-            temp_cls = cmds.cluster()
+            if mid_tangents:
+                temp_cls = cmds.spaceLocator()[0]
+                cmds.xform(temp_cls, ws=True, t=cv)
+            else:
+                cmds.select(cv)
+                temp_cls = cmds.cluster()
 
             # Create controller at that position
             ctrl = mt.curve(
@@ -386,6 +415,7 @@ def build_mouthgames_block():
             cmds.select(cl=True)
             jnt = cmds.joint(n=ctrl.replace(nc['ctrl'], nc['joint']))
             sec_jnts.append(jnt)
+            jnt_by_index[num] = jnt
             mt.match(jnt, ctrl, r=True, t=True)
             jnt_root = mt.root_grp()[0]
             sec_jnts_roots.append(jnt_root)
@@ -394,13 +424,18 @@ def build_mouthgames_block():
             # no scaleConstraint: scaling a mid ctrl scales the lip joints
             # around it (weighted, see connect_lip_scale) instead of
             # stretching the driver curve
-            cmds.parentConstraint(ctrl, jnt, mo=True)
+            if mid_tangents:
+                cmds.setAttr(jnt + '.jointOrient', 0, 0, 0)
+                follow_matrix(ctrl_driver(ctrl), jnt)
+            else:
+                cmds.parentConstraint(ctrl, jnt, mo=True)
 
             # *--------- Aims or Orients -------------
             # *----------------------------
 
             if ctrl.startswith(nc['left']):
                 left_sec_ctrls.append(ctrl)
+                left_indices.append(num)
 
                 #Near to curve to move on top of curve
                 temp_loc = cmds.spaceLocator()[0]
@@ -458,7 +493,7 @@ def build_mouthgames_block():
         right_controllers = []
         right_controllers_roots = []
 
-        for left_ctrl in left_sec_ctrls:
+        for left_ctrl, left_index in zip(left_sec_ctrls, left_indices):
             temp_loc = cmds.spaceLocator()
             cmds.delete(cmds.parentConstraint(left_ctrl, temp_loc))
 
@@ -482,6 +517,7 @@ def build_mouthgames_block():
             cmds.select(cl=True)
             jnt = cmds.joint(n=ctrl.replace(nc['ctrl'], nc['joint']))
             sec_jnts.append(jnt)
+            jnt_by_index[len(cv_to_add_ctrl_to) - 1 - left_index] = jnt
             mt.match(jnt, ctrl, r=True, t=True)
             jnt_root = mt.root_grp()[0]
             sec_jnts_roots.append(jnt_root)
@@ -490,7 +526,13 @@ def build_mouthgames_block():
             # no scaleConstraint: scaling a mid ctrl scales the lip joints
             # around it (weighted, see connect_lip_scale) instead of
             # stretching the driver curve
-            cmds.parentConstraint(ctrl, jnt, mo=True)
+            if mid_tangents:
+                # matrix copy keeps the mirror, so the handles turn mirrored
+                # (a parentConstraint drops the reflection)
+                cmds.setAttr(jnt + '.jointOrient', 0, 0, 0)
+                follow_matrix(ctrl_driver(ctrl), jnt)
+            else:
+                cmds.parentConstraint(ctrl, jnt, mo=True)
 
             #Mirror and reparent
             miror_ctrl_grp = mt.mirror_group(ctrl_root, world=True)
@@ -498,7 +540,13 @@ def build_mouthgames_block():
 
             cmds.delete(temp_loc)
 
-        cmds.skinCluster(sec_jnts, five_curve, sm=0, bm=1, tsb=True)
+        driver_skin = cmds.skinCluster(sec_jnts, five_curve, sm=0, bm=1, tsb=True)[0]
+        if mid_tangents:
+            # each ctrl owns its point and both handles (CVs 3i-1, 3i, 3i+1)
+            cv_count = 3 * (len(cv_to_add_ctrl_to) - 1) + 1
+            for c in range(cv_count):
+                cmds.skinPercent(driver_skin, '{}.cv[{}]'.format(five_curve, c),
+                                 transformValue=[(jnt_by_index[(c + 1) // 3], 1.0)])
 
 
         mid_ctrl = False
@@ -564,44 +612,56 @@ def build_mouthgames_block():
                 auto_cache[ctrl] = root
             return auto_cache[ctrl]
 
-        def apply_linear_weights(side_ctrls, start_obj, end_obj):
-            """
-            Keeps the controller order untouched, but flips weight logic so:
-            - last ctrl in list gets the strongest weight to start_obj (puller)
-            - first ctrl in list gets weakest
-            """
+        # v003: the mid ctrl only follows the lip main ctrl (the first v003 put two
+        # parentConstraints on it, the corner weights were 0 anyway)
+        cmds.parentConstraint(main_ctrl, get_auto(mid_ctrl), skipRotate=('x', 'y', 'z'), mo=True)
 
-            forward = list(enumerate(side_ctrls))
-            backward = list(reversed(forward))
+        corner_links = []
 
+        def apply_linear_weights(side_ctrls, start_obj, end_obj, side):
+            """
+            Each ctrl blends between the lip main ctrl (start_obj) and the
+            corner puller (end_obj) by t = how far it sits toward the corner
+            (0 at the middle, 1 at the corner). The weights are linear at
+            rest (same as before) and get driven by the side Main ctrl Corner
+            attrs later (see connect_corner_links).
+            """
+            count = len(side_ctrls)
             for num, ctrl in enumerate(side_ctrls):
-
+                t = float(num + 1) / count
                 auto = get_auto(ctrl)
 
                 pc = cmds.parentConstraint(
-                    start_obj,  # puller
-                    end_obj,  # mid
+                    start_obj,  # lip main
+                    end_obj,  # corner puller
                     auto,
                     skipRotate=('x', 'y', 'z'),
                     mo=True
                 )[0]
 
-                cmds.setAttr(f"{pc}.{start_obj}W0", backward[num][0])
-                cmds.setAttr(f"{pc}.{end_obj}W1", forward[num][0])
+                cmds.setAttr(f"{pc}.{start_obj}W0", 1 - t)
+                cmds.setAttr(f"{pc}.{end_obj}W1", t)
                 cmds.setAttr(pc + ".interpType", 2)
+                if num < count - 1:  # the corner ctrl always rides the puller
+                    corner_links.append({'ctrl': ctrl, 'auto': auto, 't': t, 'side': side,
+                                         'puller': end_obj,
+                                         'main_weight': f"{pc}.{start_obj}W0",
+                                         'puller_weight': f"{pc}.{end_obj}W1"})
 
         # LEFT
         apply_linear_weights(
-            [mid_ctrl]+left_controllers,
+            left_controllers,
             start_obj=main_ctrl,
-            end_obj=left_puller_loc
+            end_obj=left_puller_loc,
+            side=nc['left']
         )
 
         # RIGHT
         apply_linear_weights(
-            [mid_ctrl]+right_controllers,
+            right_controllers,
             start_obj=main_ctrl,
-            end_obj=right_puller_loc
+            end_obj=right_puller_loc,
+            side=nc['right']
         )
 
         #Mid controller
@@ -634,7 +694,8 @@ def build_mouthgames_block():
                 'lip_points': lip_points,
                 'tweak_points': tweak_points,
                 'tweek_ctrls':tweek_controllers,
-                'corner_pullers':[left_puller_loc, right_puller_loc]
+                'corner_pullers':[left_puller_loc, right_puller_loc],
+                'corner_links': corner_links
                 }
 
     #---------------------------------------------------------------------
@@ -744,6 +805,13 @@ def build_mouthgames_block():
         sub_move_mult_attr = mt.new_attr(input=side_main_ctrl, name='SubMovementMult', min=0.1, max=10, default=1)
         # seals the lips from this corner to the middle (0 -> 10)
         mt.new_attr(input=side_main_ctrl, name='Zip', min=0, max=10, default=0)
+        # v003: how the corner drags / turns the mid ctrls of both lips
+        mt.line_attr(input=side_main_ctrl, name='Corner')
+        mt.new_attr(input=side_main_ctrl, name='MidFollow', min=0, max=1, default=1)
+        mt.new_attr(input=side_main_ctrl, name='MidFalloff', min=0, max=10, default=1)
+        mt.new_attr(input=side_main_ctrl, name='CornerAim', min=0, max=1, default=0)
+        mt.new_attr(input=side_main_ctrl, name='AimFalloff', min=0, max=10, default=1)
+        mt.new_attr(input=side_main_ctrl, name='AimMult', min=0, max=20, default=1)
 
         # Make pretty
         cmds.select('{}.cv[0:4]'.format(side_main_ctrl))
@@ -908,6 +976,11 @@ def build_mouthgames_block():
     cmds.connectAttr(right_follow_attr, "{}.inputX".format(reverse_node), f=True)
     cmds.connectAttr("{}.output.outputX".format(reverse_node),
                      "{}.{}W1".format(right_corner_pc, jaw_top_locator), f=True)
+
+    # v003: corner influence + aim on the mid ctrls
+    corner_ctrls = {nc['left']: left_ctrl, nc['right']: right_ctrl}
+    for system in [upper_system, lower_system]:
+        connect_corner_links(system['corner_links'], corner_ctrls)
 
 
     #Jaw up Logic
@@ -1103,6 +1176,20 @@ def build_mouthgames_block():
         cmds.connectAttr(tweak + '.rotate', degrees + '.input1')
         tweak_degrees[tweak] = degrees
 
+    # v003: mid ctrl rotation (plus its corner aim) also turns the lip joints
+    # it moves, so rx rolls the lip there and ry/rz keep the joints on the bend
+    sec_degrees = {}
+    aim_blends = {link['ctrl']: link['aim_blend'] for system in systems
+                  for link in system['corner_links'] if link.get('aim_blend')}
+    if mid_tangents:
+        for system in systems:
+            for ctrl in system['sec_controllers']:
+                degrees = cmds.createNode('plusMinusAverage', n=ctrl + '_RotateDegrees_PMA')
+                cmds.connectAttr(ctrl + '.rotate', degrees + '.input3D[0]')
+                if ctrl in aim_blends:
+                    cmds.connectAttr(aim_blends[ctrl] + '.outRotate', degrees + '.input3D[1]')
+                sec_degrees[ctrl] = degrees
+
     for system in systems:
         roll_attr, roll_sign = roll_attrs[system['main_ctrl']]
         for point in system['lip_points']:
@@ -1127,6 +1214,13 @@ def build_mouthgames_block():
                 axes = axis_map(ctrl, point['carrier'])
                 for b in range(3):
                     scale_terms[b].append(('{}.output3D{}'.format(scale_minus[ctrl], 'xyz'[axes['scale'][b]]), weight))
+                if ctrl in sec_degrees:
+                    for b in range(3):
+                        for a in range(3):
+                            m = axes['vector'][a][b]
+                            if abs(m) > 1e-3:
+                                rotate_terms[b].append(('{}.output3D{}'.format(sec_degrees[ctrl], 'xyz'[a]),
+                                                        weight * m * axes['det']))
 
             for b, axis in enumerate('XYZ'):
                 out = weighted_sum('{}_Translate{}_BW'.format(jnt, axis), translate_terms[b])
@@ -1148,6 +1242,28 @@ def build_mouthgames_block():
         cmds.parent(bind_joint, bind_jnt_grp)
         # matrix copy instead of parent + scale constraints (cheaper, same result)
         follow_matrix(jnt, bind_joint)
+
+    # v003: buccal flap, one per side, between an upper and a lower lip joint
+    if buccal_flap:
+        flap_ctrls = []
+        mirror_source = None  # right flap ctrl mirrors the left one
+        for side in [nc['left'], nc['right']]:
+            flap_joints = [find_flap_joint(system, side, flap_joint_names[key])
+                           for system, key in [(upper_system, 'Up'), (lower_system, 'Dw')]]
+            if not all(flap_joints):
+                continue
+            flap = create_flap(side + name + '_Flap', side, flap_joints[0], flap_joints[1],
+                               clean_ctrl_grp, parent_scale, ctrl_size, mirror_source)
+            mirror_source = mirror_source or flap['follow']
+            flap_ctrls.append(flap['ctrl'])
+            cmds.select(cl=True)
+            bind_joint = cmds.joint(n=flap['joint'].replace(nc['joint'], nc['joint_bind']))
+            cmds.setAttr('{}.radius'.format(bind_joint), 1.5)
+            cmds.parent(bind_joint, bind_jnt_grp)
+            follow_matrix(flap['joint'], bind_joint)
+        for ctrl in flap_ctrls:
+            for shape in cmds.listRelatives(ctrl, s=True) or []:
+                cmds.connectAttr(main_ctrl_attr, shape + '.v', f=True)
 
     # Create Jaw Bind Joint
     cmds.select(cl=True)
@@ -1392,3 +1508,222 @@ def follow_matrix(source, target):
     cmds.connectAttr(decompose + '.outputTranslate', target + '.translate')
     cmds.connectAttr(decompose + '.outputRotate', target + '.rotate')
     cmds.connectAttr(decompose + '.outputScale', target + '.scale')
+
+
+#------------------------------------
+#-----------v003 helpers-------------
+#------------------------------------
+
+def bezier_curve(points, name):
+    """Degree 3 curve through every point, with an in/out handle per point
+    (Catmull-Rom tangents) and triple knots, so each point owns 3 CVs."""
+    pts = [om.MVector(p) for p in points]
+    last = len(pts) - 1
+    cvs = []
+    for i, p in enumerate(pts):
+        if i == 0:
+            handle = (pts[1] - p) * (1 / 3.0)
+        elif i == last:
+            handle = (p - pts[i - 1]) * (1 / 3.0)
+        else:
+            handle = (pts[i + 1] - pts[i - 1]) * (1 / 6.0)
+        if i > 0:
+            cvs.append(p - handle)
+        cvs.append(p)
+        if i < last:
+            cvs.append(p + handle)
+    knots = [k for i in range(len(pts)) for k in (i, i, i)]
+    curve = cmds.curve(d=3, p=[(c.x, c.y, c.z) for c in cvs], k=knots, n=name)
+    cmds.rename(cmds.listRelatives(curve, s=True)[0], curve + 'Shape')
+    return curve
+
+
+def ctrl_driver(ctrl):
+    """Child of a mid ctrl that undoes the ctrl's own scale, so its sec joint
+    gets the ctrl's world matrix, mirror included, without the ctrl scale
+    (scale goes to the lip joints, not the driver curve)."""
+    driver = cmds.createNode('transform', n=ctrl + '_Driver' + nc['null'], p=ctrl)
+    unscale = cmds.createNode('multiplyDivide', n=ctrl + '_Driver_Unscale_MD')
+    cmds.setAttr(unscale + '.operation', 2)
+    cmds.setAttr(unscale + '.input1', 1, 1, 1)
+    cmds.connectAttr(ctrl + '.scale', unscale + '.input2')
+    cmds.connectAttr(unscale + '.output', driver + '.scale')
+    return driver
+
+
+def connect_corner_links(links, corner_ctrls):
+    """Drive how much each mid ctrl follows / aims at its corner from the
+    side Main ctrl attrs.
+
+    follow = MidFollow * t^MidFalloff   (t: 0 middle -> 1 corner)
+    aim    = CornerAim * t^AimFalloff, turn scaled by AimMult
+    The aim is the shortest rotation from the rest direction to the corner
+    puller (angleBetween, measured in the ctrl root's own space, so mirrored
+    right side ctrls aim the same way), on a CornerAim group above the ctrl.
+    """
+    for link in links:
+        ctrl, auto, corner = link['ctrl'], link['auto'], corner_ctrls[link['side']]
+
+        falloff = cmds.createNode('multiplyDivide', n=ctrl + '_CornerFalloff_MD')
+        cmds.setAttr(falloff + '.operation', 3)
+        cmds.setAttr(falloff + '.input1X', link['t'])
+        cmds.setAttr(falloff + '.input1Y', link['t'])
+        cmds.connectAttr(corner + '.MidFalloff', falloff + '.input2X')
+        cmds.connectAttr(corner + '.AimFalloff', falloff + '.input2Y')
+
+        amount = cmds.createNode('multiplyDivide', n=ctrl + '_CornerAmount_MD')
+        cmds.connectAttr(falloff + '.outputX', amount + '.input1X')
+        cmds.connectAttr(falloff + '.outputY', amount + '.input1Y')
+        cmds.connectAttr(corner + '.MidFollow', amount + '.input2X')
+        cmds.connectAttr(corner + '.CornerAim', amount + '.input2Y')
+
+        rev = cmds.createNode('reverse', n=ctrl + '_CornerAmount_Rev')
+        cmds.connectAttr(amount + '.outputX', rev + '.inputX')
+        cmds.connectAttr(amount + '.outputX', link['puller_weight'], f=True)
+        cmds.connectAttr(rev + '.outputX', link['main_weight'], f=True)
+
+        # identity group + relative parent: mt.root_grp matches with a
+        # parentConstraint, which loses the mirror and leaves the right
+        # ctrls with scale -1 / rotate 180 channels
+        aim_grp = cmds.createNode('transform', n=ctrl + 'CornerAim' + nc['group'], p=auto)
+        cmds.parent(ctrl, aim_grp, r=True)
+        target = cmds.createNode('multMatrix', n=ctrl + '_CornerAim_MM')
+        cmds.connectAttr(link['puller'] + '.worldMatrix[0]', target + '.matrixIn[0]')
+        cmds.connectAttr(auto + '.worldInverseMatrix[0]', target + '.matrixIn[1]')
+        local = cmds.createNode('decomposeMatrix', n=ctrl + '_CornerAim_DM')
+        cmds.connectAttr(target + '.matrixSum', local + '.inputMatrix')
+
+        angle = cmds.createNode('angleBetween', n=ctrl + '_CornerAim_AB')
+        cmds.setAttr(angle + '.vector1', *cmds.getAttr(local + '.outputTranslate')[0])
+        cmds.connectAttr(local + '.outputTranslate', angle + '.vector2')
+
+        # AimMult exaggerates the turn (long snouts barely change direction)
+        mult = cmds.createNode('multiplyDivide', n=ctrl + '_CornerAimMult_MD')
+        cmds.connectAttr(angle + '.euler', mult + '.input1')
+        for axis in 'XYZ':
+            cmds.connectAttr(corner + '.AimMult', mult + '.input2' + axis)
+
+        blend = cmds.createNode('pairBlend', n=ctrl + '_CornerAim_PB')
+        cmds.setAttr(blend + '.rotInterpolation', 1)
+        cmds.connectAttr(mult + '.output', blend + '.inRotate2')
+        cmds.connectAttr(amount + '.outputY', blend + '.weight')
+        cmds.connectAttr(blend + '.outRotate', aim_grp + '.rotate')
+        link['aim_blend'] = blend
+
+
+def find_flap_joint(system, side, typed=''):
+    """Lip joint the flap hangs from: the typed one (any side prefix, mirrored
+    to this side) or, when empty / missing, the joint next to this corner."""
+    if typed:
+        if typed.endswith(nc['joint_bind']):
+            typed = typed[:-len(nc['joint_bind'])] + nc['joint']
+        for prefix in (nc['left'], nc['right']):
+            if typed.startswith(prefix):
+                typed = side + typed[len(prefix):]
+                break
+        if cmds.objExists(typed):
+            return typed
+        cmds.warning('Flap joint {} not found, using the one next to the corner.'.format(typed))
+
+    if side == nc['left']:
+        points = [p for p in system['lip_points'] if not p['corner'] and p['u'] > 0.5]
+        point = max(points, key=lambda p: p['u']) if points else None
+    else:
+        points = [p for p in system['lip_points'] if not p['corner'] and p['u'] < 0.5]
+        point = min(points, key=lambda p: p['u']) if points else None
+    if not point:
+        cmds.warning('No lip joint for the {} flap, skipped.'.format(side))
+        return None
+    return point['joint']
+
+
+def create_flap(base, side, up_jnt, dw_jnt, ctrl_parent, parent_scale, ctrl_size, mirror_source=None):
+    """Buccal flap: ctrl + joint riding a blend of an upper and a lower lip
+    joint (FlapBlend), squashed along the lip gap axis as the lips close
+    (Squash) and optionally stretched as they open (Stretch)."""
+    blend = cmds.createNode('blendMatrix', n=base + '_BM')
+    cmds.connectAttr(up_jnt + '.worldMatrix[0]', blend + '.inputMatrix')
+    cmds.connectAttr(dw_jnt + '.worldMatrix[0]', blend + '.target[0].targetMatrix')
+
+    # translate + rotate only, the scale comes from the ctrl group
+    follow = cmds.createNode('transform', n=base + '_Follow' + nc['null'], p=ctrl_parent)
+    local = cmds.createNode('multMatrix', n=base + '_Follow_MM')
+    cmds.connectAttr(blend + '.outputMatrix', local + '.matrixIn[0]')
+    cmds.connectAttr(ctrl_parent + '.worldInverseMatrix[0]', local + '.matrixIn[1]')
+    decompose = cmds.createNode('decomposeMatrix', n=base + '_Follow_DM')
+    cmds.connectAttr(local + '.matrixSum', decompose + '.inputMatrix')
+    cmds.connectAttr(decompose + '.outputTranslate', follow + '.translate')
+    cmds.connectAttr(decompose + '.outputRotate', follow + '.rotate')
+
+    cmds.select(cl=True)
+    ctrl = mt.curve(input='', type='sphere', rename=True, custom_name=True,
+                    name=base + nc['ctrl'], size=ctrl_size / 3)
+    mt.assign_color(color='blue' if side == nc['left'] else 'red')
+    root = mt.root_grp()[0]
+
+    # FlapBlend first: the follow null has to sit at its rest blend before
+    # the ctrl root is placed under it
+    mt.line_attr(input=ctrl, name='Flap')
+    blend_attr = mt.new_attr(input=ctrl, name='FlapBlend', min=0, max=1, default=0.5)
+    squash_attr = mt.new_attr(input=ctrl, name='Squash', min=0, max=1, default=1)
+    stretch_attr = mt.new_attr(input=ctrl, name='Stretch', min=0, max=1, default=0)
+    cmds.connectAttr(blend_attr, blend + '.target[0].weight')
+
+    cmds.parent(root, follow)
+    if mirror_source:
+        # world X mirror of the left flap (negative scale like mt.mirror_group,
+        # set straight in world space: a mirror group under the rotated
+        # follow null does not decompose back to the same place)
+        mirror = om.MMatrix([-1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1])
+        source = om.MMatrix(cmds.xform(mirror_source, q=True, ws=True, m=True))
+        cmds.xform(root, ws=True, m=list(source * mirror))
+    else:
+        cmds.xform(root, os=True, t=(0, 0, 0), ro=(0, 0, 0))
+
+    squash = cmds.createNode('transform', n=base + '_Squash' + nc['null'], p=ctrl)
+    cmds.select(cl=True)
+    jnt = cmds.joint(n=base + nc['joint'])
+    cmds.parent(jnt, squash, r=True)
+
+    up_pos = om.MVector(cmds.xform(up_jnt, q=True, ws=True, t=True))
+    dw_pos = om.MVector(cmds.xform(dw_jnt, q=True, ws=True, t=True))
+    gap = up_pos - dw_pos
+    scale_x = cmds.getAttr(parent_scale + '.outputScaleX') or 1.0
+    rest = gap.length() / scale_x
+    if rest < 1e-4:
+        cmds.warning('{}: upper and lower flap joints overlap, no squash.'.format(base))
+        return {'ctrl': ctrl, 'joint': jnt, 'follow': follow}
+
+    # the squash null axis that points the most along the lip gap
+    m = cmds.xform(squash, q=True, ws=True, m=True)
+    axes = [om.MVector(m[0:3]).normal(), om.MVector(m[4:7]).normal(), om.MVector(m[8:11]).normal()]
+    axis = max(range(3), key=lambda a: abs(axes[a] * gap.normal()))
+
+    # gap / rest, split in closing (0..1) and opening (1..) parts
+    distance = cmds.createNode('distanceBetween', n=base + '_Gap_DB')
+    cmds.connectAttr(up_jnt + '.worldMatrix[0]', distance + '.inMatrix1')
+    cmds.connectAttr(dw_jnt + '.worldMatrix[0]', distance + '.inMatrix2')
+    unscaled = cmds.createNode('multiplyDivide', n=base + '_Gap_MD')
+    cmds.setAttr(unscaled + '.operation', 2)
+    cmds.connectAttr(distance + '.distance', unscaled + '.input1X')
+    cmds.connectAttr(parent_scale + '.outputScaleX', unscaled + '.input2X')
+    clamp = cmds.createNode('clamp', n=base + '_Gap_Clamp')
+    cmds.connectAttr(unscaled + '.outputX', clamp + '.inputR')
+    cmds.connectAttr(unscaled + '.outputX', clamp + '.inputG')
+    cmds.setAttr(clamp + '.maxR', rest)
+    cmds.setAttr(clamp + '.minG', rest)
+    cmds.setAttr(clamp + '.maxG', rest * 1000)
+    delta = cmds.createNode('plusMinusAverage', n=base + '_Gap_PMA')
+    cmds.setAttr(delta + '.operation', 2)
+    cmds.connectAttr(clamp + '.outputR', delta + '.input3D[0].input3Dx')
+    cmds.connectAttr(clamp + '.outputG', delta + '.input3D[0].input3Dy')
+    cmds.setAttr(delta + '.input3D[1]', rest, rest, 0)
+    amount = cmds.createNode('multiplyDivide', n=base + '_Squash_MD')
+    cmds.connectAttr(delta + '.output3Dx', amount + '.input1X')
+    cmds.connectAttr(delta + '.output3Dy', amount + '.input1Y')
+    cmds.connectAttr(squash_attr, amount + '.input2X')
+    cmds.connectAttr(stretch_attr, amount + '.input2Y')
+    out = weighted_sum(base + '_Squash_BW', [(amount + '.outputX', 1.0 / rest),
+                                             (amount + '.outputY', 1.0 / rest)], constant=1.0)
+    cmds.connectAttr(out, '{}.scale{}'.format(squash, 'XYZ'[axis]))
+    return {'ctrl': ctrl, 'joint': jnt, 'follow': follow}
