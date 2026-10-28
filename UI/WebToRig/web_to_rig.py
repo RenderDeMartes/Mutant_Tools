@@ -11,18 +11,21 @@ Three stages, each reporting its progress through `report(percent, text)`:
     place_template     the HumanUnrealGameTemplate guides, moved onto the body
     build_rig          the Mutant Tools build, then Manny driven by it
 and, to try the rig, apply_animation with one of Mutant Tools' Mixamo
-animations.
+animations, or apply_hik_animation with an FBX animation through HumanIK.
 """
 from __future__ import absolute_import
 
 import glob
 import itertools
 import json
+import math
 import os
 import re
 import shutil
 import tempfile
+from xml.etree import ElementTree
 
+import maya.api.OpenMaya as om
 import maya.cmds as cmds
 import maya.mel as mel
 
@@ -46,6 +49,20 @@ NECK = ['Neck_Guide', 'Head_Guide', 'HeadEnd_Guide']
 UP, FRONT = (0, 1, 0), (0, 0, 1)
 # where the Extra tab keeps the pose the rig was built in
 POSE_NODE = 'webToRig_restPose'
+# keys, not driven keys
+TIME_CURVES = ('animCurveTL', 'animCurveTA', 'animCurveTU', 'animCurveTT')
+# HumanIK: slot -> joint of a Mixamo skeleton, of Mutant Tools' biped (its
+# bind joints), and slot -> that biped's control
+HIK_FOLDER = os.path.join(FOLDER, 'Utils', 'Mocap', 'HIK')
+HIK_SOURCE = os.path.join(HIK_FOLDER, 'Mixamo.xml')
+HIK_DEFINITION = os.path.join(HIK_FOLDER, 'MutantBipedDefinition.xml')
+HIK_CONTROLS = os.path.join(HIK_FOLDER, 'MutantBipedControllers.xml')
+HIK_NAMESPACE = 'webToRigMocap'
+HIK_WINDOW = 'hikCharacterControlsDock'
+# what maya.app.hik.retargeter builds a custom rig's mappings from (and
+# _turn_offsets its pointMatrixMultDL); ls finds nothing if one is unknown
+HIK_UTILITIES = ('composeMatrix', 'decomposeMatrix', 'multMatrix', 'eulerToQuat', 'quatToEuler', 'quatProd',
+                 'quatInvert', 'multiplyDivide', 'plusMinusAverage', 'pointMatrixMultDL', 'addDL')
 
 
 def _quiet(percent, text):
@@ -444,6 +461,12 @@ def _back_of_hand():
 def build_rig(report=_quiet):
     if not cmds.objExists('Mutant_Build'):
         raise RuntimeError('Place the template first: there is no Mutant_Build in the scene.')
+    # the template's Mannequin block rebuilds Unreal's stock Manny and refits it
+    # to the rig, moving the download's Manny off the pose its skin is bound in
+    # (the character ends the build deformed): WebToRig brings its own fitted
+    # Manny and drives it below, so that block stays off
+    if cmds.objExists('Mannequin_Block.lodVisibility'):
+        cmds.setAttr('Mannequin_Block.lodVisibility', False)
     report(5, 'Building the Mutant Tools rig, block by block...')
     from Mutant_Tools.UI.AutoRigger import load_autoRigger
     reload(load_autoRigger)
@@ -491,6 +514,10 @@ def connect_manny():
         pairs.append((manny, bind))
         if manny.endswith('_l'):
             pairs.append((mannequin_utils.replace_last_l_with_r(manny), bind.replace('L_', 'R_', 1)))
+    # Manny has no eyes: the download adds eye_l and eye_r under its head,
+    # carrying the eyeballs' skin, and the rig's eyes turn them
+    pairs.extend((eye, bind) for eye, bind in (('eye_l', 'L_Eyes_Bnd'), ('eye_r', 'R_Eyes_Bnd'))
+                 if cmds.objExists(eye))
     driven, missing = [], []
     for manny, bind in pairs:
         if not (cmds.objExists(manny) and cmds.objExists(bind)):
@@ -526,12 +553,7 @@ def apply_animation(name, report=_quiet):
     as the Anim Loader does: the skinned character follows through Manny."""
     if not cmds.objExists('Mutant_Tools_Grp'):
         raise RuntimeError('Build the rig first.')
-    # the first animation remembers the pose the rig was built in; a later
-    # one starts from it again
-    if cmds.objExists(POSE_NODE):
-        remove_animation()
-    else:
-        _keep_pose()
+    _start_from_rest()
     report(10, 'Keying {} on the controls...'.format(name))
     from Mutant_Tools.Utils.Mocap.Retarget import retarget
     reload(retarget)
@@ -558,25 +580,336 @@ def apply_animation(name, report=_quiet):
     return missing
 
 
+def apply_hik_animation(fbx, report=_quiet):
+    """Retarget an FBX animation with a Mixamo skeleton onto the rig with
+    HumanIK, as Maya's HumanIK window does for a custom rig, and bake it on
+    the controls: the FBX's skeleton is one character, the rig another, its
+    controls mapped to that one, and once baked the FBX and both characters
+    are deleted. HumanIK runs through its window, so Maya's interface is
+    needed."""
+    if not cmds.objExists('Mutant_Tools_Grp'):
+        raise RuntimeError('Build the rig first.')
+    if not os.path.isfile(fbx):
+        raise RuntimeError('{} not found.'.format(fbx))
+    if cmds.about(batch=True):
+        raise RuntimeError('HumanIK needs Maya\'s interface: run this in an interactive Maya.')
+    _start_from_rest()
+    report(5, 'Opening HumanIK...')
+    window_open = cmds.workspaceControl(HIK_WINDOW, exists=True)
+    for plugin in ('mayaHIK', 'mayaCharacterization', 'retargeterNodes', 'fbxmaya'):
+        cmds.loadPlugin(plugin, quiet=True)
+    mel.eval('HIKCharacterControlsTool')
+    characters, retargeter, before = [], None, set(cmds.ls() or [])
+    try:
+        report(10, 'Importing {}...'.format(os.path.basename(fbx)))
+        joints, start, end = _import_mocap(fbx)
+        source = _source_slots(joints)
+
+        report(25, 'Characterizing the animation\'s skeleton...')
+        characters.append(_in_rest_pose(joints, lambda: _characterize('WebToRig_Mocap', source)))
+
+        report(40, 'Characterizing the rig...')
+        _limbs_to_fk()
+        _t_stance()
+        rig = _characterize('WebToRig_Rig', _rig_slots())
+        characters.append(rig)
+
+        report(55, 'Mapping the controls to HumanIK...')
+        retargeter, mapped, missing, joints = _map_controls(rig)
+        mel.eval('hikSetCharacterInput("{}", "{}")'.format(rig, characters[0]))
+        _turn_offsets(joints)
+
+        report(65, 'Baking frames {:.0f} to {:.0f} onto {} controls...'.format(start, end, len(mapped)))
+        cmds.playbackOptions(minTime=start, maxTime=end, animationStartTime=start, animationEndTime=end)
+        attrs = mel.eval('RetargeterDestinationAttributes("{}")'.format(retargeter)) or []
+        cmds.refresh(suspend=True)
+        try:
+            cmds.bakeResults(attrs, time=(start, end), simulation=True, sampleBy=1, disableImplicitControl=True,
+                             preserveOutsideKeys=True, sparseAnimCurveBake=False, minimizeRotation=True)
+        finally:
+            cmds.refresh(suspend=False)
+        report(90, 'Removing the FBX and the HumanIK characters...')
+    finally:
+        _drop_hik(retargeter, characters, before)
+        if not window_open and cmds.workspaceControl(HIK_WINDOW, exists=True):
+            cmds.workspaceControl(HIK_WINDOW, edit=True, close=True)
+    cmds.currentTime(start)
+    if missing:
+        cmds.warning('WebToRig: not driven by HumanIK, no such control: {}'.format(', '.join(missing)))
+    report(100, '{} is on the rig through HumanIK, frames {:.0f} to {:.0f}. Press play.'.format(
+        os.path.splitext(os.path.basename(fbx))[0], start, end))
+    return missing
+
+
+def _import_mocap(fbx):
+    """The FBX's skeleton and keys, in their own namespace (FBXImport brings
+    the animation, file -import does not); its joints and frame range."""
+    _drop_mocap()
+    before = set(cmds.ls(type='joint', long=True) or [])
+    cmds.namespace(add=HIK_NAMESPACE)
+    cmds.namespace(set=HIK_NAMESPACE)
+    try:
+        unit = cmds.currentUnit(query=True, linear=True)
+        mel.eval('FBXResetImport; FBXImportMode -v add; FBXImportFillTimeline -v false; '
+                 'FBXImportUpAxis y; FBXImportConvertUnitString {};'.format({'in': 'In'}.get(unit, unit)))
+        mel.eval('FBXImport -f "{}"'.format(fbx.replace('\\', '/')))
+    finally:
+        cmds.namespace(set=':')
+    joints = [j for j in cmds.ls(type='joint', long=True) or [] if j not in before]
+    times = cmds.keyframe(joints, query=True, timeChange=True) or []
+    if not times:
+        _drop_mocap()
+        raise RuntimeError('{} has no animated skeleton.'.format(os.path.basename(fbx)))
+    return joints, math.floor(min(times)), math.ceil(max(times))
+
+
+def _source_slots(joints):
+    """HumanIK slot -> FBX joint, by Utils/Mocap/HIK/Mixamo.xml's names with
+    the namespaces and Mixamo's mixamorig prefix left out."""
+    by_name = {}
+    for joint in joints:
+        name = re.sub(r'^mixamorig\d*_?', '', joint.split('|')[-1].split(':')[-1])
+        by_name.setdefault(name, joint)
+    slots = dict((slot, by_name[name]) for slot, name in _hik_template(HIK_SOURCE).items() if name in by_name)
+    lost = [s for s in ('Hips', 'Spine', 'Head', 'LeftArm', 'LeftForeArm', 'LeftHand', 'RightArm', 'RightForeArm',
+                        'RightHand', 'LeftUpLeg', 'LeftLeg', 'LeftFoot', 'RightUpLeg', 'RightLeg', 'RightFoot')
+            if s not in slots]
+    if lost:
+        _drop_mocap()
+        raise RuntimeError('The FBX skeleton is not a Mixamo one: no joint for {}.'.format(', '.join(lost)))
+    return slots
+
+
+def _rig_slots():
+    """HumanIK slot -> rig joint. MutantBipedDefinition.xml names the bind
+    joints, but the game template splits them under Bind_Joints_Grp (the
+    hand is not below the forearm), which HumanIK refuses; the Manny joint
+    each one drives sits where it is, in one hierarchy, so that one is used."""
+    from Mutant_Tools.Utils.Unreal import mannequin_utils
+    manny = {}
+    for joint, bind in mannequin_utils.rig_map.items():
+        manny[bind] = joint
+        if joint.endswith('_l'):
+            manny[bind.replace('L_', 'R_', 1)] = mannequin_utils.replace_last_l_with_r(joint)
+    slots = dict((slot, manny[bind]) for slot, bind in _hik_template(HIK_DEFINITION).items()
+                 if bind in manny and cmds.objExists(manny[bind]))
+    if cmds.objExists('root'):
+        slots['Reference'] = 'root'
+    if 'Hips' not in slots:
+        raise RuntimeError('The rig has no Manny skeleton for HumanIK: build it with Web to Rig\'s Rig tab.')
+    return slots
+
+
+def _hik_template(path):
+    """A HumanIK characterization template: slot -> joint name."""
+    return dict((item.get('key'), item.get('value')) for item in ElementTree.parse(path).getroot().iter('item')
+                if item.get('value'))
+
+
+def _in_rest_pose(joints, work):
+    """Run `work` with the FBX skeleton's rotations zeroed, its keys
+    unplugged for it: a Mixamo skeleton then stands in the T-pose HumanIK
+    characterizes in."""
+    unplugged = []
+    for joint in joints:
+        for axis in 'XYZ':
+            plug = '{}.rotate{}'.format(joint, axis)
+            for key in cmds.listConnections(plug, source=True, destination=False, plugs=True) or []:
+                cmds.disconnectAttr(key, plug)
+                unplugged.append((key, plug))
+            if not cmds.getAttr(plug, lock=True):
+                cmds.setAttr(plug, 0)
+    try:
+        return work()
+    finally:
+        for key, plug in unplugged:
+            cmds.connectAttr(key, plug, force=True)
+
+
+def _limbs_to_fk():
+    """HumanIK drives the FK controls: every limb's IK/FK switch to FK, on
+    its switch data node (Retarget.set_ctrls_to_fk names switches this
+    template does not have, and says so)."""
+    switches = [n + '.Switch_IK_FK' for n in cmds.ls('*_Switch_Loc_Data', type='network') or []]
+    switches = [s for s in switches if cmds.objExists(s) and cmds.getAttr(s, settable=True)]
+    for switch in switches:
+        cmds.setAttr(switch, 1)
+    if not switches:
+        from Mutant_Tools.Utils.Mocap.Retarget import retarget
+        reload(retarget)
+        retarget.Retarget().set_ctrls_to_fk()
+
+
+def _t_stance():
+    """Straighten the arms out to the sides on their FK controls: HumanIK
+    characterizes in a T-pose and the rig may have been built in an A-pose.
+    The bake, then remove_animation, put the controls back."""
+    for side, letter in (('l', 'L'), ('r', 'R')):
+        shoulder, elbow, hand = 'upperarm_' + side, 'lowerarm_' + side, 'hand_' + side
+        if not all(cmds.objExists(j) for j in (shoulder, elbow, hand)):
+            continue
+        out = (1 if _pos(hand)[0] > _pos(shoulder)[0] else -1, 0, 0)
+        for ctrl, a, b in (('{}_Shoulder_Fk_Ctrl'.format(letter), shoulder, elbow),
+                           ('{}_Elbow_Fk_Ctrl'.format(letter), elbow, hand)):
+            if cmds.objExists(ctrl):
+                _turn(ctrl, [y - x for x, y in zip(_pos(a), _pos(b))], out)
+
+
+def _turn(ctrl, bone, direction):
+    """Turn a control so `bone`, a world vector it carries, points along
+    `direction`. The turn goes on its rotate channels through its parent's
+    axes: the right limbs sit under a mirrored group, where a world space
+    rotation turns the other way."""
+    order = cmds.getAttr(ctrl + '.rotateOrder')
+    parent = list(cmds.getAttr(ctrl + '.parentMatrix[0]'))
+    parent = om.MMatrix(parent[0:3] + [0] + parent[4:7] + [0] + parent[8:11] + [0, 0, 0, 0, 1])
+    turn = om.MVector(*bone).rotateTo(om.MVector(*direction)).asMatrix()
+    rotate = om.MEulerRotation([math.radians(v) for v in cmds.getAttr(ctrl + '.rotate')[0]], order)
+    turned = om.MTransformationMatrix(rotate.asMatrix() * parent * turn * parent.inverse()).rotation()
+    turned = turned.reorder(order)
+    cmds.setAttr(ctrl + '.rotate', *[math.degrees(v) for v in (turned.x, turned.y, turned.z)])
+
+
+def _characterize(name, slots):
+    """A HumanIK character on {slot: joint}, characterized in the pose the
+    joints stand in, locked."""
+    character = mel.eval('hikCreateCharacter("{}")'.format(name))
+    for slot, joint in sorted(slots.items()):
+        slot_id = int(mel.eval('hikGetNodeIdFromName("{}")'.format(slot)))
+        if slot_id >= 0:
+            mel.eval('setCharacterObject("{}", "{}", {}, 0)'.format(joint, character, slot_id))
+    mel.eval('hikSetCurrentCharacter("{}"); hikUpdateDefinitionUI;'.format(character))
+    if not mel.eval('hikIsCharacterizationInValidOrWarningState()'):
+        raise RuntimeError('HumanIK cannot characterize {} (its Definition tab says why).'.format(name))
+    mel.eval('hikCharacterLock("{}", 1, 1)'.format(character))
+    if not mel.eval('hikIsDefinitionLocked("{}")'.format(character)):
+        raise RuntimeError('HumanIK could not lock the {} characterization.'.format(name))
+    return character
+
+
+def _map_controls(character):
+    """The custom rig: each control in MutantBipedControllers.xml driven by
+    its HumanIK slot. The offsets are measured on this rig as it stands (the
+    file's are the rig it was made on). Returns the retargeter, the mappings,
+    the controls this rig lacks, and each translate-mapped control's joint
+    matrix as mapped, for _turn_offsets."""
+    retargeter = mel.eval('RetargeterCreate("{}")'.format(character))
+    mapped, missing, joints = {}, [], {}
+    for item in ElementTree.parse(HIK_CONTROLS).getroot().iter('MappedRetargeter'):
+        body, ctrl = item.get('body'), item.get('destRig')
+        if not cmds.objExists(ctrl):
+            missing.append(ctrl)
+        elif cmds.listConnections('{}.{}'.format(character, body), source=True, destination=False):
+            # one control per slot and channel, the last one as HumanIK reads the file
+            mapped[(body, item.get('type'))] = (ctrl, item.get('id'))
+    for (body, kind), (ctrl, slot_id) in sorted(mapped.items()):
+        mel.eval('RetargeterAddMapping("{}", "{}", "{}", "{}", "{}")'.format(retargeter, body, kind, ctrl, slot_id))
+        if kind == 'T':
+            joint = cmds.listConnections('{}.{}'.format(character, body), source=True, destination=False)[0]
+            joints[ctrl] = om.MMatrix(cmds.xform(joint, query=True, worldSpace=True, matrix=True))
+    return retargeter, mapped, sorted(set(missing)), joints
+
+
+def _turn_offsets(joints):
+    """Maya's custom rig puts a translate-mapped control at its joint's
+    HumanIK position plus their offset when mapped, as a fixed world vector
+    (maya.app.hik.retargeter setUpTrans): once the body turns over, as in a
+    flip, the controls slide (the hips 26 cm, the neck stretching, the FK
+    arms a few degrees off). Each offset is turned with its joint instead,
+    through HumanIK's matrix for it; with the source in its T-pose the
+    controls still sit where they were mapped."""
+    for ctrl, mapped_at in joints.items():
+        chain = [ctrl + '.translate']
+        for attr, kind in (('input3D[0]', 'plusMinusAverage'), ('inPoint', 'pointMatrixMultDL'),
+                           ('input3D[0]', 'plusMinusAverage'), ('inputMatrix', 'decomposeMatrix')):
+            source = cmds.listConnections(chain[-1], source=True, destination=False, plugs=True) or ['']
+            node = source[0].split('.')[0]
+            if not node or cmds.nodeType(node) != kind:
+                break
+            chain.append('{}.{}'.format(node, attr))
+        else:
+            add, matrix = chain[3].split('.')[0], cmds.listConnections(chain[4], source=True, destination=False,
+                                                                       plugs=True)
+            offset = om.MVector(*[cmds.getAttr('{}.input3D[1].input3D{}'.format(add, a)) for a in 'xyz'])
+            turn = cmds.createNode('pointMatrixMultDL', name=ctrl + '_hikOffset')
+            cmds.setAttr(turn + '.vectorMultiply', True)
+            cmds.setAttr(turn + '.inPoint', *(offset * mapped_at.inverse()))
+            cmds.connectAttr(matrix[0], turn + '.inMatrix')
+            cmds.connectAttr(turn + '.output', add + '.input3D[1]', force=True)
+            continue
+        cmds.warning('WebToRig: {} keeps HumanIK\'s fixed translate offset.'.format(ctrl))
+
+
+def _drop_hik(retargeter, characters, before):
+    """The custom rig, the characters and the FBX go, and the utility nodes
+    the custom rig leaves unplugged (Maya's retargeter forgets its offset
+    composeMatrix nodes): any of those types new since `before`."""
+    if retargeter and cmds.objExists(retargeter):
+        mel.eval('RetargeterDelete("{}")'.format(retargeter))
+    for character in characters:
+        if cmds.objExists(character):
+            mel.eval('hikDeleteCharacter("{}")'.format(character))
+    mel.eval('hikSetCurrentCharacter("")')
+    _drop_mocap()
+    stray = [n for n in cmds.ls(type=HIK_UTILITIES) or [] if n not in before and not cmds.listConnections(n)]
+    if stray:
+        cmds.delete(stray)
+
+
+def _drop_mocap():
+    if cmds.namespace(exists=HIK_NAMESPACE):
+        cmds.namespace(removeNamespace=HIK_NAMESPACE, deleteNamespaceContent=True)
+
+
 def remove_animation():
     """The keys come off every control and its switches, and each value goes
-    back to what it was before the first animation. (Tested headless, the IK
-    limbs of the HumanUnrealGameTemplate rig still settle a few centimetres
-    from their build pose afterwards: state inside the rig, not the controls.)"""
+    back to what it was before the first animation."""
     if not cmds.objExists(POSE_NODE):
+        _delete_keys(cmds.ls('*_Ctrl', type='transform') or [])
         from Mutant_Tools.Utils.Mocap.Retarget import retarget
         reload(retarget)
         retarget.Retarget().restore_scene()
         return
     pose = json.loads(cmds.getAttr(POSE_NODE + '.pose') or '{}')
-    nodes = [n for n in sorted(set(plug.rsplit('.', 1)[0] for plug in pose)) if cmds.objExists(n)]
-    if nodes:  # with no nodes, cutKey would take the selection
-        cmds.cutKey(nodes, clear=True)
+    _delete_keys([n for n in sorted(set(plug.rsplit('.', 1)[0] for plug in pose)) if cmds.objExists(n)])
     for plug, value in pose.items():
         try:
             cmds.setAttr(plug, value)
         except Exception:
             pass
+
+
+def _start_from_rest():
+    """The first animation remembers the pose the rig was built in; a later
+    one starts from it again."""
+    if cmds.objExists(POSE_NODE):
+        remove_animation()
+    else:
+        _keep_pose()
+        # the keyer clears keys with cutKey first, which can take the rig's
+        # switch data nodes with them (see _delete_keys): none left for it
+        _delete_keys(cmds.ls('*_Ctrl', type='transform') or [])
+
+
+def _delete_keys(nodes):
+    """Delete the curves keying these nodes, each unplugged first.
+
+    A limb's switch attributes (IK/FK, stretch, twist...) live on a network
+    node (Blocks/002_Biped/004_Limb switch_attrs_to_data_node; the head, hand
+    and squash blocks do the same) and the controls show proxies of them, so
+    keying a control keys that node. Maya deletes a network node along with
+    the curve feeding it when the curve goes while still plugged in, and
+    cutKey -clear does just that: the limb would lose its IK/FK blend,
+    stretch, twist and visibility wiring and freeze where the animation was.
+    Unplugged first, the curves go alone."""
+    if not nodes:  # with no nodes, keyframe would take the selection
+        return
+    curves = cmds.ls(cmds.keyframe(nodes, query=True, name=True) or [], type=TIME_CURVES) or []
+    for curve in set(curves):
+        for plug in cmds.listConnections(curve + '.output', source=False, destination=True, plugs=True) or []:
+            cmds.disconnectAttr(curve + '.output', plug)
+    if curves:
+        cmds.delete(list(set(curves)))
 
 
 def _keep_pose():
