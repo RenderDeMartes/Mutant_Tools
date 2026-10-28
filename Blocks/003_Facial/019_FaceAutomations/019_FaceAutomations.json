@@ -1,0 +1,30 @@
+{
+    "Name": "FaceAutomations",
+    "Description": "Cheek and nostril automations driven by the mouth",
+    "Icon": "FaceAutomations.png",
+    "Enable": "True",
+    "python_file": "exec_faceautomations_v001.py",
+    "import": "import exec_faceautomations_v001",
+    "imp.reload": "reload(exec_faceautomations_v001)",
+    "exec_command": "exec_faceautomations_v001.create_faceautomations_block()",
+    "build_command": "exec_faceautomations_v001.build_faceautomations_block()",
+    "attrs": {
+        "CheekFollow_bool": "True",
+        "CheekScaleToJoint_bool": "True",
+        "CheekBoneFollow_bool": "True",
+        "CheekPush_bool": "True",
+        "NostrilFollow_bool": "True",
+        "NostrilMode_enum": "NoseLipCorner:HeadAndCorner",
+        "SetCheekCtrl_string": "L_Cheek_A_Ctrl",
+        "SetCheekJoint_string": "L_Cheek_A_Skl",
+        "SetCheekBoneCtrl_string": "L_CheekBone_1_Main_Ctrl",
+        "SetCheekBoneOffset_string": "L_CheekBone_1_Ctrl_Main_Offset_Grp",
+        "SetMouthCornerCtrl_string": "L_Mouth_Main_Ctrl",
+        "SetMouthSubCtrl_string": "L_Mouth_Sub_Ctrl",
+        "SetNostrilCtrl_string": "L_Nostril_A_Ctrl",
+        "SetNoseCtrl_string": "Nose_Main_Ctrl",
+        "SetUpperLipCtrl_string": "Mid_Mouth_Up_Ctrl",
+        "SetHeadCtrl_string": "Head_Ctrl",
+        "Help_string": "Overview:\n  Cheek and nostril automations driven by the mouth, in one block. Each part has its own toggle, and its weights end up as keyable attrs on the ctrls so animators can tune them per shot.\n  Cheek Follow: the cheek ctrl follows the cheekbone and the mouth corner (attrs named after each driver on the cheek ctrl).\n  Cheekbone Follow: the cheekbone rides up and down with the mouth corner (translate Y only).\n  Cheek Push: the cheek puffs out when the mouth corner goes wide or up (WidePush / UpPush on the cheek ctrl).\n  Nostril Follow: NostrilMode NoseLipCorner = the nostril blends between the nose, the upper lip and the mouth corner (NoseInfluence / LipInfluence / MouthCornerInfluence on the nostril ctrl). HeadAndCorner = it follows the head plus a bit of the mouth corner, translate only (older templates).\n\nHow To Use:\n  Put this block after the Cheek, CheekBone, Nose, Nostril and Mouth blocks (and after ConvertFace when the joints are converted to Skl). Fill the Set fields with the LEFT side nodes, the right side is found by swapping the L_ / R_ prefix. A node that is missing is skipped with a warning.\n\nFields:\n- CheekFollow: cheek ctrl follows the cheekbone and the mouth corner.\n- CheekScaleToJoint: cheek ctrl scale goes straight to the cheek joint.\n- CheekBoneFollow: cheekbone moves up and down with the mouth corner.\n- CheekPush: cheek pushes out when the mouth corner goes wide or up.\n- NostrilFollow: nostril follows the face (see NostrilMode).\n- NostrilMode: NoseLipCorner = nose, upper lip and mouth corner. HeadAndCorner = head and mouth corner, translate only.\n- SetCheekCtrl: left cheek ctrl.\n- SetCheekJoint: left cheek joint that gets the cheek ctrl scale.\n- SetCheekBoneCtrl: left cheekbone main ctrl.\n- SetCheekBoneOffset: group above the cheekbone ctrl it keeps following (its rest space).\n- SetMouthCornerCtrl: left mouth corner ctrl (Mouth block L_Mouth_Main_Ctrl).\n- SetMouthSubCtrl: left mouth corner sub ctrl (Mouth block L_Mouth_Sub_Ctrl).\n- SetNostrilCtrl: left nostril ctrl.\n- SetNoseCtrl: nose ctrl (center, same for both sides).\n- SetUpperLipCtrl: upper lip middle ctrl (Mouth block Mid_Mouth_Up_Ctrl).\n- SetHeadCtrl: head ctrl the nostril follows in HeadAndCorner mode.\n\nCtrl Attrs (weights, keyable on the ctrls after build):\n- Cheek ctrl: <cheekbone ctrl> 0.75, <mouth corner ctrl> 1, WidePush 0.5, UpPush 0.5.\n- Cheekbone ctrl: <cheekbone offset> 1, <mouth corner ctrl> 0.15.\n- Nostril ctrl: NoseInfluence 3, LipInfluence 0.5, MouthCornerInfluence 0 (HeadAndCorner: <head ctrl> 1, <mouth corner ctrl> 0.25).\n\nTips:\n- the weights are relative (each ctrl normalizes its own drivers), so 3 / 0.5 / 0 on the nostril means mostly nose.\n- turn a part off and rebuild to compare with and without it."
+    }
+}

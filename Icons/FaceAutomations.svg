@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <rect x="4" y="4" width="504" height="504" rx="30" fill="#9ED6C8"/>
+  <!-- nose -->
+  <path stroke="#000" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" fill="none" d="M 228 62 C 228 34 284 34 284 62 L 298 186 C 302 212 314 222 332 232
+           C 366 248 370 302 332 314 C 314 320 304 316 294 308
+           C 286 326 270 334 256 334 C 242 334 226 326 218 308
+           C 208 316 198 320 180 314 C 142 302 146 248 180 232
+           C 198 222 210 212 214 186 Z"/>
+  <path stroke="#000" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" fill="none" d="M 192 290 C 204 294 212 300 218 308"/>
+  <path stroke="#000" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" fill="none" d="M 320 290 C 308 294 300 300 294 308"/>
+  <!-- cheek lift arrows (dashed cheek lines like the Cheeks icon) -->
+  <path stroke="#000" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" fill="none" stroke-dasharray="26 22" d="M 150 470 C 96 430 70 360 78 270"/>
+  <path stroke="#000" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" fill="none" d="M 54 292 L 78 262 L 102 292"/>
+  <path stroke="#000" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" fill="none" stroke-dasharray="26 22" d="M 362 470 C 416 430 442 360 434 270"/>
+  <path stroke="#000" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" fill="none" d="M 410 292 L 434 262 L 458 292"/>
+  <!-- gear badge -->
+  <circle cx="256" cy="420" r="74" fill="#9ED6C8"/>
+  <path stroke="#000" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" fill="none" d="M 301.1 403.5 L 318.5 406.4 L 318.5 433.6 L 301.1 436.5 L 299.6 440.2 L 309.8 454.6 L 290.6 473.8 L 276.2 463.6 L 272.5 465.1 L 269.6 482.5 L 242.4 482.5 L 239.5 465.1 L 235.8 463.6 L 221.4 473.8 L 202.2 454.6 L 212.4 440.2 L 210.9 436.5 L 193.5 433.6 L 193.5 406.4 L 210.9 403.5 L 212.4 399.8 L 202.2 385.4 L 221.4 366.2 L 235.8 376.4 L 239.5 374.9 L 242.4 357.5 L 269.6 357.5 L 272.5 374.9 L 276.2 376.4 L 290.6 366.2 L 309.8 385.4 L 299.6 399.8 Z"/>
+  <circle stroke="#000" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" fill="none" cx="256" cy="420" r="20"/>
+</svg>
