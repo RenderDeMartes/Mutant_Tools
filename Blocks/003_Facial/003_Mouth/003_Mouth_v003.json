@@ -1,0 +1,28 @@
+{
+    "Name": "Lips",
+    "Description": "Lips system, local or game (v003)",
+    "Icon": "Lips.png",
+    "Enable": "True",
+    "python_file": "exec_mouth_v003.py",
+    "import": "import exec_mouth_v003",
+    "imp.reload": "reload(exec_mouth_v003)",
+    "exec_command": "exec_mouth_v003.create_mouth_block()",
+    "build_command": "exec_mouth_v003.build_mouth_block()",
+    "attrs": {
+        "SetParent_string": "new_locator",
+        "SetAttrsPosition_string": "new_locator",
+        "SetJaw_string": "Jaw_Ctrl",
+        "GameMode_bool": "False",
+        "SetUpperEdge_string": "",
+        "SetLowerEdge_string": "",
+        "TweakCtrlsAmount_float": 7,
+        "MidCtrlsAmount_float": 5,
+        "CtrlSize_float": 4,
+        "BindJoints_enum": "PerVtx:21:15:11:9:7:5",
+        "MidCtrlTangents_bool": "True",
+        "BuccalFlap_bool": "False",
+        "SetFlapUpperJoint_string": "",
+        "SetFlapLowerJoint_string": "",
+        "Help_string": "Overview:\n  Lips for local face rigs (Jaw block + Lips block, BodyLips local geo), with everything from MouthGames v003.\n  GameMode off (default): local. The Lips_*_Bnd joints only carry the lip motion: the upper lip is measured from SetParent, the lower lip from the jaw, the corners from a blend of both (corner Follow attr). Moving the head or opening the jaw leaves them in place, the BodyJaw layer does that part. The ctrls still follow the head and the jaw.\n  GameMode on: the bind joints copy the lip joints in world space (one skinCluster, game export).\n  Lips: joints spaced evenly by length along each lip edge. Mid ctrls translate, scale and rotate: rotating one bends the lip around it, rx rolls the lip there. Tweak ctrls push the joints around them with a soft falloff. Every lip ctrl scales per axis and the scale falls off over the lip like its translate.\n  Main ctrls: Roll on Lips_Up/Dw_Main_Ctrl. On L/R_Lips_Main_Ctrl: Zip, Follow (corner between jaw and upper lip), MidFollow / MidFalloff (how much the corner drags each mid ctrl, high falloff = the front barely moves), CornerAim / AimFalloff (mid ctrls turn toward the corner as it moves) and AimMult (exaggerates that turn).\n  Jaw: LipCollision on the SetJaw ctrl pushes the upper lip when the jaw closes past rest.\n  Buccal flap (optional): L/R_Lips_Flap_Ctrl between one upper and one lower lip joint, squashes as the lips close (FlapBlend / Squash / Stretch on the flap ctrl).\n\nHow To Use:\n  build the Jaw block first, then fill the key fields below.\n\nFields:\n- SetParent: node the whole mouth follows (e.g. Skull_Lwr_Ctrl, Head_Ctrl). new_locator makes a placeholder.\n- SetAttrsPosition: node that gets the Mouth_Vis attrs (e.g. Vis_Ctrl). new_locator makes a placeholder.\n- SetJaw: the jaw ctrl (Jaw_Ctrl from the Jaw block). With Jaw v002 the lips follow its JawFollow_Null so the dynamic pivot does not make them jump. Missing = placeholder jaw.\n- GameMode: off = local bind joints for the BodyLips layer, on = world bind joints.\n- SetUpperEdge: upper lip edge loop, corner to corner.\n- SetLowerEdge: lower lip edge loop, corner to corner.\n- TweakCtrlsAmount: tweak ctrls per lip, corners not counted (default 7).\n- MidCtrlsAmount: mid ctrls per lip (default 5).\n- CtrlSize: ctrl size (default 4).\n- BindJoints: PerVtx = one joint per vertex of the lip edge, or a fixed joint count per lip.\n- MidCtrlTangents: on = mid ctrls spaced evenly on the lip, rotating them bends the lip. Off = mid ctrls translate only (older driver curve).\n- BuccalFlap: adds L/R_Lips_Flap_Ctrl + Bnd joint at the mouth corner.\n- SetFlapUpperJoint: upper lip joint the flap hangs from (select it and press Set). Left side, the right side is mirrored. Empty = the joint next to the corner.\n- SetFlapLowerJoint: lower lip joint the flap hangs from, same rules as SetFlapUpperJoint.\n\nSkin:\n- Bind joints are named <side>_Lips_Up_Lip_NN_Bnd / Mid_Lips_Up_Lip_Bnd (Dw for the lower lip). Skin block SetJoints: *Lips_Up_Lip*_Bnd,*Lips_Dw_Lip*_Bnd,Null_Local_Bnd\n\nTips:\n- Name this block Mouth (and the Jaw block Mouth_Jaw) to get the MouthGames ctrl names, so animation transfers between the local and the game rigs.\n- start with defaults, build once, then tweak only the fields you need.\n- Lips v001 / v002 blocks have no LipUp / LipDown guides: the main ctrls then sit on the Mid ctrls. Create a new block to get the guides."
+    }
+}

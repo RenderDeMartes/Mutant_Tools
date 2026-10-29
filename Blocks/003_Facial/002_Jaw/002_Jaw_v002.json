@@ -1,0 +1,19 @@
+{
+    "Name": "Jaw",
+    "Description": "Will create jaw rig (v002, dynamic pivot)",
+    "Icon": "Jaw.png",
+    "Enable": "True",
+    "python_file": "exec_jaw_v002.py",
+    "import": "import exec_jaw_v002",
+    "imp.reload": "reload(exec_jaw_v002)",
+    "exec_command": "exec_jaw_v002.create_jaw_block()",
+    "build_command": "exec_jaw_v002.build_jaw_block()",
+    "attrs": {
+        "SetParent_string": "new_locator",
+        "SetAttrsPosition_string": "new_locator",
+        "CtrlType_enum": "circleY:circleX:circleZ:square",
+        "CtrlSize_float": "4",
+        "GameMode_bool": "False",
+        "Help_string": "Overview:\n  Jaw for local face rigs (BodyJaw local geo), or world space with GameMode.\n  Jaw_Ctrl rotates and translates the jaw, UpperFollow / UpperLipBreak / SideBreaks drive the upper lip pivot like v001.\n  Dynamic pivot: the JawPivot guide sets where the jaw rotates, <name>Pivot_Ctrl (JawPivot_Ctrl) moves it in the scene (show it with Jaw_Ctrl.PivotCtrl).\n  <name>Follow_Null (JawFollow_Null, under Jaw_Ctrl) is what other blocks should follow: Lips v003 finds it from SetJaw = Jaw_Ctrl, set Teeth / Tongue SetParent to JawFollow_Null (constraints on Jaw_Ctrl jump when the pivot moves).\n\nHow To Use:\n  fill the key fields below before build. Build it before the Lips block.\n\nFields:\n- SetParent: node the jaw ctrl follows (e.g. Skull_Lwr_Ctrl, Head_Ctrl). new_locator makes a placeholder.\n- SetAttrsPosition: node that gets the Jaw_Vis attrs (e.g. Vis_Ctrl). new_locator makes a placeholder.\n- CtrlType: Jaw_Ctrl shape (circleY, circleX, circleZ, square).\n- CtrlSize: ctrl size (default 4).\n- GameMode: off = local rig, Jaw_Bnd / JawUpperLipPivot_Bnd only get the jaw ctrl motion (BodyJaw layer). On = the rig follows SetParent in world space.\n\nTips:\n- Same names as the MouthGames jaw: name this block Mouth_Jaw and the Lips block Mouth (Mouth_Jaw_Ctrl, Mouth_JawPivot_Ctrl, Mouth_JawFollow_Null, Mouth_Jaw_Bnd), so animation transfers between the local and the game rigs. The ctrl is aimed at the lips like MouthGames.\n- Jaw v001 blocks have no JawPivot guide, the pivot then starts on the Jaw guide. Create a new block to get the guide."
+    }
+}
