@@ -23,6 +23,11 @@ SKIPS = ('precode', 'postcode', 'Build_Command', 'Import_Command', BACKUP_ATTR)
 # always taken from the new json
 JSON_ONLY = ('Help',)
 NUMERIC_TYPES = ('long', 'short', 'byte', 'double', 'float', 'doubleLinear', 'doubleAngle')
+# attrs renamed between block versions: new name -> old names (Single_FK v001 SetCtrlParent -> SetCtrlParentHierarchy)
+ALIASES = {
+	'SetCtrlParentHierarchy': ('SetCtrlParent',),
+	'SetJointParentHierarchy': ('SetJointParent',),
+}
 
 
 #-------------------------------------------------------------------
@@ -92,6 +97,9 @@ def _find(source, name, used):
 	for key in source:
 		if key not in used and _norm(key) == norm:
 			return key
+	for alias in ALIASES.get(name, ()):
+		if alias in source and alias not in used:
+			return alias
 	return None
 
 
@@ -108,6 +116,9 @@ def apply_value(config, attr, kind, value):
 
 		if kind == 'enum':
 			options = (cmds.attributeQuery(attr, node=config, listEnum=True) or [''])[0].split(':')
+			# bool -> enum (Smart_RFL AltMode True -> SCL): off is the first option, on the second
+			if isinstance(value, bool) and len(options) > 1:
+				value = options[1] if value else options[0]
 			label = str(value)
 			if label not in options:
 				if label in config_previews.extended_options(attr, options):

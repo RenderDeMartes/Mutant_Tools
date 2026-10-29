@@ -294,7 +294,7 @@ createNode network -n "COG_Config";
 	setAttr -l on ".Build_Command" -type "string" "exec_single_fk_v001.build_single_fk_block()";
 	setAttr -l on ".Import_Command" -type "string" "import exec_single_fk_v001";
 	setAttr ".postcode" -type "string" "";
-	setAttr ".SetCtrlParentHierarchy" -type "string" "Ctrl_Grp";
+	setAttr ".SetCtrlParentHierarchy" -type "string" "Rig_Ctrl_Grp";
 	setAttr -cb on ".CtrlType" 16;
 	setAttr -k on ".CtrlSize";
 	setAttr -cb on ".CtrlColor" 6;
@@ -307,7 +307,7 @@ createNode network -n "COG_Config";
 	setAttr ".Help" -type "string" (
 		"Overview:\n  This will create a Single FK Ctrl + Joint, Like for COG or Single Needs.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- CtrlType: choose one option (for example: sphere, cube, square, octagon).\n- CtrlSize: numeric value that controls size/amount/intensity (default 4).\n- CtrlColor: choose one option (for example: lightBlue, blue, white, purple).\n- Mirror: False builds as-is. True builds both L_ and R_ sides (auto-prefixes L_ if needed). Right_Only mirrors to the right side only.\n- Gimbal: turn this ON/OFF depending on whether you want that feature.\n- CtrlOrientOffset: adds an offset transform above the control so you can dynamically change the control orientation without affecting the zero pose.\n- ShowOrientAttrs: when ON, the orient proxy attrs (orientTranslate/Rotate/Scale) are visible on the ctrl channel box. Turn OFF to hide them for delivery.\n- CreateJoint: turn this ON/OFF depending on whether you want that feature.\n- SetCtrlParent_Hierarchy: set the node/object name this block should use.\n"
 		+ "\nTips:\n- if a field says left/right or mirror, use it to generate the opposite side quickly.");
-	setAttr -l on ".MutantBackup" -type "string" "{\"SetCtrlParent\": {\"type\": \"string\", \"value\": \"Rig_Ctrl_Grp\"}, \"SetJointParent\": {\"type\": \"string\", \"value\": \"Miscellaneous_Grp\"}}";
+	setAttr -l on ".MutantBackup" -type "string" "{}";
 createNode hyperLayout -n "hyperLayout34";
 	rename -uid "4A4A7C7D-49EB-A3EA-9C9C-3396B1D1CD94";
 	setAttr ".ihi" 0;
