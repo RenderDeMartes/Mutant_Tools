@@ -104,9 +104,17 @@ def build_skirt_block():
     cmds.parent(clean_rig_grp, '{}{}'.format(setup['rig_groups']['misc'], nc['group']))
     cmds.parent(clean_ctrl_grp, setup['base_groups']['control'] + nc['group'])
 
+    # older builds left the parent locator and the master ctrl root at the world, a rebuild does not delete
+    # them and the new master ctrl gets a duplicated name
+    for leftover in ('|' + str(block).replace(nc['module'], '_Parent' + nc['locator']),
+                     '|' + name + '_Master' + nc['ctrl'] + nc['offset'] + nc['group']):
+        if cmds.objExists(leftover):
+            cmds.delete(leftover)
+
     # use this locator in case parent is set to new locator
     if cmds.getAttr('{}.SetParent'.format(config)) == 'new_locator':
         block_parent = cmds.spaceLocator(n='{}'.format(str(block).replace(nc['module'], '_Parent' + nc['locator'])))[0]
+        cmds.parent(block_parent, clean_rig_grp)
     else:
         block_parent = cmds.getAttr('{}.SetParent'.format(config))
 
@@ -125,6 +133,8 @@ def build_skirt_block():
     mt.assign_color(color='orange')
     root_grp = mt.root_grp()[0]
     mt.match(root_grp, block_parent, r=True, t=True)
+    # inside the rig so a rebuild deletes it (the constraint places it)
+    root_grp = cmds.parent(root_grp, setup['base_groups']['control'] + nc['group'])[0]
     cmds.parentConstraint(block_parent, root_grp)
 
     #individual ctrls
