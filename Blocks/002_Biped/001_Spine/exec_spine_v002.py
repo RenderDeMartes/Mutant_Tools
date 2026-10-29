@@ -58,10 +58,6 @@ def create_spine_block(name='Spine'):
     config = block[1]
     block = block[0]
 
-    # enums default to their first entry, start on 5 joints like v001
-    if cmds.attributeQuery('JointCount', n=config, exists=True):
-        cmds.setAttr('{}.JointCount'.format(config), JOINT_COUNTS.index(DEFAULT_JOINT_COUNT))
-
     cmds.select(cl=True)
     spineRoot_guide = mt.create_joint_guide(name=name + '_Root')
     cmds.parent(spineRoot_guide, block)
