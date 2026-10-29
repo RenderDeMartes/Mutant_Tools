@@ -12,7 +12,7 @@
         "Mirror_enum": "True:False:Right_Only",
         "LeftIKHandle_string": "L_Ankle_Ik_IKrp",
         "LeftSoftIkAttrHolder_string": "L_Hip_Jnt_Switch_Loc",
-        "SoftIkDefault_float": "0.5",
+        "SoftIkDefault_string": "0.5",
         "Help_string": "Overview:\n  Soft IK for legs built with Limb v002 and the Foot block: the leg eases to straight instead of popping at full reach.\n  v003: same math as the Limb v002 ArmsSoftIk, the IK handle is pulled back along the hip -> foot direction, so the foot roll keeps working.\n\nHow To Use:\n  build the leg (Limb v002) and the foot (Foot v002) first, then this block.\n\nFields:\n- Mirror: True builds both sides from the left names, False left only, Right_Only right only.\n- LeftIKHandle: leg IK handle (the Foot block parents it under its RFL). The joints, stretch distance and stretch condition are found from it.\n- LeftSoftIkAttrHolder: node that gets the SoftIk attr (0-10) and has the Upper_Length / Lower_Length attrs (the limb switch locator).\n- SoftIkDefault: SoftIk value at build. SoftIk 10 = soft zone of 20% of the leg length, 0 = off.\n- Stretch: with Stretch_On the stretch starts where the soft zone starts, the foot stays on the controller.\n\nTips:\n- v002 and older need Limb v001 legs (hard coded names, L_Pelvis_Ctrl, Global_Ctrl / Mover_Ctrl)."
     }
 }

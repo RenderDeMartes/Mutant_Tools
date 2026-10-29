@@ -188,7 +188,8 @@ def build_leg_softik_block():
     mirror = cmds.getAttr('{}.Mirror'.format(config), asString=True)
     ik_handle = cmds.getAttr('{}.LeftIKHandle'.format(config))
     holder = cmds.getAttr('{}.LeftSoftIkAttrHolder'.format(config))
-    default = cmds.getAttr('{}.SoftIkDefault'.format(config)) if cmds.attributeQuery('SoftIkDefault', n=config, exists=True) else 0.5
+    # string attr (create_block makes _float attrs ints 1-20, the default is 0.5)
+    default = float(cmds.getAttr('{}.SoftIkDefault'.format(config)) or 0.5) if cmds.attributeQuery('SoftIkDefault', n=config, exists=True) else 0.5
 
     sides = {'True': [nc['left'], nc['right']], 'False': [nc['left']], 'Right_Only': [nc['right']]}.get(mirror, [nc['left']])
     for side in sides:
