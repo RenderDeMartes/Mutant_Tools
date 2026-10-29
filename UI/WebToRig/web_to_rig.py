@@ -62,7 +62,10 @@ HIK_WINDOW = 'hikCharacterControlsDock'
 # what maya.app.hik.retargeter builds a custom rig's mappings from (and
 # _turn_offsets its pointMatrixMultDL); ls finds nothing if one is unknown
 HIK_UTILITIES = ('composeMatrix', 'decomposeMatrix', 'multMatrix', 'eulerToQuat', 'quatToEuler', 'quatProd',
-                 'quatInvert', 'multiplyDivide', 'plusMinusAverage', 'pointMatrixMultDL', 'addDL')
+                 'quatInvert', 'multiplyDivide', 'plusMinusAverage', 'pointMatrixMultDL', 'addDL',
+                 'pointMatrixMult', 'addDoubleLinear')
+# Maya 2025+ builds pointMatrixMultDL, Maya 2024 the legacy pointMatrixMult
+POINT_MATRIX_MULT_TYPES = ('pointMatrixMultDL', 'pointMatrixMult')
 
 
 def _quiet(percent, text):
@@ -820,18 +823,18 @@ def _turn_offsets(joints):
     controls still sit where they were mapped."""
     for ctrl, mapped_at in joints.items():
         chain = [ctrl + '.translate']
-        for attr, kind in (('input3D[0]', 'plusMinusAverage'), ('inPoint', 'pointMatrixMultDL'),
-                           ('input3D[0]', 'plusMinusAverage'), ('inputMatrix', 'decomposeMatrix')):
+        for attr, kinds in (('input3D[0]', ('plusMinusAverage',)), ('inPoint', POINT_MATRIX_MULT_TYPES),
+                            ('input3D[0]', ('plusMinusAverage',)), ('inputMatrix', ('decomposeMatrix',))):
             source = cmds.listConnections(chain[-1], source=True, destination=False, plugs=True) or ['']
             node = source[0].split('.')[0]
-            if not node or cmds.nodeType(node) != kind:
+            if not node or cmds.nodeType(node) not in kinds:
                 break
             chain.append('{}.{}'.format(node, attr))
         else:
             add, matrix = chain[3].split('.')[0], cmds.listConnections(chain[4], source=True, destination=False,
                                                                        plugs=True)
             offset = om.MVector(*[cmds.getAttr('{}.input3D[1].input3D{}'.format(add, a)) for a in 'xyz'])
-            turn = cmds.createNode('pointMatrixMultDL', name=ctrl + '_hikOffset')
+            turn = cmds.createNode('pointMatrixMult', name=ctrl + '_hikOffset')
             cmds.setAttr(turn + '.vectorMultiply', True)
             cmds.setAttr(turn + '.inPoint', *(offset * mapped_at.inverse()))
             cmds.connectAttr(matrix[0], turn + '.inMatrix')
@@ -851,7 +854,8 @@ def _drop_hik(retargeter, characters, before):
             mel.eval('hikDeleteCharacter("{}")'.format(character))
     mel.eval('hikSetCurrentCharacter("")')
     _drop_mocap()
-    stray = [n for n in cmds.ls(type=HIK_UTILITIES) or [] if n not in before and not cmds.listConnections(n)]
+    known = set(cmds.allNodeTypes())
+    stray = [n for n in cmds.ls(type=[t for t in HIK_UTILITIES if t in known]) or [] if n not in before and not cmds.listConnections(n)]
     if stray:
         cmds.delete(stray)
 

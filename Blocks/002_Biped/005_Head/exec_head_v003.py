@@ -184,10 +184,11 @@ def _plug_or_value(node_attr, value):
 
 
 def _mult(name, a, b):
-    node = cmds.createNode('multDoubleLinear', n=name)
-    _plug_or_value(node + '.input1', a)
-    _plug_or_value(node + '.input2', b)
-    return node + '.output'
+    # multiplyDivide / plusMinusAverage, not multDoubleLinear / addDoubleLinear: Maya 2026 turns those into multDL / addDL, which Maya 2024 can not open
+    node = cmds.createNode('multiplyDivide', n=name)
+    _plug_or_value(node + '.input1X', a)
+    _plug_or_value(node + '.input2X', b)
+    return node + '.outputX'
 
 
 def _orient_matrix(rest_matrix, orients):

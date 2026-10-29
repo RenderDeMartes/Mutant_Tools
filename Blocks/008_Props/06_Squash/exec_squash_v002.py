@@ -160,13 +160,14 @@ def _carry(name, rest_world, driver_plug):
 
 
 def _mult(name, a, b):
-    node = cmds.createNode('multDoubleLinear', n=name)
-    for attr, value in [('input1', a), ('input2', b)]:
+    # multiplyDivide / plusMinusAverage, not multDoubleLinear / addDoubleLinear: Maya 2026 turns those into multDL / addDL, which Maya 2024 can not open
+    node = cmds.createNode('multiplyDivide', n=name)
+    for attr, value in [('input1X', a), ('input2X', b)]:
         if isinstance(value, str):
             cmds.connectAttr(value, '{}.{}'.format(node, attr), f=True)
         else:
             cmds.setAttr('{}.{}'.format(node, attr), value)
-    return node + '.output'
+    return node + '.outputX'
 
 
 def _create_ctrl(name, curve_type, size, color, rest_matrix):

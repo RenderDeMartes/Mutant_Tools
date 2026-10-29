@@ -408,17 +408,18 @@ def _vector_mix(name, a, b, weight):
 
 def _mult(name, a, b):
     """a * b, plugs or numbers. Returns the output plug."""
-    node = cmds.createNode('multDoubleLinear', n=name)
-    _plug_or_value(node + '.input1', a)
-    _plug_or_value(node + '.input2', b)
-    return node + '.output'
+    # multiplyDivide / plusMinusAverage, not multDoubleLinear / addDoubleLinear: Maya 2026 turns those into multDL / addDL, which Maya 2024 can not open
+    node = cmds.createNode('multiplyDivide', n=name)
+    _plug_or_value(node + '.input1X', a)
+    _plug_or_value(node + '.input2X', b)
+    return node + '.outputX'
 
 
 def _add(name, a, b):
-    node = cmds.createNode('addDoubleLinear', n=name)
-    _plug_or_value(node + '.input1', a)
-    _plug_or_value(node + '.input2', b)
-    return node + '.output'
+    node = cmds.createNode('plusMinusAverage', n=name)
+    _plug_or_value(node + '.input1D[0]', a)
+    _plug_or_value(node + '.input1D[1]', b)
+    return node + '.output1D'
 
 
 def _plug_or_value(node_attr, value):
@@ -899,10 +900,10 @@ def scale_bind_joints(bind_joints, influences):
 
 def _weight_plug(name, weight, switch_plug):
     """weight * switch (switch can be the reverse of the ik fk switch)."""
-    node = cmds.createNode('multDoubleLinear', n=name)
-    cmds.setAttr(node + '.input1', weight)
-    cmds.connectAttr(switch_plug, node + '.input2')
-    return node + '.output'
+    node = cmds.createNode('multiplyDivide', n=name)
+    cmds.setAttr(node + '.input1X', weight)
+    cmds.connectAttr(switch_plug, node + '.input2X')
+    return node + '.outputX'
 
 
 def _attr_spec(node, attr):

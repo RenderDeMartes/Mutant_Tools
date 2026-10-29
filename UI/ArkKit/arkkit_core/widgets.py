@@ -1,6 +1,9 @@
 """Custom Qt widgets used by the ArkKit UI."""
 
-from PySide6 import QtWidgets, QtCore, QtGui
+try:
+    from PySide6 import QtWidgets, QtCore, QtGui
+except ImportError:  # Maya 2024 and older ship PySide2
+    from PySide2 import QtWidgets, QtCore, QtGui
 
 from . import config
 

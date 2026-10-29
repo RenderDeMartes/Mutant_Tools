@@ -209,10 +209,11 @@ def build_smarthand_block():
 
                 # spread under them, the main ctrl rotation times the finger value
                 spread = insert_group(ctrl, ctrl.replace('_Ctrl', '_SmartSpread_Grp'))
-                mult = cmds.createNode('multDoubleLinear', n=ctrl.replace('_Ctrl', '_SmartSpread_MultDoubleLinear'))
-                cmds.connectAttr(main_ctrl + '.rotate' + axes['Spread'], mult + '.input1')
-                cmds.setAttr(mult + '.input2', spread_values[finger])
-                cmds.connectAttr(mult + '.output', spread + '.rotateZ')
+                # multiplyDivide / plusMinusAverage, not multDoubleLinear / addDoubleLinear: Maya 2026 turns those into multDL / addDL, which Maya 2024 can not open
+                mult = cmds.createNode('multiplyDivide', n=ctrl.replace('_Ctrl', '_SmartSpread_MultDoubleLinear'))
+                cmds.connectAttr(main_ctrl + '.rotate' + axes['Spread'], mult + '.input1X')
+                cmds.setAttr(mult + '.input2X', spread_values[finger])
+                cmds.connectAttr(mult + '.outputX', spread + '.rotateZ')
 
         # prefix for right hand
         if str(side_guide).startswith(nc['right']):

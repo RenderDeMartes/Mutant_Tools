@@ -836,14 +836,15 @@ def create_junction_spread_ctrls():
         close = cmds.createNode('multiplyDivide', n=name + '_CloseBend_MD')
         cmds.connectAttr(bend + '.outputRotateY', close + '.input1X')
         cmds.connectAttr(ctrl + '.AutoClose', close + '.input2X')
-        half = cmds.createNode('multDoubleLinear', n=name + '_HalfBend_MDL')
-        cmds.connectAttr(close + '.outputX', half + '.input1')
-        cmds.setAttr(half + '.input2', 0.5)
+        # multiplyDivide / plusMinusAverage, not multDoubleLinear / addDoubleLinear: Maya 2026 turns those into multDL / addDL, which Maya 2024 can not open
+        half = cmds.createNode('multiplyDivide', n=name + '_HalfBend_MDL')
+        cmds.connectAttr(close + '.outputX', half + '.input1X')
+        cmds.setAttr(half + '.input2X', 0.5)
         for auto, sign in ((out_auto, 1), (in_auto, -1)):
             sum_node = cmds.createNode('plusMinusAverage', n='{}_{}_PMA'.format(name, 'Out' if sign > 0 else 'In'))
             cmds.setAttr(sum_node + '.operation', 1 if sign > 0 else 2)
             cmds.connectAttr(ctrl + '.ry', sum_node + '.input1D[0]')
-            cmds.connectAttr(half + '.output', sum_node + '.input1D[1]')
+            cmds.connectAttr(half + '.outputX', sum_node + '.input1D[1]')
             cmds.connectAttr(sum_node + '.output1D', auto + '.ry', f=True)
             cmds.connectAttr(ctrl + '.rx', auto + '.rx', f=True)
 
@@ -900,12 +901,12 @@ def create_spread_roll(joints_by_part, side='L'):
         twist = cmds.listConnections(prefixes[0] + '_SpreadCtrlGrp.rotateZ', s=True, d=False, p=True) or []
         untwist = None
         if twist:
-            follow = cmds.createNode('multDoubleLinear', n='{}_{}_JR_SpreadRoll_Twist_MDL'.format(side, part))
-            cmds.connectAttr(twist[0], follow + '.input1')
-            cmds.connectAttr('{}.{}'.format(cube, SHEET_FOLLOW_ATTR), follow + '.input2')
-            untwist = cmds.createNode('multDoubleLinear', n='{}_{}_JR_SpreadRoll_Untwist_MDL'.format(side, part))
-            cmds.connectAttr(follow + '.output', untwist + '.input1')
-            cmds.setAttr(untwist + '.input2', -1)
+            follow = cmds.createNode('multiplyDivide', n='{}_{}_JR_SpreadRoll_Twist_MDL'.format(side, part))
+            cmds.connectAttr(twist[0], follow + '.input1X')
+            cmds.connectAttr('{}.{}'.format(cube, SHEET_FOLLOW_ATTR), follow + '.input2X')
+            untwist = cmds.createNode('multiplyDivide', n='{}_{}_JR_SpreadRoll_Untwist_MDL'.format(side, part))
+            cmds.connectAttr(follow + '.outputX', untwist + '.input1X')
+            cmds.setAttr(untwist + '.input2X', -1)
 
         tips = []
         for prefix in prefixes:
@@ -941,7 +942,7 @@ def create_spread_roll(joints_by_part, side='L'):
             cmds.connectAttr(aim + '.outputMatrix', roll + '.offsetParentMatrix')
             twist_grp = cmds.createNode('transform', n=prefix + '_SpreadRoll_Twist_Grp', p=roll)
             if untwist:
-                cmds.connectAttr(untwist + '.output', twist_grp + '.rotateZ')
+                cmds.connectAttr(untwist + '.outputX', twist_grp + '.rotateZ')
             if children:
                 cmds.parent(children, twist_grp)
 
@@ -1083,11 +1084,11 @@ def create_spread_min():
         key = (feather, mode)
         if key not in shares:
             weight = cmds.getAttr(md + '.input2X')
-            reach = cmds.createNode('multDoubleLinear', n='{}_Spread{}Min_MDL'.format(feather, mode))
-            cmds.connectAttr('{}.{}'.format(cube, SPREAD_MIN_ATTR), reach + '.input1')
-            cmds.setAttr(reach + '.input2', 1 - weight)
-            share = cmds.createNode('addDoubleLinear', n='{}_Spread{}Min_ADL'.format(feather, mode))
-            cmds.connectAttr(reach + '.output', share + '.input1')
-            cmds.setAttr(share + '.input2', weight)
-            shares[key] = share + '.output'
+            reach = cmds.createNode('multiplyDivide', n='{}_Spread{}Min_MDL'.format(feather, mode))
+            cmds.connectAttr('{}.{}'.format(cube, SPREAD_MIN_ATTR), reach + '.input1X')
+            cmds.setAttr(reach + '.input2X', 1 - weight)
+            share = cmds.createNode('plusMinusAverage', n='{}_Spread{}Min_ADL'.format(feather, mode))
+            cmds.connectAttr(reach + '.outputX', share + '.input1D[0]')
+            cmds.setAttr(share + '.input1D[1]', weight)
+            shares[key] = share + '.output1D'
         cmds.connectAttr(shares[key], md + '.input2X', f=True)

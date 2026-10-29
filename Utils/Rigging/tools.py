@@ -1993,11 +1993,7 @@ class Tools_class(object):
 			str: The created node name.
 		"""
 
-		if 'addDoubleLinear' in cmds.allNodeTypes():
-			if name:
-				return cmds.shadingNode('addDoubleLinear', asUtility=True, name=name)
-			return cmds.shadingNode('addDoubleLinear', asUtility=True)
-
+		# always plusMinusAverage: Maya 2026 turns addDoubleLinear into addDL, which Maya 2024 can not open
 		if name:
 			node = cmds.createNode('plusMinusAverage', name=name)
 		else:

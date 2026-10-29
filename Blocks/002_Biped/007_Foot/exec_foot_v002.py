@@ -624,10 +624,11 @@ def build_foot_block():
             rfl_temp_attr = mt.new_attr(input= ik_attrs_shape, name = attr, min = -100 , max = 100, default = 0)
             if attr == 'RollBall':
                 # v002: positive RollBall lifts the heel like FootRoll / RollToes / RollHeel (v001 rolled back)
-                flip = cmds.createNode('multDL', n=side_guide + '_RollBall_Flip_MultDoubleLinear')
-                cmds.setAttr(flip + '.input2', -1)
-                cmds.connectAttr(rfl_temp_attr, flip + '.input1')
-                rfl_temp_attr = flip + '.output'
+                # multiplyDivide / plusMinusAverage, not multDoubleLinear / addDoubleLinear: Maya 2026 turns those into multDL / addDL, which Maya 2024 can not open
+                flip = cmds.createNode('multiplyDivide', n=side_guide + '_RollBall_Flip_MultDoubleLinear')
+                cmds.setAttr(flip + '.input2X', -1)
+                cmds.connectAttr(rfl_temp_attr, flip + '.input1X')
+                rfl_temp_attr = flip + '.outputX'
             cmds.connectAttr(rfl_temp_attr, rfl_attrs[attr])
 
 

@@ -2934,10 +2934,12 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 					print('List cleared successfully.')
 
 				# Create copy and paste shortcuts on the list widget
-				copy_shortcut = QtGui.QShortcut(QtGui.QKeySequence("Ctrl+C"), list_widget)
+				# QShortcut is in QtGui on Qt6 (Maya 2025+), QtWidgets on Qt5 (Maya 2024)
+				shortcut_cls = getattr(QtGui, 'QShortcut', None) or QtWidgets.QShortcut
+				copy_shortcut = shortcut_cls(QtGui.QKeySequence("Ctrl+C"), list_widget)
 				copy_shortcut.activated.connect(lambda lw=list_widget: handle_copy(lw))
 
-				paste_shortcut = QtGui.QShortcut(QtGui.QKeySequence("Ctrl+V"), list_widget)
+				paste_shortcut = shortcut_cls(QtGui.QKeySequence("Ctrl+V"), list_widget)
 				paste_shortcut.activated.connect(lambda lw=list_widget, ea=edit_attr, an=attr: handle_paste(lw, ea, an))
 
 				list_v_layout = QtWidgets.QVBoxLayout()

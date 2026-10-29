@@ -7,8 +7,12 @@ import them.
 from maya import cmds
 import maya.OpenMayaUI as omui
 import maya.api.OpenMaya as om
-import shiboken6
-from PySide6 import QtWidgets
+try:
+    import shiboken6 as shiboken
+    from PySide6 import QtWidgets
+except ImportError:  # Maya 2024 and older ship PySide2
+    import shiboken2 as shiboken
+    from PySide2 import QtWidgets
 
 from . import config
 
@@ -16,7 +20,7 @@ from . import config
 def get_maya_main_window():
     """Return Maya's main window as a QWidget so dialogs parent correctly."""
     ptr = omui.MQtUtil.mainWindow()
-    return shiboken6.wrapInstance(int(ptr), QtWidgets.QWidget)
+    return shiboken.wrapInstance(int(ptr), QtWidgets.QWidget)
 
 
 # -------- ATTRIBUTE DISCOVERY --------

@@ -387,16 +387,17 @@ def twist_follow_length(segments, axis, ribbons):
                     cmds.disconnectAttr(source, jnt + '.scale')
                     for other in 'XYZ'.replace(axis, ''):
                         cmds.connectAttr('{}{}'.format(source, other), '{}.scale{}'.format(jnt, other))
-                length = cmds.createNode('multDoubleLinear', n=jnt + '_BoneLength_MultDoubleLinear')
-                cmds.connectAttr(ratio + '.outputX', length + '.input1')
-                cmds.connectAttr('{}.scale{}'.format(parent, axis), length + '.input2')
-                cmds.connectAttr(length + '.output', '{}.scale{}'.format(jnt, axis), f=True)
+                # multiplyDivide / plusMinusAverage, not multDoubleLinear / addDoubleLinear: Maya 2026 turns those into multDL / addDL, which Maya 2024 can not open
+                length = cmds.createNode('multiplyDivide', n=jnt + '_BoneLength_MultDoubleLinear')
+                cmds.connectAttr(ratio + '.outputX', length + '.input1X')
+                cmds.connectAttr('{}.scale{}'.format(parent, axis), length + '.input2X')
+                cmds.connectAttr(length + '.outputX', '{}.scale{}'.format(jnt, axis), f=True)
             continue
         for jnt in twist_joints[1:]:
-            spacing = cmds.createNode('multDoubleLinear', n=jnt + '_BoneLength_MultDoubleLinear')
-            cmds.connectAttr(ratio + '.outputX', spacing + '.input1')
-            cmds.setAttr(spacing + '.input2', cmds.getAttr('{}.translate{}'.format(jnt, axis)))
-            cmds.connectAttr(spacing + '.output', '{}.translate{}'.format(jnt, axis), f=True)
+            spacing = cmds.createNode('multiplyDivide', n=jnt + '_BoneLength_MultDoubleLinear')
+            cmds.connectAttr(ratio + '.outputX', spacing + '.input1X')
+            cmds.setAttr(spacing + '.input2X', cmds.getAttr('{}.translate{}'.format(jnt, axis)))
+            cmds.connectAttr(spacing + '.outputX', '{}.translate{}'.format(jnt, axis), f=True)
 
 
 def bend_amount(limb, name, a, b, c):
@@ -1068,12 +1069,13 @@ def build_quadlimb_block():
                                                       name="{}_Reverse".format(stretchy_IKRP_snap_remap))
         # v002: the snap only with Stretch_On (v001 also snapped with no stretch: the knee popped straight at full
         # reach, the hip -> ankle target jumped from the ankle to the ball)
-        snap = cmds.createNode('multDoubleLinear', n=stretchy_IKRP_snap_remap + '_StretchOn_MultDoubleLinear')
-        cmds.connectAttr("{}.outValue".format(stretchy_IKRP_snap_remap), snap + '.input1')
-        cmds.connectAttr(stretch_attr, snap + '.input2')
-        cmds.connectAttr(snap + '.output', "{}.input.inputX".format(stretchy_IKRP_snap_reverse))
+        # multiplyDivide / plusMinusAverage, not multDoubleLinear / addDoubleLinear: Maya 2026 turns those into multDL / addDL, which Maya 2024 can not open
+        snap = cmds.createNode('multiplyDivide', n=stretchy_IKRP_snap_remap + '_StretchOn_MultDoubleLinear')
+        cmds.connectAttr("{}.outValue".format(stretchy_IKRP_snap_remap), snap + '.input1X')
+        cmds.connectAttr(stretch_attr, snap + '.input2X')
+        cmds.connectAttr(snap + '.outputX', "{}.input.inputX".format(stretchy_IKRP_snap_reverse))
 
-        cmds.connectAttr(snap + '.output', "{}.{}W0".format(stretch_ik_parentConstr,ball_ctrl))
+        cmds.connectAttr(snap + '.outputX', "{}.{}W0".format(stretch_ik_parentConstr,ball_ctrl))
         cmds.connectAttr("{}.output.outputX".format(stretchy_IKRP_snap_reverse),
                          "{}.{}W1".format(stretch_ik_parentConstr, soft_ik_grp))
 

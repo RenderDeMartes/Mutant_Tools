@@ -2355,29 +2355,17 @@ class Kinematics_class(tools.Tools_class):
 
 	#----------------------------------------------------------------------------------------------------------------
 
+	# multiplyDivide / plusMinusAverage, not multDoubleLinear / addDoubleLinear: Maya 2026 turns those
+	# into multDL / addDL, which Maya 2024 can not open
 	def create_mdl_compat(self, name):
-		try:
-			node = cmds.createNode("multDoubleLinear", n=name)
-			if cmds.nodeType(node) == "unknown":
-				cmds.delete(node)
-				raise Exception("Node type multDoubleLinear is unknown")
-			return node, "input1", "input2", "output"
-		except Exception:
-			node = cmds.createNode("multiplyDivide", n=name)
-			cmds.setAttr("{0}.operation".format(node), 1)
-			return node, "input1X", "input2X", "outputX"
+		node = cmds.createNode("multiplyDivide", n=name)
+		cmds.setAttr("{0}.operation".format(node), 1)
+		return node, "input1X", "input2X", "outputX"
 
 	def create_add_compat(self, name):
-		try:
-			node = cmds.createNode("addDoubleLinear", n=name)
-			if cmds.nodeType(node) == "unknown":
-				cmds.delete(node)
-				raise Exception("Node type addDoubleLinear is unknown")
-			return node, "input1", "input2", "output"
-		except Exception:
-			node = cmds.createNode("plusMinusAverage", n=name)
-			cmds.setAttr("{0}.operation".format(node), 1)
-			return node, "input1D[0]", "input1D[1]", "output1D"
+		node = cmds.createNode("plusMinusAverage", n=name)
+		cmds.setAttr("{0}.operation".format(node), 1)
+		return node, "input1D[0]", "input1D[1]", "output1D"
 
 	def bend_and_squash_head(self, geo, parent_grp):
 		"""

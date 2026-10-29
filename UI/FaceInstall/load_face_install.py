@@ -162,16 +162,10 @@ class FaceInstallUI(QtMutantWindow.Qt_Mutant):
             pass
 
     def create_mdl_compat(self, name):
-        try:
-            node = cmds.createNode('multDoubleLinear', n=name)
-            if cmds.nodeType(node) == "unknown":
-                cmds.delete(node)
-                raise Exception("Node type multDoubleLinear is unknown")
-            return node, 'input1', 'input2', 'output'
-        except Exception:
-            node = cmds.createNode('multiplyDivide', n=name)
-            cmds.setAttr('{}.operation'.format(node), 1)
-            return node, 'input1X', 'input2X', 'outputX'
+        # always multiplyDivide: Maya 2026 turns multDoubleLinear into multDL, which Maya 2024 can not open
+        node = cmds.createNode('multiplyDivide', n=name)
+        cmds.setAttr('{}.operation'.format(node), 1)
+        return node, 'input1X', 'input2X', 'outputX'
 
     def create_connections(self):
         """

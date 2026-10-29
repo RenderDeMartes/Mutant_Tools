@@ -118,6 +118,10 @@ def build_toon_fixes_block():
 
     #remove chest ctrl
     if cmds.objExists('Spine_Chest_FK_CtrlShape'):
-        cmds.setAttr('Spine_Chest_FK_CtrlShape.v', 0)
+        # Spine v002 drives the ctrl shape visibility (fkCtrls switch), lodVisibility still hides it
+        if cmds.getAttr('Spine_Chest_FK_CtrlShape.v', settable=True):
+            cmds.setAttr('Spine_Chest_FK_CtrlShape.v', 0)
+        else:
+            cmds.setAttr('Spine_Chest_FK_CtrlShape.lodVisibility', 0)
 
 #build_toon_fixes_block()
