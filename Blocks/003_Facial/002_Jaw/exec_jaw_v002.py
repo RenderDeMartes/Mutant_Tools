@@ -20,6 +20,8 @@ mt = main_mutant.Mutant()
 
 TAB_FOLDER = '003_Facial'
 PYBLOCK_NAME = 'exec_jaw'
+# GameNames: the MouthGames jaw names, whatever the block is called
+GAME_NAME = 'Mouth_Jaw'
 
 # Jaw v002: Jaw v001 + the MouthGames v003 jaw extras.
 # - Dynamic pivot: the JawPivot guide sets where the jaw rotates,
@@ -118,11 +120,24 @@ def build_jaw_block():
         game_mode = cmds.getAttr(config + '.GameMode')
     else:
         game_mode = False
+    game_names = cmds.attributeQuery('GameNames', n=config, exists=True) and cmds.getAttr(config + '.GameNames')
 
     pivot_rest = cmds.xform(pivot_guide or guide, q=True, ws=True, t=True)
 
     #Build
     new_guide = mt.duplicate_and_remove_guides(guide)
+    # GameNames: Mouth_Jaw_Ctrl, Mouth_JawPivot_Ctrl, Mouth_JawFollow_Null,
+    # Mouth_Jaw_Bnd... like the MouthGames jaw, so animation transfers
+    # between the local and the game rigs
+    if game_names and name != GAME_NAME:
+        chain = [new_guide] + (cmds.listRelatives(new_guide, ad=True, type='joint', f=True) or [])
+        for jnt in sorted(chain, key=lambda n: -cmds.ls(n, l=True)[0].count('|')):
+            short = jnt.split('|')[-1]
+            if short.startswith(name):
+                renamed = cmds.rename(jnt, GAME_NAME + short[len(name):])
+                if jnt == new_guide:
+                    new_guide = renamed
+        name = GAME_NAME
     cmds.select(new_guide)
     jaw_pivot_joint = new_guide
     # by name: listRelatives -ad order is not the guide order

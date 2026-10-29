@@ -1481,6 +1481,13 @@ def find_jaw(set_jaw, block_parent, mouth_center, name):
     SetParent, so the lips still build.
     """
     follow_suffix = 'Follow' + nc['null']
+    if not (set_jaw and cmds.objExists(set_jaw)):
+        # Jaw block with GameNames on / named Mouth_Jaw, or the default name
+        for fallback in ('Mouth_Jaw' + nc['ctrl'], 'Jaw' + nc['ctrl']):
+            if cmds.objExists(fallback):
+                print('SetJaw "{}" not found, using {}'.format(set_jaw, fallback))
+                set_jaw = fallback
+                break
     if set_jaw and cmds.objExists(set_jaw):
         if set_jaw.endswith(follow_suffix):
             parent = cmds.listRelatives(set_jaw, p=True)
