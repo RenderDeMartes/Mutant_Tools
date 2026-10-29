@@ -87,6 +87,23 @@ def _build_single_fk_side(name, loc_guide, config, nc, setup, is_mirror_side=Fal
         if isinstance(attr_names, str):
             attr_names = [attr_names]
 
+        # configs updated from the old block lost SetCtrlParent / SetJointParent to the MutantBackup attr
+        # (renamed to ...Hierarchy), the attr was left on the default: the backed up value wins then
+        # own import: the json name is local to the outer function (imported again further down there)
+        import json as json_module
+        backup = {}
+        if cmds.attributeQuery('MutantBackup', node=config, exists=True):
+            try:
+                backup = json_module.loads(cmds.getAttr('{}.MutantBackup'.format(config)) or '{}')
+            except ValueError:
+                backup = {}
+        current = [cmds.getAttr('{}.{}'.format(config, a)) for a in attr_names if cmds.attributeQuery(a, node=config, exists=True)]
+        if all(value in ('', None, default_target) for value in current):
+            for attr_name in attr_names:
+                backed_up = (backup.get(attr_name) or {}).get('value')
+                if backed_up and cmds.objExists(backed_up):
+                    return backed_up
+
         for attr_name in attr_names:
             if cmds.attributeQuery(attr_name, node=config, exists=True):
                 custom_target = cmds.getAttr('{}.{}'.format(config, attr_name))
