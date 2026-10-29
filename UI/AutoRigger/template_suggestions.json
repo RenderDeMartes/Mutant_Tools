@@ -1,0 +1,8515 @@
+{
+ "blocks": {
+  "autowheel": {
+   "SetMoverCtrls": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "CarTemplate"
+      ],
+      "uses": 1,
+      "value": "Chasis_Center_Ctrl"
+     }
+    ]
+   },
+   "SetWheelsName": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "CarTemplate"
+      ],
+      "uses": 1,
+      "value": "L_FrontWheel_Ctrl, L_BackWheel_Ctrl, R_FrontWheel_Ctrl, R_BackWheel_Ctrl"
+     }
+    ]
+   }
+  },
+  "baseA": {
+   "CtrlColor": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "CarTemplate",
+       "ChamaleonTemplate",
+       "HeroPropTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "Human_Face_Template",
+       "MinotaurTemplate",
+       "PigTemplate",
+       "PropTemplate",
+       "QuadTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "ToonFaceTemplate",
+       "TortoiseTemplate",
+       "humanBodySimpleTemplate",
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 19,
+      "value": "lightBlue"
+     }
+    ]
+   },
+   "CtrlScale": {
+    "type": "long",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "CarTemplate",
+       "ChamaleonTemplate",
+       "HeroPropTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "Human_Face_Template",
+       "MinotaurTemplate",
+       "PigTemplate",
+       "PropTemplate",
+       "QuadTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "ToonFaceTemplate",
+       "TortoiseTemplate",
+       "humanBodySimpleTemplate",
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 19,
+      "value": 4
+     }
+    ]
+   },
+   "Name": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "CarTemplate",
+       "ChamaleonTemplate",
+       "HeroPropTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "Human_Face_Template",
+       "MinotaurTemplate",
+       "PigTemplate",
+       "PropTemplate",
+       "QuadTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "ToonFaceTemplate",
+       "TortoiseTemplate",
+       "humanBodySimpleTemplate",
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 19,
+      "value": "Mutant_Tools"
+     }
+    ]
+   }
+  },
+  "blendshape": {
+   "NewNames": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "Human_Face_Template",
+       "ToonFaceTemplate",
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 3,
+      "value": "L_MouthUp_Corrective,R_MouthUp_Corrective,L_MouthDown_Corrective,R_MouthDown_Corrective,L_MouthWide_Corrective,R_MouthWide_Corrective,L_MouthNarrow_Corrective,R_MouthNarrow_Corrective,L_BrowUp,R_BrowUp,L_BrowDown,R_BrowDown,L_Puff,R_Puff"
+     }
+    ]
+   },
+   "SetGeo": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "Human_Face_Template",
+       "ToonFaceTemplate",
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 3,
+      "value": "BodySkull"
+     }
+    ]
+   }
+  },
+  "brows": {
+   "CtrlSize": {
+    "type": "long",
+    "values": [
+     {
+      "templates": [
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "PigTemplate",
+       "SlothTemplate"
+      ],
+      "uses": 4,
+      "value": 4
+     },
+     {
+      "templates": [
+       "Human_Face_Template",
+       "ToonFaceTemplate",
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 3,
+      "value": 1
+     }
+    ]
+   },
+   "GameMode": {
+    "type": "bool",
+    "values": [
+     {
+      "templates": [
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "PigTemplate",
+       "SlothTemplate"
+      ],
+      "uses": 4,
+      "value": true
+     },
+     {
+      "templates": [
+       "Human_Face_Template",
+       "ToonFaceTemplate",
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 3,
+      "value": false
+     }
+    ]
+   },
+   "Mirror": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Face_Template",
+       "PigTemplate",
+       "SlothTemplate",
+       "ToonFaceTemplate",
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 7,
+      "value": "True"
+     }
+    ]
+   },
+   "SetAttrsPosition": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "Human_Face_Template",
+       "PigTemplate",
+       "SlothTemplate",
+       "ToonFaceTemplate"
+      ],
+      "uses": 4,
+      "value": "Vis_Ctrl"
+     },
+     {
+      "templates": [
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate"
+      ],
+      "uses": 2,
+      "value": "VisAttrs_Ctrl"
+     },
+     {
+      "templates": [
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 1,
+      "value": "L_Brow_Ctrl"
+     }
+    ]
+   },
+   "SetParent": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "PigTemplate",
+       "SlothTemplate"
+      ],
+      "uses": 4,
+      "value": "Head_Ctrl"
+     },
+     {
+      "templates": [
+       "Human_Face_Template",
+       "ToonFaceTemplate",
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 3,
+      "value": "Skull_Upr_Ctrl"
+     }
+    ]
+   }
+  },
+  "chain": {
+   "AutoRotate": {
+    "type": "bool",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "PigTemplate",
+       "SlothTemplate"
+      ],
+      "uses": 31,
+      "value": false
+     },
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "PigTemplate"
+      ],
+      "uses": 10,
+      "value": true
+     }
+    ]
+   },
+   "CtrlColor": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "PigTemplate",
+       "SlothTemplate"
+      ],
+      "uses": 37,
+      "value": "lightBlue"
+     },
+     {
+      "templates": [
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate"
+      ],
+      "uses": 4,
+      "value": "green"
+     }
+    ]
+   },
+   "CtrlSize": {
+    "type": "long",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "PigTemplate",
+       "SlothTemplate"
+      ],
+      "uses": 33,
+      "value": 1
+     },
+     {
+      "templates": [
+       "ChamaleonTemplate"
+      ],
+      "uses": 6,
+      "value": 2
+     },
+     {
+      "templates": [
+       "BirdTemplate"
+      ],
+      "uses": 1,
+      "value": 3
+     },
+     {
+      "templates": [
+       "ChamaleonTemplate"
+      ],
+      "uses": 1,
+      "value": 4
+     }
+    ]
+   },
+   "CtrlType": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "PigTemplate",
+       "SlothTemplate"
+      ],
+      "uses": 31,
+      "value": "square"
+     },
+     {
+      "templates": [
+       "BirdTemplate",
+       "PigTemplate",
+       "SlothTemplate"
+      ],
+      "uses": 4,
+      "value": "circleX"
+     },
+     {
+      "templates": [
+       "PigTemplate",
+       "SlothTemplate"
+      ],
+      "uses": 2,
+      "value": "cube"
+     },
+     {
+      "templates": [
+       "PigTemplate",
+       "SlothTemplate"
+      ],
+      "uses": 2,
+      "value": "hexagon"
+     },
+     {
+      "templates": [
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate"
+      ],
+      "uses": 2,
+      "value": "sphere"
+     }
+    ]
+   },
+   "IndependentScale": {
+    "type": "bool",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "PigTemplate",
+       "SlothTemplate"
+      ],
+      "uses": 41,
+      "value": false
+     }
+    ]
+   },
+   "Mirror": {
+    "type": "bool",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "PigTemplate",
+       "SlothTemplate"
+      ],
+      "uses": 24,
+      "value": false
+     },
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "PigTemplate",
+       "SlothTemplate"
+      ],
+      "uses": 17,
+      "value": true
+     }
+    ]
+   },
+   "SegScaleCompensate": {
+    "type": "bool",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "PigTemplate",
+       "SlothTemplate"
+      ],
+      "uses": 41,
+      "value": true
+     }
+    ]
+   },
+   "SetParent": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "PigTemplate",
+       "SlothTemplate"
+      ],
+      "uses": 24,
+      "value": "Head_Ctrl"
+     },
+     {
+      "templates": [
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate"
+      ],
+      "uses": 4,
+      "value": "Mouth_JawFollow_Null"
+     },
+     {
+      "templates": [
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate"
+      ],
+      "uses": 2,
+      "value": "Nose_Main_Ctrl"
+     },
+     {
+      "templates": [
+       "ChamaleonTemplate"
+      ],
+      "uses": 3,
+      "value": "L_Foot_Ankle_Jnt"
+     },
+     {
+      "templates": [
+       "ChamaleonTemplate"
+      ],
+      "uses": 3,
+      "value": "L_Hand_Ankle_Jnt"
+     },
+     {
+      "templates": [
+       "ChamaleonTemplate"
+      ],
+      "uses": 1,
+      "value": "Head_Jnt"
+     },
+     {
+      "templates": [
+       "SlothTemplate"
+      ],
+      "uses": 1,
+      "value": "Jaw_A_Jnt"
+     },
+     {
+      "templates": [
+       "PigTemplate"
+      ],
+      "uses": 1,
+      "value": "Jaw_Jnt"
+     },
+     {
+      "templates": [
+       "BirdTemplate"
+      ],
+      "uses": 1,
+      "value": "L_Eyes_Bnd"
+     },
+     {
+      "templates": [
+       "BirdTemplate"
+      ],
+      "uses": 1,
+      "value": "Spine_Bottom_Ik_Ctrl"
+     }
+    ]
+   },
+   "TwistAxis": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "PigTemplate",
+       "SlothTemplate"
+      ],
+      "uses": 41,
+      "value": "X"
+     }
+    ]
+   }
+  },
+  "change_colors": {
+   "ChangeColors1": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "CarTemplate",
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "PigTemplate",
+       "QuadTemplate",
+       "SeagullTemplate",
+       "SlothTemplate"
+      ],
+      "uses": 10,
+      "value": ""
+     },
+     {
+      "templates": [
+       "BirdTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "SeagullTemplate",
+       "SlothTemplate"
+      ],
+      "uses": 6,
+      "value": "Spine_Bottom_Ik_Ctrl:lightBlue"
+     },
+     {
+      "templates": [
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 1,
+      "value": "Global_Ctrl:yellow"
+     }
+    ]
+   },
+   "ChangeColors2": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "CarTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "SeagullTemplate",
+       "SlothTemplate"
+      ],
+      "uses": 7,
+      "value": "Global_Ctrl:orange"
+     },
+     {
+      "templates": [
+       "BirdTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "SeagullTemplate",
+       "SlothTemplate"
+      ],
+      "uses": 6,
+      "value": "Spine_Base_FK_Ctrl:green"
+     },
+     {
+      "templates": [
+       "ChamaleonTemplate",
+       "PigTemplate",
+       "QuadTemplate"
+      ],
+      "uses": 3,
+      "value": ""
+     },
+     {
+      "templates": [
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 1,
+      "value": "Mover_Ctrl:yellow"
+     }
+    ]
+   },
+   "ChangeColors3": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "SeagullTemplate",
+       "SlothTemplate"
+      ],
+      "uses": 6,
+      "value": "Neck_Ctrl:green"
+     },
+     {
+      "templates": [
+       "BirdTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "SeagullTemplate",
+       "SlothTemplate"
+      ],
+      "uses": 6,
+      "value": "Spine_Belly_FK_Ctrl:green"
+     },
+     {
+      "templates": [
+       "CarTemplate",
+       "ChamaleonTemplate",
+       "PigTemplate",
+       "QuadTemplate"
+      ],
+      "uses": 4,
+      "value": ""
+     },
+     {
+      "templates": [
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 1,
+      "value": "Mover_Gimbal_Ctrl:yellow"
+     }
+    ]
+   },
+   "ChangeColors4": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "CarTemplate",
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "PigTemplate",
+       "QuadTemplate",
+       "SeagullTemplate",
+       "SlothTemplate"
+      ],
+      "uses": 10,
+      "value": ""
+     },
+     {
+      "templates": [
+       "BirdTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "SeagullTemplate",
+       "SlothTemplate"
+      ],
+      "uses": 6,
+      "value": "Spine_Chest_Top_IK_Ctrl:green"
+     },
+     {
+      "templates": [
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 1,
+      "value": "Spine_Bottom_Ik_Ctrl:yellow"
+     }
+    ]
+   },
+   "ChangeColors5": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "CarTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "SeagullTemplate",
+       "SlothTemplate"
+      ],
+      "uses": 7,
+      "value": "Mover_Ctrl:orange"
+     },
+     {
+      "templates": [
+       "BirdTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "SeagullTemplate",
+       "SlothTemplate"
+      ],
+      "uses": 6,
+      "value": "Spine_Belly_IK_Ctrl:lightBlue"
+     },
+     {
+      "templates": [
+       "ChamaleonTemplate",
+       "PigTemplate",
+       "QuadTemplate"
+      ],
+      "uses": 3,
+      "value": ""
+     },
+     {
+      "templates": [
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 1,
+      "value": "Spine_Base_FK_Ctrl:lightBlue"
+     }
+    ]
+   },
+   "ChangeColors6": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "CarTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "SeagullTemplate",
+       "SlothTemplate"
+      ],
+      "uses": 7,
+      "value": ""
+     },
+     {
+      "templates": [
+       "BirdTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "SeagullTemplate",
+       "SlothTemplate"
+      ],
+      "uses": 6,
+      "value": "Spine_Root_IK_Ctrl:lightBlue"
+     },
+     {
+      "templates": [
+       "ChamaleonTemplate",
+       "PigTemplate",
+       "QuadTemplate"
+      ],
+      "uses": 3,
+      "value": "Mover_Gimbal_Ctrl:orange"
+     },
+     {
+      "templates": [
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 1,
+      "value": "Spine_Belly_IK_Ctrl:yellow"
+     }
+    ]
+   },
+   "ChangeColors7": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "CarTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "SeagullTemplate",
+       "SlothTemplate"
+      ],
+      "uses": 7,
+      "value": "Mover_Gimbal_Ctrl:orange"
+     },
+     {
+      "templates": [
+       "BirdTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "SeagullTemplate",
+       "SlothTemplate"
+      ],
+      "uses": 6,
+      "value": "Spine_Base_IK_Ctrl:lightBlue"
+     },
+     {
+      "templates": [
+       "ChamaleonTemplate",
+       "PigTemplate",
+       "QuadTemplate"
+      ],
+      "uses": 3,
+      "value": "Neck_Ctrl:green"
+     },
+     {
+      "templates": [
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 1,
+      "value": "Spine_Chest_Top_IK_Ctrl:yellow"
+     }
+    ]
+   },
+   "ChangeColors8": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "CarTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 8,
+      "value": ""
+     },
+     {
+      "templates": [
+       "BirdTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "SeagullTemplate",
+       "SlothTemplate"
+      ],
+      "uses": 6,
+      "value": "Spine_Chest_IK_Ctrl:lightBlue"
+     },
+     {
+      "templates": [
+       "ChamaleonTemplate",
+       "PigTemplate",
+       "QuadTemplate"
+      ],
+      "uses": 3,
+      "value": "Global_Ctrl:orange"
+     }
+    ]
+   },
+   "ChangeColors9": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "CarTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 8,
+      "value": ""
+     },
+     {
+      "templates": [
+       "BirdTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "SeagullTemplate",
+       "SlothTemplate"
+      ],
+      "uses": 6,
+      "value": "Spine_End_IK_Ctrl:lightBlue"
+     },
+     {
+      "templates": [
+       "ChamaleonTemplate",
+       "PigTemplate",
+       "QuadTemplate"
+      ],
+      "uses": 3,
+      "value": "Mover_Ctrl:orange"
+     }
+    ]
+   }
+  },
+  "chasis": {
+   "SetParent": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "CarTemplate"
+      ],
+      "uses": 1,
+      "value": "COG_Gimbal_Ctrl"
+     }
+    ]
+   }
+  },
+  "cheeks": {
+   "CtrlSize": {
+    "type": "long",
+    "values": [
+     {
+      "templates": [
+       "ToonFaceTemplate"
+      ],
+      "uses": 1,
+      "value": 1
+     }
+    ]
+   },
+   "Mirror": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "ToonFaceTemplate"
+      ],
+      "uses": 1,
+      "value": "True"
+     }
+    ]
+   },
+   "SetAttrsPosition": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "ToonFaceTemplate"
+      ],
+      "uses": 1,
+      "value": "Vis_Ctrl"
+     }
+    ]
+   },
+   "SetParent": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "ToonFaceTemplate"
+      ],
+      "uses": 1,
+      "value": "Skull_Lwr_Ctrl"
+     }
+    ]
+   }
+  },
+  "cheeks_advance": {
+   "CtrlSize": {
+    "type": "long",
+    "values": [
+     {
+      "templates": [
+       "Human_Face_Template",
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 2,
+      "value": 4
+     }
+    ]
+   },
+   "Mirror": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "Human_Face_Template",
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 2,
+      "value": "True"
+     }
+    ]
+   },
+   "SetAttrsPosition": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 1,
+      "value": "L_Cheecks_Main_Ctrl"
+     },
+     {
+      "templates": [
+       "Human_Face_Template"
+      ],
+      "uses": 1,
+      "value": "Vis_Ctrl"
+     }
+    ]
+   },
+   "SetParent": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "Human_Face_Template",
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 2,
+      "value": "Skull_Lwr_Ctrl"
+     }
+    ]
+   }
+  },
+  "clavicle": {
+   "CtrlSize": {
+    "type": "long",
+    "values": [
+     {
+      "templates": [
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "PigTemplate",
+       "QuadTemplate",
+       "SlothTemplate",
+       "TortoiseTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 10,
+      "value": 4
+     },
+     {
+      "templates": [
+       "ToonBodyTemplate"
+      ],
+      "uses": 1,
+      "value": 1
+     }
+    ]
+   },
+   "CtrlType": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "PigTemplate",
+       "QuadTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 11,
+      "value": "square"
+     }
+    ]
+   },
+   "Mirror": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "PigTemplate",
+       "QuadTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 11,
+      "value": "True"
+     }
+    ]
+   },
+   "SetGameParent": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "PigTemplate",
+       "QuadTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 11,
+      "value": ""
+     }
+    ]
+   },
+   "SetParent": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "SlothTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 6,
+      "value": "Spine_End_Jnt"
+     },
+     {
+      "templates": [
+       "ChamaleonTemplate",
+       "PigTemplate",
+       "QuadTemplate"
+      ],
+      "uses": 3,
+      "value": "Spine_F_Jnt"
+     },
+     {
+      "templates": [
+       "TortoiseTemplate"
+      ],
+      "uses": 1,
+      "value": "COG_Gimbal_Ctrl"
+     },
+     {
+      "templates": [
+       "ToonBodyTemplate"
+      ],
+      "uses": 1,
+      "value": "L_ArmSlideSlideDriver_Loc"
+     }
+    ]
+   }
+  },
+  "code": {
+   "Exec": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "CarTemplate",
+       "ChamaleonTemplate",
+       "HeroPropTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "Human_Face_Template",
+       "MinotaurTemplate",
+       "PigTemplate",
+       "PropTemplate",
+       "QuadTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "ToonFaceTemplate",
+       "TortoiseTemplate",
+       "humanBodySimpleTemplate",
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 61,
+      "value": "Python"
+     }
+    ]
+   },
+   "RunAfterBuild": {
+    "type": "bool",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "CarTemplate",
+       "ChamaleonTemplate",
+       "HeroPropTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "Human_Face_Template",
+       "MinotaurTemplate",
+       "PigTemplate",
+       "PropTemplate",
+       "QuadTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "ToonFaceTemplate",
+       "TortoiseTemplate",
+       "humanBodySimpleTemplate",
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 61,
+      "value": false
+     }
+    ]
+   },
+   "RunBeforeBuild": {
+    "type": "bool",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "CarTemplate",
+       "ChamaleonTemplate",
+       "HeroPropTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "Human_Face_Template",
+       "MinotaurTemplate",
+       "PigTemplate",
+       "PropTemplate",
+       "QuadTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "ToonFaceTemplate",
+       "TortoiseTemplate",
+       "humanBodySimpleTemplate",
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 61,
+      "value": false
+     }
+    ]
+   }
+  },
+  "commissures": {
+   "LeftCornerCtrl": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "Human_Face_Template",
+       "ToonFaceTemplate",
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 3,
+      "value": "L_Lips_Main_Ctrl"
+     }
+    ]
+   },
+   "RightCornerCtrl": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "Human_Face_Template",
+       "ToonFaceTemplate",
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 3,
+      "value": "R_Lips_Main_Ctrl"
+     }
+    ]
+   }
+  },
+  "convertbody": {
+   "Engine": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "SlothTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 6,
+      "value": "unity"
+     },
+     {
+      "templates": [
+       "PigTemplate"
+      ],
+      "uses": 2,
+      "value": "unreal"
+     }
+    ]
+   },
+   "scale": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "PigTemplate",
+       "SlothTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 8,
+      "value": "None"
+     }
+    ]
+   }
+  },
+  "dinamic_scale": {},
+  "door": {
+   "Mirror": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "CarTemplate"
+      ],
+      "uses": 2,
+      "value": "True"
+     }
+    ]
+   },
+   "SetParent": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "CarTemplate"
+      ],
+      "uses": 2,
+      "value": "Chasis_Center_Suspension_Ctrl"
+     }
+    ]
+   }
+  },
+  "drift": {
+   "SetBackDrift": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "CarTemplate"
+      ],
+      "uses": 1,
+      "value": "Chasis_Back_Jnt"
+     }
+    ]
+   },
+   "SetFrontDrift": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "CarTemplate"
+      ],
+      "uses": 1,
+      "value": "Chasis_Front_Jnt"
+     }
+    ]
+   },
+   "SetParent": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "CarTemplate"
+      ],
+      "uses": 1,
+      "value": "Chasis_Center_Ctrl"
+     }
+    ]
+   }
+  },
+  "eyelids": {
+   "BindJoints": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "HumanUnrealGameTemplate",
+       "PigTemplate",
+       "SlothTemplate"
+      ],
+      "uses": 3,
+      "value": "1"
+     },
+     {
+      "templates": [
+       "Human_Face_Template",
+       "ToonFaceTemplate",
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 3,
+      "value": "PerVtx"
+     },
+     {
+      "templates": [
+       "HumanGameTemplate"
+      ],
+      "uses": 1,
+      "value": "3"
+     }
+    ]
+   },
+   "CtrlSize": {
+    "type": "long",
+    "values": [
+     {
+      "templates": [
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Face_Template",
+       "PigTemplate",
+       "SlothTemplate",
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 6,
+      "value": 4
+     },
+     {
+      "templates": [
+       "ToonFaceTemplate"
+      ],
+      "uses": 1,
+      "value": 1
+     }
+    ]
+   },
+   "GameMode": {
+    "type": "bool",
+    "values": [
+     {
+      "templates": [
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "PigTemplate",
+       "SlothTemplate"
+      ],
+      "uses": 4,
+      "value": true
+     },
+     {
+      "templates": [
+       "Human_Face_Template",
+       "ToonFaceTemplate",
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 3,
+      "value": false
+     }
+    ]
+   },
+   "LimitCtrl": {
+    "type": "bool",
+    "values": [
+     {
+      "templates": [
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Face_Template",
+       "PigTemplate",
+       "SlothTemplate",
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 6,
+      "value": false
+     },
+     {
+      "templates": [
+       "ToonFaceTemplate"
+      ],
+      "uses": 1,
+      "value": true
+     }
+    ]
+   },
+   "Mirror": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Face_Template",
+       "PigTemplate",
+       "SlothTemplate",
+       "ToonFaceTemplate",
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 7,
+      "value": "True"
+     }
+    ]
+   },
+   "SetAttrsPosition": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "Human_Face_Template",
+       "PigTemplate",
+       "SlothTemplate",
+       "ToonFaceTemplate"
+      ],
+      "uses": 4,
+      "value": "Vis_Ctrl"
+     },
+     {
+      "templates": [
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate"
+      ],
+      "uses": 2,
+      "value": "VisAttrs_Ctrl"
+     },
+     {
+      "templates": [
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 1,
+      "value": "L_Eyelids_Scale_Ctrl"
+     }
+    ]
+   },
+   "SetEyePivot": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "Human_Face_Template",
+       "ToonFaceTemplate",
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 3,
+      "value": "Eye_Pivot"
+     },
+     {
+      "templates": [
+       "PigTemplate",
+       "SlothTemplate"
+      ],
+      "uses": 2,
+      "value": "EyePivot"
+     },
+     {
+      "templates": [
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate"
+      ],
+      "uses": 2,
+      "value": "Eyelids_Guide"
+     }
+    ]
+   },
+   "SetLowerEdge": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "Human_Face_Template",
+       "ToonFaceTemplate"
+      ],
+      "uses": 2,
+      "value": ""
+     },
+     {
+      "templates": [
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 1,
+      "value": "Body_Geo.e[11136], Body_Geo.e[11138], Body_Geo.e[11142], Body_Geo.e[11145], Body_Geo.e[11149:11150], Body_Geo.e[11154], Body_Geo.e[11188], Body_Geo.e[11192], Body_Geo.e[11195], Body_Geo.e[11197], Body_Geo.e[11436]"
+     },
+     {
+      "templates": [
+       "HumanGameTemplate"
+      ],
+      "uses": 1,
+      "value": "Body_Geo.e[15760], Body_Geo.e[15762], Body_Geo.e[15767:15768], Body_Geo.e[15773], Body_Geo.e[16250], Body_Geo.e[16260], Body_Geo.e[16502], Body_Geo.e[17022], Body_Geo.e[17024], Body_Geo.e[17137]"
+     },
+     {
+      "templates": [
+       "PigTemplate"
+      ],
+      "uses": 1,
+      "value": "Character|Boar|Boar.e[2614:2615], Character|Boar|Boar.e[2636:2637], Character|Boar|Boar.e[2698:2699], Character|Boar|Boar.e[2716:2717], Character|Boar|Boar.e[2724:2725], Character|Boar|Boar.e[2733]"
+     },
+     {
+      "templates": [
+       "HumanUnrealGameTemplate"
+      ],
+      "uses": 1,
+      "value": "body.e[450], body.e[456], body.e[486], body.e[489], body.e[492], body.e[495], body.e[499], body.e[502], body.e[505], body.e[507]"
+     },
+     {
+      "templates": [
+       "SlothTemplate"
+      ],
+      "uses": 1,
+      "value": "sloth_body_mesh.e[5992], sloth_body_mesh.e[6041], sloth_body_mesh.e[6043], sloth_body_mesh.e[6045], sloth_body_mesh.e[6063], sloth_body_mesh.e[6065:6066]"
+     }
+    ]
+   },
+   "SetParent": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "PigTemplate",
+       "SlothTemplate"
+      ],
+      "uses": 4,
+      "value": "Head_Ctrl"
+     },
+     {
+      "templates": [
+       "Human_Face_Template",
+       "ToonFaceTemplate",
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 3,
+      "value": "Skull_Upr_Ctrl"
+     }
+    ]
+   },
+   "SetUpperEdge": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "Human_Face_Template",
+       "ToonFaceTemplate"
+      ],
+      "uses": 2,
+      "value": ""
+     },
+     {
+      "templates": [
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 1,
+      "value": "Body_Geo.e[11157], Body_Geo.e[11159], Body_Geo.e[11164], Body_Geo.e[11167], Body_Geo.e[11170], Body_Geo.e[11173], Body_Geo.e[11176], Body_Geo.e[11179], Body_Geo.e[11181], Body_Geo.e[11184], Body_Geo.e[11472], Body_Geo.e[11537], Body_Geo.e[11539]"
+     },
+     {
+      "templates": [
+       "HumanGameTemplate"
+      ],
+      "uses": 1,
+      "value": "Body_Geo.e[15777], Body_Geo.e[15781], Body_Geo.e[15784], Body_Geo.e[15786], Body_Geo.e[15789], Body_Geo.e[16686], Body_Geo.e[16695], Body_Geo.e[17011], Body_Geo.e[17014], Body_Geo.e[17056], Body_Geo.e[25694]"
+     },
+     {
+      "templates": [
+       "PigTemplate"
+      ],
+      "uses": 1,
+      "value": "Character|Boar|Boar.e[2644:2645], Character|Boar|Boar.e[2652:2653], Character|Boar|Boar.e[2666:2667], Character|Boar|Boar.e[2678:2679], Character|Boar|Boar.e[2690:2693], Character|Boar|Boar.e[2732]"
+     },
+     {
+      "templates": [
+       "HumanUnrealGameTemplate"
+      ],
+      "uses": 1,
+      "value": "body.e[446], body.e[452], body.e[457], body.e[462], body.e[465], body.e[469], body.e[481], body.e[483], body.e[552]"
+     },
+     {
+      "templates": [
+       "SlothTemplate"
+      ],
+      "uses": 1,
+      "value": "sloth_body_mesh.e[6047], sloth_body_mesh.e[6049], sloth_body_mesh.e[6051], sloth_body_mesh.e[6053], sloth_body_mesh.e[6055], sloth_body_mesh.e[6057], sloth_body_mesh.e[6059], sloth_body_mesh.e[6061]"
+     }
+    ]
+   }
+  },
+  "eyes": {
+   "CtrlSize": {
+    "type": "long",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "PigTemplate",
+       "QuadTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "TortoiseTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 12,
+      "value": 4
+     },
+     {
+      "templates": [
+       "ToonBodyTemplate"
+      ],
+      "uses": 1,
+      "value": 1
+     }
+    ]
+   },
+   "EyesAmount": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "PigTemplate",
+       "QuadTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 13,
+      "value": "Two"
+     }
+    ]
+   },
+   "SetParent": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "PigTemplate",
+       "QuadTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 12,
+      "value": "Head_Jnt"
+     },
+     {
+      "templates": [
+       "TortoiseTemplate"
+      ],
+      "uses": 1,
+      "value": "Head_Ctrl"
+     }
+    ]
+   }
+  },
+  "faceautomations": {
+   "CheekBoneFollow": {
+    "type": "bool",
+    "values": [
+     {
+      "templates": [
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate"
+      ],
+      "uses": 2,
+      "value": true
+     }
+    ]
+   },
+   "CheekFollow": {
+    "type": "bool",
+    "values": [
+     {
+      "templates": [
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate"
+      ],
+      "uses": 2,
+      "value": true
+     }
+    ]
+   },
+   "CheekPush": {
+    "type": "bool",
+    "values": [
+     {
+      "templates": [
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate"
+      ],
+      "uses": 2,
+      "value": true
+     }
+    ]
+   },
+   "CheekScaleToJoint": {
+    "type": "bool",
+    "values": [
+     {
+      "templates": [
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate"
+      ],
+      "uses": 2,
+      "value": true
+     }
+    ]
+   },
+   "NostrilFollow": {
+    "type": "bool",
+    "values": [
+     {
+      "templates": [
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate"
+      ],
+      "uses": 2,
+      "value": true
+     }
+    ]
+   },
+   "NostrilMode": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate"
+      ],
+      "uses": 2,
+      "value": "HeadAndCorner"
+     }
+    ]
+   },
+   "SetCheekBoneCtrl": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate"
+      ],
+      "uses": 2,
+      "value": "L_CheekBone_1_Main_Ctrl"
+     }
+    ]
+   },
+   "SetCheekBoneOffset": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate"
+      ],
+      "uses": 2,
+      "value": "L_CheekBone_1_Ctrl_Main_Offset_Grp"
+     }
+    ]
+   },
+   "SetCheekCtrl": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate"
+      ],
+      "uses": 2,
+      "value": "L_Cheek_A_Ctrl"
+     }
+    ]
+   },
+   "SetCheekJoint": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate"
+      ],
+      "uses": 2,
+      "value": "L_Cheek_A_Skl"
+     }
+    ]
+   },
+   "SetHeadCtrl": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate"
+      ],
+      "uses": 2,
+      "value": "Head_Ctrl"
+     }
+    ]
+   },
+   "SetMouthCornerCtrl": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate"
+      ],
+      "uses": 2,
+      "value": "L_Mouth_Main_Ctrl"
+     }
+    ]
+   },
+   "SetMouthSubCtrl": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate"
+      ],
+      "uses": 2,
+      "value": "L_Mouth_Sub_Ctrl"
+     }
+    ]
+   },
+   "SetNoseCtrl": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate"
+      ],
+      "uses": 2,
+      "value": "Nose_Main_Ctrl"
+     }
+    ]
+   },
+   "SetNostrilCtrl": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate"
+      ],
+      "uses": 2,
+      "value": "L_Nostril_A_Ctrl"
+     }
+    ]
+   },
+   "SetUpperLipCtrl": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate"
+      ],
+      "uses": 2,
+      "value": "Mid_Mouth_Up_Ctrl"
+     }
+    ]
+   }
+  },
+  "foot": {
+   "CtrlSize": {
+    "type": "long",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "PigTemplate",
+       "QuadTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 14,
+      "value": 2
+     },
+     {
+      "templates": [
+       "PigTemplate",
+       "QuadTemplate"
+      ],
+      "uses": 2,
+      "value": 1
+     }
+    ]
+   },
+   "IKLeg": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 9,
+      "value": "L_Ankle_Ik_IKrp"
+     },
+     {
+      "templates": [
+       "PigTemplate",
+       "QuadTemplate"
+      ],
+      "uses": 2,
+      "value": "L_BkBall_Ik_IKrp"
+     },
+     {
+      "templates": [
+       "ChamaleonTemplate",
+       "TortoiseTemplate"
+      ],
+      "uses": 2,
+      "value": "L_FrAnkle_Ik_IKrp"
+     },
+     {
+      "templates": [
+       "PigTemplate",
+       "QuadTemplate"
+      ],
+      "uses": 2,
+      "value": "L_FrBall_Ik_IKrp"
+     },
+     {
+      "templates": [
+       "MinotaurTemplate"
+      ],
+      "uses": 1,
+      "value": "L_Ball_Ik_IKrp"
+     }
+    ]
+   },
+   "IkAttrsPosition": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 9,
+      "value": "L_Ankle_Ik_Ctrl"
+     },
+     {
+      "templates": [
+       "PigTemplate",
+       "QuadTemplate"
+      ],
+      "uses": 2,
+      "value": "L_BkBall_Ik_Ctrl"
+     },
+     {
+      "templates": [
+       "ChamaleonTemplate",
+       "TortoiseTemplate"
+      ],
+      "uses": 2,
+      "value": "L_FrAnkle_Ik_Ctrl"
+     },
+     {
+      "templates": [
+       "PigTemplate",
+       "QuadTemplate"
+      ],
+      "uses": 2,
+      "value": "L_FrBall_Ik_Ctrl"
+     },
+     {
+      "templates": [
+       "MinotaurTemplate"
+      ],
+      "uses": 1,
+      "value": "L_Ball_Ik_Ctrl"
+     }
+    ]
+   },
+   "Mirror": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "PigTemplate",
+       "QuadTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 16,
+      "value": "True"
+     }
+    ]
+   },
+   "Orients": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "PigTemplate",
+       "QuadTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 16,
+      "value": "Default"
+     }
+    ]
+   },
+   "ParallelToFloor": {
+    "type": "bool",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "PigTemplate",
+       "QuadTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 16,
+      "value": false
+     }
+    ]
+   },
+   "SetFKCtrl": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 9,
+      "value": "L_Ankle_Fk_Ctrl"
+     },
+     {
+      "templates": [
+       "PigTemplate",
+       "QuadTemplate"
+      ],
+      "uses": 2,
+      "value": "L_BkBall_Fk_Ctrl"
+     },
+     {
+      "templates": [
+       "ChamaleonTemplate",
+       "TortoiseTemplate"
+      ],
+      "uses": 2,
+      "value": "L_FrAnkle_Fk_Ctrl"
+     },
+     {
+      "templates": [
+       "PigTemplate",
+       "QuadTemplate"
+      ],
+      "uses": 2,
+      "value": "L_FrBall_Fk_Ctrl"
+     },
+     {
+      "templates": [
+       "MinotaurTemplate"
+      ],
+      "uses": 1,
+      "value": "L_Ball_Fk_Ctrl"
+     }
+    ]
+   },
+   "SetGameParent": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 8,
+      "value": "L_Knee_Twist_3_Bnd"
+     },
+     {
+      "templates": [
+       "MinotaurTemplate",
+       "PigTemplate",
+       "QuadTemplate"
+      ],
+      "uses": 5,
+      "value": ""
+     },
+     {
+      "templates": [
+       "ChamaleonTemplate"
+      ],
+      "uses": 1,
+      "value": "L_FrKnee_Bnd_3_Bnd"
+     },
+     {
+      "templates": [
+       "TortoiseTemplate"
+      ],
+      "uses": 1,
+      "value": "L_FrKnee_Twist_3_Bnd"
+     },
+     {
+      "templates": [
+       "ChamaleonTemplate"
+      ],
+      "uses": 1,
+      "value": "L_Knee_Bnd_3_Bnd"
+     }
+    ]
+   },
+   "SetIKCtrl": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 9,
+      "value": "L_Ankle_SubIk_Ctrl"
+     },
+     {
+      "templates": [
+       "PigTemplate",
+       "QuadTemplate"
+      ],
+      "uses": 2,
+      "value": "L_BkBall_Ik_Sub_Ctrl"
+     },
+     {
+      "templates": [
+       "ChamaleonTemplate",
+       "TortoiseTemplate"
+      ],
+      "uses": 2,
+      "value": "L_FrAnkle_SubIk_Ctrl"
+     },
+     {
+      "templates": [
+       "PigTemplate",
+       "QuadTemplate"
+      ],
+      "uses": 2,
+      "value": "L_FrBall_Ik_Sub_Ctrl"
+     },
+     {
+      "templates": [
+       "MinotaurTemplate"
+      ],
+      "uses": 1,
+      "value": "L_Ball_Ik_Sub_Ctrl"
+     }
+    ]
+   },
+   "SwitchIKFKAttr": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate"
+      ],
+      "uses": 9,
+      "value": "L_Hip_Jnt_Switch_Loc.Switch_IK_FK"
+     },
+     {
+      "templates": [
+       "ChamaleonTemplate",
+       "PigTemplate",
+       "QuadTemplate",
+       "TortoiseTemplate"
+      ],
+      "uses": 4,
+      "value": "L_FrHip_Jnt_Switch_Loc.Switch_IK_FK"
+     },
+     {
+      "templates": [
+       "PigTemplate",
+       "QuadTemplate"
+      ],
+      "uses": 2,
+      "value": "L_BkHip_Jnt_Switch_Loc.Switch_IK_FK"
+     },
+     {
+      "templates": [
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 1,
+      "value": "L_Hip_Attrs_Ctrl.Switch_IK_FK"
+     }
+    ]
+   }
+  },
+  "footbox": {
+   "Color": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate"
+      ],
+      "uses": 8,
+      "value": "pink"
+     }
+    ]
+   },
+   "ForceYZero": {
+    "type": "bool",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate"
+      ],
+      "uses": 8,
+      "value": true
+     }
+    ]
+   },
+   "Mirror": {
+    "type": "bool",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate"
+      ],
+      "uses": 8,
+      "value": true
+     }
+    ]
+   },
+   "SetAttrsPosition": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate"
+      ],
+      "uses": 7,
+      "value": "L_Hip_Jnt_Switch_Loc"
+     },
+     {
+      "templates": [
+       "TortoiseTemplate"
+      ],
+      "uses": 1,
+      "value": "L_FrHip_Jnt_Switch_Loc"
+     }
+    ]
+   },
+   "SetBallFloor": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate"
+      ],
+      "uses": 7,
+      "value": "L_Foot_BallFloor_RFL_Grp"
+     },
+     {
+      "templates": [
+       "TortoiseTemplate"
+      ],
+      "uses": 1,
+      "value": "L_FrFoot_BallFloor_RFL_Grp"
+     }
+    ]
+   },
+   "SetBallParent": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate"
+      ],
+      "uses": 7,
+      "value": "L_Foot_Toes_Ctrl"
+     },
+     {
+      "templates": [
+       "TortoiseTemplate"
+      ],
+      "uses": 1,
+      "value": "L_FrFoot_Toes_Ctrl"
+     }
+    ]
+   },
+   "SetHeel": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate"
+      ],
+      "uses": 7,
+      "value": "L_Foot_Heel_RFL_Grp"
+     },
+     {
+      "templates": [
+       "TortoiseTemplate"
+      ],
+      "uses": 1,
+      "value": "L_FrFoot_Heel_RFL_Grp"
+     }
+    ]
+   },
+   "SetHeelParent": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate"
+      ],
+      "uses": 7,
+      "value": "L_Foot_Ankle_Bnd"
+     },
+     {
+      "templates": [
+       "TortoiseTemplate"
+      ],
+      "uses": 1,
+      "value": "L_FrFoot_Ankle_Bnd"
+     }
+    ]
+   },
+   "SetIn": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate"
+      ],
+      "uses": 7,
+      "value": "L_Foot_In_RFL_Grp"
+     },
+     {
+      "templates": [
+       "TortoiseTemplate"
+      ],
+      "uses": 1,
+      "value": "L_FrFoot_In_RFL_Grp"
+     }
+    ]
+   },
+   "SetOut": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate"
+      ],
+      "uses": 7,
+      "value": "L_Foot_Out_RFL_Grp"
+     },
+     {
+      "templates": [
+       "TortoiseTemplate"
+      ],
+      "uses": 1,
+      "value": "L_FrFoot_Out_RFL_Grp"
+     }
+    ]
+   },
+   "SetToes": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate"
+      ],
+      "uses": 7,
+      "value": "L_Foot_Toes_RFL_Grp"
+     },
+     {
+      "templates": [
+       "TortoiseTemplate"
+      ],
+      "uses": 1,
+      "value": "L_FrFoot_Toes_RFL_Grp"
+     }
+    ]
+   }
+  },
+  "hair": {
+   "AutoRotate": {
+    "type": "bool",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate"
+      ],
+      "uses": 1,
+      "value": false
+     }
+    ]
+   },
+   "CtrlColor": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate"
+      ],
+      "uses": 1,
+      "value": "purple"
+     }
+    ]
+   },
+   "CtrlSize": {
+    "type": "long",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate"
+      ],
+      "uses": 1,
+      "value": 1
+     }
+    ]
+   },
+   "CtrlType": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate"
+      ],
+      "uses": 1,
+      "value": "circleX"
+     }
+    ]
+   },
+   "Mirror": {
+    "type": "bool",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate"
+      ],
+      "uses": 1,
+      "value": true
+     }
+    ]
+   },
+   "SetLockAttrs": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate"
+      ],
+      "uses": 1,
+      "value": ""
+     }
+    ]
+   },
+   "SetLockGuides": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate"
+      ],
+      "uses": 1,
+      "value": ""
+     }
+    ]
+   },
+   "SetLockPin": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate"
+      ],
+      "uses": 1,
+      "value": ""
+     }
+    ]
+   },
+   "SetParent": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate"
+      ],
+      "uses": 1,
+      "value": "L_Primaries_JR_Wing_003_Bnd"
+     }
+    ]
+   },
+   "SubAutoRotate": {
+    "type": "bool",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate"
+      ],
+      "uses": 1,
+      "value": false
+     }
+    ]
+   },
+   "TwistAxis": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate"
+      ],
+      "uses": 1,
+      "value": "X"
+     }
+    ]
+   }
+  },
+  "hand": {
+   "AutoCupPlacement": {
+    "type": "bool",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 9,
+      "value": true
+     }
+    ]
+   },
+   "CreateFingersAttrs": {
+    "type": "bool",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate"
+      ],
+      "uses": 8,
+      "value": true
+     },
+     {
+      "templates": [
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 1,
+      "value": false
+     }
+    ]
+   },
+   "CtrlSize": {
+    "type": "long",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 8,
+      "value": 4
+     },
+     {
+      "templates": [
+       "ToonBodyTemplate"
+      ],
+      "uses": 1,
+      "value": 1
+     }
+    ]
+   },
+   "CtrlType": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 9,
+      "value": "circleX"
+     }
+    ]
+   },
+   "FingerScale": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 9,
+      "value": "Phalanx"
+     }
+    ]
+   },
+   "FingersIk": {
+    "type": "bool",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 9,
+      "value": true
+     }
+    ]
+   },
+   "HandPoses": {
+    "type": "bool",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 9,
+      "value": true
+     }
+    ]
+   },
+   "Index": {
+    "type": "bool",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 9,
+      "value": true
+     }
+    ]
+   },
+   "Middle": {
+    "type": "bool",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 9,
+      "value": true
+     }
+    ]
+   },
+   "Mirror": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 9,
+      "value": "True"
+     }
+    ]
+   },
+   "Orients": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 9,
+      "value": "Default"
+     }
+    ]
+   },
+   "Pinky": {
+    "type": "bool",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 9,
+      "value": true
+     }
+    ]
+   },
+   "Ring": {
+    "type": "bool",
+    "values": [
+     {
+      "templates": [
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 8,
+      "value": true
+     },
+     {
+      "templates": [
+       "BirdTemplate"
+      ],
+      "uses": 1,
+      "value": false
+     }
+    ]
+   },
+   "SetAttrsCtrl": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 9,
+      "value": "new_ctrl"
+     }
+    ]
+   },
+   "SetCtrlAttrsParent": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 9,
+      "value": "L_Hand_Palm_Jnt"
+     }
+    ]
+   },
+   "SetGameParent": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 8,
+      "value": ""
+     },
+     {
+      "templates": [
+       "ToonBodyTemplate"
+      ],
+      "uses": 1,
+      "value": "L_Elbow_Twist_3_Bnd"
+     }
+    ]
+   },
+   "SetParent": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 7,
+      "value": "L_Wrist_Jnt"
+     },
+     {
+      "templates": [
+       "BirdTemplate"
+      ],
+      "uses": 1,
+      "value": "L_Foot_Ankle_Bnd"
+     },
+     {
+      "templates": [
+       "SeagullTemplate"
+      ],
+      "uses": 1,
+      "value": "new_locator"
+     }
+    ]
+   },
+   "SetVisAttr": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate"
+      ],
+      "uses": 8,
+      "value": ""
+     },
+     {
+      "templates": [
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 1,
+      "value": "L_Shoulder_Attrs_Ctrl"
+     }
+    ]
+   },
+   "Thumb": {
+    "type": "bool",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 9,
+      "value": true
+     }
+    ]
+   }
+  },
+  "head": {
+   "CtrlColor": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "PigTemplate",
+       "QuadTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 12,
+      "value": "yellow"
+     }
+    ]
+   },
+   "CtrlSize": {
+    "type": "long",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "PigTemplate",
+       "QuadTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 11,
+      "value": 4
+     },
+     {
+      "templates": [
+       "ToonBodyTemplate"
+      ],
+      "uses": 1,
+      "value": 2
+     }
+    ]
+   },
+   "HeadCtrlType": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "PigTemplate",
+       "QuadTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 12,
+      "value": "octagon"
+     }
+    ]
+   },
+   "Orients": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "PigTemplate",
+       "QuadTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 12,
+      "value": "Default"
+     }
+    ]
+   },
+   "Ribbon": {
+    "type": "bool",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "PigTemplate",
+       "QuadTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 12,
+      "value": true
+     }
+    ]
+   },
+   "SecundaryRibbon": {
+    "type": "long",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "PigTemplate",
+       "QuadTemplate",
+       "SeagullTemplate"
+      ],
+      "uses": 8,
+      "value": 3
+     },
+     {
+      "templates": [
+       "ChamaleonTemplate",
+       "ToonBodyTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 3,
+      "value": 1
+     },
+     {
+      "templates": [
+       "SlothTemplate"
+      ],
+      "uses": 1,
+      "value": 2
+     }
+    ]
+   },
+   "SetGameParent": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "PigTemplate",
+       "QuadTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 12,
+      "value": ""
+     }
+    ]
+   },
+   "SetParent": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 7,
+      "value": "Spine_End_Jnt"
+     },
+     {
+      "templates": [
+       "ChamaleonTemplate",
+       "PigTemplate",
+       "QuadTemplate"
+      ],
+      "uses": 3,
+      "value": "Spine_G_Jnt"
+     },
+     {
+      "templates": [
+       "BirdTemplate",
+       "SeagullTemplate"
+      ],
+      "uses": 2,
+      "value": "Spine_Chest_Top_IK_Ctrl"
+     }
+    ]
+   },
+   "SquashStretch": {
+    "type": "bool",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "PigTemplate",
+       "QuadTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 12,
+      "value": true
+     }
+    ]
+   }
+  },
+  "human_fixes": {},
+  "jaw": {
+   "CtrlSize": {
+    "type": "long",
+    "values": [
+     {
+      "templates": [
+       "Human_Face_Template",
+       "ToonFaceTemplate",
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 3,
+      "value": 1
+     }
+    ]
+   },
+   "CtrlType": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "Human_Face_Template",
+       "ToonFaceTemplate",
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 3,
+      "value": "circleY"
+     }
+    ]
+   },
+   "GameMode": {
+    "type": "bool",
+    "values": [
+     {
+      "templates": [
+       "Human_Face_Template",
+       "ToonFaceTemplate",
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 3,
+      "value": false
+     }
+    ]
+   },
+   "SetAttrsPosition": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "Human_Face_Template",
+       "ToonFaceTemplate",
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 3,
+      "value": "Vis_Ctrl"
+     }
+    ]
+   },
+   "SetParent": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "Human_Face_Template",
+       "ToonFaceTemplate",
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 3,
+      "value": "Skull_Lwr_Ctrl"
+     }
+    ]
+   }
+  },
+  "limb": {
+   "ArmsSoftIk": {
+    "type": "bool",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate"
+      ],
+      "uses": 18,
+      "value": false
+     }
+    ]
+   },
+   "Bendys": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate"
+      ],
+      "uses": 18,
+      "value": "Default"
+     }
+    ]
+   },
+   "CtrlSize": {
+    "type": "long",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "TortoiseTemplate"
+      ],
+      "uses": 16,
+      "value": 4
+     },
+     {
+      "templates": [
+       "ToonBodyTemplate"
+      ],
+      "uses": 2,
+      "value": 2
+     }
+    ]
+   },
+   "FKCtrlType": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate"
+      ],
+      "uses": 18,
+      "value": "bounding_cube"
+     }
+    ]
+   },
+   "ForceIkWorld": {
+    "type": "bool",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate"
+      ],
+      "uses": 18,
+      "value": false
+     }
+    ]
+   },
+   "IkCtrlType": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate"
+      ],
+      "uses": 18,
+      "value": "cube"
+     }
+    ]
+   },
+   "IkTopCtrlType": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate"
+      ],
+      "uses": 18,
+      "value": "pin_cube"
+     }
+    ]
+   },
+   "Mirror": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate"
+      ],
+      "uses": 18,
+      "value": "True"
+     }
+    ]
+   },
+   "Orients": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate"
+      ],
+      "uses": 18,
+      "value": "Default"
+     }
+    ]
+   },
+   "PVCtrlType": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate"
+      ],
+      "uses": 18,
+      "value": "sphere"
+     }
+    ]
+   },
+   "Ribbons": {
+    "type": "bool",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate"
+      ],
+      "uses": 18,
+      "value": true
+     }
+    ]
+   },
+   "ScaleTweakCtrls": {
+    "type": "bool",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate"
+      ],
+      "uses": 18,
+      "value": true
+     }
+    ]
+   },
+   "SetGameParent": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate"
+      ],
+      "uses": 7,
+      "value": "L_Clavicle_Bnd"
+     },
+     {
+      "templates": [
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate"
+      ],
+      "uses": 6,
+      "value": "L_Pelvis_Bnd"
+     },
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "SeagullTemplate"
+      ],
+      "uses": 5,
+      "value": ""
+     }
+    ]
+   },
+   "SetParent": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate"
+      ],
+      "uses": 9,
+      "value": "L_Pelvis_Jnt"
+     },
+     {
+      "templates": [
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate"
+      ],
+      "uses": 8,
+      "value": "L_Clavicle_Jnt"
+     },
+     {
+      "templates": [
+       "BirdTemplate"
+      ],
+      "uses": 1,
+      "value": "L_Clav_JR"
+     }
+    ]
+   },
+   "TwistAmount": {
+    "type": "long",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "TortoiseTemplate"
+      ],
+      "uses": 15,
+      "value": 4
+     },
+     {
+      "templates": [
+       "ToonBodyTemplate"
+      ],
+      "uses": 2,
+      "value": 7
+     },
+     {
+      "templates": [
+       "BirdTemplate"
+      ],
+      "uses": 1,
+      "value": 18
+     }
+    ]
+   }
+  },
+  "load_ctrls": {
+   "File": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "Human_Body_Template",
+       "Human_Face_Template",
+       "MinotaurTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "TortoiseTemplate"
+      ],
+      "uses": 7,
+      "value": "AG"
+     },
+     {
+      "templates": [
+       "CarTemplate",
+       "ChamaleonTemplate",
+       "HeroPropTemplate",
+       "PropTemplate",
+       "ToonFaceTemplate"
+      ],
+      "uses": 5,
+      "value": ""
+     },
+     {
+      "templates": [
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate"
+      ],
+      "uses": 2,
+      "value": "Game"
+     },
+     {
+      "templates": [
+       "PigTemplate",
+       "QuadTemplate"
+      ],
+      "uses": 2,
+      "value": "Quad"
+     },
+     {
+      "templates": [
+       "humanBodySimpleTemplate",
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 2,
+      "value": "Simple"
+     },
+     {
+      "templates": [
+       "ToonBodyTemplate"
+      ],
+      "uses": 1,
+      "value": "SP"
+     }
+    ]
+   }
+  },
+  "load_skin": {
+   "Path": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "CarTemplate",
+       "ChamaleonTemplate",
+       "HeroPropTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "PigTemplate",
+       "PropTemplate",
+       "QuadTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 16,
+      "value": ""
+     }
+    ]
+   }
+  },
+  "locals": {
+   "NewNames": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "Human_Face_Template",
+       "ToonFaceTemplate",
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 3,
+      "value": "BodySkull"
+     },
+     {
+      "templates": [
+       "Human_Face_Template",
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 2,
+      "value": "BodyEyes,BodyLips,BodyBrows,BodyCheeks,BodyJaw,BodyNose,BodyMouthUp,BodyMouthDown,BodyMouthWide,BodyMouthNarrow,BodySquash"
+     },
+     {
+      "templates": [
+       "ToonFaceTemplate"
+      ],
+      "uses": 1,
+      "value": "BodyEyes,BodyLips,BodyBrows,BodyCheeks,BodyJaw,BodyMouthUp,BodyMouthDown,BodyMouthWide,BodyMouthNarrow,BodySquash"
+     }
+    ]
+   },
+   "SetExtraGeos": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "Human_Face_Template",
+       "ToonFaceTemplate",
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 6,
+      "value": ""
+     }
+    ]
+   },
+   "SetGeo": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "Human_Face_Template",
+       "ToonFaceTemplate",
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 3,
+      "value": "BodySkull"
+     },
+     {
+      "templates": [
+       "ToonFaceTemplate"
+      ],
+      "uses": 1,
+      "value": ""
+     },
+     {
+      "templates": [
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 1,
+      "value": "Body_Geo"
+     },
+     {
+      "templates": [
+       "Human_Face_Template"
+      ],
+      "uses": 1,
+      "value": "C_Head_hi"
+     }
+    ]
+   }
+  },
+  "mouth": {
+   "CtrlSize": {
+    "type": "long",
+    "values": [
+     {
+      "templates": [
+       "ToonFaceTemplate"
+      ],
+      "uses": 1,
+      "value": 1
+     },
+     {
+      "templates": [
+       "Human_Face_Template"
+      ],
+      "uses": 1,
+      "value": 4
+     }
+    ]
+   },
+   "Mirror": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "Human_Face_Template",
+       "ToonFaceTemplate"
+      ],
+      "uses": 2,
+      "value": "True"
+     }
+    ]
+   },
+   "SetAttrsPosition": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "Human_Face_Template",
+       "ToonFaceTemplate"
+      ],
+      "uses": 2,
+      "value": "Vis_Ctrl"
+     }
+    ]
+   },
+   "SetLowerEdge": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "Human_Face_Template",
+       "ToonFaceTemplate"
+      ],
+      "uses": 2,
+      "value": ""
+     }
+    ]
+   },
+   "SetParent": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "Human_Face_Template",
+       "ToonFaceTemplate"
+      ],
+      "uses": 2,
+      "value": "Skull_Lwr_Ctrl"
+     }
+    ]
+   },
+   "SetUpperEdge": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "Human_Face_Template",
+       "ToonFaceTemplate"
+      ],
+      "uses": 2,
+      "value": ""
+     }
+    ]
+   },
+   "SetupOption": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "Human_Face_Template"
+      ],
+      "uses": 1,
+      "value": "Bezier"
+     },
+     {
+      "templates": [
+       "ToonFaceTemplate"
+      ],
+      "uses": 1,
+      "value": "Curve"
+     }
+    ]
+   }
+  },
+  "mouthgames": {
+   "BindJoints": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate"
+      ],
+      "uses": 2,
+      "value": "PerVtx"
+     }
+    ]
+   },
+   "BuccalFlap": {
+    "type": "bool",
+    "values": [
+     {
+      "templates": [
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate"
+      ],
+      "uses": 2,
+      "value": false
+     }
+    ]
+   },
+   "CtrlSize": {
+    "type": "long",
+    "values": [
+     {
+      "templates": [
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate"
+      ],
+      "uses": 2,
+      "value": 4
+     }
+    ]
+   },
+   "MidCtrlTangents": {
+    "type": "bool",
+    "values": [
+     {
+      "templates": [
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate"
+      ],
+      "uses": 2,
+      "value": true
+     }
+    ]
+   },
+   "MidCtrlsAmount": {
+    "type": "long",
+    "values": [
+     {
+      "templates": [
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate"
+      ],
+      "uses": 2,
+      "value": 5
+     }
+    ]
+   },
+   "SetAttrsPosition": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate"
+      ],
+      "uses": 2,
+      "value": "VisAttrs_Ctrl"
+     }
+    ]
+   },
+   "SetFlapLowerJoint": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate"
+      ],
+      "uses": 2,
+      "value": ""
+     }
+    ]
+   },
+   "SetFlapUpperJoint": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate"
+      ],
+      "uses": 2,
+      "value": ""
+     }
+    ]
+   },
+   "SetLowerEdge": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "HumanGameTemplate"
+      ],
+      "uses": 1,
+      "value": "Body_Geo.e[2665], Body_Geo.e[2695], Body_Geo.e[2698], Body_Geo.e[2702], Body_Geo.e[2704], Body_Geo.e[2708], Body_Geo.e[2711], Body_Geo.e[2747], Body_Geo.e[2804], Body_Geo.e[2898], Body_Geo.e[16350], Body_Geo.e[16379], Body_Geo.e[16382], Body_Geo.e[16384], Body_Geo.e[16389], Body_Geo.e[16392], Body_Geo.e[16395], Body_Geo.e[16430], Body_Geo.e[16481], Body_Geo.e[16572], Body_Geo.e[27381], Body_Geo.e[27539]"
+     },
+     {
+      "templates": [
+       "HumanUnrealGameTemplate"
+      ],
+      "uses": 1,
+      "value": "body.e[173], body.e[175], body.e[177], body.e[179], body.e[181], body.e[183], body.e[185], body.e[3511], body.e[4550], body.e[4552], body.e[4554], body.e[4556], body.e[4558], body.e[4560], body.e[4562], body.e[7795]"
+     }
+    ]
+   },
+   "SetParent": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate"
+      ],
+      "uses": 2,
+      "value": "Head_Ctrl"
+     }
+    ]
+   },
+   "SetUpperEdge": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "HumanGameTemplate"
+      ],
+      "uses": 1,
+      "value": "Body_Geo.e[2663], Body_Geo.e[2673], Body_Geo.e[2677], Body_Geo.e[2679], Body_Geo.e[2682], Body_Geo.e[2685], Body_Geo.e[2689], Body_Geo.e[2693], Body_Geo.e[2801], Body_Geo.e[2899], Body_Geo.e[16344], Body_Geo.e[16355], Body_Geo.e[16358], Body_Geo.e[16363], Body_Geo.e[16366], Body_Geo.e[16370], Body_Geo.e[16373], Body_Geo.e[16375], Body_Geo.e[16480], Body_Geo.e[16575], Body_Geo.e[27345], Body_Geo.e[27503]"
+     },
+     {
+      "templates": [
+       "HumanUnrealGameTemplate"
+      ],
+      "uses": 1,
+      "value": "body.e[154], body.e[158], body.e[160], body.e[162], body.e[164], body.e[168], body.e[171], body.e[207], body.e[4533], body.e[4535], body.e[4537], body.e[4539], body.e[4541], body.e[4546], body.e[4548], body.e[4584]"
+     }
+    ]
+   },
+   "TweakCtrlsAmount": {
+    "type": "long",
+    "values": [
+     {
+      "templates": [
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate"
+      ],
+      "uses": 2,
+      "value": 7
+     }
+    ]
+   }
+  },
+  "nose": {
+   "CtrlSize": {
+    "type": "long",
+    "values": [
+     {
+      "templates": [
+       "Human_Face_Template",
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 2,
+      "value": 4
+     }
+    ]
+   },
+   "SetAttrsPosition": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 1,
+      "value": "Nose_Base_Ctrl"
+     },
+     {
+      "templates": [
+       "Human_Face_Template"
+      ],
+      "uses": 1,
+      "value": "Vis_Ctrl"
+     }
+    ]
+   },
+   "SetParent": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "Human_Face_Template",
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 2,
+      "value": "Skull_Upr_Ctrl"
+     }
+    ]
+   }
+  },
+  "orbicularis": {
+   "SetGeo": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "Human_Face_Template",
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 2,
+      "value": "BodyEyes"
+     }
+    ]
+   },
+   "SetParent": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "Human_Face_Template",
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 2,
+      "value": "Skull_Upr_Ctrl"
+     }
+    ]
+   }
+  },
+  "pelvis": {
+   "CtrlSize": {
+    "type": "long",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "PigTemplate",
+       "QuadTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "TortoiseTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 12,
+      "value": 4
+     },
+     {
+      "templates": [
+       "ToonBodyTemplate"
+      ],
+      "uses": 1,
+      "value": 1
+     }
+    ]
+   },
+   "CtrlType": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "PigTemplate",
+       "QuadTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 13,
+      "value": "hexagon"
+     }
+    ]
+   },
+   "Mirror": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "PigTemplate",
+       "QuadTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 13,
+      "value": "True"
+     }
+    ]
+   },
+   "SetGameParent": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "PigTemplate",
+       "QuadTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 13,
+      "value": ""
+     }
+    ]
+   },
+   "SetParent": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "SlothTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 6,
+      "value": "Spine_Root_Jnt"
+     },
+     {
+      "templates": [
+       "ChamaleonTemplate",
+       "PigTemplate",
+       "QuadTemplate"
+      ],
+      "uses": 3,
+      "value": "Spine_A_Jnt"
+     },
+     {
+      "templates": [
+       "BirdTemplate",
+       "SeagullTemplate"
+      ],
+      "uses": 2,
+      "value": "Spine_Bottom_Ik_Ctrl"
+     },
+     {
+      "templates": [
+       "TortoiseTemplate"
+      ],
+      "uses": 1,
+      "value": "COG_Gimbal_Ctrl"
+     },
+     {
+      "templates": [
+       "ToonBodyTemplate"
+      ],
+      "uses": 1,
+      "value": "L_LegSlideSlideDriver_Loc"
+     }
+    ]
+   }
+  },
+  "proxy_attr": {
+   "CtrlShape": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "MinotaurTemplate",
+       "PigTemplate",
+       "QuadTemplate",
+       "SeagullTemplate",
+       "ToonBodyTemplate"
+      ],
+      "uses": 37,
+      "value": "cross"
+     },
+     {
+      "templates": [
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "SlothTemplate",
+       "TortoiseTemplate"
+      ],
+      "uses": 28,
+      "value": "gear"
+     }
+    ]
+   },
+   "SetCopyAttrsFrom": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "PigTemplate",
+       "QuadTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate"
+      ],
+      "uses": 11,
+      "value": "Neck_Attrs_Loc"
+     },
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate"
+      ],
+      "uses": 10,
+      "value": "L_Hip_Jnt_Switch_Loc"
+     },
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate"
+      ],
+      "uses": 10,
+      "value": "R_Hip_Jnt_Switch_Loc"
+     },
+     {
+      "templates": [
+       "BirdTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate"
+      ],
+      "uses": 8,
+      "value": "Spine_Attrs_Loc"
+     },
+     {
+      "templates": [
+       "BirdTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate"
+      ],
+      "uses": 7,
+      "value": "L_Shoulder_Jnt_Switch_Loc"
+     },
+     {
+      "templates": [
+       "BirdTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate"
+      ],
+      "uses": 7,
+      "value": "R_Shoulder_Jnt_Switch_Loc"
+     },
+     {
+      "templates": [
+       "ChamaleonTemplate",
+       "PigTemplate",
+       "QuadTemplate",
+       "TortoiseTemplate"
+      ],
+      "uses": 4,
+      "value": "L_FrHip_Jnt_Switch_Loc"
+     },
+     {
+      "templates": [
+       "ChamaleonTemplate",
+       "PigTemplate",
+       "QuadTemplate",
+       "TortoiseTemplate"
+      ],
+      "uses": 4,
+      "value": "R_FrHip_Jnt_Switch_Loc"
+     },
+     {
+      "templates": [
+       "PigTemplate",
+       "QuadTemplate"
+      ],
+      "uses": 2,
+      "value": "L_BkHip_Jnt_Switch_Loc"
+     },
+     {
+      "templates": [
+       "PigTemplate",
+       "QuadTemplate"
+      ],
+      "uses": 2,
+      "value": "R_BkHip_Jnt_Switch_Loc"
+     }
+    ]
+   },
+   "SetParent": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "PigTemplate",
+       "QuadTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate"
+      ],
+      "uses": 11,
+      "value": "Head_Ctrl"
+     },
+     {
+      "templates": [
+       "BirdTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate"
+      ],
+      "uses": 8,
+      "value": "COG_Ctrl"
+     },
+     {
+      "templates": [
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "SlothTemplate",
+       "TortoiseTemplate"
+      ],
+      "uses": 6,
+      "value": "L_Ankle_Jnt"
+     },
+     {
+      "templates": [
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "SlothTemplate",
+       "TortoiseTemplate"
+      ],
+      "uses": 6,
+      "value": "R_Ankle_Jnt"
+     },
+     {
+      "templates": [
+       "BirdTemplate",
+       "MinotaurTemplate",
+       "SeagullTemplate",
+       "ToonBodyTemplate"
+      ],
+      "uses": 4,
+      "value": "L_Hip_Jnt"
+     },
+     {
+      "templates": [
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "SlothTemplate"
+      ],
+      "uses": 4,
+      "value": "L_Wrist_Jnt"
+     },
+     {
+      "templates": [
+       "BirdTemplate",
+       "MinotaurTemplate",
+       "SeagullTemplate",
+       "ToonBodyTemplate"
+      ],
+      "uses": 4,
+      "value": "R_Hip_Jnt"
+     },
+     {
+      "templates": [
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "SlothTemplate"
+      ],
+      "uses": 4,
+      "value": "R_Wrist_Jnt"
+     },
+     {
+      "templates": [
+       "BirdTemplate",
+       "MinotaurTemplate",
+       "ToonBodyTemplate"
+      ],
+      "uses": 3,
+      "value": "L_Shoulder_Jnt"
+     },
+     {
+      "templates": [
+       "BirdTemplate",
+       "MinotaurTemplate",
+       "ToonBodyTemplate"
+      ],
+      "uses": 3,
+      "value": "R_Shoulder_Jnt"
+     },
+     {
+      "templates": [
+       "PigTemplate",
+       "QuadTemplate"
+      ],
+      "uses": 2,
+      "value": "L_BkHip_Jnt"
+     },
+     {
+      "templates": [
+       "ChamaleonTemplate",
+       "TortoiseTemplate"
+      ],
+      "uses": 2,
+      "value": "L_FrAnkle_Jnt"
+     },
+     {
+      "templates": [
+       "PigTemplate",
+       "QuadTemplate"
+      ],
+      "uses": 2,
+      "value": "L_FrHip_Jnt"
+     },
+     {
+      "templates": [
+       "PigTemplate",
+       "QuadTemplate"
+      ],
+      "uses": 2,
+      "value": "R_BkHip_Jnt"
+     },
+     {
+      "templates": [
+       "ChamaleonTemplate",
+       "TortoiseTemplate"
+      ],
+      "uses": 2,
+      "value": "R_FrAnkle_Jnt"
+     },
+     {
+      "templates": [
+       "PigTemplate",
+       "QuadTemplate"
+      ],
+      "uses": 2,
+      "value": "R_FrHip_Jnt"
+     }
+    ]
+   }
+  },
+  "push": {
+   "SetParent": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "CarTemplate"
+      ],
+      "uses": 4,
+      "value": "Chasis_Center_Ctrl"
+     }
+    ]
+   },
+   "SetWheelGeo": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "CarTemplate"
+      ],
+      "uses": 1,
+      "value": "Wheel_Low.f[0:359]"
+     },
+     {
+      "templates": [
+       "CarTemplate"
+      ],
+      "uses": 1,
+      "value": "Wheel_Low.f[1080:1439]"
+     },
+     {
+      "templates": [
+       "CarTemplate"
+      ],
+      "uses": 1,
+      "value": "Wheel_Low.f[360:719]"
+     },
+     {
+      "templates": [
+       "CarTemplate"
+      ],
+      "uses": 1,
+      "value": "Wheel_Low.f[720:1079]"
+     }
+    ]
+   }
+  },
+  "quadlimb": {
+   "AutoOrient": {
+    "type": "bool",
+    "values": [
+     {
+      "templates": [
+       "MinotaurTemplate",
+       "PigTemplate",
+       "QuadTemplate"
+      ],
+      "uses": 5,
+      "value": true
+     }
+    ]
+   },
+   "BendyCurve": {
+    "type": "bool",
+    "values": [
+     {
+      "templates": [
+       "MinotaurTemplate",
+       "PigTemplate",
+       "QuadTemplate"
+      ],
+      "uses": 5,
+      "value": false
+     }
+    ]
+   },
+   "CreateRibbons": {
+    "type": "bool",
+    "values": [
+     {
+      "templates": [
+       "MinotaurTemplate",
+       "PigTemplate",
+       "QuadTemplate"
+      ],
+      "uses": 5,
+      "value": true
+     }
+    ]
+   },
+   "CtrlSize": {
+    "type": "long",
+    "values": [
+     {
+      "templates": [
+       "MinotaurTemplate",
+       "PigTemplate",
+       "QuadTemplate"
+      ],
+      "uses": 5,
+      "value": 4
+     }
+    ]
+   },
+   "DogMode": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "MinotaurTemplate",
+       "PigTemplate",
+       "QuadTemplate"
+      ],
+      "uses": 3,
+      "value": "Back"
+     },
+     {
+      "templates": [
+       "PigTemplate",
+       "QuadTemplate"
+      ],
+      "uses": 2,
+      "value": "Front"
+     }
+    ]
+   },
+   "ForcePoleVectorDistance": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "MinotaurTemplate",
+       "PigTemplate",
+       "QuadTemplate"
+      ],
+      "uses": 5,
+      "value": "Off"
+     }
+    ]
+   },
+   "IkOrient": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "MinotaurTemplate",
+       "PigTemplate",
+       "QuadTemplate"
+      ],
+      "uses": 5,
+      "value": "World"
+     }
+    ]
+   },
+   "Mirror": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "MinotaurTemplate",
+       "PigTemplate",
+       "QuadTemplate"
+      ],
+      "uses": 5,
+      "value": "True"
+     }
+    ]
+   },
+   "SetParent": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "PigTemplate",
+       "QuadTemplate"
+      ],
+      "uses": 2,
+      "value": "L_Clavicle_Ctrl"
+     },
+     {
+      "templates": [
+       "PigTemplate",
+       "QuadTemplate"
+      ],
+      "uses": 2,
+      "value": "L_Pelvis_Ctrl"
+     },
+     {
+      "templates": [
+       "MinotaurTemplate"
+      ],
+      "uses": 1,
+      "value": "L_Pelvis_Jnt"
+     }
+    ]
+   },
+   "SoftIk": {
+    "type": "bool",
+    "values": [
+     {
+      "templates": [
+       "MinotaurTemplate",
+       "PigTemplate",
+       "QuadTemplate"
+      ],
+      "uses": 5,
+      "value": false
+     }
+    ]
+   },
+   "TwistAmount": {
+    "type": "long",
+    "values": [
+     {
+      "templates": [
+       "MinotaurTemplate",
+       "PigTemplate",
+       "QuadTemplate"
+      ],
+      "uses": 5,
+      "value": 4
+     }
+    ]
+   }
+  },
+  "quadspine": {
+   "CtrlSize": {
+    "type": "long",
+    "values": [
+     {
+      "templates": [
+       "ChamaleonTemplate",
+       "PigTemplate",
+       "QuadTemplate"
+      ],
+      "uses": 3,
+      "value": 4
+     }
+    ]
+   },
+   "DefaultCtrls": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "ChamaleonTemplate",
+       "PigTemplate",
+       "QuadTemplate"
+      ],
+      "uses": 3,
+      "value": "Both"
+     }
+    ]
+   },
+   "JointCount": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "ChamaleonTemplate",
+       "PigTemplate",
+       "QuadTemplate"
+      ],
+      "uses": 3,
+      "value": "Guides"
+     }
+    ]
+   },
+   "SetGameParent": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "ChamaleonTemplate",
+       "PigTemplate",
+       "QuadTemplate"
+      ],
+      "uses": 3,
+      "value": ""
+     }
+    ]
+   },
+   "SetParent": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "ChamaleonTemplate",
+       "PigTemplate",
+       "QuadTemplate"
+      ],
+      "uses": 3,
+      "value": "COG_Gimbal_Ctrl"
+     }
+    ]
+   },
+   "Tweakers": {
+    "type": "bool",
+    "values": [
+     {
+      "templates": [
+       "ChamaleonTemplate",
+       "PigTemplate",
+       "QuadTemplate"
+      ],
+      "uses": 3,
+      "value": true
+     }
+    ]
+   }
+  },
+  "ribbon_mouth": {
+   "CtrlSize": {
+    "type": "long",
+    "values": [
+     {
+      "templates": [
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 1,
+      "value": 4
+     }
+    ]
+   },
+   "SetAttrsPosition": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 1,
+      "value": "Lips_Center_Ctrl"
+     }
+    ]
+   },
+   "SetLowerEdge": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 1,
+      "value": "Body_Geo.e[10556], Body_Geo.e[10562], Body_Geo.e[10564], Body_Geo.e[10569], Body_Geo.e[10636], Body_Geo.e[10638], Body_Geo.e[11620], Body_Geo.e[11627], Body_Geo.e[11897], Body_Geo.e[11899], Body_Geo.e[11905], Body_Geo.e[21940], Body_Geo.e[21982], Body_Geo.e[22409:22410], Body_Geo.e[22413:22414]"
+     }
+    ]
+   },
+   "SetParent": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 1,
+      "value": "Skull_Lwr_Ctrl"
+     }
+    ]
+   },
+   "SetUpperEdge": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 1,
+      "value": "Body_Geo.e[10543], Body_Geo.e[10545], Body_Geo.e[10551], Body_Geo.e[10553], Body_Geo.e[10614], Body_Geo.e[10627], Body_Geo.e[11609], Body_Geo.e[11616], Body_Geo.e[11894], Body_Geo.e[11896], Body_Geo.e[21930], Body_Geo.e[21955], Body_Geo.e[22401:22402], Body_Geo.e[22405:22406]"
+     }
+    ]
+   }
+  },
+  "ribbonizer": {
+   "AddFk": {
+    "type": "bool",
+    "values": [
+     {
+      "templates": [
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate"
+      ],
+      "uses": 6,
+      "value": false
+     },
+     {
+      "templates": [
+       "TortoiseTemplate"
+      ],
+      "uses": 1,
+      "value": true
+     }
+    ]
+   },
+   "Constraint": {
+    "type": "bool",
+    "values": [
+     {
+      "templates": [
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "TortoiseTemplate"
+      ],
+      "uses": 7,
+      "value": true
+     }
+    ]
+   },
+   "CtrlOrientation": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "TortoiseTemplate"
+      ],
+      "uses": 7,
+      "value": "SurfaceNormal"
+     }
+    ]
+   },
+   "CtrlScales": {
+    "type": "bool",
+    "values": [
+     {
+      "templates": [
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "TortoiseTemplate"
+      ],
+      "uses": 7,
+      "value": false
+     }
+    ]
+   },
+   "Ctrls": {
+    "type": "long",
+    "values": [
+     {
+      "templates": [
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate"
+      ],
+      "uses": 4,
+      "value": 3
+     },
+     {
+      "templates": [
+       "HumanGameTemplate"
+      ],
+      "uses": 2,
+      "value": 8
+     },
+     {
+      "templates": [
+       "TortoiseTemplate"
+      ],
+      "uses": 1,
+      "value": 5
+     }
+    ]
+   },
+   "Equal": {
+    "type": "bool",
+    "values": [
+     {
+      "templates": [
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "TortoiseTemplate"
+      ],
+      "uses": 7,
+      "value": true
+     }
+    ]
+   },
+   "FkOnLast": {
+    "type": "bool",
+    "values": [
+     {
+      "templates": [
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "TortoiseTemplate"
+      ],
+      "uses": 7,
+      "value": false
+     }
+    ]
+   },
+   "Gimbal": {
+    "type": "bool",
+    "values": [
+     {
+      "templates": [
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "TortoiseTemplate"
+      ],
+      "uses": 7,
+      "value": false
+     }
+    ]
+   },
+   "JointOrient": {
+    "type": "bool",
+    "values": [
+     {
+      "templates": [
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "TortoiseTemplate"
+      ],
+      "uses": 7,
+      "value": false
+     }
+    ]
+   },
+   "Joints": {
+    "type": "long",
+    "values": [
+     {
+      "templates": [
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate"
+      ],
+      "uses": 4,
+      "value": 3
+     },
+     {
+      "templates": [
+       "HumanGameTemplate"
+      ],
+      "uses": 2,
+      "value": 8
+     },
+     {
+      "templates": [
+       "TortoiseTemplate"
+      ],
+      "uses": 1,
+      "value": 5
+     }
+    ]
+   },
+   "MiddleCtrlPosition": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "TortoiseTemplate"
+      ],
+      "uses": 7,
+      "value": "Original"
+     }
+    ]
+   },
+   "Mirror": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "TortoiseTemplate"
+      ],
+      "uses": 7,
+      "value": "False"
+     }
+    ]
+   },
+   "SetParent": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate"
+      ],
+      "uses": 6,
+      "value": "Head_Ctrl"
+     },
+     {
+      "templates": [
+       "TortoiseTemplate"
+      ],
+      "uses": 1,
+      "value": "COG_Gimbal_Ctrl"
+     }
+    ]
+   },
+   "Wire": {
+    "type": "bool",
+    "values": [
+     {
+      "templates": [
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "TortoiseTemplate"
+      ],
+      "uses": 7,
+      "value": false
+     }
+    ]
+   }
+  },
+  "root": {
+   "SetParent": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "CarTemplate",
+       "ChamaleonTemplate",
+       "HeroPropTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "PigTemplate",
+       "PropTemplate",
+       "QuadTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 16,
+      "value": "Bind_Joints_Grp"
+     }
+    ]
+   }
+  },
+  "seat": {
+   "Mirror": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "CarTemplate"
+      ],
+      "uses": 2,
+      "value": "True"
+     }
+    ]
+   },
+   "SetParent": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "CarTemplate"
+      ],
+      "uses": 2,
+      "value": "Chasis_Center_Suspension_Ctrl"
+     }
+    ]
+   }
+  },
+  "shirt": {
+   "SetGeo": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 3,
+      "value": "C_Jacket_hi"
+     },
+     {
+      "templates": [
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 2,
+      "value": "C_Pants_hi"
+     },
+     {
+      "templates": [
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 2,
+      "value": "C_Shirt_hi"
+     }
+    ]
+   },
+   "SetParent": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 2,
+      "value": "Spine_Chest_Top_IK_Ctrl"
+     },
+     {
+      "templates": [
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 1,
+      "value": "L_Elbow_Bnd_2_Bnd"
+     },
+     {
+      "templates": [
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 1,
+      "value": "L_Knee_Bnd_2_Bnd"
+     },
+     {
+      "templates": [
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 1,
+      "value": "R_Elbow_Bnd_2_Bnd"
+     },
+     {
+      "templates": [
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 1,
+      "value": "R_Knee_Bnd_2_Bnd"
+     },
+     {
+      "templates": [
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 1,
+      "value": "Spine_Bottom_Ik_Ctrl"
+     }
+    ]
+   },
+   "WireDropoff": {
+    "type": "long",
+    "values": [
+     {
+      "templates": [
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 7,
+      "value": 10
+     }
+    ]
+   }
+  },
+  "side_mirror": {
+   "CtrlSize": {
+    "type": "long",
+    "values": [
+     {
+      "templates": [
+       "CarTemplate"
+      ],
+      "uses": 1,
+      "value": 4
+     }
+    ]
+   },
+   "CtrlType": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "CarTemplate"
+      ],
+      "uses": 1,
+      "value": "circleX"
+     }
+    ]
+   },
+   "Mirror": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "CarTemplate"
+      ],
+      "uses": 1,
+      "value": "True"
+     }
+    ]
+   },
+   "SetParent": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "CarTemplate"
+      ],
+      "uses": 1,
+      "value": "L_FrontDoor_Ctrl"
+     }
+    ]
+   }
+  },
+  "simple_spine": {
+   "CtrlSize": {
+    "type": "long",
+    "values": [
+     {
+      "templates": [
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 1,
+      "value": 11
+     }
+    ]
+   },
+   "SetGameParent": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 1,
+      "value": ""
+     }
+    ]
+   },
+   "SetParent": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 1,
+      "value": "COG_Jnt"
+     }
+    ]
+   }
+  },
+  "simplelimb": {
+   "CtrlSize": {
+    "type": "long",
+    "values": [
+     {
+      "templates": [
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 2,
+      "value": 4
+     }
+    ]
+   },
+   "FKCtrlType": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 2,
+      "value": "bounding_cube"
+     }
+    ]
+   },
+   "IkCtrlType": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 2,
+      "value": "cube"
+     }
+    ]
+   },
+   "IkTopCtrlType": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 2,
+      "value": "pin_cube"
+     }
+    ]
+   },
+   "Mirror": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 2,
+      "value": "True"
+     }
+    ]
+   },
+   "PVCtrlType": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 2,
+      "value": "sphere"
+     }
+    ]
+   },
+   "RibbonCtrls": {
+    "type": "long",
+    "values": [
+     {
+      "templates": [
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 2,
+      "value": 3
+     }
+    ]
+   },
+   "Ribbons": {
+    "type": "bool",
+    "values": [
+     {
+      "templates": [
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 2,
+      "value": true
+     }
+    ]
+   },
+   "SetGameParent": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 1,
+      "value": "L_Clavicle_Bnd"
+     },
+     {
+      "templates": [
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 1,
+      "value": "L_Pelvis_Bnd"
+     }
+    ]
+   },
+   "SetParent": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 1,
+      "value": "L_Clavicle_Jnt"
+     },
+     {
+      "templates": [
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 1,
+      "value": "L_Pelvis_Jnt"
+     }
+    ]
+   },
+   "TwistAmount": {
+    "type": "long",
+    "values": [
+     {
+      "templates": [
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 2,
+      "value": 3
+     }
+    ]
+   }
+  },
+  "single_fk": {
+   "CreateJoint": {
+    "type": "bool",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "CarTemplate",
+       "ChamaleonTemplate",
+       "HeroPropTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "PigTemplate",
+       "PropTemplate",
+       "QuadTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 19,
+      "value": true
+     }
+    ]
+   },
+   "CtrlColor": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "CarTemplate",
+       "ChamaleonTemplate",
+       "HeroPropTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "PigTemplate",
+       "PropTemplate",
+       "QuadTemplate",
+       "SlothTemplate",
+       "TortoiseTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 12,
+      "value": "yellow"
+     },
+     {
+      "templates": [
+       "BirdTemplate",
+       "MinotaurTemplate",
+       "SeagullTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate"
+      ],
+      "uses": 5,
+      "value": "lightBlue"
+     },
+     {
+      "templates": [
+       "ChamaleonTemplate"
+      ],
+      "uses": 1,
+      "value": "grey"
+     },
+     {
+      "templates": [
+       "SlothTemplate"
+      ],
+      "uses": 1,
+      "value": "purple"
+     }
+    ]
+   },
+   "CtrlOrientOffset": {
+    "type": "bool",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "CarTemplate",
+       "ChamaleonTemplate",
+       "HeroPropTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "PigTemplate",
+       "PropTemplate",
+       "QuadTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 19,
+      "value": false
+     }
+    ]
+   },
+   "CtrlSize": {
+    "type": "long",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "HeroPropTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "PigTemplate",
+       "PropTemplate",
+       "QuadTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 18,
+      "value": 4
+     },
+     {
+      "templates": [
+       "CarTemplate"
+      ],
+      "uses": 1,
+      "value": 20
+     }
+    ]
+   },
+   "CtrlType": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "CarTemplate",
+       "ChamaleonTemplate",
+       "HeroPropTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "PigTemplate",
+       "PropTemplate",
+       "QuadTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 16,
+      "value": "cog"
+     },
+     {
+      "templates": [
+       "ChamaleonTemplate"
+      ],
+      "uses": 1,
+      "value": "cube"
+     },
+     {
+      "templates": [
+       "SlothTemplate"
+      ],
+      "uses": 1,
+      "value": "mover"
+     },
+     {
+      "templates": [
+       "TortoiseTemplate"
+      ],
+      "uses": 1,
+      "value": "sphere"
+     }
+    ]
+   },
+   "Gimbal": {
+    "type": "bool",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "CarTemplate",
+       "ChamaleonTemplate",
+       "HeroPropTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "PigTemplate",
+       "PropTemplate",
+       "QuadTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 17,
+      "value": true
+     },
+     {
+      "templates": [
+       "ChamaleonTemplate",
+       "SlothTemplate"
+      ],
+      "uses": 2,
+      "value": false
+     }
+    ]
+   },
+   "Mirror": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "CarTemplate",
+       "ChamaleonTemplate",
+       "HeroPropTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "PigTemplate",
+       "PropTemplate",
+       "QuadTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 19,
+      "value": "False"
+     }
+    ]
+   },
+   "SetCtrlParentHierarchy": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "CarTemplate",
+       "ChamaleonTemplate",
+       "HeroPropTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "PigTemplate",
+       "PropTemplate",
+       "QuadTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 19,
+      "value": "Ctrl_Grp"
+     }
+    ]
+   },
+   "SetJointParentHierarchy": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "CarTemplate",
+       "ChamaleonTemplate",
+       "HeroPropTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "PigTemplate",
+       "PropTemplate",
+       "QuadTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 19,
+      "value": "Miscellaneous_Grp"
+     }
+    ]
+   },
+   "ShowOrientAttrs": {
+    "type": "bool",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "CarTemplate",
+       "ChamaleonTemplate",
+       "HeroPropTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "PigTemplate",
+       "PropTemplate",
+       "QuadTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 19,
+      "value": true
+     }
+    ]
+   }
+  },
+  "skin": {
+   "SetGeo": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "Human_Face_Template",
+       "ToonFaceTemplate",
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 3,
+      "value": "BodyBrows"
+     },
+     {
+      "templates": [
+       "Human_Face_Template",
+       "ToonFaceTemplate",
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 3,
+      "value": "BodyCheeks"
+     },
+     {
+      "templates": [
+       "Human_Face_Template",
+       "ToonFaceTemplate",
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 3,
+      "value": "BodyEyes"
+     },
+     {
+      "templates": [
+       "Human_Face_Template",
+       "ToonFaceTemplate",
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 3,
+      "value": "BodyJaw"
+     },
+     {
+      "templates": [
+       "Human_Face_Template",
+       "ToonFaceTemplate",
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 3,
+      "value": "BodyLips"
+     },
+     {
+      "templates": [
+       "Human_Face_Template",
+       "ToonFaceTemplate",
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 3,
+      "value": "BodyMouthDown"
+     },
+     {
+      "templates": [
+       "Human_Face_Template",
+       "ToonFaceTemplate",
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 3,
+      "value": "BodyMouthNarrow"
+     },
+     {
+      "templates": [
+       "Human_Face_Template",
+       "ToonFaceTemplate",
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 3,
+      "value": "BodyMouthUp"
+     },
+     {
+      "templates": [
+       "Human_Face_Template",
+       "ToonFaceTemplate",
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 3,
+      "value": "BodyMouthWide"
+     },
+     {
+      "templates": [
+       "Human_Face_Template",
+       "ToonFaceTemplate",
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 3,
+      "value": "BodySkull"
+     },
+     {
+      "templates": [
+       "Human_Face_Template",
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 2,
+      "value": "BodyNose"
+     },
+     {
+      "templates": [
+       "ToonBodyTemplate"
+      ],
+      "uses": 1,
+      "value": "Geo_Slide_Geo"
+     }
+    ]
+   },
+   "SetJoints": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "Human_Face_Template",
+       "ToonFaceTemplate",
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 3,
+      "value": "*_Cheecks_*_Bnd,Null_Local_Bnd"
+     },
+     {
+      "templates": [
+       "Human_Face_Template",
+       "ToonFaceTemplate",
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 3,
+      "value": "*_Commissures_Down_Bnd,Null_Local_Bnd"
+     },
+     {
+      "templates": [
+       "Human_Face_Template",
+       "ToonFaceTemplate",
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 3,
+      "value": "*_Commissures_Narrow_Bnd,Null_Local_Bnd"
+     },
+     {
+      "templates": [
+       "Human_Face_Template",
+       "ToonFaceTemplate",
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 3,
+      "value": "*_Commissures_Up_Bnd,Null_Local_Bnd"
+     },
+     {
+      "templates": [
+       "Human_Face_Template",
+       "ToonFaceTemplate",
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 3,
+      "value": "*_Commissures_Wide_Bnd,Null_Local_Bnd"
+     },
+     {
+      "templates": [
+       "Human_Face_Template",
+       "ToonFaceTemplate",
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 3,
+      "value": "*_Eyelids_Up_*_Bnd,*_Eyelids_Dw_*_Bnd,*_Eyelids_Scale_Bnd,Null_Local_Bnd"
+     },
+     {
+      "templates": [
+       "Human_Face_Template",
+       "ToonFaceTemplate",
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 3,
+      "value": "Jaw_Bnd, JawUpperLipPivot_Bnd,Null_Local_Bnd"
+     },
+     {
+      "templates": [
+       "Human_Face_Template",
+       "ToonFaceTemplate",
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 3,
+      "value": "Skull_Lwr_Bnd, Skull_Upr_Bnd,Null_Local_Bnd"
+     },
+     {
+      "templates": [
+       "Human_Face_Template",
+       "ToonFaceTemplate"
+      ],
+      "uses": 2,
+      "value": "*_Brow_*_Bnd,Null_Local_Bnd"
+     },
+     {
+      "templates": [
+       "Human_Face_Template",
+       "ToonFaceTemplate"
+      ],
+      "uses": 2,
+      "value": "Lips_Up_*_Bnd,Lips_Dw_*_Bnd,Null_Local_Bnd"
+     },
+     {
+      "templates": [
+       "Human_Face_Template",
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 2,
+      "value": "Nose_Origin_Bnd, R_NoseNostril_Bnd, Nose_Bridge_Bnd, Nose_Base_Bnd, Nose_Top_Bnd, L_NoseNostrilEnd_Bnd, R_NoseNostrilEnd_Bnd, Nose_Tip_Bnd, L_NoseNostril_Bnd, Null_Local_Bnd"
+     },
+     {
+      "templates": [
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 1,
+      "value": "*Lips*Bnd,Null_Local_Bnd"
+     },
+     {
+      "templates": [
+       "ToonBodyTemplate"
+      ],
+      "uses": 1,
+      "value": "*Spine*_Bnd"
+     },
+     {
+      "templates": [
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 1,
+      "value": "*_Brow*Bnd,Null_Local_Bnd"
+     }
+    ]
+   }
+  },
+  "skull": {
+   "CtrlColor": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "Human_Face_Template",
+       "ToonFaceTemplate",
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 3,
+      "value": "lightBlue"
+     }
+    ]
+   },
+   "CtrlSize": {
+    "type": "long",
+    "values": [
+     {
+      "templates": [
+       "Human_Face_Template",
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 2,
+      "value": 1
+     },
+     {
+      "templates": [
+       "ToonFaceTemplate"
+      ],
+      "uses": 1,
+      "value": 4
+     }
+    ]
+   },
+   "CtrlType": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "Human_Face_Template",
+       "ToonFaceTemplate",
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 3,
+      "value": "cube"
+     }
+    ]
+   },
+   "SetAttrsPosition": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "Human_Face_Template",
+       "ToonFaceTemplate",
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 3,
+      "value": "Vis_Ctrl"
+     }
+    ]
+   },
+   "SetParent": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "Human_Face_Template",
+       "ToonFaceTemplate",
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 3,
+      "value": "new_locator"
+     }
+    ]
+   }
+  },
+  "slide": {
+   "AxisMode": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "ToonBodyTemplate"
+      ],
+      "uses": 4,
+      "value": "Blend"
+     }
+    ]
+   },
+   "CtrlColor": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "ToonBodyTemplate"
+      ],
+      "uses": 2,
+      "value": "blue"
+     },
+     {
+      "templates": [
+       "ToonBodyTemplate"
+      ],
+      "uses": 2,
+      "value": "red"
+     }
+    ]
+   },
+   "CtrlSize": {
+    "type": "long",
+    "values": [
+     {
+      "templates": [
+       "ToonBodyTemplate"
+      ],
+      "uses": 4,
+      "value": 1
+     }
+    ]
+   },
+   "Mirror": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "ToonBodyTemplate"
+      ],
+      "uses": 4,
+      "value": "False"
+     }
+    ]
+   },
+   "SetParent": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "ToonBodyTemplate"
+      ],
+      "uses": 2,
+      "value": "Spine_Chest_Jnt"
+     },
+     {
+      "templates": [
+       "ToonBodyTemplate"
+      ],
+      "uses": 2,
+      "value": "Spine_Root_Jnt"
+     }
+    ]
+   },
+   "SetSlideNurb": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "ToonBodyTemplate"
+      ],
+      "uses": 4,
+      "value": "Geo_Slide_Geo"
+     }
+    ]
+   }
+  },
+  "smart_rfl": {
+   "AltMode": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "PigTemplate",
+       "QuadTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 15,
+      "value": "Original"
+     }
+    ]
+   },
+   "SetFootBlockName": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "SlothTemplate",
+       "TortoiseTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 8,
+      "value": "L_Foot"
+     },
+     {
+      "templates": [
+       "PigTemplate",
+       "QuadTemplate",
+       "ToonBodyTemplate"
+      ],
+      "uses": 5,
+      "value": ""
+     },
+     {
+      "templates": [
+       "TortoiseTemplate"
+      ],
+      "uses": 1,
+      "value": "L_FrFoot"
+     },
+     {
+      "templates": [
+       "ChamaleonTemplate"
+      ],
+      "uses": 1,
+      "value": "L_Hand"
+     }
+    ]
+   },
+   "SetRFLAttrsPosition": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 9,
+      "value": "L_Ankle_Ik_Ctrl"
+     },
+     {
+      "templates": [
+       "PigTemplate",
+       "QuadTemplate"
+      ],
+      "uses": 2,
+      "value": "L_BkBall_Ik_Ctrl"
+     },
+     {
+      "templates": [
+       "ChamaleonTemplate",
+       "TortoiseTemplate"
+      ],
+      "uses": 2,
+      "value": "L_FrAnkle_Ik_Ctrl"
+     },
+     {
+      "templates": [
+       "PigTemplate",
+       "QuadTemplate"
+      ],
+      "uses": 2,
+      "value": "L_FrBall_Ik_Ctrl"
+     }
+    ]
+   },
+   "TransferAttrs": {
+    "type": "bool",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "PigTemplate",
+       "QuadTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate"
+      ],
+      "uses": 14,
+      "value": true
+     },
+     {
+      "templates": [
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 1,
+      "value": false
+     }
+    ]
+   }
+  },
+  "smarthand": {
+   "Axes": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 3,
+      "value": "XSpread_YSides_ZCurl"
+     }
+    ]
+   },
+   "HandBlock": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 3,
+      "value": "L_Hand"
+     }
+    ]
+   }
+  },
+  "spaceSwitches": {
+   "Animbot": {
+    "type": "bool",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "PigTemplate",
+       "QuadTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 113,
+      "value": true
+     }
+    ]
+   },
+   "AttrName": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "PigTemplate",
+       "QuadTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 113,
+      "value": "Follow"
+     }
+    ]
+   },
+   "CustomNames": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "PigTemplate",
+       "QuadTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 113,
+      "value": ""
+     }
+    ]
+   },
+   "MaintainOffset": {
+    "type": "bool",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "PigTemplate",
+       "QuadTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 113,
+      "value": true
+     }
+    ]
+   },
+   "Mirror": {
+    "type": "bool",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "PigTemplate",
+       "QuadTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 75,
+      "value": true
+     },
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "PigTemplate",
+       "QuadTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 38,
+      "value": false
+     }
+    ]
+   },
+   "Rotate": {
+    "type": "bool",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "PigTemplate",
+       "QuadTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 113,
+      "value": true
+     }
+    ]
+   },
+   "RunAfterBuild": {
+    "type": "bool",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "PigTemplate",
+       "QuadTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 113,
+      "value": false
+     }
+    ]
+   },
+   "SetAttrsHolder": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "PigTemplate",
+       "QuadTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 24,
+      "value": "Neck_Attrs_Loc"
+     },
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 11,
+      "value": "Eyes_Attrs_Loc"
+     },
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate"
+      ],
+      "uses": 30,
+      "value": "L_Hip_Jnt_Switch_Loc"
+     },
+     {
+      "templates": [
+       "BirdTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate"
+      ],
+      "uses": 21,
+      "value": "L_Shoulder_Jnt_Switch_Loc"
+     },
+     {
+      "templates": [
+       "ChamaleonTemplate",
+       "PigTemplate",
+       "QuadTemplate"
+      ],
+      "uses": 3,
+      "value": "Tail_1_Main_Ctrl"
+     },
+     {
+      "templates": [
+       "PigTemplate",
+       "QuadTemplate"
+      ],
+      "uses": 6,
+      "value": "L_BkHip_Jnt_Switch_Ctrl"
+     },
+     {
+      "templates": [
+       "PigTemplate",
+       "QuadTemplate"
+      ],
+      "uses": 6,
+      "value": "L_FrHip_Jnt_Switch_Ctrl"
+     },
+     {
+      "templates": [
+       "ChamaleonTemplate",
+       "TortoiseTemplate"
+      ],
+      "uses": 6,
+      "value": "L_FrHip_Jnt_Switch_Loc"
+     },
+     {
+      "templates": [
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 3,
+      "value": "L_Hip_Attrs_Ctrl"
+     },
+     {
+      "templates": [
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 3,
+      "value": "L_Shoulder_Attrs_Ctrl\n"
+     }
+    ]
+   },
+   "SetTargetCtrl": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "PigTemplate",
+       "QuadTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 12,
+      "value": "Head_Ctrl"
+     },
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "PigTemplate",
+       "QuadTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 12,
+      "value": "Neck_Ctrl"
+     },
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 11,
+      "value": "Eyes_Main_Ctrl"
+     },
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 11,
+      "value": "L_Hip_Fk_Ctrl"
+     },
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 10,
+      "value": "L_Ankle_Ik_Ctrl"
+     },
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 10,
+      "value": "L_Ankle_Ik_PoleVector_Ctrl"
+     },
+     {
+      "templates": [
+       "BirdTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 8,
+      "value": "L_Shoulder_Fk_Ctrl"
+     },
+     {
+      "templates": [
+       "BirdTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 8,
+      "value": "L_Wrist_Ik_Ctrl"
+     },
+     {
+      "templates": [
+       "BirdTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 8,
+      "value": "L_Wrist_Ik_PoleVector_Ctrl"
+     },
+     {
+      "templates": [
+       "ChamaleonTemplate",
+       "PigTemplate",
+       "QuadTemplate",
+       "TortoiseTemplate"
+      ],
+      "uses": 4,
+      "value": "L_FrHip_Fk_Ctrl"
+     },
+     {
+      "templates": [
+       "ChamaleonTemplate",
+       "PigTemplate",
+       "QuadTemplate"
+      ],
+      "uses": 3,
+      "value": "Tail_1_Main_Ctrl"
+     },
+     {
+      "templates": [
+       "PigTemplate",
+       "QuadTemplate"
+      ],
+      "uses": 2,
+      "value": "L_BkBall_Ik_Ctrl"
+     },
+     {
+      "templates": [
+       "PigTemplate",
+       "QuadTemplate"
+      ],
+      "uses": 2,
+      "value": "L_BkHip_Fk_Ctrl"
+     },
+     {
+      "templates": [
+       "PigTemplate",
+       "QuadTemplate"
+      ],
+      "uses": 2,
+      "value": "L_BkKnee_IkPV_Ctrl"
+     },
+     {
+      "templates": [
+       "ChamaleonTemplate",
+       "TortoiseTemplate"
+      ],
+      "uses": 2,
+      "value": "L_FrAnkle_Ik_Ctrl"
+     },
+     {
+      "templates": [
+       "ChamaleonTemplate",
+       "TortoiseTemplate"
+      ],
+      "uses": 2,
+      "value": "L_FrAnkle_Ik_PoleVector_Ctrl"
+     },
+     {
+      "templates": [
+       "PigTemplate",
+       "QuadTemplate"
+      ],
+      "uses": 2,
+      "value": "L_FrBall_Ik_Ctrl"
+     },
+     {
+      "templates": [
+       "PigTemplate",
+       "QuadTemplate"
+      ],
+      "uses": 2,
+      "value": "L_FrKnee_IkPV_Ctrl"
+     },
+     {
+      "templates": [
+       "MinotaurTemplate"
+      ],
+      "uses": 1,
+      "value": "L_Ball_Ik_Ctrl"
+     },
+     {
+      "templates": [
+       "MinotaurTemplate"
+      ],
+      "uses": 1,
+      "value": "L_Knee_IkPV_Ctrl"
+     }
+    ]
+   },
+   "Spaces": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "PigTemplate",
+       "QuadTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 24,
+      "value": "Mover_Gimbal_Ctrl, COG_Ctrl, L_Pelvis_Jnt, Mutant_Tools_Grp"
+     },
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "PigTemplate",
+       "QuadTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 12,
+      "value": "Mover_Gimbal_Ctrl, COG_Ctrl, Neck_Ctrl, Mutant_Tools_Grp"
+     },
+     {
+      "templates": [
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "PigTemplate",
+       "QuadTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 22,
+      "value": "Mover_Gimbal_Ctrl, COG_Ctrl, L_Clavicle_Jnt, Mutant_Tools_Grp"
+     },
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 11,
+      "value": "Head_Jnt, Mover_Gimbal_Ctrl, COG_Ctrl,  Mutant_Tools_Grp"
+     },
+     {
+      "templates": [
+       "BirdTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 9,
+      "value": "Spine_End_Jnt, Mover_Gimbal_Ctrl, COG_Ctrl, Mutant_Tools_Grp"
+     },
+     {
+      "templates": [
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "SlothTemplate",
+       "TortoiseTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 7,
+      "value": "L_Ankle_Ik_Ctrl, Mover_Gimbal_Ctrl, Mutant_Tools_Grp,COG_Gimbal_Ctrl"
+     },
+     {
+      "templates": [
+       "BirdTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "SlothTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 7,
+      "value": "L_Wrist_Ik_Ctrl, Mover_Gimbal_Ctrl, Mutant_Tools_Grp,COG_Gimbal_Ctrl"
+     },
+     {
+      "templates": [
+       "BirdTemplate",
+       "SeagullTemplate",
+       "ToonBodyTemplate"
+      ],
+      "uses": 3,
+      "value": "L_Ankle_Ik_Ctrl, Mover_Gimbal_Ctrl, Mutant_Tools_Grp"
+     },
+     {
+      "templates": [
+       "PigTemplate",
+       "QuadTemplate"
+      ],
+      "uses": 2,
+      "value": "COG_Ctrl, Spine_A_Jnt, Mover_Gimbal_Ctrl, Mutant_Tools_Grp"
+     },
+     {
+      "templates": [
+       "PigTemplate",
+       "QuadTemplate"
+      ],
+      "uses": 2,
+      "value": "COG_Ctrl, Spine_G_Jnt, Mover_Gimbal_Ctrl, Mutant_Tools_Grp"
+     },
+     {
+      "templates": [
+       "PigTemplate",
+       "QuadTemplate"
+      ],
+      "uses": 2,
+      "value": "L_BkBall_Ik_Ctrl, Mover_Gimbal_Ctrl, Mutant_Tools_Grp,COG_Gimbal_Ctrl"
+     },
+     {
+      "templates": [
+       "ChamaleonTemplate",
+       "TortoiseTemplate"
+      ],
+      "uses": 2,
+      "value": "L_FrAnkle_Ik_Ctrl, Mover_Gimbal_Ctrl, Mutant_Tools_Grp,COG_Gimbal_Ctrl"
+     },
+     {
+      "templates": [
+       "PigTemplate",
+       "QuadTemplate"
+      ],
+      "uses": 2,
+      "value": "L_FrBall_Ik_Ctrl, Mover_Gimbal_Ctrl, Mutant_Tools_Grp,COG_Gimbal_Ctrl"
+     },
+     {
+      "templates": [
+       "PigTemplate",
+       "QuadTemplate"
+      ],
+      "uses": 2,
+      "value": "Mover_Gimbal_Ctrl, COG_Ctrl, R_Pelvis_Jnt, Mutant_Tools_Grp"
+     },
+     {
+      "templates": [
+       "BirdTemplate"
+      ],
+      "uses": 2,
+      "value": "Mover_Gimbal_Ctrl, COG_Ctrl, L_Clavicle_Ctrl, Mutant_Tools_Grp"
+     },
+     {
+      "templates": [
+       "MinotaurTemplate"
+      ],
+      "uses": 1,
+      "value": "L_Ball_Ik_Ctrl, Mover_Gimbal_Ctrl, Mutant_Tools_Grp,COG_Gimbal_Ctrl"
+     },
+     {
+      "templates": [
+       "ToonBodyTemplate"
+      ],
+      "uses": 1,
+      "value": "L_Wrist_Ik_Ctrl, Mover_Gimbal_Ctrl, Mutant_Tools_Grp"
+     },
+     {
+      "templates": [
+       "ChamaleonTemplate"
+      ],
+      "uses": 1,
+      "value": "LowerSpine_Ctrl, COG_Gimbal_Ctrl, Mover_Gimbal_Ctrl, Mutant_Tools_Grp"
+     },
+     {
+      "templates": [
+       "ChamaleonTemplate"
+      ],
+      "uses": 1,
+      "value": "Spine_G_Jnt, Mover_Gimbal_Ctrl, COG_Ctrl, Mutant_Tools_Grp"
+     }
+    ]
+   },
+   "SplitTranslateRotate": {
+    "type": "bool",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "PigTemplate",
+       "QuadTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 113,
+      "value": false
+     }
+    ]
+   },
+   "Translate": {
+    "type": "bool",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "PigTemplate",
+       "QuadTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 61,
+      "value": true
+     },
+     {
+      "templates": [
+       "BirdTemplate",
+       "ChamaleonTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "PigTemplate",
+       "QuadTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 52,
+      "value": false
+     }
+    ]
+   }
+  },
+  "spine": {
+   "Breath": {
+    "type": "bool",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate"
+      ],
+      "uses": 7,
+      "value": false
+     },
+     {
+      "templates": [
+       "MinotaurTemplate"
+      ],
+      "uses": 1,
+      "value": true
+     }
+    ]
+   },
+   "CtrlSize": {
+    "type": "long",
+    "values": [
+     {
+      "templates": [
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate"
+      ],
+      "uses": 6,
+      "value": 2
+     },
+     {
+      "templates": [
+       "BirdTemplate",
+       "SeagullTemplate"
+      ],
+      "uses": 2,
+      "value": 4
+     }
+    ]
+   },
+   "DefaultCtrls": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate"
+      ],
+      "uses": 8,
+      "value": "Both"
+     }
+    ]
+   },
+   "JointCount": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate"
+      ],
+      "uses": 8,
+      "value": "5"
+     }
+    ]
+   },
+   "OrientToWorld": {
+    "type": "bool",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "SeagullTemplate",
+       "ToonBodyTemplate"
+      ],
+      "uses": 7,
+      "value": true
+     },
+     {
+      "templates": [
+       "SlothTemplate"
+      ],
+      "uses": 1,
+      "value": false
+     }
+    ]
+   },
+   "SetGameParent": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate"
+      ],
+      "uses": 8,
+      "value": ""
+     }
+    ]
+   },
+   "SetParent": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate"
+      ],
+      "uses": 8,
+      "value": "COG_Jnt"
+     }
+    ]
+   },
+   "Tweakers": {
+    "type": "bool",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate"
+      ],
+      "uses": 8,
+      "value": true
+     }
+    ]
+   }
+  },
+  "steering_wheel": {
+   "CtrlColor": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "CarTemplate"
+      ],
+      "uses": 1,
+      "value": "lightBlue"
+     }
+    ]
+   },
+   "CtrlSize": {
+    "type": "long",
+    "values": [
+     {
+      "templates": [
+       "CarTemplate"
+      ],
+      "uses": 1,
+      "value": 4
+     }
+    ]
+   },
+   "CtrlType": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "CarTemplate"
+      ],
+      "uses": 1,
+      "value": "circleX"
+     }
+    ]
+   },
+   "SetParent": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "CarTemplate"
+      ],
+      "uses": 1,
+      "value": "Chasis_Center_Suspension_Ctrl"
+     }
+    ]
+   }
+  },
+  "tail": {
+   "FkCtrls": {
+    "type": "long",
+    "values": [
+     {
+      "templates": [
+       "PigTemplate",
+       "QuadTemplate",
+       "SeagullTemplate",
+       "SlothTemplate"
+      ],
+      "uses": 4,
+      "value": 5
+     },
+     {
+      "templates": [
+       "ChamaleonTemplate"
+      ],
+      "uses": 1,
+      "value": 15
+     },
+     {
+      "templates": [
+       "TortoiseTemplate"
+      ],
+      "uses": 1,
+      "value": 3
+     }
+    ]
+   },
+   "Joints": {
+    "type": "long",
+    "values": [
+     {
+      "templates": [
+       "PigTemplate",
+       "QuadTemplate",
+       "SeagullTemplate",
+       "SlothTemplate"
+      ],
+      "uses": 4,
+      "value": 10
+     },
+     {
+      "templates": [
+       "ChamaleonTemplate"
+      ],
+      "uses": 1,
+      "value": 20
+     },
+     {
+      "templates": [
+       "TortoiseTemplate"
+      ],
+      "uses": 1,
+      "value": 3
+     }
+    ]
+   },
+   "SetParent": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "PigTemplate",
+       "QuadTemplate"
+      ],
+      "uses": 2,
+      "value": "Spine_A_Jnt"
+     },
+     {
+      "templates": [
+       "TortoiseTemplate"
+      ],
+      "uses": 1,
+      "value": "COG_Gimbal_Ctrl"
+     },
+     {
+      "templates": [
+       "ChamaleonTemplate"
+      ],
+      "uses": 1,
+      "value": "LowerSpine_Bnd"
+     },
+     {
+      "templates": [
+       "SeagullTemplate"
+      ],
+      "uses": 1,
+      "value": "Spine_Bottom_Ik_Ctrl"
+     },
+     {
+      "templates": [
+       "SlothTemplate"
+      ],
+      "uses": 1,
+      "value": "Spine_Root_Bnd"
+     }
+    ]
+   }
+  },
+  "teeth": {
+   "CtrlSize": {
+    "type": "long",
+    "values": [
+     {
+      "templates": [
+       "Human_Face_Template",
+       "ToonFaceTemplate",
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 3,
+      "value": 1
+     }
+    ]
+   },
+   "LwrTeeth": {
+    "type": "bool",
+    "values": [
+     {
+      "templates": [
+       "Human_Face_Template",
+       "ToonFaceTemplate",
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 3,
+      "value": true
+     }
+    ]
+   },
+   "SetAttrsPosition": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "Human_Face_Template",
+       "ToonFaceTemplate",
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 3,
+      "value": "Vis_Ctrl"
+     }
+    ]
+   },
+   "SetJawJnt": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "Human_Face_Template",
+       "ToonFaceTemplate",
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 3,
+      "value": ""
+     }
+    ]
+   },
+   "SetLwrParent": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "Human_Face_Template",
+       "ToonFaceTemplate",
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 3,
+      "value": "Jaw_Ctrl"
+     }
+    ]
+   },
+   "SetUprParent": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "Human_Face_Template",
+       "ToonFaceTemplate",
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 3,
+      "value": "Skull_Lwr_Ctrl"
+     }
+    ]
+   },
+   "UprTeeth": {
+    "type": "bool",
+    "values": [
+     {
+      "templates": [
+       "Human_Face_Template",
+       "ToonFaceTemplate",
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 3,
+      "value": true
+     }
+    ]
+   }
+  },
+  "tongue": {
+   "CtrlColor": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "Human_Face_Template",
+       "ToonFaceTemplate",
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 3,
+      "value": "lightBlue"
+     }
+    ]
+   },
+   "CtrlSize": {
+    "type": "long",
+    "values": [
+     {
+      "templates": [
+       "Human_Face_Template",
+       "ToonFaceTemplate",
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 3,
+      "value": 1
+     }
+    ]
+   },
+   "SetAttrsPosition": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "Human_Face_Template",
+       "ToonFaceTemplate",
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 3,
+      "value": "Vis_Ctrl"
+     }
+    ]
+   },
+   "SetParent": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "Human_Face_Template",
+       "ToonFaceTemplate",
+       "humanFaceSimpleTemplate"
+      ],
+      "uses": 3,
+      "value": "Jaw_Ctrl"
+     }
+    ]
+   }
+  },
+  "toon_fixes": {},
+  "trunk": {
+   "SetParent": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "CarTemplate"
+      ],
+      "uses": 2,
+      "value": "Chasis_Center_Suspension_Ctrl"
+     }
+    ]
+   }
+  },
+  "unselectable": {
+   "LockAttr": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "CarTemplate",
+       "ChamaleonTemplate",
+       "HeroPropTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "PigTemplate",
+       "PropTemplate",
+       "QuadTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 16,
+      "value": "Global_Ctrl.Geo"
+     }
+    ]
+   },
+   "SetGeo": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "CarTemplate",
+       "ChamaleonTemplate",
+       "HeroPropTemplate",
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate",
+       "Human_Body_Template",
+       "MinotaurTemplate",
+       "PigTemplate",
+       "PropTemplate",
+       "QuadTemplate",
+       "SeagullTemplate",
+       "SlothTemplate",
+       "ToonBodyTemplate",
+       "TortoiseTemplate",
+       "humanBodySimpleTemplate"
+      ],
+      "uses": 16,
+      "value": "geo"
+     }
+    ]
+   }
+  },
+  "visattrs": {
+   "SetParent": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "HumanGameTemplate",
+       "HumanUnrealGameTemplate"
+      ],
+      "uses": 2,
+      "value": "Head_Ctrl"
+     }
+    ]
+   }
+  },
+  "wheel": {
+   "Mirror": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "CarTemplate"
+      ],
+      "uses": 2,
+      "value": "True"
+     }
+    ]
+   },
+   "SetManualRotationAttPos": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "CarTemplate"
+      ],
+      "uses": 2,
+      "value": "Chasis_Center_Ctrl"
+     }
+    ]
+   },
+   "SetParent": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "CarTemplate"
+      ],
+      "uses": 2,
+      "value": "Chasis_Center_Ctrl"
+     }
+    ]
+   }
+  },
+  "window": {
+   "Mirror": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "CarTemplate"
+      ],
+      "uses": 2,
+      "value": "True"
+     }
+    ]
+   },
+   "SetParent": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "CarTemplate"
+      ],
+      "uses": 1,
+      "value": "Chasis_Center_Suspension_Ctrl"
+     },
+     {
+      "templates": [
+       "CarTemplate"
+      ],
+      "uses": 1,
+      "value": "L_FrontDoor_Ctrl"
+     }
+    ]
+   }
+  },
+  "wingmodule": {
+   "Amount": {
+    "type": "long",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate"
+      ],
+      "uses": 1,
+      "value": 12
+     }
+    ]
+   },
+   "Mirror": {
+    "type": "bool",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate"
+      ],
+      "uses": 1,
+      "value": false
+     }
+    ]
+   },
+   "SetParent": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate"
+      ],
+      "uses": 1,
+      "value": "Tail_B_Ctrl"
+     }
+    ]
+   }
+  },
+  "wings": {
+   "Primary": {
+    "type": "long",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate"
+      ],
+      "uses": 1,
+      "value": 10
+     },
+     {
+      "templates": [
+       "SeagullTemplate"
+      ],
+      "uses": 1,
+      "value": 5
+     }
+    ]
+   },
+   "PrimaryFeatherJoints": {
+    "type": "long",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "SeagullTemplate"
+      ],
+      "uses": 2,
+      "value": 4
+     }
+    ]
+   },
+   "PrimaryPreview": {
+    "type": "bool",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "SeagullTemplate"
+      ],
+      "uses": 2,
+      "value": false
+     }
+    ]
+   },
+   "Scapular": {
+    "type": "long",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate"
+      ],
+      "uses": 1,
+      "value": 15
+     },
+     {
+      "templates": [
+       "SeagullTemplate"
+      ],
+      "uses": 1,
+      "value": 5
+     }
+    ]
+   },
+   "ScapularFeatherJoints": {
+    "type": "long",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "SeagullTemplate"
+      ],
+      "uses": 2,
+      "value": 4
+     }
+    ]
+   },
+   "ScapularPreview": {
+    "type": "bool",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "SeagullTemplate"
+      ],
+      "uses": 2,
+      "value": false
+     }
+    ]
+   },
+   "Secundary": {
+    "type": "long",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate"
+      ],
+      "uses": 1,
+      "value": 18
+     },
+     {
+      "templates": [
+       "SeagullTemplate"
+      ],
+      "uses": 1,
+      "value": 5
+     }
+    ]
+   },
+   "SecundaryFeatherJoints": {
+    "type": "long",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "SeagullTemplate"
+      ],
+      "uses": 2,
+      "value": 4
+     }
+    ]
+   },
+   "SecundaryPreview": {
+    "type": "bool",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "SeagullTemplate"
+      ],
+      "uses": 2,
+      "value": false
+     }
+    ]
+   },
+   "SetParent": {
+    "type": "string",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "SeagullTemplate"
+      ],
+      "uses": 2,
+      "value": "Spine_Chest_Top_IK_Ctrl"
+     }
+    ]
+   },
+   "SpreadMode": {
+    "type": "enum",
+    "values": [
+     {
+      "templates": [
+       "BirdTemplate",
+       "SeagullTemplate"
+      ],
+      "uses": 2,
+      "value": "Roll"
+     }
+    ]
+   }
+  }
+ },
+ "scanned": "2026-10-28",
+ "templates": [
+  "BirdTemplate",
+  "CarTemplate",
+  "ChamaleonTemplate",
+  "HeroPropTemplate",
+  "HumanGameTemplate",
+  "HumanUnrealGameTemplate",
+  "Human_Body_Template",
+  "Human_Face_Template",
+  "MinotaurTemplate",
+  "PigTemplate",
+  "PropTemplate",
+  "QuadTemplate",
+  "SeagullTemplate",
+  "SlothTemplate",
+  "ToonBodyTemplate",
+  "ToonFaceTemplate",
+  "TortoiseTemplate",
+  "humanBodySimpleTemplate",
+  "humanFaceSimpleTemplate"
+ ]
+}

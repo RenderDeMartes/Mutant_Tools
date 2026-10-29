@@ -6,6 +6,8 @@ Values, Lists, Text, Code, Help), shows bools as toggle chips, short enums as
 segmented buttons, ints as spinbox + slider. Each attr gets a readable label,
 the matching line of the block Help as tooltip, and an orange marker when its
 value is not the block json default (right click -> Reset to default).
+Right click also lists the values the preset templates use for that attr
+(template_suggestions.json, built by template_suggestions.scan_templates).
 
 The classic view is still in load_autoRigger (_add_classic_attr_row), the
 header toggle switches between both (optionVar mutant_attr_panel_style).
@@ -24,6 +26,7 @@ import maya.cmds as cmds
 
 from Mutant_Tools.UI.AutoRigger import config_previews
 from Mutant_Tools.UI.AutoRigger import config_update
+from Mutant_Tools.UI.AutoRigger import template_suggestions
 from Mutant_Tools.Utils.Rigging import block_hooks
 
 STYLE_OPTION_VAR = 'mutant_attr_panel_style'
@@ -73,6 +76,16 @@ QPushButton#attrSmallBtn { padding: 2px 8px; }
 QToolButton#attrPicker { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.10); border-radius: 4px; padding: 2px 6px; text-align: left; }
 QToolButton#attrPicker:hover { border-color: rgba(255,255,255,0.25); }
 '''
+
+SUGGEST_MENU_QSS = '''
+QMenu { padding: 4px; }
+QMenu::item { padding: 4px 18px 4px 8px; border-radius: 3px; }
+QMenu::item:selected { background: ''' + ACCENT + '''; color: white; }
+QMenu::item:disabled { color: #8A8A8A; }
+QMenu::separator { height: 1px; background: rgba(255,255,255,0.10); margin: 4px 6px; }
+'''
+# suggestions shown directly, the rest go in a More submenu
+SUGGEST_LIMIT = 15
 
 
 #-------------------------------------------------------------------
@@ -396,6 +409,8 @@ class ConfigCardsPanel(QtCore.QObject):
 			self.ui._add_classic_attr_row(holder_layout, self.config, attr, separator=False,
 										  label_text=pretty_attr_name(attr, self.config))
 			holder.setToolTip(self._tooltip(attr))
+			if section_key == 'lists':
+				self._add_context_menu(holder, attr, attr_type)
 			layout.addWidget(holder)
 			self.rows.append((holder, section_key, self._search_text(attr)))
 			return
@@ -434,6 +449,7 @@ class ConfigCardsPanel(QtCore.QObject):
 		line_edit = QtWidgets.QLineEdit(self._current(attr) or '')
 		line_edit.textChanged.connect(partial(self.ui.lineEdit_update_attr, line_edit, edit_attr))
 		line_edit.textChanged.connect(lambda *_: self._changed(attr))
+		self._add_line_edit_menu(line_edit, attr, 'string')
 		row_layout.addWidget(line_edit)
 
 		if 'Set' in attr:
@@ -671,6 +687,8 @@ class ConfigCardsPanel(QtCore.QObject):
 
 		def show_menu(pos):
 			menu = QtWidgets.QMenu(widget)
+			suggestion_actions = self._add_suggestions_menu(menu, attr, attr_type)
+			menu.addSeparator()
 			default = self.defaults.get(attr)
 			shown = str(default).split(':')[0] if attr_type == 'enum' and default else default
 			reset_action = menu.addAction('Use default value ({})'.format(shown) if default not in (None, '') else 'Use default value')
@@ -682,7 +700,9 @@ class ConfigCardsPanel(QtCore.QObject):
 			menu.addSeparator()
 			copy_action = menu.addAction('Copy attr name')
 			chosen = menu.exec_(widget.mapToGlobal(pos)) if hasattr(menu, 'exec_') else menu.exec(widget.mapToGlobal(pos))
-			if chosen == reset_action:
+			if chosen in suggestion_actions:
+				self.apply_suggestion(attr, attr_type, suggestion_actions[chosen])
+			elif chosen == reset_action:
 				self.reset_attr(attr, attr_type)
 			elif backup_action and chosen == backup_action:
 				self.restore_backup(attr, attr_type)
@@ -690,6 +710,110 @@ class ConfigCardsPanel(QtCore.QObject):
 				QtWidgets.QApplication.clipboard().setText('{}.{}'.format(self.config, attr))
 
 		widget.customContextMenuRequested.connect(show_menu)
+
+	def _add_line_edit_menu(self, line_edit, attr, attr_type):
+		"""Keep the normal copy / paste menu of a text field and add the template suggestions on top."""
+		line_edit.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
+
+		def show_menu(pos):
+			menu = line_edit.createStandardContextMenu()
+			first = menu.actions()[0] if menu.actions() else None
+			holder = QtWidgets.QMenu(menu)
+			suggestion_actions = self._add_suggestions_menu(holder, attr, attr_type)
+			for action in holder.actions():
+				menu.insertAction(first, action)
+			menu.insertSeparator(first)
+			chosen = menu.exec_(line_edit.mapToGlobal(pos)) if hasattr(menu, 'exec_') else menu.exec(line_edit.mapToGlobal(pos))
+			if chosen in suggestion_actions:
+				self.apply_suggestion(attr, attr_type, suggestion_actions[chosen])
+
+		line_edit.customContextMenuRequested.connect(show_menu)
+
+	#---------------------------------------------------------------
+	def _suggestion_label(self, attr_type, value):
+		if attr_type == 'bool':
+			return 'On' if value else 'Off'
+		if attr_type == 'string':
+			if value == '':
+				return '(empty)'
+			text = ' '.join(str(value).split())
+			return text if len(text) <= 48 else text[:45] + '...'
+		return str(value)
+
+	def _same_value(self, attr, attr_type, value):
+		path = '{}.{}'.format(self.config, attr)
+		current = cmds.getAttr(path, asString=True) if attr_type == 'enum' else self._current(attr)
+		if attr_type == 'bool':
+			return bool(current) == bool(value)
+		if attr_type in NUMERIC_TYPES:
+			try:
+				return abs(float(current) - float(value)) < 1e-6
+			except (TypeError, ValueError):
+				return False
+		return (current or '') == (value or '')
+
+	def _add_suggestions_menu(self, menu, attr, attr_type):
+		"""'Suggestions from templates' submenu, returns action -> value."""
+		actions = {}
+		values = template_suggestions.suggestions(self.config, attr)
+		total = template_suggestions.template_count()
+		sub = menu.addMenu('Suggestions from templates')
+		sub.setStyleSheet(SUGGEST_MENU_QSS)
+		sub.setToolTipsVisible(True)
+		if not values:
+			sub.setEnabled(False)
+			sub.setTitle('Suggestions from templates (none)')
+			return actions
+
+		enums = []
+		if attr_type == 'enum':
+			enums = cmds.attributeQuery(attr, node=self.config, listEnum=True)[0].split(':')
+		is_curve = attr_type == 'enum' and config_previews.is_curve_enum(attr, enums)
+		is_color = attr_type == 'enum' and config_previews.is_color_enum(attr, enums)
+
+		header = sub.addAction('{} - used in {} templates'.format(pretty_attr_name(attr), total))
+		header.setEnabled(False)
+		sub.addSeparator()
+
+		target = sub
+		for index, entry in enumerate(values):
+			if index == SUGGEST_LIMIT:
+				target = sub.addMenu('More ({})'.format(len(values) - SUGGEST_LIMIT))
+				target.setStyleSheet(SUGGEST_MENU_QSS)
+				target.setToolTipsVisible(True)
+			value = entry['value']
+			templates = entry['templates']
+			# text after the tab shows right aligned like a shortcut
+			action = target.addAction('{}\t{}/{}'.format(self._suggestion_label(attr_type, value), len(templates), total))
+			action.setCheckable(True)
+			action.setChecked(self._same_value(attr, attr_type, value))
+			if is_curve:
+				action.setIcon(QtGui.QIcon(config_previews.curve_pixmap(str(value), 22)))
+			elif is_color:
+				action.setIcon(QtGui.QIcon(config_previews.color_pixmap(str(value), 16)))
+			tip = '<b>{}</b><br>{}'.format(len(templates), '<br>'.join(templates))
+			if attr_type == 'string' and len(str(value)) > 48:
+				tip = '{}<hr>{}'.format(str(value)[:400], tip)
+			action.setToolTip(tip)
+			actions[action] = value
+		return actions
+
+	def apply_suggestion(self, attr, attr_type, value):
+		edit_attr = '{}.{}'.format(self.config, attr)
+		cmds.undoInfo(openChunk=True)
+		try:
+			if attr_type in NUMERIC_TYPES:
+				if cmds.attributeQuery(attr, node=self.config, maxExists=True) and \
+						value > cmds.attributeQuery(attr, node=self.config, maximum=True)[0]:
+					cmds.addAttr(edit_attr, edit=True, max=max(100, value))
+				cmds.setAttr(edit_attr, value)
+			elif not config_update.apply_value(self.config, attr, KIND_BY_TYPE.get(attr_type, 'string'), value):
+				cmds.warning('Suggestion {} does not fit {}'.format(value, edit_attr))
+				return
+			block_hooks.run_attr_changed(self.config, attr)
+		finally:
+			cmds.undoInfo(closeChunk=True)
+		self._rebuild_later()
 
 	def reset_attr(self, attr, attr_type):
 		edit_attr = '{}.{}'.format(self.config, attr)
