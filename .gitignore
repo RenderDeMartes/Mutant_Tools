@@ -146,3 +146,6 @@ dmypy.json
 cython_debug/
 .idea/dbnavigator.xml
 /.idea
+
+# Meta Mutant ships Epic's dna module built from OpenRigLogic (MIT)
+!Utils/MetaMutant/dna_module/**/*.pyd

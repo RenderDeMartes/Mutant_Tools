@@ -1,0 +1,6 @@
+These meshes are derived from Blender Studio's "Human Base Meshes" asset bundle v1.4.1,
+released under CC0 1.0 Universal (public domain dedication).
+https://www.blender.org/download/demo/  —  https://creativecommons.org/publicdomain/zero/1.0/
+
+Derivation: exported with tools/blender_export_meshes.py (Blender 4.2.23 LTS) and
+scripts/prepare-human-examples.ts. Vertex order of each base part is unchanged.

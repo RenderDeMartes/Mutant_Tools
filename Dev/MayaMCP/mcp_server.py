@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import base64
 import json
 import sys
 import threading
@@ -1412,6 +1413,71 @@ def maya_ping(port: int | None = None) -> str:
         return json.dumps(result, indent=2)
     except ConnectionError as e:
         return json.dumps({"success": False, "error": str(e)}, indent=2)
+
+
+# --- TopoTransfer (Claude link) ---
+#
+# TopoTransfer's browser page, opened from Maya (Misc > TopoTransfer or Meta Mutant), takes
+# commands straight through its own bridge while "Claude" is on in its Guides step
+# (Utils/TopoTransfer/maya/tt_claude.py); Maya's MCP listener is not needed for these.
+
+_TT_MAYA = Path(__file__).resolve().parents[2] / "Utils" / "TopoTransfer" / "maya"
+if str(_TT_MAYA) not in sys.path:
+    sys.path.append(str(_TT_MAYA))
+import tt_claude  # noqa: E402
+
+
+def _tt_call(command, args, port=None, timeout=60):
+    # `port` is kept for the tools' signatures; the page is reached through its own bridge
+    return tt_claude.call(command, args, timeout=timeout)
+
+
+@mcp.tool(annotations=_ann(read_only=True, destructive=False, idempotent=True))
+def topotransfer_guides(port: int | None = None) -> str:
+    """The guide points in the open TopoTransfer page (Claude link on).
+
+    Each guide: label, placement hint, `ask` (true = place it; with mirror on, right
+    points follow their left twin), and its 3D point on the base (the MetaHuman,
+    aligned) and on the reference (the user's head), or null. Start here, then
+    topotransfer_capture the reference and topotransfer_set_guides.
+    """
+    return json.dumps(_tt_call("state", {}, port), indent=2)
+
+
+@mcp.tool(annotations=_ann(read_only=True, destructive=False, idempotent=True))
+def topotransfer_capture(
+    view: Literal["front", "left", "right"] = "front",
+    mesh: Literal["reference", "base"] = "reference",
+    focus: str = "",
+    zoom: float = 1.0,
+    port: int | None = None,
+) -> Image:
+    """A 1024x1024 orthographic picture of one TopoTransfer mesh with its guides drawn.
+
+    view: front, or the character's left / right profile. mesh: reference (the
+    user's head, where guides are placed) or base (the MetaHuman, as a model of
+    where each guide belongs). focus + zoom (1..20) centre on a guide and magnify,
+    for precise placement. Pixels of the latest capture of a mesh+view are what
+    topotransfer_set_guides takes.
+    """
+    args = {"view": view, "mesh": mesh, "zoom": zoom}
+    if focus:
+        args["focus"] = focus
+    result = _tt_call("capture", args, port)
+    return Image(data=base64.b64decode(result["png"]), format="png")
+
+
+@mcp.tool(annotations=_ann(read_only=False, destructive=False, idempotent=True))
+def topotransfer_set_guides(points: list[dict], port: int | None = None) -> str:
+    """Place guide points in TopoTransfer (one undo step in the page; mirror applies).
+
+    points: [{"label": "Nose tip", "view": "front", "x": 512, "y": 470}] with
+    pixels (x right, y down) of the latest topotransfer_capture of that view, or
+    {"label": ..., "position": [x, y, z]} for a 3D point (snapped to the surface).
+    Add "mesh": "base" to place on the base instead of the reference. Returns how
+    many were placed and which missed.
+    """
+    return json.dumps(_tt_call("set_guides", {"points": points}, port), indent=2)
 
 
 # ---------------------------------------------------------------------------

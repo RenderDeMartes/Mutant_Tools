@@ -237,6 +237,32 @@ def zombinator(*args):
     cZombinator = load_zombinator.Zombinator()
     cZombinator.show()
 
+def topotransfer(*args):
+    try:
+        import importlib;
+        from importlib import reload
+    except:
+        import imp;
+        from imp import reload
+
+    import Mutant_Tools
+    from Mutant_Tools.UI.TopoTransfer import load_topotransfer
+    reload(load_topotransfer)
+    load_topotransfer.from_selection()
+
+def meta_mutant(*args):
+    try:
+        import importlib;
+        from importlib import reload
+    except:
+        import imp;
+        from imp import reload
+
+    import Mutant_Tools
+    from Mutant_Tools.UI.MetaMutant import load_meta_mutant
+    reload(load_meta_mutant)
+    load_meta_mutant.from_selection()
+
 def shelves(*args):
     try:
         import importlib;
@@ -404,6 +430,8 @@ def create_mutant_menu(*args):
             "Misc" : {"Kanban Board" : open_kanban,
                       "Line_misc" : '',
                       "Zombinator" : zombinator,
+                      "TopoTransfer" : topotransfer,
+                      "Meta Mutant" : meta_mutant,
                       "ROM" : ROM,
                       "Scene Shelves" : shelves,
                     },
@@ -449,6 +477,9 @@ def create_mutant_menu(*args):
                     'Join Community':'Discord.png',
                     "Report Bug": "Bot.png",
                     "Request Feature": "HeadNeck.png",
+
+                    'TopoTransfer': 'TopoTransfer.png',
+                    'Meta Mutant': 'MetaMutant.png',
 
                     }
 

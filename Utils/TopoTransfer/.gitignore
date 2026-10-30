@@ -1,0 +1,8 @@
+node_modules/
+dist/
+*.log
+.vite/
+bench/results/*.json
+third_party/
+__pycache__/
+*.pyc

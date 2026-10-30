@@ -108,6 +108,16 @@ Python execution shares one namespace within each call, including functions
 and comprehensions. Calls are independent; assign `result` to return data
 from a multi-line script. Python and MEL retain captured stdout/stderr/tracebacks.
 
+### TopoTransfer tools
+
+`topotransfer_guides`, `topotransfer_capture` (front / left / right picture of
+the reference or base, optional `focus` guide and `zoom`, guides drawn on it)
+and `topotransfer_set_guides` (pixels of the latest capture of that view, or 3D
+points) drive the TopoTransfer page opened from Maya (Misc > TopoTransfer or
+Meta Mutant) while its Guides step has **Claude** on. They talk to the page
+through its own bridge (`Utils/TopoTransfer/maya/tt_claude.py`), so they work
+even without this listener running in Maya.
+
 ### Rigging tools
 
 `maya_list_blocks`, `maya_block_info`, `maya_list_controllers`, and

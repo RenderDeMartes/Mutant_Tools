@@ -34,7 +34,6 @@
 - No obvious unit-test harness is present at repo root; validate changes by running targeted block/UI flows in Maya.
 
 ## Integration boundaries
-- `Utils/Unreal/MetaHuman/dna_calibration/**` contains external/vendor-style code and READMEs; avoid broad style rewrites there unless task-specific.
 - External runtime dependencies are Maya Python APIs (`maya.cmds`, `maya.mel`, `maya.OpenMaya`) and occasional PyMEL-like tooling.
 
 ## Practical edit rules for agents

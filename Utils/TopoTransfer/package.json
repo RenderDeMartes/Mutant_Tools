@@ -1,0 +1,38 @@
+{
+  "name": "topotransfer",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Topology-preserving non-rigid mesh fitting (local, browser-based)",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc",
+    "bench": "tsx bench/benchmark.ts",
+    "examples": "tsx scripts/generate-examples.ts",
+    "test:python": "python -m unittest discover -s tests/python && python -m unittest discover -s ../MetaMutant/tests",
+    "test:all": "npm test && npm run test:python",
+    "serve": "vite build && vite preview --port 4173",
+    "build:maya": "tsc && vite build --mode maya"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "three": "^0.170.0",
+    "zustand": "^4.5.5"
+  },
+  "devDependencies": {
+    "@types/node": "^22.9.0",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@types/three": "^0.170.0",
+    "@vitejs/plugin-react": "^5.2.0",
+    "tsx": "^4.23.15",
+    "typescript": "^5.9.3",
+    "vite": "^7.3.7",
+    "vitest": "^4.1.12"
+  }
+}
