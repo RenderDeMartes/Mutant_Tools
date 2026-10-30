@@ -28,10 +28,12 @@ CORNER_ORIENTS = False
 # block. Like Lips v001 / v002 the lips are their own system: the jaw never
 # moves them, the Jaw and Lips blocks build in any order. The whole mouth
 # follows SetParent.
-# GameMode off (default) = local: the bind joints only carry the lip motion
-# relative to SetParent, so the BodyLips local geo stacks on top of the
-# BodyJaw layer without doubling.
-# GameMode on = the bind joints copy the lip joints in world space.
+# Local rig: the ctrls follow SetParent, the rig only sees them relative to the
+# block ctrl group (to_local), so moving that group, SetParent or anything
+# above never moves the lip joints, only the ctrls do (connect_local_space).
+# GameMode off (default) = local bind joints, the BodyLips local geo stacks on
+# top of the BodyJaw layer without doubling.
+# GameMode on = the bind joints are taken back to world (to_world).
 
 #Read name conventions as nc[''] and setup as seup['']
 PATH = os.path.dirname(__file__)
@@ -154,6 +156,12 @@ def build_mouth_block():
     # on = Lips v001 / v002 bind names (Lips_Up_0_Bnd...), so old skins and Skin blocks still match
     legacy_bind_names = bool(config_value('LegacyBindNames', False))
 
+    # local rig: ctrl world matrices go into the rig through to_local, rig
+    # matrices go back to the ctrls / GameMode binds through to_world (see
+    # connect_local_space, wired at the end, identity until then)
+    to_local = cmds.createNode('multMatrix', n=name + '_ToLocal_MM') + '.matrixSum'
+    to_world = cmds.createNode('multMatrix', n=name + '_ToWorld_MM') + '.matrixSum'
+
     upper_edge = cmds.getAttr('{}.SetUpperEdge'.format(config), asString=True).split(',')
     lower_edge = cmds.getAttr('{}.SetLowerEdge'.format(config), asString=True).split(',')
     attrs_position = cmds.getAttr('{}.SetAttrsPosition'.format(config), asString=True)
@@ -270,7 +278,8 @@ def build_mouth_block():
             ctrl_root = mt.root_grp()[0]
             cmds.xform(ctrl_root, ws=True, t=cmds.xform(point['carrier'], q=True, ws=True, t=True), ro=(0, 0, 0))
             cmds.parent(ctrl_root, tweek_ctrl_grp)
-            cmds.parentConstraint(point['carrier'], ctrl_root, mo=True)
+            # the carrier lives in the rig space, the tweak ctrl in world (to_world)
+            matrix_follow(point['carrier'], ctrl_root, to_world)
             point['ctrl'] = ctrl
 
         for point in tweak_points:
@@ -291,7 +300,8 @@ def build_mouth_block():
 
             miror_grp = mt.mirror_group(ctrl_root, world=True)
             cmds.parent(miror_grp, tweek_ctrl_grp)
-            cmds.parentConstraint(point['carrier'], ctrl_root, mo=True)
+            # the carrier lives in the rig space, the tweak ctrl in world (to_world)
+            matrix_follow(point['carrier'], ctrl_root, to_world)
             point['ctrl'] = ctrl
 
         # Tweaks push the lip joints around them with a soft falloff
@@ -431,9 +441,9 @@ def build_mouth_block():
             # stretching the driver curve
             if mid_tangents:
                 cmds.setAttr(jnt + '.jointOrient', 0, 0, 0)
-                follow_matrix(ctrl_driver(ctrl), jnt)
+                follow_matrix(ctrl_driver(ctrl), jnt, to_local)
             else:
-                cmds.parentConstraint(ctrl, jnt, mo=True)
+                cmds.parentConstraint(local_proxy(ctrl, main_joint_grp, to_local), jnt, mo=True)
 
             # *--------- Aims or Orients -------------
             # *----------------------------
@@ -535,9 +545,9 @@ def build_mouth_block():
                 # matrix copy keeps the mirror, so the handles turn mirrored
                 # (a parentConstraint drops the reflection)
                 cmds.setAttr(jnt + '.jointOrient', 0, 0, 0)
-                follow_matrix(ctrl_driver(ctrl), jnt)
+                follow_matrix(ctrl_driver(ctrl), jnt, to_local)
             else:
-                cmds.parentConstraint(ctrl, jnt, mo=True)
+                cmds.parentConstraint(local_proxy(ctrl, main_joint_grp, to_local), jnt, mo=True)
 
             #Mirror and reparent
             miror_ctrl_grp = mt.mirror_group(ctrl_root, world=True)
@@ -598,7 +608,7 @@ def build_mouth_block():
 
         if not CORNER_ORIENTS:
             for side, puller in [(nc['right'], right_puller_loc), (nc['left'], left_puller_loc)]:
-                follow_rotation(puller, [loc for s, loc in corner_follow_locs if s == side])
+                follow_rotation(puller, [loc for s, loc in corner_follow_locs if s == side], to_local)
 
         print('*'*50)
         print('*'*50)
@@ -621,7 +631,8 @@ def build_mouth_block():
 
         # v003: the mid ctrl only follows the lip main ctrl (the first v003 put two
         # parentConstraints on it, the corner weights were 0 anyway)
-        cmds.parentConstraint(main_ctrl, get_auto(mid_ctrl), skipRotate=('x', 'y', 'z'), mo=True)
+        # (matrix follow: keeps the offset when the rig is scaled)
+        matrix_follow_translate([main_ctrl], get_auto(mid_ctrl))
 
         corner_links = []
 
@@ -638,22 +649,16 @@ def build_mouth_block():
                 t = float(num + 1) / count
                 auto = get_auto(ctrl)
 
-                pc = cmds.parentConstraint(
-                    start_obj,  # lip main
-                    end_obj,  # corner puller
-                    auto,
-                    skipRotate=('x', 'y', 'z'),
-                    mo=True
-                )[0]
-
-                cmds.setAttr(f"{pc}.{start_obj}W0", 1 - t)
-                cmds.setAttr(f"{pc}.{end_obj}W1", t)
-                cmds.setAttr(pc + ".interpType", 2)
+                # lip main / corner puller (matrix follow instead of a
+                # parentConstraint: keeps the offsets when the rig is scaled)
+                main_weight, puller_weight = matrix_follow_translate([start_obj, end_obj], auto)
+                cmds.setAttr(main_weight, 1 - t)
+                cmds.setAttr(puller_weight, t)
                 if num < count - 1:  # the corner ctrl always rides the puller
                     corner_links.append({'ctrl': ctrl, 'auto': auto, 't': t, 'side': side,
                                          'puller': end_obj,
-                                         'main_weight': f"{pc}.{start_obj}W0",
-                                         'puller_weight': f"{pc}.{end_obj}W1"})
+                                         'main_weight': main_weight,
+                                         'puller_weight': puller_weight})
 
         # LEFT
         apply_linear_weights(
@@ -856,22 +861,30 @@ def build_mouth_block():
 
         cmds.parent(left_sub_ctrl_root, side_main_ctrl)
 
+        # mode, like v001 / v002: the lip corner follows this locator, not the ctrls.
+        # BSP = the Main ctrl is free for the Commissures blendshapes, only the Sub
+        # ctrl moves the lip corner. RIG = the Main ctrl moves the lip corner too.
+        # The locator sits next to the Main ctrl, same space (mirror included).
+        cmds.parent(loc_root, left_main_ctrl_auto)
+        cmds.xform(loc_root, os=True, t=(0, 0, 0), ro=(0, 0, 0), s=(1, 1, 1))
+        cmds.setAttr(loc + '.v', 0)
+        mt.connect_md_node(in_x1=sub_move_mult_attr, in_x2='{}.rotate'.format(sub_main_ctrl), out_x='{}.rotate'.format(loc), mode='multiply', vector=True)
+        mt.connect_md_node(in_x1=sub_move_mult_attr, in_x2='{}.translate'.format(sub_main_ctrl), out_x='{}.translate'.format(loc), mode='multiply', vector=True)
+        md_rotate = mt.connect_md_node(in_x1=move_mult_attr, in_x2='{}.rotate'.format(side_main_ctrl), out_x='{}.rotate'.format(loc_auto), mode='multiply', vector=True)
+        md_translate = mt.connect_md_node(in_x1=move_mult_attr, in_x2='{}.translate'.format(side_main_ctrl), out_x='{}.translate'.format(loc_auto), mode='multiply', vector=True)
+        mt.connect_md_node(in_x1=mode_attr, in_x2='{}.output'.format(md_rotate), out_x='{}.rotate'.format(loc_auto), mode='multiply', vector=True, force=True)
+        mt.connect_md_node(in_x1=mode_attr, in_x2='{}.output'.format(md_translate), out_x='{}.translate'.format(loc_auto), mode='multiply', vector=True, force=True)
+
         # Flip
         if side == nc['right']:
-            loc_root = mt.mirror_group(loc_root, world=True)
             left_main_ctrl_root = mt.mirror_group(left_main_ctrl_root, world=True)
 
-        # cmds.parent(loc_root, clean_rig_grp)
-        cmds.parent(loc_root, center_grp)
         # cmds.parent(left_main_ctrl_root, clean_ctrl_grp)
         cmds.parent(left_main_ctrl_root, center_ctrl)
 
     #Automations time
     left_ctrl = side_controllers[0]
     right_ctrl = side_controllers[1]
-
-    left_sub_ctrl = sub_side_controllers[0]
-    right_sub_ctrl = sub_side_controllers[1]
 
     # upper lip + center ctrl driver (node name kept from MouthGames)
     jaw_top_locator = cmds.spaceLocator(n=name + '_TopJaw' + nc['locator'])[0]
@@ -893,18 +906,19 @@ def build_mouth_block():
     # just takes the same rigid rotation as its lip. Nothing left to flip.
     # v003: one shared rotation per driver instead of an orientConstraint
     # per locator (same result as orientConstraint mo=True)
-    follow_rotation(lower_space, lower_system['interior_end_locators'])
-    follow_rotation(jaw_top_locator, upper_system['interior_end_locators'])
+    follow_rotation(lower_space, lower_system['interior_end_locators'], to_local)
+    follow_rotation(jaw_top_locator, upper_system['interior_end_locators'], to_local)
 
     #Corner controllers ride with the upper lip and the center ctrl
     for corner_root in side_controllers_root:
         cmds.parentConstraint(jaw_top_locator, corner_root, mo=True)
 
-    #Corner controller move pullers
-    cmds.parentConstraint(left_sub_ctrl, upper_system['corner_pullers'][0], mo=True)
-    cmds.parentConstraint(right_sub_ctrl, upper_system['corner_pullers'][1], mo=True)
-    cmds.parentConstraint(left_sub_ctrl, lower_system['corner_pullers'][0], mo=True)
-    cmds.parentConstraint(right_sub_ctrl, lower_system['corner_pullers'][1], mo=True)
+    #Corner locators (Sub ctrl, + Main ctrl in RIG mode) move pullers
+    # (matrix follow: the pullers take the rig scale, the mid ctrls measure from them)
+    left_corner_loc, right_corner_loc = side_locators
+    for system in [upper_system, lower_system]:
+        matrix_follow(left_corner_loc, system['corner_pullers'][0])
+        matrix_follow(right_corner_loc, system['corner_pullers'][1])
 
     # v003: corner influence + aim on the mid ctrls
     corner_ctrls = {nc['left']: left_ctrl, nc['right']: right_ctrl}
@@ -1020,8 +1034,11 @@ def build_mouth_block():
     # block scale on every follow transform, so the joint offsets and the
     # joint scale follow a scaled rig like the v002 constraints did
     parent_node = block_parent[0] if isinstance(block_parent, list) else block_parent
+    parent_local = cmds.createNode('multMatrix', n=name + '_ParentScale_MM')
+    cmds.connectAttr(parent_node + '.worldMatrix[0]', parent_local + '.matrixIn[0]')
+    cmds.connectAttr(to_local, parent_local + '.matrixIn[1]')
     parent_scale = cmds.createNode('decomposeMatrix', n=name + '_ParentScale_DM')
-    cmds.connectAttr(parent_node + '.worldMatrix[0]', parent_scale + '.inputMatrix')
+    cmds.connectAttr(parent_local + '.matrixSum', parent_scale + '.inputMatrix')
     for system in systems:
         for point in system['lip_points'] + system['tweak_points']:
             cmds.connectAttr(parent_scale + '.outputScale', point['carrier'] + '.scale')
@@ -1039,13 +1056,26 @@ def build_mouth_block():
     scale_ctrls = side_controllers + sub_side_controllers
     for system in systems:
         scale_ctrls += system['sec_controllers'] + [system['main_ctrl']]
+    # measured in RIG mode, so the Main ctrls still scale the lips once mode is RIG
+    for ctrl in side_controllers:
+        cmds.setAttr(ctrl + '.mode', 1)
     scale_weights = measure_point_weights(scale_ctrls, all_points)
+    for ctrl in side_controllers:
+        cmds.setAttr(ctrl + '.mode', 0)
 
     scale_minus = {}
     for ctrl in scale_ctrls + upper_system['tweek_ctrls'] + lower_system['tweek_ctrls']:
         minus = cmds.createNode('plusMinusAverage', n=ctrl + '_ScaleMinus_PMA')
         cmds.setAttr(minus + '.operation', 2)
-        cmds.connectAttr(ctrl + '.scale', minus + '.input3D[0]')
+        scale = ctrl + '.scale'
+        if ctrl in side_controllers:
+            # BSP mode: the Main ctrl scale is for the Commissures, not the lips
+            gate = cmds.createNode('blendColors', n=ctrl + '_ScaleMode_BC')
+            cmds.connectAttr(ctrl + '.scale', gate + '.color1')
+            cmds.setAttr(gate + '.color2', 1, 1, 1)
+            cmds.connectAttr(ctrl + '.mode', gate + '.blender')
+            scale = gate + '.output'
+        cmds.connectAttr(scale, minus + '.input3D[0]')
         cmds.setAttr(minus + '.input3D[1]', 1, 1, 1)
         scale_minus[ctrl] = minus
 
@@ -1114,27 +1144,24 @@ def build_mouth_block():
                 cmds.connectAttr(out, '{}.scale{}'.format(jnt, axis))
 
     # create bind joints
-    # GameMode: world copy of the lip joints. Local: only the lip motion, the
-    # SetParent part is taken out per joint (see LocalSpace)
+    # The lip joints live in the local rig space. Local: the binds copy them
+    # as they are. GameMode: taken back to world (to_world), they follow
+    # SetParent like the ctrls.
     bind_jnt_grp = '{}{}'.format(setup['rig_groups']['bind_joints'], nc['group'])
-    local_space = None if game_mode else LocalSpace(parent_node)
 
-    def follow_bind(jnt, bind_name=None):
+    def follow_bind(jnt, bind_name=None, space=None):
         cmds.select(cl=True)
         bind_joint = cmds.joint(n=bind_name or jnt.replace(nc['joint'], nc['joint_bind']))
         cmds.setAttr('{}.radius'.format(bind_joint), 1.5)
         cmds.parent(bind_joint, bind_jnt_grp)
-        if local_space:
-            local_space.follow(jnt, bind_joint)
-        else:
-            # matrix copy instead of parent + scale constraints (cheaper, same result)
-            follow_matrix(jnt, bind_joint)
+        # matrix copy instead of parent + scale constraints (cheaper, same result)
+        follow_matrix(jnt, bind_joint, space)
 
     for system, system_name in [(upper_system, name + '_Up'), (lower_system, name + '_Dw')]:
         for num, point in enumerate(system['lip_points']):
             # v002 counted the joints from the right corner (cv[0]), same order as lip_points
             bind_name = '{}_{}{}'.format(system_name, num, nc['joint_bind']) if legacy_bind_names else None
-            follow_bind(point['joint'], bind_name)
+            follow_bind(point['joint'], bind_name, to_world if game_mode else None)
 
     # v003: buccal flap, one per side, between an upper and a lower lip joint
     if buccal_flap:
@@ -1146,13 +1173,18 @@ def build_mouth_block():
             if not all(flap_joints):
                 continue
             flap = create_flap(side + name + '_Flap', side, flap_joints[0], flap_joints[1],
-                               clean_ctrl_grp, parent_scale, ctrl_size, mirror_source)
+                               clean_ctrl_grp, parent_scale, ctrl_size, to_world, mirror_source)
             mirror_source = mirror_source or flap['follow']
             flap_ctrls.append(flap['ctrl'])
-            follow_bind(flap['joint'])
+            # the flap joint sits under its ctrl (world): local binds take it into the rig space
+            follow_bind(flap['joint'], space=None if game_mode else to_local)
         for ctrl in flap_ctrls:
             for shape in cmds.listRelatives(ctrl, s=True) or []:
                 cmds.connectAttr(main_ctrl_attr, shape + '.v', f=True)
+
+    # everything is at rest now: from here on moving the block ctrl group only
+    # moves the ctrls, not the lip joints
+    connect_local_space(clean_ctrl_grp, to_local, to_world)
 
     # build complete ----------------------------------------------------
     print ('Build {} Success'.format(block))
@@ -1306,31 +1338,37 @@ def linear_curve_point(curve_info, shape, param, name):
     return '{}.controlPoints[{}]'.format(curve_info, 0 if param < knots[0] else len(knots) - 1)
 
 
-def follow_rotation(driver, nodes):
+def follow_rotation(driver, nodes, space=None):
     """Same as orientConstraint(driver, node, mo=True) for nodes at rest
-    identity under a still parent, with one multMatrix/decompose shared by all."""
+    identity under a still parent, with one multMatrix/decompose shared by all.
+    space: matrix plug between the driver and the nodes (to_local / to_world)."""
     if not nodes:
         return
     rest = om.MMatrix(cmds.xform(driver, q=True, ws=True, m=True)).inverse()
     mult = cmds.createNode('multMatrix', n=driver + '_RestDelta_MM')
     cmds.setAttr(mult + '.matrixIn[0]', list(rest), type='matrix')
     cmds.connectAttr(driver + '.worldMatrix[0]', mult + '.matrixIn[1]')
+    if space:
+        cmds.connectAttr(space, mult + '.matrixIn[2]')
     parent = cmds.listRelatives(nodes[0], p=True)
     if parent:
-        cmds.connectAttr(parent[0] + '.worldInverseMatrix[0]', mult + '.matrixIn[2]')
+        cmds.connectAttr(parent[0] + '.worldInverseMatrix[0]', mult + '.matrixIn[3]')
     decompose = cmds.createNode('decomposeMatrix', n=driver + '_RestDelta_DM')
     cmds.connectAttr(mult + '.matrixSum', decompose + '.inputMatrix')
     for node in nodes:
         cmds.connectAttr(decompose + '.outputRotate', node + '.rotate')
 
 
-def follow_matrix(source, target):
-    """target copies source's world transform (target has no joint orient)."""
+def follow_matrix(source, target, space=None):
+    """target copies source's world transform (target has no joint orient).
+    space: matrix plug between source and target (to_local / to_world)."""
     mult = cmds.createNode('multMatrix', n=target + '_Follow_MM')
     cmds.connectAttr(source + '.worldMatrix[0]', mult + '.matrixIn[0]')
+    if space:
+        cmds.connectAttr(space, mult + '.matrixIn[1]')
     parent = cmds.listRelatives(target, p=True)
     if parent:
-        cmds.connectAttr(parent[0] + '.worldInverseMatrix[0]', mult + '.matrixIn[1]')
+        cmds.connectAttr(parent[0] + '.worldInverseMatrix[0]', mult + '.matrixIn[2]')
     decompose = cmds.createNode('decomposeMatrix', n=target + '_Follow_DM')
     cmds.connectAttr(mult + '.matrixSum', decompose + '.inputMatrix')
     cmds.connectAttr(decompose + '.outputTranslate', target + '.translate')
@@ -1346,32 +1384,71 @@ def _world_matrix(node):
     return list(om.MMatrix(cmds.xform(node, q=True, ws=True, m=True)))
 
 
-class LocalSpace(object):
-    """Local bind joints for the BodyLips layer.
+def matrix_follow_translate(targets, node):
+    """parentConstraint(targets, node, skipRotate=xyz, mo=True) with each offset
+    kept in its target's space, scale included (a parentConstraint keeps it in
+    world units, so a scaled rig slides the node off). Returns one weight plug
+    per target, the weights should add up to 1."""
+    add = cmds.createNode('wtAddMatrix', n=node + '_Follow_WAM')
+    node_rest = om.MMatrix(_world_matrix(node))
+    weights = []
+    for i, target in enumerate(targets):
+        offset = node_rest * om.MMatrix(_world_matrix(target)).inverse()
+        mult = cmds.createNode('multMatrix', n='{}_Follow{}_MM'.format(node, i))
+        cmds.setAttr(mult + '.matrixIn[0]', list(offset), type='matrix')
+        cmds.connectAttr(target + '.worldMatrix[0]', mult + '.matrixIn[1]')
+        cmds.connectAttr(mult + '.matrixSum', '{}.wtMatrix[{}].matrixIn'.format(add, i))
+        weights.append('{}.wtMatrix[{}].weightIn'.format(add, i))
+        cmds.setAttr(weights[-1], 1.0 / len(targets))
+    local = cmds.createNode('multMatrix', n=node + '_Follow_Local_MM')
+    cmds.connectAttr(add + '.matrixSum', local + '.matrixIn[0]')
+    cmds.connectAttr(node + '.parentInverseMatrix[0]', local + '.matrixIn[1]')
+    decompose = cmds.createNode('decomposeMatrix', n=node + '_Follow_Local_DM')
+    cmds.connectAttr(local + '.matrixSum', decompose + '.inputMatrix')
+    cmds.connectAttr(decompose + '.outputTranslate', node + '.translate')
+    return weights
 
-    bind = lip joint world * SetParent world inverse * SetParent rest world, so
-    moving SetParent leaves the bind joint where it is and the bind joint only
-    carries the lip motion on top of it. The jaw is not in here: the lips are
-    their own system, the BodyJaw layer moves the jaw part.
-    """
 
-    def __init__(self, head):
-        self.inverse = head + '.worldInverseMatrix[0]'
-        self.rest = _world_matrix(head)
+def matrix_follow(target, node, space=None):
+    """parentConstraint + scaleConstraint(target, node, mo=True) as matrices:
+    node keeps its rest offset in the target's space and takes its scale
+    (a parentConstraint leaves the node unscaled in a scaled rig).
+    space: matrix plug between target and node (to_local / to_world)."""
+    offset = om.MMatrix(_world_matrix(node)) * om.MMatrix(_world_matrix(target)).inverse()
+    mult = cmds.createNode('multMatrix', n=node + '_MatrixFollow_MM')
+    cmds.setAttr(mult + '.matrixIn[0]', list(offset), type='matrix')
+    cmds.connectAttr(target + '.worldMatrix[0]', mult + '.matrixIn[1]')
+    if space:
+        cmds.connectAttr(space, mult + '.matrixIn[2]')
+    cmds.connectAttr(node + '.parentInverseMatrix[0]', mult + '.matrixIn[3]')
+    decompose = cmds.createNode('decomposeMatrix', n=node + '_MatrixFollow_DM')
+    cmds.connectAttr(mult + '.matrixSum', decompose + '.inputMatrix')
+    cmds.connectAttr(decompose + '.outputTranslate', node + '.translate')
+    cmds.connectAttr(decompose + '.outputRotate', node + '.rotate')
+    cmds.connectAttr(decompose + '.outputScale', node + '.scale')
 
-    def follow(self, source, target):
-        mult = cmds.createNode('multMatrix', n=target + '_Local_MM')
-        cmds.connectAttr(source + '.worldMatrix[0]', mult + '.matrixIn[0]')
-        cmds.connectAttr(self.inverse, mult + '.matrixIn[1]')
-        cmds.setAttr(mult + '.matrixIn[2]', self.rest, type='matrix')
-        parent = cmds.listRelatives(target, p=True)
-        if parent:
-            cmds.connectAttr(parent[0] + '.worldInverseMatrix[0]', mult + '.matrixIn[3]')
-        decompose = cmds.createNode('decomposeMatrix', n=target + '_Local_DM')
-        cmds.connectAttr(mult + '.matrixSum', decompose + '.inputMatrix')
-        cmds.connectAttr(decompose + '.outputTranslate', target + '.translate')
-        cmds.connectAttr(decompose + '.outputRotate', target + '.rotate')
-        cmds.connectAttr(decompose + '.outputScale', target + '.scale')
+
+def local_proxy(node, parent, space):
+    """Hidden copy of node's world transform taken into the rig space (space =
+    to_local), for constraints that need a transform target."""
+    proxy = cmds.createNode('transform', n=node + '_Local' + nc['null'], p=parent)
+    follow_matrix(node, proxy, space)
+    return proxy
+
+
+def connect_local_space(ctrl_root, to_local, to_world):
+    """Local rig: the lip joints see the ctrls only relative to the block ctrl
+    group, so moving it (SetParent, Ctrl_Grp, a face install...) never moves
+    them, only the ctrls do, like direct connections.
+      to_local = ctrl_root world inverse * ctrl_root rest   (ctrls -> rig)
+      to_world = ctrl_root rest inverse * ctrl_root world   (rig -> ctrls / GameMode)
+    Wired at the end of the build: both are identity at rest."""
+    rest = om.MMatrix(_world_matrix(ctrl_root))
+    local_node, world_node = to_local.split('.')[0], to_world.split('.')[0]
+    cmds.connectAttr(ctrl_root + '.worldInverseMatrix[0]', local_node + '.matrixIn[0]')
+    cmds.setAttr(local_node + '.matrixIn[1]', list(rest), type='matrix')
+    cmds.setAttr(world_node + '.matrixIn[0]', list(rest.inverse()), type='matrix')
+    cmds.connectAttr(ctrl_root + '.worldMatrix[0]', world_node + '.matrixIn[1]')
 
 
 #------------------------------------
@@ -1501,7 +1578,7 @@ def find_flap_joint(system, side, typed=''):
     return point['joint']
 
 
-def create_flap(base, side, up_jnt, dw_jnt, ctrl_parent, parent_scale, ctrl_size, mirror_source=None):
+def create_flap(base, side, up_jnt, dw_jnt, ctrl_parent, parent_scale, ctrl_size, to_world, mirror_source=None):
     """Buccal flap: ctrl + joint riding a blend of an upper and a lower lip
     joint (FlapBlend), squashed along the lip gap axis as the lips close
     (Squash) and optionally stretched as they open (Stretch)."""
@@ -1511,9 +1588,11 @@ def create_flap(base, side, up_jnt, dw_jnt, ctrl_parent, parent_scale, ctrl_size
 
     # translate + rotate only, the scale comes from the ctrl group
     follow = cmds.createNode('transform', n=base + '_Follow' + nc['null'], p=ctrl_parent)
+    # the lip joints live in the rig space, the ctrl in world: to_world
     local = cmds.createNode('multMatrix', n=base + '_Follow_MM')
     cmds.connectAttr(blend + '.outputMatrix', local + '.matrixIn[0]')
-    cmds.connectAttr(ctrl_parent + '.worldInverseMatrix[0]', local + '.matrixIn[1]')
+    cmds.connectAttr(to_world, local + '.matrixIn[1]')
+    cmds.connectAttr(ctrl_parent + '.worldInverseMatrix[0]', local + '.matrixIn[2]')
     decompose = cmds.createNode('decomposeMatrix', n=base + '_Follow_DM')
     cmds.connectAttr(local + '.matrixSum', decompose + '.inputMatrix')
     cmds.connectAttr(decompose + '.outputTranslate', follow + '.translate')
