@@ -1,0 +1,16 @@
+{
+    "Name": "Commissures",
+    "Description": "Commissures (mouth corner) joints for the lips blendshapes (v002, Lips corner mode)",
+    "Icon": "Commissures.png",
+    "Enable": "True",
+    "python_file": "exec_commissures_v002.py",
+    "import": "import exec_commissures_v002",
+    "imp.reload": "reload(exec_commissures_v002)",
+    "exec_command": "exec_commissures_v002.create_commissures_block()",
+    "build_command": "exec_commissures_v002.build_commissures_block()",
+    "attrs": {
+        "LeftCornerCtrl_string": "new_locator",
+        "RightCornerCtrl_string": "new_locator",
+        "Help_string": "Overview:\n  Commissures (mouth corner) system for the lips blendshapes: Wide / Narrow / Up / Down joints driven by the corner ctrl translate (X = wide / narrow, Y = up / down), they skin the BodyMouthWide / Narrow / Up / Down layers.\n  v002: when the corner ctrl has a mode attr (L/R_Lips_Main_Ctrl of the Lips block), the commissures only move in mode BSP. In mode RIG that ctrl moves the lip rig itself, so the commissures stay still (no double transform). Ctrls without mode drive them like v001.\n\nHow To Use:\n  build it after the Lips block and set the two corner ctrls.\n\nFields:\n- LeftCornerCtrl: left mouth corner ctrl (e.g. L_Lips_Main_Ctrl, L_Mouth_Main_Ctrl). new_locator makes a placeholder.\n- RightCornerCtrl: right mouth corner ctrl (e.g. R_Lips_Main_Ctrl). new_locator makes a placeholder.\n\nTips:\n- Switch L/R_Lips_Main_Ctrl.mode to RIG to move the lip corners with the rig instead of these commissures.\n- start with defaults, build once, then tweak only the fields you need."
+    }
+}
