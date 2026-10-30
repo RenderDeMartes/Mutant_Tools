@@ -27,7 +27,7 @@ GAME_NAME = 'Mouth_Jaw'
 # - Dynamic pivot: the JawPivot guide sets where the jaw rotates,
 #   JawPivot_Ctrl moves it in the scene (Jaw_Ctrl.PivotCtrl shows it).
 #   It drives the rotatePivot of the Jaw_Ctrl and of the local rig locator.
-# - JawFollow_Null under Jaw_Ctrl: what the Lips v003 / Teeth / Tongue blocks
+# - JawFollow_Null under Jaw_Ctrl: what the Teeth / Tongue blocks
 #   follow (constraints on the ctrl read its rotatePivot and jump when it moves).
 # GameMode off = local rig (the jaw joints only see the Jaw_Ctrl channels),
 # on = the rig follows SetParent in world space, same as v001.
@@ -193,7 +193,7 @@ def build_jaw_block():
     cmds.connectAttr(jaw_ctrl+'.rotate', global_locator+'.rotate')
     cmds.connectAttr('{}.translate'.format(jaw_ctrl), '{}.translate'.format(jaw_jnt_mover))
 
-    # Lips v003 / Teeth / Tongue follow this null, not the ctrl
+    # Teeth / Tongue follow this null, not the ctrl
     jaw_follow = cmds.createNode('transform', n=name + 'Follow' + nc['null'], p=jaw_ctrl)
 
     #New attrs

@@ -25,10 +25,12 @@ CORNER_ORIENTS = False
 
 # Lips v003: the MouthGames v003 lips (zip, roll, soft tweaks, weighted scale,
 # corner follow / aim, buccal flap) as a separate Lips block next to the Jaw
-# block. The jaw comes from SetJaw instead of being built here.
-# GameMode off (default) = local: the bind joints only carry the lip motion,
-# relative to SetParent (upper lip), the jaw (lower lip) or a Follow blend of
-# both (corners), so BodyLips local geos stack on top of the BodyJaw layer.
+# block. Like Lips v001 / v002 the lips are their own system: the jaw never
+# moves them, the Jaw and Lips blocks build in any order. The whole mouth
+# follows SetParent.
+# GameMode off (default) = local: the bind joints only carry the lip motion
+# relative to SetParent, so the BodyLips local geo stacks on top of the
+# BodyJaw layer without doubling.
 # GameMode on = the bind joints copy the lip joints in world space.
 
 #Read name conventions as nc[''] and setup as seup['']
@@ -149,9 +151,8 @@ def build_mouth_block():
 
     # off = local bind joints (BodyLips layer), on = world bind joints
     game_mode = bool(config_value('GameMode', False))
-
-    # Jaw block ctrl the lower lip rides (Jaw v002: its JawFollow null)
-    jaw_ctrl, jaw_follow = find_jaw((config_value('SetJaw', '') or '').strip(), block_parent, mouth_center, name)
+    # on = Lips v001 / v002 bind names (Lips_Up_0_Bnd...), so old skins and Skin blocks still match
+    legacy_bind_names = bool(config_value('LegacyBindNames', False))
 
     upper_edge = cmds.getAttr('{}.SetUpperEdge'.format(config), asString=True).split(',')
     lower_edge = cmds.getAttr('{}.SetLowerEdge'.format(config), asString=True).split(',')
@@ -871,29 +872,32 @@ def build_mouth_block():
     left_sub_ctrl = sub_side_controllers[0]
     right_sub_ctrl = sub_side_controllers[1]
 
-    #jaw top to collide
+    # upper lip + center ctrl driver (node name kept from MouthGames)
     jaw_top_locator = cmds.spaceLocator(n=name + '_TopJaw' + nc['locator'])[0]
     cmds.parent(jaw_top_locator, clean_rig_grp)
 
-    #Jaw to main lower and up jaw to main upper
-    cmds.parentConstraint(jaw_follow, lower_system['main_ctrl_root'], mo=True)
+    # the lower lip follows SetParent like the upper lip (clean_ctrl_grp follows
+    # SetParent): no jaw, the lips are their own system
+    lower_space = cmds.createNode('transform', n=name + '_LowerSpace' + nc['null'], p=clean_ctrl_grp)
+    cmds.xform(lower_space, ws=True, t=cmds.xform(mouth_center, q=True, ws=True, t=True))
+
+    #main lower and main upper
+    cmds.parentConstraint(lower_space, lower_system['main_ctrl_root'], mo=True)
     cmds.parentConstraint(jaw_top_locator, upper_system['main_ctrl_root'], mo=True)
 
     # Interior tweak locators no longer compute their own orient off the
     # curve -- every geometry-based attempt (fourByFourMatrix, motionPath,
     # aim-chain) eventually hit a point whose tangent went singular against
     # whatever reference it used. Force it instead: every interior locator
-    # just takes the same rigid rotation as the jaw. Nothing left to flip.
+    # just takes the same rigid rotation as its lip. Nothing left to flip.
     # v003: one shared rotation per driver instead of an orientConstraint
     # per locator (same result as orientConstraint mo=True)
-    follow_rotation(jaw_follow, lower_system['interior_end_locators'])
+    follow_rotation(lower_space, lower_system['interior_end_locators'])
     follow_rotation(jaw_top_locator, upper_system['interior_end_locators'])
 
-    #Corner controllers stay between loc and jaw
-    left_corner_pc=cmds.parentConstraint(jaw_follow, jaw_top_locator, side_controllers_root[0], mo=True)[0]
-    cmds.setAttr(left_corner_pc + ".interpType", 2)
-    right_corner_pc=cmds.parentConstraint(jaw_follow, jaw_top_locator, side_controllers_root[1], mo=True)[0]
-    cmds.setAttr(right_corner_pc + ".interpType", 2)
+    #Corner controllers ride with the upper lip and the center ctrl
+    for corner_root in side_controllers_root:
+        cmds.parentConstraint(jaw_top_locator, corner_root, mo=True)
 
     #Corner controller move pullers
     cmds.parentConstraint(left_sub_ctrl, upper_system['corner_pullers'][0], mo=True)
@@ -901,78 +905,11 @@ def build_mouth_block():
     cmds.parentConstraint(left_sub_ctrl, lower_system['corner_pullers'][0], mo=True)
     cmds.parentConstraint(right_sub_ctrl, lower_system['corner_pullers'][1], mo=True)
 
-    # Automation for corner pc to move up or down
-    # (weight plugs from the constraint itself: the jaw node belongs to the
-    # Jaw block, its short name is not always the weight attr name)
-    follow_attrs = {}
-    for side, ctrl, corner_pc in [(nc['left'], left_ctrl, left_corner_pc),
-                                  (nc['right'], right_ctrl, right_corner_pc)]:
-        follow_attr = mt.new_attr(input=ctrl, name='Follow', min=-0, max=1, default=0.5)
-        follow_attrs[side] = follow_attr
-        jaw_weight, top_weight = ['{}.{}'.format(corner_pc, w)
-                                  for w in cmds.parentConstraint(corner_pc, q=True, wal=True)]
-        cmds.connectAttr(follow_attr, jaw_weight, f=True)
-
-        reverse_node = cmds.shadingNode('reverse', asUtility=True, name="{}_reverse".format(corner_pc))
-        cmds.connectAttr(follow_attr, "{}.inputX".format(reverse_node), f=True)
-        cmds.connectAttr("{}.output.outputX".format(reverse_node), top_weight, f=True)
-
     # v003: corner influence + aim on the mid ctrls
     corner_ctrls = {nc['left']: left_ctrl, nc['right']: right_ctrl}
     for system in [upper_system, lower_system]:
         connect_corner_links(system['corner_links'], corner_ctrls)
 
-
-    #Jaw up Logic
-    up_main_auto = cmds.listRelatives(upper_system['main_ctrl'], p=True)[0]
-    up_main_ctrl_root = upper_system['main_ctrl_root']
-    pc = cmds.parentConstraint(
-        jaw_follow,
-        up_main_ctrl_root,
-        up_main_auto,
-        mo=True,
-        skipTranslate=['x', 'z'],
-        skipRotate=['x', 'y', 'z']
-    )[0]
-
-    lt = cmds.createNode("lessThan", name=name+"_jaw_lessThan")
-    bc = cmds.createNode("blendColors", name=name+"_jaw_blendColors")
-    rev = cmds.createNode("reverse", name=name+"_jaw_reverse")
-    cmds.setAttr(bc + ".color1R", 1)  # Been 1R = 1
-    cmds.setAttr(bc + ".color2R", 0)  # 2R = 0
-
-    # collision when the jaw closes past rest (rotateX < 0 when +rx opens it)
-    jaw_open_sign = jaw_opening_sign(jaw_ctrl, jaw_follow, lip_down_guide or mouth_center)
-    if jaw_open_sign > 0:
-        cmds.connectAttr(jaw_ctrl + ".rotateX", lt + ".input1", force=True)
-    else:
-        flip = cmds.createNode("multiplyDivide", name=name + "_jaw_openSign")
-        cmds.setAttr(flip + ".input2X", -1)
-        cmds.connectAttr(jaw_ctrl + ".rotateX", flip + ".input1X", force=True)
-        cmds.connectAttr(flip + ".outputX", lt + ".input1", force=True)
-    cmds.connectAttr(lt + ".output", bc + ".blender", force=True)
-    cmds.connectAttr(bc + ".output", rev + ".input", force=True)
-
-    weights = cmds.parentConstraint(pc, q=True, wal=True)
-    w0, w1 = [f"{pc}.{w}" for w in weights]
-
-    # LipCollision attr on the jaw ctrl to blend collision on/off (kept when
-    # another Lips block already added it)
-    if cmds.attributeQuery('LipCollision', n=jaw_ctrl, exists=True):
-        lip_collision_attr = jaw_ctrl + '.LipCollision'
-    else:
-        mt.line_attr(input=jaw_ctrl, name='Lips')
-        lip_collision_attr = mt.new_attr(input=jaw_ctrl, name='LipCollision', min=0, max=1, default=1)
-
-    collision_mult = cmds.createNode("multiplyDivide", name=name + "_jaw_collisionMult")
-    cmds.connectAttr(bc + ".outputR", collision_mult + ".input1X", f=True)
-    cmds.connectAttr(lip_collision_attr, collision_mult + ".input2X", f=True)
-
-    collision_rev = cmds.createNode("reverse", name=name + "_jaw_collisionReverse")
-    cmds.connectAttr(collision_mult + ".outputX", collision_rev + ".inputX", f=True)
-
-    cmds.connectAttr(collision_mult + ".outputX", w0, f=True)
-    cmds.connectAttr(collision_rev + ".outputX", w1, f=True)
 
     #--------------------------------------------------
     #--Make the whole mouth and center mouth works-----
@@ -1183,36 +1120,26 @@ def build_mouth_block():
 
     # create bind joints
     # GameMode: world copy of the lip joints. Local: only the lip motion, the
-    # head / jaw part is taken out per joint (see LocalSpaces)
+    # SetParent part is taken out per joint (see LocalSpace)
     bind_jnt_grp = '{}{}'.format(setup['rig_groups']['bind_joints'], nc['group'])
-    spaces = None
-    if not game_mode:
-        # rest corner of each side, middle of the upper and lower corner joints
-        corners = {}
-        for point in upper_system['lip_points'] + lower_system['lip_points']:
-            if point['corner']:
-                side = nc['left'] if point['u'] > 0.5 else nc['right']
-                corners.setdefault(side, []).append(om.MVector(cmds.xform(point['joint'], q=True, ws=True, t=True)))
-        corners = {side: tuple(sum(p, om.MVector()) / len(p)) for side, p in corners.items()}
-        spaces = LocalSpaces(name, parent_node, jaw_follow, follow_attrs, corners)
+    local_space = None if game_mode else LocalSpace(parent_node)
 
-    def follow_bind(jnt, space):
+    def follow_bind(jnt, bind_name=None):
         cmds.select(cl=True)
-        bind_joint = cmds.joint(n=jnt.replace(nc['joint'], nc['joint_bind']))
+        bind_joint = cmds.joint(n=bind_name or jnt.replace(nc['joint'], nc['joint_bind']))
         cmds.setAttr('{}.radius'.format(bind_joint), 1.5)
         cmds.parent(bind_joint, bind_jnt_grp)
-        if spaces:
-            spaces.follow(jnt, bind_joint, space)
+        if local_space:
+            local_space.follow(jnt, bind_joint)
         else:
             # matrix copy instead of parent + scale constraints (cheaper, same result)
             follow_matrix(jnt, bind_joint)
 
-    for system, space in [(upper_system, 'head'), (lower_system, 'jaw')]:
-        for point in system['lip_points']:
-            if point['corner']:
-                follow_bind(point['joint'], nc['left'] if point['u'] > 0.5 else nc['right'])
-            else:
-                follow_bind(point['joint'], space)
+    for system, system_name in [(upper_system, name + '_Up'), (lower_system, name + '_Dw')]:
+        for num, point in enumerate(system['lip_points']):
+            # v002 counted the joints from the right corner (cv[0]), same order as lip_points
+            bind_name = '{}_{}{}'.format(system_name, num, nc['joint_bind']) if legacy_bind_names else None
+            follow_bind(point['joint'], bind_name)
 
     # v003: buccal flap, one per side, between an upper and a lower lip joint
     if buccal_flap:
@@ -1227,7 +1154,7 @@ def build_mouth_block():
                                clean_ctrl_grp, parent_scale, ctrl_size, mirror_source)
             mirror_source = mirror_source or flap['follow']
             flap_ctrls.append(flap['ctrl'])
-            follow_bind(flap['joint'], side)
+            follow_bind(flap['joint'])
         for ctrl in flap_ctrls:
             for shape in cmds.listRelatives(ctrl, s=True) or []:
                 cmds.connectAttr(main_ctrl_attr, shape + '.v', f=True)
@@ -1468,112 +1395,31 @@ def follow_matrix(source, target):
 
 
 #------------------------------------
-#-----------Lips v003: jaw + local---
+#-----------Lips v003: local---------
 #------------------------------------
-
-def find_jaw(set_jaw, block_parent, mouth_center, name):
-    """(jaw ctrl, node the lips follow) from the SetJaw attr.
-
-    SetJaw is the jaw ctrl (Jaw_Ctrl from Jaw v002, Mouth_Jaw_Ctrl from a
-    MouthGames block). When it has a *Follow_Null child (dynamic pivot), the
-    lips follow that null: constraints on the ctrl read its rotatePivot and
-    jump when the pivot moves. Empty / missing = a placeholder locator under
-    SetParent, so the lips still build.
-    """
-    follow_suffix = 'Follow' + nc['null']
-    if not (set_jaw and cmds.objExists(set_jaw)):
-        # Jaw block with GameNames on / named Mouth_Jaw, or the default name
-        for fallback in ('Mouth_Jaw' + nc['ctrl'], 'Jaw' + nc['ctrl']):
-            if cmds.objExists(fallback):
-                print('SetJaw "{}" not found, using {}'.format(set_jaw, fallback))
-                set_jaw = fallback
-                break
-    if set_jaw and cmds.objExists(set_jaw):
-        if set_jaw.endswith(follow_suffix):
-            parent = cmds.listRelatives(set_jaw, p=True)
-            return (parent[0] if parent else set_jaw), set_jaw
-        for child in cmds.listRelatives(set_jaw, c=True, type='transform') or []:
-            if child.endswith(follow_suffix):
-                return set_jaw, child
-        return set_jaw, set_jaw
-
-    cmds.warning('SetJaw "{}" not found (build the Jaw block first), using a placeholder jaw.'.format(set_jaw))
-    loc = cmds.spaceLocator(n=name + '_Jaw' + nc['locator'])[0]
-    cmds.xform(loc, ws=True, t=cmds.xform(mouth_center, q=True, ws=True, t=True))
-    cmds.parent(loc, block_parent)
-    cmds.setAttr(loc + '.v', 0)
-    return loc, loc
-
-
-def jaw_opening_sign(jaw_ctrl, jaw_follow, probe_node):
-    """1 when +rotateX on the jaw ctrl opens the mouth (moves the lips down),
-    -1 when the ctrl axes are flipped. Measured, the Jaw guide can be rotated."""
-    plug = jaw_ctrl + '.rotateX'
-    if not cmds.getAttr(plug, settable=True):
-        return 1
-    probe = cmds.createNode('transform', n='JawSign_Probe_Null')
-    cmds.xform(probe, ws=True, t=cmds.xform(probe_node, q=True, ws=True, t=True))
-    probe = cmds.parent(probe, jaw_follow)[0]
-    value = cmds.getAttr(plug)
-    before = cmds.xform(probe, q=True, ws=True, t=True)[1]
-    cmds.setAttr(plug, value + 10)
-    after = cmds.xform(probe, q=True, ws=True, t=True)[1]
-    cmds.setAttr(plug, value)
-    cmds.delete(probe)
-    return -1 if after > before + 1e-6 else 1
-
 
 def _world_matrix(node):
     return list(om.MMatrix(cmds.xform(node, q=True, ws=True, m=True)))
 
 
-class LocalSpaces(object):
+class LocalSpace(object):
     """Local bind joints for the BodyLips layer.
 
-    bind = lip joint world * space world inverse * space rest world, so moving
-    the space (head or jaw) leaves the bind joint where it is and the bind
-    joint only carries the lip motion on top of it.
-      head      SetParent (upper lip)
-      jaw       the jaw follow node (lower lip)
-      L_ / R_   head -> jaw blend by the corner Follow attr, the same blend
-                the corner ctrls ride (corner joints, buccal flap). Both
-                frames are carried to the corner first (like the corner
-                parentConstraint offsets): blending them at their own origins
-                would turn the corner around a point between head and jaw.
+    bind = lip joint world * SetParent world inverse * SetParent rest world, so
+    moving SetParent leaves the bind joint where it is and the bind joint only
+    carries the lip motion on top of it. The jaw is not in here: the lips are
+    their own system, the BodyJaw layer moves the jaw part.
     """
 
-    def __init__(self, name, head, jaw, follow_attrs, corners):
-        head_rest = om.MMatrix(_world_matrix(head))
-        jaw_rest = om.MMatrix(_world_matrix(jaw))
-        self.spaces = {'head': (head + '.worldInverseMatrix[0]', list(head_rest)),
-                       'jaw': (jaw + '.worldInverseMatrix[0]', list(jaw_rest))}
-        for side, follow_attr in follow_attrs.items():
-            base = '{}{}_LocalSpace'.format(side, name)
-            corner = om.MMatrix()
-            corner[12], corner[13], corner[14] = corners[side]
-            carried = []
-            for key, node, rest in [('Head', head, head_rest), ('Jaw', jaw, jaw_rest)]:
-                mult = cmds.createNode('multMatrix', n='{}{}_MM'.format(base, key))
-                cmds.setAttr(mult + '.matrixIn[0]', list(corner * rest.inverse()), type='matrix')
-                cmds.connectAttr(node + '.worldMatrix[0]', mult + '.matrixIn[1]')
-                carried.append(mult + '.matrixSum')
-            live = cmds.createNode('blendMatrix', n=base + '_BM')
-            cmds.connectAttr(carried[0], live + '.inputMatrix')
-            cmds.connectAttr(carried[1], live + '.target[0].targetMatrix')
-            cmds.connectAttr(follow_attr, live + '.target[0].weight')
-            inverse = cmds.createNode('inverseMatrix', n=base + '_IM')
-            cmds.connectAttr(live + '.outputMatrix', inverse + '.inputMatrix')
-            self.spaces[side] = (inverse + '.outputMatrix', list(corner))
+    def __init__(self, head):
+        self.inverse = head + '.worldInverseMatrix[0]'
+        self.rest = _world_matrix(head)
 
-    def follow(self, source, target, space):
-        inverse, rest = self.spaces[space]
+    def follow(self, source, target):
         mult = cmds.createNode('multMatrix', n=target + '_Local_MM')
         cmds.connectAttr(source + '.worldMatrix[0]', mult + '.matrixIn[0]')
-        cmds.connectAttr(inverse, mult + '.matrixIn[1]')
-        if isinstance(rest, list):
-            cmds.setAttr(mult + '.matrixIn[2]', rest, type='matrix')
-        else:
-            cmds.connectAttr(rest, mult + '.matrixIn[2]')
+        cmds.connectAttr(self.inverse, mult + '.matrixIn[1]')
+        cmds.setAttr(mult + '.matrixIn[2]', self.rest, type='matrix')
         parent = cmds.listRelatives(target, p=True)
         if parent:
             cmds.connectAttr(parent[0] + '.worldInverseMatrix[0]', mult + '.matrixIn[3]')
