@@ -1,2 +1,0 @@
-# SPyUs
-Swig python utilities
