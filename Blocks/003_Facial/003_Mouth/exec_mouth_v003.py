@@ -23,7 +23,7 @@ TAB_FOLDER = '003_Facial'
 PYBLOCK_NAME = 'exec_mouth'
 CORNER_ORIENTS = False
 
-# Lips v003: the MouthGames v003 lips (zip, roll, soft tweaks, weighted scale,
+# Lips v003: the MouthGames v003 lips (roll, soft tweaks, weighted scale,
 # corner follow / aim, buccal flap) as a separate Lips block next to the Jaw
 # block. Like Lips v001 / v002 the lips are their own system: the jaw never
 # moves them, the Jaw and Lips blocks build in any order. The whole mouth
@@ -810,8 +810,6 @@ def build_mouth_block():
         mode_attr = mt.new_enum(input=side_main_ctrl, name='mode', enums='BSP:RIG')
         move_mult_attr = mt.new_attr(input=side_main_ctrl, name='MovementMult', min=0.1, max=10, default=1)
         sub_move_mult_attr = mt.new_attr(input=side_main_ctrl, name='SubMovementMult', min=0.1, max=10, default=1)
-        # seals the lips from this corner to the middle (0 -> 10)
-        mt.new_attr(input=side_main_ctrl, name='Zip', min=0, max=10, default=0)
         # v003: how the corner drags / turns the mid ctrls of both lips
         mt.line_attr(input=side_main_ctrl, name='Corner')
         mt.new_attr(input=side_main_ctrl, name='MidFollow', min=0, max=1, default=1)
@@ -1012,7 +1010,7 @@ def build_mouth_block():
     cmds.parent(center_root, clean_rig_grp)
 
     #*---------------------------------------------------
-    # v003 lip joints: zip, tweak offsets, roll and weighted scale
+    # v003 lip joints: tweak offsets, roll and weighted scale
     #*---------------------------------------------------
     systems = [upper_system, lower_system]
 
@@ -1024,12 +1022,6 @@ def build_mouth_block():
     for system in systems:
         for point in system['lip_points'] + system['tweak_points']:
             cmds.connectAttr(parent_scale + '.outputScale', point['carrier'] + '.scale')
-
-    # Zip: each point slides to the middle of both lips, from the corners in
-    zip_attrs = {nc['left']: left_ctrl + '.Zip', nc['right']: right_ctrl + '.Zip'}
-    for system, other in [(upper_system, lower_system), (lower_system, upper_system)]:
-        for point in system['lip_points'] + system['tweak_points']:
-            connect_zip(point, other['curve_info'], other['curve_shape'], zip_attrs)
 
     # Roll: curls the lip out (positive) / in, strongest in the middle
     roll_attrs = {}
@@ -1202,13 +1194,6 @@ def length_fraction(shape, param):
     return fn.findLengthFromParam(param) / fn.length()
 
 
-def param_from_fraction(shape, u):
-    fn = _curve_fn(shape)
-    if u >= 1 - 1e-6:
-        return fn.knotDomain[1]
-    return fn.findParamFromLength(fn.length() * max(u, 0.0))
-
-
 def symmetric_names(base, params, shape, eps=1e-4):
     """Mid_<base> for the center point, R_/L_<base>_NN counting out from the middle."""
     us = [length_fraction(shape, p) for p in params]
@@ -1295,50 +1280,6 @@ def measure_point_weights(ctrls, points, threshold=0.02):
             if d / top > threshold:
                 weights.setdefault(p['joint'], []).append((ctrl, d / top))
     return weights
-
-
-def connect_zip(point, other_info, other_shape, zip_attrs):
-    """Blend a point toward the middle of both lips with the corner Zip attrs.
-
-    Each corner zips its own half, corner first (zip 0-3) to middle (7-10).
-    """
-    other = linear_curve_point(other_info, other_shape, param_from_fraction(other_shape, point['u']),
-                               point['name'] + '_ZipOther')
-
-    middle = cmds.createNode('plusMinusAverage', n=point['name'] + '_ZipMiddle_PMA')
-    cmds.setAttr(middle + '.operation', 3)
-    cmds.connectAttr(point['position'], middle + '.input3D[0]')
-    cmds.connectAttr(other, middle + '.input3D[1]')
-
-    blend = cmds.createNode('blendColors', n=point['name'] + '_Zip_BC')
-    cmds.connectAttr(middle + '.output3D', blend + '.color1')
-    cmds.connectAttr(point['position'], blend + '.color2')
-    cmds.connectAttr(blend + '.output', point['carrier'] + '.translate', f=True)
-
-    sides = []
-    if point['u'] > 0.5 - 1e-4:
-        sides.append((nc['left'], (1 - point['u']) * 2))
-    if point['u'] < 0.5 + 1e-4:
-        sides.append((nc['right'], point['u'] * 2))
-    remaps = []
-    for side, f in sides:
-        remap = cmds.createNode('remapValue', n='{}_Zip{}Remap'.format(point['name'], side.replace('_', '')))
-        cmds.connectAttr(zip_attrs[side], remap + '.inputValue')
-        cmds.setAttr(remap + '.inputMin', f * 7)
-        cmds.setAttr(remap + '.inputMax', f * 7 + 3)
-        cmds.setAttr(remap + '.value[0].value_Interp', 2)
-        cmds.setAttr(remap + '.value[1].value_Interp', 2)
-        remaps.append(remap + '.outValue')
-    if len(remaps) == 1:
-        cmds.connectAttr(remaps[0], blend + '.blender')
-    else:
-        both = cmds.createNode('plusMinusAverage', n=point['name'] + '_Zip_PMA')
-        for i, r in enumerate(remaps):
-            cmds.connectAttr(r, '{}.input1D[{}]'.format(both, i))
-        clamp = cmds.createNode('clamp', n=point['name'] + '_Zip_Clamp')
-        cmds.setAttr(clamp + '.maxR', 1)
-        cmds.connectAttr(both + '.output1D', clamp + '.inputR')
-        cmds.connectAttr(clamp + '.outputR', blend + '.blender')
 
 
 def linear_curve_point(curve_info, shape, param, name):
