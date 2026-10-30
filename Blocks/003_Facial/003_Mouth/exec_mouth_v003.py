@@ -830,6 +830,9 @@ def build_mouth_block():
 
         # ----------SUB-----------------------------------------
         # create sub controller with modes in case we dont use BS
+        # (mt.curve matches the selection: the main ctrl, not its rotated CVs,
+        # or the sub ctrl stays at the origin)
+        cmds.select(side_main_ctrl)
         sub_main_ctrl = mt.curve(input='',
                                  type='square',
                                  rename=True,
