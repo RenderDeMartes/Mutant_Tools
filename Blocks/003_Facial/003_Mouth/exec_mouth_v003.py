@@ -815,6 +815,11 @@ def build_mouth_block():
         mode_attr = mt.new_enum(input=side_main_ctrl, name='mode', enums='BSP:RIG')
         move_mult_attr = mt.new_attr(input=side_main_ctrl, name='MovementMult', min=0.1, max=10, default=1)
         sub_move_mult_attr = mt.new_attr(input=side_main_ctrl, name='SubMovementMult', min=0.1, max=10, default=1)
+        # sticky lips from this corner to the middle (0 -> 10). Hidden + locked:
+        # the lips alone have no jaw to stick against, the StickyLips block
+        # (v002) unlocks it and drives the lip joints with it
+        zip_attr = mt.new_attr(input=side_main_ctrl, name='Zip', min=0, max=10, default=0)
+        cmds.setAttr(zip_attr, keyable=False, channelBox=False, lock=True)
         # v003: how the corner drags / turns the mid ctrls of both lips
         mt.line_attr(input=side_main_ctrl, name='Corner')
         mt.new_attr(input=side_main_ctrl, name='MidFollow', min=0, max=1, default=1)

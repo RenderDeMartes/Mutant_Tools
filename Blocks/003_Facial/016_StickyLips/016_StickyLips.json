@@ -1,19 +1,16 @@
 {
-    "Name":  "StickyLips",
-    "Description":  "StickyLips System",
-    "Icon":  "Sticky.png",
-    "Enable":  "True",
-    "python_file":  "exec_stickylips_v001.py",
-    "import":  "import exec_stickylips_v001",
-    "imp.reload":  "reload(exec_stickylips_v001)",
-    "exec_command":  "exec_stickylips_v001.create_stickylips_block()",
-    "build_command":  "exec_stickylips_v001.build_stickylips_block()",
-    "attrs":  {
-                  "SetJawBone_string":  "",
-                  "SetNotJawBone_string":  "",
-                  "SetLeftMouthCtrl_string":  "new_locator",
-                  "SetMouthEdge_string":  "",
-                  "SetFaceGeo_string":  "",
-                  "Help_string":  "Overview:\n  StickyLips System.\n\nHow To Use:\n  fill the key fields below before build.\n\nFields:\n- SetJawBone: set the node/object name this block should use.\n- SetNotJawBone: set the node/object name this block should use.\n- SetLeftMouthCtrl: set the target node name.\n- If left as default, the tool uses placeholder behavior for setup.\n- SetMouthEdge: set the node/object name this block should use.\n- SetFaceGeo: set the node/object name this block should use.\n\nTips:\n- start with defaults, build once, then tweak only the fields you need."
-              }
+    "Name": "StickyLips",
+    "Description": "StickyLips (zip) for the local Lips v003 + Jaw v002 face (v002)",
+    "Icon": "Sticky.png",
+    "Enable": "True",
+    "python_file": "exec_stickylips_v002.py",
+    "import": "import exec_stickylips_v002",
+    "imp.reload": "reload(exec_stickylips_v002)",
+    "exec_command": "exec_stickylips_v002.create_stickylips_block()",
+    "build_command": "exec_stickylips_v002.build_stickylips_block()",
+    "attrs": {
+        "SetLips_string": "Lips",
+        "SetJawGeo_string": "BodyJaw",
+        "Help_string": "Overview:\n  Sticky lips (zip) for the local face: Lips v003 + Jaw v002 with the BodyJaw / BodyLips local geos. Works like the MouthGames zip: each lip point slides to the middle of both lips, from the corners in.\n  The lips never follow the jaw, the BodyJaw layer opens the mouth. This block reads what the jaw layer does under each lip bind joint (live, any skin weights) and moves the lip bind joints so the upper and the lower lip meet halfway, lip ctrl motion included. The BodyLips layer adds it on top of the jaw.\n  Zip on L/R_<Lips>_Main_Ctrl (0 -> 10): 0-3 seals the corner, 7-10 reaches the middle. The Lips block keeps that attr hidden and locked, this block shows it.\n\nHow To Use:\n  put it below the Lips and Jaw blocks in Mutant_Build, set the two fields, build.\n\nFields:\n- SetLips: name of the Lips block (Lips, or Mouth in the face templates). Its corner ctrls get the Zip attr.\n- SetJawGeo: the local jaw layer geo (BodyJaw), the one the Jaw block bind joints are skinned to. Needs UVs.\n\nTips:\n- local lips only (Lips GameMode off).\n- the skin of BodyJaw can come later in the build (Skin blocks, rebuild skin load), it is read live."
+    }
 }
