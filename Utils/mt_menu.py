@@ -119,15 +119,15 @@ def open_block_builder(args):
 
 def view_log(*args):
     import Mutant_Tools
-    from Mutant_Tools.UI.CodeReader import load_codeReader
+    from Mutant_Tools.UI.AutoRigger import build_log
     try:
         import importlib;from importlib import reload
     except:
         import imp;from imp import reload
 
-    reload(load_codeReader)
+    reload(build_log)
+    build_log.show()
 
-    
 
 
 def open_website(website='http://mutanttools.com/', mode = 'view'):

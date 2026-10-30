@@ -95,6 +95,7 @@ from Mutant_Tools.Utils.IO import EasySkin
 from Mutant_Tools.Utils.IO import CtrlUtils
 from Mutant_Tools.Utils.IO import io_report
 from Mutant_Tools.Utils.Rigging import block_hooks
+from Mutant_Tools.UI.AutoRigger import build_log
 
 # Read dev_mode early so reloads only happen during active development.
 # In production (dev_mode Off) skipping reloads avoids re-running all
@@ -3319,6 +3320,8 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 	def build_autorigger(self, only_progressbar=False):
 		cmds.undoInfo(openChunk=True)
 		build_failed = False
+		build_error = None
+		log_started = False
 		failed_block = 'Unknown'
 		is_skin_block = False
 		# skins / controllers save and load problems, shown in a small dialog at the end of the build
@@ -3343,8 +3346,20 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 			else:
 				load_io = True
 
+			#log: the whole build goes to the Mutant log, split per block / builder step by build_log markers
+			try:
+				clear_se = cmds.optionVar(q="mutant_clear_script_editor") if cmds.optionVar(ex="mutant_clear_script_editor") else True
+				if clear_se:
+					cmds.scriptEditorInfo(ch=True)
+				mt.Mutant_logger(mode = 'clear')
+				mt.Mutant_logger(mode = 'create')
+				log_started = True
+			except:
+				pass
+
 			# Get blocks to build early so we can run pre-build blocks before EVERYTHING
 			blocks = self.get_blocks_to_build(mode = self.ui.build_method.currentText())
+			build_log.plan(blocks)
 
 			# Collect and run pre-build blocks (RunBeforeBuild) before any plugins, rebuild cleanups, or IO
 			before_code_blocks = []
@@ -3363,6 +3378,7 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 				print('------------------------------------------------------------------------------------')
 				for before_block in before_code_blocks:
 					failed_block = before_block + ' (Pre-Build)'
+					build_log.section(before_block, label='Pre-Build')
 					print('Running pre-build: {}'.format(before_block))
 					self.ui.bar_label.setText('Pre-Build: {}'.format(before_block))
 					cmds.select(before_block)
@@ -3412,17 +3428,9 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 
 			# Clean up and export after pre-build blocks are done
 			if load_io:
+				failed_block = 'Save previous build'
+				build_log.section('Save previous build (skins / controllers)', kind='tool')
 				self.cleanup_and_export_previous_build()
-
-			#log
-			try:
-				clear_se = cmds.optionVar(q="mutant_clear_script_editor") if cmds.optionVar(ex="mutant_clear_script_editor") else True
-				if clear_se:
-					cmds.scriptEditorInfo(ch=True)
-				mt.Mutant_logger(mode = 'clear')
-				mt.Mutant_logger(mode = 'stop')
-			except:
-				pass
 
 			#build
 			cmds.optionVar(iv=("mutant_ensure_mirror", 0))  # Reset ensure-mirror flag before build
@@ -3457,7 +3465,7 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 						cmds.refresh()
 
 				#log
-				mt.Mutant_logger(mode = 'create')
+				build_log.section(block)
 				print ('------------------------------------------------------------------------------------')
 				print ('------------------------------------------------------------------------------------')
 				print ('Building: {}'.format(block))
@@ -3560,9 +3568,6 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 				self.ui.bar_label.setToolTip('Succesfull build: {}'.format(block))
 				self.ui.progressBar.setValue((num + 1))
 
-				#log
-				mt.Mutant_logger(mode = 'stop')
-
 				#Stop Block
 				if block == 'Stop_Block':
 					print ('User Stop')
@@ -3581,6 +3586,8 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 				cProgressBarUI.close()
 
 			#all success message
+			failed_block = 'Finish build'
+			build_log.section('Finish build', kind='tool')
 			print('Mutant Build Complete')
 			self.ui.bar_label.setText('Mutant Build Complete')
 			self.ui.bar_label.setToolTip('Mutant Build Complete')
@@ -3591,6 +3598,8 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 
 			#IO -- skins first, then RunBeforeLoadCtrls blocks, then controllers
 			if load_io:
+				failed_block = 'Load skins'
+				build_log.section('Load skins', kind='tool')
 				if not cmds.about(batch=True):
 					mel.eval("paneLayout -e -manage false $gMainPane")
 				try:
@@ -3607,9 +3616,12 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 				print('------------------------------------------------------------------------------------')
 				for before_ctrls_block in before_ctrls_blocks:
 					failed_block = before_ctrls_block + ' (Before Load Ctrls)'
+					build_log.section(before_ctrls_block, label='Before Load Ctrls')
 					self._run_phase_block(before_ctrls_block, 'Before Load Ctrls')
 
 			if load_io:
+				failed_block = 'Load controllers'
+				build_log.section('Load controllers', kind='tool')
 				if not cmds.about(batch=True):
 					mel.eval("paneLayout -e -manage false $gMainPane")
 				try:
@@ -3630,6 +3642,7 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 				print('------------------------------------------------------------------------------------')
 				for deferred_block in deferred_code_blocks:
 					failed_block = deferred_block + ' (Deferred)'
+					build_log.section(deferred_block, label='Deferred')
 					print('Running deferred: {}'.format(deferred_block))
 					self.ui.bar_label.setText('Deferred: {}'.format(deferred_block))
 					cmds.select(deferred_block)
@@ -3679,29 +3692,36 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 
 			# Auto Orient Deformers
 			if cmds.optionVar(q="mutant_auto_orient_deformers") if cmds.optionVar(ex="mutant_auto_orient_deformers") else False:
+				failed_block = 'Auto orient deformers'
+				build_log.section('Auto orient deformers', kind='tool')
 				self._auto_orient_deformers_on_all_meshes()
 
 			# skins / controllers IO problems (nothing shows when everything loaded)
+			failed_block = 'IO report'
+			build_log.section('IO report', kind='tool')
 			self._io_report_dialog = self.io_report.show()
 
-		except Exception:
+		except Exception as e:
 			import traceback
 			traceback.print_exc()
 			build_failed = True
+			build_error = e
 
 		finally:
 			cmds.undoInfo(closeChunk=True)
-			if build_failed:
+			revert_on_fail = cmds.optionVar(q="mutant_revert_on_fail") if cmds.optionVar(ex="mutant_revert_on_fail") else True
+			if log_started:
+				build_log.result(not build_failed, failed=failed_block if build_failed else None, error=build_error,
+								 reverted=build_failed and bool(revert_on_fail))
 				mt.Mutant_logger(mode='stop')
-				
-				revert_on_fail = cmds.optionVar(q="mutant_revert_on_fail") if cmds.optionVar(ex="mutant_revert_on_fail") else True
+			if build_failed:
 				if revert_on_fail:
 					cmds.warning('Build failed on "{}". Reverting to pre-build state...'.format(failed_block))
 					import maya.utils
 					maya.utils.executeDeferred('import maya.cmds as cmds; cmds.undo()')
 				else:
 					cmds.warning('Build failed on "{}". Revert on Fail is disabled, scene left as-is.'.format(failed_block))
-				
+
 				self.view_log()
 				
 				if only_progressbar and 'cProgressBarUI' in locals():
@@ -4207,26 +4227,9 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 	#-------------------------------------------------------------------
 
 	def view_log(self):
-
-		log_file = mt.Mutant_logger(mode = 'log')
-		with open(log_file) as log_data:
-			log = log_data.read()
-
-		#log
-		try:
-			log_ui.close()
-		except:
-			pass
-
-		print(log)
-
-		reload(load_codeReader)
-		log_ui = load_codeReader.Code_Reader(mode='view', code='', config_attr='')
-		log_ui.previous_code = log
-		log_ui.modify_ui_based_on_mode()
-		log_ui.ui.code_text.verticalScrollBar().setValue(log_ui.ui.code_text.verticalScrollBar().maximum())
-		log_ui.set_path_label(code_path = os.path.join(cmds.internalVar(usd=True),'Mutant_log.txt'))
-		log_ui.show()
+		"""Build Log window: one row per block / builder step, the failed one open with its likely cause."""
+		reload(build_log)
+		self._build_log_dialog = build_log.show(path=mt.Mutant_logger(mode = 'log'))
 
 	#-------------------------------------------------------------------
 
