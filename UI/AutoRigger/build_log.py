@@ -37,18 +37,21 @@ EXCEPTION_LINE = re.compile(r'^\s*(?:#\s*)?(?:Error:\s*)?(?:[\w]+\.)*(\w*(?:Erro
 OLD_BLOCK_LINE = re.compile(r'^Building: (\S+)\s*$')
 DASH_LINE = re.compile(r'^-{20,}$')
 
+# Maya prints a name passed in a list as "No object matches name: ['geo']"
+NO_MATCH = r'No object matches name: \[?[\'"]?'
+
 # most common build errors -> what to check. First match wins, {0} = first group of the pattern
 HINTS = [
     (r'No module named \'?(exec_\w+)',
      'The block code "{0}" is not installed: the block points to a version this Mutant Tools does not have. '
      'Change the block version in the AutoRigger or update Mutant Tools.'),
-    (r'No object matches name: ([\w:|]+\.(?:e|vtx|f|cv)\[[\d:]+\])',
+    (NO_MATCH + r'([\w:|]+\.(?:e|vtx|f|cv)\[[\d:]+\])',
      'The component "{0}" is not on the mesh any more (mesh renamed or topology changed). '
      'Select the edges / vertices again and press Set on that field.'),
-    (r'No object matches name: ([\w:|]+\.\w[\w\[\].]*)',
+    (NO_MATCH + r'([\w:|]+\.\w[\w\[\].]*)',
      'The attribute "{0}" does not exist. If it is a block attr, the block config is older than its code: '
      'use Update Block in the AutoRigger. If it comes from a pre / postcode, fix the name there.'),
-    (r'No object matches name: ([\w:|]+)|(?:Object|Node) \'([\w:|]+)\' (?:not found|does not exist|is invalid)',
+    (NO_MATCH + r'([\w:|]+)|(?:Object|Node) \'([\w:|]+)\' (?:not found|does not exist|is invalid)',
      'A node the block needs is missing: "{0}". Check the Set fields of the block (SetParent, SetJaw...), '
      'that the block making it builds earlier (move it up in Mutant_Build), and that a block version change '
      'did not rename it.'),
