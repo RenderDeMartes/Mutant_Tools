@@ -33,6 +33,13 @@ import types
 FILE_EXT = ".bSkin"
 FILE_JSON_EXT = ".jSkin"
 PACK_EXT = ".bSkinPack"
+# classic linear, dual quaternion, weight blended. FBX imports can leave -1,
+# which setAttr refuses, so anything else loads as classic linear
+SKINNING_METHODS = (0, 1, 2)
+
+
+def validSkinningMethod(value):
+    return value if value in SKINNING_METHODS else 0
 
 
 
@@ -564,8 +571,8 @@ def setBlendWeights(skinCls, dagPath, components, dataDic, compressed):
 def setData(skinCls, dataDic, compressed):
     dagPath, components = getGeometryComponents(skinCls)
     setInfluenceWeights(skinCls, dagPath, components, dataDic, compressed)
-    for attr in ["skinningMethod", "normalizeWeights"]:
-        skinCls.attr(attr).set(dataDic[attr])
+    skinCls.attr("skinningMethod").set(validSkinningMethod(dataDic["skinningMethod"]))
+    skinCls.attr("normalizeWeights").set(dataDic["normalizeWeights"])
     setBlendWeights(skinCls, dagPath, components, dataDic, compressed)
 
 
@@ -868,7 +875,7 @@ def skinCopy(sourceMesh=None, targetMesh=None, *args, **kwargs):
                 smooth=True,
                 normalize=True,
             )
-            skCluster.skinningMethod.set(skinMethod)
+            skCluster.skinningMethod.set(validSkinningMethod(skinMethod))
         else:
             errorMsg = "Source Mesh : {} doesn't have a skinCluster."
             pm.displayError(errorMsg.format(sourceMesh.name()))
