@@ -446,6 +446,17 @@ def _sin(name, angle):
     return node + '.outputQuatX'
 
 
+def _safe_divisor(name, value, epsilon=1e-5):
+    """value, or 1 while it is ~0: a multiplyDivide never sees a zero (it warns on every evaluation)."""
+    node = cmds.createNode('condition', n=name)
+    cmds.setAttr(node + '.operation', 2)
+    cmds.connectAttr(value, node + '.firstTerm')
+    cmds.setAttr(node + '.secondTerm', epsilon)
+    cmds.connectAttr(value, node + '.colorIfTrueR')
+    cmds.setAttr(node + '.colorIfFalseR', 1)
+    return node + '.outColorR'
+
+
 def _rotate_vector(name, vector, axis, angle):
     quat = cmds.createNode('axisAngleToQuat', n=name + '_AxisAngleToQuat')
     cmds.connectAttr(axis, quat + '.inputAxis')
@@ -514,6 +525,7 @@ def bendy_segment_path(name, start, end, other, curve, tweak_ctrls, start_offset
     cmds.connectAttr(_vector_op(name + '_OtherEnd_PlusMinusAverage', end, other, 2), angle + '.vector2')
     angle += '.angle'
     sin_angle = _sin(name + '_Sin', angle)
+    sin_divisor = _safe_divisor(name + '_SinDivisor_Condition', sin_angle)
     offsets_slope = _vector_op(name + '_OffsetSlope_PlusMinusAverage', end_offset, start_offset, 2)
 
     rest_start = om.MVector(cmds.getAttr(start)[0])
@@ -544,7 +556,7 @@ def bendy_segment_path(name, start, end, other, curve, tweak_ctrls, start_offset
         ratio = cmds.createNode('multiplyDivide', n=point + '_ArcRatio_MultiplyDivide')
         cmds.setAttr(ratio + '.operation', 2)
         cmds.connectAttr(_sin(point + '_SinU', _scaled_angle(point + '_U_Angle', angle, u)), ratio + '.input1X')
-        cmds.connectAttr(sin_angle, ratio + '.input2X')
+        cmds.connectAttr(sin_divisor, ratio + '.input2X')
         # straight limb: sin is 0, the arc is the straight line
         safe_ratio = cmds.createNode('condition', n=point + '_ArcRatio_Condition')
         cmds.setAttr(safe_ratio + '.operation', 2)
@@ -1094,6 +1106,7 @@ def _sn_path(name, start, end, other, curve, ease, ease_at_start, u_values):
     cmds.connectAttr(_vector_op(name + '_OtherEnd_PlusMinusAverage', end, other, 2), angle + '.vector2')
     angle += '.angle'
     sin_angle = _sin(name + '_Sin', angle)
+    sin_divisor = _safe_divisor(name + '_SinDivisor_Condition', sin_angle)
 
     points = {}
     for u in u_values:
@@ -1109,7 +1122,7 @@ def _sn_path(name, start, end, other, curve, ease, ease_at_start, u_values):
         ratio = cmds.createNode('multiplyDivide', n=point + '_ArcRatio_MultiplyDivide')
         cmds.setAttr(ratio + '.operation', 2)
         cmds.connectAttr(_sin(point + '_SinU', _scaled_angle(point + '_U_Angle', angle, u)), ratio + '.input1X')
-        cmds.connectAttr(sin_angle, ratio + '.input2X')
+        cmds.connectAttr(sin_divisor, ratio + '.input2X')
         # straight limb: sin is 0, the arc is the straight line
         safe_ratio = cmds.createNode('condition', n=point + '_ArcRatio_Condition')
         cmds.setAttr(safe_ratio + '.operation', 2)
