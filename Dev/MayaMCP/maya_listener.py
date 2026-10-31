@@ -745,6 +745,31 @@ def _action_capture(request):
         return _make_response(False, error=str(exc), tb=traceback.format_exc())
 
 
+class _Tee(io.StringIO):
+    """Captures what is written and still passes it on to the Script Editor.
+
+    The Mutant build log is the Script Editor history (Mutant_logger), so a build
+    run over the bridge would leave an empty Build Log if its prints stopped here.
+    """
+
+    def __init__(self, passthrough):
+        super().__init__()
+        self._passthrough = passthrough
+
+    def write(self, text):
+        try:
+            self._passthrough.write(text)
+        except Exception:
+            pass
+        return super().write(text)
+
+    def flush(self):
+        try:
+            self._passthrough.flush()
+        except Exception:
+            pass
+
+
 def _capture_exec(code_str, local_vars=None):
     """Execute Python code and capture stdout, stderr, result, and exceptions.
 
@@ -755,10 +780,10 @@ def _capture_exec(code_str, local_vars=None):
     Returns:
         dict: {success, result, stdout, stderr, traceback}
     """
-    stdout_capture = io.StringIO()
-    stderr_capture = io.StringIO()
     old_stdout = sys.stdout
     old_stderr = sys.stderr
+    stdout_capture = _Tee(old_stdout)
+    stderr_capture = _Tee(old_stderr)
 
     exec_globals = {"__builtins__": __builtins__}
     exec_globals.update(local_vars or {})
