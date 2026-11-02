@@ -1458,19 +1458,22 @@ def build_limb_block():
                                     name='{}_{}_GlobalScale{}'.format(side_prefix, limb_label, nc['ctrl']),
                                     size=ctrl_size * 1.8)
         mt.assign_color(limb_global_ctrl, color)
-        limb_global_root = mt.root_grp(input=limb_global_ctrl)[0]
+        limb_global_root, limb_global_scale = mt.root_grp(input=limb_global_ctrl, autoRoot=True)
         cmds.delete(cmds.parentConstraint(ikfk['ik_fk'][0][0], limb_global_root, mo=False))
         cmds.parent(limb_global_root, setup['base_groups']['control'] + nc['group'])
-        # uniform: scale X drives Y and Z, so any scale manipulator works
+        # uniform: scale X drives the Auto group on all axes and the limb follows the Auto group, so any scale
+        # manipulator works. Not scale X -> scale Y Z on the ctrl itself, that self connection gave cycle
+        # warnings on scene open (the ctrl .scale compound read by the limb depended on itself)
+        for axis in 'XYZ':
+            cmds.connectAttr(limb_global_ctrl + '.scaleX', '{}.scale{}'.format(limb_global_scale, axis))
         for axis in 'YZ':
-            cmds.connectAttr(limb_global_ctrl + '.scaleX', '{}.scale{}'.format(limb_global_ctrl, axis))
-            cmds.setAttr('{}.scale{}'.format(limb_global_ctrl, axis), keyable=False, channelBox=False)
+            cmds.setAttr('{}.scale{}'.format(limb_global_ctrl, axis), lock=True, keyable=False, channelBox=False)
         for attr in ['translate', 'rotate']:
             for axis in 'XYZ':
                 cmds.setAttr('{}.{}{}'.format(limb_global_ctrl, attr, axis), lock=True, keyable=False, channelBox=False)
         cmds.setAttr(limb_global_ctrl + '.visibility', keyable=False, channelBox=False)
         limb_scale_node = cmds.createNode('decomposeMatrix', n=limb_global_ctrl + '_WorldScale_DecomposeMatrix')
-        cmds.connectAttr(limb_global_ctrl + '.worldMatrix[0]', limb_scale_node + '.inputMatrix')
+        cmds.connectAttr(limb_global_scale + '.worldMatrix[0]', limb_scale_node + '.inputMatrix')
         limb_scale = limb_scale_node + '.outputScale'
 
         # clean a bit
@@ -1786,7 +1789,7 @@ def build_limb_block():
                 backward = list(reversed(forward))
 
                 extra_aim_forward_grp = cmds.group(em=True, n=name + '_ForwardAim' + nc['group'])
-                cmds.scaleConstraint(limb_global_ctrl, extra_aim_forward_grp)
+                cmds.scaleConstraint(limb_global_scale, extra_aim_forward_grp)
 
                 for num, ctrl in enumerate(ribbon_ctrls):
                     auto = cmds.listRelatives(ctrl, p=True)
@@ -2044,8 +2047,8 @@ def build_limb_block():
         cmds.parent(ikfk['ik_fk'][4][5][0], clean_rig_grp)
         cmds.parent(cmds.listRelatives(ikfk['ik_fk'][4][3], p=True), clean_rig_grp)
 
-        cmds.scaleConstraint(limb_global_ctrl, ikfk['upper_twist']['twist_grp'], mo=True)
-        cmds.scaleConstraint(limb_global_ctrl, ikfk['lower_twist']['twist_grp'], mo=True)
+        cmds.scaleConstraint(limb_global_scale, ikfk['upper_twist']['twist_grp'], mo=True)
+        cmds.scaleConstraint(limb_global_scale, ikfk['lower_twist']['twist_grp'], mo=True)
 
         cmds.parent(ikfk['ik_fk'][5][0], clean_ctrl_grp)
         cmds.parent(cmds.listRelatives(ikfk['ik_fk'][4][0], p=True), clean_ctrl_grp)
@@ -2115,7 +2118,7 @@ def build_limb_block():
             cmds.setAttr('{}.scaleY'.format(main_jnt_grp), -1)
             cmds.setAttr('{}.scaleZ'.format(main_jnt_grp), -1)
 
-        cmds.scaleConstraint(limb_global_ctrl, main_jnt_grp, mo=True)
+        cmds.scaleConstraint(limb_global_scale, main_jnt_grp, mo=True)
 
         temp_locator = cmds.spaceLocator()[0]
         cmds.delete(cmds.parentConstraint(ikfk['ik_fk'][0][0], temp_locator))
@@ -2250,7 +2253,7 @@ def build_limb_block():
         cmds.parentConstraint(block_parent, limb_global_root, mo=True)
         cmds.scaleConstraint('Rig_Ctrl_Grp', limb_global_root, mo=True)
         # controllers keep following the rig (ik stays in world), they only get scaled around the scale controller
-        scale_around(clean_ctrl_grp, 'Rig_Ctrl_Grp', limb_global_ctrl)
+        scale_around(clean_ctrl_grp, 'Rig_Ctrl_Grp', limb_global_scale)
 
         upper_count = len(top_ribbon['fol_joints'] if create_ribbons else ikfk['upper_twist']['joints'])
         mutant_bendys = create_ribbons and not sn_bendys
