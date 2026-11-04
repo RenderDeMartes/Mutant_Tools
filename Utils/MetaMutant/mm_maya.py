@@ -477,6 +477,8 @@ def plain_material_where_missing(meshes: Sequence[str], log=print) -> List[str]:
         cmds.sets(mesh, edit=True, forceElement=PARTS_MATERIAL + "SG")
         changed.append(mesh)
     if changed:
+        if not cmds.about(batch=True):
+            cmds.ogs(reset=True)  # the viewport can keep drawing the old material, in solid green, until it is reset
         log(f"{', '.join(changed)}: their materials have no shader, so they get a plain lambert ({PARTS_MATERIAL})")
     return changed
 

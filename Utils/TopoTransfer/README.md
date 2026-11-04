@@ -47,7 +47,7 @@ Blender Studio — or a synthetic head), or drag OBJ / PLY / STL files onto the 
 **Human bodies and faces are the primary target.** See [docs/HUMANS.md](docs/HUMANS.md) for the
 CC0 human test data and measured results (≈1 mm surface error on a full body in ~4 s), and
 **Meta Mutant** ([its README](../MetaMutant/README.md)) for custom MetaHuman heads — three steps:
-*Prepare* in Maya (**Mutant-Tools ▸ Misc ▸ Meta Mutant**), *Wrap* here, *Apply* in Maya
+*Prepare* in Maya (**Mutant-Tools ▸ Misc ▸ Meta Mutant**), *TopoTransfer* here, *Apply* in Maya
 (calibrates the DNA with Epic's DNA library, builds the rig and transfers it onto your head).
 
 A production build (static files you can host anywhere, or open via `npm run preview`) is created
@@ -63,9 +63,9 @@ Other scripts:
 | --- | --- |
 | `npm test` | Automated numerical, IO and integration tests (Vitest, ~10 s) |
 | `npm run test:python` | Tests for the Maya link (`maya/`) and Meta Mutant (plain Python 3, no Maya needed) |
-| `npx tsx scripts/wrap-cli.ts base.obj ref.obj out.obj` | Wrap without the browser (auto align with scale, default modes, the app's OBJ export) |
+| `npx tsx scripts/wrap-cli.ts base.obj ref.obj out.obj` | Fit without the browser (auto align with scale, default modes, the app's OBJ export) |
 | `npm run serve` | Production build served locally on port 4173 |
-| `npx tsx bench/profile.ts 100000` | Per-stage timing of one wrap |
+| `npx tsx bench/profile.ts 100000` | Per-stage timing of one fit |
 | `npx tsx bench/human.ts` | Human body / head evaluation incl. ground-truth correspondence error |
 | `npm run bench` | Performance benchmark at 5k / 25k / 50k / 100k vertices (`npm run bench -- 20000` for custom sizes) |
 | `npm run examples` | Regenerates the reproducible example meshes in `examples/` |
@@ -136,7 +136,7 @@ reasoning and **known limitations**.
 Measured on synthetic meshes (Node 24 / V8, same engine as Chrome/Edge), default parameters.
 Full table and method in [docs/PERFORMANCE.md](docs/PERFORMANCE.md).
 
-| Base vertices | Reference vertices | Total wrap time | Mean distance before → after | Flipped triangles |
+| Base vertices | Reference vertices | Total fit time | Mean distance before → after | Flipped triangles |
 | ---: | ---: | ---: | ---: | ---: |
 | 5,048 | 2,562 | 0.9 s | 7.6e-2 → 5.6e-4 | 0 |
 | 25,352 | 40,962 | 4.7 s | 7.5e-2 → 2.0e-4 | 0 |
@@ -144,7 +144,7 @@ Full table and method in [docs/PERFORMANCE.md](docs/PERFORMANCE.md).
 | 99,848 | 163,842 | 22.3 s | 7.5e-2 → 1.6e-4 | 0 |
 
 Time grows roughly linearly with vertex count (the multigrid keeps solver iterations constant).
-Wrapping is **not** real-time; the app shows an estimate (labelled as such) before long runs.
+Fitting is **not** real-time; the app shows an estimate (labelled as such) before long runs.
 
 ## Architecture
 
@@ -194,7 +194,7 @@ what could not be represented. `.mtl` files are referenced but not copied.
 ## Testing
 
 `npm test` runs 81 tests (plus 46 Python tests via `npm run test:python`) covering: loading two meshes; rigid alignment recovering known
-transforms (Umeyama, ICP, landmarks); wrapping onto differently tessellated references with
+transforms (Umeyama, ICP, landmarks); fitting onto differently tessellated references with
 independently measured error reduction; landmarks moving a feature where closest points fail;
 unchanged connectivity and an unmodified reference (hash checks); smoothness producing measurable
 differences; protected and fit-only regions; open-boundary rejection; seam lock; cancellation;

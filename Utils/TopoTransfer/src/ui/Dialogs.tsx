@@ -37,8 +37,8 @@ export function HelpDialog() {
     ['[ / ]', 'Brush smaller / larger'],
     ['T / R / S', 'Alignment gizmo: move / rotate / uniform scale'],
     ['Del', 'Delete selected landmark'],
-    ['Ctrl+Enter', 'Run wrap, or commit the preview'],
-    ['Esc', 'Cancel running wrap / leave tool / hide gizmo'],
+    ['Ctrl+Enter', 'Run the fit, or commit the preview'],
+    ['Esc', 'Cancel running fit / leave tool / hide gizmo'],
     ['Ctrl+Z / Ctrl+Shift+Z', 'Undo / redo'],
     ['Ctrl+E', 'Export'],
   ];

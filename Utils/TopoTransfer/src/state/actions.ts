@@ -265,12 +265,12 @@ const HUMAN_EXAMPLES: Record<'body' | 'head', { base: string; ref: string; hint:
   body: {
     base: 'body_male_base.obj',
     ref: 'body_female_sculpt_ref.ply',
-    hint: 'CC0 human body: male base cage (eyes Follow) → female sculpt (169k vertices). Align with Auto (bounds, scale off) → ICP refine, then Wrap.',
+    hint: 'CC0 human body: male base cage (eyes Follow) → female sculpt (169k vertices). Align with Auto (bounds, scale off) → ICP refine, then Fit.',
   },
   head: {
     base: 'head_anim_base.obj',
     ref: 'head_sculpt_ref.ply',
-    hint: 'CC0 human head: animation topology (sclera/iris Follow) → sculpting head with different topology. Align with Auto → ICP refine, then Wrap.',
+    hint: 'CC0 human head: animation topology (sclera/iris Follow) → sculpting head with different topology. Align with Auto → ICP refine, then Fit.',
   },
 };
 
@@ -329,7 +329,7 @@ export async function loadExample() {
     { name: 'example_reference_head.obj', buffer: enc.encode(writeOBJ(refMoved, { header: ['TopoTransfer example reference: stylised head, cm units'] })).buffer as ArrayBuffer, role: 'reference' },
   ]);
   set({ units: 'cm', allowScale: true });
-  log('info', 'Example loaded. Next: Align, then Wrap.');
+  log('info', 'Example loaded. Next: Align, then Fit.');
 }
 
 export function setRole(id: string, role: MeshRoleUI) {
@@ -458,7 +458,7 @@ export function estimateWrapSeconds(n: number, p: WrapParams): number {
 
 export async function runWrap() {
   const b = baseEntry(), r = refEntry();
-  if (!b || !r) return log('warn', 'Wrapping needs a Base and a Reference mesh.');
+  if (!b || !r) return log('warn', 'Fitting needs a Base and a Reference mesh.');
   if (!requireIdle('Wrap')) return;
   const s = get();
   if (s.preview) return log('warn', 'Commit or discard the current preview before running again.');
@@ -494,17 +494,17 @@ export async function runWrap() {
       set({ preview: { positions: res.positions, result: res }, bottomTab: 'log' });
       log(
         d.warnings.length ? 'warn' : 'info',
-        `Wrap preview ready in ${fmtMs(d.timings.totalMs)}: mean distance ${fmtLen(d.distanceBefore.mean)} → ${fmtLen(d.distanceAfter.mean)}, max ${fmtLen(d.distanceAfter.max)} (measured at ${d.distanceAfter.count.toLocaleString()} vertices). Keep or discard it.`,
+        `Fit preview ready in ${fmtMs(d.timings.totalMs)}: mean distance ${fmtLen(d.distanceBefore.mean)} → ${fmtLen(d.distanceAfter.mean)}, max ${fmtLen(d.distanceAfter.max)} (measured at ${d.distanceAfter.count.toLocaleString()} vertices). Keep or discard it.`,
       );
       for (const w of d.warnings) log('warn', `  ${w}`);
     } else if (res.status === 'cancelled') {
       log('info', res.message);
     } else {
-      log('error', `Wrap failed: ${res.message}`);
+      log('error', `Fit failed: ${res.message}`);
     }
   } catch (e) {
-    if (e instanceof CancelledError) log('info', 'Wrapping cancelled; no changes were applied.');
-    else log('error', `Wrap failed: ${(e as Error).message}`);
+    if (e instanceof CancelledError) log('info', 'Fitting cancelled; no changes were applied.');
+    else log('error', `Fit failed: ${(e as Error).message}`);
   } finally {
     set({ job: null });
   }
@@ -520,15 +520,15 @@ export async function cancelJob() {
 export function commitPreview() {
   const s = get();
   if (!s.preview) return;
-  pushUndo('Commit wrap');
+  pushUndo('Commit fit');
   set({ committed: s.preview.positions, committedResult: s.preview.result, preview: null, heat: null });
-  log('info', 'Wrap result kept.');
+  log('info', 'Fit result kept.');
 }
 
 export function discardPreview() {
   if (!get().preview) return;
   set({ preview: null, heat: null });
-  log('info', 'Wrap preview discarded.');
+  log('info', 'Fit preview discarded.');
 }
 
 export function resetDeformation() {

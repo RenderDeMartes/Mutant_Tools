@@ -259,7 +259,7 @@ class Workflow:
         xs = [q[0] for q in head]
         guides = mp.launch_guides(points, base, base_regions, mp.reference_regions(regions, remap), (min(xs) + max(xs)) / 2)
         mp.write_guides(p.guides, guides)
-        self.log(f"Guides: {len(guides['landmarks'])} pairs, regions locked in the wrap: {', '.join(guides['regions']) or 'none'}")
+        self.log(f"Guides: {len(guides['landmarks'])} pairs, regions locked in TopoTransfer: {', '.join(guides['regions']) or 'none'}")
 
     def picked_points(self) -> Optional[dict]:
         """The points of this work folder when they were picked on this head, else None."""
@@ -303,7 +303,7 @@ class Workflow:
             app_dir=app_dir, static_dirs=static,
         ).start()
         webbrowser.open(self.bridge.app_launch_url())
-        self.log("opened TopoTransfer with Base + Reference loaded - wrap there; Export sends the OBJ back here")
+        self.log("opened TopoTransfer with Base + Reference loaded - fit there; Export sends the OBJ back here")
 
     def stop_link(self):
         if self.bridge:
@@ -339,7 +339,7 @@ class Workflow:
         self.need(p.manifest, "manifest (run step 1)")
         n, want = wf.obj_vertex_count(self.s.wrapped_obj), wf.manifest_vertex_count(p.manifest)
         if n != want:
-            raise RuntimeError(f"{self.s.wrapped_obj} has {n} vertices, the exported Base has {want}: export the result of the wrap with mh_head_lod0.obj as Base")
+            raise RuntimeError(f"{self.s.wrapped_obj} has {n} vertices, the exported Base has {want}: export the fit from TopoTransfer with mh_head_lod0.obj as Base")
         if not wf.is_topotransfer_obj(self.s.wrapped_obj):
             self.log("warning: no TopoTransfer header in this OBJ; DNA space cannot be recovered without its alignment line")
         if os.path.normcase(os.path.abspath(self.s.wrapped_obj)) != os.path.normcase(os.path.abspath(p.wrapped_obj)):
@@ -354,7 +354,7 @@ class Workflow:
         p = self.paths()
         self.need(self.s.dna_path, "Head DNA")
         self.need(p.manifest, "manifest (run step 1)")
-        self.need(self.s.wrapped_obj, "wrapped OBJ")
+        self.need(self.s.wrapped_obj, "fitted OBJ")
         # all picked eye points together: split into two eyes by position (one mesh may hold both eyes,
         # and eye + cornea meshes may be picked together)
         eyes = [[q for group in self.part_points_dna(self.s.eyes) for q in group]] if self.s.eyes else []
@@ -441,7 +441,7 @@ class Workflow:
 
         _, mm_maya = self.modules()
         p = self.paths()
-        self.need(self.s.wrapped_obj, "wrapped OBJ")
+        self.need(self.s.wrapped_obj, "fitted OBJ")
         source = wf.head_mesh_name(p.manifest)
         if not cmds.objExists(source):
             raise RuntimeError(f"{source} is not in the scene: build the rig first")

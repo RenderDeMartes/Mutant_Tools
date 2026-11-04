@@ -9,9 +9,9 @@ the selected mesh as your head:
 A numbered path of four steps. 1 is the Pick Points window: points, lip and
 eyelid lines, face regions, eyes and teeth on your head. 2 exports the MetaHuman
 head from the DNA and your head, and opens TopoTransfer (served by Maya itself)
-with them and your points loaded. 3 happens in the browser: wrap, then Export
+with them and your points loaded. 3 happens in the browser: TopoTransfer, then Export
 sends the result back here and the step lights up done. 4 calibrates the DNA to
-the wrapped head, builds the rig and transfers skin and blendshapes to a copy of
+the fitted head, builds the rig and transfers skin and blendshapes to a copy of
 your head, <head>_MH.
 
 The work itself is in Utils/MetaMutant (mm_controller); this is only its
@@ -591,7 +591,7 @@ class MetaMutantUI(QtMutantWindow.Qt_Mutant):
                  'regions, your eyes and teeth.',
                  'Pick points', 'pickwalk.png', self.do_pick, again='Pick again',
                  tip='Points and lines pair your head with the MetaHuman exactly, right where the lips and lids touch. '
-                     'Regions keep the wrap and the rig transfer from crossing between them. Each pick is saved at once; '
+                     'Regions keep TopoTransfer and the rig transfer from crossing between them. Each pick is saved at once; '
                      'skip this and TopoTransfer guesses the points in the browser.'),
             Step(2, 'Prepare',
                  'Exports the MetaHuman head from the DNA and your head, and opens TopoTransfer in the browser '
@@ -600,19 +600,19 @@ class MetaMutantUI(QtMutantWindow.Qt_Mutant):
                  tip='Writes mh_head_lod0.obj (with its manifest) and custom_head.obj, world space, to the work '
                      'folder (picked eyes and teeth are left out of it). Maya serves TopoTransfer itself, linked to '
                      'this window.'),
-            Step(3, 'Wrap in TopoTransfer',
-                 'In the browser: check the guides, Fit, then Send to Maya. The wrapped head comes back here on '
+            Step(3, 'TopoTransfer',
+                 'In the browser: check the guides, Fit, then Send to Maya. The fitted head comes back here on '
                  'its own.',
                  'Open TopoTransfer again', 'TopoTransfer.png', self.do_wrap, again='Open again',
-                 tip='The MetaHuman head is the Base, your head the Reference. Export sends the wrapped Base '
+                 tip='The MetaHuman head is the Base, your head the Reference. Export sends the fitted Base '
                      '(same vertices, your shape) to the work folder. Closed the browser? Open it again, or pick '
                      'an exported OBJ.'),
             Step(4, 'Apply to my head',
-                 'Calibrates the DNA to the wrapped head, builds the MetaHuman rig and transfers its skin and '
+                 'Calibrates the DNA to the fitted head, builds the MetaHuman rig and transfers its skin and '
                  'blendshapes to a copy of your head.',
                  'Apply to my head', 'Skin.png', self.do_apply, again='Apply again',
                  tip='The MetaHuman eyes and teeth are fitted onto yours, the neutral meshes and facial joints move '
-                     'to the wrap (head_custom.dna), the rig is built from it (joints, meshes, skin, blendshapes), '
+                     'to the fitted head (head_custom.dna), the rig is built from it (joints, meshes, skin, blendshapes), '
                      'and <head>_MH gets the skin and blendshapes. Applying again replaces the earlier result.'),
         ]
         self.pick_obj = _named(QtWidgets.QPushButton('Pick OBJ'), 'Ghost')
@@ -738,7 +738,7 @@ class MetaMutantUI(QtMutantWindow.Qt_Mutant):
 
     def result_arrived(self):
         """TopoTransfer's Export came back through the link."""
-        self.steps[2].set_state('done', 'Wrapped head received: {}'.format(
+        self.steps[2].set_state('done', 'Fitted head received: {}'.format(
             os.path.basename(self.workflow.s.wrapped_obj)), 'done')
         self.step_done(self.steps[2], True)
         self.raise_()

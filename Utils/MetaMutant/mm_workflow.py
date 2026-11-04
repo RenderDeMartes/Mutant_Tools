@@ -154,7 +154,7 @@ def wrapped_obj_problem(path: str, expected_vertices: Optional[int] = None) -> O
     if expected_vertices is not None:
         n = obj_vertex_count(path)
         if n != expected_vertices:
-            return f"{n} vertices, the exported Base has {expected_vertices}: wrap with mh_head_lod0.obj as Base"
+            return f"{n} vertices, the exported Base has {expected_vertices}: fit with mh_head_lod0.obj as Base"
     return None
 
 

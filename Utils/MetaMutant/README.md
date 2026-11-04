@@ -10,12 +10,12 @@ blendshapes) onto a copy of your head. Your eyes and teeth (with the tongue) can
                                 │
  Maya ── 2 Prepare ──► mh_head_lod0.obj + custom_head.obj + guides.json
                                 │
- Browser ── 3 Wrap (TopoTransfer) ──► mh_head_lod0_wrapped.obj
+ Browser ── 3 TopoTransfer ──► mh_head_lod0_wrapped.obj
                                 │
  Maya ── 4 Apply ──► head_custom.dna ► rig ► <your head>_MH rigged
 ```
 
-New here? **Help ▸ Tutorial** opens the [tutorial on the website](https://mutanttools.com/meta-mutant/). The steps are also in `tutorial/TUTORIAL.md`.
+New here? **Help ▸ Tutorial** opens the [tutorial on the website](https://mutanttools.com/meta-mutant/). The steps are also in `tutorial/TUTORIAL.md`. For an AI assistant: `Docs/AI_META_MUTANT.md`.
 
 **Maya 2026 only.** Everything it needs comes with Mutant Tools: TopoTransfer (served by Maya,
 no Node.js) and Epic's `dna` module for Maya 2026 (`dna_module/Maya2026`, built from
@@ -37,7 +37,7 @@ Then the four steps, top to bottom (the next one is lit):
 2. **Prepare** — **Export and open TopoTransfer**: writes the MetaHuman meshes from the DNA, your
    head (without the picked eyes / teeth) and your points into the work folder, and opens TopoTransfer
    in the browser with them loaded.
-3. **Wrap (browser)** — the MetaHuman head is the Base, your head the Reference; the eyes, teeth
+3. **TopoTransfer (browser)** — the MetaHuman head is the Base, your head the Reference; the eyes, teeth
    and lashes are set to Follow on their own.
    * With points from Maya the head is already aligned from them and every guide is placed: go to **Fit**.
      To change a guide, drag its dot.
@@ -81,8 +81,8 @@ heads also show, one over the other, in your other viewports.
 
 | Tab | You pick | What it does |
 | --- | --- | --- |
-| **Points** | one vertex each, asked for in order: click it and the next is asked for. **Mirror L to R** fills each right point from its left one, for symmetric heads | exact pairs for the wrap, and the alignment |
-| **Lines** | the most important picks. Double click an edge of the loop where the lips meet, **Use selected**: it splits at its corners into the upper and lower line. The same for the edge of each eye opening. Or select each line alone, corner to corner | matched to the MetaHuman's same line by arc length (lips: each side of the midline on its own), giving many pairs exactly where closest-point wrapping fails. They also decide the [skin and blendshapes](#lips-and-eyes) around them |
+| **Points** | one vertex each, asked for in order: click it and the next is asked for. **Mirror L to R** fills each right point from its left one, for symmetric heads | exact pairs for the fit, and the alignment |
+| **Lines** | the most important picks. Double click an edge of the loop where the lips meet, **Use selected**: it splits at its corners into the upper and lower line. The same for the edge of each eye opening. Or select each line alone, corner to corner | matched to the MetaHuman's same line by arc length (lips: each side of the midline on its own), giving many pairs exactly where closest point fails. They also decide the [skin and blendshapes](#lips-and-eyes) around them |
 | **Regions** | optional: faces of the lips, eyelids, mouth bag, eye sockets, to correct what the lines say | see [Face regions](#face-regions) |
 | **Eyes & teeth** | your meshes (they show in this tab), or faces of the head | see [Eyes and teeth](#eyes-and-teeth) |
 
@@ -103,7 +103,7 @@ gets coordinates on both heads (`mm_zones.py`): outside or inside the closed lin
 how far from it along the surface. A vertex of your head takes its skin weights and blendshapes from the MetaHuman points
 with the same coordinates. The whole inside of the mouth and sockets goes this way; on the skin it blends back into
 closest point away from the line. At the mouth, your line pairs only with the part of the MetaHuman's where its lips really
-part: further out its upper and lower line are one crease of skin, and your lips would stay stuck together that far. The same zones lock the wrap's regions, so nothing else has to be picked.
+part: further out its upper and lower line are one crease of skin, and your lips would stay stuck together that far. The same zones lock TopoTransfer's regions, so nothing else has to be picked.
 
 Then, with the rig moving, Apply corrects what depends on your head's proportions (`mm_fixes.py`, needs the face board):
 
@@ -114,7 +114,7 @@ Then, with the rig moving, Apply corrects what depends on your head's proportion
 
 Both are on by default; set them in `<work>/meta_mutant.json`.
 
-Measured on a stylised head (Ada wrapped onto it, picks made carefully, face board poses):
+Measured on a stylised head (Ada fitted onto it, picks made carefully, face board poses):
 
 | | Closest point, regions picked by hand | With lines and fixes | MetaHuman |
 | --- | --- | --- | --- |
@@ -123,7 +123,7 @@ Measured on a stylised head (Ada wrapped onto it, picks made carefully, face boa
 | Lowest lip gap with the jaw open (below 0: lips cross) | -1.28 | 1.18 | 0.00 (its crease) |
 | Mean lid gap at full blink (below 0: the upper lid rides over the lower) | 0.23 | -0.41 | -0.20 |
 | Teeth through the skin, worst of jaw / smile | 1.42 | 0 | |
-| Flipped faces in the wrap | 14 | 2 | |
+| Flipped faces in TopoTransfer | 14 | 2 | |
 
 ## Eyes and teeth
 
@@ -131,7 +131,7 @@ Measured on a stylised head (Ada wrapped onto it, picks made carefully, face boa
 | --- | --- |
 | **Eyes**: eye meshes, eye + cornea, or faces of the head | every picked vertex is split into two eyes by position; each MetaHuman eyeball is moved and scaled onto the nearer one (sphere fit of the back half: the iris dent and the cornea's bulge are in front); `FACIAL_L/R_Eye` and the lid pivots move onto the centre of your eye, and the rig's small translations of the eye joint are removed, so the eye turns about its centre; the eye shell and eye edge follow; your eye vertices are weighted like the MetaHuman eyeball |
 | **Teeth**: teeth, gums, tongue — meshes or faces | each connected piece goes whole to the upper or lower arch, by height (a piece as long as the arches, narrower and in the middle, is the tongue). Each MetaHuman arch is moved and scaled onto yours, the teeth joints and the tongue follow. Upper teeth follow `FACIAL_C_TeethUpper` and lower teeth `FACIAL_C_TeethLower`, whole; a tongue is weighted like the MetaHuman's. As their own meshes they get the teeth's tongue blendshapes |
-| faces of the head mesh | left out of the TopoTransfer Reference (the wrap fits the skin, not the eyeballs) and kept still by the head's blendshapes |
+| faces of the head mesh | left out of the TopoTransfer Reference (the fit takes the skin, not the eyeballs) and kept still by the head's blendshapes |
 
 ## Face regions
 
@@ -139,7 +139,7 @@ Closest-point transfer bleeds where two surfaces touch: with the mouth closed, a
 lip can be closer to the MetaHuman's lower lip and then opens with the jaw; eyelids can stick the same
 way. The [lines](#lips-and-eyes) solve this on their own; regions picked in [Pick Points](#pick-points) correct them, and act twice.
 
-In the wrap (`Lock regions` in TopoTransfer's Guides; lips, eyelids and mouth bag): a MetaHuman vertex of one
+in TopoTransfer (`Lock regions` in TopoTransfer's Guides; lips, eyelids and mouth bag): a MetaHuman vertex of one
 region may land on its own region or on free skin, never on another region.
 
 In the rig transfer (`mm_regions.py`):
@@ -215,7 +215,7 @@ import sys; sys.path.append(r"C:/…/Mutant_Tools/Utils/MetaMutant")
 import mm_controller, mm_workflow as wf
 w = mm_controller.Workflow(wf.Settings(dna_path=r"C:/mh/head.dna", work_dir=r"C:/work", custom_mesh="myHead",
                                        eyes=["eyeL", "eyeR"], teeth=["teeth"]))
-w.prepare()        # then wrap in the browser (or: npx tsx scripts/wrap-cli.ts base ref out [guides.json] in Utils/TopoTransfer)
+w.prepare()        # then fit in TopoTransfer (or: npx tsx scripts/wrap-cli.ts base ref out [guides.json] in Utils/TopoTransfer)
 w.apply_all()
 ```
 

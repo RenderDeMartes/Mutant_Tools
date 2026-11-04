@@ -76,7 +76,7 @@ Full guide: [INSTALLATION_GUIDE.txt](INSTALLATION_GUIDE.txt) · [Video walkthrou
   ```
 - **Headless build** – [Dev/build_no_ui.py](Dev/build_no_ui.py) builds a rig without the UI.
 - **Maya MCP bridge** – [Dev/MayaMCP/](Dev/MayaMCP/README.md) lets Claude Code, Claude Desktop, Codex and other MCP clients read and drive a live Maya session (start it from the **MCP** menu in the main window). Includes guide fitting helpers ([GUIDE_FITTING.md](Dev/MayaMCP/GUIDE_FITTING.md)) and FBX skeleton retargeting.
-- **AI coding guide** – [Docs/AI_MT_COMMAND_RULES.md](Docs/AI_MT_COMMAND_RULES.md) and [Docs/AI_MT_COMMAND_TUTORIAL.md](Docs/AI_MT_COMMAND_TUTORIAL.md).
+- **AI coding guide** – [Docs/AI_MT_COMMAND_RULES.md](Docs/AI_MT_COMMAND_RULES.md) and [Docs/AI_MT_COMMAND_TUTORIAL.md](Docs/AI_MT_COMMAND_TUTORIAL.md). For Meta Mutant: [Docs/AI_META_MUTANT.md](Docs/AI_META_MUTANT.md).
 - **Releases** – push a `v*` tag; the [release workflow](.github/workflows/release.yml) zips the repo, creates the GitHub release and syncs it to Gumroad.
 
 ## 📫 Get in Touch
