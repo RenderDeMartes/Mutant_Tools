@@ -178,7 +178,7 @@ class Bridge:
         static_dirs: Sequence[str] = (),
     ):
         """
-        files       role -> path ('base', 'reference'); each must be a file inside `work_dir`
+        files       role -> path ('base', 'reference', 'guides'); each must be a file inside `work_dir`
         result_path where a received result is stored (inside `work_dir`); None = no upload route
         app_dir     prebuilt web app to serve under /<token>/app/ (then `app_url` is not used)
         on_result   called with `result_path` after a result was stored (on the server thread)
@@ -292,8 +292,8 @@ class Bridge:
         return f"{self.root}/app/" if self.serves_app else self.app_url
 
     def app_launch_url(self) -> str:
-        """The app URL with ?base=&reference=&return= pointing at this bridge."""
-        params = {role: self.file_url(role) for role in ("base", "reference") if role in self.files}
+        """The app URL with ?base=&reference=&guides=&return= pointing at this bridge."""
+        params = {role: self.file_url(role) for role in ("base", "reference", "guides") if role in self.files}
         if self.result_path:
             params["return"] = self.result_url
         return with_query(self.app_page_url, params) if params else self.app_page_url

@@ -378,6 +378,15 @@ def sphere_fit(points: Sequence[Vec3]) -> Tuple[Vec3, float]:
     return centre, math.sqrt(u[3] + u[0] ** 2 + u[1] ** 2 + u[2] ** 2)
 
 
+def eyeball_fit(points: Sequence[Vec3]) -> Tuple[Vec3, float]:
+    """(centre, radius) of an eyeball, from its back half (+Z is the front in DNA space): the iris dent and the
+    cornea's bulge are in front, and they pull a fit of the whole eye off its real centre."""
+    zs = [p[2] for p in points]
+    middle = (min(zs) + max(zs)) / 2
+    back = [p for p in points if p[2] < middle]
+    return sphere_fit(back if len(back) >= 4 else points)
+
+
 def _dist(a: Sequence[float], b: Sequence[float]) -> float:
     return math.sqrt((a[0] - b[0]) ** 2 + (a[1] - b[1]) ** 2 + (a[2] - b[2]) ** 2)
 
@@ -405,12 +414,69 @@ def bounds(points: Sequence[Vec3]) -> Tuple[Vec3, Vec3]:
     return tuple((lo[k] + hi[k]) / 2 for k in range(3)), tuple(hi[k] - lo[k] for k in range(3))  # type: ignore
 
 
+def _two_means(values: Sequence[float]) -> float:
+    """The value between the two groups of `values`."""
+    low, high = min(values), max(values)
+    split = (low + high) / 2
+    for _ in range(20):
+        a = [v for v in values if v < split]
+        b = [v for v in values if v >= split]
+        if not a or not b:
+            break
+        split = (sum(a) / len(a) + sum(b) / len(b)) / 2
+    return split
+
+
+def teeth_parts(points: Sequence[Vec3], shells: Sequence[Sequence[int]]) -> Tuple[List[int], List[int], List[int]]:
+    """
+    (upper, lower, tongue) vertex ids of a teeth set, from its pieces: each piece (a tooth, a gum) goes whole to one
+    arch, by the height of its centre. The tongue is a piece as long as the arches, narrower, in the middle.
+    When the arches are a single piece, the vertices split by height instead.
+    """
+    every = [i for shell in shells for i in shell]
+    if not every:
+        return [], [], []
+    lo = [min(points[i][k] for i in every) for k in range(3)]
+    hi = [max(points[i][k] for i in every) for k in range(3)]
+    size = [hi[k] - lo[k] for k in range(3)]
+    middle = (lo[0] + hi[0]) / 2
+    tongue: List[int] = []
+    pieces = []
+    for shell in shells:
+        xs, zs = [points[i][0] for i in shell], [points[i][2] for i in shell]
+        wide, long = max(xs) - min(xs), max(zs) - min(zs)
+        if len(shells) > 2 and long > 0.4 * size[2] and wide < 0.85 * size[0] and abs((min(xs) + max(xs)) / 2 - middle) < 0.1 * size[0]:
+            tongue.extend(shell)
+        else:
+            pieces.append(shell)
+    if len(pieces) < 2:
+        rest = [i for shell in pieces for i in shell]
+        if not rest:
+            return [], [], tongue
+        split = _two_means([points[i][1] for i in rest])
+        return [i for i in rest if points[i][1] >= split], [i for i in rest if points[i][1] < split], tongue
+    heights = [sum(points[i][1] for i in shell) / len(shell) for shell in pieces]
+    split = _two_means(heights)
+    upper = [i for shell, y in zip(pieces, heights) if y >= split for i in shell]
+    lower = [i for shell, y in zip(pieces, heights) if y < split for i in shell]
+    return upper, lower, tongue
+
+
+def _box_move(points: Sequence[Vec3], source: Sequence[Vec3], target: Sequence[Vec3]) -> List[Vec3]:
+    """`points` under the move and scale (each axis, 0.5 to 2) that takes the box of `source` onto the box of `target`."""
+    cm, sm = bounds(source)
+    cu, su = bounds(target)
+    s = [min(2.0, max(0.5, su[k] / sm[k])) if sm[k] > 1e-9 else 1.0 for k in range(3)]
+    return [tuple(cu[k] + (p[k] - cm[k]) * s[k] for k in range(3)) for p in points]  # type: ignore
+
+
 def _blocks_named(blocks: Sequence[MeshBlock], key: str) -> List[MeshBlock]:
     return [b for b in blocks if key.lower() in b.name.lower()]
 
 
 def fit_parts(new_positions: Dict[int, List[Vec3]], blocks: Sequence[MeshBlock], eyes: Sequence[Sequence[Vec3]] = (),
-              teeth: Sequence[Vec3] = ()) -> List[str]:
+              teeth: Sequence[Vec3] = (), arches: Optional[Tuple[Sequence[Vec3], Sequence[Vec3]]] = None,
+              mh_arches: Optional[Callable[[MeshBlock], Tuple[List[int], List[int], List[int], List[int]]]] = None) -> List[str]:
     """
     Put the MetaHuman eyes and teeth on the artist's (all in DNA space), in place in `new_positions`.
 
@@ -418,14 +484,17 @@ def fit_parts(new_positions: Dict[int, List[Vec3]], blocks: Sequence[MeshBlock],
     MetaHuman eyeball is moved and scaled onto the nearer picked eye (sphere fit); the eye shell
     and eye edge follow the nearer eye. teeth: the picked teeth / gums / tongue points; the
     MetaHuman teeth (with the tongue) and saliva are moved and scaled onto their box.
+    arches: your (upper points, lower points), with mh_arches(block) -> (upper ids, lower ids, ids surely upper,
+    ids surely lower) of a MetaHuman teeth mesh: then each MetaHuman arch goes onto yours on its own, and the
+    tongue goes with the lower one. What moves here is what the teeth joints follow.
     """
     report: List[str] = []
     if eyes:
         groups = [list(g) for g in eyes if g]
         if len(groups) == 1:
             groups = list(split_two(groups[0]))
-        targets = [sphere_fit(g) for g in groups[:2]]
-        mh = [(b, sphere_fit(new_positions[b.dna_index])) for b in _blocks_named(blocks, "eyeLeft") + _blocks_named(blocks, "eyeRight")]
+        targets = [eyeball_fit(g) for g in groups[:2]]
+        mh = [(b, eyeball_fit(new_positions[b.dna_index])) for b in _blocks_named(blocks, "eyeLeft") + _blocks_named(blocks, "eyeRight")]
         if len(targets) == 2 and len(mh) == 2:
             (b0, (c0, r0)), (b1, (c1, r1)) = mh
             straight = _dist(c0, targets[0][0]) + _dist(c1, targets[1][0])
@@ -452,18 +521,131 @@ def fit_parts(new_positions: Dict[int, List[Vec3]], blocks: Sequence[MeshBlock],
     if teeth:
         mh_teeth = _blocks_named(blocks, "teeth")
         if mh_teeth:
-            cm, sm = bounds([p for b in mh_teeth for p in new_positions[b.dna_index]])
+            whole = [p for b in mh_teeth for p in new_positions[b.dna_index]]
+            cm, sm = bounds(whole)
             cu, su = bounds(list(teeth))
             s = [min(2.0, max(0.5, su[k] / sm[k])) if sm[k] > 1e-9 else 1.0 for k in range(3)]
             for b in mh_teeth + _blocks_named(blocks, "saliva"):
-                new_positions[b.dna_index] = [tuple(cu[k] + (p[k] - cm[k]) * s[k] for k in range(3)) for p in new_positions[b.dna_index]]  # type: ignore
-                report.append(f"{b.name}: onto the picked teeth (moved {_dist(cm, cu):.3f}, scale {s[0]:.2f} {s[1]:.2f} {s[2]:.2f})")
+                old = new_positions[b.dna_index]
+                split = mh_arches(b) if arches and all(arches) and mh_arches and b in mh_teeth else None
+                if split and split[2] and split[3]:
+                    upper, lower, sure_upper, sure_lower = split
+                    moved = list(old)
+                    for ids, sure, mine in ((upper, sure_upper, arches[0]), (lower, sure_lower, arches[1])):
+                        for i, p in zip(ids, _box_move([old[i] for i in ids], [old[i] for i in sure], mine)):
+                            moved[i] = p
+                    new_positions[b.dna_index] = moved
+                    report.append(f"{b.name}: each arch onto your upper and lower teeth ({len(upper)} + {len(lower)} vertices)")
+                else:
+                    new_positions[b.dna_index] = _box_move(old, whole, list(teeth))
+                    report.append(f"{b.name}: onto the picked teeth (moved {_dist(cm, cu):.3f}, scale {s[0]:.2f} {s[1]:.2f} {s[2]:.2f})")
         else:
             report.append("teeth: no MetaHuman teeth mesh in the manifest; left as wrapped")
     return report
 
 
 # ----------------------------------------------------------------------------- calibration plan
+
+
+#: joints around the eyeball's centre on the MetaHuman, that the eye and the lids rotate about
+EYE_PIVOTS = ("Eye", "EyeParallel", "EyelidUpperA", "EyelidUpperB", "EyelidLowerA", "EyelidLowerB")
+#: the hinge of the jaw: one point on the MetaHuman
+JAW_PIVOTS = ("FACIAL_C_Jaw", "FACIAL_C_LowerLipRotation")
+#: how far around the hinge's axis the skin at both sides of the jaw is read, and the outer share of it used, in DNA units
+HINGE_REACH = 2.0
+HINGE_OUTER = 0.8
+TEETH_UPPER_JOINT = "FACIAL_C_TeethUpper"
+TEETH_LOWER_JOINT = "FACIAL_C_TeethLower"
+#: a MetaHuman teeth vertex counts as surely on an arch from this weight on: some gums below it hang off the other arch
+TEETH_SURE = 0.99
+
+
+def mh_teeth_arches(skin: Sequence[Sequence[Tuple[int, float]]], names: Sequence[str]) -> Tuple[List[int], List[int], List[int], List[int]]:
+    """(upper ids, lower ids, ids surely upper, ids surely lower) of a MetaHuman teeth mesh, by its skin weights. Lower
+    takes all that is not upper, the tongue too."""
+    up = names.index(TEETH_UPPER_JOINT) if TEETH_UPPER_JOINT in names else -1
+    low = names.index(TEETH_LOWER_JOINT) if TEETH_LOWER_JOINT in names else -1
+    upper: List[int] = []
+    lower: List[int] = []
+    sure_upper: List[int] = []
+    sure_lower: List[int] = []
+    for v, influences in enumerate(skin):
+        weights = dict(influences)
+        best = max(influences, key=lambda q: q[1])[0] if influences else -1
+        (upper if best == up else lower).append(v)
+        if weights.get(up, 0.0) >= TEETH_SURE:
+            sure_upper.append(v)
+        elif weights.get(low, 0.0) >= TEETH_SURE:
+            sure_lower.append(v)
+    return upper, lower, sure_upper, sure_lower
+
+
+def hinge_delta(old: Sequence[Vec3], new: Sequence[Vec3], hinge: Vec3, reach: float = HINGE_REACH) -> Optional[Vec3]:
+    """How the head moved at the hinge of the jaw: the mean move of the outer skin beside it on both sides (the cheek in
+    front of the ears). The hinge is deep inside the head, and none of the vertices it moves are near it."""
+    sides = []
+    for side in (1.0, -1.0):
+        tube = [i for i, p in enumerate(old) if (p[0] - hinge[0]) * side > 0
+                and (p[1] - hinge[1]) ** 2 + (p[2] - hinge[2]) ** 2 < reach * reach]
+        if not tube:
+            return None
+        far = max((old[i][0] - hinge[0]) * side for i in tube)
+        outer = [i for i in tube if (old[i][0] - hinge[0]) * side >= HINGE_OUTER * far]
+        sides.append(tuple(sum(new[i][k] - old[i][k] for i in outer) / len(outer) for k in range(3)))
+    return tuple((sides[0][k] + sides[1][k]) / 2 for k in range(3))  # type: ignore
+
+
+def pivot_deltas(r, sk: Skeleton, world_pos: Sequence[Vec3], new_positions: Dict[int, List[Vec3]], old_positions: Dict[int, List[Vec3]]) -> Tuple[Dict[int, Vec3], List[str]]:
+    """
+    The moves of the joints the eyes, the lids and the jaw rotate about. Averaging the vertices a joint moves is right
+    on the surface of the face, and wrong for these: they would rotate your eyes and your jaw from somewhere else.
+    Each group moves as one: the eye's onto the centre of your eyeball, the jaw's as the head moved beside the hinge.
+    """
+    index = {n: j for j, n in enumerate(sk.names)}
+    out: Dict[int, Vec3] = {}
+    report: List[str] = []
+    for mesh, new in new_positions.items():
+        name = r.getMeshName(mesh)
+        side = "L" if "eyeLeft" in name else "R" if "eyeRight" in name else ""
+        if side and f"FACIAL_{side}_Eye" in index and len(new) >= 4:
+            centre, _ = eyeball_fit(new)
+            at = world_pos[index[f"FACIAL_{side}_Eye"]]
+            delta = (centre[0] - at[0], centre[1] - at[1], centre[2] - at[2])
+            for joint in EYE_PIVOTS:
+                if f"FACIAL_{side}_{joint}" in index:
+                    out[index[f"FACIAL_{side}_{joint}"]] = delta
+            report.append(f"{side} eye and lids rotate about the centre of the eye ({centre[0]:.3f}, {centre[1]:.3f}, {centre[2]:.3f})")
+        elif "head" in name and JAW_PIVOTS[0] in index:
+            delta = hinge_delta(old_positions[mesh], new, world_pos[index[JAW_PIVOTS[0]]])
+            if delta is not None:
+                for joint in JAW_PIVOTS:
+                    if joint in index:
+                        out[index[joint]] = delta
+                report.append(f"jaw hinge moved with the skin beside it ({delta[0]:.3f}, {delta[1]:.3f}, {delta[2]:.3f})")
+    return out, report
+
+
+#: joints that carry the lids around the eye; how far their turn may be scaled to keep the lids' travel
+LID_PIVOTS = tuple(f"FACIAL_{side}_{joint}" for side in "LR" for joint in EYE_PIVOTS[2:])
+LID_TRAVEL_RANGE = (0.5, 1.5)
+
+
+def eye_radius(r) -> Optional[float]:
+    """The mean radius of the eyeballs of a DNA at LOD0; None without them."""
+    radii = []
+    for mesh in range(r.getMeshCount()):
+        name = r.getMeshName(mesh)
+        if ("eyeLeft" in name or "eyeRight" in name) and name.endswith("lod0_mesh"):
+            radii.append(eyeball_fit(read_mesh_positions(r, mesh))[1])
+    return sum(radii) / len(radii) if radii else None
+
+
+def lid_travel(source_radius: Optional[float], own_radius: Optional[float]) -> float:
+    """What to multiply the lids' turn by. They turn about the eye's centre: on a bigger eye the same angle takes them
+    further, past the other lid at a blink. This keeps the distance the MetaHuman's lids travel."""
+    if not source_radius or not own_radius:
+        return 1.0
+    return min(LID_TRAVEL_RANGE[1], max(LID_TRAVEL_RANGE[0], source_radius / own_radius))
 
 
 def default_joint_filter(name: str) -> bool:
@@ -544,6 +726,11 @@ def build_calibration_plan(
             if l > max_joint_move:
                 s = max_joint_move / l
                 deltas[j] = (d[0] * s, d[1] * s, d[2] * s)
+    pivots, pivot_report = pivot_deltas(r, sk, world_pos, new_positions, old_positions)
+    for j, d in pivots.items():
+        if j in deltas:
+            deltas[j] = d
+    report.extend(pivot_report)
     translations = local_translations_after_move(sk, world_rot, deltas)
     moved = [math.sqrt(d[0] ** 2 + d[1] ** 2 + d[2] ** 2) for d in deltas.values()]
     report.append(f"{len(deltas)} of {len(sk.names)} joints moved (max {max(moved) if moved else 0:.3f}, mean {sum(moved) / len(moved) if moved else 0:.3f})")

@@ -10,10 +10,11 @@ import { closestRotation } from '../core/mat3';
 import { computeBBox } from '../core/mesh';
 import { isBoundaryEdge, vertexNormals } from '../geometry/topology';
 import { protectionWeights } from '../constraints/mask';
+import { allowedTriangles, RegionLock, reverseAllowed } from '../constraints/regionLock';
 import { applyComponentModes, ComponentMode, fitVertexMask, FollowReport } from '../constraints/components';
 import { checkSurfacePoint, evalSurfacePoint, isComplete, Landmark } from '../landmarks/landmarks';
 import { pcg } from '../linalg/pcg';
-import { makeHit, TriRegion } from '../spatial/bvh';
+import { makeHit, TriangleBVH, TriRegion } from '../spatial/bvh';
 import { DistanceStats, pointToSurfaceDistances, qualityReport, QualityReport } from '../validation/metrics';
 import { sanitizeParams, stiffnessSchedule, WrapParams } from './params';
 import { BasePrep, prepareBase, prepareReference, RefPrep } from './prepare';
@@ -31,6 +32,8 @@ export interface WrapInput {
   mask?: Float32Array | null;
   /** per connected component of the base (see BasePrep.components); null = fit everything */
   componentModes?: ComponentMode[] | null;
+  /** Base vertices of a face region never land on another region of the Reference */
+  regionLock?: RegionLock | null;
   params?: Partial<WrapParams>;
 }
 
@@ -154,6 +157,18 @@ export async function wrapMesh(input: WrapInput, hooks: WrapHooks = {}): Promise
   const mu = params.normalAlignment;
   const schedule = stiffnessSchedule(params);
   const eps = 1e-3;
+
+  // ---------- region lock ----------
+  // one search structure per region: the Reference without the other regions
+  const lock = input.regionLock ?? null;
+  if (lock && (lock.baseVertex.length !== n || lock.refTriangle.length !== ref.triangles.length / 3)) return fail('Region lock does not match the meshes.');
+  const lockSearch: ({ bvh: TriangleBVH; ids: Uint32Array } | null)[] | null = lock ? [null] : null;
+  if (lock) {
+    lock.names.forEach((_, r) => {
+      const { triangles, ids } = allowedTriangles(lock, r + 1, ref.triangles);
+      lockSearch!.push(ids.length ? { bvh: TriangleBVH.build(ref.positions, triangles), ids } : null);
+    });
+  }
 
   // ---------- region weights ----------
   const hasMask = !!input.mask;
@@ -394,7 +409,7 @@ export async function wrapMesh(input: WrapInput, hooks: WrapHooks = {}): Promise
           stages[k] += t - tS;
           tS = t;
         };
-        // 1. forward correspondences
+        // 1. forward correspondences (a vertex of a locked region searches without the other regions)
         let accepted = 0, fitSq = 0, eligible = 0;
         const acceptedMask = new Uint8Array(n);
         for (let i = 0; i < n; i++) {
@@ -402,10 +417,12 @@ export async function wrapMesh(input: WrapInput, hooks: WrapHooks = {}): Promise
           if (!base.referenced[i] || dataMul[i] <= 0 || params.fitStrength <= 0) continue;
           eligible++;
           const o = i * 3;
-          if (!ref.bvh.closestPoint(x[o], x[o + 1], x[o + 2], maxDistSq, hit, fwdHint[i])) continue;
+          const locked = lockSearch ? lockSearch[lock!.baseVertex[i]] : null;
+          if (!(locked ? locked.bvh : ref.bvh).closestPoint(x[o], x[o + 1], x[o + 2], maxDistSq, hit, fwdHint[i])) continue;
           fwdHint[i] = hit.tri;
-          if (params.rejectBoundary && onBoundary(hit.region, hit.tri, ref.triangles, ref.boundary, ref.adj)) continue;
-          const ta = ref.triangles[hit.tri * 3] * 3, tb = ref.triangles[hit.tri * 3 + 1] * 3, tc = ref.triangles[hit.tri * 3 + 2] * 3;
+          const refTri = locked ? locked.ids[hit.tri] : hit.tri;
+          if (params.rejectBoundary && onBoundary(hit.region, refTri, ref.triangles, ref.boundary, ref.adj)) continue;
+          const ta = ref.triangles[refTri * 3] * 3, tb = ref.triangles[refTri * 3 + 1] * 3, tc = ref.triangles[refTri * 3 + 2] * 3;
           let nx = hit.u * ref.normals[ta] + hit.v * ref.normals[tb] + hit.w * ref.normals[tc];
           let ny = hit.u * ref.normals[ta + 1] + hit.v * ref.normals[tb + 1] + hit.w * ref.normals[tc + 1];
           let nz = hit.u * ref.normals[ta + 2] + hit.v * ref.normals[tb + 2] + hit.w * ref.normals[tc + 2];
@@ -441,6 +458,7 @@ export async function wrapMesh(input: WrapInput, hooks: WrapHooks = {}): Promise
             if (onBaseBoundary(hit.region, hit.tri, baseTriangles, base)) continue;
             const ta = baseTriangles[hit.tri * 3], tb = baseTriangles[hit.tri * 3 + 1], tc = baseTriangles[hit.tri * 3 + 2];
             if (!fitMask[ta] || !fitMask[tb] || !fitMask[tc]) continue;
+            if (lock && !reverseAllowed(lock, lock.refVertex[revIdx[s]], ta, tb, tc)) continue;
             let nx = hit.u * normals[ta * 3] + hit.v * normals[tb * 3] + hit.w * normals[tc * 3];
             let ny = hit.u * normals[ta * 3 + 1] + hit.v * normals[tb * 3 + 1] + hit.w * normals[tc * 3 + 1];
             let nz = hit.u * normals[ta * 3 + 2] + hit.v * normals[tb * 3 + 2] + hit.w * normals[tc * 3 + 2];

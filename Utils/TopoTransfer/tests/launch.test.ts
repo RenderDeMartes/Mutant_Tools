@@ -44,13 +44,13 @@ describe('parseLaunchParams', () => {
   it('reads encoded base, reference and return URLs', () => {
     const q = `?base=${encodeURIComponent(base)}&reference=${encodeURIComponent(ref)}&return=${encodeURIComponent(ret)}`;
     const p = parseLaunchParams(q);
-    expect(p).toEqual({ base, reference: ref, returnUrl: ret, errors: [] });
+    expect(p).toEqual({ base, reference: ref, guides: null, returnUrl: ret, errors: [] });
     expect(hasLaunchParams(p)).toBe(true);
   });
 
   it('is empty without parameters', () => {
     const p = parseLaunchParams('?foo=1');
-    expect(p).toEqual({ base: null, reference: null, returnUrl: null, errors: [] });
+    expect(p).toEqual({ base: null, reference: null, guides: null, returnUrl: null, errors: [] });
     expect(hasLaunchParams(p)).toBe(false);
   });
 

@@ -359,12 +359,16 @@ function LandmarkStep() {
   const metahuman = useStore((s) => isMetaHumanBase(baseEntry(s)));
   const mh = metahuman && mode === 'metahuman';
   const aligned = useStore((s) => !isIdentity(s.transform));
+  const lock = useStore((s) => s.regionLock);
+  const lockOn = useStore((s) => s.lockRegions);
   const side = (s: 'base' | 'ref') => (s === 'base' ? 'Base (left)' : mh ? 'your head (right)' : 'Reference (right)');
   return (
     <>
       {tool !== 'landmark' && (
         <p className="muted small">
-          {mh
+          {lock
+            ? 'Your points came from Maya: Fit is next. To change one, drag its dot.'
+            : mh
             ? 'The MetaHuman points are already placed: click each named point on your head.'
             : 'Match the two meshes with a few points: eye corners, mouth corners, nose tip, chin, ears. Each pair gets its own colour.'}
         </p>
@@ -394,6 +398,14 @@ function LandmarkStep() {
             : 'Open the bridge first: open TopoTransfer from Mutant Tools (Misc > TopoTransfer, or Meta Mutant), which opens it for you.'
         }
       />
+      {lock && (
+        <Toggle
+          label="Lock regions"
+          checked={lockOn}
+          onChange={(v) => set({ lockRegions: v })}
+          hint={`Picked in Maya (${lock.names.join(', ')}): a MetaHuman vertex of one region never lands on another, so the lips and eyelids do not cross.`}
+        />
+      )}
       <Slider label="Dot size" value={dotSize} min={0.2} max={3} step={0.1} onChange={(v) => set({ guideSize: v })} format={(v) => `${v.toFixed(1)}×`} hint="Size of the guide dots in the view" />
       {claude && <p className="muted small">Claude is linked: ask Claude Code to place the guides. You can still move any dot yourself.</p>}
       <div className="row">
@@ -484,7 +496,7 @@ function LandmarkTable() {
   return (
     <table className="lm-table">
       <tbody>
-        {landmarks.map((l) => (
+        {landmarks.filter((l) => l.group !== 'lines').map((l) => (
           <tr key={l.id} className={l.id === selected ? 'selected' : ''} onClick={() => set({ selectedLandmarkId: l.id })}>
             <td className="lm-name" title={presetHint(l.label) ?? l.label}>
               <i className="dot" style={{ background: pairColor(l.id) }} />

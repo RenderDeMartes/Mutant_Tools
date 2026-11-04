@@ -17,7 +17,7 @@ blendshape weights (same steps as OpenRigLogic, MIT):
 
 from __future__ import annotations
 
-from typing import Dict, Tuple
+from typing import Dict, Sequence, Tuple
 
 import numpy as np
 
@@ -113,6 +113,28 @@ def evaluate(beh, gui) -> Tuple[np.ndarray, np.ndarray]:
     shapes = np.zeros(len(beh["channel_names"]), dtype=np.float32)
     shapes[beh["shape_out"]] = c[beh["shape_in"]]
     return absolute.reshape(-1), shapes
+
+
+def rotate_only(beh, joints: Sequence[str]) -> Dict[str, np.ndarray]:
+    """The behaviour with the named joints' translations taken out: they turn about their own point and nothing else."""
+    names = [str(n) for n in beh["joint_names"]]
+    wanted = [names.index(j) for j in joints if j in names]
+    out = beh["joint_out"]
+    drop = np.isin(out // 9, wanted) & (out % 9 < 3)
+    values = beh["joint_val"].copy()
+    values[np.repeat(drop, np.diff(beh["joint_offsets"]))] = 0.0
+    return dict(beh, joint_val=values)
+
+
+def scale_rotation(beh, joints: Sequence[str], factor: float) -> Dict[str, np.ndarray]:
+    """The behaviour with the named joints' rotations multiplied by `factor`."""
+    names = [str(n) for n in beh["joint_names"]]
+    wanted = [names.index(j) for j in joints if j in names]
+    out = beh["joint_out"]
+    rows = np.isin(out // 9, wanted) & (out % 9 >= 3) & (out % 9 < 6)
+    values = beh["joint_val"].copy()
+    values[np.repeat(rows, np.diff(beh["joint_offsets"]))] *= factor
+    return dict(beh, joint_val=values)
 
 
 def animated(beh) -> np.ndarray:

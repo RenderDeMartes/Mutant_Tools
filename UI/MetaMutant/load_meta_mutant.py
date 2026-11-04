@@ -6,11 +6,13 @@ the selected mesh as your head:
     from Mutant_Tools.UI.MetaMutant import load_meta_mutant
     load_meta_mutant.open_window(head='myHead')
 
-A numbered path of three steps. 1 exports the MetaHuman head from the DNA and
-your head, and opens TopoTransfer (served by Maya itself) with both loaded.
-2 happens in the browser: wrap, then Export sends the result back here and the
-step lights up done. 3 calibrates the DNA to the wrapped head, builds the rig
-and transfers skin and blendshapes to a copy of your head, <head>_MH.
+A numbered path of four steps. 1 is the Pick Points window: points, lip and
+eyelid lines, face regions, eyes and teeth on your head. 2 exports the MetaHuman
+head from the DNA and your head, and opens TopoTransfer (served by Maya itself)
+with them and your points loaded. 3 happens in the browser: wrap, then Export
+sends the result back here and the step lights up done. 4 calibrates the DNA to
+the wrapped head, builds the rig and transfers skin and blendshapes to a copy of
+your head, <head>_MH.
 
 The work itself is in Utils/MetaMutant (mm_controller); this is only its
 window. Settings live in the work folder (meta_mutant.json), the last work
@@ -46,10 +48,16 @@ import mm_workflow as wf  # noqa: E402  (puts TopoTransfer's maya/ on sys.path t
 import tt_bridge  # noqa: E402
 import tt_app  # noqa: E402
 import mm_controller  # noqa: E402
-import mm_regions  # noqa: E402
+import mm_points  # noqa: E402
+import mm_zones  # noqa: E402
+import mm_maya  # noqa: E402
+import mm_fixes  # noqa: E402
 import mm_epic  # noqa: E402
-for _module in (tt_bridge, tt_app, wf, mm_regions, mm_controller, mm_epic):
+for _module in (tt_bridge, tt_app, wf, mm_points, mm_zones, mm_maya, mm_fixes, mm_controller, mm_epic):
     reload(_module)
+
+from Mutant_Tools.UI.MetaMutant import load_point_picker  # noqa: E402
+reload(load_point_picker)
 
 TITLE = 'Meta Mutant'
 ICONS = QtMutantWindow.ICONS_FOLDER
@@ -418,7 +426,7 @@ class MetaMutantUI(QtMutantWindow.Qt_Mutant):
         super(MetaMutantUI, self).__init__()
         self.setWindowTitle(TITLE)
         self.set_title(TITLE)
-        self.resize(460, 760)
+        self.resize(460, 800)
         self.workflow = mm_controller.Workflow(self.load_settings(head), log=self.log, on_change=self.result_arrived)
 
         body = _named(QtWidgets.QWidget(), 'MetaMutant')
@@ -468,19 +476,11 @@ class MetaMutantUI(QtMutantWindow.Qt_Mutant):
         s = self.workflow.s
         self.dna.setText(s.dna_path)
         self.head.setText(s.custom_mesh)
-        self.eyes.setText(' '.join(s.eyes))
-        self.teeth.setText(' '.join(s.teeth))
-        for key, edit in self.region_edits.items():
-            edit.setText(' '.join((s.regions or {}).get(key, [])))
-        self.show_regions(self.regions_box.isVisible())
 
     def read_settings(self):
         s = self.workflow.s
         s.dna_path = self.dna.text().strip()
         s.custom_mesh = self.head.text().strip()
-        s.eyes = self.eyes.text().split()
-        s.teeth = self.teeth.text().split()
-        s.regions = {k: e.text().split() for k, e in self.region_edits.items() if e.text().split()}
 
     def save_settings(self):
         self.read_settings()
@@ -607,78 +607,35 @@ class MetaMutantUI(QtMutantWindow.Qt_Mutant):
         self.head = self.field(
             grid, 3, 'Your head', 'Your head mesh in the scene. It is not changed: step 3 rigs a copy, <head>_MH.',
             'select it, then Use selected', 'Use selected', lambda: self.use_selected())
-        self.eyes = self.field(
-            grid, 4, 'Eyes', 'Optional. Your eyeballs: select the two eye meshes, or the faces of each eye on your '
-            'head mesh, then Use selected. The MetaHuman eyes are fitted onto them and they follow the eye joints.',
-            'optional: eye meshes or their faces', 'Use selected', lambda: self.use_part(self.eyes))
-        self.teeth = self.field(
-            grid, 5, 'Teeth', 'Optional. Your teeth, gums and tongue: select their meshes, or their faces on your '
-            'head mesh, then Use selected. The MetaHuman teeth (with the tongue) are fitted onto them and they follow '
-            'the jaw and teeth joints.', 'optional: teeth & tongue, meshes or faces', 'Use selected',
-            lambda: self.use_part(self.teeth))
-        # optional face regions: lips, eyelids, mouth bag, eye sockets (region-to-region skin transfer)
-        self.regions_toggle = _named(QtWidgets.QPushButton(), 'Link')
-        self.regions_toggle.setCursor(QtCore.Qt.PointingHandCursor)
-        self.regions_toggle.setToolTip(
-            'Optional, for cleaner lips and eyelids. Select the faces (or vertices) of each region on your head and '
-            'press Use selected: each region then takes its skin weights and blendshapes only from the same region '
-            'of the MetaHuman, so the upper lip never opens with the jaw and the lids do not stick together. The '
-            'MetaHuman side is found on its own. Eye sockets take the skin around the eye and stay still in the '
-            'shapes.')
-        self.regions_toggle.clicked.connect(lambda *_: self.show_regions(not self.regions_box.isVisible()))
-        grid.addWidget(self.regions_toggle, 6, 0, 1, 3, QtCore.Qt.AlignLeft)
-        self.regions_box = QtWidgets.QWidget()
-        sub = QtWidgets.QGridLayout(self.regions_box)
-        sub.setContentsMargins(0, 0, 0, 0)
-        sub.setHorizontalSpacing(8)
-        sub.setVerticalSpacing(4)
-        self.region_edits = {}
-        for line, (key, label) in enumerate(mm_regions.REGIONS):
-            self.region_edits[key] = self.field(
-                sub, line, label, 'Optional. Select the {} faces or vertices on your head mesh, then Use selected '
-                '(clear the field to leave it out).'.format(label.lower()), 'optional: faces of your head',
-                'Use selected', (lambda k: lambda: self.use_region(k))(key))
-        grid.addWidget(self.regions_box, 7, 0, 1, 3)
-        self.show_regions(False)
         return box
-
-    def show_regions(self, visible):
-        self.regions_box.setVisible(visible)
-        picked = sum(1 for e in self.region_edits.values() if e.text().strip())
-        self.regions_toggle.setText('{} Face regions: lips, eyelids, mouth{}'.format(
-            '▾' if visible else '▸', ' ({} picked)'.format(picked) if picked else ''))
-
-    def use_region(self, key):
-        """A face region: the selected faces / vertices of your head, as they are."""
-        picked = cmds.ls(selection=True) or []
-        if not picked or not all('.' in p for p in picked):
-            cmds.warning('Meta Mutant: select faces or vertices of your head mesh first')
-            return
-        self.region_edits[key].setText(' '.join(picked))
-        self.log('{}: {} item(s)'.format(dict(mm_regions.REGIONS)[key], len(picked)))
-        self.fields_changed()
-        self.show_regions(True)
 
     def path(self):
         layout = QtWidgets.QVBoxLayout()
         layout.setContentsMargins(6, 4, 6, 0)
         layout.setSpacing(0)
         self.steps = [
-            Step(1, 'Prepare',
+            Step(1, 'Pick points',
+                 'Opens two views, the MetaHuman and your head: pick the points, the lip and eyelid lines, the face '
+                 'regions, your eyes and teeth.',
+                 'Pick points', 'pickwalk.png', self.do_pick, again='Pick again',
+                 tip='Points and lines pair your head with the MetaHuman exactly, right where the lips and lids touch. '
+                     'Regions keep the wrap and the rig transfer from crossing between them. Each pick is saved at once; '
+                     'skip this and TopoTransfer guesses the points in the browser.'),
+            Step(2, 'Prepare',
                  'Exports the MetaHuman head from the DNA and your head, and opens TopoTransfer in the browser '
                  'with both loaded.',
                  'Export and open TopoTransfer', 'ImportGeo.png', self.do_prepare, again='Export again',
                  tip='Writes mh_head_lod0.obj (with its manifest) and custom_head.obj, world space, to the work '
                      'folder (picked eyes and teeth are left out of it). Maya serves TopoTransfer itself, linked to '
                      'this window.'),
-            Step(2, 'Wrap in TopoTransfer',
-                 'In the browser: place the landmarks, Wrap, then Export. The wrapped head comes back here on '
+            Step(3, 'Wrap in TopoTransfer',
+                 'In the browser: check the guides, Fit, then Send to Maya. The wrapped head comes back here on '
                  'its own.',
                  'Open TopoTransfer again', 'TopoTransfer.png', self.do_wrap, again='Open again',
                  tip='The MetaHuman head is the Base, your head the Reference. Export sends the wrapped Base '
                      '(same vertices, your shape) to the work folder. Closed the browser? Open it again, or pick '
                      'an exported OBJ.'),
-            Step(3, 'Apply to my head',
+            Step(4, 'Apply to my head',
                  'Calibrates the DNA to the wrapped head, builds the MetaHuman rig and transfers its skin and '
                  'blendshapes to a copy of your head.',
                  'Apply to my head', 'Skin.png', self.do_apply, again='Apply again',
@@ -690,7 +647,11 @@ class MetaMutantUI(QtMutantWindow.Qt_Mutant):
         self.pick_obj.setIcon(_icon('Folder.png'))
         self.pick_obj.setToolTip('Use an OBJ exported from TopoTransfer by hand')
         self.pick_obj.clicked.connect(lambda *_: self.pick_wrapped())
-        self.steps[1].row.insertWidget(1, self.pick_obj)
+        self.steps[2].row.insertWidget(1, self.pick_obj)
+        self.skip_points = _named(QtWidgets.QPushButton('Skip'), 'Ghost')
+        self.skip_points.setToolTip('Go straight to the export: TopoTransfer guesses the points in the browser')
+        self.skip_points.clicked.connect(lambda *_: self.skip_picking())
+        self.steps[0].row.insertWidget(1, self.skip_points)
         for step in self.steps:
             step.after = self.step_done
             step.changed = self.show_progress
@@ -713,6 +674,19 @@ class MetaMutantUI(QtMutantWindow.Qt_Mutant):
         self.ready_text.setWordWrap(True)
         text.addWidget(_named(QtWidgets.QLabel('Your head is rigged'), 'Title'))
         text.addWidget(self.ready_text)
+        views = QtWidgets.QHBoxLayout()
+        views.setContentsMargins(0, 6, 0, 0)
+        two = _named(QtWidgets.QPushButton(' Face + board view'), 'Ghost')
+        two.setToolTip('Maya\'s viewport in two panels: your face on the left, the face board on the right, each with its own '
+                       'camera (metaMutant_faceCam, metaMutant_boardCam).')
+        two.clicked.connect(lambda *_: self.two_panels())
+        one = _named(QtWidgets.QPushButton(' One view'), 'Ghost')
+        one.setToolTip('Back to a single perspective view, with the panels as they were.')
+        one.clicked.connect(lambda *_: self.one_panel())
+        views.addWidget(two)
+        views.addWidget(one)
+        views.addStretch(1)
+        text.addLayout(views)
         row.addWidget(mark, 0, QtCore.Qt.AlignTop)
         row.addLayout(text, 1)
         box.hide()
@@ -737,7 +711,8 @@ class MetaMutantUI(QtMutantWindow.Qt_Mutant):
                 mm_controller.MAYA_VERSION, self.maya_version()))
             return
         done = self.workflow.status()
-        flags = [done['prepare'], done['prepare'] and done['wrap'], done['prepare'] and done['wrap'] and done['apply']]
+        flags = [done['points'], done['points'] and done['prepare'], done['points'] and done['prepare'] and done['wrap'],
+                 done['points'] and done['prepare'] and done['wrap'] and done['apply']]
         ready = True
         for step, finished in zip(self.steps, flags):
             if step.state == 'running':
@@ -762,7 +737,8 @@ class MetaMutantUI(QtMutantWindow.Qt_Mutant):
         for i, step in enumerate(self.steps):
             _restyle(step.rail_in, state='none' if i == 0 else self.steps[i - 1].state)
             _restyle(step.rail_out, state='none' if step is self.steps[-1] else step.state)
-        self.pick_obj.setVisible(self.steps[1].state in ('ready', 'failed'))
+        self.pick_obj.setVisible(self.steps[2].state in ('ready', 'failed'))
+        self.skip_points.setVisible(self.steps[0].state in ('ready', 'failed'))
         todo = [step for step in self.steps if step.state != 'done']
         if not problem and not self.supported():
             problem = 'Meta Mutant needs Maya {} (this is Maya {}).'.format(mm_controller.MAYA_VERSION, self.maya_version())
@@ -790,9 +766,9 @@ class MetaMutantUI(QtMutantWindow.Qt_Mutant):
 
     def result_arrived(self):
         """TopoTransfer's Export came back through the link."""
-        self.steps[1].set_state('done', 'Wrapped head received: {}'.format(
+        self.steps[2].set_state('done', 'Wrapped head received: {}'.format(
             os.path.basename(self.workflow.s.wrapped_obj)), 'done')
-        self.step_done(self.steps[1], True)
+        self.step_done(self.steps[2], True)
         self.raise_()
         self.activateWindow()
 
@@ -827,16 +803,6 @@ class MetaMutantUI(QtMutantWindow.Qt_Mutant):
         self.head.setText(meshes[0])
         self.fields_changed()
 
-    def use_part(self, edit):
-        """Eyes / teeth: the selected meshes and / or faces, as they are."""
-        picked = cmds.ls(selection=True) or []
-        if not picked:
-            cmds.warning('Meta Mutant: select the meshes or faces first (or clear the field to leave it out)')
-            return
-        edit.setText(' '.join(picked))
-        self.log('{}: {}'.format('eyes' if edit is self.eyes else 'teeth', ' '.join(picked)))
-        self.fields_changed()
-
     def pick_wrapped(self):
         picked = cmds.fileDialog2(fileMode=1, dialogStyle=2, fileFilter='OBJ (*.obj)',
                                   startingDirectory=self.workflow.s.work_dir or '',
@@ -845,6 +811,17 @@ class MetaMutantUI(QtMutantWindow.Qt_Mutant):
             self.workflow.s.wrapped_obj = picked[0]
             self.log('using {}'.format(picked[0]))
             self.result_arrived()
+
+    def two_panels(self):
+        import mm_faceboard
+        try:
+            mm_faceboard.two_panel_view(self.workflow.s.custom_mesh + mm_controller.RESULT_SUFFIX, log=self.log)
+        except RuntimeError as error:
+            self.log(str(error))
+
+    def one_panel(self):
+        import mm_faceboard
+        mm_faceboard.single_view(log=self.log)
 
     def open_work_folder(self):
         work = self.workflow.s.work_dir
@@ -958,8 +935,75 @@ class MetaMutantUI(QtMutantWindow.Qt_Mutant):
 
     # ------------------------------------------------------------------ the steps
 
+    def check_scale(self):
+        """Your meshes should have a scale of 1: offer to freeze them. False when the artist cancels."""
+        problems = self.workflow.scale_problems()
+        if not problems:
+            return True
+        _, mm_maya = self.workflow.modules()
+        names = [mesh for mesh, _ in problems]
+        listing = '\n'.join('{}: scale {:.3f} {:.3f} {:.3f}'.format(m.split('|')[-1], *s) for m, s in problems)
+        blockers = mm_maya.freeze_blockers(names)
+        if blockers:
+            answer = QtWidgets.QMessageBox.warning(
+                self, 'Scale is not 1', 'These meshes have a scale, its parents\' included:\n\n{}\n\nThey cannot be frozen '
+                'here:\n{}\n\nFix that first for a clean result, or go on as they are?'.format(listing, '\n'.join(blockers)),
+                QtWidgets.QMessageBox.Ignore | QtWidgets.QMessageBox.Cancel, QtWidgets.QMessageBox.Cancel)
+            return answer == QtWidgets.QMessageBox.Ignore
+        answer = QtWidgets.QMessageBox.question(
+            self, 'Scale is not 1', 'These meshes have a scale, its parents\' included:\n\n{}\n\nFreeze them so everything '
+            'is clean? Nothing moves in the view, and Ctrl+Z brings it back.'.format(listing),
+            QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No | QtWidgets.QMessageBox.Cancel, QtWidgets.QMessageBox.Yes)
+        if answer == QtWidgets.QMessageBox.Cancel:
+            return False
+        if answer == QtWidgets.QMessageBox.Yes:
+            frozen = mm_maya.freeze_scale(names)
+            self.log('froze the scale of {}'.format(', '.join(n.split('|')[-1] for n in frozen)))
+        else:
+            self.log('warning: going on with the scale as it is')
+        return True
+
+    def need_head(self):
+        s = self.workflow.s
+        if not s.dna_path or not os.path.isfile(s.dna_path):
+            raise RuntimeError('choose the Head DNA first')
+        if not s.custom_mesh or not cmds.objExists(s.custom_mesh):
+            raise RuntimeError('choose your head mesh first (select it, then Use selected)')
+
+    def do_pick(self, step):
+        self.read_settings()
+        self.need_head()
+        self.workflow.work()
+        if not self.check_scale():
+            step.set_state('ready', 'Stopped: scale not resolved.', 'failed')
+            raise Waiting()
+        self.workflow.s.points_skipped = False
+        load_point_picker.open_window(self.workflow, on_close=self.picking_closed)
+        step.set_state('ready', 'Pick in the window; Done there brings you back here.', '')
+        raise Waiting()
+
+    def picking_closed(self):
+        """The Pick Points window closed: what was picked is saved, a new export has to carry it."""
+        self.workflow.s.wrapped_obj = ''
+        self.workflow.applied = False
+        for step in self.steps[1:]:
+            step.set_state('locked', '')
+        self.steps[0].set_state('done', mm_points.summary(
+            mm_points.load(wf.paths(self.workflow.s.work_dir).points), self.workflow.s.regions, self.workflow.s.eyes,
+            self.workflow.s.teeth), 'done')
+        self.step_done(self.steps[0], True)
+        self.raise_()
+        self.activateWindow()
+
+    def skip_picking(self):
+        self.workflow.s.points_skipped = True
+        self.steps[0].set_state('done', 'Skipped: TopoTransfer will guess the points.', 'done')
+        self.step_done(self.steps[0], True)
+
     def do_prepare(self, step):
         self.read_settings()
+        if not self.check_scale():
+            raise RuntimeError('stopped: scale not resolved')
         self.workflow.s.wrapped_obj = ''  # a new export waits for a new wrap
         self.workflow.applied = False
         self.workflow.prepare()
@@ -978,6 +1022,10 @@ class MetaMutantUI(QtMutantWindow.Qt_Mutant):
         return 'Rigged {}_MH.'.format(self.workflow.s.custom_mesh)
 
     def closeEvent(self, event):
+        try:
+            load_point_picker._window.close()
+        except Exception:
+            pass
         self.save_settings()
         self.workflow.stop_link()
         super(MetaMutantUI, self).closeEvent(event)

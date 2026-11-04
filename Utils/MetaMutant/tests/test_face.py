@@ -31,6 +31,17 @@ def behaviour():
 
 
 class TestFace(unittest.TestCase):
+    def test_scale_rotation_leaves_translation(self):
+        b = mm_face.scale_rotation(behaviour(), ["j0"], 0.5)
+        self.assertEqual(b["joint_val"].tolist(), [2.0, 45.0])
+
+    def test_rotate_only_keeps_the_rotation_and_drops_the_translation(self):
+        b = mm_face.rotate_only(behaviour(), ["j0", "not there"])
+        joints, _ = mm_face.evaluate(b, [0.8, 0.9])
+        self.assertAlmostEqual(float(joints[0]), 1.0, places=5)  # neutral, not 1 + 2 * raw0
+        self.assertGreater(float(joints[3]), 0.0)
+        self.assertEqual(float(behaviour()["joint_val"][0]), 2.0)
+
     def test_neutral_is_the_rest_pose(self):
         joints, shapes = mm_face.evaluate(behaviour(), [0, 0])
         np.testing.assert_allclose(joints, [1, 2, 3, 0, 0, 0, 1, 1, 1])

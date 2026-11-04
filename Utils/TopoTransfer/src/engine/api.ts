@@ -42,6 +42,7 @@ export interface WrapJob {
   landmarks: Landmark[];
   mask: Float32Array | null;
   componentModes: import('./constraints/components').ComponentMode[] | null;
+  regionLock?: import('./constraints/regionLock').RegionLock | null;
   params: WrapParams;
 }
 

@@ -11,13 +11,15 @@
 export interface LaunchParams {
   base: string | null;
   reference: string | null;
+  /** guides prepared in Maya (Meta Mutant's Pick Points) */
+  guides: string | null;
   returnUrl: string | null;
   /** rejected parameters, as messages for the log */
   errors: string[];
 }
 
 const LOOPBACK_HOSTS = new Set(['localhost', '127.0.0.1', '[::1]']);
-const PARAMS = ['base', 'reference', 'return'] as const;
+const PARAMS = ['base', 'reference', 'guides', 'return'] as const;
 
 /** True for an http(s) URL on this machine without credentials in it. */
 export function isLoopbackUrl(value: string): boolean {
@@ -32,7 +34,7 @@ export function isLoopbackUrl(value: string): boolean {
 
 export function parseLaunchParams(search: string): LaunchParams {
   const q = new URLSearchParams(search);
-  const out: LaunchParams = { base: null, reference: null, returnUrl: null, errors: [] };
+  const out: LaunchParams = { base: null, reference: null, guides: null, returnUrl: null, errors: [] };
   for (const key of PARAMS) {
     const v = q.get(key);
     if (v === null || v === '') continue;
@@ -47,7 +49,7 @@ export function parseLaunchParams(search: string): LaunchParams {
 }
 
 export function hasLaunchParams(p: LaunchParams): boolean {
-  return !!(p.base || p.reference || p.returnUrl || p.errors.length);
+  return !!(p.base || p.reference || p.guides || p.returnUrl || p.errors.length);
 }
 
 /** The page URL without the launch parameters (they carry the bridge's access token). */

@@ -5,6 +5,8 @@ TopoTransfer exported (browser download) and which steps are done.
 
 Work folder layout:
 
+    <work>/points.json                  the points picked in Maya (mm_points)
+    <work>/guides.json                  those points as TopoTransfer loads them, written by step 2
     <work>/mh_head_lod0.obj             MetaHuman LOD0 meshes from the DNA   -> TopoTransfer Base
     <work>/mh_head_lod0.manifest.json   vertex ranges of the DNA meshes
     <work>/custom_head.obj              custom head exported from Maya       -> TopoTransfer Reference
@@ -50,9 +52,15 @@ class Settings:
     lower_lods: bool = True
     blendshapes: bool = True
     face_board: bool = True  # MetaHuman-style controls driving the rig (mm_faceboard, plain Maya nodes)
+    #: lids meet at full blink, whatever the proportions of your eye (needs the face board and the lid lines)
+    close_eyelids: bool = True
+    #: narrow the rigged copy of your teeth as far as keeps them inside the skin (needs the face board and the lip lines)
+    fit_teeth: bool = True
     #: optional face regions on your head (mm_regions.REGIONS keys -> faces / vertices): the skin and
     #: blendshapes of each come only from the same region of the MetaHuman (no bleeding between lips)
     regions: Dict[str, List[str]] = field(default_factory=dict)
+    #: Pick Points was skipped on purpose: TopoTransfer's own guess will do
+    points_skipped: bool = False
     wrapped_obj: str = ""
 
 
@@ -64,6 +72,8 @@ class Paths:
     wrapped_obj: str
     custom_dna: str
     settings: str
+    points: str
+    guides: str
 
 
 def paths(work_dir: str) -> Paths:
@@ -75,6 +85,8 @@ def paths(work_dir: str) -> Paths:
         wrapped_obj=j(BASE_STEM + "_wrapped.obj"),
         custom_dna=j("head_custom.dna"),
         settings=j(SETTINGS_FILE),
+        points=j("points.json"),
+        guides=j("guides.json"),
     )
 
 
@@ -208,10 +220,11 @@ def scene_warnings(linear_unit: str, up_axis: str) -> List[str]:
 def status(s: Settings) -> Dict[str, bool]:
     """Which steps have their output on disk."""
     if not s.work_dir:
-        return {"setup": False, "export": False, "wrapped": False, "calibrated": False}
+        return {"setup": False, "points": False, "export": False, "wrapped": False, "calibrated": False}
     p = paths(s.work_dir)
     return {
         "setup": bool(s.dna_path) and os.path.isfile(s.dna_path),
+        "points": s.points_skipped or os.path.isfile(p.points),
         "export": all(os.path.isfile(f) for f in (p.base_obj, p.manifest, p.reference_obj)),
         "wrapped": bool(s.wrapped_obj) and os.path.isfile(s.wrapped_obj),
         "calibrated": os.path.isfile(p.custom_dna),

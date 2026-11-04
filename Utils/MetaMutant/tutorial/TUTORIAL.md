@@ -3,25 +3,33 @@
 Give **your own 3D head** the **MetaHuman face rig**: blinking eyes, a jaw that opens, hundreds
 of face shapes. Meta Mutant moves the MetaHuman face onto your head, then copies its rig over.
 
-![Three steps](mm_overview.png)
-
 **You need:** Maya 2026, a head model (looking forward, standing up, mouth closed), and a
 MetaHuman `.dna` file. No file? Use **Get the sample DNA from Epic...** in the window.
 
 ---
 
-## Step 1 · In Maya: fill in the window
+## Step 1 · In Maya: pick the points
 
-Open it from **Mutant-Tools ▸ Misc ▸ Meta Mutant**.
-
-![Fill in the window](mm_pick.png)
+Open the window from **Mutant-Tools ▸ Misc ▸ Meta Mutant**.
 
 1. **Head DNA**: your MetaHuman file, or Epic's sample.
 2. **Your head**: click your head in the scene, then **Use selected**.
-3. **Eyes** and **Teeth**: only if your head has them. Select them, then **Use selected**.
-4. **Face regions** (optional): open **▸ Face regions**, select the faces of your upper lip, lower lip,
-   upper and lower eyelids, mouth bag and eye sockets, one at a time, and press **Use selected** for
-   each. Then the lips and eyelids of your head move like the MetaHuman's, without sticking together.
+
+Press **Pick points**. If your meshes have a scale, Meta Mutant asks to freeze them first.
+
+Two views open: the MetaHuman on the left, already marked, your head on the right. Turn either one and both
+turn. You only pick on your head, tab by tab:
+
+* **Points**: a name is asked for and lights up on the MetaHuman. Click the same spot on your head. The next
+  one is asked for on its own.
+* **Lines**: the picks that matter most. Double click an edge of the loop where your lips meet, then **Use
+  selected**: it fills the upper and lower lip line. Do the same for the edge of the opening of each eye. Then the lips
+  open cleanly and the lids close without crumpling.
+* **Regions**: optional. The lines already say which lip and lid is which; select faces here only to correct them.
+* **Eyes & teeth**: only if your head has them. Select them, then **Use selected**.
+
+Press **Done**. Everything you picked is saved, so you can come back with **Pick again**. In a hurry? **Skip**
+this step and the browser guesses the points.
 
 Press **Export and open TopoTransfer**. Your browser opens with both heads in it.
 
@@ -30,6 +38,8 @@ Press **Export and open TopoTransfer**. Your browser opens with both heads in it
 ## Step 2 · In the browser: fit the MetaHuman onto your head
 
 The MetaHuman is the **Base** (left), your head is the **Reference** (right).
+
+Picked your points in Maya? They are already here and the heads are aligned: go straight to **Fit**.
 
 ### Align
 
@@ -133,7 +143,7 @@ yourself.
 | The MetaHuman is far from my head | **Auto align** again; check your head stands up and looks forward |
 | The face is twisted or melted | fix the guides near that spot, then **Fit** again |
 | A small bump or dent | **Brush** ▸ **Smooth** |
-| The eyes or teeth are off | pick them again in step 1, then **Apply again** |
+| The eyes or teeth are off | pick them again in step 1, then export and **Apply again** |
 | **Send to Maya** is grey | open TopoTransfer from Maya again (see above) |
 
 Want all the details? Open **README.md** in this folder.

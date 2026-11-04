@@ -27,6 +27,7 @@ from typing import Callable, Dict, List, Optional, Tuple
 
 import numpy as np
 
+import mm_core
 import mm_dna
 import mm_face
 import mm_rig
@@ -34,6 +35,10 @@ import mm_rig
 BOARD = "metaMutant_faceBoard"
 DRIVER = "metaMutant_faceDriver"
 NETWORK = "metaMutant_faceNetwork"  # container set of the network nodes, so a rebuild removes them
+BOARD_CAMERA = "metaMutant_boardCam"
+FACE_CAMERA = "metaMutant_faceCam"
+#: what the two-panel view changed on each panel, to give it back
+_view_before: Dict[str, dict] = globals().get("_view_before", {})
 REGIONS = ("brow", "eye", "eyelashes", "ear", "nose", "mouth", "jaw", "teeth", "tongue", "neck")
 COLORS = {"L": 6, "R": 13, "C": 17}  # Maya index colours: blue, red, yellow
 
@@ -481,18 +486,134 @@ def remove():
     if cmds.objExists(NETWORK):
         nodes = cmds.sets(NETWORK, q=True) or []
         cmds.delete([n for n in nodes if cmds.objExists(n)] + [NETWORK])
-    for n in (BOARD, DRIVER):
+    for n in (BOARD, DRIVER, BOARD_CAMERA, FACE_CAMERA):
         if cmds.objExists(n):
             cmds.delete(n)
 
 
-def build(dna_path: str, head: str = "", log: Callable[[str], None] = print, epic_board: str = "") -> dict:
+def make_cameras(head: str = "") -> Tuple[str, str]:
+    """The board's camera (orthographic, facing it) and one in front of the face, framed on them as they stand now.
+    Made once; called again they are framed again."""
+    cmds = _maya()
+    for name, flags in ((BOARD_CAMERA, {"orthographic": True}), (FACE_CAMERA, {"focalLength": 50})):
+        if not cmds.objExists(name):
+            node = cmds.camera(**flags)[0]
+            cmds.rename(node, name)
+    low = cmds.exactWorldBoundingBox(BOARD)
+    width, height = low[3] - low[0], low[4] - low[1]
+    cmds.xform(BOARD_CAMERA, worldSpace=True, translation=((low[0] + low[3]) / 2, (low[1] + low[4]) / 2, low[5] + max(width, height)), rotation=(0, 0, 0))
+    shape = cmds.listRelatives(BOARD_CAMERA, shapes=True)[0]
+    cmds.setAttr(shape + ".orthographicWidth", max(width, height) * 1.08)
+    cmds.setAttr(shape + ".farClipPlane", (low[5] - low[2] + max(width, height)) * 4)
+    target = head if head and cmds.objExists(head) else ("head_lod0_mesh" if cmds.objExists("head_lod0_mesh") else "")
+    if target:
+        visible = cmds.listRelatives(target, shapes=True, noIntermediate=True, fullPath=True) or [target]
+        box = cmds.exactWorldBoundingBox(visible)
+        size = max(box[3] - box[0], box[4] - box[1])
+        distance = size * 2.0
+        cmds.xform(FACE_CAMERA, worldSpace=True, translation=((box[0] + box[3]) / 2, box[1] + (box[4] - box[1]) * 0.55, box[5] + distance), rotation=(0, 0, 0))
+        cmds.setAttr(FACE_CAMERA + ".centerOfInterest", distance + (box[5] - box[2]) / 2)
+        shape = cmds.listRelatives(FACE_CAMERA, shapes=True)[0]
+        cmds.setAttr(shape + ".nearClipPlane", max(0.01, size * 0.01))
+        cmds.setAttr(shape + ".farClipPlane", size * 100)
+    return BOARD_CAMERA, FACE_CAMERA
+
+
+def _set_panel(panel: str, camera: str, **flags) -> None:
+    """Look through `camera` with these show flags, remembering what the panel had."""
+    cmds = _maya()
+    if panel not in _view_before:
+        before = {flag: cmds.modelEditor(panel, query=True, **{flag: True}) for flag in flags}
+        before["camera"] = cmds.modelEditor(panel, query=True, camera=True)
+        before["isolate"] = cmds.isolateSelect(panel, query=True, state=True)
+        _view_before[panel] = before
+    if cmds.isolateSelect(panel, query=True, state=True):  # an isolated selection would hide what this view is for
+        cmds.isolateSelect(panel, state=False)
+    cmds.modelEditor(panel, edit=True, camera=camera, **flags)
+
+
+def _fill_two_panels(log: Callable[[str], None]) -> None:
+    """Each visible panel of the new layout gets its camera, what it shows, and fits its camera."""
+    cmds = _maya()
+    panels = [p for p in cmds.getPanel(visiblePanels=True) or [] if cmds.getPanel(typeOf=p) == "modelPanel"]
+    if len(panels) < 2:
+        log("Maya's Two Panes layout does not hold two 3D views here: set it back with Panels > Saved Layouts")
+        return
+    # left to right by where Maya put them on screen
+    panels.sort(key=lambda p: _panel_left(p))
+    face, board = panels[0], panels[1]
+    _set_panel(face, FACE_CAMERA, joints=False, locators=False, grid=False, manipulators=False, wireframeOnShaded=False, displayAppearance="smoothShaded")
+    # the board alone: Epic's is meshes, Meta Mutant's curves, so it is isolated rather than filtered by type
+    _set_panel(board, BOARD_CAMERA, polymeshes=True, nurbsCurves=True, joints=False, locators=False, grid=False, wireframeOnShaded=False, displayAppearance="smoothShaded")
+    cmds.isolateSelect(board, state=True)
+    cmds.isolateSelect(board, addDagObject=BOARD)
+    _view_before[board]["isolated_board"] = True
+    cmds.setFocus(face)
+    log("two panels: the face on the left, the board on the right")
+
+
+def _panel_left(panel: str) -> int:
+    """The panel's left edge on screen, for telling left from right; 0 when Qt cannot say."""
+    try:
+        import maya.OpenMayaUI as omui  # type: ignore
+        try:
+            import shiboken6 as shiboken  # type: ignore
+            from PySide6 import QtCore, QtWidgets  # type: ignore
+        except ImportError:
+            import shiboken2 as shiboken  # type: ignore
+            from PySide2 import QtCore, QtWidgets  # type: ignore
+        widget = shiboken.wrapInstance(int(omui.MQtUtil.findControl(panel)), QtWidgets.QWidget)
+        return widget.mapToGlobal(QtCore.QPoint(0, 0)).x()
+    except Exception:
+        return 0
+
+
+def two_panel_view(head: str = "", log: Callable[[str], None] = print) -> None:
+    """Maya's two side by side panes: your face on the left, the board on the right. Maya only lays the panes out at
+    idle, so their cameras are set then."""
+    import maya.mel as mel  # type: ignore
+
+    cmds = _maya()
+    if not cmds.objExists(BOARD):
+        raise RuntimeError("there is no face board in the scene: run Apply first")
+    make_cameras(head)
+    mel.eval("TwoSideBySideViewArrangement")
+    cmds.evalDeferred(lambda: _fill_two_panels(log), lowestPriority=True)
+
+
+def single_view(log: Callable[[str], None] = print) -> None:
+    """Back from the two panels: Maya's single perspective view, each panel as it was."""
+    import maya.mel as mel  # type: ignore
+
+    cmds = _maya()
+    for panel, before in list(_view_before.items()):
+        if cmds.modelPanel(panel, exists=True):
+            if before.get("isolated_board"):
+                if cmds.objExists(BOARD):
+                    cmds.isolateSelect(panel, removeDagObject=BOARD)
+                cmds.isolateSelect(panel, state=False)
+            flags = {k: v for k, v in before.items() if k not in ("camera", "isolate", "isolated_board")}
+            camera = before.get("camera")
+            cmds.modelEditor(panel, edit=True, **flags)
+            if camera and cmds.objExists(camera):
+                cmds.modelEditor(panel, edit=True, camera=camera)
+            if before.get("isolate"):
+                cmds.isolateSelect(panel, state=True)
+    _view_before.clear()
+    mel.eval('setNamedPanelLayout "Single Perspective View"')
+    log("back to one view")
+
+
+def build(dna_path: str, head: str = "", log: Callable[[str], None] = print, epic_board: str = "", lid_travel: float = 1.0) -> dict:
     """Face board + network from the rig's DNA, next to `head` (the rigged copy), replacing an earlier one.
-    `epic_board`: Epic's gui.ma (the MetaHuman board itself) to use instead of Meta Mutant's own board."""
+    `epic_board`: Epic's gui.ma (the MetaHuman board itself) to use instead of Meta Mutant's own board.
+    `lid_travel`: what the lids' turn is multiplied by (mm_core.lid_travel)."""
     cmds = _maya()
     remove()
     r = mm_dna.load_dna(dna_path)
-    beh = mm_face.export_behaviour(r)
+    # Epic's rig also slides the eyes a little as they look around: yours turn about their centre
+    beh = mm_face.rotate_only(mm_face.export_behaviour(r), ("FACIAL_L_Eye", "FACIAL_R_Eye"))
+    beh = mm_face.scale_rotation(beh, mm_core.LID_PIVOTS, lid_travel)
     flips: Dict[int, bool] = {}
     net = _Net()
     if epic_board:
@@ -522,6 +643,7 @@ def build(dna_path: str, head: str = "", log: Callable[[str], None] = print, epi
         k = 1.5 * (hi[1] - lo[1]) / max(1e-6, blo[4] - blo[1])
         cmds.setAttr(BOARD + ".scale", k, k, k)
         cmds.xform(BOARD, translation=(hi[0] + (hi[0] - lo[0]) * 0.3 - blo[0] * k, hi[1] - blo[4] * k, (lo[2] + hi[2]) / 2))
+    make_cameras(head)
     log(f"face board: {len(plugs)} control channels drive {driven} joint channels and {shapes} blendshape weights; "
         f"{len(flips)} drawn flipped so they move the way the face does")
     return {"board": BOARD, "controls": len(plugs), "joint_channels": driven, "shapes": shapes}

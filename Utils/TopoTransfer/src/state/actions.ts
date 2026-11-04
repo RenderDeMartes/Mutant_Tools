@@ -8,6 +8,8 @@ import { boundingBoxAlignment } from '../engine/alignment/rigid';
 import { computeBBox } from '../engine/core/mesh';
 import { buildAdjacency, Adjacency } from '../engine/geometry/topology';
 import { alignFromLandmarks, evalSurfacePoint, Landmark, LandmarkGroup, SurfacePoint } from '../engine/landmarks/landmarks';
+import { buildMayaLandmarks, parseMayaGuides } from '../engine/landmarks/mayaGuides';
+import { buildRegionLock } from '../engine/constraints/regionLock';
 import { FACE_PRESET, METAHUMAN_FACE_VERTEX, METAHUMAN_HEAD_VERTICES, mirrorName, PRESETS, PresetKind } from '../engine/landmarks/presets';
 import { defaultSymmetryPlane, fitSymmetryPlane, mirrorSurfacePoint, Plane } from '../engine/landmarks/mirror';
 import { makeHit, TriangleBVH } from '../engine/spatial/bvh';
@@ -132,6 +134,7 @@ function resetDependentState(reason: string) {
     pendingPick: null,
     guided: false,
     mask: null,
+    regionLock: null,
     componentModes: null,
     heat: null,
     transform: mat4Identity(),
@@ -230,6 +233,30 @@ export async function loadFromLaunch(p: LaunchParams) {
     set({ job: null });
   }
   await loadBuffers(files);
+  if (p.guides) await loadMayaGuides(p.guides);
+}
+
+/** The guides prepared in Maya: complete pairs, the regions locked, the Base aligned from them. */
+async function loadMayaGuides(url: string) {
+  const b = baseEntry(), r = refEntry();
+  if (!b || !r) return log('warn', 'The guides from Maya need both meshes loaded.');
+  try {
+    const file = await fetchLaunchFile(url, 'guides.json');
+    const guides = parseMayaGuides(JSON.parse(new TextDecoder().decode(file.buffer)));
+    const baseCount = b.loaded.mesh.positions.length / 3, refCount = r.loaded.mesh.positions.length / 3;
+    const { landmarks, skipped } = buildMayaLandmarks(guides, get().nextLandmarkId, b.triangles, baseCount, bvhFor(r));
+    const inputs = Object.entries(guides.regions).map(([name, v]) => ({ name, base: v.base ?? [], ref: v.ref ?? [] }));
+    const built = buildRegionLock(inputs, baseCount, refCount, r.triangles);
+    pushUndo('Guides from Maya');
+    set({ landmarks, nextLandmarkId: get().nextLandmarkId + landmarks.length, guided: false, regionLock: built.lock, guideMode: 'metahuman' });
+    const named = landmarks.filter((l) => l.group !== 'lines').length;
+    log('info', `From Maya: ${named} guides, ${landmarks.length - named} lip and eyelid line points${built.lock ? `, locked regions: ${built.lock.names.join(', ')}` : ''}.`);
+    if (skipped.length) log('warn', `Guides from Maya not used (their MetaHuman vertex is not on the Base): ${skipped.slice(0, 8).join(', ')}.`);
+    if (built.skipped.length) log('warn', `Regions from Maya not locked (no faces left on one side): ${built.skipped.join(', ')}.`);
+    if (landmarks.length >= 3) alignLandmarks(true);
+  } catch (e) {
+    log('error', `Could not load the guides from Maya: ${(e as Error).message}. You can place them here instead.`);
+  }
 }
 
 export type ExampleKind = 'synthetic' | 'body' | 'head';
@@ -457,6 +484,7 @@ export async function runWrap() {
         landmarks: s.landmarks,
         mask: s.mask,
         componentModes: effectiveComponentModes(),
+        regionLock: s.lockRegions ? s.regionLock : null,
         params: s.params,
       },
       (p) => set((st) => (st.job ? { job: { ...st.job, progress: p.fraction, message: p.message, wrapProgress: p } } : {})),

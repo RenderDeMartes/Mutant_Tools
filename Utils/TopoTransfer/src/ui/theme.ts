@@ -8,6 +8,7 @@ export const GROUP_COLORS: Record<LandmarkGroup, string> = {
   mouth: '#e868b0',
   ears: '#8bd17c',
   body: '#b48cff',
+  lines: '#e8d5a0',
   other: '#c9ced6',
 };
 

@@ -176,12 +176,14 @@ def calibrate(
     dna_module=None,
     eyes: Sequence[Sequence[core.Vec3]] = (),
     teeth: Sequence[core.Vec3] = (),
+    arches=None,
 ) -> List[str]:
     """
     Apply the wrapped neutral meshes and moved joints to a copy of the DNA. Returns a report.
 
     eyes / teeth: the artist's eye and teeth points in DNA space (optional); the MetaHuman eyes and
     teeth are fitted onto them first (core.fit_parts), so their joints follow too.
+    arches: your (upper, lower) teeth points in DNA space: each MetaHuman arch is fitted on its own.
 
     backend: "dnacalib" (Epic's DNACalib commands, recalculates lower LODs), "writer"
     (OpenRigLogic dna.BinaryStreamWriter only; lower LODs unchanged) or "auto"
@@ -193,7 +195,8 @@ def calibrate(
     wrapped = core.read_obj_positions(wrapped_obj)
     positions = core.to_dna_space(wrapped)
     new_positions = core.split_positions(positions, blocks)
-    fitted = core.fit_parts(new_positions, blocks, eyes, teeth)
+    names = core.skeleton_from_reader(r).names
+    fitted = core.fit_parts(new_positions, blocks, eyes, teeth, arches, lambda b: core.mh_teeth_arches(core.read_skin(r, b.dna_index), names))
     plan = core.build_calibration_plan(r, new_positions, joint_filter=joint_filter)
     plan.report[:0] = fitted
 

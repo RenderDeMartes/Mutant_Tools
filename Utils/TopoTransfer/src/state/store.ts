@@ -85,6 +85,9 @@ export interface AppState {
   mirrorGuides: boolean;
   /** guides: free clicking, or MetaHuman (the MetaHuman points are pre-placed) */
   guideMode: 'free' | 'metahuman';
+  /** face regions picked in Maya: a Base vertex of one never lands on another (see constraints/regionLock) */
+  regionLock: import('../engine/constraints/regionLock').RegionLock | null;
+  lockRegions: boolean;
   newLandmarkGroup: LandmarkGroup;
   hiddenGroups: LandmarkGroup[];
   showLandmarks: boolean;
@@ -143,6 +146,8 @@ export const useStore = create<AppState>(() => ({
   guided: false,
   mirrorGuides: true,
   guideMode: 'free',
+  regionLock: null,
+  lockRegions: true,
   newLandmarkGroup: 'face',
   hiddenGroups: [],
   showLandmarks: true,

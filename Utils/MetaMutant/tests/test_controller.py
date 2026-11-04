@@ -35,13 +35,13 @@ class TestController(unittest.TestCase):
     def test_prepare_and_apply_run_their_steps_in_order(self):
         w = mc.Workflow(log=lambda t: None)
         calls = []
-        for name in ("export", "open_app", "import_wrapped", "calibrate", "remove_result", "build_rig", "transfer", "build_face_board"):
+        for name in ("export", "open_app", "import_wrapped", "calibrate", "remove_result", "build_rig", "transfer", "build_face_board", "apply_fixes"):
             setattr(w, name, (lambda n: lambda: calls.append(n))(name))
         w.prepare()
         self.assertEqual(calls, ["export", "open_app"])
         calls.clear()
         w.apply_all()
-        self.assertEqual(calls, ["import_wrapped", "calibrate", "remove_result", "build_rig", "transfer", "build_face_board"])
+        self.assertEqual(calls, ["import_wrapped", "calibrate", "remove_result", "build_rig", "transfer", "build_face_board", "apply_fixes"])
         calls.clear()
 
         def bad():

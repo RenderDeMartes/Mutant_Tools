@@ -6,7 +6,7 @@
 
 import { umeyama, SimilarityFit } from '../alignment/rigid';
 
-export const LANDMARK_GROUPS = ['face', 'eyes', 'nose', 'mouth', 'ears', 'body', 'other'] as const;
+export const LANDMARK_GROUPS = ['face', 'eyes', 'nose', 'mouth', 'ears', 'body', 'lines', 'other'] as const;
 export type LandmarkGroup = (typeof LANDMARK_GROUPS)[number];
 
 export interface SurfacePoint {

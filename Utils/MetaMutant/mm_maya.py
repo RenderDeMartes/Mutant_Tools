@@ -253,6 +253,26 @@ def region_correspondence(source_mesh: str, target_mesh: str, target_regions: Di
     return mm_regions.correspondence(tgt_points, src_points, tris, g)
 
 
+def line_correspondence(source_mesh: str, target_mesh: str, points: dict, corr=None, log=print):
+    """Closest point (or `corr`, from the regions) with the picked lip and eyelid lines applied on top (mm_zones)."""
+    import mm_zones
+
+    base = corr if corr is not None else surface_correspondence(source_mesh, target_mesh)
+    return mm_zones.correspondence(points, mesh_points(target_mesh), mesh_edges(target_mesh),
+                                   mesh_points(source_mesh), mesh_edges(source_mesh), base, log=log)
+
+
+def mesh_edges(mesh: str):
+    """The polygon edges of a mesh (n, 2), not the triangles' diagonals."""
+    import maya.api.OpenMaya as om  # type: ignore
+    import mm_zones
+
+    sel = om.MSelectionList()
+    sel.add(mesh)
+    counts, connects = om.MFnMesh(sel.getDagPath(0)).getVertices()
+    return mm_zones.polygon_edges(list(counts), list(connects))
+
+
 def transfer_skin(source_mesh: str, target_mesh: str, corr=None) -> str:
     """Bind the target to the source's influences and copy weights by closest point (or through
     `corr`, a region_correspondence: each vertex blends the weights of its source triangle)."""
@@ -272,8 +292,13 @@ def transfer_skin(source_mesh: str, target_mesh: str, corr=None) -> str:
     src_names, src_w, _ = _skin_weights(source_mesh)
     dst_names, _, (fn, path, obj) = _skin_weights(target_mesh)
     column = [dst_names.index(n) for n in src_names]
-    tri = np.array([c[0] for c in corr], int)
-    bary = np.array([c[1] for c in corr], float)
+    # entries hold 3 corners of a triangle, or more where a line paired the vertex (mm_zones)
+    width = max(len(c[0]) for c in corr)
+    tri = np.zeros((len(corr), width), int)
+    bary = np.zeros((len(corr), width))
+    for row, (ids, weights) in enumerate(corr):
+        tri[row, :len(ids)] = ids
+        bary[row, :len(ids)] = weights
     blended = np.einsum("tk,tki->ti", bary, src_w[tri])
     out = np.zeros((len(corr), len(dst_names)))
     out[:, column] = blended
@@ -429,6 +454,42 @@ def spec_points(spec: Sequence[str]) -> List[List[core.Vec3]]:
     return groups
 
 
+def mesh_shells(mesh: str, ids: Optional[Sequence[int]] = None) -> List[List[int]]:
+    """The connected pieces of a mesh, as vertex ids: of the vertices `ids` only, when given."""
+    edges = mesh_edges(mesh)
+    wanted = set(ids) if ids is not None else None
+    parent: Dict[int, int] = {}
+
+    def find(a: int) -> int:
+        parent.setdefault(a, a)
+        while parent[a] != a:
+            parent[a] = parent[parent[a]]
+            a = parent[a]
+        return a
+
+    for a, b in edges.tolist():
+        if wanted is None or (a in wanted and b in wanted):
+            parent[find(a)] = find(b)
+    for i in (wanted if wanted is not None else ()):
+        find(i)
+    groups: Dict[int, List[int]] = {}
+    for i in sorted(parent):
+        groups.setdefault(find(i), []).append(i)
+    return list(groups.values())
+
+
+def set_rigid(mesh: str, by_joint: Dict[str, Sequence[int]]) -> None:
+    """These vertices of a skinned mesh follow their one joint and nothing else."""
+    import maya.api.OpenMaya as om  # type: ignore
+
+    names, weights, (fn, path, obj) = _skin_weights(mesh)
+    for joint, ids in by_joint.items():
+        ids = list(ids)
+        weights[ids] = 0.0
+        weights[ids, names.index(joint)] = 1.0
+    fn.setWeights(path, obj, om.MIntArray(list(range(len(names)))), om.MDoubleArray(weights.ravel().tolist()), False)
+
+
 def copy_part_skin(source_mesh: str, target_mesh: str, vertex_ids: Sequence[int]) -> None:
     """Weights of `vertex_ids` of the target taken from `source_mesh` (closest point), e.g. an eyeball."""
     _require_maya()
@@ -448,19 +509,100 @@ def copy_part_skin(source_mesh: str, target_mesh: str, vertex_ids: Sequence[int]
         cmds.select(sel, replace=True) if sel else cmds.select(clear=True)
 
 
-def export_head_without(mesh: str, vertex_ids: Sequence[int], path: str) -> str:
-    """Export `mesh` as the TopoTransfer Reference without the faces of `vertex_ids` (picked eyes, teeth)."""
+def export_head_without(mesh: str, vertex_ids: Sequence[int], path: str) -> Optional[List[int]]:
+    """Export `mesh` as the TopoTransfer Reference without the faces of `vertex_ids` (picked eyes, teeth).
+    Returns old vertex id -> OBJ vertex id (-1 = cut out), or None when nothing was cut."""
     _require_maya()
     if not vertex_ids:
-        return export_mesh_obj(mesh, path)
+        export_mesh_obj(mesh, path)
+        return None
     dup = cmds.duplicate(mesh, name=f"{mesh}_metaMutantReference")[0]
     try:
+        before = mesh_points(dup)
         faces = cmds.polyListComponentConversion([f"{dup}.vtx[{i}]" for i in vertex_ids], toFace=True, internal=True)
         if faces:
             cmds.delete(faces)
-        return export_mesh_obj(dup, path)
+        export_mesh_obj(dup, path)
+        return vertex_map(before, mesh_points(dup))
     finally:
         cmds.delete(dup)
+
+
+def vertex_map(before: Sequence[core.Vec3], after: Sequence[core.Vec3]) -> List[int]:
+    """Old id -> new id after faces were deleted: Maya keeps the surviving vertices in order, so walk both lists."""
+    out = [-1] * len(before)
+    k = 0
+    for i, p in enumerate(before):
+        if k < len(after) and p == after[k]:
+            out[i] = k
+            k += 1
+    if k != len(after):
+        raise RuntimeError("could not follow the vertices of the Reference after cutting out the eyes and teeth")
+    return out
+
+
+#: how far a scale may be from 1 and still count as 1
+SCALE_TOLERANCE = 1e-4
+
+
+def scale_problems(meshes: Sequence[str]) -> List[Tuple[str, Tuple[float, float, float]]]:
+    """(mesh, world scale) of every mesh whose world scale is not 1, its parents' scale included."""
+    _require_maya()
+    out = []
+    for mesh in meshes:
+        node = mesh.split(".")[0]
+        if not cmds.objExists(node):
+            continue
+        scale = cmds.xform(_transform(node), query=True, worldSpace=True, scale=True)
+        if any(abs(s - 1.0) > SCALE_TOLERANCE for s in scale):
+            out.append((_transform(node), tuple(scale)))
+    return out
+
+
+def freeze_blockers(meshes: Sequence[str]) -> List[str]:
+    """Why these meshes cannot be frozen, for the artist: deformers (freezing would break them), locks, references."""
+    _require_maya()
+    out = []
+    for mesh in meshes:
+        for node in _scaled_chain(mesh):
+            if cmds.referenceQuery(node, isNodeReferenced=True):
+                out.append(f"{node} comes from a reference")
+                continue
+            for axis in "xyz":
+                plug = f"{node}.s{axis}"
+                if cmds.getAttr(plug, lock=True) or cmds.listConnections(plug, source=True, destination=False):
+                    out.append(f"{plug} is locked or connected")
+                    break
+            for shape in cmds.listRelatives(node, allDescendents=True, type="mesh", fullPath=True) or []:
+                deformers = [d for d in cmds.listHistory(shape, pruneDagObjects=True) or []
+                             if "geometryFilter" in cmds.nodeType(d, inherited=True)]
+                if deformers:
+                    out.append(f"{shape.split('|')[-1]} has a deformer ({deformers[0]})")
+    return sorted(set(out))
+
+
+def _scaled_chain(mesh: str) -> List[str]:
+    """The mesh and its parents that have a scale of their own, top first: what a freeze has to touch."""
+    node = _transform(mesh.split(".")[0])
+    chain = cmds.ls(node, long=True)[0].split("|")[1:]
+    paths = ["|" + "|".join(chain[:i + 1]) for i in range(len(chain))]
+    return [p for p in paths if any(abs(s - 1.0) > SCALE_TOLERANCE for s in cmds.getAttr(p + ".scale")[0])]
+
+
+def freeze_scale(meshes: Sequence[str]) -> List[str]:
+    """Freeze the scale of these meshes and of whichever parents scale them; nothing moves in the view.
+    Returns the transforms frozen. One undo."""
+    _require_maya()
+    frozen: List[str] = []
+    cmds.undoInfo(openChunk=True, chunkName="Meta Mutant: freeze scale")
+    try:
+        for mesh in meshes:
+            for node in _scaled_chain(mesh):  # top first: freezing a parent pushes its scale into the children
+                cmds.makeIdentity(node, apply=True, translate=False, rotate=False, scale=True, normal=0, preserveNormals=True)
+                frozen.append(node)
+    finally:
+        cmds.undoInfo(closeChunk=True)
+    return frozen
 
 
 def nearest_mesh(points: Sequence[core.Vec3], meshes: Sequence[str]) -> str:

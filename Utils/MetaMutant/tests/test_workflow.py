@@ -92,9 +92,9 @@ class TestWorkflow(unittest.TestCase):
     def test_status_and_warnings(self):
         with tempfile.TemporaryDirectory() as tmp:
             s = wf.Settings(work_dir=tmp, dna_path=os.path.join(tmp, "head.dna"))
-            self.assertEqual(wf.status(s), {"setup": False, "export": False, "wrapped": False, "calibrated": False})
+            self.assertEqual(wf.status(s), {"setup": False, "points": False, "export": False, "wrapped": False, "calibrated": False})
             p = wf.paths(tmp)
-            for f in (s.dna_path, p.base_obj, p.manifest, p.reference_obj, p.wrapped_obj, p.custom_dna):
+            for f in (s.dna_path, p.points, p.base_obj, p.manifest, p.reference_obj, p.wrapped_obj, p.custom_dna):
                 open(f, "w").close()
             s.wrapped_obj = p.wrapped_obj
             self.assertTrue(all(wf.status(s).values()))

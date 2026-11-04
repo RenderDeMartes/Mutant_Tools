@@ -427,11 +427,11 @@ export class SceneController {
           new THREE.MeshBasicMaterial({ color: selected && !asked ? '#ffffff' : color, depthTest: true }),
         );
         m.position.set(p[0], p[1], p[2]);
-        m.scale.setScalar(asked ? rad * 2.2 : selected ? rad * 1.5 : busy ? rad * 0.8 : rad);
+        m.scale.setScalar(asked ? rad * 2.2 : selected ? rad * 1.5 : l.group === 'lines' ? rad * 0.35 : busy ? rad * 0.8 : rad);
         m.renderOrder = 5;
         this.markers.add(m);
         this.dots.push({ id: l.id, side: side === 'b' ? 'base' : 'ref', pos: m.position });
-        if (!busy || asked || selected) {
+        if ((!busy || asked || selected) && l.group !== 'lines') {
           const sprite = new THREE.Sprite(new THREE.SpriteMaterial({ map: this.label(`${l.id}${side === 'b' ? '' : "'"}`, color), depthTest: false, sizeAttenuation: false }));
           sprite.position.copy(m.position);
           sprite.center.set(-0.15, -0.15);

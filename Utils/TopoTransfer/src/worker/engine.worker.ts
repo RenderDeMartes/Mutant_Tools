@@ -93,6 +93,7 @@ self.onmessage = async (ev: MessageEvent<Req>) => {
             landmarks: j.landmarks,
             mask: j.mask,
             componentModes: j.componentModes,
+            regionLock: j.regionLock,
             params: j.params,
           },
           {

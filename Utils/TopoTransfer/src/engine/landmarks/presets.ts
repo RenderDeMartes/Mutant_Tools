@@ -79,7 +79,7 @@ export const METAHUMAN_FACE_VERTEX: Record<string, number> = {
   'Nose tip': 17088,
   'Nasion': 9854,
   'Glabella': 16130,
-  'Subnasale': 12818,
+  'Subnasale': 17113,
   'Upper lip center': 2909,
   'Lower lip center': 2881,
   'Chin': 2971,
