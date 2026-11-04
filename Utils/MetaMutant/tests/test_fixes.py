@@ -62,5 +62,49 @@ class Teeth(unittest.TestCase):
         np.testing.assert_allclose(q, [[-1.0, 5.0, 0.0], [1.0, 5.0, 0.0], [0.0, 7.0, 5.0]])
 
 
+def wall(z, x=(-10, 10), y=(-10, 10)):
+    """A flat square of skin facing the front, at depth z."""
+    a, b, c, d = (x[0], y[0], z), (x[1], y[0], z), (x[1], y[1], z), (x[0], y[1], z)
+    return np.array([[a, b, c], [a, c, d]], float)
+
+
+STILL = (np.eye(3), np.zeros(3), np.zeros(3))
+
+
+class TestPlaceTeeth(unittest.TestCase):
+    def test_height_map_reads_the_nearest_surface_and_nothing_outside_it(self):
+        skin = mf.HeightMap(np.concatenate([wall(2.0), wall(5.0, x=(0, 10))]), (-12, -12), (12, 12), 0.5)
+        self.assertEqual(skin.at(np.array([-5.0]), np.array([0.0]))[0], 2.0)
+        self.assertEqual(skin.at(np.array([5.0]), np.array([0.0]))[0], 5.0)
+        self.assertEqual(skin.at(np.array([11.0]), np.array([0.0]))[0], -np.inf)
+        self.assertEqual(skin.at(np.array([500.0]), np.array([0.0]))[0], -np.inf)
+
+    def test_a_point_in_the_mouths_opening_may_show(self):
+        skin = mf.HeightMap(wall(2.0, y=(1, 10)), (-12, -12), (12, 12), 0.5)
+        opening = np.array([[0.0, -5.0, 9.0]])  # no skin in front: the opening
+        behind = np.array([[0.0, 5.0, 1.0]])
+        self.assertEqual(mf.in_front_of_skin(opening, [(STILL, skin)]), -np.inf)
+        self.assertAlmostEqual(mf.in_front_of_skin(behind, [(STILL, skin)]), -1.0)
+
+    def test_the_arch_follows_its_move_in_each_pose(self):
+        skin = mf.HeightMap(wall(2.0), (-12, -12), (12, 12), 0.5)
+        forward = (np.eye(3), np.zeros(3), np.array([0.0, 0.0, 3.0]))
+        self.assertAlmostEqual(mf.in_front_of_skin(np.array([[0.0, 0.0, 1.0]]), [(STILL, skin), (forward, skin)]), 2.0)
+
+    def test_back_needed_is_the_least_that_clears_every_part(self):
+        skin = mf.HeightMap(wall(2.0), (-12, -12), (12, 12), 0.5)
+        parts = [(np.array([[0.0, 0.0, 3.0]]), [(STILL, skin)]), (np.array([[1.0, 0.0, 1.0]]), [(STILL, skin)])]
+        self.assertAlmostEqual(mf.back_needed(parts, 0.5, 5.0), 1.5, places=2)
+        self.assertEqual(mf.back_needed(parts, 0.5, 1.0), 1.0)  # the limit
+        self.assertEqual(mf.back_needed([(np.array([[0.0, 0.0, 0.0]]), [(STILL, skin)])], 0.5, 5.0), 0.0)
+
+    def test_rigid_move_recovers_a_turn(self):
+        rest = np.array([[0.0, 0, 0], [1, 0, 0], [0, 1, 0], [0, 0, 1], [1, 1, 1]])
+        turn = np.array([[0.0, -1, 0], [1, 0, 0], [0, 0, 1]])
+        pose = rest @ turn.T + np.array([3.0, 0, 0])
+        R, a, b = mf.rigid_move(rest, pose)
+        self.assertTrue(np.allclose((rest - a) @ R.T + b, pose))
+
+
 if __name__ == "__main__":
     unittest.main()

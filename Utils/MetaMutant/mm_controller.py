@@ -432,8 +432,9 @@ class Workflow:
                 eyes = [core.sphere_fit(g) for g in (a, b) if len(g) >= 4]
             mm_fixes.close_eyelids(head, source, points, mm_rig.ROOT, eyes, meshes, log=self.log)
         if self.s.fit_teeth and self.s.teeth:
-            teeth = [mesh + RESULT_SUFFIX for mesh in mm_maya.spec_vertices(self.s.teeth) if mesh != self.s.custom_mesh]
-            mm_fixes.fit_teeth(head, teeth, points, log=self.log)
+            arches = {mesh + RESULT_SUFFIX: (up, low) for mesh, (up, low, _) in self.teeth_arches().items() if mesh != self.s.custom_mesh}
+            mm_fixes.place_teeth(head, arches, points, mm_rig.ROOT, log=self.log)
+            mm_fixes.fit_teeth(head, list(arches), points, log=self.log)
 
     def transfer(self):
         import maya.cmds as cmds  # type: ignore
@@ -511,7 +512,9 @@ class Workflow:
         # the MetaHuman's own meshes only drive the rig now: hidden, your copies show
         cmds.hide([m for m in cmds.listRelatives("metaMutant_geometry", children=True, type="transform") or []
                    if m.endswith("_lod0_mesh")])
-        self.log("rig placed on your head (its original position)")
+        # your meshes stay as they were, only hidden: left showing they would stand still inside the moving copies
+        cmds.hide(list(copies))
+        self.log(f"rig placed on your head (its original position); your {', '.join(copies)} hidden, not changed")
         self.applied = True
         self.log(f"rig transferred from {source} to {', '.join(copies.values())}")
 

@@ -54,7 +54,7 @@ Then the four steps, top to bottom (the next one is lit):
      out ("not listening") when the page was not opened from Maya; **Download** saves the file.
 4. **Apply** — **Apply to my head**: fits the MetaHuman eyes and teeth onto yours, calibrates the
    DNA (`head_custom.dna`), builds the rig from it and rigs a copy of your head, `<your head>_MH`
-   (and `<part>_MH` for eye / teeth meshes), right where your head is. Your meshes are not touched. **Apply again** replaces
+   (and `<part>_MH` for eye / teeth meshes), right where your head is. Your meshes are not touched. They are only hidden, so they do not stand still inside the moving copies. **Apply again** replaces
    the earlier result.
 
 **Face + board view** (on the green panel at the end) turns Maya's viewport into two panels: your face on the left, the
@@ -106,7 +106,7 @@ Then, with the rig moving, Apply corrects what depends on your head's proportion
 | Setting | What it does |
 | --- | --- |
 | `close_eyelids` | in the blink pose, measures what your lids still lack to meet as the MetaHuman's do, with the upper riding slightly over the lower and the lids kept out of your eye meshes. Stored as a blendShape target per eye (`mmFix_lidClose_L/R`) driven by the MetaHuman's `eye_blink_L/R` |
-| `fit_teeth` | teeth wider than the face around them come through the cheeks when the jaw opens and through the lips in a smile. Narrows the rigged copy (`<teeth>_MH`) as little as keeps it inside the skin in those poses, and logs by how much. Your own teeth mesh is not touched |
+| `fit_teeth` | teeth modelled close behind the lips come through them when the lips press back. Moves the rigged copy (`<teeth>_MH`) back, both arches alike so the bite stays, as little as keeps it behind the skin seen from the front in the mouth's poses. What still comes through the cheeks when the jaw opens, it narrows. It logs by how much. Your own teeth mesh is not touched |
 
 Both are on by default; set them in `<work>/meta_mutant.json`.
 

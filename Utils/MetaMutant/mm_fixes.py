@@ -6,12 +6,16 @@ differently on the eyeball, the same motion leaves a gap at full blink, and the 
 corners. It measures that in the blink pose and stores what is missing as one more blendShape target, driven by the
 MetaHuman's own blink weight, so it grows with the blink and is nothing at rest.
 
-fit_teeth: teeth wider than the face around them come through the cheeks when the jaw opens and through the lips in
-a smile (the wrapped MetaHuman does the same). It narrows the rigged copy of your teeth, as little as stops that
-in those poses. Your own teeth mesh is not touched.
+place_teeth: teeth modelled close behind the lips come through them as soon as the lips press back against the teeth.
+It moves the rigged copy of your teeth back, both arches by the same amount so the bite stays, as little as keeps
+them behind the skin seen from the front, across the mouth's poses.
+
+fit_teeth: teeth wider than the face around them come through the cheeks when the jaw opens (the wrapped MetaHuman
+does the same). What moving them back left over, it narrows, as little as stops that in those poses. Your own teeth
+mesh is not touched by either.
 
 Need the rig and the face board in the scene (mm_rig, mm_faceboard), and the lines picked (mm_points).
-The math (delta_along_lines, lid_gaps, out_of_sphere, narrowed) needs no Maya.
+The math (delta_along_lines, lid_gaps, out_of_sphere, narrowed, height_map, in_front_of_skin, back_needed) needs no Maya.
 """
 
 from __future__ import annotations
@@ -41,6 +45,23 @@ TEETH_SAMPLE = 5  # every how many teeth vertices are checked against the skin
 TEETH_POSES = (("CTRL_C_jaw.translateY",),
                ("CTRL_L_mouth_cornerPull.translateY", "CTRL_R_mouth_cornerPull.translateY"),
                ("CTRL_C_jaw.translateY", "CTRL_L_mouth_cornerPull.translateY", "CTRL_R_mouth_cornerPull.translateY"))
+
+
+#: poses the teeth must stay behind the skin in, as what is set on the board: both sides of each stem, and the jaw
+TEETH_PLACE_POSES = (
+    (0.0, {}), (1.0, {}), (0.6, {"mouth_cornerPull": 1.0}), (0.0, {"mouth_cornerPull": 1.0}),
+    (0.15, {"mouth_cornerPull": 0.85, "mouth_upperLipRaise": 0.25, "mouth_lowerLipDepress": 0.3}), (0.0, {"mouth_sharpCornerPull": 1.0}),
+    (0.0, {"mouth_stretch": 1.0}), (0.9, {"mouth_stretch": 0.7, "mouth_upperLipRaise": 0.8, "mouth_lowerLipDepress": 0.8}),
+    (0.0, {"mouth_upperLipRaise": 1.0, "mouth_lowerLipDepress": 1.0}), (0.1, {"mouth_lipBiteD": 0.85, "mouth_upperLipRaise": 0.3}),
+    (0.0, {"mouth_funnelU": 1.0, "mouth_funnelD": 1.0}), (0.0, {"mouth_purseU": 1.0, "mouth_purseD": 1.0}),
+    (0.0, {"mouth_towardsU": 1.0, "mouth_towardsD": 1.0}), (0.0, {"mouth_lipsPressU": 1.0, "mouth_lipsPressD": 1.0}),
+    (0.0, {"mouth_cornerDepress": 1.0}), (0.0, {"mouth_tightenU": 1.0, "mouth_tightenD": 1.0}),
+)
+#: space kept between the teeth and the skin, and the most they move back, as shares of the teeth's width and depth
+TEETH_MARGIN = 0.02
+TEETH_MAX_BACK = 0.25
+#: the size of a cell of the height maps, as a share of the teeth's width
+HEIGHT_CELL = 0.01
 
 
 def falloff(depth: np.ndarray, reach: float) -> np.ndarray:
@@ -98,6 +119,84 @@ def narrowed(points: np.ndarray, scale: float) -> np.ndarray:
     out[:, 0] = middle + (points[:, 0] - middle) * scale
     out[:, 2] = back + (points[:, 2] - back) * scale
     return out
+
+
+class HeightMap:
+    """The nearest surface seen from the front (+Z) at each (x, y) of a grid; -inf where there is none."""
+
+    def __init__(self, triangles: np.ndarray, low: Sequence[float], high: Sequence[float], cell: float):
+        self.x0, self.y0, self.cell = float(low[0]), float(low[1]), float(cell)
+        xs = np.arange(low[0], high[0] + cell, cell)
+        ys = np.arange(low[1], high[1] + cell, cell)
+        self.z = np.full((len(ys), len(xs)), -np.inf)
+        for a, b, c in np.asarray(triangles, float):
+            area = (b[0] - a[0]) * (c[1] - a[1]) - (b[1] - a[1]) * (c[0] - a[0])
+            if abs(area) < 1e-12:
+                continue
+            lo, hi = np.minimum(np.minimum(a, b), c), np.maximum(np.maximum(a, b), c)
+            i0, i1 = np.searchsorted(xs, lo[0]), np.searchsorted(xs, hi[0], "right")
+            j0, j1 = np.searchsorted(ys, lo[1]), np.searchsorted(ys, hi[1], "right")
+            if i0 >= i1 or j0 >= j1:
+                continue
+            X, Y = np.meshgrid(xs[i0:i1], ys[j0:j1])
+            w0 = ((b[0] - X) * (c[1] - Y) - (b[1] - Y) * (c[0] - X)) / area
+            w1 = ((c[0] - X) * (a[1] - Y) - (c[1] - Y) * (a[0] - X)) / area
+            w2 = 1.0 - w0 - w1
+            inside = (w0 >= 0) & (w1 >= 0) & (w2 >= 0)
+            part = self.z[j0:j1, i0:i1]
+            part[inside] = np.maximum(part[inside], (w0 * a[2] + w1 * b[2] + w2 * c[2])[inside])
+
+    def at(self, x: np.ndarray, y: np.ndarray) -> np.ndarray:
+        rows, cols = self.z.shape
+        i = np.round((np.asarray(x) - self.x0) / self.cell).astype(int)
+        j = np.round((np.asarray(y) - self.y0) / self.cell).astype(int)
+        out = np.full(len(i), -np.inf)
+        ok = (i >= 0) & (i < cols) & (j >= 0) & (j < rows)
+        out[ok] = self.z[j[ok], i[ok]]
+        return out
+
+
+def rigid_move(rest: np.ndarray, pose: np.ndarray) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
+    """(R, a, b) of the rigid move from `rest` to `pose`: a point p goes to (p - a) R^T + b."""
+    a, b = rest.mean(0), pose.mean(0)
+    u, _, vt = np.linalg.svd((rest - a).T @ (pose - b))
+    flip = np.sign(np.linalg.det(vt.T @ u.T))
+    return vt.T @ np.diag([1.0, 1.0, flip]) @ u.T, a, b
+
+
+def in_front_of_skin(points: np.ndarray, moves: Sequence[Tuple[tuple, HeightMap]]) -> float:
+    """How far `points` (at rest) come in front of the skin, worst of all poses; negative: the space left behind it.
+    Each pose gives the rigid move of these points and the height map of the skin. No skin in front of a point is the
+    mouth's opening: that point may show."""
+    worst = -np.inf
+    for (R, a, b), skin in moves:
+        q = (points - a) @ R.T + b
+        z = skin.at(q[:, 0], q[:, 1])
+        seen = np.isfinite(z)
+        if seen.any():
+            worst = max(worst, float((q[seen, 2] - z[seen]).max()))
+    return worst
+
+
+def back_needed(parts: Sequence[Tuple[np.ndarray, Sequence[Tuple[tuple, HeightMap]]]], margin: float, limit: float) -> float:
+    """How far back (-Z) all the `parts` (points at rest, their moves) must go to stay `margin` behind the skin in every
+    pose, up to `limit`."""
+    def worst(back: float) -> float:
+        shift = np.array([0.0, 0.0, back])
+        return max(in_front_of_skin(p - shift, moves) for p, moves in parts)
+
+    if worst(0.0) <= -margin:
+        return 0.0
+    if worst(limit) > -margin:
+        return limit
+    low, high = 0.0, limit
+    for _ in range(12):
+        mid = (low + high) / 2
+        if worst(mid) > -margin:
+            low = mid
+        else:
+            high = mid
+    return high
 
 
 # ----------------------------------------------------------------------------- Maya
@@ -300,6 +399,72 @@ def _rest(mesh: str) -> np.ndarray:
     sel = om.MSelectionList()
     sel.add(orig[0])
     return np.array([(p.x, p.y, p.z) for p in om.MFnMesh(sel.getDagPath(0)).getPoints(om.MSpace.kObject)])
+
+
+def place_teeth(head: str, arches: Dict[str, Tuple[Sequence[int], Sequence[int]]], points: dict, root: str, log: Callable[[str], None] = print) -> float:
+    """Move the rigged teeth (mesh -> upper ids, lower ids) back as little as keeps them behind the skin of `head` in
+    TEETH_PLACE_POSES. Returns how far, in scene units."""
+    import maya.api.OpenMaya as om  # type: ignore
+    import maya.cmds as cmds  # type: ignore
+
+    arches = {m: a for m, a in arches.items() if cmds.objExists(m)}
+    if not arches:
+        return 0.0
+    # in the rig's own space, where the head faces +Z, whatever the scene's alignment
+    inverse = np.linalg.inv(np.array(cmds.xform(root, query=True, worldSpace=True, matrix=True)).reshape(4, 4))
+    to_rig = lambda p: (np.c_[p, np.ones(len(p))] @ inverse)[:, :3]  # noqa: E731
+    rest = {m: to_rig(_world(m)) for m in arches}
+    every = np.concatenate(list(rest.values()))
+    width, depth = float(np.ptp(every[:, 0])), float(np.ptp(every[:, 2]))
+    low, high = every.min(0) - width * 0.2, every.max(0) + width * 0.2
+    sel = om.MSelectionList()
+    sel.add(head)
+    fn = om.MFnMesh(sel.getDagPath(0))
+    counts, connects = fn.getTriangles()
+    triangles = np.array(connects).reshape(-1, 3)
+    triangles = triangles[_outer_faces(head, points)[np.repeat(np.arange(len(counts)), np.array(counts))]]
+    skin_rest = to_rig(_world(head))[triangles]
+    near = (skin_rest[:, :, :2].max(1) > low[:2]).all(1) & (skin_rest[:, :, :2].min(1) < high[:2]).all(1) & (skin_rest.mean(1)[:, 2] > low[2])
+    triangles = triangles[near]
+    parts = [(rest[m][list(ids)], []) for m, (up, lo) in arches.items() for ids in (up, lo) if len(ids)]
+    jaw = "CTRL_C_jaw.translateY"
+    for opened, stems in TEETH_PLACE_POSES:
+        plugs = {f"CTRL_{side}_{stem}.translateY": value for stem, value in stems.items() for side in "LR"}
+        if opened:
+            plugs[jaw] = opened
+        # Epic's board drives some controls from their pair
+        plugs = {plug: value for plug, value in plugs.items() if cmds.objExists(plug) and cmds.getAttr(plug, settable=True)}
+        for plug, value in plugs.items():
+            cmds.setAttr(plug, value)
+        cmds.refresh(force=True)
+        skin = HeightMap(to_rig(_world(head))[triangles], low, high, width * HEIGHT_CELL)
+        at = 0
+        for m, (up, lo) in arches.items():
+            now = to_rig(_world(m))
+            for ids in (up, lo):
+                if len(ids):
+                    parts[at][1].append((rigid_move(rest[m][list(ids)], now[list(ids)]), skin))
+                    at += 1
+        for plug in plugs:
+            cmds.setAttr(plug, 0.0)
+    cmds.refresh(force=True)
+    limit = depth * TEETH_MAX_BACK
+    back = back_needed(parts, width * TEETH_MARGIN, limit)
+    scale = float(np.linalg.norm(np.linalg.inv(inverse)[0, :3]))
+    if back > 0.0:
+        for m in arches:
+            q = _rest(m)
+            q[:, 2] -= back
+            _set_rest(m, q)
+        cmds.refresh(force=True)
+    left = max(in_front_of_skin(p - np.array([0.0, 0.0, back]), moves) for p, moves in parts)
+    if back >= limit and left > 0.0:
+        log(f"teeth moved back {back * scale:.2f}, the most allowed, and they still come through the skin by {left * scale:.2f}: they are too far forward or too big for these lips")
+    elif back > 0.0:
+        log(f"teeth moved back {back * scale:.2f} so the lips clear them in {len(TEETH_PLACE_POSES)} poses (same size, same bite). Your own teeth mesh is as it was")
+    else:
+        log("teeth stay behind the lips in the poses checked")
+    return back * scale
 
 
 def fit_teeth(head: str, teeth: Sequence[str], points: dict, log: Callable[[str], None] = print) -> float:
