@@ -512,6 +512,7 @@ class Workflow:
         # the MetaHuman's own meshes only drive the rig now: hidden, your copies show
         cmds.hide([m for m in cmds.listRelatives("metaMutant_geometry", children=True, type="transform") or []
                    if m.endswith("_lod0_mesh")])
+        mm_maya.plain_material_where_missing([copy for mesh, copy in copies.items() if mesh != self.s.custom_mesh], log=self.log)
         # your meshes stay as they were, only hidden: left showing they would stand still inside the moving copies
         cmds.hide(list(copies))
         self.log(f"rig placed on your head (its original position); your {', '.join(copies)} hidden, not changed")

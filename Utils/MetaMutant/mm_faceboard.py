@@ -491,6 +491,15 @@ def remove():
             cmds.delete(n)
 
 
+def main_box(points, margin: float = 0.18) -> Tuple[float, float, float, float]:
+    """(x0, y0, x1, y1) around most of the points, with a margin: Epic's board keeps a few switches far from the rest,
+    and a box around all of them would leave the board a dot in the view."""
+    p = np.asarray(points, float)
+    low, high = np.percentile(p[:, :2], 3, axis=0), np.percentile(p[:, :2], 97, axis=0)
+    pad = (high - low) * margin
+    return float(low[0] - pad[0]), float(low[1] - pad[1]), float(high[0] + pad[0]), float(high[1] + pad[1])
+
+
 def make_cameras(head: str = "") -> Tuple[str, str]:
     """The board's camera (orthographic, facing it) and one in front of the face, framed on them as they stand now.
     Made once; called again they are framed again."""
@@ -500,8 +509,10 @@ def make_cameras(head: str = "") -> Tuple[str, str]:
             node = cmds.camera(**flags)[0]
             cmds.rename(node, name)
     low = cmds.exactWorldBoundingBox(BOARD)
-    width, height = low[3] - low[0], low[4] - low[1]
-    cmds.xform(BOARD_CAMERA, worldSpace=True, translation=((low[0] + low[3]) / 2, (low[1] + low[4]) / 2, low[5] + max(width, height)), rotation=(0, 0, 0))
+    controls = [c for c in cmds.ls("CTRL_*", type="transform", long=True) if c.startswith("|" + BOARD + "|")]
+    x0, y0, x1, y1 = main_box([cmds.xform(c, query=True, worldSpace=True, translation=True) for c in controls]) if len(controls) > 4 else (low[0], low[1], low[3], low[4])
+    width, height = x1 - x0, y1 - y0
+    cmds.xform(BOARD_CAMERA, worldSpace=True, translation=((x0 + x1) / 2, (y0 + y1) / 2, low[5] + max(width, height)), rotation=(0, 0, 0))
     shape = cmds.listRelatives(BOARD_CAMERA, shapes=True)[0]
     cmds.setAttr(shape + ".orthographicWidth", max(width, height) * 1.08)
     cmds.setAttr(shape + ".farClipPlane", (low[5] - low[2] + max(width, height)) * 4)

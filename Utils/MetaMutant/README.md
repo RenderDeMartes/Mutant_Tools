@@ -15,7 +15,7 @@ blendshapes) onto a copy of your head. Your eyes and teeth (with the tongue) can
  Maya ── 4 Apply ──► head_custom.dna ► rig ► <your head>_MH rigged
 ```
 
-New here? **Help ▸ Tutorial** (`tutorial/TUTORIAL.md`) walks through it with pictures.
+New here? **Help ▸ Tutorial** opens the [tutorial on the website](https://mutanttools.com/meta-mutant/). The steps are also in `tutorial/TUTORIAL.md`.
 
 **Maya 2026 only.** Everything it needs comes with Mutant Tools: TopoTransfer (served by Maya,
 no Node.js) and Epic's `dna` module for Maya 2026 (`dna_module/Maya2026`, built from
@@ -54,7 +54,7 @@ Then the four steps, top to bottom (the next one is lit):
      out ("not listening") when the page was not opened from Maya; **Download** saves the file.
 4. **Apply** — **Apply to my head**: fits the MetaHuman eyes and teeth onto yours, calibrates the
    DNA (`head_custom.dna`), builds the rig from it and rigs a copy of your head, `<your head>_MH`
-   (and `<part>_MH` for eye / teeth meshes), right where your head is. Your meshes are not touched. They are only hidden, so they do not stand still inside the moving copies. **Apply again** replaces
+   (and `<part>_MH` for eye / teeth meshes), right where your head is. Your meshes are not touched. They are only hidden, so they do not stand still inside the moving copies. Eyes and teeth whose materials have no shader, which show solid green, get a plain lambert on their copies. **Apply again** replaces
    the earlier result.
 
 **Face + board view** (on the green panel at the end) turns Maya's viewport into two panels: your face on the left, the
@@ -90,6 +90,10 @@ heads also show, one over the other, in your other viewports.
 
 Stored in `<work>/points.json` and the settings. Step 2 turns them into `guides.json` for TopoTransfer, reading
 the positions again from your head in case it moved. Points picked on other topology are dropped.
+
+## Sharing the rig
+
+The result is vanilla Maya 2026: joints, skinCluster, blendShape and math nodes. Animators need no custom nodes, plugin or Mutant Tools, and the scene has no references or external files. Older versions of Maya are not supported: the rig uses `multDL` nodes, which Maya 2024 cannot load. Tested by opening a rigged scene in a clean `mayapy` 2026 without Mutant Tools: the animation and controls drive the head, eyes and teeth.
 
 ## Lips and eyes
 

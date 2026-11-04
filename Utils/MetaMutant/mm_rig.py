@@ -131,9 +131,10 @@ def build_mesh(r, m: int, parent: str) -> str:
     transform = fn.create(om.MPointArray([om.MPoint(*p) for p in d["positions"]]), d["counts"], d["connects"],
                           d["us"], d["vs"])
     fn.assignUVs(d["counts"], d["uv_ids"])
-    node = om.MFnDependencyNode(transform).setName(d["name"])
+    om.MFnDependencyNode(transform).setName(d["name"])
     om.MFnDependencyNode(fn.object()).setName(d["name"] + "Shape")
-    node = cmds.parent(node, parent)[0]
+    # by its full path: the rig of an earlier Apply may hold a mesh of this name (Pick again)
+    node = cmds.parent(om.MFnDagNode(transform).fullPathName(), parent)[0]
     cmds.sets(node, edit=True, forceElement="initialShadingGroup")
     return node
 

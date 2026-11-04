@@ -181,6 +181,11 @@ def place_in_scene(wrapped_obj: str, meshes: Sequence[str] = ()) -> List[float]:
 # ----------------------------------------------------------------------------- rig transfer
 
 
+#: the material of eyes and teeth that came without a shader
+PARTS_MATERIAL = "metaMutant_parts"
+PARTS_COLOUR = (0.74, 0.72, 0.70)
+
+
 def _skin_cluster(mesh: str) -> Optional[str]:
     hist = cmds.listHistory(mesh, pruneDagObjects=True) or []
     sc = cmds.ls(hist, type="skinCluster")
@@ -452,6 +457,28 @@ def spec_points(spec: Sequence[str]) -> List[List[core.Vec3]]:
         pts = mesh_points(mesh)
         groups.append([pts[i] for i in ids])
     return groups
+
+
+def plain_material_where_missing(meshes: Sequence[str], log=print) -> List[str]:
+    """Meshes whose materials have no shader show solid green in the viewport: those get a plain lambert, a bit
+    whiter than an untextured face. A mesh with any real material is left as it is. Returns the meshes changed."""
+    _require_maya()
+    changed = []
+    for mesh in meshes:
+        shapes = cmds.listRelatives(mesh, shapes=True, noIntermediate=True, fullPath=True) or []
+        groups = sorted({g for s in shapes for g in cmds.listConnections(s, type="shadingEngine") or []})
+        if not groups or any(cmds.listConnections(g + ".surfaceShader") for g in groups):
+            continue
+        if not cmds.objExists(PARTS_MATERIAL):
+            node = cmds.shadingNode("lambert", asShader=True, name=PARTS_MATERIAL)
+            cmds.setAttr(node + ".color", *PARTS_COLOUR, type="double3")
+            group = cmds.sets(renderable=True, noSurfaceShader=True, empty=True, name=PARTS_MATERIAL + "SG")
+            cmds.connectAttr(node + ".outColor", group + ".surfaceShader")
+        cmds.sets(mesh, edit=True, forceElement=PARTS_MATERIAL + "SG")
+        changed.append(mesh)
+    if changed:
+        log(f"{', '.join(changed)}: their materials have no shader, so they get a plain lambert ({PARTS_MATERIAL})")
+    return changed
 
 
 def mesh_shells(mesh: str, ids: Optional[Sequence[int]] = None) -> List[List[int]]:

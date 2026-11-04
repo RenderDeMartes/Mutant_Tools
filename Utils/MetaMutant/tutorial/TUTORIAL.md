@@ -1,5 +1,9 @@
 # Meta Mutant in 5 minutes
 
+> The short version with pictures is on the website: <https://mutanttools.com/meta-mutant/>
+>
+> **Animators:** the rig is vanilla Maya 2026. No custom nodes, no plugin to install, no Mutant Tools needed: just the scene file.
+
 Give **your own 3D head** the **MetaHuman face rig**: blinking eyes, a jaw that opens, hundreds
 of face shapes. Meta Mutant moves the MetaHuman face onto your head, then copies its rig over.
 

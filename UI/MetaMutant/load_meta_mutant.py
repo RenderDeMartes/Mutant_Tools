@@ -23,6 +23,7 @@ from __future__ import absolute_import
 import os
 import sys
 import traceback
+import webbrowser
 
 import maya.cmds as cmds
 
@@ -63,6 +64,7 @@ TITLE = 'Meta Mutant'
 ICONS = QtMutantWindow.ICONS_FOLDER
 OPTION_VAR = 'metaMutant_workDir'
 _window = None
+TUTORIAL_URL = 'https://mutanttools.com/meta-mutant/'
 
 # the same colours as the Web to Rig window: Mutant Tools' own, its selection
 # blue for the one thing to do next, green for done and red for stopped
@@ -157,38 +159,8 @@ _tutorial = None
 
 
 def open_tutorial():
-    """The Meta Mutant tutorial (simple steps with pictures), rendered in a Maya window."""
-    global _tutorial
-    try:
-        _tutorial.close()
-        _tutorial.deleteLater()
-    except Exception:
-        pass
-    _tutorial = TutorialWindow(os.path.join(PIPELINE, 'tutorial', 'TUTORIAL.md'), _window)
-    _tutorial.show()
-    return _tutorial
-
-
-class TutorialWindow(QtWidgets.QDialog):
-
-    def __init__(self, path, parent=None):
-        super(TutorialWindow, self).__init__(parent)
-        self.setWindowFlags(self.windowFlags() | QtCore.Qt.Window)
-        self.setWindowTitle('Meta Mutant tutorial')
-        self.resize(760, 820)
-        layout = QtWidgets.QVBoxLayout(self)
-        layout.setContentsMargins(0, 0, 0, 0)
-        text = QtWidgets.QTextBrowser()
-        text.setOpenExternalLinks(True)
-        text.setSearchPaths([os.path.dirname(path)])
-        text.setStyleSheet('QTextBrowser { background: #2b2d2f; color: #d0d0d0; border: none; padding: 12px 18px; }')
-        text.document().setDefaultStyleSheet('a { color: #8fb0e6; } code, pre { color: #e6c27a; }')
-        try:
-            with open(path, encoding='utf-8') as f:
-                text.setMarkdown(f.read())
-        except OSError as error:
-            text.setPlainText('The tutorial is missing: {}'.format(error))
-        layout.addWidget(text)
+    """The Meta Mutant tutorial, on the Mutant Tools website."""
+    webbrowser.open(TUTORIAL_URL)
 
 
 def _help_button(text):

@@ -30,6 +30,18 @@ def behaviour():
     }
 
 
+class TestBoardFrame(unittest.TestCase):
+    def test_a_few_far_controls_do_not_shrink_the_board(self):
+        import mm_faceboard
+
+        grid = [(x, y, 0.0) for x in range(0, 100, 5) for y in range(-240, -150, 5)]
+        x0, y0, x1, y1 = mm_faceboard.main_box(grid + [(0.0, -760.0, 0.0), (120.0, -755.0, 0.0)])
+        self.assertGreater(y0, -270)
+        self.assertLess(y1, -130)
+        self.assertLess(x0, 5)
+        self.assertGreater(x1, 90)
+
+
 class TestFace(unittest.TestCase):
     def test_scale_rotation_leaves_translation(self):
         b = mm_face.scale_rotation(behaviour(), ["j0"], 0.5)
