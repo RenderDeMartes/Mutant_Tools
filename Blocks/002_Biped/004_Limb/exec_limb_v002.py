@@ -380,6 +380,21 @@ def _vector_op(name, a, b, operation):
     return node + '.output3D'
 
 
+def _bend_normal(name, chord, to_other):
+    """Unit normal of the plane start, end, other (chord x to_other). A perfectly straight limb makes that a zero
+    vector and vectorProduct warns, so to_other gets a tiny nudge (far below a visible size). Straight limbs
+    ignore the arc anyway. Returns the output plug."""
+    nudge = cmds.createNode('plusMinusAverage', n=name + '_NormalNudge_PlusMinusAverage')
+    cmds.connectAttr(to_other, nudge + '.input3D[0]')
+    cmds.setAttr(nudge + '.input3D[1]', 1e-4, 1e-4, 1e-4, type='double3')
+    normal = cmds.createNode('vectorProduct', n=name + '_Normal_VectorProduct')
+    cmds.setAttr(normal + '.operation', 2)
+    cmds.setAttr(normal + '.normalizeOutput', 1)
+    cmds.connectAttr(chord, normal + '.input1')
+    cmds.connectAttr(nudge + '.output3D', normal + '.input2')
+    return normal + '.output'
+
+
 def _vector_scale(name, vector, value):
     node = cmds.createNode('multiplyDivide', n=name)
     cmds.connectAttr(vector, node + '.input1')
@@ -512,12 +527,7 @@ def bendy_segment_path(name, start, end, other, curve, tweak_ctrls, start_offset
     where each controller sits."""
     chord = _vector_op(name + '_Chord_PlusMinusAverage', end, start, 2)
     to_other = _vector_op(name + '_ToOther_PlusMinusAverage', other, start, 2)
-    normal = cmds.createNode('vectorProduct', n=name + '_Normal_VectorProduct')
-    cmds.setAttr(normal + '.operation', 2)
-    cmds.setAttr(normal + '.normalizeOutput', 1)
-    cmds.connectAttr(chord, normal + '.input1')
-    cmds.connectAttr(to_other, normal + '.input2')
-    normal += '.output'
+    normal = _bend_normal(name, chord, to_other)
 
     # inscribed angle at the other point: the arc start -> end turns twice this
     angle = cmds.createNode('angleBetween', n=name + '_Inscribed_AngleBetween')
@@ -1094,12 +1104,7 @@ def _sn_path(name, start, end, other, curve, ease, ease_at_start, u_values):
     """Default bendy path math (straight -> arc through start, end, other) at some u values.
     Returns {u: (position plug, tangent plug)}, the tangent goes start -> end."""
     chord = _vector_op(name + '_Chord_PlusMinusAverage', end, start, 2)
-    normal = cmds.createNode('vectorProduct', n=name + '_Normal_VectorProduct')
-    cmds.setAttr(normal + '.operation', 2)
-    cmds.setAttr(normal + '.normalizeOutput', 1)
-    cmds.connectAttr(chord, normal + '.input1')
-    cmds.connectAttr(_vector_op(name + '_ToOther_PlusMinusAverage', other, start, 2), normal + '.input2')
-    normal += '.output'
+    normal = _bend_normal(name, chord, _vector_op(name + '_ToOther_PlusMinusAverage', other, start, 2))
     # inscribed angle at the other point: the arc start -> end turns twice this
     angle = cmds.createNode('angleBetween', n=name + '_Inscribed_AngleBetween')
     cmds.connectAttr(_vector_op(name + '_OtherStart_PlusMinusAverage', start, other, 2), angle + '.vector1')
