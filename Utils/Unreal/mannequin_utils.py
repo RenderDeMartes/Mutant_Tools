@@ -404,9 +404,9 @@ def fix_clav_arms(node_array):
         fix_last=False, node_array=node_array,
         do_push_parents=True, last_rotations=[0, 0, 0])
 
-    # Lower arm twists: twist_01 -> twist_02 -> hand (hand is target only, fix_last=False)
+    # Lower arm twists: Unreal puts twist_02 next to the elbow and twist_01 next to the hand (hand is target only, fix_last=False)
     fix_guides_orientation(
-        guides=["lowerarm_twist_01_l", "lowerarm_twist_02_l", "hand_l"],
+        guides=["lowerarm_twist_02_l", "lowerarm_twist_01_l", "hand_l"],
         aim_axis=(1, 0, 0), up_axis=(0, 1, 0), target_locator='Back',
         fix_last=False, node_array=node_array,
         do_push_parents=True, last_rotations=[0, 0, 0])
@@ -429,7 +429,7 @@ def fix_clav_arms(node_array):
 
     # Lower arm twists
     fix_guides_orientation(
-        guides=["lowerarm_twist_01_r", "lowerarm_twist_02_r", "hand_r"],
+        guides=["lowerarm_twist_02_r", "lowerarm_twist_01_r", "hand_r"],
         aim_axis=(-1, 0, 0), up_axis=(0, 1, 0), target_locator='Front',
         fix_last=False, node_array=node_array,
         do_push_parents=True, last_rotations=[0, 0, 0])
@@ -640,16 +640,18 @@ def place_twist_joints():
         ])
         print('Placed spine_05 at midpoint between spine_04 and neck_01')
 
-    # (segment_start, segment_end, [twist_joints_ordered_01_first])
+    # (segment_start, segment_end, [twist joints ordered from the segment start to its end])
+    # Unreal: lowerarm and calf twist_02 sit next to the elbow/knee, twist_01 next to the hand/foot,
+    # the rig_map below wires them that way (upperarm and thigh go 01 -> 02)
     segments = [
         ('upperarm_l', 'lowerarm_l', ['upperarm_twist_01_l', 'upperarm_twist_02_l']),
-        ('lowerarm_l', 'hand_l',     ['lowerarm_twist_01_l', 'lowerarm_twist_02_l']),
+        ('lowerarm_l', 'hand_l',     ['lowerarm_twist_02_l', 'lowerarm_twist_01_l']),
         ('thigh_l',    'calf_l',     ['thigh_twist_01_l',    'thigh_twist_02_l']),
-        ('calf_l',     'foot_l',     ['calf_twist_01_l',     'calf_twist_02_l']),
+        ('calf_l',     'foot_l',     ['calf_twist_02_l',     'calf_twist_01_l']),
         ('upperarm_r', 'lowerarm_r', ['upperarm_twist_01_r', 'upperarm_twist_02_r']),
-        ('lowerarm_r', 'hand_r',     ['lowerarm_twist_01_r', 'lowerarm_twist_02_r']),
+        ('lowerarm_r', 'hand_r',     ['lowerarm_twist_02_r', 'lowerarm_twist_01_r']),
         ('thigh_r',    'calf_r',     ['thigh_twist_01_r',    'thigh_twist_02_r']),
-        ('calf_r',     'foot_r',     ['calf_twist_01_r',     'calf_twist_02_r']),
+        ('calf_r',     'foot_r',     ['calf_twist_02_r',     'calf_twist_01_r']),
     ]
 
     for start_jnt, end_jnt, twist_jnts in segments:
