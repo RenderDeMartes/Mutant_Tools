@@ -33,7 +33,85 @@ def import_mannequin_fancy_skeleton():
     skeleton = os.path.join(os.path.dirname(__file__), 'MannequinFBX', 'SKM_Manny_Skeleton.FBX')
     print(skeleton)
     cmds.file(skeleton, i=True)
+
+GAMESCALE_TAG = '_GameScale_'
+
+def release_gamescale(root='root'):
+    """The GameScale block drives every joint under root with matrix nodes (translate, rotate and scale are
+    connected). A rebuild only deletes the rig groups, the Unreal skeleton stays in the scene, so on the next build
+    those joints are still connected: setAttr fails on them and the Mannequin block stops (ball_l.rotateZ).
+    Cut those links and delete the old nodes, the GameScale block makes them again at the end of the build.
+    Returns the number of nodes deleted."""
+    if not cmds.objExists(root):
+        return 0
+    joints = [root] + (cmds.listRelatives(root, ad=True, type='joint') or [])
+    names = set(joints)
+    old = [node for node in cmds.ls('*{}*'.format(GAMESCALE_TAG)) if node.split(GAMESCALE_TAG)[0] in names]
+    if not old:
+        return 0   # never built with GameScale: nothing of ours to cut
+    for joint in joints:
+        parent = (cmds.listRelatives(joint, p=True) or [None])[0]
+        for channel in ('translate', 'rotate', 'scale'):
+            plug = '{}.{}'.format(joint, channel)
+            source = cmds.listConnections(plug, s=True, d=False, p=True)
+            if not source:
+                continue
+            node = source[0].split('.')[0]
+            # GameScale nodes, or the parent scale it uses for joints with no source
+            if GAMESCALE_TAG in node or (channel == 'scale' and node == parent):
+                try:
+                    cmds.disconnectAttr(source[0], plug)
+                except Exception as error:
+                    cmds.warning('Could not disconnect {} -> {}: {}'.format(source[0], plug, error))
+    cmds.delete(old)
+    return len(old)
+
+_POSE_BEFORE_REBUILD = {}
+
+def remember_skinned_poses(root='root'):
+    """World matrix of every joint under root that has a skinCluster, taken before the rebuild moves them."""
+    from maya.api import OpenMaya as om
+    _POSE_BEFORE_REBUILD.clear()
+    if not cmds.objExists(root):
+        return
+    for joint in [root] + (cmds.listRelatives(root, ad=True, type='joint') or []):
+        if cmds.listConnections(joint + '.worldMatrix[0]', s=False, d=True, type='skinCluster'):
+            _POSE_BEFORE_REBUILD[joint] = om.MMatrix(cmds.getAttr(joint + '.worldMatrix[0]'))
+
+def keep_skin_on_turned_joints(tolerance=1e-3):
+    """The rebuild can leave a skinned joint in the same place but turned (a better orientation than the scene had).
+    The skinCluster would turn the mesh with it. Fold that turn into the bind matrix of the joint so the mesh stays
+    as it was, animation then moves it exactly like before. Joints that moved are left alone: the skin follows them.
+    Returns the joints fixed."""
+    from maya.api import OpenMaya as om
+    before = dict(_POSE_BEFORE_REBUILD)
+    _POSE_BEFORE_REBUILD.clear()
+    fixed = []
+    for joint, old in before.items():
+        if not cmds.objExists(joint):
+            continue
+        new = om.MMatrix(cmds.getAttr(joint + '.worldMatrix[0]'))
+        moved = (om.MVector(new[12], new[13], new[14]) - om.MVector(old[12], old[13], old[14])).length()
+        turned = max(abs(new[i] - old[i]) for i in (0, 1, 2, 4, 5, 6, 8, 9, 10))
+        if moved > tolerance or turned < 1e-4:
+            continue
+        # v * bindPre * world must not change: bindPre' = bindPre * old * new^-1
+        compensation = old * new.inverse()
+        for plug in cmds.listConnections(joint + '.worldMatrix[0]', s=False, d=True, p=True, type='skinCluster') or []:
+            skin, attr = plug.split('.', 1)
+            if not attr.startswith('matrix['):
+                continue
+            bind_plug = '{}.bindPreMatrix[{}]'.format(skin, attr[len('matrix['):-1])
+            cmds.setAttr(bind_plug, om.MMatrix(cmds.getAttr(bind_plug)) * compensation, type='matrix')
+        fixed.append(joint)
+    if fixed:
+        print('Kept the skin still on turned joints: {}'.format(', '.join(fixed)))
+    return fixed
+
 def parent_to_superhero_template():
+    #A rebuild keeps this skeleton: free it from the old GameScale links first
+    release_gamescale()
+
     #Unparent all joints
     rig_joints = cmds.listRelatives('root', ad=True, type='joint') or []
     hierarchy_array = Skeletor.unparent_hierarchy(rig_joints)
@@ -176,6 +254,12 @@ def parent_to_superhero_template():
 
         if cmds.objExists('scale_reader') and cmds.objExists('root'):
             cmds.scaleConstraint('scale_reader', 'root')
+
+        #Joints that only turned must not turn the skinned mesh with them
+        try:
+            keep_skin_on_turned_joints()
+        except Exception as error:
+            cmds.warning('Could not keep the skin still on turned joints: {}'.format(error))
 
         #Done
         print('Done Placing Mannequin Skeleton')
@@ -824,6 +908,10 @@ def recreate_mannequin_from_json(source=None):
 
     joints_data = payload.get('joints', {})
     joint_order = payload.get('joint_order', list(joints_data.keys()))
+
+    # A rebuild keeps the old skeleton: free it from the GameScale links so its values can be set again
+    release_gamescale()
+    remember_skinned_poses()
 
     # Create missing joints first
     created = []
