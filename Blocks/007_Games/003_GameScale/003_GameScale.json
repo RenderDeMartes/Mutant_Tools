@@ -1,0 +1,18 @@
+{
+    "Name":  "GameScale",
+    "Description":  "Fix scale on the game skeletons: global scale and non uniform scale",
+    "Icon":  "GameScale.png",
+    "Enable":  "True",
+    "python_file":  "exec_gamescale_v001.py",
+    "import":  "import exec_gamescale_v001",
+    "imp.reload":  "reload(exec_gamescale_v001)",
+    "exec_command":  "exec_gamescale_v001.create_gamescale_block()",
+    "build_command":  "exec_gamescale_v001.build_gamescale_block()",
+    "attrs":  {
+                  "FixBodySkeleton_bool":  "True",
+                  "FixUnrealSkeleton_bool":  "True",
+                  "FixMouthScale_bool":  "True",
+                  "FixPushScale_bool":  "True",
+                  "Help_string":  "Overview:\n  Makes the game skeletons follow scale: global scale at any size and non uniform scale on any ctrl.\n\nHow To Use:\n  Keep this block at the very end of the build, below ConvertBody and the Mannequin block. Nothing else to set.\n\nFields:\n- FixBodySkeleton: fixes the _Skl skeleton from ConvertBody.\n- FixUnrealSkeleton: fixes the root skeleton from the Mannequin block. Turn it off in templates without that skeleton.\n- FixMouthScale: MouthGames lips keep their shape when the rig scales or the head turns.\n- FixPushScale: push joints keep their place and push the same amount at any size. Does nothing without push joints.\n\nTips:\n- Each joint gets its own world scale from its _Bnd joint, with Segment Scale Compensate on, so no shear goes down the chain.\n- These joints no longer have parent constraints, so bake them before deleting anything for export."
+              }
+}
