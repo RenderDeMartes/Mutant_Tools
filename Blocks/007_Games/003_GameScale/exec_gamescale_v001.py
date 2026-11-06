@@ -72,11 +72,13 @@ def build_gamescale_block():
     if option('FixPushScale'):
         fix_push_scale()
 
+    # the face joints of the body skeleton can hang from the Unreal head (Mannequin block), so look in both skeletons
+    no_own_scale = joints_without_own_scale((BODY_ROOT, UNREAL_ROOT)) if option('FixBodySkeleton') or option('FixUnrealSkeleton') else set()
     done = 0
     if option('FixBodySkeleton'):
-        done += fix_skeleton(BODY_ROOT, joints_without_own_scale())
+        done += fix_skeleton(BODY_ROOT, no_own_scale)
     if option('FixUnrealSkeleton'):
-        done += fix_skeleton(UNREAL_ROOT)
+        done += fix_skeleton(UNREAL_ROOT, no_own_scale)
 
     cmds.select(block)
     print('Build {} Success, {} joints now follow scale'.format(block, done))
@@ -148,18 +150,25 @@ def fix_push_scale():
 #-------------------------
 # Skeletons
 
-def joints_without_own_scale():
-    """Bind joints that ignore their parents' scale (brows only read their ctrl), found by testing global scale."""
+def joints_without_own_scale(roots=(BODY_ROOT,)):
+    """Joints whose bind joint ignores their parents' scale (brows only read their ctrl), found by testing global scale
+    on the joints under roots. Unreal joints that follow other Unreal joints (sockets) have no bind joint to test."""
     if not cmds.objExists(GLOBAL_SIZE):
         return set()
+    unreal = (set(cmds.listRelatives(UNREAL_ROOT, ad=True, type='joint') or []) | {UNREAL_ROOT}) if cmds.objExists(UNREAL_ROOT) else set()
     rest = cmds.getAttr(GLOBAL_SIZE)
     found = set()
     cmds.setAttr(GLOBAL_SIZE, rest * 2.0)
     try:
-        for joint in cmds.listRelatives(BODY_ROOT, ad=True, type='joint') or []:
-            for target in _constraint_target(joint)[:1]:
-                if _world_scale(target) < rest * 1.5:
-                    found.add(joint)
+        for root in roots:
+            if not cmds.objExists(root):
+                continue
+            for joint in cmds.listRelatives(root, ad=True, type='joint') or []:
+                for target in _constraint_target(joint)[:1]:
+                    if target in unreal:
+                        continue
+                    if _world_scale(target) < rest * 1.5:
+                        found.add(joint)
     finally:
         cmds.setAttr(GLOBAL_SIZE, rest)
     return found
