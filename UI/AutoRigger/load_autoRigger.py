@@ -3758,7 +3758,12 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 				joint, parent = line.strip().split(',')
 				parent_dict[joint] = parent
 
+		# only joints still under the group: the build can move joints out of it on purpose (the Mannequin block puts the
+		# face joints under the Unreal head), and those stay where the build put them
+		under_group = set(cmds.listRelatives(group_name, ad=True, type='joint') or [])
 		for joint, parent in parent_dict.items():
+			if joint not in under_group:
+				continue
 			if cmds.objExists(joint) and cmds.objExists(parent):
 				try:
 					cmds.parent(joint, parent)
@@ -4112,6 +4117,17 @@ class AutoRigger(QtMutantWindow.Qt_Mutant):
 		if not os.path.exists(temp_skin_folder):
 			os.mkdir(temp_skin_folder)
 		self._save_rebuild_skins(temp_skin_folder=temp_skin_folder)
+
+		#Game skeleton: GameScale drives it with matrix nodes that read the rig about to be deleted. Without that source
+		#every joint, and the skinned meshes with it, falls to the origin while the new rig is built (the lips, eyelids...
+		#would be built on the collapsed mesh). Cut the links now so the skeleton stays where it is, like the old constraints did.
+		if cmds.objExists('root') and cmds.ls('*_GameScale_*'):
+			try:
+				from Mutant_Tools.Utils.Unreal import mannequin_utils
+				reload(mannequin_utils)
+				mannequin_utils.release_gamescale()
+			except Exception as e:
+				cmds.warning('Could not free the game skeleton before deleting the rig, the new build may be wrong: {}'.format(e))
 
 		#Delete
 		if cmds.objExists(build_grp):

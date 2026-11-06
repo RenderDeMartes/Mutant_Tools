@@ -108,12 +108,43 @@ def keep_skin_on_turned_joints(tolerance=1e-3):
         print('Kept the skin still on turned joints: {}'.format(', '.join(fixed)))
     return fixed
 
+SKL_SUFFIX = '_Skl'
+SKL_HEAD = 'Head_Skl'
+UNREAL_HEAD = 'head'
+BUILD_GROUP = 'Mutant_Tools_Grp'
+
+def parent_head_skl_to_unreal_head(skl_head=SKL_HEAD, unreal_head=UNREAL_HEAD):
+    """Everything that hangs from Head_Skl (jaw, lips, eyes, brows, teeth, tongue...) goes under the Unreal head, so the
+    Unreal skeleton is the only hierarchy to use and export. The joints stay where they are in the world, their
+    constraints keep driving them. Returns the joints moved."""
+    if not cmds.objExists(skl_head) or not cmds.objExists(unreal_head):
+        cmds.warning('Skipping face parent {} -> {} (missing). The Mannequin block goes below the face blocks.'.format(skl_head, unreal_head))
+        return []
+    moved = []
+    # joints only: the constraint node of Head_Skl is a child too and has to stay with it
+    for joint in cmds.listRelatives(skl_head, c=True, type='joint', f=True) or []:
+        cmds.parent(joint, unreal_head)
+        moved.append(joint.split('|')[-1])
+    if moved:
+        print('Parented {} joints from {} to {}'.format(len(moved), skl_head, unreal_head))
+    return moved
+
+def parent_root_to_build_group(root='root', group=BUILD_GROUP):
+    """The Unreal skeleton lives in the rig group, so a rebuild deletes it with the rig and the Mannequin block makes it
+    again (the rebuild saves the skins before and loads them back after)."""
+    if not cmds.objExists(root) or not cmds.objExists(group):
+        cmds.warning('Skipping parent {} -> {} (missing)'.format(root, group))
+        return False
+    if (cmds.listRelatives(root, p=True) or [None])[0] != group:
+        cmds.parent(root, group)
+    return True
+
 def parent_to_superhero_template():
     #A rebuild keeps this skeleton: free it from the old GameScale links first
     release_gamescale()
 
-    #Unparent all joints
-    rig_joints = cmds.listRelatives('root', ad=True, type='joint') or []
+    #Unparent all joints. The face joints that hang from the Unreal head (a rebuild without deleting) are not part of the mannequin
+    rig_joints = [joint for joint in (cmds.listRelatives('root', ad=True, type='joint') or []) if not joint.endswith(SKL_SUFFIX)]
     hierarchy_array = Skeletor.unparent_hierarchy(rig_joints)
     hierarchy_restored = False
 
@@ -254,6 +285,10 @@ def parent_to_superhero_template():
 
         if cmds.objExists('scale_reader') and cmds.objExists('root'):
             cmds.scaleConstraint('scale_reader', 'root')
+
+        #One hierarchy: the face joints of the body skeleton go under the Unreal head, and the skeleton lives in the rig group
+        parent_head_skl_to_unreal_head()
+        parent_root_to_build_group()
 
         #Joints that only turned must not turn the skinned mesh with them
         try:
