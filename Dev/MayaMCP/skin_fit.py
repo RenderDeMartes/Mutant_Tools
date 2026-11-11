@@ -178,3 +178,80 @@ def skin_shells(mesh, groups, smooth_iterations=3, smooth_intensity=0.5,
 def skin_shells_by_chains(mesh, chains, **kwargs):
     """Match shells to the nearest joint chain, then skin_shells()."""
     return skin_shells(mesh, match_shells_to_chains(mesh, chains), **kwargs)
+
+
+# --------------------------------------------------------------------------
+# Plain Maya skinning helpers (no ngSkinTools)
+# --------------------------------------------------------------------------
+def skin_cluster_of(mesh):
+    """The skinCluster deforming mesh, or None."""
+    found = mc.ls(mc.listHistory(mesh, pdo=True) or [], type='skinCluster')
+    return found[0] if found else None
+
+
+def side_bleed(mesh, fix=False, center_band=3.0, axis=0, left='L_', right='R_', max_influences=4,
+               threshold=0.01):
+    """Weight from the other side's joints on a symmetric character.
+
+    A vertex further than `center_band` from the mirror plane (world `axis`,
+    0 = X, +side = left) should not follow the other side's joints. With
+    fix=True that weight moves to the mirror-named joint (R_Hip -> L_Hip;
+    dropped when there is none), each vertex keeps its `max_influences`
+    largest weights and is normalized. Reads the bind pose.
+    Returns {'skin_cluster', 'bleeding', 'worst', 'fixed'}.
+    """
+    import maya.api.OpenMayaAnim as oma
+    try:
+        from . import guide_fit as gf  # rest_pose
+    except ImportError:
+        import guide_fit as gf
+    sc = skin_cluster_of(mesh)
+    if not sc:
+        raise ValueError('{} has no skinCluster'.format(mesh))
+    sel = om.MSelectionList()
+    sel.add(sc)
+    fn = oma.MFnSkinCluster(sel.getDependNode(0))
+    shape = mc.listRelatives(mesh, s=True, ni=True, f=True)[0] if mc.nodeType(mesh) == 'transform' else mesh
+    sel.add(shape)
+    dag = sel.getDagPath(1)
+    comp = om.MFnSingleIndexedComponent()
+    comp_obj = comp.create(om.MFn.kMeshVertComponent)
+    with gf.rest_pose(mesh):
+        pts = om.MFnMesh(dag).getPoints(om.MSpace.kWorld)
+    comp.addElements(list(range(len(pts))))
+    weights, n_inf = fn.getWeights(dag, comp_obj)
+    names = [p.partialPathName().split('|')[-1] for p in fn.influenceObjects()]
+    index = {n: i for i, n in enumerate(names)}
+    bleeding, worst, fixed = 0, 0.0, 0
+    new = om.MDoubleArray(weights)
+    for v in range(len(pts)):
+        x = pts[v][axis]
+        if abs(x) <= center_band:
+            continue
+        good, bad = (left, right) if x > 0 else (right, left)
+        row = [weights[v * n_inf + i] for i in range(n_inf)]
+        wrong = sum(w for i, w in enumerate(row) if names[i].startswith(bad))
+        if wrong <= threshold:
+            continue
+        bleeding += 1
+        worst = max(worst, wrong)
+        if not fix:
+            continue
+        merged = [0.0] * n_inf
+        for i, w in enumerate(row):
+            if w <= 0:
+                continue
+            if names[i].startswith(bad):
+                j = index.get(good + names[i][len(bad):])
+                if j is not None:
+                    merged[j] += w
+            else:
+                merged[i] += w
+        keep = sorted(range(n_inf), key=lambda i: -merged[i])[:max_influences]
+        total = sum(merged[i] for i in keep) or 1.0
+        for i in range(n_inf):
+            new[v * n_inf + i] = merged[i] / total if i in keep else 0.0
+        fixed += 1
+    if fix and fixed:
+        fn.setWeights(dag, comp_obj, om.MIntArray(list(range(n_inf))), new, False)
+    return {'skin_cluster': sc, 'bleeding': bleeding, 'worst': round(worst, 4), 'fixed': fixed}
