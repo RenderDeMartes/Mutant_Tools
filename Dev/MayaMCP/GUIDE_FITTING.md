@@ -82,6 +82,39 @@ straight chain (thumb direction especially is template-locked).
    the user saves wip versions from their own tool too, so always list the
    folder and take the next free number.
 
+## Joints from cross-sections (toes, fingers, tails, bent limbs)
+
+`finger_points` splits a finger by fixed ratios; when the model has visible
+knuckles, read them instead. These slice the mesh (bind pose on a skinned
+mesh) and follow the tube, re-centring every slice:
+
+```python
+# toe / finger / tail: walk from the nail toward the body
+res = gf.tube_joints('Body_Geo', tip=nail_centre, direction=toward_body, count=3,
+                     step=0.5, max_radius=9)
+res['joints']    # [knuckle, crease, crease] root -> tip; res['profile'] = radius per slice
+
+# bent limb: straight stretches of each bone, away from the bends
+res = gf.limb_joints('Body_Geo', [
+    {'start': thigh_top, 'direction': (0, -1, 0), 'length': 25},
+    {'start': shin_top, 'direction': shin_dir, 'length': 11}])
+res['joints'], res['gaps']    # knee where the axes cross; a big gap = axes miss
+
+gf.project_chain_to_plane(['L_Hip_Guide', 'L_Knee_Guide', 'L_Ankle_Guide', 'L_Ball_Guide'])
+```
+
+- The knuckle is the last slice before the radius jumps (the tube merges
+  into the body); creases are radius dips with real bulges on both sides,
+  so a smooth tube or spur returns only its base. Scale `step` /
+  `max_radius` with the character (defaults: ~1 m tall, cm).
+- A bulky bend fools the eye: the knee of a thick thigh sits where the
+  thigh and shin axes cross, often a few cm off the crease.
+- `project_chain_to_plane` moves positions only (children stay put until
+  moved), so it keeps the channel rules above; run it after placing a
+  3+ segment limb so the IK plane is clean.
+- `snap_persp(name, eye, aim, out_dir, xray=True)` checks the result with
+  the rig controls showing; `gf.snap` stays the calibrated ortho view.
+
 ## Gotchas
 - Don't name scratch scripts `inspect.py` (shadows stdlib, mayapy crashes).
 - Code exec'd through the bridge runs with separate globals/locals: helper

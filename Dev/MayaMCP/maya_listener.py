@@ -642,6 +642,16 @@ def bridge_dispatch(json_str):
         "lock_node": _action_lock_node,
         "mirror_group": _action_mirror_group,
         "list_control_shapes": _action_list_control_shapes,
+        "create_block": _action_create_block,
+        "set_block_attrs": _action_set_block_attrs,
+        "build_rig": _action_build_rig,
+        "snapshot": _action_snapshot,
+        "fit_tube_joints": _action_fit_tube_joints,
+        "fit_limb_joints": _action_fit_limb_joints,
+        "side_weight_bleed": _action_side_weight_bleed,
+        "fit_ctrl_shape": _action_fit_ctrl_shape,
+        "mirror_ctrl_shapes": _action_mirror_ctrl_shapes,
+        "pose_check": _action_pose_check,
     }
 
     handler = dispatch_table.get(action)
@@ -2583,6 +2593,140 @@ def _action_list_control_shapes(request):
         return _make_response(True, result={"shapes": shapes})
     except Exception as e:
         return _make_response(False, error=str(e), tb=traceback.format_exc())
+
+
+# ---------------------------------------------------------------------------
+# Actions — rig-fitting helpers (block_build, guide_fit, skin_fit, ctrl_fit, rig_check)
+#
+# Thin wrappers: the work lives in those modules so scripts can call the same
+# functions directly. Each call reloads its module, so edits apply without
+# restarting the bridge. A ValueError from a helper is bad input: it comes
+# back as error_type "validation".
+# ---------------------------------------------------------------------------
+
+
+def _helper(name):
+    """Import (and reload) a helper module next to this listener."""
+    import importlib
+
+    try:
+        mod = importlib.import_module("Mutant_Tools.Dev.MayaMCP." + name)
+    except ImportError:
+        here = os.path.dirname(os.path.abspath(__file__))
+        if here not in sys.path:
+            sys.path.insert(0, here)
+        mod = importlib.import_module(name)
+    return importlib.reload(mod)
+
+
+def _helper_call(request, module, func, nodes=(), args=()):
+    """Run module.func(**request args), checking that `nodes` keys exist first."""
+    try:
+        for key in nodes:
+            value = request.get(key)
+            if value is not None and _missing(value):
+                return _make_response(
+                    False, error="Node '{}' does not exist".format(value), error_type="validation"
+                )
+        kwargs = {k: request[k] for k in args if request.get(k) is not None}
+        result = getattr(_helper(module), func)(**kwargs)
+        return _make_response(True, result=result)
+    except TypeError as e:
+        if "argument" not in str(e):
+            return _make_response(False, error=str(e), tb=traceback.format_exc())
+        return _make_response(False, error=str(e), error_type="validation", tb=traceback.format_exc())
+    except ValueError as e:
+        return _make_response(False, error=str(e), error_type="validation", tb=traceback.format_exc())
+    except Exception as e:
+        return _make_response(False, error=str(e), tb=traceback.format_exc())
+
+
+def _action_create_block(request):
+    """Create a Mutant block with its name prompts answered (block_build.create_block)."""
+    if not request.get("block"):
+        return _make_response(False, error="No block given", error_type="validation")
+    return _helper_call(request, "block_build", "create_block",
+                        args=("block", "answers", "parent", "after", "attrs"))
+
+
+def _action_set_block_attrs(request):
+    """Set block settings; enums by label (block_build.set_block_attrs)."""
+    return _helper_call(request, "block_build", "set_block_attrs", nodes=("block",),
+                        args=("block", "attrs"))
+
+
+def _action_build_rig(request):
+    """Build all blocks like the Auto Rigger Build button (block_build.build_rig)."""
+    return _helper_call(request, "block_build", "build_rig", args=("mode", "rename_skins"))
+
+
+def _action_snapshot(request):
+    """One frame from a temporary camera with the rig controls showing (guide_fit.snap_persp)."""
+    if cmds.about(batch=True):
+        return _make_response(False, error="Snapshots need an interactive Maya", error_type="validation")
+    for key in ("eye", "aim"):
+        value = request.get(key)
+        if not isinstance(value, (list, tuple)) or len(value) != 3:
+            return _make_response(False, error="{} must be [x, y, z]".format(key), error_type="validation")
+    width, height = request.get("width", 1200), request.get("height", 1000)
+    if any(not isinstance(n, int) or not 64 <= n <= 4096 for n in (width, height)):
+        return _make_response(False, error="width and height must be integers from 64 to 4096",
+                              error_type="validation")
+    folder = os.path.join(tempfile.gettempdir(), "mutant_mcp_captures")
+    os.makedirs(folder, exist_ok=True)
+    try:
+        path = _helper("guide_fit").snap_persp(
+            uuid.uuid4().hex, request["eye"], request["aim"], folder, w=width, h=height,
+            focal=request.get("focal", 35.0), xray=request.get("xray", False),
+            controls=request.get("controls", True), joints=request.get("joints", False),
+            panel=request.get("panel") or "modelPanel4")
+        return _make_response(True, result={"path": path})
+    except ValueError as e:
+        return _make_response(False, error=str(e), error_type="validation", tb=traceback.format_exc())
+    except Exception as e:
+        return _make_response(False, error=str(e), tb=traceback.format_exc())
+
+
+def _action_fit_tube_joints(request):
+    """Toe / finger / tail joints from the mesh's creases (guide_fit.tube_joints)."""
+    return _helper_call(request, "guide_fit", "tube_joints", nodes=("mesh",),
+                        args=("mesh", "tip", "direction", "count", "step", "max_dist", "max_radius"))
+
+
+def _action_fit_limb_joints(request):
+    """Joints where limb segment centre lines cross (guide_fit.limb_joints)."""
+    return _helper_call(request, "guide_fit", "limb_joints", nodes=("mesh",),
+                        args=("mesh", "segments", "max_radius"))
+
+
+def _action_side_weight_bleed(request):
+    """Check / fix weight from the other side's joints (skin_fit.side_bleed)."""
+    return _helper_call(request, "skin_fit", "side_bleed", nodes=("mesh",),
+                        args=("mesh", "fix", "center_band", "axis", "left", "right", "max_influences"))
+
+
+def _action_fit_ctrl_shape(request):
+    """Size / place a controller shape (ctrl_fit.flat_shape, ring_around_bone, fit_fk_box)."""
+    mode = request.get("mode")
+    calls = {
+        "flat": ("flat_shape", ("ctrl", "center", "radius", "radius2", "plane")),
+        "ring": ("ring_around_bone", ("ctrl", "radius", "radius2", "axis", "offset")),
+        "fk_box": ("fit_fk_box", ("ctrl", "length", "half_thickness", "axis")),
+    }
+    if mode not in calls:
+        return _make_response(False, error="mode must be flat, ring or fk_box", error_type="validation")
+    func, args = calls[mode]
+    return _helper_call(request, "ctrl_fit", func, nodes=("ctrl",), args=args)
+
+
+def _action_mirror_ctrl_shapes(request):
+    """Mutant's L -> R controller shape mirror plus a pair check (ctrl_fit.mirror_shapes)."""
+    return _helper_call(request, "ctrl_fit", "mirror_shapes", args=("verify", "tol"))
+
+
+def _action_pose_check(request):
+    """Pose, measure, restore (rig_check.pose_check)."""
+    return _helper_call(request, "rig_check", "pose_check", args=("pose", "measure"))
 
 
 # ---------------------------------------------------------------------------

@@ -182,6 +182,45 @@ marked destructive. Failed calls carry `error_type`: `"validation"` for bad
 input caught before Maya was touched, `"maya_command"` for an exception Maya
 itself raised.
 
+### Rig-fitting tools
+
+For building a Mutant rig from a script, start to finish. Each tool is a thin
+wrapper over a module next to the listener; scripts inside Maya can import the
+same functions (`from Mutant_Tools.Dev.MayaMCP import block_build`), and the
+listener reloads the module on every call, so edits apply without restarting
+the bridge.
+
+| Tool | Module function | What it does |
+|---|---|---|
+| `maya_create_block` | `block_build.create_block` | Creates a block like its tab button, answering the name prompts from a list; puts it in a Mutant_Build group, after a given block, with settings applied |
+| `maya_set_block_attrs` | `block_build.set_block_attrs` | Block settings by name, enums by label; an unknown setting is an error |
+| `maya_build_rig` | `block_build.build_rig` | The Auto Rigger build with no dialogs (first build or delete and rebuild); returns which block failed, gives skinClusters their names back after a rebuild |
+| `maya_fit_tube_joints` | `guide_fit.tube_joints` | Toe / finger / tail joints from the mesh: knuckle where the tube meets the body, then the creases between bulges |
+| `maya_fit_limb_joints` | `guide_fit.limb_joints` | Knee / elbow / hock where the centre lines of the bones on each side cross |
+| `maya_snapshot` | `guide_fit.snap_persp` | One frame from a placed camera with the rig controls showing; puts the panel back |
+| `maya_pose_check` | `rig_check.pose_check` | Pose, measure, restore, and say whether the rig came back to rest |
+| `maya_fit_ctrl_shape` | `ctrl_fit.flat_shape` / `ring_around_bone` / `fit_fk_box` | Controller shapes: flat rings in a world plane, rings around a bone, FK boxes to the bone length |
+| `maya_mirror_ctrl_shapes` | `ctrl_fit.mirror_shapes` | Mutant's L -> R shape mirror, then checks every pair |
+| `maya_side_weight_bleed` | `skin_fit.side_bleed` | Finds (and with `fix` moves to the mirror joint) skin weight from the other side's joints |
+
+Module-only helpers: `guide_fit.walk_tube` / `MeshSlicer` (cross-section
+loops), `bone_axis`, `project_chain_to_plane` (a limb's guides on one plane,
+no knee pop), `put_keep_children`, `rest_pose` (measure a skinned mesh in its
+bind pose), `controls_visible`; `rig_check.pole_vector_report` (the pole a PV
+control really drives, its offset, and a drag test for flips). The math in
+`fit_math.py` has no Maya imports: `python -m unittest Tests/test_maya_mcp_fit_math.py`.
+
+Mutant behaviours these tools work around, worth knowing when scripting:
+
+- A guide name with the digit 1 loses every 1 when the build duplicates it
+  (`modules.duplicate_and_remove_guides`): `L_Toe1_B` becomes `L_Toe_B`.
+- A rebuild loads back the skeleton hierarchy and controller values of the
+  old rig after every block has run, postcode included. A Code block with
+  `RunAfterBuild` on runs after that. When the old rig had no `Skeleton`, the
+  rebuild reads a stale or missing temp file: `build_rig` empties it first.
+- Playblasts hide controls (`Global_Ctrl.CtrlPlayback` drives `hideOnPlayback`);
+  `maya_snapshot` turns that off for its frame.
+
 ## Long work
 
 Normal calls have a 30-second response deadline. Python/MEL execution accepts

@@ -86,6 +86,11 @@ mcp = MCPServer(
         "Utils/Rigging commands, so naming and conventions stay consistent "
         "with the rest of the rig instead of being reimplemented ad hoc. Use "
         "the generic tools for anything Mutant Tools' commands don't cover. "
+        "To build a Mutant rig from a script: maya_create_block, "
+        "maya_set_block_attrs, place the guides (maya_fit_tube_joints / "
+        "maya_fit_limb_joints read joint spots from the mesh), maya_build_rig, "
+        "then maya_snapshot, maya_pose_check, maya_fit_ctrl_shape, "
+        "maya_mirror_ctrl_shapes and maya_side_weight_bleed to check and finish. "
         "Use these tools to inspect scene objects and query Mutant Tools rig "
         "blocks/controllers. The bridge communicates with Maya's commandPort "
         "over localhost TCP. List sessions first; when several are open, pass "
@@ -1364,6 +1369,290 @@ def maya_mirror_group(node: str, world: bool = True, port: int | None = None) ->
         JSON with: mirror_group (the new group's name).
     """
     result = _bridge_call("mirror_group", port=port, node=node, world=world)
+    return json.dumps(result, indent=2)
+
+
+# --- Rig fitting: blocks, guides, skin, controller shapes, checks ---
+# Thin wrappers over Dev/MayaMCP block_build / guide_fit / skin_fit / ctrl_fit /
+# rig_check, which scripts can also import directly inside Maya.
+
+
+@mcp.tool(annotations=_ann(read_only=False, destructive=False, idempotent=False))
+def maya_create_block(
+    block: str,
+    answers: list[str],
+    parent: str = "",
+    after: str = "",
+    attrs: dict | None = None,
+    port: int | None = None,
+) -> str:
+    """Create a Mutant Tools block (guides + config) without its name dialog.
+
+    Same as the block's tab button; the prompts are answered from `answers`
+    in order (most blocks ask only the name; Chain asks name then joint
+    count). The block lands under `parent` (a group in Mutant_Build such as
+    Body / Extras), right after the `after` block (build order = outliner
+    order), with `attrs` applied like maya_set_block_attrs. Names with the
+    digit 1 get mangled by Mutant's guide duplication: avoid them.
+
+    Args:
+        block: Block folder ('08_Chain'), name ('Chain') or exec module ('exec_chain').
+        answers: Replies to the block's name prompts.
+        parent: Optional group under Mutant_Build.
+        after: Optional sibling block to place it after.
+        attrs: Optional settings {name: value}; enums by label.
+
+    Returns:
+        JSON with: blocks, configs, guides (move the guides onto the mesh next).
+    """
+    result = _bridge_call(
+        "create_block", port=port, block=block, answers=answers,
+        parent=parent or None, after=after or None, attrs=attrs or None,
+    )
+    return json.dumps(result, indent=2)
+
+
+@mcp.tool(annotations=_ann(read_only=False, destructive=False, idempotent=True))
+def maya_set_block_attrs(block: str, attrs: dict, port: int | None = None) -> str:
+    """Set a Mutant block's settings on its config node.
+
+    Enums take their label ('octagon', 'Back') or index; an unknown setting
+    is an error, so a typo never builds silently with the default.
+
+    Args:
+        block: Block node (e.g. 'L_Toe_Block').
+        attrs: {setting: value}.
+
+    Returns:
+        JSON with the values as stored.
+    """
+    result = _bridge_call("set_block_attrs", port=port, block=block, attrs=attrs)
+    return json.dumps(result, indent=2)
+
+
+@mcp.tool(annotations=_ann(read_only=False, destructive=True, idempotent=False))
+def maya_build_rig(
+    mode: Literal["auto", "first", "delete", "just"] = "auto",
+    rename_skins: bool = True,
+    timeout: float = 900,
+    port: int | None = None,
+) -> str:
+    """Build every block, like the Auto Rigger's Build button, with no dialogs.
+
+    auto = first build, or delete and rebuild when a rig exists (skins and
+    controller shapes are saved and loaded back). A failing block makes the
+    build revert (Mutant's Revert on Fail). The rebuild reloads skins as
+    skinClusterNN; rename_skins gives each mesh its old name back. Takes
+    seconds to minutes: never retry after a timeout, check the scene first.
+
+    Args:
+        mode: auto, first, delete (delete and rebuild) or just (just rebuild).
+        rename_skins: Restore skinCluster names after a rebuild.
+        timeout: Seconds to wait for Maya, up to 3600.
+
+    Returns:
+        JSON with: ok, failed (block or step), reverted, error, seconds, renamed, log (last lines).
+    """
+    client.validate_timeout(timeout)
+    result = _bridge_call("build_rig", port=port, timeout=timeout, mode=mode, rename_skins=rename_skins)
+    return json.dumps(result, indent=2)
+
+
+@mcp.tool(annotations=_ann(read_only=True, destructive=False, idempotent=True))
+def maya_snapshot(
+    eye: list[float],
+    aim: list[float],
+    width: int = 1200,
+    height: int = 1000,
+    focal: float = 35.0,
+    xray: bool = False,
+    controls: bool = True,
+    joints: bool = False,
+    panel: str = "",
+    port: int | None = None,
+) -> Image:
+    """Render one frame from a temporary camera at `eye` looking at `aim`.
+
+    Unlike maya_capture the view is placed exactly, and the rig controls
+    show (Mutant hides them on playback, which playblasts count as). The
+    panel's camera and display settings are put back. xray shows controls
+    inside an unskinned mesh.
+
+    Args:
+        eye: Camera position [x, y, z].
+        aim: Point to look at [x, y, z].
+        width / height: Image size (64..4096).
+        focal: Focal length (35 = normal, 50+ = closer).
+        xray: See through meshes.
+        controls: Draw the rig controls.
+        joints: Draw joints.
+        panel: Model panel to borrow (default modelPanel4).
+    """
+    response = _bridge_call(
+        "snapshot", port=port, eye=eye, aim=aim, width=width, height=height, focal=focal,
+        xray=xray, controls=controls, joints=joints, panel=panel,
+    )
+    if not response.get("success"):
+        raise RuntimeError(json.dumps(response))
+    path = Path(response["result"]["path"])
+    try:
+        return Image(data=path.read_bytes(), format="png")
+    finally:
+        path.unlink(missing_ok=True)
+
+
+@mcp.tool(annotations=_ann(read_only=True, destructive=False, idempotent=True))
+def maya_fit_tube_joints(
+    mesh: str,
+    tip: list[float],
+    direction: list[float],
+    count: int = 3,
+    step: float = 0.5,
+    max_dist: float = 20.0,
+    max_radius: float = 9.0,
+    port: int | None = None,
+) -> str:
+    """Joint positions of a toe / finger / tail from the mesh shape.
+
+    Walks cross-sections from `tip` (e.g. the nail centre) along `direction`
+    (toward the body), re-centring every slice. Joint 0 is the knuckle (last
+    slice before the tube merges into the body), the others are the creases
+    between bulges, nearest the knuckle first. Reads the bind pose on a
+    skinned mesh. Distances are scene units: scale step / max_radius with
+    the character (defaults suit ~1 m tall in cm).
+
+    Args:
+        mesh: Mesh transform or shape.
+        tip: Start point near the tip, inside the tube.
+        direction: Rough direction from the tip toward the body.
+        count: Most joints to return (fewer if the tube has fewer creases).
+        step: Slice spacing.
+        max_dist: How far to walk.
+        max_radius: Largest tube radius expected (search reach).
+
+    Returns:
+        JSON with: joints (root -> tip), dists, radii, profile (dist, radius per slice).
+    """
+    result = _bridge_call(
+        "fit_tube_joints", port=port, timeout=120, mesh=mesh, tip=tip, direction=direction,
+        count=count, step=step, max_dist=max_dist, max_radius=max_radius,
+    )
+    return json.dumps(result, indent=2)
+
+
+@mcp.tool(annotations=_ann(read_only=True, destructive=False, idempotent=True))
+def maya_fit_limb_joints(
+    mesh: str, segments: list[dict], max_radius: float = 14.0, port: int | None = None
+) -> str:
+    """Joints between limb segments, where their centre lines cross.
+
+    Each segment is a straight stretch of one bone, away from the bends:
+    {'start': [x,y,z], 'direction': [x,y,z], 'length': n}. The joint between
+    two segments is where their fitted axes cross (knee from thigh + shin),
+    which beats eyeballing a bulky bend. A big gap means the axes do not
+    meet: check the segments.
+
+    Args:
+        mesh: Mesh transform or shape.
+        segments: Bone stretches in chain order.
+        max_radius: Largest limb radius expected.
+
+    Returns:
+        JSON with: axes (origin, direction), joints, gaps.
+    """
+    result = _bridge_call("fit_limb_joints", port=port, timeout=120, mesh=mesh, segments=segments,
+                          max_radius=max_radius)
+    return json.dumps(result, indent=2)
+
+
+@mcp.tool(annotations=_ann(read_only=False, destructive=True, idempotent=True))
+def maya_side_weight_bleed(
+    mesh: str,
+    fix: bool = False,
+    center_band: float = 3.0,
+    axis: int = 0,
+    left: str = "L_",
+    right: str = "R_",
+    max_influences: int = 4,
+    port: int | None = None,
+) -> str:
+    """Find (and optionally fix) skin weight from the other side's joints.
+
+    Automatic binds leak left-leg weight into the right leg near the crotch,
+    armpits, between fingers. Vertices further than `center_band` from the
+    mirror plane (world `axis`, 0 = X, positive side = left) are checked;
+    fix moves that weight to the mirror-named joint, keeps max_influences
+    and normalizes. Run with fix=False first.
+
+    Returns:
+        JSON with: skin_cluster, bleeding (vertex count), worst (weight), fixed.
+    """
+    result = _bridge_call(
+        "side_weight_bleed", port=port, timeout=300, mesh=mesh, fix=fix, center_band=center_band,
+        axis=axis, left=left, right=right, max_influences=max_influences,
+    )
+    return json.dumps(result, indent=2)
+
+
+@mcp.tool(annotations=_ann(read_only=False, destructive=False, idempotent=True))
+def maya_fit_ctrl_shape(
+    ctrl: str,
+    mode: Literal["flat", "ring", "fk_box"],
+    center: list[float] | None = None,
+    radius: float | None = None,
+    radius2: float | None = None,
+    plane: Literal["xz", "xy", "yz"] = "xz",
+    axis: Literal["x", "y", "z"] = "x",
+    offset: float = 0.0,
+    length: float | None = None,
+    half_thickness: list[float] | None = None,
+    port: int | None = None,
+) -> str:
+    """Size and place a controller's curve shape (CVs only, pivot unchanged).
+
+    flat: lay a flat shape (ring, gear, hexagon) in a world plane at
+    `center` with radius / radius2 (hips, COG, root rings).
+    ring: turn a flat shape into a ring around the bone (local `axis` down
+    the bone), radius / radius2 on the other axes, `offset` along the bone
+    (fingers, toes).
+    fk_box: stretch a shape down the bone to `length`, optional
+    half_thickness [a, b] (Mutant FK boxes after the guides moved).
+    Mirror afterwards with maya_mirror_ctrl_shapes.
+
+    Returns:
+        JSON with what changed.
+    """
+    result = _bridge_call(
+        "fit_ctrl_shape", port=port, ctrl=ctrl, mode=mode, center=center, radius=radius,
+        radius2=radius2, plane=plane, axis=axis, offset=offset, length=length,
+        half_thickness=half_thickness,
+    )
+    return json.dumps(result, indent=2)
+
+
+@mcp.tool(annotations=_ann(read_only=False, destructive=False, idempotent=True))
+def maya_mirror_ctrl_shapes(verify: bool = True, tol: float = 0.01, port: int | None = None) -> str:
+    """Mirror every left controller shape to the right (Mutant's own mirror), then check.
+
+    Returns:
+        JSON with: mismatches [(left ctrl, worst CV distance, -1 = different CV count)].
+    """
+    result = _bridge_call("mirror_ctrl_shapes", port=port, timeout=120, verify=verify, tol=tol)
+    return json.dumps(result, indent=2)
+
+
+@mcp.tool(annotations=_ann(read_only=False, destructive=False, idempotent=True))
+def maya_pose_check(pose: dict, measure: list[str], port: int | None = None) -> str:
+    """Pose the rig, read world positions, then put every value back.
+
+    pose: {'node.attr': value}; measure: joints / controls to read. Use it to
+    test a control does what it should (foot lift bends the knee forward,
+    a space switch follows) without leaving the rig posed.
+
+    Returns:
+        JSON with: rest, posed, moved (distance per node), restored (False = rig did not come back).
+    """
+    result = _bridge_call("pose_check", port=port, pose=pose, measure=measure)
     return json.dumps(result, indent=2)
 
 

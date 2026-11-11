@@ -586,3 +586,308 @@ def guide_report(root):
             g, [round(v, 3) for v in mc.getAttr(g + '.t')[0]],
             [round(v, 2) for v in mc.getAttr(g + '.r')[0]],
             [round(v, 2) for v in mc.getAttr(g + '.jo')[0]]))
+
+
+# --------------------------------------------------------------------------
+# Cross-sections: joints from the mesh shape (toes, fingers, tails, limbs)
+# --------------------------------------------------------------------------
+try:
+    from . import fit_math as fm
+except ImportError:  # loaded as a plain module (mayapy, run_in_maya scripts)
+    import fit_math as fm
+
+
+class rest_pose(object):
+    """Context: skinClusters on `meshes` off, so measurements read the bind pose."""
+
+    def __init__(self, meshes):
+        meshes = [meshes] if isinstance(meshes, str) else list(meshes)
+        self.nodes = []
+        for m in meshes:
+            for sc in mc.ls(mc.listHistory(m) or [], type='skinCluster'):
+                self.nodes.append((sc, mc.getAttr(sc + '.envelope')))
+
+    def __enter__(self):
+        for sc, _ in self.nodes:
+            mc.setAttr(sc + '.envelope', 0)
+        return self
+
+    def __exit__(self, *exc):
+        for sc, value in self.nodes:
+            mc.setAttr(sc + '.envelope', value)
+        return False
+
+
+class MeshSlicer(object):
+    """Plane / mesh intersection loops, one loop per separate tube cut.
+
+    Build it once per mesh (reads the mesh at the current pose; wrap in
+    rest_pose() on a skinned mesh), then call loops() as often as needed.
+    """
+
+    def __init__(self, mesh):
+        fn = _fn_mesh(mesh)
+        self.mesh = mesh
+        self.points = [om.MVector(p.x, p.y, p.z) for p in fn.getPoints(om.MSpace.kWorld)]
+        self.edges = {}
+        for f in range(fn.numPolygons):
+            vs = list(fn.getPolygonVertices(f))
+            for i in range(len(vs)):
+                a, b = vs[i], vs[(i + 1) % len(vs)]
+                self.edges.setdefault((a, b) if a < b else (b, a), []).append(f)
+
+    def loops(self, point, normal, reach=9.0):
+        """Loops of the plane (point, normal) within `reach` of point.
+
+        Returns [{'center', 'radius' (mean), 'rmax', 'n'}, ...]; edges sharing
+        a face join the same loop, so two toes cut by one plane stay apart.
+        """
+        c = om.MVector(point)
+        d = om.MVector(normal).normal()
+        hits = {}
+        for (a, b), faces in self.edges.items():
+            pa, pb = self.points[a], self.points[b]
+            if (pa - c).length() > reach and (pb - c).length() > reach:
+                continue
+            sa, sb = (pa - c) * d, (pb - c) * d
+            if (sa > 0) == (sb > 0) or sa == sb:
+                continue
+            hits[(a, b)] = (pa + (pb - pa) * (sa / (sa - sb)), faces)
+        parent = {k: k for k in hits}
+
+        def find(k):
+            while parent[k] != k:
+                parent[k] = parent[parent[k]]
+                k = parent[k]
+            return k
+        by_face = {}
+        for k, (_, faces) in hits.items():
+            for f in faces:
+                if f in by_face:
+                    parent[find(k)] = find(by_face[f])
+                else:
+                    by_face[f] = k
+        groups = {}
+        for k, (p, _) in hits.items():
+            groups.setdefault(find(k), []).append(p)
+        out = []
+        for pts in groups.values():
+            if len(pts) < 5:
+                continue
+            cen = om.MVector()
+            for p in pts:
+                cen += p
+            cen /= len(pts)
+            rs = [(p - cen).length() for p in pts]
+            out.append({'center': [cen.x, cen.y, cen.z], 'radius': sum(rs) / len(rs),
+                        'rmax': max(rs), 'n': len(pts)})
+        return out
+
+
+def walk_tube(mesh, start, direction, step=0.5, steps=40, max_radius=9.0, snap=None,
+              stop_radius=None, slicer=None):
+    """Follow a tube from `start` along `direction`, re-centring every slice.
+
+    Each slice is cut perpendicular to the current direction, the loop
+    nearest the predicted point is kept (within `snap`, default
+    0.4 * max_radius) and the direction eases toward the new centre line.
+    Use it tip -> root (nail to foot) so the tube is unambiguous at the start.
+    Returns [{'dist', 'center', 'radius', 'rmax'}, ...]; center/radius None
+    where no loop was found. Stops after `stop_radius` or 3 empty slices.
+    """
+    snap = 0.4 * max_radius if snap is None else snap
+    if slicer is None:
+        with rest_pose(mesh):
+            slicer = MeshSlicer(mesh)
+    p = om.MVector(start)
+    d = om.MVector(direction).normal()
+    prev, misses, dist, out = None, 0, 0.0, []
+    for i in range(steps):
+        p = p + d * step
+        dist += step
+        loops = [l for l in slicer.loops(p, d, reach=max_radius)
+                 if (om.MVector(l['center']) - p).length() <= snap]
+        if not loops:
+            out.append({'dist': dist, 'center': None, 'radius': None, 'rmax': None})
+            misses += 1
+            if misses >= 3:
+                break
+            continue
+        misses = 0
+        best = min(loops, key=lambda l: (om.MVector(l['center']) - p).length())
+        cen = om.MVector(best['center'])
+        out.append({'dist': dist, 'center': best['center'], 'radius': best['radius'],
+                    'rmax': best['rmax']})
+        if prev is not None and i > 3:
+            d = (d * 0.7 + (cen - prev).normal() * 0.3).normal()
+        p, prev = cen, cen
+        if stop_radius and best['radius'] > stop_radius:
+            break
+    return out
+
+
+def tube_joints(mesh, tip, direction, count=3, step=0.5, max_dist=20.0, max_radius=9.0,
+                **crease_kw):
+    """Joint positions of a toe / finger / tail from its shape, root -> tip.
+
+    Walks from `tip` (e.g. the nail centre) along `direction` (toward the
+    body), then: joint 0 = the last slice before the tube merges into the
+    body (knuckle), the next joints = the creases (radius dips between
+    bulges) nearest the knuckle. `count` joints at most; fewer when the
+    tube has fewer creases (a spur gives only its base). crease_kw goes to
+    fit_math.tube_joint_indices (window, span, min_depth, ratio).
+    Returns {'joints', 'dists', 'radii', 'profile'}.
+    """
+    prof = walk_tube(mesh, tip, direction, step=step, steps=int(round(max_dist / step)),
+                     max_radius=max_radius)
+    good = [s for s in prof if s['radius'] is not None]
+    if not good:
+        raise ValueError('no cross-section found from {} along {}'.format(tip, direction))
+    idx = fm.tube_joint_indices([(s['dist'], s['radius']) for s in prof], count=count, **crease_kw)
+    return {'joints': [good[i]['center'] for i in idx], 'dists': [good[i]['dist'] for i in idx],
+            'radii': [round(good[i]['radius'], 3) for i in idx],
+            'profile': [(s['dist'], None if s['radius'] is None else round(s['radius'], 3)) for s in prof]}
+
+
+def bone_axis(mesh, start, direction, length, step=1.0, max_radius=14.0, slicer=None):
+    """Centre line of a limb segment: slice centres from start over `length`.
+
+    Returns {'origin', 'direction', 'points'} (fit_math.fit_line of the centres).
+    """
+    prof = walk_tube(mesh, start, direction, step=step, steps=int(round(length / step)),
+                     max_radius=max_radius, slicer=slicer)
+    pts = [s['center'] for s in prof if s['center'] is not None]
+    if len(pts) < 3:
+        raise ValueError('bone_axis found {} slices; check start/direction'.format(len(pts)))
+    origin, axis = fm.fit_line(pts)
+    return {'origin': origin, 'direction': axis, 'points': pts}
+
+
+def limb_joints(mesh, segments, max_radius=14.0):
+    """Joints between limb segments from their centre lines.
+
+    segments: [{'start', 'direction', 'length'}, ...] in chain order, each
+    a stretch of straight bone (keep away from the bends). Returns
+    {'axes': [...], 'joints': [crossing of segment k and k+1, ...],
+    'gaps': [...]} -- a big gap means the two axes do not really cross.
+    """
+    with rest_pose(mesh):
+        slicer = MeshSlicer(mesh)
+    axes = [bone_axis(mesh, s['start'], s['direction'], s['length'],
+                      step=s.get('step', 1.0), max_radius=max_radius, slicer=slicer)
+            for s in segments]
+    joints, gaps = [], []
+    for a, b in zip(axes, axes[1:]):
+        mid, gap = fm.closest_points(a['origin'], a['direction'], b['origin'], b['direction'])
+        joints.append(mid)
+        gaps.append(gap)
+    return {'axes': [{'origin': a['origin'], 'direction': a['direction']} for a in axes],
+            'joints': joints, 'gaps': gaps}
+
+
+def put_keep_children(node, pos):
+    """Move a guide in world space without moving its children."""
+    kids = mc.listRelatives(node, c=True, type='transform', f=True) or []
+    keep = [(k, mc.xform(k, q=True, ws=True, t=True)) for k in kids]
+    mc.xform(node, ws=True, t=list(pos))
+    for k, kp in keep:
+        mc.xform(k, ws=True, t=kp)
+
+
+def project_chain_to_plane(nodes, apply=True):
+    """Put a chain's guides on their best-fit plane (stable IK, no knee pop).
+
+    nodes in chain order; parents move first and children keep their place
+    until moved. Returns {'normal', 'offsets': {node: distance moved}}.
+    """
+    pos = [mc.xform(n, q=True, ws=True, t=True) for n in nodes]
+    origin, normal = fm.fit_plane(pos)
+    new = [fm.project_to_plane(p, origin, normal) for p in pos]
+    offsets = {}
+    for n, p, q in zip(nodes, pos, new):
+        offsets[n] = round(fm._len(fm._sub(p, q)), 4)
+        if apply:
+            put_keep_children(n, q)
+    return {'normal': normal, 'offsets': offsets}
+
+
+# --------------------------------------------------------------------------
+# Perspective snapshots with the rig controls showing
+# --------------------------------------------------------------------------
+class controls_visible(object):
+    """Context: controls draw in playblasts (Mutant's Global_Ctrl.CtrlPlayback
+    turns hideOnPlayback on), restored afterwards."""
+
+    def __init__(self):
+        self.saved = []
+
+    def __enter__(self):
+        for plug in mc.ls('*.CtrlPlayback'):
+            if mc.getAttr(plug, settable=True):
+                self.saved.append((plug, mc.getAttr(plug)))
+                mc.setAttr(plug, 0)
+        for shape in mc.ls(type='nurbsCurve'):
+            plug = shape + '.hideOnPlayback'
+            if mc.getAttr(plug) and mc.getAttr(plug, settable=True):
+                self.saved.append((plug, True))
+                mc.setAttr(plug, False)
+        return self
+
+    def __exit__(self, *exc):
+        for plug, value in reversed(self.saved):
+            if mc.objExists(plug):
+                mc.setAttr(plug, value)
+        return False
+
+
+_EDITOR_FLAGS = ('polymeshes', 'nurbsCurves', 'controllers', 'joints', 'locators', 'grid',
+                 'xray', 'wireframeOnShaded', 'hud', 'ikHandles', 'deformers', 'cameras',
+                 'lights', 'handles', 'dimensions', 'selectionHiliteDisplay')
+
+
+def snap_persp(name, eye, aim, out_dir, w=1200, h=1000, focal=35.0, xray=False,
+               controls=True, joints=False, panel='modelPanel4'):
+    """Playblast one frame from a temporary camera at `eye` looking at `aim`.
+
+    The panel's camera and display flags are put back afterwards; with
+    controls=True the rig controls show even though Mutant hides them on
+    playback. Returns the png path.
+    """
+    import os
+    cam = mc.camera(n='mcp_snap_cam', focalLength=focal)[0]
+    loc = mc.spaceLocator(n='mcp_snap_aim')[0]
+    old_cam = mc.modelPanel(panel, q=True, cam=True)
+    flags = {f: mc.modelEditor(panel, q=True, **{f: True}) for f in _EDITOR_FLAGS}
+    appearance = mc.modelEditor(panel, q=True, displayAppearance=True)
+    path = os.path.join(out_dir, name + '.png')
+    try:
+        mc.xform(cam, ws=True, t=list(eye))
+        mc.xform(loc, ws=True, t=list(aim))
+        mc.delete(mc.aimConstraint(loc, cam, aim=(0, 0, -1), u=(0, 1, 0), wu=(0, 1, 0)))
+        mc.modelPanel(panel, e=True, cam=cam)
+        mc.modelEditor(panel, e=True, polymeshes=True, nurbsCurves=controls, controllers=controls,
+                       joints=joints, locators=False, grid=False, xray=xray, wireframeOnShaded=False,
+                       hud=False, ikHandles=False, deformers=False, cameras=False, lights=False,
+                       handles=False, dimensions=False, selectionHiliteDisplay=False,
+                       displayAppearance='smoothShaded')
+        sel = mc.ls(sl=True)
+        mc.select(cl=True)
+        with controls_visible() if controls else _null():
+            mc.playblast(completeFilename=path, format='image', compression='png',
+                         frame=[mc.currentTime(q=True)], viewer=False, showOrnaments=False,
+                         percent=100, widthHeight=[w, h], forceOverwrite=True, offScreen=True)
+        if sel:
+            mc.select(sel)
+    finally:
+        mc.modelPanel(panel, e=True, cam=old_cam)
+        mc.modelEditor(panel, e=True, displayAppearance=appearance, **flags)
+        mc.delete(cam, loc)
+    return path
+
+
+class _null(object):
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *exc):
+        return False
