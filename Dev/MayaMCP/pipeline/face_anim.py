@@ -15,8 +15,9 @@ EXPR = {
     'smile': {**corner(1, 1), **LR(SQ, 0.3)},
     'happy': {**corner(1, 1), **LR(SQ, 0.6), **LR(B, 0.35), **LR(BI, 0.3), **LR(BL, 0.2)},
     'laugh': {**corner(1, 1), JAW: 15, **LR(SQ, 0.45), **LR(B, 0.3)},
-    'kiss': {**corner(-1, 0), **LR(LD, 0.15)},
-    'kiss_shift': {**corner(-1, 0.3, 'L'), **corner(-0.6, -0.2, 'R')},
+    # narrow corners stop at 0.6: past that the lip corners sweep in front of the tusks (the rig limits them there)
+    'kiss': {**corner(-0.6, 0), **LR(LD, 0.15)},
+    'kiss_shift': {**corner(-0.6, 0.3, 'L'), **corner(-0.35, -0.2, 'R')},
     'frown': {**corner(0.6, -1), **LR(B, -0.4)},
     'sad': {**corner(0.15, -1), **LR(BI, 1), **LR(BO, -0.6), BM: 0.6, **LR(B, 0.2), **LR(BL, 0.3)},
     'angry': {**corner(0.5, -0.4), **LR(B, -1), **LR(BI, -1), BM: -0.8, **LR(SN, 0.35), **LR(NO, 0.4), **LR(SQ, 0.4)},
@@ -99,6 +100,117 @@ def fingers(f0, f1, axes, curl_of_frame, step=3):
             S = ctl[0]; amt = cl[0] if S == 'L' else cl[1]
             base = 12 if 'Thumb' not in ctl else 5
             c.setKeyframe('%s.r%s' % (ctl, a), t=f, v=sg * (base + amt * (75 if 'Thumb' not in ctl else 35)))
+FINGERS = ('Index', 'Middle', 'Ring', 'Pinky')
+def hand_rig(side='L'):
+    """measure the hand controls numerically (works whatever their orientation): per finger the curl axis/sign of each
+    segment control and the spread axis/sign of the first one, the thumb's curl and opposition, the palm cup"""
+    s = side.lower(); wr = lambda: np.array(c.xform('hand_' + s, q=True, ws=True, t=True))
+    def tip(f): return '%s_03_%s' % (f.lower(), s)
+    def pos(n): return np.array(c.xform(n, q=True, ws=True, t=True))
+    def best_axis(ctl, score, axes='xyz'):
+        best = None
+        for a in axes:
+            for sg in (1, -1):
+                v = c.getAttr('%s.r%s' % (ctl, a)); c.setAttr('%s.r%s' % (ctl, a), v + sg * 20); sc = score()
+                c.setAttr('%s.r%s' % (ctl, a), v)
+                if best is None or sc > best[0]: best = (sc, a, sg)
+        return best[1], best[2]
+    R = dict(curl={}, spread={}, thumb={}, cup=None)
+    lat = pos('index_01_' + s) - pos('pinky_01_' + s); lat /= np.linalg.norm(lat)
+    for f in FINGERS + ('Thumb',):
+        if not c.objExists(tip(f)): continue
+        segs = ('01', '02', '03') if f != 'Thumb' else ('01', '02')
+        for seg in segs:
+            ctl = '%s_Hand_%s_%s_Ctrl' % (side, f, seg)
+            if not c.objExists(ctl): continue
+            p0 = pos(tip(f)); w = wr()
+            R['curl'][ctl] = best_axis(ctl, lambda: np.linalg.norm(p0 - w) - np.linalg.norm(pos(tip(f)) - w))
+        ctl = '%s_Hand_%s_01_Ctrl' % (side, f)
+        if f != 'Thumb' and c.objExists(ctl):
+            ca = R['curl'][ctl][0]; p0 = pos(tip(f)); away = 1.0 if f in ('Index',) else -1.0 if f in ('Ring', 'Pinky') else 0.0
+            if away:
+                R['spread'][ctl] = best_axis(ctl, lambda: away * ((pos(tip(f)) - p0) @ lat), axes=[a for a in 'xyz' if a != ca])
+    th0 = '%s_Hand_Thumb_00_Ctrl' % side
+    if c.objExists(th0) and c.objExists('pinky_01_' + s):
+        R['thumb'][th0] = best_axis(th0, lambda: -np.linalg.norm(pos(tip('Thumb')) - pos('pinky_01_' + s)))
+    cup = '%s_Hand_OutterCup_Ctrl' % side
+    if c.objExists(cup):
+        R['cup'] = (cup,) + best_axis(cup, lambda: -np.linalg.norm(pos(tip('Pinky')) - pos(tip('Thumb'))))
+    return R
+
+def hand_pose(R, curl, spread=0.0, thumb=None, cup=None, lag=None):
+    """{plug: value} for one hand: curl 0 relaxed .. 1 fist (cascade: pinky curls most), spread -0.3..1, thumb
+    opposition and palm cup default to follow the curl"""
+    thumb = curl if thumb is None else thumb; cup = curl if cup is None else cup
+    K = {'Index': 0.85, 'Middle': 0.95, 'Ring': 1.0, 'Pinky': 1.08}
+    BASE = {'01': 8, '02': 12, '03': 8}; AMP = {'01': 68, '02': 95, '03': 60}
+    out = {}
+    for ctl, (a, sg) in R['curl'].items():
+        f, seg = ctl.split('_')[2], ctl.split('_')[3]
+        cf = curl[f] if isinstance(curl, dict) else curl
+        if f == 'Thumb': v = (5 + cf * 32) if seg == '01' else (6 + cf * 48)
+        else: v = BASE[seg] + min(1.0, cf * K[f]) * AMP[seg] + (4 if f == 'Pinky' else 0)
+        out['%s.r%s' % (ctl, a)] = sg * v
+    for ctl, (a, sg) in R['spread'].items():
+        f = ctl.split('_')[2]; out['%s.r%s' % (ctl, a)] = sg * spread * {'Index': 9, 'Ring': 7, 'Pinky': 15}.get(f, 0)
+    for ctl, (a, sg) in R['thumb'].items():
+        out['%s.r%s' % (ctl, a)] = sg * 26 * thumb
+    if R['cup']:
+        ctl, a, sg = R['cup']; out['%s.r%s' % (ctl, a)] = sg * 16 * cup
+    return out
+
+def hands(f0, f1, style='relaxed', step=2, smooth=3):
+    """AI-driven hand animation for a body clip with no finger data. Per hand and per frame, from the hand's own
+    motion: speed (smoothed, normalised by the clip), height above the feet, reach (hand-to-shoulder / arm length).
+    style picks how those become curl / spread:
+      fighter    guard half-fist, full fist while the hand travels fast and far (punches)
+      gorilla    knuckle fists near the ground, claw-spread hands otherwise
+      strongman  tense half-fists, a little spread
+      jumper     relaxed while running, open spread hands when the arms swing high
+      relaxed    gentle curl with the motion
+    Fingers lag by a frame or two from index to pinky so the hand reads as alive, not as one switch."""
+    sides = [S for S in 'LR' if c.objExists('%s_Hand_Index_01_Ctrl' % S)]
+    rigs = {S: hand_rig(S) for S in sides}
+    frames = list(range(f0, f1 + 1)); n = len(frames)
+    def sm(a, r):
+        o = np.empty_like(a)
+        for i in range(len(a)): o[i] = a[max(0, i - r):i + r + 1].mean(0)
+        return o
+    data = {}
+    for S in sides:
+        s = S.lower(); H, SH, FT = [], [], []
+        for f in frames:
+            c.currentTime(f)
+            H.append(c.xform('hand_' + s, q=True, ws=True, t=True)); SH.append(c.xform('upperarm_' + s, q=True, ws=True, t=True))
+            FT.append(min(c.xform('foot_l', q=True, ws=True, t=True)[1], c.xform('foot_r', q=True, ws=True, t=True)[1]))
+        H, SH, FT = np.array(H), np.array(SH), np.array(FT)
+        sp = np.r_[0, np.linalg.norm(np.diff(H, axis=0), axis=1)]; sp = sm(sp, 2); sp = np.clip(sp / (np.percentile(sp, 90) + 1e-6), 0, 1.5)
+        arm = np.percentile(np.linalg.norm(H - SH, axis=1), 95) + 1e-6
+        reach = np.clip(np.linalg.norm(H - SH, axis=1) / arm, 0, 1); up = H[:, 1] - SH[:, 1]; height = H[:, 1] - FT
+        if style == 'fighter':
+            curl = 0.62 + 0.38 * np.clip((sp - 0.45) / 0.45, 0, 1) * np.clip((reach - 0.6) / 0.3, 0, 1) + 0.15 * np.clip(sp, 0, 1)
+            spread = np.zeros(n)
+        elif style == 'gorilla':
+            low = np.clip((45 - height) / 20, 0, 1)
+            curl = 0.3 + 0.65 * low; spread = 0.7 * (1 - low)
+        elif style == 'strongman':
+            curl = 0.5 + 0.2 * np.clip(sp, 0, 1); spread = 0.25 * np.ones(n)
+        elif style == 'jumper':
+            high = np.clip((up + 5) / 25, 0, 1)
+            curl = 0.38 - 0.3 * high; spread = 0.9 * high
+        else:
+            curl = 0.25 + 0.3 * np.clip(sp, 0, 1); spread = np.zeros(n)
+        data[S] = (sm(np.clip(curl, 0, 1), smooth), sm(np.clip(spread, -0.3, 1), smooth))
+    keyed = 0; lag = {'Index': 0, 'Middle': 1, 'Ring': 1, 'Pinky': 2, 'Thumb': 0}
+    for i in range(0, n, step):
+        f = frames[i]
+        for S in sides:
+            cu, spd = data[S]
+            curl = {fg: float(cu[max(0, i - lag[fg])]) for fg in lag}
+            for plug, v in hand_pose(rigs[S], curl, float(spd[i]), thumb=curl['Index'], cup=curl['Ring']).items():
+                c.setKeyframe(plug, t=f, v=v); keyed += 1
+    return dict(style=style, keys=keyed, curl_mean={S: round(float(data[S][0].mean()), 2) for S in sides})
+
 def video_to_controls(path, start, gain=1.3, smooth=2, head=True):
     """MediaPipe ARKit-style weights (video_face_extract.py json) -> Mutant face controls, keyed from start"""
     d = json.load(open(path)); fr = d['frames']
