@@ -112,6 +112,7 @@ nc, curve_data, setup = mt.import_configs()
 
 import Mutant_Tools.Utils.Wrap
 from Mutant_Tools.Utils.Wrap import wrap_utils
+from Mutant_Tools.Utils.Wrap import topotransfer_wrap
 reload(wrap_utils)
 cWrap = wrap_utils.Wrap3D()
 
@@ -157,6 +158,9 @@ class Zombinator(QtMutantWindow.Qt_Mutant):
 						}
 
 		self.base_mesh = 'WrapBaseMesh'
+		self.wrap_mode = 'Body'
+		self.wrap_reference = None
+		self.tt_link = None
 		self.skinning_boxes={}
 		self.body_skinning_versions = []
 		self.face_skinning_versions = []
@@ -371,6 +375,8 @@ class Zombinator(QtMutantWindow.Qt_Mutant):
   
 		#Create new export geo
 		sel = cmds.ls(sl=True)
+		self.wrap_mode = mode
+		self.wrap_reference = sel[0] if sel else None
 
 		export_grp = cmds.group(em=True, n='Zombinator_Export_Grp')
 		dups = cmds.duplicate(sel, rc=True)
@@ -446,13 +452,32 @@ class Zombinator(QtMutantWindow.Qt_Mutant):
 		clipboard.setText(new_wrap_file)
 
 	def open_wrap_3d(self):
-		centos_command = "r3ds_wrap"
-		roky_command = "sclenv r3ds_wrap"
+		'''Wrap 3D when it is installed; otherwise TopoTransfer does the same wrap (base mesh -> your geo -> transf0).'''
+		command = topotransfer_wrap.wrap3d_command()
+		if command:
+			subprocess.Popen(command, stdout=subprocess.PIPE)
+			return
+		self.wrap_with_topotransfer()
 
-		try:
-			subprocess.Popen([centos_command], stdout = subprocess.PIPE)
-		except:
-			os.system('{}'.format(roky_command))
+	def wrap_with_topotransfer(self, reference=None, mode=None):
+		'''Open TopoTransfer with the Zombinator base mesh and your geo (the selection, or the geo last exported for
+		wrap). Place the guides and wrap there, then Export: the result comes back as transf0, like Wrap's alembic.'''
+		meshes = [n for n in (cmds.ls(sl=True, type='transform') or []) if cmds.listRelatives(n, s=True, type='mesh')]
+		reference = reference or (meshes[0] if meshes else self.wrap_reference)
+		mode = mode or self.wrap_mode or 'Body'
+		if not reference or not cmds.objExists(reference):
+			cmds.warning('Zombinator: select your character geo, then click again (Wrap 3D is not installed, TopoTransfer will do the wrap).')
+			return None
+		if self.tt_link:
+			self.tt_link.stop()
+		def done(name):
+			cmds.select(name)
+			cmds.inViewMessage(amg='Zombinator: <hl>{}</hl> is ready (TopoTransfer). Next: place the guides.'.format(name), pos='topCenter', fade=True)
+		def failed(message):
+			cmds.warning('Zombinator / TopoTransfer: {}'.format(message))
+		self.tt_link = topotransfer_wrap.wrap(reference, base_mesh=self.base_mesh, mode=mode, on_done=done, on_error=failed)
+		print('Zombinator: Wrap 3D not found, TopoTransfer opened ({} base mesh onto {}). Place the guides, wrap, Export.'.format(mode, reference))
+		return self.tt_link
 
 
 	def wrap_help(self):
@@ -465,6 +490,8 @@ class Zombinator(QtMutantWindow.Qt_Mutant):
 		print(path)
 		if 'Windows' in o_system:
 			subprocess.call('explorer "{}"'.format(path.replace('/', '\\')), shell=True)
+		elif sys.platform == 'darwin':
+			subprocess.call(['open', path])
 		else:
 			os.system('xdg-open "{}"'.format(os.path.join(cmds.workspace(rd=True, q=True), 'data').replace('modeling', 'rigging')))
 
