@@ -33,13 +33,14 @@
         }
     },
     "open_wrap_3d": {
-        "tip": "Open R3DS Wrap.",
-        "what": "Starts Wrap 3D to fit the base mesh to your character.",
+        "tip": "Open R3DS Wrap (or TopoTransfer if Wrap is not installed).",
+        "what": "Starts Wrap 3D to fit the base mesh to your character. Without Wrap 3D, opens TopoTransfer with the base mesh and the selected geo instead: place the guides, wrap, Export, and the result comes back as transf0.",
         "examples": [
             "Click it after exporting.",
-            "Open Wrap to fit the base mesh to a sculpt."
+            "Open Wrap to fit the base mesh to a sculpt.",
+            "No Wrap 3D: select the character body and click it to wrap with TopoTransfer."
         ],
-        "details": "Runs r3ds_wrap (or \"sclenv r3ds_wrap\" on studio Linux).",
+        "details": "Runs r3ds_wrap (or \"sclenv r3ds_wrap\" on studio Linux, or the Wrap app on macOS / Windows). If none is found, Utils/Wrap/topotransfer_wrap.py imports the base mesh (Alembic/Body.abc or Face.abc), sends it with your geo to TopoTransfer, and renames the wrapped copy transf0, so the next steps work the same.",
         "code": {
             "file": "UI/Zombinator/load_zombinator.py",
             "function": "open_wrap_3d",
