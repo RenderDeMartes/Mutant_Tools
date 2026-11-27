@@ -1,8 +1,8 @@
 # Guide fitting (placing block guides on a mesh)
 
 Tools for fitting Mutant block guides (Limb + Hand) to a model, driven from
-outside Maya through the bridge. Used first on the SN_Rigging
-`module/arms` variants (blob, cartoon, robot, skeleton).
+outside Maya through the bridge. First used on four arm test models
+(blob, cartoon, robot, skeleton).
 
 Files:
 - `guide_fit.py` — runs **inside Maya** (live session or mayapy).
@@ -60,15 +60,15 @@ tentacles, hair strands, etc.), ~90% of the time they want it **colinear**:
   at as few guides as possible, keep each straight run colinear, and tell
   the user where and why it bends.
 
-Example (2026-11-27, SC Brawlstars `angelo` tvshow rig, `L/R_suit_01-04`,
-coat tails): the chain was tx-only, but the child POS groups had rotations
+Example (2026-11-27, a character's coat tails, 4-joint chain per side):
+the chain was tx-only, but the child offset groups had rotations
 (-6.6°, -1.7°, 22.7°), and the root was 0.19 off the panel middle. The
 result wobbled in front view, and the tip kinked in toward the panel's
-pointed corner. Fix: midline X 0.53 (constant), Z sloping back with the
-panel, root rotation only, children tx only, R mirrored. Show rigs with
-`POS > CON > SDK > ctrl` plus constrained `_s` joints: set the POS, then
-set each `_s` jointOrient to (ctrl world × parent_s inverse), so the
-constrained rotate stays 0 (see the SC rig notes).
+pointed corner. Fix: midline X constant, Z sloping back with the panel,
+root rotation only, children tx only, R mirrored. Rigs with
+`POS > CON > SDK > ctrl` plus constrained skin joints: set the POS, then
+set each skin joint's jointOrient to (ctrl world × parent joint inverse),
+so the constrained rotate stays 0.
 
 ## Workflow
 
