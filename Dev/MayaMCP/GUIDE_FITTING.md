@@ -33,6 +33,43 @@ The solvers enforce this; finger rotations stay at template values, so a
 fanned or curled finger can't be matched exactly — the fit is the best
 straight chain (thumb direction especially is template-locked).
 
+## FK chains: colinear by default
+
+When the user asks for an FK chain (ears, coat tails, antennae, tails,
+tentacles, hair strands, etc.), ~90% of the time they want it **colinear**:
+
+- Keep every guide on a straight line from its parent in at least 2 axes,
+  ideally all 3. Each child guide moves along **one local axis only**
+  (just X, or just Y, or just Z) relative to its parent — normally the
+  aim axis (tx).
+- **tx-only is not enough.** Every child also needs **zero local
+  rotation** (rotate, jointOrient, and the offset/POS group rotate), so
+  the whole chain shares the root's orientation. A chain with tx-only
+  children but a few degrees of rotation on each child still zigzags.
+- Only the **root** gets a rotation: X aims down the line, up axis kept
+  close to the old one. Children: `t = (length, 0, 0)`, `r = jo = 0`.
+- The line goes through the **middle of the part** (slice the mesh by
+  height and take the centre of each slice), not along an edge. The root
+  can move onto that midline. Don't bend the last guide to reach a
+  pointed or cut-off tip; end the chain on the line, inside the mesh.
+- Right side = behaviour mirror of the left (children `t = (-length,0,0)`).
+- Check: max distance of any joint from the root→end line ≈ 0, every
+  child rotate/jointOrient = 0, controls sit on their joints.
+- Break the rule **only when necessary** (the shape clearly bends, e.g. a
+  curled tail or an L-shaped part a straight line can't cover). Then bend
+  at as few guides as possible, keep each straight run colinear, and tell
+  the user where and why it bends.
+
+Example (2026-11-27, SC Brawlstars `angelo` tvshow rig, `L/R_suit_01-04`,
+coat tails): the chain was tx-only, but the child POS groups had rotations
+(-6.6°, -1.7°, 22.7°), and the root was 0.19 off the panel middle. The
+result wobbled in front view, and the tip kinked in toward the panel's
+pointed corner. Fix: midline X 0.53 (constant), Z sloping back with the
+panel, root rotation only, children tx only, R mirrored. Show rigs with
+`POS > CON > SDK > ctrl` plus constrained `_s` joints: set the POS, then
+set each `_s` jointOrient to (ctrl world × parent_s inverse), so the
+constrained rotate stays 0 (see the SC rig notes).
+
 ## Workflow
 
 1. **Open the scene** in the live Maya (check `mc.file(q=True, modified=True)`
