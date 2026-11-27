@@ -148,7 +148,6 @@ def skin_shells(mesh, groups, smooth_iterations=3, smooth_intensity=0.5,
     for info in ng.list_influences(skin):
         index[info.path.split('|')[-1]] = info.logicalIndex
 
-    data_before = set(mc.ls(type='ngst2SkinLayerData'))
     layers = ng.init_layers(skin)
     layers.influence_limit_per_vertex = max_influences
     layer = layers.add('ShellSkin')
@@ -169,10 +168,26 @@ def skin_shells(mesh, groups, smooth_iterations=3, smooth_intensity=0.5,
     mc.select(cl=True)
     if not keep_layers:
         # the weights already live on the skinCluster, the layer data is only for ngSkinTools
-        new_data = set(mc.ls(type='ngst2SkinLayerData')) - data_before
-        if new_data:
-            mc.delete(list(new_data))
+        delete_ng_nodes()
     return skin
+
+
+NG_NODE_TYPES = ('ngst2SkinLayerData', 'ngst2MeshDisplay', 'ngSkinLayerData', 'ngSkinLayerDisplay')
+
+
+def delete_ng_nodes():
+    """Delete every ngSkinTools node in the scene (v1 and v2).
+
+    The weights already live on the skinCluster; the ng nodes only hold layer
+    data for the ngSkinTools UI. Run this at the end of every skinning request.
+    Returns the deleted node names.
+    """
+    known = set(mc.allNodeTypes() or [])
+    types = [t for t in NG_NODE_TYPES if t in known]
+    nodes = mc.ls(type=types) if types else []
+    if nodes:
+        mc.delete(nodes)
+    return nodes
 
 
 def skin_shells_by_chains(mesh, chains, **kwargs):

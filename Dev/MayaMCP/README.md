@@ -263,6 +263,16 @@ The listener scans ports starting at 7501 (see `_DEFAULT_PORT` in
 automatically; pass `port=` explicitly to any tool once more than one
 session is registered.
 
+## After any skinning: delete the ngSkinTools nodes
+
+Whenever a request involves skinning (binding, reweighting, mirroring,
+copying weights), finish by deleting every ngSkinTools node in the scene:
+`ngst2SkinLayerData`, `ngst2MeshDisplay` and the v1 `ngSkinLayerData` /
+`ngSkinLayerDisplay`, including ones that were there before. The weights
+already live on the skinCluster; the ng nodes only hold layer data for the
+ngSkinTools UI. Call `skin_fit.delete_ng_nodes()` (`skin_shells` calls it
+unless `keep_layers=True`) and say in the reply which nodes were deleted.
+
 ## Keep show and asset names out of the repo
 
 Mutant Tools is public. Never write a client show, project, character or
