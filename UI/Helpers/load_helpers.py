@@ -1400,16 +1400,9 @@ class HelperUI(QtMutantWindow.Qt_Mutant):
 	def auto_skin_lips(self):
 		from Mutant_Tools.UI.Helpers.helpers_utils import auto_skin_helpers
 		reload(auto_skin_helpers)
-		upper_edge = cmds.getAttr('Lips_Config.SetUpperEdge')
-		dot_index = upper_edge.index('.')
-		src_mesh = upper_edge[0:dot_index]
-		upper_edge = upper_edge.replace(src_mesh, 'BodyLips').replace(' ', '').split(',')
-		lower_edge = cmds.getAttr('Lips_Config.SetLowerEdge').replace(src_mesh, 'BodyLips').replace(' ', '').split(',')
-
-		upper_edge.extend(lower_edge)
-		upper_edge = cmds.filterExpand(upper_edge, sm=32)
+		# any lip block: local Lips (BodyLips layer) or game (MouthGames / GameMode)
 		loop_span = self.ui.auto_skin_range_value.value()
-		auto_skin_helpers.skin_edge_loop_joints('BodyLips', upper_edge, loop_span)
+		auto_skin_helpers.auto_skin_lips(loop_span)
 
 
 

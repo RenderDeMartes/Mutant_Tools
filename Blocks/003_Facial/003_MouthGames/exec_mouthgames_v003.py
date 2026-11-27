@@ -375,6 +375,7 @@ def build_mouthgames_block():
 
         # driver curve index of every sec joint (bezier skin weights)
         jnt_by_index = {}
+        ctrl_by_index = {}
         left_indices = []
 
         #Left side first
@@ -416,6 +417,7 @@ def build_mouthgames_block():
             jnt = cmds.joint(n=ctrl.replace(nc['ctrl'], nc['joint']))
             sec_jnts.append(jnt)
             jnt_by_index[num] = jnt
+            ctrl_by_index[num] = ctrl
             mt.match(jnt, ctrl, r=True, t=True)
             jnt_root = mt.root_grp()[0]
             sec_jnts_roots.append(jnt_root)
@@ -518,6 +520,7 @@ def build_mouthgames_block():
             jnt = cmds.joint(n=ctrl.replace(nc['ctrl'], nc['joint']))
             sec_jnts.append(jnt)
             jnt_by_index[len(cv_to_add_ctrl_to) - 1 - left_index] = jnt
+            ctrl_by_index[len(cv_to_add_ctrl_to) - 1 - left_index] = ctrl
             mt.match(jnt, ctrl, r=True, t=True)
             jnt_root = mt.root_grp()[0]
             sec_jnts_roots.append(jnt_root)
@@ -540,13 +543,25 @@ def build_mouthgames_block():
 
             cmds.delete(temp_loc)
 
-        driver_skin = cmds.skinCluster(sec_jnts, five_curve, sm=0, bm=1, tsb=True)[0]
+        driver_influences = list(sec_jnts)
         if mid_tangents:
-            # each ctrl owns its point and both handles (CVs 3i-1, 3i, 3i+1)
+            # live auto tangents: the handles follow the neighbour ctrls, the
+            # ctrl rotation turns them on top (see auto_tangent_handles)
+            tangent_handles = auto_tangent_handles(
+                [(jnt_by_index[i], ctrl_by_index[i] + '_Driver' + nc['null'],
+                  cmds.listRelatives(ctrl_by_index[i], p=True)[0], cv_to_add_ctrl_to[i])
+                 for i in range(len(cv_to_add_ctrl_to))])
+            driver_influences += [h for pair in tangent_handles.values() for h in pair if h]
+        driver_skin = cmds.skinCluster(driver_influences, five_curve, sm=0, bm=1, tsb=True)[0]
+        if mid_tangents:
+            # each ctrl owns its point (CV 3i, sec joint) and its in / out
+            # handles (CVs 3i-1, 3i+1, tangent joints)
             cv_count = 3 * (len(cv_to_add_ctrl_to) - 1) + 1
             for c in range(cv_count):
+                index, slot = (c + 1) // 3, c - 3 * ((c + 1) // 3)
+                influence = jnt_by_index[index] if slot == 0 else tangent_handles[index][0 if slot < 0 else 1]
                 cmds.skinPercent(driver_skin, '{}.cv[{}]'.format(five_curve, c),
-                                 transformValue=[(jnt_by_index[(c + 1) // 3], 1.0)])
+                                 transformValue=[(influence, 1.0)])
 
 
         mid_ctrl = False
@@ -812,6 +827,11 @@ def build_mouthgames_block():
         mt.new_attr(input=side_main_ctrl, name='CornerAim', min=0, max=1, default=0)
         mt.new_attr(input=side_main_ctrl, name='AimFalloff', min=0, max=10, default=1)
         mt.new_attr(input=side_main_ctrl, name='AimMult', min=0, max=20, default=1)
+        # like a reference face rig: the corner wraps around the teeth as it widens,
+        # Pinch presses the lips together
+        mt.new_attr(input=side_main_ctrl, name='DepthWrap', min=0, max=5, default=0.5)
+        mt.new_attr(input=side_main_ctrl, name='Pinch', min=-1, max=1, default=0)
+        mt.new_attr(input=side_main_ctrl, name='AutoRotate', min=0, max=5, default=1)
 
         # Make pretty
         cmds.select('{}.cv[0:4]'.format(side_main_ctrl))
@@ -952,10 +972,13 @@ def build_mouthgames_block():
     cmds.setAttr(right_corner_pc + ".interpType", 2)
 
     #Corner controller move pullers
-    cmds.parentConstraint(left_sub_ctrl, upper_system['corner_pullers'][0], mo=True)
-    cmds.parentConstraint(right_sub_ctrl, upper_system['corner_pullers'][1], mo=True)
-    cmds.parentConstraint(left_sub_ctrl, lower_system['corner_pullers'][0], mo=True)
-    cmds.parentConstraint(right_sub_ctrl, lower_system['corner_pullers'][1], mo=True)
+    # (through a depth wrap null: DepthWrap / AutoRotate on the side Main ctrl)
+    left_wrap = corner_wrap(left_sub_ctrl, side_controllers_root[0], left_ctrl)
+    right_wrap = corner_wrap(right_sub_ctrl, side_controllers_root[1], right_ctrl)
+    cmds.parentConstraint(left_wrap, upper_system['corner_pullers'][0], mo=True)
+    cmds.parentConstraint(right_wrap, upper_system['corner_pullers'][1], mo=True)
+    cmds.parentConstraint(left_wrap, lower_system['corner_pullers'][0], mo=True)
+    cmds.parentConstraint(right_wrap, lower_system['corner_pullers'][1], mo=True)
 
     # Automation for corner pc to move up or down
     left_follow_attr = mt.new_attr(input=left_ctrl,
@@ -984,6 +1007,7 @@ def build_mouthgames_block():
     corner_ctrls = {nc['left']: left_ctrl, nc['right']: right_ctrl}
     for system in [upper_system, lower_system]:
         connect_corner_links(system['corner_links'], corner_ctrls)
+    connect_pinch(upper_system['corner_links'], lower_system['corner_links'], corner_ctrls)
 
 
     #Jaw up Logic
@@ -1541,6 +1565,70 @@ def bezier_curve(points, name):
     return curve
 
 
+def auto_tangent_handles(points):
+    """Live auto tangents for the bezier driver curve (MidCtrlTangents).
+
+    points: [(jnt, driver, ref, point)] in curve order. jnt = sec joint
+    (copies the driver), driver = ctrl_driver null, ref = the ctrl's parent at
+    rest (the space the ctrl rotates in), point = rest world position of the
+    curve point the ctrl owns (corner ctrls do not sit on it).
+    Each point gets an in / out handle joint under its sec joint. The handle
+    offset is the Catmull-Rom tangent of the LIVE curve points
+    ((next - prev) / 6, ends (next - this) / 3), read in ref space, so:
+    moving a corner drags the mid ctrls and their handles turn with the lip
+    (no flat shelf at each mid ctrl), and rotating a ctrl still turns its
+    handles (the sec joint carries the ctrl rotation on top).
+    Returns {index: (in_jnt or None, out_jnt or None)}.
+    """
+    last = len(points) - 1
+    positions, offsets = [], []
+    for jnt, driver, ref, point in points:
+        base = jnt[:-len(nc['joint'])] if jnt.endswith(nc['joint']) else jnt
+        # live curve point (world, same space as ref)
+        live = cmds.createNode('transform', n=base + '_CurvePoint' + nc['null'], p=driver)
+        cmds.xform(live, ws=True, t=point)
+        dm = cmds.createNode('decomposeMatrix', n=base + '_CurvePoint_DM')
+        cmds.connectAttr(live + '.worldMatrix[0]', dm + '.inputMatrix')
+        positions.append(dm + '.outputTranslate')
+        # handles hang from the curve point, in the sec joint's frame
+        offset = cmds.createNode('transform', n=base + '_TanOffset' + nc['null'], p=jnt)
+        cmds.xform(offset, ws=True, t=point)
+        offsets.append(offset)
+
+    handles = {}
+    for i, (jnt, driver, ref, point) in enumerate(points):
+        a, b = max(i - 1, 0), min(i + 1, last)
+        scale = 1 / 3.0 if i in (0, last) else 1 / 6.0
+        base = jnt[:-len(nc['joint'])] if jnt.endswith(nc['joint']) else jnt
+
+        delta = cmds.createNode('plusMinusAverage', n=base + '_Tangent_PMA')
+        cmds.setAttr(delta + '.operation', 2)
+        cmds.connectAttr(positions[b], delta + '.input3D[0]')
+        cmds.connectAttr(positions[a], delta + '.input3D[1]')
+
+        local = cmds.createNode('vectorProduct', n=base + '_Tangent_VP')
+        cmds.setAttr(local + '.operation', 3)
+        cmds.setAttr(local + '.normalizeOutput', 0)
+        cmds.connectAttr(delta + '.output3D', local + '.input1')
+        cmds.connectAttr(ref + '.worldInverseMatrix[0]', local + '.matrix')
+
+        pair = []
+        for side, sign, use in (('In', -1, i > 0), ('Out', 1, i < last)):
+            if not use:
+                pair.append(None)
+                continue
+            md = cmds.createNode('multiplyDivide', n=base + '_Tan' + side + '_MD')
+            cmds.connectAttr(local + '.output', md + '.input1')
+            cmds.setAttr(md + '.input2', sign * scale, sign * scale, sign * scale)
+            handle = cmds.createNode('joint', n=base + '_Tan' + side + nc['joint'], p=offsets[i])
+            cmds.setAttr(handle + '.segmentScaleCompensate', 0)
+            cmds.setAttr(handle + '.drawStyle', 2)
+            cmds.connectAttr(md + '.output', handle + '.translate')
+            pair.append(handle)
+        handles[i] = tuple(pair)
+    return handles
+
+
 def ctrl_driver(ctrl):
     """Child of a mid ctrl that undoes the ctrl's own scale, so its sec joint
     gets the ctrl's world matrix, mirror included, without the ctrl scale
@@ -1552,6 +1640,115 @@ def ctrl_driver(ctrl):
     cmds.connectAttr(ctrl + '.scale', unscale + '.input2')
     cmds.connectAttr(unscale + '.output', driver + '.scale')
     return driver
+
+
+def smoothstep(t):
+    """Eased 0 -> 1 (flat at both ends): the corner drags the mid ctrls with no
+    crease at the middle of the lip (like a reference face rig falloff)."""
+    return t * t * (3 - 2 * t)
+
+
+def corner_wrap(source, frame, ctrl):
+    """Corner depth. Returns a null under source for the corner pullers to follow.
+
+    The null moves back along the face depth by ctrl.DepthWrap x how far the
+    corner moved outward (narrow = forward), so
+    the lip wraps around the teeth as the corner widens. It also turns around
+    the depth axis as the corner goes up / down (ctrl.AutoRotate x the angle
+    of the corner seen from the mouth center), which swings the mid ctrls into
+    a smile / frown arc, like rotating the Main ctrl by hand.
+    source = node that carries the corner motion, frame = its rest space
+    (motion measured there). Only core nodes (any Maya from 2018).
+    """
+    side = 1.0 if cmds.xform(source, q=True, ws=True, t=True)[0] >= 0 else -1.0
+    wrap = cmds.createNode('transform', n=ctrl + '_Wrap' + nc['null'], p=source)
+    frame_inv = om.MMatrix(cmds.getAttr(frame + '.worldInverseMatrix[0]'))
+    source_inv = om.MMatrix(cmds.getAttr(source + '.worldInverseMatrix[0]'))
+    out_dir = (om.MVector(side, 0, 0) * frame_inv).normal()
+    up_dir = (om.MVector(0, 1, 0) * frame_inv).normal()
+    fwd_dir = (om.MVector(0, 0, 1) * source_inv).normal()
+    # same directions in the source's own space (the wrap null rotates there)
+    out_src = om.MVector(side, 0, 0) * source_inv
+    up_src = (om.MVector(0, 1, 0) * source_inv).normal()
+    half_width = abs(cmds.xform(source, q=True, ws=True, t=True)[0]) or 1.0
+
+    mm = cmds.createNode('multMatrix', n=ctrl + '_Wrap_MM')
+    cmds.connectAttr(source + '.worldMatrix[0]', mm + '.matrixIn[0]')
+    cmds.connectAttr(frame + '.worldInverseMatrix[0]', mm + '.matrixIn[1]')
+    dm = cmds.createNode('decomposeMatrix', n=ctrl + '_Wrap_DM')
+    cmds.connectAttr(mm + '.matrixSum', dm + '.inputMatrix')
+    rest = cmds.getAttr(dm + '.outputTranslate')[0]
+    moved = cmds.createNode('plusMinusAverage', n=ctrl + '_Wrap_Moved_PMA')
+    cmds.setAttr(moved + '.operation', 2)
+    cmds.connectAttr(dm + '.outputTranslate', moved + '.input3D[0]')
+    cmds.setAttr(moved + '.input3D[1]', *rest)
+
+    outward = cmds.createNode('vectorProduct', n=ctrl + '_Wrap_Out_VP')
+    cmds.setAttr(outward + '.operation', 1)
+    cmds.setAttr(outward + '.normalizeOutput', 0)
+    cmds.connectAttr(moved + '.output3D', outward + '.input1')
+    cmds.setAttr(outward + '.input2', out_dir.x, out_dir.y, out_dir.z)
+
+    depth = cmds.createNode('multiplyDivide', n=ctrl + '_Wrap_Depth_MD')
+    cmds.connectAttr(outward + '.outputX', depth + '.input1X')
+    cmds.connectAttr(ctrl + '.DepthWrap', depth + '.input2X')
+    # back = minus forward
+    offset = cmds.createNode('multiplyDivide', n=ctrl + '_Wrap_Offset_MD')
+    cmds.setAttr(offset + '.input1', -fwd_dir.x, -fwd_dir.y, -fwd_dir.z)
+    for axis in 'XYZ':
+        cmds.connectAttr(depth + '.outputX', offset + '.input2' + axis)
+    cmds.connectAttr(offset + '.output', wrap + '.translate')
+
+    # auto rotate: angle between (center -> corner) at rest and the same
+    # vector with the corner's up move added (x AutoRotate)
+    upward = cmds.createNode('vectorProduct', n=ctrl + '_Wrap_Up_VP')
+    cmds.setAttr(upward + '.operation', 1)
+    cmds.setAttr(upward + '.normalizeOutput', 0)
+    cmds.connectAttr(moved + '.output3D', upward + '.input1')
+    cmds.setAttr(upward + '.input2', up_dir.x, up_dir.y, up_dir.z)
+    lift = cmds.createNode('multiplyDivide', n=ctrl + '_Wrap_Lift_MD')
+    cmds.connectAttr(upward + '.outputX', lift + '.input1X')
+    cmds.connectAttr(ctrl + '.AutoRotate', lift + '.input2X')
+    lift_vec = cmds.createNode('multiplyDivide', n=ctrl + '_Wrap_LiftVec_MD')
+    cmds.setAttr(lift_vec + '.input1', up_src.x, up_src.y, up_src.z)
+    for axis in 'XYZ':
+        cmds.connectAttr(lift + '.outputX', lift_vec + '.input2' + axis)
+    reach = out_src * half_width
+    turned = cmds.createNode('plusMinusAverage', n=ctrl + '_Wrap_Turned_PMA')
+    cmds.setAttr(turned + '.input3D[0]', reach.x, reach.y, reach.z)
+    cmds.connectAttr(lift_vec + '.output', turned + '.input3D[1]')
+    angle = cmds.createNode('angleBetween', n=ctrl + '_Wrap_Rotate_AB')
+    cmds.setAttr(angle + '.vector1', reach.x, reach.y, reach.z)
+    cmds.connectAttr(turned + '.output3D', angle + '.vector2')
+    cmds.connectAttr(angle + '.euler', wrap + '.rotate')
+    return wrap
+
+
+def connect_pinch(upper_links, lower_links, corner_ctrls):
+    """Pinch on the side Main ctrl: the upper and lower mid ctrls next to the
+    corner close the gap between them (1 = touch, -1 = open as much),
+    strongest next to the corner, fading toward the middle (t^3)."""
+    lower = {link['ctrl']: link for link in lower_links}
+    t_max = {}
+    for link in upper_links:
+        t_max[link['side']] = max(t_max.get(link['side'], 0), link['t'])
+    for up in upper_links:
+        dw = lower.get(up['ctrl'].replace('_Up' + nc['ctrl'], '_Dw' + nc['ctrl']))
+        if not dw:
+            continue
+        weight = (up['t'] / t_max[up['side']]) ** 3
+        up_pos = om.MVector(cmds.xform(up['ctrl'], q=True, ws=True, t=True))
+        dw_pos = om.MVector(cmds.xform(dw['ctrl'], q=True, ws=True, t=True))
+        half = (dw_pos - up_pos) * 0.5
+        corner = corner_ctrls[up['side']]
+        for link, vec in ((up, half), (dw, half * -1.0)):
+            inv = om.MMatrix(cmds.getAttr(link['aim_grp'] + '.parentInverseMatrix[0]'))
+            local = vec * inv * weight
+            md = cmds.createNode('multiplyDivide', n=link['ctrl'] + '_Pinch_MD')
+            cmds.setAttr(md + '.input1', local.x, local.y, local.z)
+            for axis in 'XYZ':
+                cmds.connectAttr(corner + '.Pinch', md + '.input2' + axis)
+            cmds.connectAttr(md + '.output', link['aim_grp'] + '.translate')
 
 
 def connect_corner_links(links, corner_ctrls):
@@ -1569,7 +1766,7 @@ def connect_corner_links(links, corner_ctrls):
 
         falloff = cmds.createNode('multiplyDivide', n=ctrl + '_CornerFalloff_MD')
         cmds.setAttr(falloff + '.operation', 3)
-        cmds.setAttr(falloff + '.input1X', link['t'])
+        cmds.setAttr(falloff + '.input1X', smoothstep(link['t']))
         cmds.setAttr(falloff + '.input1Y', link['t'])
         cmds.connectAttr(corner + '.MidFalloff', falloff + '.input2X')
         cmds.connectAttr(corner + '.AimFalloff', falloff + '.input2Y')
@@ -1612,6 +1809,7 @@ def connect_corner_links(links, corner_ctrls):
         cmds.connectAttr(amount + '.outputY', blend + '.weight')
         cmds.connectAttr(blend + '.outRotate', aim_grp + '.rotate')
         link['aim_blend'] = blend
+        link['aim_grp'] = aim_grp
 
 
 def find_flap_joint(system, side, typed=''):
