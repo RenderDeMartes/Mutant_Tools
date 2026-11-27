@@ -262,3 +262,12 @@ The listener scans ports starting at 7501 (see `_DEFAULT_PORT` in
 `maya_listener.py`). Multiple Maya sessions each get their own port
 automatically; pass `port=` explicitly to any tool once more than one
 session is registered.
+
+## Keep show and asset names out of the repo
+
+Mutant Tools is public. Never write a client show, project, character or
+asset name, or a studio file path (e.g. `S:/shows/...`), in anything that
+lands in git: code, notes, docs, commit messages, PR titles or descriptions.
+Describe the case generically instead ("a character's coat tails", "a game
+head mesh"). Before committing, grep the diff and the message for show
+names and `S:/` paths.
